@@ -44,9 +44,6 @@ PageView.ELEMENT_ID_SECTION_DIV_PREFIX = "section_view_";
 PageView.ELEMENT_ID_SECTION_DIV_MIDFIX = "_in_page_";
 PageView.ELEMENT_ID_SUMMARY_VIEW_DIV_PREFIX = "_summary_view_for_page_";
 
-PageView.ELEMENT_CLASS_EDIT_MODE = "editmode";
-PageView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
-
 
 /**
  * The RootView uses an instance of a PageView to display a Page in the
@@ -96,7 +93,6 @@ PageView.prototype.refresh = function () {
   if (!this._myHasEverBeenDisplayedFlag) {
     this.doInitialDisplay();
   } else {
-    this.getDivElement().className = (this.isInEditMode()) ? PageView.ELEMENT_CLASS_EDIT_MODE : PageView.ELEMENT_CLASS_VIEW_MODE;
     this._myPageSummaryView.refresh();
     for (var key in this.myListOfSectionViews) {
       var sectionView = this.myListOfSectionViews[key];      
@@ -116,7 +112,6 @@ PageView.prototype.doInitialDisplay = function () {
   Util.assert(this.getDivElement() instanceof HTMLDivElement);
   
   var pageDivElement = this.getDivElement();
-  pageDivElement.className = (this.isInEditMode()) ? PageView.ELEMENT_CLASS_EDIT_MODE : PageView.ELEMENT_CLASS_VIEW_MODE;
   
   var headerElement = View.createAndAppendElement(pageDivElement, "h1");
   headerElement.innerHTML = this.myPage.getDisplayName();

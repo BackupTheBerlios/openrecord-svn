@@ -190,6 +190,14 @@ span.bad {
   width: 100%;
 }
 
+div.editmode .header {
+  background-color: rgb(100%, 100%, 40%);
+}
+
+div.viewmode .header {
+  background-color: rgb(100%, 100%, 100%);
+}
+
 .logo a {
   font-weight: bold;
   text-decoration: none;

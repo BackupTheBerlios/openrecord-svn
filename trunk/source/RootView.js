@@ -50,6 +50,9 @@ RootView.URL_ITEM_PREFIX = "item";
 RootView.URL_HASH_PAGE_PREFIX = "#" + RootView.URL_PAGE_PREFIX;
 RootView.URL_HASH_ITEM_PREFIX = "#" + RootView.URL_ITEM_PREFIX;
 
+RootView.ELEMENT_CLASS_EDIT_MODE = "editmode";
+RootView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
+
 
 // -------------------------------------------------------------------
 // RootView class properties
@@ -122,6 +125,7 @@ function RootView(inStevedore) {
   this._myContentViewDivElement = contentViewDiv;
   this.myDebugDivElement = debugDiv;
   this.myStatusBlurbSpanElement = statusBlurbSpan;
+  this._myRootDiv = rootDiv;
   
   Util.setErrorReportCallback(RootView.displayTextInDebugTextarea);
   this.setCurrentContentViewFromUrl();
@@ -234,6 +238,7 @@ RootView.prototype.display = function () {
   Util.assert(this._myCurrentContentView instanceof Object);
 
   document.title = this._myCurrentContentView.getPageTitle() + " - openagenda.org";
+  this._myRootDiv.className = (this.isInEditMode()) ? RootView.ELEMENT_CLASS_EDIT_MODE : RootView.ELEMENT_CLASS_VIEW_MODE;
   this.displayControlSpan();
   this.displayNavbar();
   this.displayDebugArea();
