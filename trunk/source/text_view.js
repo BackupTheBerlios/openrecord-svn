@@ -42,19 +42,20 @@
  * to display and (if in edit mode) edit multi-lines of text
  *
  * @scope    public instance constructor
+ * @param    theSuperview    The view that this view is nested in. 
  * @param    theItem    The Item to be displayed and edited by this view. 
  * @param    theAttribute    The attribute of the item to be displayed.
  * @param    theDivElement    The HTMLDivElement to display the HTML in. 
  * @param    theClassType    A string that gives a class name to assign to the HTML element. 
  */
-function MultiLineTextView(theItem, theAttribute, theDivElement, theClassType) {
+function MultiLineTextView(theSuperview, theItem, theAttribute, theDivElement, theClassType) {
   Util.assert(theItem instanceof Item);
   //Util.assert(theAttribute instanceof Attribute); PROBLEM need to check that attribute is an attribute
   //Util.assert(inDivElement instanceof HTMLDivElement);
   
+  this.mySuperview = theSuperview;
   this.textItem = theItem;
   this.attribute = theAttribute;
-  this.editMode = true;
   this.editField = null;
   this.textObj = null;
   this.classType = theClassType;
@@ -82,6 +83,17 @@ MultiLineTextView.prototype.setDivElement = function(theDivElement) {
 };
 
 
+/**
+ * Returns true if we are in Edit Mode.
+ *
+ * @scope    public instance method
+ * @return   A boolean value. True if we are in Edit Mode.
+ */
+MultiLineTextView.prototype.isInEditMode = function () {
+  return this.mySuperview.isInEditMode();
+};
+
+  
 /**
  * Re-creates all the HTML for the MultiLineTextView, and hands the HTML to the 
  * browser to be re-drawn.
@@ -144,7 +156,9 @@ MultiLineTextView.prototype.startEditing = function() {
  */
 MultiLineTextView.prototype.onClick = function(inEventObject) {
   inEventObject = inEventObject || window.event;
-  this.startEditing();
+  if (this.isInEditMode()) {
+    this.startEditing();
+  }
 };
 
 
@@ -158,12 +172,14 @@ MultiLineTextView.prototype.onClick = function(inEventObject) {
  * @param    inEventObject    An event object. 
  */
 MultiLineTextView.prototype.onBlur = function(inEventObject) {
-  var newText = this.editField.value;
-  this.textItem.clear(this.attribute);
-  this.textItem.assign(this.attribute,newText); //PROBLEM: need to deal with multi valued attrs
-  this.textNode.data = newText;
-  this.divElement.replaceChild(this.textNode,this.editField);
-  this.isEditing = false;
+  if (this.isEditing) {
+    var newText = this.editField.value;
+    this.textItem.clear(this.attribute);
+    this.textItem.assign(this.attribute,newText); //PROBLEM: need to deal with multi valued attrs
+    this.textNode.data = newText;
+    this.divElement.replaceChild(this.textNode,this.editField);
+    this.isEditing = false;
+  }
 };
 
 

@@ -139,6 +139,17 @@ SectionView.prototype.getStevedore = function () {
 
 
 /**
+ * Returns true if we are in Edit Mode.
+ *
+ * @scope    public instance method
+ * @return   A boolean value. True if we are in Edit Mode.
+ */
+SectionView.prototype.isInEditMode = function () {
+  return this.myPageView.isInEditMode();
+};
+
+  
+/**
  * Given the name of a layout ("Table", "Outline", etc.), returns a newly
  * created layout object of that type, initialized to be the layout for this 
  * section
@@ -248,7 +259,7 @@ SectionView.prototype.display = function () {
   
   // set up the summary text view
   var summaryElement = document.getElementById(summaryDivId);
-  new MultiLineTextView(this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, summaryElement, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+  new MultiLineTextView(this, this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, summaryElement, SectionView.ELEMENT_CLASS_TEXT_VIEW);
   
   var layoutDivElement = document.getElementById(layoutDivId);
   this.myLayout.setDivElement(layoutDivElement);
