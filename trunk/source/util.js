@@ -88,6 +88,7 @@ Util.getCleanString = function(inString) {
   returnString = returnString.replace(/</g, "&lt;");
   returnString = returnString.replace(/>/g, "&gt;");
   returnString = returnString.replace(/"/g, "&quot;");
+  returnString = returnString.replace(/\n/g, " ");
   return returnString;
 };
 
