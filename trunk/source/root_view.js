@@ -65,24 +65,13 @@ RootView.ourSingleInstance = null;
  * @scope    public instance constructor
  * @syntax   var rootView = new RootView()
  */
-function RootView(inStevedore, inNavbarDivElement, inContentViewDivElement, inDebugDivElement, inMainControlSpanElement, inStatusBlurbSpanElement) {
+function RootView(inStevedore) {
   RootView.ourSingleInstance = this;
    
   Util.assert(inStevedore instanceof Stevedore);
-  Util.assert(inNavbarDivElement instanceof HTMLDivElement);
-  Util.assert(inContentViewDivElement instanceof HTMLDivElement);
-  Util.assert(inDebugDivElement instanceof HTMLDivElement);
-  Util.assert(inMainControlSpanElement instanceof HTMLSpanElement);
-  Util.assert(inStatusBlurbSpanElement instanceof HTMLSpanElement);
 
   // instance properties
   this._myStevedore = inStevedore;
-  this.myNavbarDivElement = inNavbarDivElement;
-  this._myContentViewDivElement = inContentViewDivElement;
-  this.myDebugDivElement = inDebugDivElement;
-  this.myMainControlSpanElement = inMainControlSpanElement;
-  this.myStatusBlurbSpanElement = inStatusBlurbSpanElement;
-  
   this.myEditButtonId = RootView.ELEMENT_ID_EDIT_BUTTON;
   this.myEditMode = false;
   this.myNumberOfCallsToDebug = 0;
@@ -100,6 +89,68 @@ function RootView(inStevedore, inNavbarDivElement, inContentViewDivElement, inDe
     this.myHashTableOfPagesKeyedByUuid[page.getUuid()] = page; 
   }
 
+  window.document.body.innerHTML = "";
+  var rootDivElement = window.document.createElement("div"); 
+  window.document.body.appendChild(rootDivElement);
+ 
+  for (var uuid in this.myHashTableOfPagesKeyedByUuid) {
+    var aPage = this.myHashTableOfPagesKeyedByUuid[uuid];
+    var anchorElement = window.document.createElement("a");
+    anchorElement.setAttribute("name", RootView.URL_PAGE_PREFIX + aPage.getUuid());
+    rootDivElement.appendChild(anchorElement);
+  }
+  
+  var headerElement = window.document.createElement("p"); 
+  headerElement.setAttribute("class", "header");
+  rootDivElement.appendChild(headerElement);
+  
+  var logoSpanElement = window.document.createElement("span");
+  logoSpanElement.setAttribute("class", "logo");
+  logoSpanElement.innerHTML = '<a href="http://openrecord.org"><span class="logostart">open</span><span class="logomiddle">record</span><span class="logoend">.org</span></a>';
+  headerElement.appendChild(logoSpanElement);
+
+  var mainControlSpanElement = window.document.createElement("span");
+  mainControlSpanElement.setAttribute("id", "main_control_span");
+  headerElement.appendChild(mainControlSpanElement);
+  headerElement.appendChild(window.document.createElement("br"));
+  
+  var navbarDivElement = window.document.createElement("div");
+  navbarDivElement.setAttribute("class", "navbar");
+  rootDivElement.appendChild(navbarDivElement);
+
+  var contentAreaDivElement = window.document.createElement("div");
+  contentAreaDivElement.setAttribute("class", "content_area");
+  rootDivElement.appendChild(contentAreaDivElement);
+
+  var contentViewDivElement = window.document.createElement("div");
+  contentAreaDivElement.appendChild(contentViewDivElement);
+
+  var debugDivElement = window.document.createElement("div");
+  debugDivElement.setAttribute("class", "debug");
+  rootDivElement.appendChild(debugDivElement);
+
+  var footerElement = window.document.createElement("p"); 
+  footerElement.setAttribute("class", "footer");
+  rootDivElement.appendChild(footerElement);
+
+  var copyrightSpanElement = window.document.createElement("span");
+  copyrightSpanElement.setAttribute("class", "copyright");
+  copyrightSpanElement.innerHTML = 'You can copy freely from this site &mdash; ' +
+    'copyright rights relinquished under the Creative Commons ' +
+    '<a rel="license external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain Dedication</a>.';
+  footerElement.appendChild(copyrightSpanElement);
+
+  var statusBlurbSpanElement = window.document.createElement("span");
+  statusBlurbSpanElement.setAttribute("class", "fileformat");
+  footerElement.appendChild(statusBlurbSpanElement);
+  footerElement.appendChild(window.document.createElement("br"));
+  
+  this.myMainControlSpanElement = mainControlSpanElement;
+  this.myNavbarDivElement = navbarDivElement;
+  this._myContentViewDivElement = contentViewDivElement;
+  this.myDebugDivElement = debugDivElement;
+  this.myStatusBlurbSpanElement = statusBlurbSpanElement;
+  
   Util.setErrorReportCallback(RootView.displayTextInDebugTextarea);
   this.setCurrentContentViewFromUrl();
 }

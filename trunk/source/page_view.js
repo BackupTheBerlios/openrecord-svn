@@ -132,7 +132,7 @@ PageView.prototype.display = function () {
   var hashTableOfSectionViewsKeyedByDivId = {};
   
   // add an <h1> heading with the name of the page
-  listOfStrings.push("<h1 id=\"" + RootView.URL_PAGE_PREFIX + this.myPage.getUuid() + "\">" + this.myPage.getDisplayName() + "</h1>");
+  listOfStrings.push("<h1>" + this.myPage.getDisplayName() + "</h1>");
   
   var summaryViewDivId = PageView.ELEMENT_ID_SUMMARY_VIEW_DIV_PREFIX + this.myPage.getUuid();
   listOfStrings.push("<div id=\"" + summaryViewDivId + "\"></div>");

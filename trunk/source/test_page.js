@@ -35,17 +35,6 @@
 //   root_view.js
 // -------------------------------------------------------------------
 
-
-// -------------------------------------------------------------------
-// Global constants
-// -------------------------------------------------------------------
-window.GLOBAL_ELEMENT_ID_NAVBAR_DIV = "navbar_div";
-window.GLOBAL_ELEMENT_ID_CONTENT_VIEW_DIV = "content_view_div";
-window.GLOBAL_ELEMENT_ID_DEBUG_DIV = "debug_div";
-window.GLOBAL_ELEMENT_ID_MAIN_CONTROL_SPAN = "main_control_span";
-window.GLOBAL_ELEMENT_ID_STATUS_BLURB_SPAN = "status_blurb_span";
-                  
-
 /**
  * Called when the window first loads. Calls all the functions that do 
  * initialization when the page is loaded.
@@ -55,23 +44,9 @@ window.GLOBAL_ELEMENT_ID_STATUS_BLURB_SPAN = "status_blurb_span";
 window.doOnloadActions = function() {  
   Util.setTargetsForExternalLinks();
   
-  // Repository.initialize();
-  
-  var navbarDivElement = document.getElementById(window.GLOBAL_ELEMENT_ID_NAVBAR_DIV);
-  var contentViewDivElement = document.getElementById(window.GLOBAL_ELEMENT_ID_CONTENT_VIEW_DIV);
-  var debugDivElement = document.getElementById(window.GLOBAL_ELEMENT_ID_DEBUG_DIV);
-  var mainControlSpanElement = document.getElementById(window.GLOBAL_ELEMENT_ID_MAIN_CONTROL_SPAN);
-  var statusBlurbSpanElement = document.getElementById(window.GLOBAL_ELEMENT_ID_STATUS_BLURB_SPAN);
-
-  Util.assert(navbarDivElement instanceof HTMLDivElement);
-  Util.assert(contentViewDivElement instanceof HTMLDivElement);
-  Util.assert(debugDivElement instanceof HTMLDivElement);
-  Util.assert(mainControlSpanElement instanceof HTMLSpanElement);
-  Util.assert(statusBlurbSpanElement instanceof HTMLSpanElement);
-
   var stevedore = new Stevedore();
   stevedore._loadItemsFromList(Stevedore._ourRepositoryInJsonFormat);
-  window.rootView = new RootView(stevedore, navbarDivElement, contentViewDivElement, debugDivElement, mainControlSpanElement, statusBlurbSpanElement);
+  window.rootView = new RootView(stevedore);
 };
 
 
