@@ -49,7 +49,7 @@
  */
 function MultiLineTextView(theItem, theAttribute, theDivElement, theClassType) {
   Util.assert(theItem instanceof Item);
-  //Util.assert(theAttribute instanceof Attribute); FIXME need to check that attribute is an attribute
+  //Util.assert(theAttribute instanceof Attribute); PROBLEM need to check that attribute is an attribute
   //Util.assert(inDivElement instanceof HTMLDivElement);
   
   this.textItem = theItem;
@@ -160,7 +160,7 @@ MultiLineTextView.prototype.onClick = function(inEventObject) {
 MultiLineTextView.prototype.onBlur = function(inEventObject) {
   var newText = this.editField.value;
   this.textItem.clear(this.attribute);
-  this.textItem.assign(this.attribute,newText); //FIXME: need to deal with multi valued attrs
+  this.textItem.assign(this.attribute,newText); //PROBLEM: need to deal with multi valued attrs
   this.textNode.data = newText;
   this.divElement.replaceChild(this.textNode,this.editField);
   this.isEditing = false;

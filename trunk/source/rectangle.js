@@ -30,15 +30,16 @@
 //    + accessor methods are prefixed with "get" or "is" -- e.g. oval.getArea(), oval.isCircle()
 //       + any method that returns a value and does not change an object's state should be a "get" or "is" method
 //       + any method that does change an object's state should be a "set" method
-//    + problems are marked with FIX_ME
+//    + problems are marked with PROBLEM
 //
 // + compatiblity with other browsers and other JavaScript libraries 
 //    + use "get" and "set" accessors -- do *not* assign Mozilla "getter" and "setter" methods
 //    + add methods in your own namespace -- do *not* extend built-in objects: String.prototype.toEsperanto = function ...
 //
-// + indenting
+// + indenting, tabs, and line ending characters
 //    + 2-space indenting
 //    + only spaces, no tabs
+//    + Unix style line endings: just \n -- not \r or \r\n
 //
 // + file header and footer conventions
 //    + file name is given
@@ -53,7 +54,7 @@
 //    + instance methods are defined on the prototype -- see getArea()
 //    + accessor methods never have side-effects
 //
-// + FIX_ME
+// + PROBLEM
 //    + private instance properties?
 //    + private instance methods?
 //    + class methods?

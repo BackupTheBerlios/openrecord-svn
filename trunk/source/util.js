@@ -253,7 +253,7 @@ Util.isArray = function (inValue) {
  * @return   A boolean value. True if inValue is a hash table.
  */
 Util.isHashTable = function (inValue) {
-  return (inValue && (typeof(inValue) == "object"));  // FIX_ME: we should be more restrictive!
+  return (inValue && (typeof(inValue) == "object"));  // PROBLEM: we should be more restrictive!
 };
 
 
@@ -394,7 +394,7 @@ Util.setTargetsForExternalLinks = function () {
   var listOfAnchorElements = window.document.getElementsByTagName("a");
   for (var i=0; i<listOfAnchorElements.length; i+=1) {
     var anchor = listOfAnchorElements[i];
-    // FIX_ME: This only works if the "rel" attribute has a single value == "external".
+    // PROBLEM: This only works if the "rel" attribute has a single value == "external".
     // To make it work with multi-valued rel attributes, we should do some regular
     // expression matching to check for strings like "external", "foo external", 
     // and "external foo".

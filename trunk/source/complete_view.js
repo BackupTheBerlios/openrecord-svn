@@ -409,7 +409,7 @@ CompleteView.clickOnEditButton = function (inEventObject) {
   var eventObject = inEventObject;
   if (!eventObject) { eventObject = window.event; }
   var editButton = Util.getTargetFromEvent(eventObject);
-  // FIX_ME: We could replace the lines above with "var editButton = this;"
+  // PROBLEM: We could replace the lines above with "var editButton = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
 
   var completeView = editButton.mycompleteview;

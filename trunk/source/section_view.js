@@ -88,7 +88,7 @@ function SectionView(inPageView, inSection, inSectionNumber) {
   Util.assert(inSection instanceof Item);
   
   // instance properties
-  // FIX_ME: these should all be private
+  // PROBLEM: these should all be private
   this.myPageView = inPageView;
   this.mySection = inSection;
   this.mySectionNumber = inSectionNumber;
@@ -270,7 +270,7 @@ SectionView.clickOnLayoutSelectionMenu = function (inEventObject) {
   var eventObject = inEventObject;
   if (!eventObject) { eventObject = window.event; }
   var optionElement = Util.getTargetFromEvent(eventObject);
-  // FIX_ME: We could replace the lines above with "var optionElement = this;"
+  // PROBLEM: We could replace the lines above with "var optionElement = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
   
   var selectElement = optionElement.parentNode;

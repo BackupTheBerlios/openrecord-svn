@@ -54,7 +54,7 @@ TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD = "current_edit_field";
  * When the TableLayout creates an HTML table, it sets up each HTML "td" table 
  * cell element in the table to point to a corresponding CellDelegate instance.
  *
- * FIX_ME: This CellDelegate class should be privately owned by the
+ * PROBLEM: This CellDelegate class should be privately owned by the
  * TableLayout class.
  *
  * @scope    public instance constructor
@@ -77,7 +77,7 @@ function _CellDelegate(inRowDelegate, inCellElementId, inCellCount, inColumnNumb
  * When the TableLayout creates an HTML table, it sets up each HTML "tr" table
  * row element in the table to point to a corresponding RowDelegate instance.
  *
- * FIX_ME: This RowDelegate class should be privately owned by the
+ * PROBLEM: This RowDelegate class should be privately owned by the
  * TableLayout class.
  *
  * @scope    public instance constructor
@@ -262,10 +262,10 @@ TableLayout.prototype.display = function () {
 TableLayout.clickOnCell = function (inEventObject) {
   var eventObject = inEventObject;
   if (!eventObject) { eventObject = window.event; } 
-  // FIX_ME: try this instead: var eventObject = inEventObject || window.event;
+  // PROBLEM: try this instead: var eventObject = inEventObject || window.event;
   
   var htmlElement = Util.getTargetFromEvent(eventObject);
-  // FIX_ME: We could replace the two lines above with "var htmlElement = this;"
+  // PROBLEM: We could replace the two lines above with "var htmlElement = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?
 
   var currentEditField = document.getElementById(TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD);
@@ -340,7 +340,7 @@ TableLayout.leaveEditField = function () {
       var queryList = sectionView.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY);
       if (queryList) {
         var query = queryList[0];
-        // FIX_ME: We should NOT get a value from the item's PRIVATE _myStevedore property
+        // PROBLEM: We should NOT get a value from the item's PRIVATE _myStevedore property
         contentItem._myStevedore.setItemToBeIncludedInQueryResultList(contentItem, query);
       }
     }
@@ -428,7 +428,7 @@ TableLayout.keyPressOnEditField = function (inEventObject) {
     if (move == MOVE_LEFT || move == MOVE_RIGHT) {
       shiftBy = (move == MOVE_LEFT) ? -1 : 1;
       var nextColumnNumber = cellDelegate.myColumnNumber + shiftBy;
-      // FIX_ME: We should be able to do this in one line, using a modulo operator
+      // PROBLEM: We should be able to do this in one line, using a modulo operator
       if (nextColumnNumber < 0) {
         nextColumnNumber = (tableLayout.myNumColumns - 1);
       }

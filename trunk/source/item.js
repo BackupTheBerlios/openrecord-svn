@@ -116,7 +116,7 @@ Item.prototype.getValueListFromAttribute = function (inAttribute) {
   Util.assert(Util.isHashTable(this._myHashTableOfAssignmentsKeyedByAttributeUuid));
   
   var attributeUuid = this._myStevedore.getAttributeUuidFromAttributeOrUuid(inAttribute);
-  // FIX_ME: 
+  // PROBLEM: 
   //   If this item isn't yet fully loaded into the cache, then we might need 
   //   to ask our stevedore to get the attribute values for us.
   var valueList = this._myHashTableOfAssignmentsKeyedByAttributeUuid[attributeUuid];
@@ -153,7 +153,7 @@ Item.prototype.assign = function (inAttribute, inValue) {
   if (valueWasSet) {
     this._myStevedore.markDirty(this);
   }
-  // FIX_ME: 
+  // PROBLEM: 
   //   We also need to create a change object, and we need to tell 
   //   this._myStevedore about the change.
   this._notifyObservers();
@@ -180,7 +180,7 @@ Item.prototype.clear = function (inAttribute) {
     this._myStevedore.markDirty(this);
   }
   
-  // FIX_ME: 
+  // PROBLEM: 
   //   We also need to create a change object, and we need to tell 
   //   this._myStevedore about the change.
   this._notifyObservers();
@@ -250,11 +250,11 @@ Item.prototype.isInCategory = function (inCategory) {
   // is in turn in the categoery "inCategory"
   for (key in valueList) {
     value = valueList[key];
-    // FIX_ME: 
+    // PROBLEM: 
     //   This will go into an infinite loop if there is ever a cycle in the category 
     //   assignments, like: A is in category B, and B is in C, and C is in A.
     //   We need to use a non-recursive search of the graph.
-    // FIX_ME:
+    // PROBLEM:
     //   Do we also need to register as an observer of something, so that if we later
     //   become a member of that category in question, then we can notify whoever
     //   is observing us?

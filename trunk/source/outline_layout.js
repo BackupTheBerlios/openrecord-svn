@@ -98,7 +98,7 @@ OutlineLayout.prototype.display = function () {
     var contentItem = listOfContentItems[contentItemKey];
     listOfStrings.push("<li>");
     listOfStrings.push(contentItem.getDisplayName("{no name}"));
-    // FIX_ME: Why do I have to provide an onclick handler to get these links to work?
+    // PROBLEM: Why do I have to provide an onclick handler to get these links to work?
     listOfStrings.push(" " + "<a class=\"" + SectionView.ELEMENT_CLASS_MORE_LINK + "\" href=\"" + CompleteView.URL_HASH_ITEM_PREFIX + contentItem.getUuid() + "\" onclick=\"CompleteView.clickOnLocalLink(event)\">(more &#8658;)</a>" + "");
     listOfStrings.push("</li>");
   }
