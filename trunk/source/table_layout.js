@@ -203,7 +203,7 @@ TableLayout.prototype.display = function () {
         hashTableOfCellDelegatesKeyedByElementId[cellId] = cellDelegate;
       } else {
         // if (columnCount == 0) {
-        //   string = "<a href=\"" + CompleteView.URL_HASH_ITEM_PREFIX + contentItem.getUuid() + "\" onclick=\"CompleteView.clickOnLocalLink(event)\">" + string + "</a>";
+        //   string = "<a href=\"" + RootView.URL_HASH_ITEM_PREFIX + contentItem.getUuid() + "\" onclick=\"RootView.clickOnLocalLink(event)\">" + string + "</a>";
         // }
         listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\">" + string + "</td>");
       }

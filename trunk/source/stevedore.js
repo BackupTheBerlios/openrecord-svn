@@ -317,7 +317,7 @@ Stevedore.prototype.endTransaction = function () {
   //   This is just a stub method for now.  Once we start implementing
   //   support for transactions we'll have to put some real code here.
   if (this._myCountOfNestedTransactions === 0) {
-    CompleteView.displayStatusBlurb(this._myListOfDirtyItems.length + " changes made");
+    RootView.displayStatusBlurb(this._myListOfDirtyItems.length + " changes made");
     if (this._myListOfDirtyItems && (this._myListOfDirtyItems.length > 0)) {
       this._saveChangesToServer();
       this._myListOfDirtyItems = [];

@@ -55,23 +55,23 @@ PageView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
 
 
 /**
- * The CompleteView uses an instance of a PageView to display a Page in the
+ * The RootView uses an instance of a PageView to display a Page in the
  * browser window.
  *
  * @scope    public instance constructor
  * @param    inPage    The page item to be displayed by this view. 
  * @param    inDivElement    The HTMLDivElement to display the HTML in. 
- * @param    inCompleteView    The CompleteView that this PageView is nested in. 
+ * @param    inRootView    The RootView that this PageView is nested in. 
  */
-function PageView(inPage, inDivElement, inCompleteView) {
+function PageView(inPage, inDivElement, inRootView) {
   Util.assert(inPage instanceof Item);
   Util.assert(inDivElement instanceof HTMLDivElement);
-  Util.assert(inCompleteView instanceof CompleteView);
+  Util.assert(inRootView instanceof RootView);
 
   // instance properties
   this.myPage = inPage;
   this.myDivElement = inDivElement;
-  this.myCompleteView = inCompleteView;
+  this.myRootView = inRootView;
   
   this.myListOfSectionViews = [];
   
@@ -93,7 +93,7 @@ function PageView(inPage, inDivElement, inCompleteView) {
  * @return   A boolean value. True if we are in Edit Mode.
  */
 PageView.prototype.isInEditMode = function () {
-  return this.myCompleteView.isInEditMode();
+  return this.myRootView.isInEditMode();
 };
 
   
@@ -132,7 +132,7 @@ PageView.prototype.display = function () {
   var hashTableOfSectionViewsKeyedByDivId = {};
   
   // add an <h1> heading with the name of the page
-  listOfStrings.push("<h1 id=\"" + CompleteView.URL_PAGE_PREFIX + this.myPage.getUuid() + "\">" + this.myPage.getDisplayName() + "</h1>");
+  listOfStrings.push("<h1 id=\"" + RootView.URL_PAGE_PREFIX + this.myPage.getUuid() + "\">" + this.myPage.getDisplayName() + "</h1>");
   
   var summaryViewDivId = PageView.ELEMENT_ID_SUMMARY_VIEW_DIV_PREFIX + this.myPage.getUuid();
   listOfStrings.push("<div id=\"" + summaryViewDivId + "\"></div>");

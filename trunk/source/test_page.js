@@ -32,7 +32,7 @@
 // -------------------------------------------------------------------
 // Dependencies:
 //   repository.js
-//   complete_view.js
+//   root_view.js
 // -------------------------------------------------------------------
 
 
@@ -71,8 +71,7 @@ window.doOnloadActions = function() {
 
   var stevedore = new Stevedore();
   stevedore._loadItemsFromList(Stevedore._ourRepositoryInJsonFormat);
-  window.completeView = new CompleteView(stevedore, navbarDivElement, contentViewDivElement, debugDivElement, mainControlSpanElement, statusBlurbSpanElement);
-  // window.completeView.displayTextInDebugTextarea(stevedore._getPickleForAllItems());
+  window.rootView = new RootView(stevedore, navbarDivElement, contentViewDivElement, debugDivElement, mainControlSpanElement, statusBlurbSpanElement);
 };
 
 
@@ -87,11 +86,11 @@ window.doOnunloadActions = function() {
 };
 
 window.doOnfocusActions = function() {
-  // window.completeView.displayTextInDebugTextarea("onfocus");
+  // window.rootView.displayTextInDebugTextarea("onfocus");
 };
 
 window.doOnblurActions = function() {
-  // window.completeView.displayTextInDebugTextarea("onblur");
+  // window.rootView.displayTextInDebugTextarea("onblur");
 };
 
 

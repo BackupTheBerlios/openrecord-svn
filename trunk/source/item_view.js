@@ -33,7 +33,7 @@
 // Dependencies:
 //   repository.js
 //   util.js
-//   complete_view.js
+//   root_view.js
 //   detail_layout.js
 // -------------------------------------------------------------------
 
@@ -51,23 +51,23 @@ ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_layout_div_for_item_";
 
 
 /**
- * The CompleteView uses an instance of a ItemView to display an Item in the
+ * The RootView uses an instance of a ItemView to display an Item in the
  * browser window.
  *
  * @scope    public instance constructor
  * @param    inItem    The item to be displayed by this view. 
  * @param    inDivElement    The HTMLDivElement to display the HTML in. 
- * @param    inCompleteView    The CompleteView that this ItemView is nested in. 
+ * @param    inRootView    The RootView that this ItemView is nested in. 
  */
-function ItemView(inItem, inDivElement, inCompleteView) {
+function ItemView(inItem, inDivElement, inRootView) {
   Util.assert(inItem instanceof Item);
   Util.assert(inDivElement instanceof HTMLDivElement);
-  Util.assert(inCompleteView instanceof CompleteView);
+  Util.assert(inRootView instanceof RootView);
 
   // instance properties
   this.myItem = inItem;
   this.myDivElement = inDivElement;
-  this.myCompleteView = inCompleteView;
+  this.myRootView = inRootView;
   this.myLayout = new DetailLayout(this);
 }
 
@@ -79,7 +79,7 @@ function ItemView(inItem, inDivElement, inCompleteView) {
  * @return   The stevedore object.
  */
 ItemView.prototype.getStevedore = function () {
-  return this.myCompleteView.getStevedore();
+  return this.myRootView.getStevedore();
 };
 
 
@@ -103,7 +103,7 @@ ItemView.prototype.getListOfContentItems = function () {
  * @return   A boolean value. True if we are in Edit Mode.
  */
 ItemView.prototype.isInEditMode = function () {
-  return this.myCompleteView.isInEditMode();
+  return this.myRootView.isInEditMode();
 };
 
   
@@ -142,7 +142,7 @@ ItemView.prototype.display = function () {
   var listOfStrings = [];
 
   // add an <h1> heading with the name of the page
-  listOfStrings.push("<h1 id=\"" + CompleteView.URL_ITEM_PREFIX + this.myItem.getUuid() + "\">" + this.myItem.getDisplayName() + "</h1>");
+  listOfStrings.push("<h1 id=\"" + RootView.URL_ITEM_PREFIX + this.myItem.getUuid() + "\">" + this.myItem.getDisplayName() + "</h1>");
 
   // add a <div> element for the detail layout
   var detailDivId = ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this.myItem.getUuid();

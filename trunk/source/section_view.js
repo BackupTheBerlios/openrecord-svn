@@ -134,7 +134,7 @@ SectionView.getStringForValue = function (inValue) {
  * @return   A Stevedore object.
  */
 SectionView.prototype.getStevedore = function () {
-  return this.myPageView.myCompleteView.getStevedore();
+  return this.myPageView.myRootView.getStevedore();
 };
 
 
@@ -229,6 +229,7 @@ SectionView.prototype.display = function () {
 
   var summaryDivId = this.myDivElement.id + SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX;
   listOfStrings.push("<div id=\"" + summaryDivId + "\"></div>");
+  listOfStrings.push("<p></p>");
   
   // create the layout editing controls, if we're in edit mode
   var selectMenuId = this.myDivElement.id + SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX;

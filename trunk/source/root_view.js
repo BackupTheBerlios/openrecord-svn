@@ -1,5 +1,5 @@
 /*****************************************************************************
- complete_view.js
+ root_view.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -38,35 +38,35 @@
 
 
 // -------------------------------------------------------------------
-// CompleteView public class constants
+// RootView public class constants
 // -------------------------------------------------------------------
-CompleteView.ELEMENT_CLASS_PAGE_EDIT_BUTTON = "page_edit_button";
+RootView.ELEMENT_CLASS_PAGE_EDIT_BUTTON = "page_edit_button";
 
-CompleteView.ELEMENT_ID_EDIT_BUTTON = "edit_button";
-CompleteView.ELEMENT_ID_DEBUG_TEXTAREA = "debug_textarea";
+RootView.ELEMENT_ID_EDIT_BUTTON = "edit_button";
+RootView.ELEMENT_ID_DEBUG_TEXTAREA = "debug_textarea";
 
-CompleteView.URL_PAGE_PREFIX = "page";
-CompleteView.URL_ITEM_PREFIX = "item";
-CompleteView.URL_HASH_PAGE_PREFIX = "#" + CompleteView.URL_PAGE_PREFIX;
-CompleteView.URL_HASH_ITEM_PREFIX = "#" + CompleteView.URL_ITEM_PREFIX;
+RootView.URL_PAGE_PREFIX = "page";
+RootView.URL_ITEM_PREFIX = "item";
+RootView.URL_HASH_PAGE_PREFIX = "#" + RootView.URL_PAGE_PREFIX;
+RootView.URL_HASH_ITEM_PREFIX = "#" + RootView.URL_ITEM_PREFIX;
 
 
 // -------------------------------------------------------------------
-// CompleteView class properties
+// RootView class properties
 // -------------------------------------------------------------------
-CompleteView.ourSingleInstance = null;
+RootView.ourSingleInstance = null;
 
 
 /**
- * The OpenRecord app uses a single instance of CompleteView, which serves as the
+ * The OpenRecord app uses a single instance of RootView, which serves as the
  * outer-most view in the browser, and contains the current PageView as well
  * as some standard chrome (like the Edit button).
  *
  * @scope    public instance constructor
- * @syntax   var completeView = new CompleteView()
+ * @syntax   var rootView = new RootView()
  */
-function CompleteView(inStevedore, inNavbarDivElement, inContentViewDivElement, inDebugDivElement, inMainControlSpanElement, inStatusBlurbSpanElement) {
-  CompleteView.ourSingleInstance = this;
+function RootView(inStevedore, inNavbarDivElement, inContentViewDivElement, inDebugDivElement, inMainControlSpanElement, inStatusBlurbSpanElement) {
+  RootView.ourSingleInstance = this;
    
   Util.assert(inStevedore instanceof Stevedore);
   Util.assert(inNavbarDivElement instanceof HTMLDivElement);
@@ -83,7 +83,7 @@ function CompleteView(inStevedore, inNavbarDivElement, inContentViewDivElement, 
   this.myMainControlSpanElement = inMainControlSpanElement;
   this.myStatusBlurbSpanElement = inStatusBlurbSpanElement;
   
-  this.myEditButtonId = CompleteView.ELEMENT_ID_EDIT_BUTTON;
+  this.myEditButtonId = RootView.ELEMENT_ID_EDIT_BUTTON;
   this.myEditMode = false;
   this.myNumberOfCallsToDebug = 0;
   this.myDebugTextarea = null;
@@ -100,7 +100,7 @@ function CompleteView(inStevedore, inNavbarDivElement, inContentViewDivElement, 
     this.myHashTableOfPagesKeyedByUuid[page.getUuid()] = page; 
   }
 
-  Util.setErrorReportCallback(CompleteView.displayTextInDebugTextarea);
+  Util.setErrorReportCallback(RootView.displayTextInDebugTextarea);
   this.setCurrentContentViewFromUrl();
 }
 
@@ -110,12 +110,12 @@ function CompleteView(inStevedore, inNavbarDivElement, inContentViewDivElement, 
 // -------------------------------------------------------------------
 
 /**
- * Returns the Stevedore instance that this CompleteView is using.
+ * Returns the Stevedore instance that this RootView is using.
  *
  * @scope    public instance method
  * @return   A Stevedore object. 
  */
-CompleteView.prototype.getStevedore = function () {
+RootView.prototype.getStevedore = function () {
   return this._myStevedore;
 };
 
@@ -126,7 +126,7 @@ CompleteView.prototype.getStevedore = function () {
  * @scope    public instance method
  * @return   A boolean value. True if we are in Edit Mode.
  */
-CompleteView.prototype.isInEditMode = function () {
+RootView.prototype.isInEditMode = function () {
   return this.myEditMode;
 };
 
@@ -138,7 +138,7 @@ CompleteView.prototype.isInEditMode = function () {
  *
  * @scope    public instance method
  */
-CompleteView.prototype.setCurrentContentViewFromUrl = function () {
+RootView.prototype.setCurrentContentViewFromUrl = function () {
   var contentViewToSwitchTo = null;
   
   if (window.location) {
@@ -149,11 +149,11 @@ CompleteView.prototype.setCurrentContentViewFromUrl = function () {
       var pageFromUuid = null;
       var itemFromUuid = null;
       var divElement = null;
-      var isUrlForPage = (originalHash.indexOf(CompleteView.URL_HASH_PAGE_PREFIX) != -1);
-      var isUrlForItem = (originalHash.indexOf(CompleteView.URL_HASH_ITEM_PREFIX) != -1);
+      var isUrlForPage = (originalHash.indexOf(RootView.URL_HASH_PAGE_PREFIX) != -1);
+      var isUrlForItem = (originalHash.indexOf(RootView.URL_HASH_ITEM_PREFIX) != -1);
       // alert(originalHash + "\n isUrlForPage: " + isUrlForPage + "\n isUrlForItem: " + isUrlForItem);
       if (isUrlForItem) {
-        uuidText = originalHash.replace(CompleteView.URL_HASH_ITEM_PREFIX, "");
+        uuidText = originalHash.replace(RootView.URL_HASH_ITEM_PREFIX, "");
         uuidNumber = parseInt(uuidText);
         contentViewToSwitchTo = this._myHashTableOfItemViewsKeyedByUuid[uuidNumber];
         if (!contentViewToSwitchTo) {
@@ -168,7 +168,7 @@ CompleteView.prototype.setCurrentContentViewFromUrl = function () {
         // this._myCurrentContentView = contentView;
       } else {
         if (isUrlForPage) {
-          uuidText = originalHash.replace(CompleteView.URL_HASH_PAGE_PREFIX, "");
+          uuidText = originalHash.replace(RootView.URL_HASH_PAGE_PREFIX, "");
           uuidNumber = parseInt(uuidText);
           contentViewToSwitchTo = this._myHashTableOfPageViewsKeyedByUuid[uuidNumber];
           if (!contentViewToSwitchTo) {
@@ -205,12 +205,12 @@ CompleteView.prototype.setCurrentContentViewFromUrl = function () {
 
   
 /**
- * Re-creates all the HTML for the CompleteView, including the chrome and 
+ * Re-creates all the HTML for the RootView, including the chrome and 
  * the current PageView, and hands the HTML to the browser to be re-drawn.
  *
  * @scope    public instance method
  */
-CompleteView.prototype.display = function () {
+RootView.prototype.display = function () {
   Util.assert(this._myCurrentContentView instanceof Object);
 
   document.title = this._myCurrentContentView.getPageTitle() + " - openagenda.org";
@@ -228,13 +228,13 @@ CompleteView.prototype.display = function () {
  *
  * @scope    public instance method
  */
-CompleteView.prototype.displayControlSpan = function () {
+RootView.prototype.displayControlSpan = function () {
   Util.assert(this.myMainControlSpanElement instanceof HTMLSpanElement);
 
   var listOfStrings = [];
   
   var buttonValue = (this.myEditMode) ? "View" : "Edit";
-  listOfStrings.push("<input type=\"button\" class=\"" + CompleteView.ELEMENT_CLASS_PAGE_EDIT_BUTTON + "\" id=\"" + this.myEditButtonId + "\" name=\"layout\" value=\"" + buttonValue + "\"></input>");
+  listOfStrings.push("<input type=\"button\" class=\"" + RootView.ELEMENT_CLASS_PAGE_EDIT_BUTTON + "\" id=\"" + this.myEditButtonId + "\" name=\"layout\" value=\"" + buttonValue + "\"></input>");
 
   // write out the new control span content 
   var finalString = listOfStrings.join("");
@@ -242,10 +242,10 @@ CompleteView.prototype.displayControlSpan = function () {
 
   // add event handlers for the newly created control span UI elements
   var editButton = document.getElementById(this.myEditButtonId);
-  editButton.onclick = CompleteView.clickOnEditButton;
+  editButton.onclick = RootView.clickOnEditButton;
  
   // attach back-pointers to the newly created control span UI elements
-  editButton.mycompleteview = this;
+  editButton.myrootview = this;
 };
 
 
@@ -255,7 +255,7 @@ CompleteView.prototype.displayControlSpan = function () {
  *
  * @scope    public instance method
  */
-CompleteView.prototype.displayNavbar = function () {
+RootView.prototype.displayNavbar = function () {
   Util.assert(this.myNavbarDivElement instanceof HTMLDivElement);
 
   var listOfStrings = [];
@@ -265,8 +265,8 @@ CompleteView.prototype.displayNavbar = function () {
   for (var uuid in this.myHashTableOfPagesKeyedByUuid) {
     var page = this.myHashTableOfPagesKeyedByUuid[uuid];
     var menuText = page.getShortName();
-    var menuUrl = CompleteView.URL_HASH_PAGE_PREFIX + page.getUuid();
-    listOfStrings.push("<li class=\"menu_item\"><a href=\"" + menuUrl + "\" onclick=\"CompleteView.clickOnLocalLink(event)\">" + menuText + "</a></li>");
+    var menuUrl = RootView.URL_HASH_PAGE_PREFIX + page.getUuid();
+    listOfStrings.push("<li class=\"menu_item\"><a href=\"" + menuUrl + "\" onclick=\"RootView.clickOnLocalLink(event)\">" + menuText + "</a></li>");
   }
 
   listOfStrings.push("</ul>");
@@ -284,14 +284,14 @@ CompleteView.prototype.displayNavbar = function () {
  *
  * @scope    public instance method
  */
-CompleteView.prototype.displayDebugArea = function () {
+RootView.prototype.displayDebugArea = function () {
   Util.assert(this.myDebugDivElement instanceof HTMLDivElement);
 
   var listOfStrings = [];
-  listOfStrings.push("<textarea readonly id=\"" + CompleteView.ELEMENT_ID_DEBUG_TEXTAREA + "\" rows=\"20\" cols=\"100\" wrap=\"virtual\"></textarea>");
+  listOfStrings.push("<textarea readonly id=\"" + RootView.ELEMENT_ID_DEBUG_TEXTAREA + "\" rows=\"20\" cols=\"100\" wrap=\"virtual\"></textarea>");
   var finalString = listOfStrings.join("");
   this.myDebugDivElement.innerHTML = finalString;
-  this.myDebugTextarea = document.getElementById(CompleteView.ELEMENT_ID_DEBUG_TEXTAREA);
+  this.myDebugTextarea = document.getElementById(RootView.ELEMENT_ID_DEBUG_TEXTAREA);
 }
 
 
@@ -305,8 +305,8 @@ CompleteView.prototype.displayDebugArea = function () {
  * @scope    public class method
  * @param    inText    A text string to be displayed. 
  */
-CompleteView.displayStatusBlurb = function (inText) {
-  CompleteView.ourSingleInstance.displayStatusBlurb(inText);
+RootView.displayStatusBlurb = function (inText) {
+  RootView.ourSingleInstance.displayStatusBlurb(inText);
 };
 
 
@@ -316,7 +316,7 @@ CompleteView.displayStatusBlurb = function (inText) {
  * @scope    public instance method
  * @param    inText    A text string to be displayed. 
  */
-CompleteView.prototype.displayStatusBlurb = function (inText) {
+RootView.prototype.displayStatusBlurb = function (inText) {
   this.myStatusBlurbSpanElement.innerHTML = inText;
 };
 
@@ -327,8 +327,8 @@ CompleteView.prototype.displayStatusBlurb = function (inText) {
  * @scope    public class method
  * @param    inText    A text string to be displayed. 
  */
-CompleteView.displayTextInDebugTextarea = function (inText) {
-  CompleteView.ourSingleInstance.displayTextInDebugTextarea(inText);
+RootView.displayTextInDebugTextarea = function (inText) {
+  RootView.ourSingleInstance.displayTextInDebugTextarea(inText);
 };
 
 
@@ -338,7 +338,7 @@ CompleteView.displayTextInDebugTextarea = function (inText) {
  * @scope    public instance method
  * @param    inText    A text string to be displayed. 
  */
-CompleteView.prototype.displayTextInDebugTextarea = function (inText) {
+RootView.prototype.displayTextInDebugTextarea = function (inText) {
   this.myNumberOfCallsToDebug++;
   if (this.myNumberOfCallsToDebug > 20) {
     return;
@@ -357,7 +357,7 @@ CompleteView.prototype.displayTextInDebugTextarea = function (inText) {
  * @scope    public instance method
  * @param    inObject    Any sort of object. 
  */
-CompleteView.prototype.displayObjectInDebugTextarea = function (inObject) {
+RootView.prototype.displayObjectInDebugTextarea = function (inObject) {
   var outputText = "";
   for (var property in inObject) {
     outputText += property + " == " + inObject[property] + "\n";
@@ -380,7 +380,7 @@ CompleteView.prototype.displayObjectInDebugTextarea = function (inObject) {
  * @scope    public class method
  * @param    inEventObject    An event object. 
  */
-CompleteView.clickOnLocalLink = function (inEventObject) {
+RootView.clickOnLocalLink = function (inEventObject) {
   var eventObject = inEventObject;
   if (!eventObject) { eventObject = window.event; }
   
@@ -388,11 +388,11 @@ CompleteView.clickOnLocalLink = function (inEventObject) {
   var htmlAnchorElement = Util.getTargetFromEvent(eventObject);
   
   window.location = htmlAnchorElement.href;
-  CompleteView.ourSingleInstance.setCurrentContentViewFromUrl();
+  RootView.ourSingleInstance.setCurrentContentViewFromUrl();
   
   var stopTiming = new Date();
   var delayInMilliseconds = stopTiming.getTime() - startTiming.getTime();
-  CompleteView.ourSingleInstance.displayStatusBlurb("Page load: " + delayInMilliseconds + " milliseconds");
+  RootView.ourSingleInstance.displayStatusBlurb("Page load: " + delayInMilliseconds + " milliseconds");
 };
 
   
@@ -405,25 +405,25 @@ CompleteView.clickOnLocalLink = function (inEventObject) {
  * @scope    public class method
  * @param    inEventObject    An event object. 
  */
-CompleteView.clickOnEditButton = function (inEventObject) {
+RootView.clickOnEditButton = function (inEventObject) {
   var eventObject = inEventObject;
   if (!eventObject) { eventObject = window.event; }
   var editButton = Util.getTargetFromEvent(eventObject);
   // PROBLEM: We could replace the lines above with "var editButton = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
 
-  var completeView = editButton.mycompleteview;
-  var stevedore = completeView.getStevedore();
-  if (completeView.myEditMode) {
+  var rootView = editButton.myrootview;
+  var stevedore = rootView.getStevedore();
+  if (rootView.myEditMode) {
     stevedore.endTransaction();
   } else {
     stevedore.beginTransaction();
   }
-  completeView.myEditMode = !completeView.myEditMode;
-  completeView.display();
-  // completeView.displayTextInDebugTextarea(completeView.myEditMode);
-  if (!completeView.myEditMode && window.location && (window.location.protocol == "file:")) {
-    CompleteView.displayTextInDebugTextarea(stevedore._getJsonStringRepresentingAllItems());
+  rootView.myEditMode = !rootView.myEditMode;
+  rootView.display();
+  // rootView.displayTextInDebugTextarea(rootView.myEditMode);
+  if (!rootView.myEditMode && window.location && (window.location.protocol == "file:")) {
+    RootView.displayTextInDebugTextarea(stevedore._getJsonStringRepresentingAllItems());
   }
 };
 
