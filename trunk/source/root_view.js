@@ -101,47 +101,47 @@ function RootView(inStevedore) {
   }
   
   var headerElement = window.document.createElement("p"); 
-  headerElement.setAttribute("class", "header");
+  headerElement.className = "header";
   rootDivElement.appendChild(headerElement);
   
   var logoSpanElement = window.document.createElement("span");
-  logoSpanElement.setAttribute("class", "logo");
+  logoSpanElement.className = "logo";
   logoSpanElement.innerHTML = '<a href="http://openrecord.org"><span class="logostart">open</span><span class="logomiddle">record</span><span class="logoend">.org</span></a>';
   headerElement.appendChild(logoSpanElement);
 
   var mainControlSpanElement = window.document.createElement("span");
-  mainControlSpanElement.setAttribute("id", "main_control_span");
+  mainControlSpanElement.id = "main_control_span";
   headerElement.appendChild(mainControlSpanElement);
   headerElement.appendChild(window.document.createElement("br"));
   
   var navbarDivElement = window.document.createElement("div");
-  navbarDivElement.setAttribute("class", "navbar");
+  navbarDivElement.className = "navbar";
   rootDivElement.appendChild(navbarDivElement);
 
   var contentAreaDivElement = window.document.createElement("div");
-  contentAreaDivElement.setAttribute("class", "content_area");
+  contentAreaDivElement.className = "content_area";
   rootDivElement.appendChild(contentAreaDivElement);
 
   var contentViewDivElement = window.document.createElement("div");
   contentAreaDivElement.appendChild(contentViewDivElement);
 
   var debugDivElement = window.document.createElement("div");
-  debugDivElement.setAttribute("class", "debug");
+  debugDivElement.className = "debug";
   rootDivElement.appendChild(debugDivElement);
 
   var footerElement = window.document.createElement("p"); 
-  footerElement.setAttribute("class", "footer");
+  footerElement.className = "footer";
   rootDivElement.appendChild(footerElement);
 
   var copyrightSpanElement = window.document.createElement("span");
-  copyrightSpanElement.setAttribute("class", "copyright");
+  copyrightSpanElement.className = "copyright";
   copyrightSpanElement.innerHTML = 'You can copy freely from this site &mdash; ' +
     'copyright rights relinquished under the Creative Commons ' +
     '<a rel="license external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain Dedication</a>.';
   footerElement.appendChild(copyrightSpanElement);
 
   var statusBlurbSpanElement = window.document.createElement("span");
-  statusBlurbSpanElement.setAttribute("class", "fileformat");
+  statusBlurbSpanElement.className = "fileformat";
   footerElement.appendChild(statusBlurbSpanElement);
   footerElement.appendChild(window.document.createElement("br"));
   
@@ -202,7 +202,6 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
       var divElement = null;
       var isUrlForPage = (originalHash.indexOf(RootView.URL_HASH_PAGE_PREFIX) != -1);
       var isUrlForItem = (originalHash.indexOf(RootView.URL_HASH_ITEM_PREFIX) != -1);
-      // alert(originalHash + "\n isUrlForPage: " + isUrlForPage + "\n isUrlForItem: " + isUrlForItem);
       if (isUrlForItem) {
         uuidText = originalHash.replace(RootView.URL_HASH_ITEM_PREFIX, "");
         uuidNumber = parseInt(uuidText);
@@ -212,11 +211,10 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
           if (itemFromUuid) {
             divElement = window.document.createElement("div"); 
             this._myContentViewDivElement.appendChild(divElement);
-            contentViewToSwitchTo = new ItemView(itemFromUuid, divElement, this);
+            contentViewToSwitchTo = new ItemView(this, divElement, itemFromUuid);
             this._myHashTableOfItemViewsKeyedByUuid[uuidNumber] = contentViewToSwitchTo;
           }
         }
-        // this._myCurrentContentView = contentView;
       } else {
         if (isUrlForPage) {
           uuidText = originalHash.replace(RootView.URL_HASH_PAGE_PREFIX, "");
@@ -247,10 +245,9 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
     }
   }
   if (this._myCurrentContentView) {
-    this._myCurrentContentView.hide();
+    this._myCurrentContentView.includeOnScreen(false);
   }
   this._myCurrentContentView = contentViewToSwitchTo;
-
   this.display();
 };
 
@@ -268,7 +265,7 @@ RootView.prototype.display = function () {
   this.displayControlSpan();
   this.displayNavbar();
   this.displayDebugArea();
-  this._myCurrentContentView.display();
+  this._myCurrentContentView.includeOnScreen(true);
   window.focus();
 };
 

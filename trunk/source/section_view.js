@@ -60,6 +60,7 @@ SectionView.ELEMENT_CLASS_TEXT_VIEW = "text_view";
 
 SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX = "_select_menu";
 SectionView.ELEMENT_ID_LAYOUT_DIV_SUFFIX = "_layout_div";
+SectionView.ELEMENT_ID_CELL_PREFIX = "section_";
 SectionView.ELEMENT_ID_CELL_MIDFIX = "_cell_";
 SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX = "_summary_div";
 
@@ -78,25 +79,29 @@ SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName = {};
  * of a page. 
  *
  * @scope    public instance constructor
+ * @extends  View
  * @param    inPageView    The PageView that serves as the superview for this view. 
+ * @param    inDivElement    The HTMLDivElement to display the HTML in. 
  * @param    inSection    The Section item to be displayed in by this view. 
  * @param    inSectionNumber    The number of the section on the page (1, 2, 3, 4...). 
  * @syntax   var sectionView = new SectionView()
  */
-function SectionView(inPageView, inSection, inSectionNumber) {
+SectionView.prototype = new View();  // makes SectionView be a subclass of View
+function SectionView(inPageView, inDivElement, inSection, inSectionNumber) {
   Util.assert(inPageView instanceof PageView);
   Util.assert(inSection instanceof Item);
   
   // instance properties
   // PROBLEM: these should all be private
-  this.myPageView = inPageView;
+  this.setSuperview(inPageView);
+  this.setDivElement(inDivElement);
   this.mySection = inSection;
   this.mySectionNumber = inSectionNumber;
   var query = inSection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
   this.myListOfContentItems = this.getStevedore().getListOfResultItemsForQuery(query); 
-  this.myDivElement = null;
   var layoutName = inSection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME)[0];
   this.myLayout = this.getLayoutFromLayoutName(layoutName);
+  this._myHasEverBeenDisplayedFlag = false;
 }
 
 
@@ -133,9 +138,9 @@ SectionView.getStringForValue = function (inValue) {
  * @scope    public instance method
  * @return   A Stevedore object.
  */
-SectionView.prototype.getStevedore = function () {
-  return this.myPageView.getStevedore();
-};
+// SectionView.prototype.getStevedore = function () {
+//  return this.myPageView.getStevedore();
+// };
 
 
 /**
@@ -144,9 +149,9 @@ SectionView.prototype.getStevedore = function () {
  * @scope    public instance method
  * @return   A boolean value. True if we are in Edit Mode.
  */
-SectionView.prototype.isInEditMode = function () {
-  return this.myPageView.isInEditMode();
-};
+// SectionView.prototype.isInEditMode = function () {
+//   return this.myPageView.isInEditMode();
+// };
 
   
 /**
@@ -182,12 +187,12 @@ SectionView.prototype.getLayoutFromLayoutName = function (inLayoutName) {
  * @scope    public instance method
  * @param    inDivElement    The HTMLDivElement to display the Section in. 
  */
-SectionView.prototype.setDivElement = function (inDivElement) {
-  Util.assert(inDivElement instanceof HTMLDivElement);
-
-  this.myDivElement = inDivElement;
-  this.display();
-};
+// SectionView.prototype.setDivElement = function (inDivElement) {
+//   Util.assert(inDivElement instanceof HTMLDivElement);
+// 
+//   this.myDivElement = inDivElement;
+//   this.display();
+// };
 
 
 /**
@@ -210,8 +215,8 @@ SectionView.prototype.getListOfContentItems = function () {
  *
  * @scope    public instance method
  */
-SectionView.prototype.display = function () {
-  if (!this.myDivElement) {
+SectionView.prototype.refresh = function () {
+  if (!this.getDivElement()) {
     return;
   }
   var query = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
@@ -226,13 +231,13 @@ SectionView.prototype.display = function () {
   listOfStrings.push("<div class=\"" + SectionView.ELEMENT_CLASS_SECTION + "\">");
   listOfStrings.push("<h2>" + this.mySection.getDisplayName() + "</h2>");
 
-  var summaryDivId = this.myDivElement.id + SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX;
+  var summaryDivId = this.getDivElement().id + SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX;
   listOfStrings.push("<div id=\"" + summaryDivId + "\"></div>");
   listOfStrings.push("<p></p>");
   
   // create the layout editing controls, if we're in edit mode
-  var selectMenuId = this.myDivElement.id + SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX;
-  if (this.myPageView.isInEditMode()) {
+  var selectMenuId = this.getDivElement().id + SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX;
+  if (this.isInEditMode()) {
     listOfStrings.push("<select id=\"" + selectMenuId + "\" class=\"" + SectionView.ELEMENT_CLASS_SECTION_LAYOUT_MENU + "\" name=\"" + selectMenuId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.mySectionNumber + "\">");
     for (var layoutName in SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName) {
       listOfStrings.push("<option " + ((this.myLayout.getLayoutName() == layoutName) ? "selected" : "") + " value=\"" + layoutName + "\" onclick=\"SectionView.clickOnLayoutSelectionMenu(event)\">" + layoutName + "</option>:");
@@ -241,7 +246,7 @@ SectionView.prototype.display = function () {
   }
   
   // create a div element for the layout class to use
-  var layoutDivId = this.myDivElement.id + SectionView.ELEMENT_ID_LAYOUT_DIV_SUFFIX;
+  var layoutDivId = this.getDivElement().id + SectionView.ELEMENT_ID_LAYOUT_DIV_SUFFIX;
   listOfStrings.push("<div id=\"" + layoutDivId + "\"></div>");
   
   // create the closing </div> for the section
@@ -249,17 +254,17 @@ SectionView.prototype.display = function () {
   
   // write out all the new content 
   var finalString = listOfStrings.join("");
-  this.myDivElement.innerHTML = finalString;
+  this.getDivElement().innerHTML = finalString;
 
   // attach back-pointers to the newly created UI elements
-  if (this.myPageView.isInEditMode()) {
+  if (this.isInEditMode()) {
     var selectElement = document.getElementById(selectMenuId);
     selectElement.mysectionview = this;
   }
   
   // set up the summary text view
   var summaryElement = document.getElementById(summaryDivId);
-  new MultiLineTextView(this, this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, summaryElement, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+  new MultiLineTextView(this, summaryElement, this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
   
   var layoutDivElement = document.getElementById(layoutDivId);
   this.myLayout.setDivElement(layoutDivElement);
@@ -298,7 +303,7 @@ SectionView.clickOnLayoutSelectionMenu = function (inEventObject) {
     sectionView.mySection.clear(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME);
     sectionView.mySection.assign(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME, newChoiceName);
   
-    sectionView.display();
+    sectionView.refresh();
   }
 };
 

@@ -44,43 +44,30 @@
 ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_layout_div_for_item_";
 
 
-// -------------------------------------------------------------------
-// ItemView class properties
-// -------------------------------------------------------------------
-// none
-
-
 /**
  * The RootView uses an instance of a ItemView to display an Item in the
  * browser window.
  *
  * @scope    public instance constructor
- * @param    inItem    The item to be displayed by this view. 
- * @param    inDivElement    The HTMLDivElement to display the HTML in. 
+ * @extends  View
  * @param    inRootView    The RootView that this ItemView is nested in. 
+ * @param    inDivElement    The HTMLDivElement to display the HTML in. 
+ * @param    inItem    The item to be displayed by this view. 
  */
-function ItemView(inItem, inDivElement, inRootView) {
+ItemView.prototype = new View();  // makes ItemView be a subclass of View
+function ItemView(inRootView, inDivElement, inItem) {
   Util.assert(inItem instanceof Item);
   Util.assert(inDivElement instanceof HTMLDivElement);
   Util.assert(inRootView instanceof RootView);
 
   // instance properties
+  this.setSuperview(inRootView);
+  this.setDivElement(inDivElement);
   this.myItem = inItem;
-  this.myDivElement = inDivElement;
-  this.myRootView = inRootView;
+  // this.myDivElement = inDivElement;
+  // this.myRootView = inRootView;
   this.myLayout = new DetailLayout(this);
 }
-
-
-/**
- * Returns the stevedore object that's supplying our data items.
- *
- * @scope    public instance method
- * @return   The stevedore object.
- */
-ItemView.prototype.getStevedore = function () {
-  return this.myRootView.getStevedore();
-};
 
 
 /**
@@ -97,17 +84,6 @@ ItemView.prototype.getListOfContentItems = function () {
 
 
 /**
- * Returns true if we are in Edit Mode.
- *
- * @scope    public instance method
- * @return   A boolean value. True if we are in Edit Mode.
- */
-ItemView.prototype.isInEditMode = function () {
-  return this.myRootView.isInEditMode();
-};
-
-  
-/**
  * Returns a string that gives the name of the page.
  *
  * @scope    public instance method
@@ -119,25 +95,14 @@ ItemView.prototype.getPageTitle = function () {
 
 
 /**
- * Hides the ItemView by setting the div element's display style to "none".
- *
- * @scope    public instance method
- */
-ItemView.prototype.hide = function () {
-  Util.assert(this.myDivElement instanceof HTMLDivElement);
-  this.myDivElement.style.display = "none";
-};
-
-
-/**
  * Re-creates all the HTML for the ItemView, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-ItemView.prototype.display = function () {
+ItemView.prototype.refresh = function () {
   Util.assert(this.myItem instanceof Item);
-  Util.assert(this.myDivElement instanceof HTMLDivElement);
+  // Util.assert(this.myDivElement instanceof HTMLDivElement);
   
   var listOfStrings = [];
 
@@ -150,8 +115,8 @@ ItemView.prototype.display = function () {
 
   // write out all the new content 
   var finalString = listOfStrings.join("");
-  this.myDivElement.innerHTML = finalString;
-  this.myDivElement.style.display = "block";
+  this.getDivElement().innerHTML = finalString;
+  this.includeOnScreen(true);
 
   // let the detailLayout add its own content
   var detailLayoutDivElement = document.getElementById(detailDivId);

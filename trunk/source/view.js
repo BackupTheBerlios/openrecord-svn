@@ -130,6 +130,7 @@ View.prototype.includeOnScreen = function (inBoolean) {
   Util.assert(Util.isBoolean(inBoolean));
 
   if (inBoolean) {
+    this.refresh();
     this._myDivElement.style.display = "block";
   } else {
     this._myDivElement.style.display = "none";

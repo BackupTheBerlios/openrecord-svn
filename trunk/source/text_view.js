@@ -48,7 +48,7 @@
  * @param    theDivElement    The HTMLDivElement to display the HTML in. 
  * @param    theClassType    A string that gives a class name to assign to the HTML element. 
  */
-function MultiLineTextView(theSuperview, theItem, theAttribute, theDivElement, theClassType) {
+function MultiLineTextView(theSuperview, theDivElement, theItem, theAttribute, theClassType) {
   Util.assert(theItem instanceof Item);
   //Util.assert(theAttribute instanceof Attribute); PROBLEM need to check that attribute is an attribute
   //Util.assert(inDivElement instanceof HTMLDivElement);
@@ -59,8 +59,9 @@ function MultiLineTextView(theSuperview, theItem, theAttribute, theDivElement, t
   this.editField = null;
   this.textObj = null;
   this.classType = theClassType;
-  this.setDivElement(theDivElement);
   this.isEditing = false;
+  this._myHasEverBeenDisplayedFlag = false;
+  this.setDivElement(theDivElement);
 };
 
 
@@ -78,7 +79,7 @@ MultiLineTextView.prototype.setDivElement = function(theDivElement) {
     theDivElement.addEventListener("click",
       function(event) {listener.onClick(event)},
       false);
-    this.display();
+    this.refresh();
   }
 };
 
@@ -95,12 +96,30 @@ MultiLineTextView.prototype.isInEditMode = function () {
 
   
 /**
+ * Updates the HTML elements in this view to reflect any changes in 
+ * the item's attribute values.
+ *
+ * @scope    public instance method
+ */
+MultiLineTextView.prototype.refresh = function() {
+  if (!this._myHasEverBeenDisplayedFlag) {
+    this.doInitialDisplay();
+  } else {
+    // if (weHaveBeenNotifiedOfChangesTo(this.textItem)) {
+    //   var newText = getNewValueFrom(this.textItem);
+    //   this.textNode.data = newText;
+    // }
+  }
+};
+
+
+/**
  * Re-creates all the HTML for the MultiLineTextView, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-MultiLineTextView.prototype.display = function() {
+MultiLineTextView.prototype.doInitialDisplay = function() {
   if (!this.divElement) return;
   Util.assert(this.divElement instanceof HTMLDivElement);
   
@@ -112,6 +131,7 @@ MultiLineTextView.prototype.display = function() {
   
   this.textNode = document.createTextNode(textString);
   this.divElement.appendChild(this.textNode);
+  this._myHasEverBeenDisplayedFlag = true;
 };
 
 

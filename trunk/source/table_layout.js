@@ -177,7 +177,7 @@ TableLayout.prototype.display = function () {
   
   // add all the table body rows
   var cellCount = 0;
-  var cellIdPrefix = this.mySectionView.myDivElement.id + SectionView.ELEMENT_ID_CELL_MIDFIX;
+  var cellIdPrefix = SectionView.ELEMENT_ID_CELL_PREFIX + this.mySectionView.mySectionNumber + SectionView.ELEMENT_ID_CELL_MIDFIX;
   var cellId = "";
   this.myNumRows = 0;
   for (var kKey in listOfContentItems) {
@@ -196,7 +196,7 @@ TableLayout.prototype.display = function () {
       if (valueList) {
         string = SectionView.getStringForValue(valueList[0]);
       }
-      if (this.mySectionView.myPageView.isInEditMode()) {
+      if (this.mySectionView.isInEditMode()) {
         listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.mySectionView.mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TableLayout.clickOnCell(event)\">" + string + "</td>");
         var cellDelegate = new _CellDelegate(rowDelegate, cellId, cellCount, columnCount, attribute, this);
         rowDelegate.myArrayOfCellDelegates[columnCount] = cellDelegate;
@@ -217,7 +217,7 @@ TableLayout.prototype.display = function () {
   var lastRowDelegate = new _RowDelegate(null, this.myNumRows);
   this.myArrayOfRowDelegates[this.myNumRows] = lastRowDelegate;
   this.myNumRows += 1;
-  if (this.mySectionView.myPageView.isInEditMode()) {
+  if (this.mySectionView.isInEditMode()) {
     listOfStrings.push("<tr>");
     columnCount = 0;
     for (var mKey in hashTableOfAttributesKeyedByUuid) {
