@@ -43,10 +43,14 @@
 // -------------------------------------------------------------------
 SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[SectionView.LAYOUT_BAR_CHART] = BarChartLayout;
 
-// -------------------------------------------------------------------
-// new BarChartLayout()
-//   public instance constructor
-// -------------------------------------------------------------------
+
+/**
+ * A BarChartLayout displays a set of content items for a SectionView. 
+ *
+ * @scope    public instance constructor
+ * @param    inSectionView    The SectionView that serves as the superview for this view. 
+ * @syntax   var barChart = new BarChartLayout()
+ */
 function BarChartLayout(inSectionView) {
   Util.assert(inSectionView instanceof SectionView);
   this.mySectionView = inSectionView;
@@ -54,19 +58,23 @@ function BarChartLayout(inSectionView) {
 }
 
 
-// -------------------------------------------------------------------
-// barChartLayout.getLayoutName()
-//   public instance method
-// -------------------------------------------------------------------
+/**
+ * Returns the registered name of this type of layout.
+ *
+ * @scope    public instance method
+ * @return   A string.
+ */
 BarChartLayout.prototype.getLayoutName = function () {
   return SectionView.LAYOUT_BAR_CHART;
 };
 
-  
-// -------------------------------------------------------------------
-// barChartLayout.setDivElement()
-//   public instance method
-// -------------------------------------------------------------------
+
+/**
+ * Tells the BarChartLayout what HTMLDivElement to display the bar chart in.
+ *
+ * @scope    public instance method
+ * @param    inDivElement    The HTMLDivElement to display the bar chart in. 
+ */
 BarChartLayout.prototype.setDivElement = function (inDivElement) {
   Util.assert(inDivElement instanceof HTMLDivElement);
   this._myDivElement = inDivElement;
@@ -74,10 +82,12 @@ BarChartLayout.prototype.setDivElement = function (inDivElement) {
 };
 
 
-// -------------------------------------------------------------------
-// barChartLayout.display()
-//   public instance method
-// -------------------------------------------------------------------
+/**
+ * Re-creates all the HTML for the BarChartLayout, and hands the HTML to the 
+ * browser to be re-drawn.
+ *
+ * @scope    public instance method
+ */
 BarChartLayout.prototype.display = function () {
   var listOfStrings = [];
 

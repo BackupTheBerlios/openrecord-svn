@@ -36,16 +36,18 @@
 //   util.js
 // -------------------------------------------------------------------
 
+
 /**
  * An instance of MultiLineTextView can be placed in any parent container View
  * to display and (if in edit mode) edit multi-lines of text
  *
  * @scope    public instance constructor
- * @param    theItem         The Item to be displayed and edited by this view. 
- * @param    theAttribute    The attribute of the item to be displayed 
- * @param    theDivElement   The HTMLDivElement to display the HTML in. 
+ * @param    theItem    The Item to be displayed and edited by this view. 
+ * @param    theAttribute    The attribute of the item to be displayed.
+ * @param    theDivElement    The HTMLDivElement to display the HTML in. 
+ * @param    theClassType    A string that gives a class name to assign to the HTML element. 
  */
-function MultiLineTextView(theItem, theAttribute, theDivElement, classType) {
+function MultiLineTextView(theItem, theAttribute, theDivElement, theClassType) {
   Util.assert(theItem instanceof Item);
   //Util.assert(theAttribute instanceof Attribute); FIXME need to check that attribute is an attribute
   //Util.assert(inDivElement instanceof HTMLDivElement);
@@ -55,15 +57,18 @@ function MultiLineTextView(theItem, theAttribute, theDivElement, classType) {
   this.editMode = true;
   this.editField = null;
   this.textObj = null;
-  this.classType = classType;
+  this.classType = theClassType;
   this.setDivElement(theDivElement);
   this.isEditing = false;
 };
 
-// -------------------------------------------------------------------
-// MultiLineTextView.setDivElement()
-//   public instance method
-// -------------------------------------------------------------------
+
+/**
+ * Tells the MultiLineTextView what HTMLDivElement to display itself in.
+ *
+ * @scope    public instance method
+ * @param    inDivElement    The HTMLDivElement to display in. 
+ */
 MultiLineTextView.prototype.setDivElement = function(theDivElement) {
   Util.assert(theDivElement instanceof HTMLDivElement);
   this.divElement = theDivElement;
@@ -76,6 +81,13 @@ MultiLineTextView.prototype.setDivElement = function(theDivElement) {
   }
 };
 
+
+/**
+ * Re-creates all the HTML for the MultiLineTextView, and hands the HTML to the 
+ * browser to be re-drawn.
+ *
+ * @scope    public instance method
+ */
 MultiLineTextView.prototype.display = function() {
   if (!this.divElement) return;
   Util.assert(this.divElement instanceof HTMLDivElement);
@@ -88,23 +100,14 @@ MultiLineTextView.prototype.display = function() {
   
   this.textNode = document.createTextNode(textString);
   this.divElement.appendChild(this.textNode);
-}
-  
-// -------------------------------------------------------------------
-// MultiLineTextView.onClick()
-//  public instance method
-//  handle mouse click on text view. Called by listener   
-// -------------------------------------------------------------------
-MultiLineTextView.prototype.onClick = function(eventObj) {
-  eventObj = eventObj || window.event;
-  this.startEditing();
-}
+};
 
-// -------------------------------------------------------------------
-// MultiLineTextView.onClick()
-//  public instance method
-//  Switch to edit text field for editing 
-// -------------------------------------------------------------------
+
+/**
+ * Switch to edit text field for editing.
+ *
+ * @scope    public instance method
+ */
 MultiLineTextView.prototype.startEditing = function() {
   if (!this.isEditing) {
     var editField = this.editField;
@@ -126,20 +129,42 @@ MultiLineTextView.prototype.startEditing = function() {
   }
 };
 
+
 // -------------------------------------------------------------------
-// MultiLineTextView.onClick()
-//  public instance method
-//  handles loss of focus for text view. Called by listener   
-//  switches back to static text from editable text
+// Event handler methods
 // -------------------------------------------------------------------
-MultiLineTextView.prototype.onBlur = function(eventObj) {
+
+/**
+ * Called when the user clicks on the text.
+ *
+ * Handles the mouse click event on text view. Called by listener.
+ *
+ * @scope    public instance method
+ * @param    inEventObject    An event object. 
+ */
+MultiLineTextView.prototype.onClick = function(inEventObject) {
+  inEventObject = inEventObject || window.event;
+  this.startEditing();
+};
+
+
+/**
+ * Called when focus leaves the text view.
+ *
+ * Handles loss of focus for text view. Called by listener. Switches back 
+ * to static text from editable text.
+ *
+ * @scope    public instance method
+ * @param    inEventObject    An event object. 
+ */
+MultiLineTextView.prototype.onBlur = function(inEventObject) {
   var newText = this.editField.value;
   this.textItem.clear(this.attribute);
   this.textItem.assign(this.attribute,newText); //FIXME: need to deal with multi valued attrs
   this.textNode.data = newText;
   this.divElement.replaceChild(this.textNode,this.editField);
   this.isEditing = false;
-}
+};
 
 
 // -------------------------------------------------------------------

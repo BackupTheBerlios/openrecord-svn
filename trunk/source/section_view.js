@@ -83,7 +83,7 @@ SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName = {};
  * @param    inSectionNumber    The number of the section on the page (1, 2, 3, 4...). 
  * @syntax   var sectionView = new SectionView()
  */
- function SectionView(inPageView, inSection, inSectionNumber) {
+function SectionView(inPageView, inSection, inSectionNumber) {
   Util.assert(inPageView instanceof PageView);
   Util.assert(inSection instanceof Item);
   

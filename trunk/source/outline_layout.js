@@ -42,10 +42,13 @@
 SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[SectionView.LAYOUT_OUTLINE] = OutlineLayout;
 
 
-// -------------------------------------------------------------------
-// new OutlineLayout()
-//   public instance constructor
-// -------------------------------------------------------------------
+/**
+ * An OutlineLayout displays a set of content items for a SectionView. 
+ *
+ * @scope    public instance constructor
+ * @param    inSectionView    The SectionView that serves as the superview for this view. 
+ * @syntax   var outline = new OutlineLayout()
+ */
 function OutlineLayout(inSectionView) {
   Util.assert(inSectionView instanceof SectionView);
 
@@ -54,19 +57,23 @@ function OutlineLayout(inSectionView) {
 }
 
 
-// -------------------------------------------------------------------
-// outlineLayout.getLayoutName()
-//   public instance method
-// -------------------------------------------------------------------
+/**
+ * Returns the registered name of this type of layout.
+ *
+ * @scope    public instance method
+ * @return   A string.
+ */
 OutlineLayout.prototype.getLayoutName = function () {
   return SectionView.LAYOUT_OUTLINE;
 };
 
   
-// -------------------------------------------------------------------
-// outlineLayout.setDivElement()
-//   public instance method
-// -------------------------------------------------------------------
+/**
+ * Tells the OutlineLayout what HTMLDivElement to display the bar chart in.
+ *
+ * @scope    public instance method
+ * @param    inDivElement    The HTMLDivElement to display the bar chart in. 
+ */
 OutlineLayout.prototype.setDivElement = function (inDivElement) {
   Util.assert(inDivElement instanceof HTMLDivElement);
 
@@ -75,10 +82,12 @@ OutlineLayout.prototype.setDivElement = function (inDivElement) {
 };
 
 
-// -------------------------------------------------------------------
-// outlineLayout.display()
-//   public method
-// -------------------------------------------------------------------
+/**
+ * Re-creates all the HTML for the OutlineLayout, and hands the HTML to the 
+ * browser to be re-drawn.
+ *
+ * @scope    public instance method
+ */
 OutlineLayout.prototype.display = function () {
   var listOfStrings = [];
 

@@ -43,10 +43,13 @@
 SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[SectionView.LAYOUT_DETAIL] = DetailLayout;
 
 
-// -------------------------------------------------------------------
-// new DetailLayout()
-//   public instance constructor
-// -------------------------------------------------------------------
+/**
+ * A DetailLayout display one or more content items. 
+ *
+ * @scope    public instance constructor
+ * @param    inSuperView    The superview for this view. 
+ * @syntax   var detailLayout = new DetailLayout()
+ */
 function DetailLayout(inSuperView) {
   Util.assert((inSuperView instanceof SectionView) || (inSuperView instanceof ItemView));
   
@@ -55,19 +58,23 @@ function DetailLayout(inSuperView) {
 }
 
 
-// -------------------------------------------------------------------
-// detailLayout.getLayoutName()
-//   public instance method
-// -------------------------------------------------------------------
+/**
+ * Returns the registered name of this type of layout.
+ *
+ * @scope    public instance method
+ * @return   A string.
+ */
 DetailLayout.prototype.getLayoutName = function () {
   return SectionView.LAYOUT_DETAIL;
 };
 
   
-// -------------------------------------------------------------------
-// detailLayout.setDivElement()
-//   public instance method
-// -------------------------------------------------------------------
+/**
+ * Tells the DetailLayout what HTMLDivElement to display itself in.
+ *
+ * @scope    public instance method
+ * @param    inDivElement    The HTMLDivElement to display in. 
+ */
 DetailLayout.prototype.setDivElement = function (inDivElement) {
   Util.assert(inDivElement instanceof HTMLDivElement);
   
@@ -76,10 +83,12 @@ DetailLayout.prototype.setDivElement = function (inDivElement) {
 };
 
 
-// -------------------------------------------------------------------
-// detailLayout.display()
-//   public method
-// -------------------------------------------------------------------
+/**
+ * Re-creates all the HTML for the DetailLayout, and hands the HTML to the 
+ * browser to be re-drawn.
+ *
+ * @scope    public instance method
+ */
 DetailLayout.prototype.display = function () {
   var listOfStrings = [];
 
@@ -97,10 +106,14 @@ DetailLayout.prototype.display = function () {
 };
 
 
-// -------------------------------------------------------------------
-// detailLayout.getXhtmlTableForItem()
-//   public instance method
-// -------------------------------------------------------------------
+/**
+ * Given an item to be display, returns a string with XHTML to display
+ * the item.
+ *
+ * @scope    public instance method
+ * @param    inItem    An item to be displayed. 
+ * @return   A string containing the XHTML to display the item.
+ */
 DetailLayout.prototype.getXhtmlTableForItem = function (inItem) {
   Util.assert(inItem instanceof Item);
   
