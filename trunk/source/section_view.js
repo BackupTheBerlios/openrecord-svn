@@ -73,27 +73,17 @@ SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER = "cell_number";
 SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName = {};
 
 
-// -------------------------------------------------------------------
-// SectionView.getStringForValue()
-//   public class method
-// -------------------------------------------------------------------
-SectionView.getStringForValue = function (inValue) {
-  var string = "";
-  if (Util.isString(inValue)) {
-    string = inValue;
-  }
-  if (inValue instanceof Item) {
-    string = inValue.getDisplayName();
-  }
-  return string;
-};
-
-
-// -------------------------------------------------------------------
-// new SectionView()
-//   public instance constructor
-// -------------------------------------------------------------------
-function SectionView(inPageView, inSection, inSectionNumber) {
+/**
+ * A PageView uses instances of a SectionViews to display the Sections 
+ * of a page. 
+ *
+ * @scope    public instance constructor
+ * @param    inPageView    The PageView that serves as the superview for this view. 
+ * @param    inSection    The Section item to be displayed in by this view. 
+ * @param    inSectionNumber    The number of the section on the page (1, 2, 3, 4...). 
+ * @syntax   var sectionView = new SectionView()
+ */
+ function SectionView(inPageView, inSection, inSectionNumber) {
   Util.assert(inPageView instanceof PageView);
   Util.assert(inSection instanceof Item);
   
@@ -111,17 +101,52 @@ function SectionView(inPageView, inSection, inSectionNumber) {
 
 
 // -------------------------------------------------------------------
-//   public instance method
+// Public class methods
 // -------------------------------------------------------------------
+
+/**
+ * Given a string or an item, returns a string.
+ *
+ * @scope    public class method
+ * @param    inValue    A string or an Item. 
+ * @return   A string.
+ */
+SectionView.getStringForValue = function (inValue) {
+  var string = "";
+  if (Util.isString(inValue)) {
+    string = inValue;
+  }
+  if (inValue instanceof Item) {
+    string = inValue.getDisplayName();
+  }
+  return string;
+};
+
+
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
+
+/**
+ * Returns the Stevedore instance that this SectionView is using.
+ *
+ * @scope    public instance method
+ * @return   A Stevedore object.
+ */
 SectionView.prototype.getStevedore = function () {
   return this.myPageView.myCompleteView.getStevedore();
 };
 
 
-// -------------------------------------------------------------------
-// sectionView.getLayoutFromLayoutName()
-//   public instance method
-// -------------------------------------------------------------------
+/**
+ * Given the name of a layout ("Table", "Outline", etc.), returns a newly
+ * created layout object of that type, initialized to be the layout for this 
+ * section
+ *
+ * @scope    public instance method
+ * @param    inLayoutName    A string. One of the registered layout names. 
+ * @return   A newly created layout object, initialized to be the layout for this section.
+ */
 SectionView.prototype.getLayoutFromLayoutName = function (inLayoutName) {
   Util.assert(Util.isString(inLayoutName));
   
@@ -140,10 +165,12 @@ SectionView.prototype.getLayoutFromLayoutName = function (inLayoutName) {
 };
 
 
-// -------------------------------------------------------------------
-// sectionView.setDivElement()
-//   public instance method
-// -------------------------------------------------------------------
+/**
+ * Tells the SectionView what HTMLDivElement to display the Section in.
+ *
+ * @scope    public instance method
+ * @param    inDivElement    The HTMLDivElement to display the Section in. 
+ */
 SectionView.prototype.setDivElement = function (inDivElement) {
   Util.assert(inDivElement instanceof HTMLDivElement);
 
@@ -152,10 +179,13 @@ SectionView.prototype.setDivElement = function (inDivElement) {
 };
 
 
-// -------------------------------------------------------------------
-// sectionView.getListOfContentItems()
-//   public instance method
-// -------------------------------------------------------------------
+
+/**
+ * Returns a list of content items to be displayed in this SectionView.
+ *
+ * @scope    public instance method
+ * @return   A list of content items.
+ */
 SectionView.prototype.getListOfContentItems = function () {
   var query = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
   this.myListOfContentItems = this.getStevedore().getListOfResultItemsForQuery(query); 
@@ -163,10 +193,13 @@ SectionView.prototype.getListOfContentItems = function () {
 };
 
 
-// -------------------------------------------------------------------
-// sectionView.display()
-//   public instance method
-// -------------------------------------------------------------------
+
+/**
+ * Re-creates all the HTML for the SectionView, and hands the HTML to the 
+ * browser to be re-drawn.
+ *
+ * @scope    public instance method
+ */
 SectionView.prototype.display = function () {
   if (!this.myDivElement) {
     return;
@@ -223,12 +256,16 @@ SectionView.prototype.display = function () {
   
 
 // -------------------------------------------------------------------
-// SectionView.clickOnLayoutSelectionMenu() -- called from <select><option>
-//   public class method
-//
-// Called when the user clicks on any of the layout option-select
-// controls.
+// Event handler methods
 // -------------------------------------------------------------------
+
+/**
+ * Called when the user clicks on any of the layout option-select controls.
+ * Called from an HTML option element within an HTML select element.
+ *
+ * @scope    public class method
+ * @param    inEventObject    An event object. 
+ */
 SectionView.clickOnLayoutSelectionMenu = function (inEventObject) {
   var eventObject = inEventObject;
   if (!eventObject) { eventObject = window.event; }

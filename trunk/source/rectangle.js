@@ -115,10 +115,32 @@ Rectangle.FILL_EMPTY = "Empty";
 Rectangle.ourHashTableOfColorsKeyedBySize = new Array();
 
 
+/**
+ * Each Rectangle instances represents a single rectangle.
+ *
+ * @scope    public instance constructor
+ * @syntax   var rect = new Rectangle()
+ */
+function Rectangle() {
+  // instance properties
+  this.myWidth = null;
+  this.myHeight = null;
+}
+
+
 // -------------------------------------------------------------------
-// Rectangle.union()
-//   public class method
+// Public class methods
 // -------------------------------------------------------------------
+
+/**
+ * Given two Rectangle object, returns new Rectangle large enough
+ * to encompass both of the given Rectangles.
+ *
+ * @scope    public class method
+ * @param    inRectOne    A Rectangle object. 
+ * @param    inRectTwo    A Rectangle object. 
+ * @return   A newly created Rectangle object.
+ */
 Rectangle.union = function (inRectOne, inRectTwo) {
   Util.assert(inRectOne instanceof Rectangle);
   Util.assert(inRectTwo instanceof Rectangle);
@@ -131,20 +153,15 @@ Rectangle.union = function (inRectOne, inRectTwo) {
 
 
 // -------------------------------------------------------------------
-// new Rectangle()
-//   public instance constructor
+// Public instance methods
 // -------------------------------------------------------------------
-function Rectangle() {
-  // instance properties
-  this.myWidth = null;
-  this.myHeight = null;
-}
 
-
-// -------------------------------------------------------------------
-// rectangle.getArea()
-//   public instance method
-// -------------------------------------------------------------------
+/**
+ * Returns the area of the rectangle.
+ *
+ * @scope    public instance method
+ * @return   A number.
+ */
 Rectangle.prototype.getArea = function () {
   var area = this.myWidth * this.myHeight;
   return area;

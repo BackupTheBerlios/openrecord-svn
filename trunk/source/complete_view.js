@@ -58,7 +58,7 @@ CompleteView.ourSingleInstance = null;
 
 
 /**
- * The BlueSky app uses a single instance of CompleteView, which serves as the
+ * The OpenRecord app uses a single instance of CompleteView, which serves as the
  * outer-most view in the browser, and contains the current PageView as well
  * as some standard chrome (like the Edit button).
  *
@@ -104,6 +104,10 @@ function CompleteView(inStevedore, inNavbarDivElement, inContentViewDivElement, 
   this.setCurrentContentViewFromUrl();
 }
 
+
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
 
 /**
  * Returns the Stevedore instance that this CompleteView is using.
@@ -292,14 +296,14 @@ CompleteView.prototype.displayDebugArea = function () {
 
 
 // -------------------------------------------------------------------
-// Debug Error Display Methods
+// Debug error display methods
 // -------------------------------------------------------------------
-
 
 /**
  * Displays a text string in the status blurb span.
  *
  * @scope    public class method
+ * @param    inText    A text string to be displayed. 
  */
 CompleteView.displayStatusBlurb = function (inText) {
   CompleteView.ourSingleInstance.displayStatusBlurb(inText);
@@ -310,6 +314,7 @@ CompleteView.displayStatusBlurb = function (inText) {
  * Displays a text string in the status blurb span.
  *
  * @scope    public instance method
+ * @param    inText    A text string to be displayed. 
  */
 CompleteView.prototype.displayStatusBlurb = function (inText) {
   this.myStatusBlurbSpanElement.innerHTML = inText;
@@ -320,6 +325,7 @@ CompleteView.prototype.displayStatusBlurb = function (inText) {
  * Displays a text string in the debug textarea.
  *
  * @scope    public class method
+ * @param    inText    A text string to be displayed. 
  */
 CompleteView.displayTextInDebugTextarea = function (inText) {
   CompleteView.ourSingleInstance.displayTextInDebugTextarea(inText);
@@ -330,6 +336,7 @@ CompleteView.displayTextInDebugTextarea = function (inText) {
  * Displays a text string in the debug textarea.
  *
  * @scope    public instance method
+ * @param    inText    A text string to be displayed. 
  */
 CompleteView.prototype.displayTextInDebugTextarea = function (inText) {
   this.myNumberOfCallsToDebug++;
@@ -348,6 +355,7 @@ CompleteView.prototype.displayTextInDebugTextarea = function (inText) {
  * and displays them in the debug textarea.
  *
  * @scope    public instance method
+ * @param    inObject    Any sort of object. 
  */
 CompleteView.prototype.displayObjectInDebugTextarea = function (inObject) {
   var outputText = "";
@@ -359,7 +367,7 @@ CompleteView.prototype.displayObjectInDebugTextarea = function (inObject) {
 
 
 // -------------------------------------------------------------------
-// Event Handler Methods
+// Event handler methods
 // -------------------------------------------------------------------
 
 /**
@@ -370,6 +378,7 @@ CompleteView.prototype.displayObjectInDebugTextarea = function (inObject) {
  * There is no need to call this method directly.
  *
  * @scope    public class method
+ * @param    inEventObject    An event object. 
  */
 CompleteView.clickOnLocalLink = function (inEventObject) {
   var eventObject = inEventObject;
@@ -394,6 +403,7 @@ CompleteView.clickOnLocalLink = function (inEventObject) {
  * There is no need to call this method directly.
  *
  * @scope    public class method
+ * @param    inEventObject    An event object. 
  */
 CompleteView.clickOnEditButton = function (inEventObject) {
   var eventObject = inEventObject;

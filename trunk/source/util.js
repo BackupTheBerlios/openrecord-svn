@@ -62,6 +62,11 @@ Util.ASCII_VALUE_FOR_UP_ARROW = 38;    // 126
 Util.ASCII_VALUE_FOR_RIGHT_ARROW = 39; // 124
 Util.ASCII_VALUE_FOR_DOWN_ARROW = 40;  // 125
 
+
+// -------------------------------------------------------------------
+// String manipulation methods
+// -------------------------------------------------------------------
+
 /**
  * Returns a copy of the input string, cleaned up so that it can be 
  * included in a valid HTML page.
@@ -86,6 +91,10 @@ Util.getCleanString = function(inString) {
   return returnString;
 };
 
+
+// -------------------------------------------------------------------
+// Assertions and error handling methods
+// -------------------------------------------------------------------
 
 /**
  * Registers a function to be used to report errors.
@@ -153,6 +162,10 @@ Util.assert = function (inBoolean, inMessage) {
   }
 };
 
+
+// -------------------------------------------------------------------
+// Type checking methods
+// -------------------------------------------------------------------
 
 /**
  * Returns true if the given value is a string.
@@ -244,56 +257,9 @@ Util.isHashTable = function (inValue) {
 };
 
 
-/**
- * Given an event object, returns the HTML element that was the 
- * target of the event.  
- * 
- * Should work for IE, Mozilla, and _some_ other browsers.  
- *
- * @scope    public class method
- * @param    inEventObject    An event object. 
- * @return   An HTML element.
- */
-Util.getTargetFromEvent = function (inEventObject) {
-  var target = null;
-  if (inEventObject.target) {
-    target = inEventObject.target;
-  } else {
-    if (inEventObject.srcElement) {
-      target = inEventObject.srcElement;
-    }
-  }
-  if (target && target.nodeType == 3) { // defeat Safari bug
-    target = target.parentNode;
-  }
-  return target;
-};
-
-
-/**
- * Looks at all the anchor links in the document, finds the ones with the 
- * attribute rel="external", and sets the target attribute of those anchor
- * links so that the links will open in a new browser window.  
- * 
- * @scope    public class method
- */
-Util.setTargetsForExternalLinks = function () {
-  if (!window.document.getElementsByTagName) {
-    return;
-  }
-  var listOfAnchorElements = window.document.getElementsByTagName("a");
-  for (var i=0; i<listOfAnchorElements.length; i+=1) {
-    var anchor = listOfAnchorElements[i];
-    // FIX_ME: This only works if the "rel" attribute has a single value == "external".
-    // To make it work with multi-valued rel attributes, we should do some regular
-    // expression matching to check for strings like "external", "foo external", 
-    // and "external foo".
-    if (anchor.getAttribute("href") && (anchor.getAttribute("rel") == "external")) {
-      anchor.target = "_blank";
-    }
-  }
-};
-
+// -------------------------------------------------------------------
+// Methods that operate on Sets
+// -------------------------------------------------------------------
 
 /**
  * Returns true if the given object is a member of the set.  
@@ -362,16 +328,46 @@ Util.addObjectToSet = function (inObject, inSet) {
 };
 
 
+// -------------------------------------------------------------------
+// Methods that deal with event handling
+// -------------------------------------------------------------------
+
+/**
+ * Given an event object, returns the HTML element that was the 
+ * target of the event.  
+ * 
+ * Should work for IE, Mozilla, and _some_ other browsers.  
+ *
+ * @scope    public class method
+ * @param    inEventObject    An event object. 
+ * @return   An HTML element.
+ */
+Util.getTargetFromEvent = function (inEventObject) {
+  var target = null;
+  if (inEventObject.target) {
+    target = inEventObject.target;
+  } else {
+    if (inEventObject.srcElement) {
+      target = inEventObject.srcElement;
+    }
+  }
+  if (target && target.nodeType == 3) { // defeat Safari bug
+    target = target.parentNode;
+  }
+  return target;
+};
+
+
 /**
  * This function allows Views to register an event listener in an 
  * object-oriented manner, allowing a specific object's handleEvent() 
  * method to be called. 
  *
  * @scope public class method
- * @param inElement   An HTMLElement.
- * @param inEventtype The type of event (e.g. "mousedown", "click").
- * @param inView      The object whose handleEvent() method is to be called.
- * @param inCaptures  True if the event should be captured by this function.
+ * @param inElement    An HTMLElement.
+ * @param inEventtype    The type of event (e.g. "mousedown", "click").
+ * @param inView    The object whose handleEvent() method is to be called.
+ * @param inCaptures    True if the event should be captured by this function.
  */
 Util.registerObjectEventHandler = function(inElement, inEventtype, inView, inCaptures) {
   inElement.addEventListener(inEventtype,
@@ -379,6 +375,34 @@ Util.registerObjectEventHandler = function(inElement, inEventtype, inView, inCap
     inCaptures);
 };
 
+
+// -------------------------------------------------------------------
+// HTML document manipulation
+// -------------------------------------------------------------------
+
+/**
+ * Looks at all the anchor links in the document, finds the ones with the 
+ * attribute rel="external", and sets the target attribute of those anchor
+ * links so that the links will open in a new browser window.  
+ * 
+ * @scope    public class method
+ */
+Util.setTargetsForExternalLinks = function () {
+  if (!window.document.getElementsByTagName) {
+    return;
+  }
+  var listOfAnchorElements = window.document.getElementsByTagName("a");
+  for (var i=0; i<listOfAnchorElements.length; i+=1) {
+    var anchor = listOfAnchorElements[i];
+    // FIX_ME: This only works if the "rel" attribute has a single value == "external".
+    // To make it work with multi-valued rel attributes, we should do some regular
+    // expression matching to check for strings like "external", "foo external", 
+    // and "external foo".
+    if (anchor.getAttribute("href") && (anchor.getAttribute("rel") == "external")) {
+      anchor.target = "_blank";
+    }
+  }
+};
 
 // -------------------------------------------------------------------
 // End of file

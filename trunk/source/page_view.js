@@ -118,6 +118,7 @@ PageView.prototype.hide = function () {
   this.myDivElement.style.display = "none";
 };
 
+
 /**
  * Re-creates all the HTML for the PageView, and hands the HTML to the 
  * browser to be re-drawn.
