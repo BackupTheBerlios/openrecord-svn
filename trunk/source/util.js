@@ -361,7 +361,23 @@ Util.addObjectToSet = function (inObject, inSet) {
   return true;
 };
 
+/**
+ * This function allows Views to register an event listener in an object-oriented manner,
+ * allowing a specific object's handleEvent() method to be called 
+ *
+ * @scope public function
+ * @param element		HTMLElement
+ * @param eventtype type of event e.g. "mousedown", "click"
+ * @param view			Object whose handleEvent() method is to be called
+ * @param captures	should event be captured by this function
+ */
+Util.registerObjectEventHandler = function(element, eventtype, view, captures) {
+	element.addEventListener(eventtype,
+													 function(event) { view.handleEvent(event);},
+													 captures);
+};
 
+													 
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------

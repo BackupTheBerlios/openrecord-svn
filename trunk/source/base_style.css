@@ -511,6 +511,13 @@ li.detail {
   color: white;
 }
 
+.text_view {
+	height: 100%;
+	width: 100%;
+  font-family: Arial, Verdana, sans-serif;
+	color: red;
+}
+
 
 /****************************************/
 /* PENDING -- time to delete these?     */

@@ -177,12 +177,9 @@ SectionView.prototype.display = function () {
   listOfStrings.push("<div class=\"" + SectionView.ELEMENT_CLASS_SECTION + "\">");
   listOfStrings.push("<h2>" + this.mySection.getDisplayName() + "</h2>");
 
-  var sectionSummaryList = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY);
-  for (var iKey in sectionSummaryList) {
-    var summary = sectionSummaryList[iKey];
-    listOfStrings.push("<p>" + summary + "</p>");
-  }
-  
+	var summaryDivId = this.myDivElement.id + SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX;
+	listOfStrings.push("<div id=\"" + summaryDivId + "\"></div>");
+	
   // create the layout editing controls, if we're in edit mode
   var selectMenuId = this.myDivElement.id + SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX;
   if (this.myPageView.isInEditMode()) {
@@ -209,6 +206,11 @@ SectionView.prototype.display = function () {
     var selectElement = document.getElementById(selectMenuId);
     selectElement.mysectionview = this;
   }
+	
+	// set up the summary text view
+	var summaryElement = document.getElementById(summaryDivId);
+	new MultiLineTextView(this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, summaryElement, "text_view");
+	
   var layoutDivElement = document.getElementById(layoutDivId);
   this.myLayout.setDivElement(layoutDivElement);
 };

@@ -117,7 +117,6 @@ PageView.prototype.hide = function () {
   this.myDivElement.style.display = "none";
 };
 
-
 /**
  * Re-creates all the HTML for the PageView, and hands the HTML to the 
  * browser to be re-drawn.
@@ -133,11 +132,7 @@ PageView.prototype.display = function () {
   // add an <h1> heading with the name of the page
   listOfStrings.push("<h1 id=\"" + CompleteView.URL_PAGE_PREFIX + this.myPage.getUuid() + "\">" + this.myPage.getDisplayName() + "</h1>");
   
-  var pageSummaryList = this.myPage.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY);
-  for (var iKey in pageSummaryList) {
-    var summary = pageSummaryList[iKey];
-    listOfStrings.push("<p>" + summary + "</p>");
-  }
+	listOfStrings.push("<div id=summaryView></div>");
   
   // add <div> elements for each of the sections on the page
   for (var jKey in this.myListOfSectionViews) {
@@ -153,7 +148,11 @@ PageView.prototype.display = function () {
   this.myDivElement.innerHTML = finalString;
   this.myDivElement.style.display = "block";
 
-  // let each of the sectionViews add their own content
+	// set up the summary text view
+	var summaryElement = document.getElementById("summaryView");
+	new MultiLineTextView(this.myPage, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, summaryElement,"text_view");
+
+// let each of the sectionViews add their own content
   for (var divId in hashTableOfSectionViewsKeyedByDivId) {
     var aSectionView = hashTableOfSectionViewsKeyedByDivId[divId];
     var sectionDivElement = document.getElementById(divId);
