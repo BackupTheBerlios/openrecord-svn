@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------
-// Brian's 2005 JavaScript Coding Conventions
+// OpenRecord 2005 JavaScript Coding Conventions
 //
 // + jslint approved
 //    + jslint should return "ok" when it looks at the code (with strictest settings)
@@ -66,7 +66,7 @@
 
 
 /*****************************************************************************
- rectangle.js
+ Rectangle.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -98,7 +98,7 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   line.js
+//   Line.js
 // -------------------------------------------------------------------
 
 

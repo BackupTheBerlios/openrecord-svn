@@ -1,5 +1,5 @@
 /*****************************************************************************
- outline_layout.js
+ OutlinePlugin.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -31,53 +31,54 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   repository.js
-//   section_view.js
+//   Stevedore.js
+//   SectionView.js
 // -------------------------------------------------------------------
 
 
 // -------------------------------------------------------------------
-// Register this layout type in the SectionView registry
+// Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
-SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[SectionView.LAYOUT_OUTLINE] = OutlineLayout;
+SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_OUTLINE] = OutlinePlugin;
 
 
 /**
- * An OutlineLayout displays a set of content items for a SectionView. 
+ * An OutlinePlugin displays a set of content items for a SectionView. 
  *
  * @scope    public instance constructor
  * @extends  View
  * @param    inSectionView    The SectionView that serves as the superview for this view. 
  * @param    inDivElement    The HTMLDivElement to display this view in. 
- * @syntax   var outline = new OutlineLayout()
+ * @syntax   var outline = new OutlinePlugin()
  */
-OutlineLayout.prototype = new View();  // makes OutlineLayout be a subclass of View
-function OutlineLayout(inSectionView, inDivElement) {
+OutlinePlugin.prototype = new View();  // makes OutlinePlugin be a subclass of View
+function OutlinePlugin(inSectionView, inDivElement) {
   this.setSuperview(inSectionView);
   this.setDivElement(inDivElement);
 }
 
 
 /**
- * Returns the registered name of this type of layout.
+ * Returns the registered name of this plugin.
  *
  * @scope    public instance method
  * @return   A string.
  */
-OutlineLayout.prototype.getLayoutName = function () {
-  return SectionView.LAYOUT_OUTLINE;
+OutlinePlugin.prototype.getPluginName = function () {
+  return SectionView.PLUGIN_OUTLINE;
 };
 
   
 /**
- * Re-creates all the HTML for the OutlineLayout, and hands the HTML to the 
+ * Re-creates all the HTML for the OutlinePlugin, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-OutlineLayout.prototype.refresh = function () {
+OutlinePlugin.prototype.refresh = function () {
   var listOfContentItems = this.getSuperview().getListOfContentItems();
   var outlineDiv = this.getDivElement();
+  outlineDiv.innerHTML = "";
   var ulElement = View.createAndAppendElement(outlineDiv, "ul");
   for (var contentItemKey in listOfContentItems) {
     var contentItem = listOfContentItems[contentItemKey];
@@ -97,7 +98,7 @@ OutlineLayout.prototype.refresh = function () {
  *
  * @scope    public instance method
  */
-OutlineLayout.prototype.endOfLife = function () {
+OutlinePlugin.prototype.endOfLife = function () {
   this.getDivElement().innerHTML = "";
 };
 

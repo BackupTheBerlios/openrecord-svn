@@ -1,5 +1,5 @@
 /*****************************************************************************
- stevedore.js
+ Stevedore.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -31,8 +31,8 @@
  
 // -------------------------------------------------------------------
 // Dependencies:
-//   util.js
-//   item.js
+//   Util.js
+//   Item.js
 // -------------------------------------------------------------------
 
 
@@ -51,7 +51,7 @@ Stevedore.UUID_FOR_ATTRIBUTE_SECTION = 108;
 Stevedore.UUID_FOR_ATTRIBUTE_QUERY = 109;
 Stevedore.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY = 110;
 Stevedore.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM = 111;
-Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME = 112;
+Stevedore.UUID_FOR_ATTRIBUTE_PLUGIN_NAME = 112;
 
 Stevedore.UUID_FOR_CATEGORY_BOOK = 141;      // here as an example only
 Stevedore.UUID_FOR_CATEGORY_MOVIE = 142;     // here as an example only
@@ -386,7 +386,7 @@ Stevedore.prototype._loadBootstrapItems = function () {
   hashTableOfAttributeNamesKeyedByUuid[Stevedore.UUID_FOR_ATTRIBUTE_QUERY] = "Query";
   hashTableOfAttributeNamesKeyedByUuid[Stevedore.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY] = "Matching Category";
   hashTableOfAttributeNamesKeyedByUuid[Stevedore.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM] = "Matching Item";
-  hashTableOfAttributeNamesKeyedByUuid[Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME] = "Layout Name";
+  hashTableOfAttributeNamesKeyedByUuid[Stevedore.UUID_FOR_ATTRIBUTE_PLUGIN_NAME] = "Plugin Name";
 
   // create all the Item objects for the attributes
   for (uuid in hashTableOfAttributeNamesKeyedByUuid) {

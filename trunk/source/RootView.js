@@ -1,5 +1,5 @@
 /*****************************************************************************
- root_view.js
+ RootView.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -31,9 +31,9 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   page_view.js
-//   repository.js
-//   util.js
+//   PageView.js
+//   Stevedore.js
+//   Util.js
 // -------------------------------------------------------------------
 
 
@@ -254,7 +254,7 @@ RootView.prototype.displayControlSpan = function () {
   var listOfStrings = [];
   
   var buttonValue = (this.myEditMode) ? "Save" : "Edit";
-  listOfStrings.push("<input type=\"button\" class=\"" + RootView.ELEMENT_CLASS_PAGE_EDIT_BUTTON + "\" id=\"" + this.myEditButtonId + "\" name=\"layout\" value=\"" + buttonValue + "\"></input>");
+  listOfStrings.push("<input type=\"button\" class=\"" + RootView.ELEMENT_CLASS_PAGE_EDIT_BUTTON + "\" id=\"" + this.myEditButtonId + "\" name=\"editbutton\" value=\"" + buttonValue + "\"></input>");
 
   // write out the new control span content 
   var finalString = listOfStrings.join("");

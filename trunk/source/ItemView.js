@@ -1,5 +1,5 @@
 /*****************************************************************************
- item_view.js
+ ItemView.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -31,17 +31,17 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   repository.js
-//   util.js
-//   root_view.js
-//   detail_layout.js
+//   Stevedore.js
+//   Util.js
+//   RootView.js
+//   DetailPlugin.js
 // -------------------------------------------------------------------
 
 
 // -------------------------------------------------------------------
 // ItemView public class constants
 // -------------------------------------------------------------------
-ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_layout_div_for_item_";
+ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_plugin_div_for_item_";
 
 
 /**
@@ -66,7 +66,7 @@ function ItemView(inRootView, inDivElement, inItem) {
   this.myItem = inItem;
   // this.myDivElement = inDivElement;
   // this.myRootView = inRootView;
-  this.myLayout = null;
+  this.myPlugin = null;
 }
 
 
@@ -109,7 +109,7 @@ ItemView.prototype.refresh = function () {
   // add an <h1> heading with the name of the page
   listOfStrings.push("<h1 id=\"" + RootView.URL_ITEM_PREFIX + this.myItem.getUuid() + "\">" + this.myItem.getDisplayName() + "</h1>");
 
-  // add a <div> element for the detail layout
+  // add a <div> element for the detail plugin
   var detailDivId = ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this.myItem.getUuid();
   listOfStrings.push("<div id=\"" + detailDivId + "\"></div>");
 
@@ -117,10 +117,10 @@ ItemView.prototype.refresh = function () {
   var finalString = listOfStrings.join("");
   this.getDivElement().innerHTML = finalString;
 
-  // let the detailLayout add its own content
-  var detailLayoutDivElement = document.getElementById(detailDivId);
-  this.myLayout = new DetailLayout(this, detailLayoutDivElement);
-  this.myLayout.refresh();
+  // let the detailPlugin add its own content
+  var detailPluginDivElement = document.getElementById(detailDivId);
+  this.myPlugin = new DetailPlugin(this, detailPluginDivElement);
+  this.myPlugin.refresh();
 };
 
 

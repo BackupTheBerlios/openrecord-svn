@@ -1,5 +1,5 @@
 /*****************************************************************************
- section_view.js
+ SectionView.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -31,23 +31,23 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   repository.js
-//   util.js
-//   page_view.js
-//   table_layout.js
+//   Stevedore.js
+//   Util.js
+//   PageView.js
+//   TablePlugin.js
 // -------------------------------------------------------------------
 
 
 // -------------------------------------------------------------------
 // SectionView public class constants
 // -------------------------------------------------------------------
-SectionView.LAYOUT_TABLE = "Table";
-SectionView.LAYOUT_OUTLINE = "Outline";
-SectionView.LAYOUT_DETAIL = "Detail";
-SectionView.LAYOUT_BAR_CHART = "Bar Chart";
+SectionView.PLUGIN_TABLE = "Table";
+SectionView.PLUGIN_OUTLINE = "Outline";
+SectionView.PLUGIN_DETAIL = "Detail";
+SectionView.PLUGIN_BAR_CHART = "Bar Chart";
 
 SectionView.ELEMENT_CLASS_SECTION = "section";
-SectionView.ELEMENT_CLASS_SECTION_LAYOUT_MENU = "section_layout_menu";
+SectionView.ELEMENT_CLASS_SECTION_PLUGIN_MENU = "section_plugin_menu";
 SectionView.ELEMENT_CLASS_SIMPLE_TABLE = "simple_table";
 SectionView.ELEMENT_CLASS_NEW_ITEM = "newitem";
 SectionView.ELEMENT_CLASS_PLAIN = "plain";
@@ -60,7 +60,7 @@ SectionView.ELEMENT_CLASS_TEXT_VIEW = "text_view";
 
 SectionView.ELEMENT_ID_SELECT_MENU_PREFIX = "select_menu_";
 SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX = "_select_menu";
-SectionView.ELEMENT_ID_LAYOUT_DIV_SUFFIX = "_layout_div";
+SectionView.ELEMENT_ID_PLUGIN_DIV_SUFFIX = "_plugin_div";
 SectionView.ELEMENT_ID_CELL_PREFIX = "section_";
 SectionView.ELEMENT_ID_CELL_MIDFIX = "_cell_";
 SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX = "_summary_div";
@@ -72,7 +72,7 @@ SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER = "cell_number";
 // -------------------------------------------------------------------
 // SectionView class properties
 // -------------------------------------------------------------------
-SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName = {};
+SectionView.ourHashTableOfPluginClassesKeyedByPluginName = {};
 
 
 /**
@@ -101,8 +101,8 @@ function SectionView(inPageView, inDivElement, inSection, inSectionNumber) {
   var query = inSection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
   this.myListOfContentItems = this.getStevedore().getListOfResultItemsForQuery(query); 
 
-  this._myLayout = null;
-  this._myLayoutDiv = null;
+  this._myPlugin = null;
+  this._myPluginDiv = null;
   this._myHasEverBeenDisplayedFlag = false;
   this._mySectionSummaryView = null;
 }
@@ -136,24 +136,24 @@ SectionView.getStringForValue = function (inValue) {
 // -------------------------------------------------------------------
 
 /**
- * Given the name of a layout ("Table", "Outline", etc.), returns a newly
- * created layout object of that type, initialized to be the layout for this 
+ * Given the name of a plugin ("Table", "Outline", etc.), returns a newly
+ * created plugin object of that type, initialized to be the plugin for this 
  * SectionView.
  *
  * @scope    public instance method
- * @param    inLayoutName    A string. One of the registered layout names. 
- * @param    inLayoutDiv    The HTMLDivElement to display the layout in. 
- * @return   A newly created layout object, initialized to be the layout for this section.
+ * @param    inPluginName    A string. One of the registered plugin names. 
+ * @param    inPluginDiv    The HTMLDivElement to display the plugin in. 
+ * @return   A newly created plugin object, initialized to be the plugin for this section.
  */
-SectionView.prototype.getLayoutFromLayoutName = function (inLayoutName, inLayoutDiv) {
-  Util.assert(Util.isString(inLayoutName));
+SectionView.prototype.getPluginFromPluginName = function (inPluginName, inPluginDiv) {
+  Util.assert(Util.isString(inPluginName));
   
-  var newLayout = null;
-  var layoutClass = SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[inLayoutName];
-  if (layoutClass) {
-    newLayout = new layoutClass(this, inLayoutDiv);
+  var newPlugin = null;
+  var pluginClass = SectionView.ourHashTableOfPluginClassesKeyedByPluginName[inPluginName];
+  if (pluginClass) {
+    newPlugin = new pluginClass(this, inPluginDiv);
   }
-  return newLayout;
+  return newPlugin;
 };
 
 
@@ -182,7 +182,7 @@ SectionView.prototype.refresh = function () {
   } else {
     // refresh the <h2> element with the value: this.mySection.getDisplayName();  
     this._mySectionSummaryView.refresh();
-    this._myLayout.refresh();
+    this._myPlugin.refresh();
   }
 };
 
@@ -197,7 +197,7 @@ SectionView.prototype.doInitialDisplay = function () {
   if (!this.getDivElement()) {
     return;
   }
-  var selectedLayoutName = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME)[0];
+  var selectedPluginName = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_PLUGIN_NAME)[0];
   var query = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
   this.myListOfContentItems = this.getStevedore().getListOfResultItemsForQuery(query); 
   if (!this.myListOfContentItems) {
@@ -212,24 +212,24 @@ SectionView.prototype.doInitialDisplay = function () {
   this._mySectionSummaryView = new MultiLineTextView(this, summaryDiv, this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
   View.createAndAppendElement(outerDiv, "p");
 
-  // create the layout editing controls, if we're in edit mode
+  // create the plugin editing controls, if we're in edit mode
   var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this.mySection.getUuid();
-  var selectElement = View.createAndAppendElement(outerDiv, "select", SectionView.ELEMENT_CLASS_SECTION_LAYOUT_MENU, selectMenuId);
+  var selectElement = View.createAndAppendElement(outerDiv, "select", SectionView.ELEMENT_CLASS_SECTION_PLUGIN_MENU, selectMenuId);
   selectElement.setAttribute("name", selectMenuId);
   selectElement.setAttribute(SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER, this.mySectionNumber);
-  for (var layoutName in SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName) {
+  for (var pluginName in SectionView.ourHashTableOfPluginClassesKeyedByPluginName) {
     var optionElement = View.createAndAppendElement(selectElement, "option");
-    optionElement.selected = (selectedLayoutName == layoutName);
-    optionElement.setAttribute("value", layoutName);
-    // Util.addEventListener(optionElement, "click", SectionView.clickOnLayoutSelectionMenu);
+    optionElement.selected = (selectedPluginName == pluginName);
+    optionElement.setAttribute("value", pluginName);
+    // Util.addEventListener(optionElement, "click", SectionView.clickOnPluginSelectionMenu);
     var listener = this; 
-    Util.addEventListener(optionElement, "click", function(event) {listener.clickOnLayoutSelectionMenu(event);});
-    optionElement.innerHTML = layoutName;
+    Util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
+    optionElement.innerHTML = pluginName;
   }
 
-  // create a div element for the layout class to use
-  this._myLayoutDiv = View.createAndAppendElement(outerDiv, "div");
-  this._myLayout = this.getLayoutFromLayoutName(selectedLayoutName, this._myLayoutDiv);
+  // create a div element for the plugin class to use
+  this._myPluginDiv = View.createAndAppendElement(outerDiv, "div");
+  this._myPlugin = this.getPluginFromPluginName(selectedPluginName, this._myPluginDiv);
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
 };
@@ -240,13 +240,13 @@ SectionView.prototype.doInitialDisplay = function () {
 // -------------------------------------------------------------------
 
 /**
- * Called when the user clicks on any of the layout option-select controls.
+ * Called when the user clicks on any of the plugin option-select controls.
  * Called from an HTML option element within an HTML select element.
  *
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-SectionView.prototype.clickOnLayoutSelectionMenu = function (inEventObject) {
+SectionView.prototype.clickOnPluginSelectionMenu = function (inEventObject) {
   var eventObject = inEventObject || window.event;
   var optionElement = Util.getTargetFromEvent(eventObject);
   // PENDING: We could replace the lines above with "var optionElement = this;"
@@ -256,13 +256,13 @@ SectionView.prototype.clickOnLayoutSelectionMenu = function (inEventObject) {
   var newChoiceName = optionElement.value;
 
  
-  if (this._myLayout.getLayoutName() == newChoiceName) {
+  if (this._myPlugin.getPluginName() == newChoiceName) {
     return;
   } else {
-    this._myLayout.endOfLife();
-    this._myLayout = this.getLayoutFromLayoutName(newChoiceName, this._myLayoutDiv);
-    this.mySection.clear(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME);
-    this.mySection.assign(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME, newChoiceName);
+    this._myPlugin.endOfLife();
+    this._myPlugin = this.getPluginFromPluginName(newChoiceName, this._myPluginDiv);
+    this.mySection.clear(Stevedore.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
+    this.mySection.assign(Stevedore.UUID_FOR_ATTRIBUTE_PLUGIN_NAME, newChoiceName);
     this.refresh();
   }
 };

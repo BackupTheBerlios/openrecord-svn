@@ -1,5 +1,5 @@
 /*****************************************************************************
- detail_layout.js
+ DetailPlugin.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -31,52 +31,52 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   repository.js
-//   section_view.js
-//   util.js
+//   Stevedore.js
+//   SectionView.js
+//   Util.js
 // -------------------------------------------------------------------
 
 
 // -------------------------------------------------------------------
-// Register this layout type in the SectionView registry
+// Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
-SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[SectionView.LAYOUT_DETAIL] = DetailLayout;
+SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_DETAIL] = DetailPlugin;
 
 
 /**
- * A DetailLayout display one or more content items. 
+ * A DetailPlugin display one or more content items. 
  *
  * @scope    public instance constructor
  * @extends  View
  * @param    inSuperView    The superview for this view. 
  * @param    inDivElement    The HTMLDivElement to display this view in. 
- * @syntax   var detailLayout = new DetailLayout()
+ * @syntax   var detailPlugin = new DetailPlugin()
  */
-DetailLayout.prototype = new View();  // makes DetailLayout be a subclass of View
-function DetailLayout(inSuperView, inDivElement) {
+DetailPlugin.prototype = new View();  // makes DetailPlugin be a subclass of View
+function DetailPlugin(inSuperView, inDivElement) {
   this.setSuperview(inSuperView);
   this.setDivElement(inDivElement);  
 }
 
 
 /**
- * Returns the registered name of this type of layout.
+ * Returns the registered name of this plugin.
  *
  * @scope    public instance method
  * @return   A string.
  */
-DetailLayout.prototype.getLayoutName = function () {
-  return SectionView.LAYOUT_DETAIL;
+DetailPlugin.prototype.getPluginName = function () {
+  return SectionView.PLUGIN_DETAIL;
 };
 
   
 /**
- * Re-creates all the HTML for the DetailLayout, and hands the HTML to the 
+ * Re-creates all the HTML for the DetailPlugin, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-DetailLayout.prototype.refresh = function () {
+DetailPlugin.prototype.refresh = function () {
   var listOfStrings = [];
 
   // for each content item, add its HTML representation to the output
@@ -99,7 +99,7 @@ DetailLayout.prototype.refresh = function () {
  *
  * @scope    public instance method
  */
-DetailLayout.prototype.endOfLife = function () {
+DetailPlugin.prototype.endOfLife = function () {
   this.getDivElement().innerHTML = "";
 };
 
@@ -112,7 +112,7 @@ DetailLayout.prototype.endOfLife = function () {
  * @param    inItem    An item to be displayed. 
  * @return   A string containing the XHTML to display the item.
  */
-DetailLayout.prototype.getXhtmlTableForItem = function (inItem) {
+DetailPlugin.prototype.getXhtmlTableForItem = function (inItem) {
   Util.assert(inItem instanceof Item);
   
   var listOfStrings = [];

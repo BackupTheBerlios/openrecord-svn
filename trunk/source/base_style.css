@@ -224,11 +224,11 @@ span.bad {
   float: right;
 }
 
-div.editmode .section_layout_menu {
+div.editmode .section_plugin_menu {
   display: block;
 }
 
-div.viewmode .section_layout_menu {
+div.viewmode .section_plugin_menu {
   display: none;
 }
 

@@ -1,5 +1,5 @@
 /*****************************************************************************
- table_layout.js
+ TablePlugin.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -31,52 +31,52 @@
  
 // -------------------------------------------------------------------
 // Dependencies:
-//   repository.js
-//   section_view.js
-//   page_view.js
-//   util.js
+//   Stevedore.js
+//   SectionView.js
+//   PageView.js
+//   Util.js
 // -------------------------------------------------------------------
 
 
 // -------------------------------------------------------------------
-// Register this layout type in the SectionView registry
+// Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
-SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[SectionView.LAYOUT_TABLE] = TableLayout;
+SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_TABLE] = TablePlugin;
 
 
 // -------------------------------------------------------------------
-// TableLayout public class constants
+// TablePlugin public class constants
 // -------------------------------------------------------------------
-TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD = "current_edit_field";
+TablePlugin.ELEMENT_ID_CURRENT_EDIT_FIELD = "current_edit_field";
 
 
 /**
- * When the TableLayout creates an HTML table, it sets up each HTML "td" table 
+ * When the TablePlugin creates an HTML table, it sets up each HTML "td" table 
  * cell element in the table to point to a corresponding CellDelegate instance.
  *
  * @scope    private instance constructor
  */
-TableLayout._CellDelegate = function (inRowDelegate, inCellElementId, inCellCount, inColumnNumber, inAttribute, inTableLayout) {
-  Util.assert(inRowDelegate instanceof TableLayout._RowDelegate);
+TablePlugin._CellDelegate = function (inRowDelegate, inCellElementId, inCellCount, inColumnNumber, inAttribute, inTablePlugin) {
+  Util.assert(inRowDelegate instanceof TablePlugin._RowDelegate);
   Util.assert(inAttribute instanceof Item);
-  Util.assert(inTableLayout instanceof TableLayout);
+  Util.assert(inTablePlugin instanceof TablePlugin);
 
   this.myRowDelegate = inRowDelegate;
   this.myCellElementId = inCellElementId;
   this.myCellCount = inCellCount;
   this.myColumnNumber = inColumnNumber;
   this.myAttribute = inAttribute;
-  this.myTableLayout = inTableLayout;
+  this.myTablePlugin = inTablePlugin;
 }
 
 
 /**
- * When the TableLayout creates an HTML table, it sets up each HTML "tr" table
+ * When the TablePlugin creates an HTML table, it sets up each HTML "tr" table
  * row element in the table to point to a corresponding RowDelegate instance.
  *
  * @scope    private instance constructor
  */
-TableLayout._RowDelegate = function (inContentItem, inRowNumber) {
+TablePlugin._RowDelegate = function (inContentItem, inRowNumber) {
   Util.assert((inContentItem == null) || (inContentItem instanceof Item));
 
   this.myContentItem = inContentItem;
@@ -86,16 +86,16 @@ TableLayout._RowDelegate = function (inContentItem, inRowNumber) {
 
 
 /**
- * The TableLayout class knows how to display a Section of a Page as an
+ * The TablePlugin class knows how to display a Section of a Page as an
  * HTML table.
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    inSectionView    The SectionView that this TableLayout will appears in. 
+ * @param    inSectionView    The SectionView that this TablePlugin will appears in. 
  * @param    inDivElement    The HTMLDivElement to display this view in. 
  */
-TableLayout.prototype = new View();  // makes TableLayout be a subclass of View
-function TableLayout(inSectionView, inDivElement) {
+TablePlugin.prototype = new View();  // makes TablePlugin be a subclass of View
+function TablePlugin(inSectionView, inDivElement) {
   this.setSuperview(inSectionView);
   this.setDivElement(inDivElement);  
 
@@ -107,23 +107,23 @@ function TableLayout(inSectionView, inDivElement) {
 
 
 /**
- * Returns a string with the display name for this type of layout.
+ * Returns a string with the display name for this plugin.
  *
  * @scope    public instance method
- * @return   A String with a display name for this type of layout. 
+ * @return   A String with a display name for this plugin. 
  */
-TableLayout.prototype.getLayoutName = function () {
-  return SectionView.LAYOUT_TABLE;
+TablePlugin.prototype.getPluginName = function () {
+  return SectionView.PLUGIN_TABLE;
 };
 
   
 /**
- * Re-creates all the HTML for the TableLayout, and hands the HTML to the 
+ * Re-creates all the HTML for the TablePlugin, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-TableLayout.prototype.refresh = function () {
+TablePlugin.prototype.refresh = function () {
   var listOfStrings = [];
   var hashTableOfAttributesKeyedByUuid = {};
   var hashTableOfCellDelegatesKeyedByElementId = {};
@@ -165,7 +165,7 @@ TableLayout.prototype.refresh = function () {
   for (var kKey in listOfContentItems) {
     contentItem = listOfContentItems[kKey];
     listOfStrings.push("<tr>");
-    var rowDelegate = new TableLayout._RowDelegate(contentItem, this.myNumRows);
+    var rowDelegate = new TablePlugin._RowDelegate(contentItem, this.myNumRows);
     this.myArrayOfRowDelegates[this.myNumRows] = rowDelegate;
     this.myNumRows += 1;
     columnCount = 0;
@@ -179,8 +179,8 @@ TableLayout.prototype.refresh = function () {
         string = SectionView.getStringForValue(valueList[0]);
       }
       if (this.isInEditMode()) {
-        listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.getSuperview().mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TableLayout.clickOnCell(event)\">" + string + "</td>");
-        var cellDelegate = new TableLayout._CellDelegate(rowDelegate, cellId, cellCount, columnCount, attribute, this);
+        listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.getSuperview().mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TablePlugin.clickOnCell(event)\">" + string + "</td>");
+        var cellDelegate = new TablePlugin._CellDelegate(rowDelegate, cellId, cellCount, columnCount, attribute, this);
         rowDelegate.myArrayOfCellDelegates[columnCount] = cellDelegate;
         hashTableOfCellDelegatesKeyedByElementId[cellId] = cellDelegate;
       } else {
@@ -196,7 +196,7 @@ TableLayout.prototype.refresh = function () {
 
   // if we're in edit mode, add a row at the bottom of the table for entering new items
   var firstCell = true;
-  var lastRowDelegate = new TableLayout._RowDelegate(null, this.myNumRows);
+  var lastRowDelegate = new TablePlugin._RowDelegate(null, this.myNumRows);
   this.myArrayOfRowDelegates[this.myNumRows] = lastRowDelegate;
   this.myNumRows += 1;
   if (this.isInEditMode()) {
@@ -208,8 +208,8 @@ TableLayout.prototype.refresh = function () {
       firstCell = false;
       cellCount += 1;
       cellId = cellIdPrefix + cellCount;
-      listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_NEW_ITEM + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.getSuperview().mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TableLayout.clickOnCell(event)\">" + contentString + "</td>");
-      var lastRowCellDelegate = new TableLayout._CellDelegate(lastRowDelegate, cellId, cellCount, columnCount, attribute, this);
+      listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_NEW_ITEM + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.getSuperview().mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TablePlugin.clickOnCell(event)\">" + contentString + "</td>");
+      var lastRowCellDelegate = new TablePlugin._CellDelegate(lastRowDelegate, cellId, cellCount, columnCount, attribute, this);
       lastRowDelegate.myArrayOfCellDelegates[columnCount] = lastRowCellDelegate;
       hashTableOfCellDelegatesKeyedByElementId[cellId] = lastRowCellDelegate;
       columnCount += 1;
@@ -238,7 +238,7 @@ TableLayout.prototype.refresh = function () {
  *
  * @scope    public instance method
  */
-TableLayout.prototype.endOfLife = function () {
+TablePlugin.prototype.endOfLife = function () {
   this.getDivElement().innerHTML = "";
 };
 
@@ -251,7 +251,7 @@ TableLayout.prototype.endOfLife = function () {
  *
  * @scope    public class method
  */
-TableLayout.clickOnCell = function (inEventObject) {
+TablePlugin.clickOnCell = function (inEventObject) {
   var eventObject = inEventObject;
   if (!eventObject) { eventObject = window.event; } 
   // PENDING: try this instead: var eventObject = inEventObject || window.event;
@@ -260,13 +260,13 @@ TableLayout.clickOnCell = function (inEventObject) {
   // PENDING: We could replace the two lines above with "var htmlElement = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?
 
-  var currentEditField = document.getElementById(TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD);
+  var currentEditField = document.getElementById(TablePlugin.ELEMENT_ID_CURRENT_EDIT_FIELD);
   if (currentEditField && (currentEditField == htmlElement)) {
     // another click in the cell we're already editing -- just ignore it
     return; 
   }
-  TableLayout.leaveEditField();
-  TableLayout.startEditingInCell(htmlElement);
+  TablePlugin.leaveEditField();
+  TablePlugin.startEditingInCell(htmlElement);
 };
 
 
@@ -277,12 +277,12 @@ TableLayout.clickOnCell = function (inEventObject) {
  * @scope    public instance method
  * @param    inColumnNumber    An integer column number, telling which column to start editing in. 
  */
-TableLayout.prototype.startEditingInCellForNewItemAtColumn = function (inColumnNumber) {
+TablePlugin.prototype.startEditingInCellForNewItemAtColumn = function (inColumnNumber) {
   var rowForNewItemEntry = this.myNumRows - 1;
   var rowDelegateForNewItemEntry = this.myArrayOfRowDelegates[rowForNewItemEntry];
   var cellDelegate = rowDelegateForNewItemEntry.myArrayOfCellDelegates[inColumnNumber];
   var nextCell = document.getElementById(cellDelegate.myCellElementId);
-  TableLayout.startEditingInCell(nextCell);
+  TablePlugin.startEditingInCell(nextCell);
 };
 
 
@@ -293,18 +293,18 @@ TableLayout.prototype.startEditingInCellForNewItemAtColumn = function (inColumnN
  * @scope    public class method
  * @param    inCellElement    An HTMLTableCellElement. 
  */
-TableLayout.startEditingInCell = function (inCellElement) {
+TablePlugin.startEditingInCell = function (inCellElement) {
   Util.assert(inCellElement instanceof HTMLTableCellElement);
 
   var initialEditValue = inCellElement.innerHTML.replace(/"/g, "&quot");
-  var editFieldString = "<input type=\"text\" class=\"" + SectionView.ELEMENT_CLASS_TEXT_FIELD_IN_TABLE_CELL + "\" id=\"" + TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD + "\" value=\"" + initialEditValue + "\" size=\"1\"></input>";
+  var editFieldString = "<input type=\"text\" class=\"" + SectionView.ELEMENT_CLASS_TEXT_FIELD_IN_TABLE_CELL + "\" id=\"" + TablePlugin.ELEMENT_ID_CURRENT_EDIT_FIELD + "\" value=\"" + initialEditValue + "\" size=\"1\"></input>";
   inCellElement.innerHTML = editFieldString;
   inCellElement.className = SectionView.ELEMENT_CLASS_SELECTED + " " + inCellElement.className;
   // var listener = this; 
   // Util.addEventListener(editField, "blur", function(event) {listener.onBlur(event);});
       
-  var newEditField = document.getElementById(TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD);
-  newEditField.onkeypress = TableLayout.keyPressOnEditField;
+  var newEditField = document.getElementById(TablePlugin.ELEMENT_ID_CURRENT_EDIT_FIELD);
+  newEditField.onkeypress = TablePlugin.keyPressOnEditField;
   newEditField.select();
   newEditField.focus();
 };
@@ -315,8 +315,8 @@ TableLayout.startEditingInCell = function (inCellElement) {
  *
  * @scope    public class method
  */
-TableLayout.leaveEditField = function () {
-  var currentEditField = document.getElementById(TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD);
+TablePlugin.leaveEditField = function () {
+  var currentEditField = document.getElementById(TablePlugin.ELEMENT_ID_CURRENT_EDIT_FIELD);
 
   if (currentEditField) {
     var newValueString = currentEditField.value;
@@ -326,10 +326,10 @@ TableLayout.leaveEditField = function () {
     // find the content item for this cell, and set the attribute to the new cell value
     var contentItem = cellDelegate.myRowDelegate.myContentItem;
     if (!contentItem) {
-      var sectionView = cellDelegate.myTableLayout.getSuperview();
+      var sectionView = cellDelegate.myTablePlugin.getSuperview();
       var stevedore = sectionView.getStevedore();
       contentItem = stevedore.newItem(); 
-      cellDelegate.myTableLayout.myNewItemCreatedFlag = true;
+      cellDelegate.myTablePlugin.myNewItemCreatedFlag = true;
       cellDelegate.myRowDelegate.myContentItem = contentItem;
       var queryList = sectionView.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY);
       if (queryList) {
@@ -371,7 +371,7 @@ TableLayout.leaveEditField = function () {
  * 
  * @scope    public class method
  */
-TableLayout.keyPressOnEditField = function (inEventObject) {
+TablePlugin.keyPressOnEditField = function (inEventObject) {
   var eventObject = inEventObject;
   if (!eventObject) { eventObject = window.event; }
   var asciiValueOfKey = eventObject.keyCode;
@@ -408,13 +408,13 @@ TableLayout.keyPressOnEditField = function (inEventObject) {
   }
   
   if (move) {
-    var currentEditField = document.getElementById(TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD);
+    var currentEditField = document.getElementById(TablePlugin.ELEMENT_ID_CURRENT_EDIT_FIELD);
     Util.assert(currentEditField == Util.getTargetFromEvent(eventObject));
 
     var cellElement = currentEditField.parentNode;
     var cellDelegate = cellElement.mydelegate;
-    var tableLayout = cellDelegate.myTableLayout;
-    var sectionView = tableLayout.mySectionView;
+    var tablePlugin = cellDelegate.myTablePlugin;
+    var sectionView = tablePlugin.mySectionView;
     var userHitReturnInLastRow = false;
     var nextCellDelegate = null;
     var shiftBy;
@@ -424,9 +424,9 @@ TableLayout.keyPressOnEditField = function (inEventObject) {
       var nextColumnNumber = cellDelegate.myColumnNumber + shiftBy;
       // PENDING: We should be able to do this in one line, using a modulo operator
       if (nextColumnNumber < 0) {
-        nextColumnNumber = (tableLayout.myNumColumns - 1);
+        nextColumnNumber = (tablePlugin.myNumColumns - 1);
       }
-      if (nextColumnNumber >= tableLayout.myNumColumns) {
+      if (nextColumnNumber >= tablePlugin.myNumColumns) {
         nextColumnNumber = 0;
       }
       nextCellDelegate = cellDelegate.myRowDelegate.myArrayOfCellDelegates[nextColumnNumber];
@@ -436,26 +436,26 @@ TableLayout.keyPressOnEditField = function (inEventObject) {
       shiftBy = (move == MOVE_UP) ? -1 : 1;
       var nextRowNumber = cellDelegate.myRowDelegate.myRowNumber + shiftBy;
       if (nextRowNumber < 0) {
-        nextRowNumber = (tableLayout.myNumRows - 1);
+        nextRowNumber = (tablePlugin.myNumRows - 1);
       }
-      if (nextRowNumber >= tableLayout.myNumRows) {
+      if (nextRowNumber >= tablePlugin.myNumRows) {
         nextRowNumber = 0;
         userHitReturnInLastRow = true;
       }
-      var nextRowDelegate = tableLayout.myArrayOfRowDelegates[nextRowNumber];
+      var nextRowDelegate = tablePlugin.myArrayOfRowDelegates[nextRowNumber];
       nextCellDelegate = nextRowDelegate.myArrayOfCellDelegates[cellDelegate.myColumnNumber];
     }
     
     var nextCellId = nextCellDelegate.myCellElementId;    
     var nextCell = document.getElementById(nextCellId);
-    TableLayout.leaveEditField();
-    if (userHitReturnInLastRow && tableLayout.myNewItemCreatedFlag) {
-      tableLayout.myNewItemCreatedFlag = false;
-      tableLayout.refresh();
-      tableLayout.startEditingInCellForNewItemAtColumn(cellDelegate.myColumnNumber);
+    TablePlugin.leaveEditField();
+    if (userHitReturnInLastRow && tablePlugin.myNewItemCreatedFlag) {
+      tablePlugin.myNewItemCreatedFlag = false;
+      tablePlugin.refresh();
+      tablePlugin.startEditingInCellForNewItemAtColumn(cellDelegate.myColumnNumber);
     } else {
       if (nextCell) {
-        TableLayout.startEditingInCell(nextCell);
+        TablePlugin.startEditingInCell(nextCell);
       }
     }
   }

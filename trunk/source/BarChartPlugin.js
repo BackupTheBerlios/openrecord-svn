@@ -1,5 +1,5 @@
 /*****************************************************************************
- bar_chart_layout.js
+ BarChartPlugin.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -31,53 +31,53 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   repository.js
-//   section_view.js
-//   page_view.js
-//   util.js
+//   Stevedore.js
+//   SectionView.js
+//   PageView.js
+//   Util.js
 // -------------------------------------------------------------------
 
 
 // -------------------------------------------------------------------
-// Register this layout type in the SectionView registry
+// Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
-SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[SectionView.LAYOUT_BAR_CHART] = BarChartLayout;
+SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_BAR_CHART] = BarChartPlugin;
 
 
 /**
- * A BarChartLayout displays a set of content items for a SectionView. 
+ * A BarChartPlugin displays a set of content items for a SectionView. 
  *
  * @scope    public instance constructor
  * @extends  View
  * @param    inSectionView    The SectionView that serves as the superview for this view. 
  * @param    inDivElement    The HTMLDivElement to display this view in. 
- * @syntax   var barChart = new BarChartLayout()
+ * @syntax   var barChart = new BarChartPlugin()
  */
-BarChartLayout.prototype = new View();  // makes BarChartLayout be a subclass of View
-function BarChartLayout(inSectionView, inDivElement) {
+BarChartPlugin.prototype = new View();  // makes BarChartPlugin be a subclass of View
+function BarChartPlugin(inSectionView, inDivElement) {
   this.setSuperview(inSectionView);
   this.setDivElement(inDivElement);
 }
 
 
 /**
- * Returns the registered name of this type of layout.
+ * Returns the registered name of this plugin.
  *
  * @scope    public instance method
  * @return   A string.
  */
-BarChartLayout.prototype.getLayoutName = function () {
-  return SectionView.LAYOUT_BAR_CHART;
+BarChartPlugin.prototype.getPluginName = function () {
+  return SectionView.PLUGIN_BAR_CHART;
 };
 
 
 /**
- * Re-creates all the HTML for the BarChartLayout, and hands the HTML to the 
+ * Re-creates all the HTML for the BarChartPlugin, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-BarChartLayout.prototype.refresh = function () {
+BarChartPlugin.prototype.refresh = function () {
   var listOfStrings = [];
 
   var contentItem = null;
@@ -177,7 +177,7 @@ BarChartLayout.prototype.refresh = function () {
  *
  * @scope    public instance method
  */
-BarChartLayout.prototype.endOfLife = function () {
+BarChartPlugin.prototype.endOfLife = function () {
   this.getDivElement().innerHTML = "";
 };
 
