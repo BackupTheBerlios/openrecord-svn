@@ -281,7 +281,7 @@ RootView.prototype.displayControlSpan = function () {
 
   var listOfStrings = [];
   
-  var buttonValue = (this.myEditMode) ? "View" : "Edit";
+  var buttonValue = (this.myEditMode) ? "Save" : "Edit";
   listOfStrings.push("<input type=\"button\" class=\"" + RootView.ELEMENT_CLASS_PAGE_EDIT_BUTTON + "\" id=\"" + this.myEditButtonId + "\" name=\"layout\" value=\"" + buttonValue + "\"></input>");
 
   // write out the new control span content 
