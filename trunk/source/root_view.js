@@ -227,7 +227,7 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
             if (pageFromUuid) {
               divElement = window.document.createElement("div"); 
               this._myContentViewDivElement.appendChild(divElement);
-              contentViewToSwitchTo = new PageView(pageFromUuid, divElement, this);
+              contentViewToSwitchTo = new PageView(this, divElement, pageFromUuid);
               this._myHashTableOfPageViewsKeyedByUuid[uuidNumber] = contentViewToSwitchTo;
             }
           }
@@ -242,7 +242,7 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
     if (!contentViewToSwitchTo) {
       divElement = window.document.createElement("div"); 
       this._myContentViewDivElement.appendChild(divElement);
-      contentViewToSwitchTo = new PageView(page, divElement, this);
+      contentViewToSwitchTo = new PageView(this, divElement, page);
       this._myHashTableOfPageViewsKeyedByUuid[page.getUuid()] = contentViewToSwitchTo;
     }
   }

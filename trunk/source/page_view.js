@@ -59,19 +59,22 @@ PageView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
  * browser window.
  *
  * @scope    public instance constructor
- * @param    inPage    The page item to be displayed by this view. 
- * @param    inDivElement    The HTMLDivElement to display the HTML in. 
  * @param    inRootView    The RootView that this PageView is nested in. 
+ * @param    inDivElement    The HTMLDivElement to display the HTML in. 
+ * @param    inPage    The page item to be displayed by this view. 
  */
-function PageView(inPage, inDivElement, inRootView) {
+PageView.prototype = new View();
+function PageView(inRootView, inDivElement, inPage) {
+  Util.assert(inRootView instanceof RootView);
   Util.assert(inPage instanceof Item);
   Util.assert(inDivElement instanceof HTMLDivElement);
-  Util.assert(inRootView instanceof RootView);
 
   // instance properties
+  this.setSuperview(inRootView);
+  this.setDivElement(inDivElement);
+  // this.myRootView = inRootView;
+  // this.myDivElement = inDivElement;
   this.myPage = inPage;
-  this.myDivElement = inDivElement;
-  this.myRootView = inRootView;
   
   this.myListOfSectionViews = [];
   
@@ -92,9 +95,9 @@ function PageView(inPage, inDivElement, inRootView) {
  * @scope    public instance method
  * @return   A boolean value. True if we are in Edit Mode.
  */
-PageView.prototype.isInEditMode = function () {
-  return this.myRootView.isInEditMode();
-};
+// PageView.prototype.isInEditMode = function () {
+//   return this.myRootView.isInEditMode();
+// };
 
   
 /**
@@ -114,8 +117,9 @@ PageView.prototype.getPageTitle = function () {
  * @scope    public instance method
  */
 PageView.prototype.hide = function () {
-  Util.assert(this.myDivElement instanceof HTMLDivElement);
-  this.myDivElement.style.display = "none";
+  // Util.assert(this.myDivElement instanceof HTMLDivElement);
+  // this.myDivElement.style.display = "none";
+  this.includeOnScreen(false);
 };
 
 
@@ -126,7 +130,8 @@ PageView.prototype.hide = function () {
  * @scope    public instance method
  */
 PageView.prototype.display = function () {
-  Util.assert(this.myDivElement instanceof HTMLDivElement);
+  // Util.assert(this.myDivElement instanceof HTMLDivElement);
+  Util.assert(this.getDivElement() instanceof HTMLDivElement);
   
   var listOfStrings = [];
   var hashTableOfSectionViewsKeyedByDivId = {};
@@ -147,9 +152,12 @@ PageView.prototype.display = function () {
 
   // write out all the new content 
   var finalString = listOfStrings.join("");
-  this.myDivElement.className = (this.isInEditMode()) ? PageView.ELEMENT_CLASS_EDIT_MODE : PageView.ELEMENT_CLASS_VIEW_MODE;
-  this.myDivElement.innerHTML = finalString;
-  this.myDivElement.style.display = "block";
+  // var divElement = this.myDivElement;
+  var divElement = this.getDivElement();
+  divElement.className = (this.isInEditMode()) ? PageView.ELEMENT_CLASS_EDIT_MODE : PageView.ELEMENT_CLASS_VIEW_MODE;
+  divElement.innerHTML = finalString;
+  // divElement.style.display = "block";
+  this.includeOnScreen(true);
 
   // set up the summary text view
   var summaryElement = document.getElementById(summaryViewDivId);

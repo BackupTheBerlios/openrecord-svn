@@ -134,7 +134,7 @@ SectionView.getStringForValue = function (inValue) {
  * @return   A Stevedore object.
  */
 SectionView.prototype.getStevedore = function () {
-  return this.myPageView.myRootView.getStevedore();
+  return this.myPageView.getStevedore();
 };
 
 
@@ -188,7 +188,6 @@ SectionView.prototype.setDivElement = function (inDivElement) {
   this.myDivElement = inDivElement;
   this.display();
 };
-
 
 
 /**
