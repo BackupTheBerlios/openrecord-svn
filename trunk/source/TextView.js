@@ -103,9 +103,13 @@ TextView.prototype.doInitialDisplay = function() {
   divElement.className = TextView.ELEMENT_CLASS_TEXT_BLOCK;
   var textList = this.textItem.getValueListFromAttribute(this.attribute);
   var textString = "";
-  for (var i in textList) {
-    textString = textList[i] + "\n" + textString;
-  };
+  if (textList && textList[0]) {
+    textString = textList[0];
+  }
+  // PENDING: need to deal with multi valued attrs
+  // for (var i in textList) {
+  //   textString = textList[i] + "\n" + textString;
+  // };
   
   this.textNode = document.createTextNode(textString);
   divElement.appendChild(this.textNode);
@@ -131,6 +135,7 @@ TextView.prototype.startEditing = function() {
       //editField.cols=80; now using css style sheet "text_view"
       var listener = this; 
       Util.addEventListener(editField, "blur", function(event) {listener.onBlur(event);});
+      Util.addEventListener(editField, "keypress", function(event) {listener.onKeyPress(event);});
       editField.defaultValue = this.textNode.data;
     }
     editField.style.height = this.getDivElement().offsetHeight + "px";
@@ -181,6 +186,57 @@ TextView.prototype.onBlur = function(inEventObject) {
   }
 };
 
+
+/**
+ * Called when the user types in editField
+ *
+ * @scope    public instance method
+ * @param    inEventObject    An event object. 
+ */
+TextView.prototype.onKeyPress = function(inEventObject) {
+  var editField = this.editField;
+
+  // PENDING: 
+  // Here are some failed attempts at trying to get the editField to 
+  // automatically grow taller as the user types more text into it.
+  // The idea was to avoid having the editField ever show its scroll 
+  // bar. The user shouldn't feel like they're filling in a form; 
+  // they should feel like they're typing a paragraph in a word
+  // processor, and the paragraph grows naturally as they type, 
+  // with all the paragraphs beneath it getting pushed down the page.
+  
+  // ATTEMPT #0: 
+  // Display diagnostic info...
+  // Initially editField.scrollHeight and editField.clientHeight are equal.  
+  // As you type scrollHeight grows. editField.rows is always -1.
+  /*
+  RootView.displayStatusBlurb("editField.scrollHeight: " + editField.scrollHeight + ", " +
+    "editField.clientHeight: " + editField.clientHeight + ", " +
+    "editField.rows: " + editField.rows);
+  */
+
+  // ATTEMPT #1: 
+  // causes infinite loop -- adding rows doesn't change editField.clientHeight
+  /*
+  while (editField.scrollHeight > editField.clientHeight) {
+    editField.rows += 1;
+  }
+  */
+
+  // ATTEMPT #2: has no impact
+  /*
+  if (editField.scrollHeight > editField.clientHeight) {
+    editField.style.height = editField.scrollHeight;
+  }
+  */
+
+  // ATTEMPT #3: has no impact
+  /*
+  if (editField.scrollHeight > editField.clientHeight) {
+    editField.clientHeight = editField.scrollHeight;
+  }
+  */
+};
 
 // -------------------------------------------------------------------
 // End of file
