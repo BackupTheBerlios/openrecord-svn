@@ -126,11 +126,15 @@ SectionView.prototype.getLayoutFromLayoutName = function (inLayoutName) {
   Util.assert(Util.isString(inLayoutName));
   
   var newLayout = null;
-  for (var layoutName in SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName) {
-    var layoutClass = SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[layoutName];
-    if (inLayoutName == layoutName) {
-      newLayout = new layoutClass(this);
-    }
+  // for (var layoutName in SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName) {
+  //   var layoutClass = SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[layoutName];
+  //   if (inLayoutName == layoutName) {
+  //     newLayout = new layoutClass(this);
+  //   }
+  // }
+  var layoutClass = SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[inLayoutName];
+  if (layoutClass) {
+    newLayout = new layoutClass(this);
   }
   return newLayout;
 };
