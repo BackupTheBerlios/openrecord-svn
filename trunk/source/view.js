@@ -172,6 +172,26 @@ View.createAndAppendElement = function (inElement, inTagName, inClassName, inId)
 };
 
 
+/**
+ * Given an HTML element, we first call document.createTextNode() to 
+ * create a new text node, and then call appendChild() to add the new 
+ * text node to the given element.
+ *
+ * @scope    public class method
+ * @param    inElement    The existing element that we should append the new element to. 
+ * @param    inText    The text string to put in the text node.
+ * @return   The newly created text node.
+ */
+View.createAndAppendTextNode = function (inElement, inText) {
+  Util.assert(inElement instanceof HTMLElement);
+  Util.assert(Util.isString(inText));
+
+  var newTextNode = window.document.createTextNode(inText);
+  inElement.appendChild(newTextNode);
+  return newTextNode;
+};
+
+
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------

@@ -43,6 +43,7 @@
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
 function Util() {
+  throw new Error("Util is a static class. You can't create instances of it.");
 }
 
 
@@ -254,7 +255,7 @@ Util.isArray = function (inValue) {
  * @return   A boolean value. True if inValue is a hash table.
  */
 Util.isHashTable = function (inValue) {
-  return (inValue && (typeof(inValue) == "object"));  // PROBLEM: we should be more restrictive!
+  return (inValue && (typeof(inValue) == "object"));  // PENDING: we should be more restrictive!
 };
 
 
@@ -360,22 +361,25 @@ Util.getTargetFromEvent = function (inEventObject) {
 
 
 /**
- * This function allows Views to register an event listener in an 
- * object-oriented manner, allowing a specific object's handleEvent() 
- * method to be called. 
+ * A cross-browser compatibility method for registering event listeners. 
  *
  * @scope public class method
  * @param inElement    An HTMLElement.
- * @param inEventtype    The type of event (e.g. "mousedown", "click").
- * @param inView    The object whose handleEvent() method is to be called.
+ * @param inEventType    The type of event (e.g. "mousedown", "click").
+ * @param inCallback    The function to call when the event happens.
  * @param inCaptures    True if the event should be captured by this function.
  */
-Util.registerObjectEventHandler = function(inElement, inEventtype, inView, inCaptures) {
-  inElement.addEventListener(inEventtype,
-    function(event) { inView.handleEvent(event);},
-    inCaptures);
+Util.addEventListener = function (inElement, inEventType, inCallback, inCaptures) {
+  if (inElement.addEventListener) {
+    // for DOM Level 2 browsers, like Firefox
+    inElement.addEventListener(inEventType, inCallback, inCaptures);
+  } else {
+    if (inElement.attachEvent) {
+      // for Internet Explorer
+      inElement.attachEvent("on"+inEventType, inCallback, inCaptures);
+    }
+  } 
 };
-
 
 // -------------------------------------------------------------------
 // HTML document manipulation
@@ -393,13 +397,10 @@ Util.setTargetsForExternalLinks = function () {
     return;
   }
   var listOfAnchorElements = window.document.getElementsByTagName("a");
+  var regExp = new RegExp("\\b" + "external" + "\\b");
   for (var i=0; i<listOfAnchorElements.length; i+=1) {
     var anchor = listOfAnchorElements[i];
-    // PROBLEM: This only works if the "rel" attribute has a single value == "external".
-    // To make it work with multi-valued rel attributes, we should do some regular
-    // expression matching to check for strings like "external", "foo external", 
-    // and "external foo".
-    if (anchor.getAttribute("href") && (anchor.getAttribute("rel") == "external")) {
+    if (anchor.getAttribute("href") && (anchor.getAttribute("rel")) && (anchor.getAttribute("rel").search(regExp) != -1)) {
       anchor.target = "_blank";
     }
   }

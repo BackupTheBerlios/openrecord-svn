@@ -42,11 +42,11 @@
  * @scope    global function
  */
 window.doOnloadActions = function() {  
-  Util.setTargetsForExternalLinks();
   
   var stevedore = new Stevedore();
   stevedore._loadItemsFromList(Stevedore._ourRepositoryInJsonFormat);
   window.rootView = new RootView(stevedore);
+  Util.setTargetsForExternalLinks();
 };
 
 

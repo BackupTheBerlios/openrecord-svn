@@ -299,7 +299,7 @@ Stevedore.prototype.getListOfItemsInCategory = function (inCategory) {
  */
 Stevedore.prototype.beginTransaction = function () {
   this._myCountOfNestedTransactions += 1;
-  // PROBLEM:
+  // PENDING:
   //   This is just a stub method for now.  Once we start implementing
   //   support for transactions we'll have to put some real code here.
 };
@@ -313,7 +313,7 @@ Stevedore.prototype.beginTransaction = function () {
 Stevedore.prototype.endTransaction = function () {
   this._myCountOfNestedTransactions -= 1;
   Util.assert(this._myCountOfNestedTransactions >= 0);
-  // PROBLEM:
+  // PENDING:
   //   This is just a stub method for now.  Once we start implementing
   //   support for transactions we'll have to put some real code here.
   if (this._myCountOfNestedTransactions === 0) {
@@ -487,7 +487,7 @@ Stevedore.prototype._loadItemsFromList = function (inDataSet) {
     }
   }
   
-  // PROBLEM:
+  // PENDING:
   // If we don't have a designated "home page" for this data set, then just
   // look through all the items and set the home page to be the first page 
   // item we come across.  This, of course, is a hack.

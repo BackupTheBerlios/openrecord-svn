@@ -262,10 +262,9 @@ RootView.prototype.displayControlSpan = function () {
 
   // add event handlers for the newly created control span UI elements
   var editButton = document.getElementById(this.myEditButtonId);
-  editButton.onclick = RootView.clickOnEditButton;
- 
-  // attach back-pointers to the newly created control span UI elements
-  editButton.myrootview = this;
+  var listener = this;
+  Util.addEventListener(editButton, "click",
+    function(event) { listener.clickOnEditButton(event);});
 };
 
 
@@ -401,14 +400,21 @@ RootView.prototype.displayObjectInDebugTextarea = function (inObject) {
  * @param    inEventObject    An event object. 
  */
 RootView.clickOnLocalLink = function (inEventObject) {
-  var eventObject = inEventObject;
-  if (!eventObject) { eventObject = window.event; }
+  var eventObject = inEventObject || window.event;
   
   var startTiming = new Date();
+  
+  // "wait", "auto", "default", "crosshair", "help"
+  // "n-resize", "s-resize", "e-resize", "w-resize"
+  // "ne-resize", "se-resize", "nw-resize", "sw-resize"
+  // window.document.body.style.cursor = "wait";
+
   var htmlAnchorElement = Util.getTargetFromEvent(eventObject);
   
   window.location = htmlAnchorElement.href;
   RootView.ourSingleInstance.setCurrentContentViewFromUrl();
+
+  // window.document.body.style.cursor = "default";
   
   var stopTiming = new Date();
   var delayInMilliseconds = stopTiming.getTime() - startTiming.getTime();
@@ -422,27 +428,22 @@ RootView.clickOnLocalLink = function (inEventObject) {
  * Called from an HTML "input type='button'" element on the generated page.  
  * There is no need to call this method directly.
  *
- * @scope    public class method
+ * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-RootView.clickOnEditButton = function (inEventObject) {
-  var eventObject = inEventObject;
-  if (!eventObject) { eventObject = window.event; }
-  var editButton = Util.getTargetFromEvent(eventObject);
-  // PROBLEM: We could replace the lines above with "var editButton = this;"
-  // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
-
-  var rootView = editButton.myrootview;
-  var stevedore = rootView.getStevedore();
-  if (rootView.myEditMode) {
+RootView.prototype.clickOnEditButton = function (inEventObject) {
+  var stevedore = this.getStevedore();
+  if (this.myEditMode) {
     stevedore.endTransaction();
+    window.document.body.style.cursor = "auto";
   } else {
     stevedore.beginTransaction();
+    window.document.body.style.cursor = "crosshair";
   }
-  rootView.myEditMode = !rootView.myEditMode;
-  rootView.display();
-  // rootView.displayTextInDebugTextarea(rootView.myEditMode);
-  if (!rootView.myEditMode && window.location && (window.location.protocol == "file:")) {
+  this.myEditMode = !this.myEditMode;
+  this.display();
+  // this.displayTextInDebugTextarea(this.myEditMode);
+  if (!this.myEditMode && window.location && (window.location.protocol == "file:")) {
     RootView.displayTextInDebugTextarea(stevedore._getJsonStringRepresentingAllItems());
   }
 };

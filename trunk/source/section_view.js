@@ -93,15 +93,15 @@ function SectionView(inPageView, inDivElement, inSection, inSectionNumber) {
   Util.assert(inSection instanceof Item);
   
   // instance properties
-  // PROBLEM: these should all be private
+  // PENDING: these should all be private
   this.setSuperview(inPageView);
   this.setDivElement(inDivElement);
   this.mySection = inSection;
   this.mySectionNumber = inSectionNumber;
   var query = inSection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
   this.myListOfContentItems = this.getStevedore().getListOfResultItemsForQuery(query); 
-  var layoutName = inSection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME)[0];
-  this.myLayout = this.getLayoutFromLayoutName(layoutName);
+
+  this._myLayout = null;
   this._myLayoutDiv = null;
   this._myHasEverBeenDisplayedFlag = false;
   this._mySectionSummaryView = null;
@@ -138,19 +138,20 @@ SectionView.getStringForValue = function (inValue) {
 /**
  * Given the name of a layout ("Table", "Outline", etc.), returns a newly
  * created layout object of that type, initialized to be the layout for this 
- * section
+ * SectionView.
  *
  * @scope    public instance method
  * @param    inLayoutName    A string. One of the registered layout names. 
+ * @param    inLayoutDiv    The HTMLDivElement to display the layout in. 
  * @return   A newly created layout object, initialized to be the layout for this section.
  */
-SectionView.prototype.getLayoutFromLayoutName = function (inLayoutName) {
+SectionView.prototype.getLayoutFromLayoutName = function (inLayoutName, inLayoutDiv) {
   Util.assert(Util.isString(inLayoutName));
   
   var newLayout = null;
   var layoutClass = SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[inLayoutName];
   if (layoutClass) {
-    newLayout = new layoutClass(this);
+    newLayout = new layoutClass(this, inLayoutDiv);
   }
   return newLayout;
 };
@@ -181,8 +182,7 @@ SectionView.prototype.refresh = function () {
   } else {
     // refresh the <h2> element with the value: this.mySection.getDisplayName();  
     this._mySectionSummaryView.refresh();
-    this.myLayout.setDivElement(this._myLayoutDiv);
-    this.myLayout.display();
+    this._myLayout.refresh();
   }
 };
 
@@ -197,6 +197,7 @@ SectionView.prototype.doInitialDisplay = function () {
   if (!this.getDivElement()) {
     return;
   }
+  var selectedLayoutName = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME)[0];
   var query = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
   this.myListOfContentItems = this.getStevedore().getListOfResultItemsForQuery(query); 
   if (!this.myListOfContentItems) {
@@ -216,18 +217,19 @@ SectionView.prototype.doInitialDisplay = function () {
   var selectElement = View.createAndAppendElement(outerDiv, "select", SectionView.ELEMENT_CLASS_SECTION_LAYOUT_MENU, selectMenuId);
   selectElement.setAttribute("name", selectMenuId);
   selectElement.setAttribute(SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER, this.mySectionNumber);
-  selectElement.mysectionview = this;
   for (var layoutName in SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName) {
     var optionElement = View.createAndAppendElement(selectElement, "option");
-    optionElement.selected = (this.myLayout.getLayoutName() == layoutName);
+    optionElement.selected = (selectedLayoutName == layoutName);
     optionElement.setAttribute("value", layoutName);
-    optionElement.setAttribute("onclick", "SectionView.clickOnLayoutSelectionMenu(event)");
+    // Util.addEventListener(optionElement, "click", SectionView.clickOnLayoutSelectionMenu);
+    var listener = this; 
+    Util.addEventListener(optionElement, "click", function(event) {listener.clickOnLayoutSelectionMenu(event);});
     optionElement.innerHTML = layoutName;
   }
 
   // create a div element for the layout class to use
   this._myLayoutDiv = View.createAndAppendElement(outerDiv, "div");
-  this.myLayout.setDivElement(this._myLayoutDiv);
+  this._myLayout = this.getLayoutFromLayoutName(selectedLayoutName, this._myLayoutDiv);
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
 };
@@ -241,31 +243,27 @@ SectionView.prototype.doInitialDisplay = function () {
  * Called when the user clicks on any of the layout option-select controls.
  * Called from an HTML option element within an HTML select element.
  *
- * @scope    public class method
+ * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-SectionView.clickOnLayoutSelectionMenu = function (inEventObject) {
-  var eventObject = inEventObject;
-  if (!eventObject) { eventObject = window.event; }
+SectionView.prototype.clickOnLayoutSelectionMenu = function (inEventObject) {
+  var eventObject = inEventObject || window.event;
   var optionElement = Util.getTargetFromEvent(eventObject);
-  // PROBLEM: We could replace the lines above with "var optionElement = this;"
+  // PENDING: We could replace the lines above with "var optionElement = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
   
   var selectElement = optionElement.parentNode;
   var newChoiceName = optionElement.value;
-  
-  var sectionView = selectElement.mysectionview;
-  
-  if (sectionView.myLayout.getLayoutName() == newChoiceName) {
-    // alert("line 213");
+
+ 
+  if (this._myLayout.getLayoutName() == newChoiceName) {
     return;
   } else {
-    // alert("line 216");
-    sectionView.myLayout = sectionView.getLayoutFromLayoutName(newChoiceName);
-    sectionView.mySection.clear(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME);
-    sectionView.mySection.assign(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME, newChoiceName);
-  
-    sectionView.refresh();
+    this._myLayout.endOfLife();
+    this._myLayout = this.getLayoutFromLayoutName(newChoiceName, this._myLayoutDiv);
+    this.mySection.clear(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME);
+    this.mySection.assign(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME, newChoiceName);
+    this.refresh();
   }
 };
 

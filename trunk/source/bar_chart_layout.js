@@ -48,13 +48,15 @@ SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[SectionView.LAYOUT_BAR_
  * A BarChartLayout displays a set of content items for a SectionView. 
  *
  * @scope    public instance constructor
+ * @extends  View
  * @param    inSectionView    The SectionView that serves as the superview for this view. 
+ * @param    inDivElement    The HTMLDivElement to display this view in. 
  * @syntax   var barChart = new BarChartLayout()
  */
-function BarChartLayout(inSectionView) {
-  Util.assert(inSectionView instanceof SectionView);
-  this.mySectionView = inSectionView;
-  this._myDivElement = null;
+BarChartLayout.prototype = new View();  // makes BarChartLayout be a subclass of View
+function BarChartLayout(inSectionView, inDivElement) {
+  this.setSuperview(inSectionView);
+  this.setDivElement(inDivElement);
 }
 
 
@@ -70,25 +72,12 @@ BarChartLayout.prototype.getLayoutName = function () {
 
 
 /**
- * Tells the BarChartLayout what HTMLDivElement to display the bar chart in.
- *
- * @scope    public instance method
- * @param    inDivElement    The HTMLDivElement to display the bar chart in. 
- */
-BarChartLayout.prototype.setDivElement = function (inDivElement) {
-  Util.assert(inDivElement instanceof HTMLDivElement);
-  this._myDivElement = inDivElement;
-  this.display();
-};
-
-
-/**
  * Re-creates all the HTML for the BarChartLayout, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-BarChartLayout.prototype.display = function () {
+BarChartLayout.prototype.refresh = function () {
   var listOfStrings = [];
 
   var contentItem = null;
@@ -96,7 +85,8 @@ BarChartLayout.prototype.display = function () {
   var hashTableOfNumericValueIncidenceKeyedByAttributeUuid = {};
   
   // for each attribute, count the number of items where that attribute has a numeric value
-  var listOfContentItems = this.mySectionView.getListOfContentItems();
+  // PENDING: how do we know our superview responds to getListOfContentItems()? 
+  var listOfContentItems = this.getSuperview().getListOfContentItems();
   for (var iKey in listOfContentItems) {
     contentItem = listOfContentItems[iKey];
     var listOfAttributesForItem = contentItem.getListOfAttributeUuids();
@@ -123,7 +113,7 @@ BarChartLayout.prototype.display = function () {
   for (attributeUuid in hashTableOfNumericValueIncidenceKeyedByAttributeUuid) {
     var incidence = hashTableOfNumericValueIncidenceKeyedByAttributeUuid[attributeUuid];
     if (incidence > maxIncidence) {
-      selectedAttribute = this.mySectionView.getStevedore().getItemFromUuid(attributeUuid);
+      selectedAttribute = this.getStevedore().getItemFromUuid(attributeUuid);
       maxIncidence = incidence;
     }
   }
@@ -144,7 +134,7 @@ BarChartLayout.prototype.display = function () {
   // add the table header row(s)
   listOfStrings.push("<table class=\"" + SectionView.ELEMENT_CLASS_SIMPLE_TABLE + "\">");
   listOfStrings.push("<tr>");
-  var attributeCalledName = this.mySectionView.getStevedore().getItemFromUuid(Stevedore.UUID_FOR_ATTRIBUTE_NAME);
+  var attributeCalledName = this.getStevedore().getItemFromUuid(Stevedore.UUID_FOR_ATTRIBUTE_NAME);
   listOfStrings.push("<th>" + attributeCalledName.getDisplayName() + "</th>");
   if (selectedAttribute) {
     listOfStrings.push("<th>" + selectedAttribute.getDisplayName() + "</th>");
@@ -178,12 +168,21 @@ BarChartLayout.prototype.display = function () {
     
   // return all the new content   
   var finalString = listOfStrings.join("");
-  this._myDivElement.innerHTML = finalString;
+  this.getDivElement().innerHTML = finalString;
+};
+
+
+/**
+ * Does final clean-up.
+ *
+ * @scope    public instance method
+ */
+BarChartLayout.prototype.endOfLife = function () {
+  this.getDivElement().innerHTML = "";
 };
 
 
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------
-
 

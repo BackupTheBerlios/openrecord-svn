@@ -47,14 +47,15 @@ SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[SectionView.LAYOUT_DETA
  * A DetailLayout display one or more content items. 
  *
  * @scope    public instance constructor
+ * @extends  View
  * @param    inSuperView    The superview for this view. 
+ * @param    inDivElement    The HTMLDivElement to display this view in. 
  * @syntax   var detailLayout = new DetailLayout()
  */
-function DetailLayout(inSuperView) {
-  Util.assert((inSuperView instanceof SectionView) || (inSuperView instanceof ItemView));
-  
-  this.mySuperView = inSuperView;
-  this.myDivElement = null;
+DetailLayout.prototype = new View();  // makes DetailLayout be a subclass of View
+function DetailLayout(inSuperView, inDivElement) {
+  this.setSuperview(inSuperView);
+  this.setDivElement(inDivElement);  
 }
 
 
@@ -70,30 +71,17 @@ DetailLayout.prototype.getLayoutName = function () {
 
   
 /**
- * Tells the DetailLayout what HTMLDivElement to display itself in.
- *
- * @scope    public instance method
- * @param    inDivElement    The HTMLDivElement to display in. 
- */
-DetailLayout.prototype.setDivElement = function (inDivElement) {
-  Util.assert(inDivElement instanceof HTMLDivElement);
-  
-  this.myDivElement = inDivElement;
-  this.display();
-};
-
-
-/**
  * Re-creates all the HTML for the DetailLayout, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-DetailLayout.prototype.display = function () {
+DetailLayout.prototype.refresh = function () {
   var listOfStrings = [];
 
   // for each content item, add its HTML representation to the output
-  var listOfContentItems = this.mySuperView.getListOfContentItems();
+  // PENDING: how do we know our superview responds to getListOfContentItems()? 
+  var listOfContentItems = this.getSuperview().getListOfContentItems();
   for (var contentItemKey in listOfContentItems) {
     var contentItem = listOfContentItems[contentItemKey];
     listOfStrings.push(this.getXhtmlTableForItem(contentItem));
@@ -102,7 +90,17 @@ DetailLayout.prototype.display = function () {
 
   // take all the HTML and put it together
   var finalString = listOfStrings.join("");
-  this.myDivElement.innerHTML = finalString;
+  this.getDivElement().innerHTML = finalString;
+};
+
+
+/**
+ * Does final clean-up.
+ *
+ * @scope    public instance method
+ */
+DetailLayout.prototype.endOfLife = function () {
+  this.getDivElement().innerHTML = "";
 };
 
 
@@ -118,7 +116,7 @@ DetailLayout.prototype.getXhtmlTableForItem = function (inItem) {
   Util.assert(inItem instanceof Item);
   
   var listOfStrings = [];
-  var stevedore = this.mySuperView.getStevedore();
+  var stevedore = this.getStevedore();
   var attributeCalledName = stevedore.getItemFromUuid(Stevedore.UUID_FOR_ATTRIBUTE_NAME);
   
   listOfStrings.push("<table class=\"" + SectionView.ELEMENT_CLASS_SIMPLE_TABLE + "\">");

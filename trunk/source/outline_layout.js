@@ -46,14 +46,15 @@ SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[SectionView.LAYOUT_OUTL
  * An OutlineLayout displays a set of content items for a SectionView. 
  *
  * @scope    public instance constructor
+ * @extends  View
  * @param    inSectionView    The SectionView that serves as the superview for this view. 
+ * @param    inDivElement    The HTMLDivElement to display this view in. 
  * @syntax   var outline = new OutlineLayout()
  */
-function OutlineLayout(inSectionView) {
-  Util.assert(inSectionView instanceof SectionView);
-
-  this.mySectionView = inSectionView;
-  this.myDivElement = null;
+OutlineLayout.prototype = new View();  // makes OutlineLayout be a subclass of View
+function OutlineLayout(inSectionView, inDivElement) {
+  this.setSuperview(inSectionView);
+  this.setDivElement(inDivElement);
 }
 
 
@@ -69,43 +70,35 @@ OutlineLayout.prototype.getLayoutName = function () {
 
   
 /**
- * Tells the OutlineLayout what HTMLDivElement to display the bar chart in.
- *
- * @scope    public instance method
- * @param    inDivElement    The HTMLDivElement to display the bar chart in. 
- */
-OutlineLayout.prototype.setDivElement = function (inDivElement) {
-  Util.assert(inDivElement instanceof HTMLDivElement);
-
-  this.myDivElement = inDivElement;
-};
-
-
-/**
  * Re-creates all the HTML for the OutlineLayout, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-OutlineLayout.prototype.display = function () {
-  var listOfStrings = [];
-
-  var listOfContentItems = this.mySectionView.getListOfContentItems();
-  listOfStrings.push("<ul>");
-  // for each content item, add its HTML representation to the output
+OutlineLayout.prototype.refresh = function () {
+  var listOfContentItems = this.getSuperview().getListOfContentItems();
+  var outlineDiv = this.getDivElement();
+  var ulElement = View.createAndAppendElement(outlineDiv, "ul");
   for (var contentItemKey in listOfContentItems) {
     var contentItem = listOfContentItems[contentItemKey];
-    listOfStrings.push("<li>");
-    listOfStrings.push(contentItem.getDisplayName("{no name}"));
-    // PROBLEM: Why do I have to provide an onclick handler to get these links to work?
-    listOfStrings.push(" " + "<a class=\"" + SectionView.ELEMENT_CLASS_MORE_LINK + "\" href=\"" + RootView.URL_HASH_ITEM_PREFIX + contentItem.getUuid() + "\" onclick=\"RootView.clickOnLocalLink(event)\">(more &#8658;)</a>" + "");
-    listOfStrings.push("</li>");
+    var liElement = View.createAndAppendElement(ulElement, "li");
+    View.createAndAppendTextNode(liElement, contentItem.getDisplayName("{no name}") + " ");
+    var anchorElement = View.createAndAppendElement(liElement, "a", SectionView.ELEMENT_CLASS_MORE_LINK);
+    anchorElement.setAttribute("href", RootView.URL_HASH_ITEM_PREFIX + contentItem.getUuid());
+    // View.createAndAppendTextNode(anchorElement, "(more &#8658;)");
+    anchorElement.innerHTML = "(more &#8658;)";
+    Util.addEventListener(anchorElement, "click", RootView.clickOnLocalLink);
   }
-  listOfStrings.push("</ul>");
+};
 
-  // take all the HTML and put it together
-  var finalString = listOfStrings.join("");
-  this.myDivElement.innerHTML = finalString;
+
+/**
+ * Does final clean-up.
+ *
+ * @scope    public instance method
+ */
+OutlineLayout.prototype.endOfLife = function () {
+  this.getDivElement().innerHTML = "";
 };
 
 

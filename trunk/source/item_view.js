@@ -66,7 +66,7 @@ function ItemView(inRootView, inDivElement, inItem) {
   this.myItem = inItem;
   // this.myDivElement = inDivElement;
   // this.myRootView = inRootView;
-  this.myLayout = new DetailLayout(this);
+  this.myLayout = null;
 }
 
 
@@ -103,7 +103,7 @@ ItemView.prototype.getPageTitle = function () {
 ItemView.prototype.refresh = function () {
   Util.assert(this.myItem instanceof Item);
   // Util.assert(this.myDivElement instanceof HTMLDivElement);
-  
+  // RootView.displayTextInDebugTextarea("ItemView.prototype.refresh"); 
   var listOfStrings = [];
 
   // add an <h1> heading with the name of the page
@@ -116,11 +116,11 @@ ItemView.prototype.refresh = function () {
   // write out all the new content 
   var finalString = listOfStrings.join("");
   this.getDivElement().innerHTML = finalString;
-  this.includeOnScreen(true);
 
   // let the detailLayout add its own content
   var detailLayoutDivElement = document.getElementById(detailDivId);
-  this.myLayout.setDivElement(detailLayoutDivElement);
+  this.myLayout = new DetailLayout(this, detailLayoutDivElement);
+  this.myLayout.refresh();
 };
 
 

@@ -30,7 +30,7 @@
 //    + accessor methods are prefixed with "get" or "is" -- e.g. oval.getArea(), oval.isCircle()
 //       + any method that returns a value and does not change an object's state should be a "get" or "is" method
 //       + any method that does change an object's state should be a "set" method
-//    + problems are marked with PROBLEM
+//    + problems are marked with PENDING
 //
 // + compatiblity with other browsers and other JavaScript libraries 
 //    + use "get" and "set" accessors -- do *not* assign Mozilla "getter" and "setter" methods
@@ -54,7 +54,7 @@
 //    + instance methods are defined on the prototype -- see getArea()
 //    + accessor methods never have side-effects
 //
-// + PROBLEM
+// + PENDING
 //    + private instance properties?
 //    + private instance methods?
 //    + class methods?

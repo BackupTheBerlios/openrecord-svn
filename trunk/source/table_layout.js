@@ -54,13 +54,10 @@ TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD = "current_edit_field";
  * When the TableLayout creates an HTML table, it sets up each HTML "td" table 
  * cell element in the table to point to a corresponding CellDelegate instance.
  *
- * PROBLEM: This CellDelegate class should be privately owned by the
- * TableLayout class.
- *
- * @scope    public instance constructor
+ * @scope    private instance constructor
  */
-function _CellDelegate(inRowDelegate, inCellElementId, inCellCount, inColumnNumber, inAttribute, inTableLayout) {
-  Util.assert(inRowDelegate instanceof _RowDelegate);
+TableLayout._CellDelegate = function (inRowDelegate, inCellElementId, inCellCount, inColumnNumber, inAttribute, inTableLayout) {
+  Util.assert(inRowDelegate instanceof TableLayout._RowDelegate);
   Util.assert(inAttribute instanceof Item);
   Util.assert(inTableLayout instanceof TableLayout);
 
@@ -77,12 +74,9 @@ function _CellDelegate(inRowDelegate, inCellElementId, inCellCount, inColumnNumb
  * When the TableLayout creates an HTML table, it sets up each HTML "tr" table
  * row element in the table to point to a corresponding RowDelegate instance.
  *
- * PROBLEM: This RowDelegate class should be privately owned by the
- * TableLayout class.
- *
- * @scope    public instance constructor
+ * @scope    private instance constructor
  */
-function _RowDelegate(inContentItem, inRowNumber) {
+TableLayout._RowDelegate = function (inContentItem, inRowNumber) {
   Util.assert((inContentItem == null) || (inContentItem instanceof Item));
 
   this.myContentItem = inContentItem;
@@ -96,13 +90,15 @@ function _RowDelegate(inContentItem, inRowNumber) {
  * HTML table.
  *
  * @scope    public instance constructor
+ * @extends  View
  * @param    inSectionView    The SectionView that this TableLayout will appears in. 
+ * @param    inDivElement    The HTMLDivElement to display this view in. 
  */
-function TableLayout(inSectionView) {
-  Util.assert(inSectionView instanceof SectionView);
+TableLayout.prototype = new View();  // makes TableLayout be a subclass of View
+function TableLayout(inSectionView, inDivElement) {
+  this.setSuperview(inSectionView);
+  this.setDivElement(inDivElement);  
 
-  this.mySectionView = inSectionView;
-  this.myDivElement = null;
   this.myNumColumns = null;
   this.myNumRows = null;
   this.myArrayOfRowDelegates = new Array();
@@ -122,27 +118,12 @@ TableLayout.prototype.getLayoutName = function () {
 
   
 /**
- * Gives the TableLayout a place on the page to put HTML code, allowing
- * the TableLayout to display itself.
- *
- * @scope    public instance method
- * @param    inDivElement    The HTMLDivElement that this layout should display itself in. 
- */
-TableLayout.prototype.setDivElement = function (inDivElement) {
-  Util.assert(inDivElement instanceof HTMLDivElement);
-
-  this.myDivElement = inDivElement;
-  this.display();
-};
-
-
-/**
  * Re-creates all the HTML for the TableLayout, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-TableLayout.prototype.display = function () {
+TableLayout.prototype.refresh = function () {
   var listOfStrings = [];
   var hashTableOfAttributesKeyedByUuid = {};
   var hashTableOfCellDelegatesKeyedByElementId = {};
@@ -152,14 +133,15 @@ TableLayout.prototype.display = function () {
   var columnCount = 0;
   
   // find the union of the attribute lists of all the content items
-  var listOfContentItems = this.mySectionView.getListOfContentItems();
+  // PENDING: how do we know our superview responds to getListOfContentItems()? 
+  var listOfContentItems = this.getSuperview().getListOfContentItems();
   for (var iKey in listOfContentItems) {
     contentItem = listOfContentItems[iKey];
     var listOfAttributesForItem = contentItem.getListOfAttributeUuids();
     for (var attributeKey in listOfAttributesForItem) {
       attributeUuid = listOfAttributesForItem[attributeKey];
       if (attributeUuid != Stevedore.UUID_FOR_ATTRIBUTE_CATEGORY) {
-        hashTableOfAttributesKeyedByUuid[attributeUuid] = this.mySectionView.getStevedore().getItemFromUuid(attributeUuid);
+        hashTableOfAttributesKeyedByUuid[attributeUuid] = this.getStevedore().getItemFromUuid(attributeUuid);
       }
     }
   }
@@ -177,13 +159,13 @@ TableLayout.prototype.display = function () {
   
   // add all the table body rows
   var cellCount = 0;
-  var cellIdPrefix = SectionView.ELEMENT_ID_CELL_PREFIX + this.mySectionView.mySectionNumber + SectionView.ELEMENT_ID_CELL_MIDFIX;
+  var cellIdPrefix = SectionView.ELEMENT_ID_CELL_PREFIX + this.getSuperview().mySectionNumber + SectionView.ELEMENT_ID_CELL_MIDFIX;
   var cellId = "";
   this.myNumRows = 0;
   for (var kKey in listOfContentItems) {
     contentItem = listOfContentItems[kKey];
     listOfStrings.push("<tr>");
-    var rowDelegate = new _RowDelegate(contentItem, this.myNumRows);
+    var rowDelegate = new TableLayout._RowDelegate(contentItem, this.myNumRows);
     this.myArrayOfRowDelegates[this.myNumRows] = rowDelegate;
     this.myNumRows += 1;
     columnCount = 0;
@@ -196,9 +178,9 @@ TableLayout.prototype.display = function () {
       if (valueList) {
         string = SectionView.getStringForValue(valueList[0]);
       }
-      if (this.mySectionView.isInEditMode()) {
-        listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.mySectionView.mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TableLayout.clickOnCell(event)\">" + string + "</td>");
-        var cellDelegate = new _CellDelegate(rowDelegate, cellId, cellCount, columnCount, attribute, this);
+      if (this.isInEditMode()) {
+        listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.getSuperview().mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TableLayout.clickOnCell(event)\">" + string + "</td>");
+        var cellDelegate = new TableLayout._CellDelegate(rowDelegate, cellId, cellCount, columnCount, attribute, this);
         rowDelegate.myArrayOfCellDelegates[columnCount] = cellDelegate;
         hashTableOfCellDelegatesKeyedByElementId[cellId] = cellDelegate;
       } else {
@@ -214,10 +196,10 @@ TableLayout.prototype.display = function () {
 
   // if we're in edit mode, add a row at the bottom of the table for entering new items
   var firstCell = true;
-  var lastRowDelegate = new _RowDelegate(null, this.myNumRows);
+  var lastRowDelegate = new TableLayout._RowDelegate(null, this.myNumRows);
   this.myArrayOfRowDelegates[this.myNumRows] = lastRowDelegate;
   this.myNumRows += 1;
-  if (this.mySectionView.isInEditMode()) {
+  if (this.isInEditMode()) {
     listOfStrings.push("<tr>");
     columnCount = 0;
     for (var mKey in hashTableOfAttributesKeyedByUuid) {
@@ -226,8 +208,8 @@ TableLayout.prototype.display = function () {
       firstCell = false;
       cellCount += 1;
       cellId = cellIdPrefix + cellCount;
-      listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_NEW_ITEM + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.mySectionView.mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TableLayout.clickOnCell(event)\">" + contentString + "</td>");
-      var lastRowCellDelegate = new _CellDelegate(lastRowDelegate, cellId, cellCount, columnCount, attribute, this);
+      listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_NEW_ITEM + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.getSuperview().mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TableLayout.clickOnCell(event)\">" + contentString + "</td>");
+      var lastRowCellDelegate = new TableLayout._CellDelegate(lastRowDelegate, cellId, cellCount, columnCount, attribute, this);
       lastRowDelegate.myArrayOfCellDelegates[columnCount] = lastRowCellDelegate;
       hashTableOfCellDelegatesKeyedByElementId[cellId] = lastRowCellDelegate;
       columnCount += 1;
@@ -240,7 +222,7 @@ TableLayout.prototype.display = function () {
   
   // write out all the new content   
   var finalString = listOfStrings.join("");
-  this.myDivElement.innerHTML = finalString;
+  this.getDivElement().innerHTML = finalString;
   
   // attach back-pointers to the newly created UI elements
   for (var elementId in hashTableOfCellDelegatesKeyedByElementId) {
@@ -250,6 +232,16 @@ TableLayout.prototype.display = function () {
   }
 };
   
+
+/**
+ * Does final clean-up.
+ *
+ * @scope    public instance method
+ */
+TableLayout.prototype.endOfLife = function () {
+  this.getDivElement().innerHTML = "";
+};
+
 
 /**
  * Called when the user clicks on a table cell.
@@ -262,10 +254,10 @@ TableLayout.prototype.display = function () {
 TableLayout.clickOnCell = function (inEventObject) {
   var eventObject = inEventObject;
   if (!eventObject) { eventObject = window.event; } 
-  // PROBLEM: try this instead: var eventObject = inEventObject || window.event;
+  // PENDING: try this instead: var eventObject = inEventObject || window.event;
   
   var htmlElement = Util.getTargetFromEvent(eventObject);
-  // PROBLEM: We could replace the two lines above with "var htmlElement = this;"
+  // PENDING: We could replace the two lines above with "var htmlElement = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?
 
   var currentEditField = document.getElementById(TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD);
@@ -308,7 +300,9 @@ TableLayout.startEditingInCell = function (inCellElement) {
   var editFieldString = "<input type=\"text\" class=\"" + SectionView.ELEMENT_CLASS_TEXT_FIELD_IN_TABLE_CELL + "\" id=\"" + TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD + "\" value=\"" + initialEditValue + "\" size=\"1\"></input>";
   inCellElement.innerHTML = editFieldString;
   inCellElement.className = SectionView.ELEMENT_CLASS_SELECTED + " " + inCellElement.className;
-  
+  // var listener = this; 
+  // Util.addEventListener(editField, "blur", function(event) {listener.onBlur(event);});
+      
   var newEditField = document.getElementById(TableLayout.ELEMENT_ID_CURRENT_EDIT_FIELD);
   newEditField.onkeypress = TableLayout.keyPressOnEditField;
   newEditField.select();
@@ -332,7 +326,7 @@ TableLayout.leaveEditField = function () {
     // find the content item for this cell, and set the attribute to the new cell value
     var contentItem = cellDelegate.myRowDelegate.myContentItem;
     if (!contentItem) {
-      var sectionView = cellDelegate.myTableLayout.mySectionView;
+      var sectionView = cellDelegate.myTableLayout.getSuperview();
       var stevedore = sectionView.getStevedore();
       contentItem = stevedore.newItem(); 
       cellDelegate.myTableLayout.myNewItemCreatedFlag = true;
@@ -340,7 +334,7 @@ TableLayout.leaveEditField = function () {
       var queryList = sectionView.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY);
       if (queryList) {
         var query = queryList[0];
-        // PROBLEM: We should NOT get a value from the item's PRIVATE _myStevedore property
+        // PENDING: We should NOT get a value from the item's PRIVATE _myStevedore property
         contentItem._myStevedore.setItemToBeIncludedInQueryResultList(contentItem, query);
       }
     }
@@ -428,7 +422,7 @@ TableLayout.keyPressOnEditField = function (inEventObject) {
     if (move == MOVE_LEFT || move == MOVE_RIGHT) {
       shiftBy = (move == MOVE_LEFT) ? -1 : 1;
       var nextColumnNumber = cellDelegate.myColumnNumber + shiftBy;
-      // PROBLEM: We should be able to do this in one line, using a modulo operator
+      // PENDING: We should be able to do this in one line, using a modulo operator
       if (nextColumnNumber < 0) {
         nextColumnNumber = (tableLayout.myNumColumns - 1);
       }
@@ -457,7 +451,7 @@ TableLayout.keyPressOnEditField = function (inEventObject) {
     TableLayout.leaveEditField();
     if (userHitReturnInLastRow && tableLayout.myNewItemCreatedFlag) {
       tableLayout.myNewItemCreatedFlag = false;
-      tableLayout.display();
+      tableLayout.refresh();
       tableLayout.startEditingInCellForNewItemAtColumn(cellDelegate.myColumnNumber);
     } else {
       if (nextCell) {
