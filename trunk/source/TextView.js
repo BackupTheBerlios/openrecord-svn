@@ -1,5 +1,5 @@
 /*****************************************************************************
- text_view.js
+ TextView.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -38,13 +38,13 @@
 
 
 // -------------------------------------------------------------------
-// MultiLineTextView public class constants
+// TextView public class constants
 // -------------------------------------------------------------------
-MultiLineTextView.ELEMENT_CLASS_TEXT_BLOCK = "text_block";
+TextView.ELEMENT_CLASS_TEXT_BLOCK = "text_block";
 
 
 /**
- * An instance of MultiLineTextView can be placed in any parent container View
+ * An instance of TextView can be placed in any parent container View
  * to display and (if in edit mode) edit multi-lines of text
  *
  * @scope    public instance constructor
@@ -55,8 +55,8 @@ MultiLineTextView.ELEMENT_CLASS_TEXT_BLOCK = "text_block";
  * @param    theDivElement    The HTMLDivElement to display the HTML in. 
  * @param    theClassType    A string that gives a class name to assign to the HTML element. 
  */
-MultiLineTextView.prototype = new View();  // makes MultiLineTextView be a subclass of View
-function MultiLineTextView(theSuperview, theDivElement, theItem, theAttribute, theClassType) {
+TextView.prototype = new View();  // makes TextView be a subclass of View
+function TextView(theSuperview, theDivElement, theItem, theAttribute, theClassType) {
   Util.assert(theItem instanceof Item);
   //Util.assert(theAttribute instanceof Attribute); PENDING need to check that attribute is an attribute
   
@@ -78,7 +78,7 @@ function MultiLineTextView(theSuperview, theDivElement, theItem, theAttribute, t
  *
  * @scope    public instance method
  */
-MultiLineTextView.prototype.refresh = function() {
+TextView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this.doInitialDisplay();
   } else {
@@ -91,16 +91,16 @@ MultiLineTextView.prototype.refresh = function() {
 
 
 /**
- * Re-creates all the HTML for the MultiLineTextView, and hands the HTML to the 
+ * Re-creates all the HTML for the TextView, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-MultiLineTextView.prototype.doInitialDisplay = function() {
+TextView.prototype.doInitialDisplay = function() {
   var divElement = this.getDivElement();
   Util.assert(divElement instanceof HTMLDivElement);
   
-  divElement.className = MultiLineTextView.ELEMENT_CLASS_TEXT_BLOCK;
+  divElement.className = TextView.ELEMENT_CLASS_TEXT_BLOCK;
   var textList = this.textItem.getValueListFromAttribute(this.attribute);
   var textString = "";
   for (var i in textList) {
@@ -122,7 +122,7 @@ MultiLineTextView.prototype.doInitialDisplay = function() {
  *
  * @scope    public instance method
  */
-MultiLineTextView.prototype.startEditing = function() {
+TextView.prototype.startEditing = function() {
   if (!this.isEditing) {
     var editField = this.editField;
     if (!editField) {
@@ -154,7 +154,7 @@ MultiLineTextView.prototype.startEditing = function() {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-MultiLineTextView.prototype.onClick = function(inEventObject) {
+TextView.prototype.onClick = function(inEventObject) {
   if (this.isInEditMode()) {
     this.startEditing();
   }
@@ -170,7 +170,7 @@ MultiLineTextView.prototype.onClick = function(inEventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-MultiLineTextView.prototype.onBlur = function(inEventObject) {
+TextView.prototype.onBlur = function(inEventObject) {
   if (this.isEditing) {
     var newText = this.editField.value;
     this.textItem.clear(this.attribute);

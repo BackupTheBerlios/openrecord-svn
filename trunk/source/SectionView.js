@@ -209,7 +209,7 @@ SectionView.prototype.doInitialDisplay = function () {
   var headerH2 = View.createAndAppendElement(outerDiv, "h2");
   headerH2.innerHTML = this.mySection.getDisplayName();
   var summaryDiv = View.createAndAppendElement(outerDiv, "div");
-  this._mySectionSummaryView = new MultiLineTextView(this, summaryDiv, this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+  this._mySectionSummaryView = new TextView(this, summaryDiv, this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
   View.createAndAppendElement(outerDiv, "p");
 
   // create the plugin editing controls, if we're in edit mode

@@ -122,7 +122,7 @@ PageView.prototype.doInitialDisplay = function () {
   headerElement.innerHTML = this.myPage.getDisplayName();
 
   var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
-  this._myPageSummaryView = new MultiLineTextView(this, summaryViewDiv, this.myPage, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+  this._myPageSummaryView = new TextView(this, summaryViewDiv, this.myPage, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
 
   // add <div> elements for each of the sections on the page
   // and create a new SectionView for each section
