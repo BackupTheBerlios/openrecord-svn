@@ -78,7 +78,6 @@ OutlineLayout.prototype.setDivElement = function (inDivElement) {
   Util.assert(inDivElement instanceof HTMLDivElement);
 
   this.myDivElement = inDivElement;
-  this.display();
 };
 
 

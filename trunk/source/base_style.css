@@ -222,7 +222,12 @@ span.bad {
   float: right;
 }
 
-.section_layout_menu {
+div.editmode .section_layout_menu {
+  display: block;
+}
+
+div.viewmode .section_layout_menu {
+  display: none;
 }
 
 

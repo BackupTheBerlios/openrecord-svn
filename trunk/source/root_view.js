@@ -90,66 +90,38 @@ function RootView(inStevedore) {
   }
 
   window.document.body.innerHTML = "";
-  var rootDivElement = window.document.createElement("div"); 
-  window.document.body.appendChild(rootDivElement);
+  var rootDiv = View.createAndAppendElement(window.document.body, "div");
  
   for (var uuid in this.myHashTableOfPagesKeyedByUuid) {
     var aPage = this.myHashTableOfPagesKeyedByUuid[uuid];
-    var anchorElement = window.document.createElement("a");
-    anchorElement.setAttribute("name", RootView.URL_PAGE_PREFIX + aPage.getUuid());
-    rootDivElement.appendChild(anchorElement);
+    var anchor = View.createAndAppendElement(rootDiv, "a");
+    anchor.setAttribute("name", RootView.URL_PAGE_PREFIX + aPage.getUuid());
   }
   
-  var headerElement = window.document.createElement("p"); 
-  headerElement.className = "header";
-  rootDivElement.appendChild(headerElement);
-  
-  var logoSpanElement = window.document.createElement("span");
-  logoSpanElement.className = "logo";
-  logoSpanElement.innerHTML = '<a href="http://openrecord.org"><span class="logostart">open</span><span class="logomiddle">record</span><span class="logoend">.org</span></a>';
-  headerElement.appendChild(logoSpanElement);
+  var headerP = View.createAndAppendElement(rootDiv, "p", "header");
+  var logoSpan = View.createAndAppendElement(headerP, "span", "logo");
+  logoSpan.innerHTML = '<a href="http://openrecord.org"><span class="logostart">open</span><span class="logomiddle">record</span><span class="logoend">.org</span></a>';
+  var mainControlSpan = View.createAndAppendElement(headerP, "span", null, "main_control_span");
+  View.createAndAppendElement(headerP, "br");
+  var navbarDiv = View.createAndAppendElement(rootDiv, "div", "navbar");
+  var contentAreaDiv = View.createAndAppendElement(rootDiv, "div", "content_area");
+  var contentViewDiv = View.createAndAppendElement(contentAreaDiv, "div");
+  var debugDiv = View.createAndAppendElement(rootDiv, "div", "debug");
 
-  var mainControlSpanElement = window.document.createElement("span");
-  mainControlSpanElement.id = "main_control_span";
-  headerElement.appendChild(mainControlSpanElement);
-  headerElement.appendChild(window.document.createElement("br"));
-  
-  var navbarDivElement = window.document.createElement("div");
-  navbarDivElement.className = "navbar";
-  rootDivElement.appendChild(navbarDivElement);
-
-  var contentAreaDivElement = window.document.createElement("div");
-  contentAreaDivElement.className = "content_area";
-  rootDivElement.appendChild(contentAreaDivElement);
-
-  var contentViewDivElement = window.document.createElement("div");
-  contentAreaDivElement.appendChild(contentViewDivElement);
-
-  var debugDivElement = window.document.createElement("div");
-  debugDivElement.className = "debug";
-  rootDivElement.appendChild(debugDivElement);
-
-  var footerElement = window.document.createElement("p"); 
-  footerElement.className = "footer";
-  rootDivElement.appendChild(footerElement);
-
-  var copyrightSpanElement = window.document.createElement("span");
-  copyrightSpanElement.className = "copyright";
-  copyrightSpanElement.innerHTML = 'You can copy freely from this site &mdash; ' +
+  var footerP = View.createAndAppendElement(rootDiv, "p", "footer");
+  var copyrightSpan = View.createAndAppendElement(footerP, "span", "copyright");
+  copyrightSpan.innerHTML = 'You can copy freely from this site &mdash; ' +
     'copyright rights relinquished under the Creative Commons ' +
     '<a rel="license external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain Dedication</a>.';
-  footerElement.appendChild(copyrightSpanElement);
 
-  var statusBlurbSpanElement = window.document.createElement("span");
-  statusBlurbSpanElement.className = "fileformat";
-  footerElement.appendChild(statusBlurbSpanElement);
-  footerElement.appendChild(window.document.createElement("br"));
+  var statusBlurbSpan = View.createAndAppendElement(footerP, "span", "fileformat");
+  View.createAndAppendElement(footerP, "br");
   
-  this.myMainControlSpanElement = mainControlSpanElement;
-  this.myNavbarDivElement = navbarDivElement;
-  this._myContentViewDivElement = contentViewDivElement;
-  this.myDebugDivElement = debugDivElement;
-  this.myStatusBlurbSpanElement = statusBlurbSpanElement;
+  this.myMainControlSpanElement = mainControlSpan;
+  this.myNavbarDivElement = navbarDiv;
+  this._myContentViewDivElement = contentViewDiv;
+  this.myDebugDivElement = debugDiv;
+  this.myStatusBlurbSpanElement = statusBlurbSpan;
   
   Util.setErrorReportCallback(RootView.displayTextInDebugTextarea);
   this.setCurrentContentViewFromUrl();

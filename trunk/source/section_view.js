@@ -58,6 +58,7 @@ SectionView.ELEMENT_CLASS_SELECTED = "selected";
 SectionView.ELEMENT_CLASS_MORE_LINK = "more";
 SectionView.ELEMENT_CLASS_TEXT_VIEW = "text_view";
 
+SectionView.ELEMENT_ID_SELECT_MENU_PREFIX = "select_menu_";
 SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX = "_select_menu";
 SectionView.ELEMENT_ID_LAYOUT_DIV_SUFFIX = "_layout_div";
 SectionView.ELEMENT_ID_CELL_PREFIX = "section_";
@@ -101,7 +102,9 @@ function SectionView(inPageView, inDivElement, inSection, inSectionNumber) {
   this.myListOfContentItems = this.getStevedore().getListOfResultItemsForQuery(query); 
   var layoutName = inSection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_LAYOUT_NAME)[0];
   this.myLayout = this.getLayoutFromLayoutName(layoutName);
+  this._myLayoutDiv = null;
   this._myHasEverBeenDisplayedFlag = false;
+  this._mySectionSummaryView = null;
 }
 
 
@@ -133,28 +136,6 @@ SectionView.getStringForValue = function (inValue) {
 // -------------------------------------------------------------------
 
 /**
- * Returns the Stevedore instance that this SectionView is using.
- *
- * @scope    public instance method
- * @return   A Stevedore object.
- */
-// SectionView.prototype.getStevedore = function () {
-//  return this.myPageView.getStevedore();
-// };
-
-
-/**
- * Returns true if we are in Edit Mode.
- *
- * @scope    public instance method
- * @return   A boolean value. True if we are in Edit Mode.
- */
-// SectionView.prototype.isInEditMode = function () {
-//   return this.myPageView.isInEditMode();
-// };
-
-  
-/**
  * Given the name of a layout ("Table", "Outline", etc.), returns a newly
  * created layout object of that type, initialized to be the layout for this 
  * section
@@ -167,32 +148,12 @@ SectionView.prototype.getLayoutFromLayoutName = function (inLayoutName) {
   Util.assert(Util.isString(inLayoutName));
   
   var newLayout = null;
-  // for (var layoutName in SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName) {
-  //   var layoutClass = SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[layoutName];
-  //   if (inLayoutName == layoutName) {
-  //     newLayout = new layoutClass(this);
-  //   }
-  // }
   var layoutClass = SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName[inLayoutName];
   if (layoutClass) {
     newLayout = new layoutClass(this);
   }
   return newLayout;
 };
-
-
-/**
- * Tells the SectionView what HTMLDivElement to display the Section in.
- *
- * @scope    public instance method
- * @param    inDivElement    The HTMLDivElement to display the Section in. 
- */
-// SectionView.prototype.setDivElement = function (inDivElement) {
-//   Util.assert(inDivElement instanceof HTMLDivElement);
-// 
-//   this.myDivElement = inDivElement;
-//   this.display();
-// };
 
 
 /**
@@ -208,6 +169,23 @@ SectionView.prototype.getListOfContentItems = function () {
 };
 
 
+/**
+ * Updates the HTML elements in this view to reflect any changes in 
+ * the data, and tells the sub-views to refresh themselves too.
+ *
+ * @scope    public instance method
+ */
+SectionView.prototype.refresh = function () {
+  if (!this._myHasEverBeenDisplayedFlag) {
+    this.doInitialDisplay();
+  } else {
+    // refresh the <h2> element with the value: this.mySection.getDisplayName();  
+    this._mySectionSummaryView.refresh();
+    this.myLayout.setDivElement(this._myLayoutDiv);
+    this.myLayout.display();
+  }
+};
+
 
 /**
  * Re-creates all the HTML for the SectionView, and hands the HTML to the 
@@ -215,7 +193,7 @@ SectionView.prototype.getListOfContentItems = function () {
  *
  * @scope    public instance method
  */
-SectionView.prototype.refresh = function () {
+SectionView.prototype.doInitialDisplay = function () {
   if (!this.getDivElement()) {
     return;
   }
@@ -225,49 +203,33 @@ SectionView.prototype.refresh = function () {
     return;
   }
 
-  var listOfStrings = [];
+  var sectionDiv = this.getDivElement();
+  var outerDiv = View.createAndAppendElement(sectionDiv, "div", SectionView.ELEMENT_CLASS_SECTION);
+  var headerH2 = View.createAndAppendElement(outerDiv, "h2");
+  headerH2.innerHTML = this.mySection.getDisplayName();
+  var summaryDiv = View.createAndAppendElement(outerDiv, "div");
+  this._mySectionSummaryView = new MultiLineTextView(this, summaryDiv, this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+  View.createAndAppendElement(outerDiv, "p");
 
-  // create the opening <div> for the section
-  listOfStrings.push("<div class=\"" + SectionView.ELEMENT_CLASS_SECTION + "\">");
-  listOfStrings.push("<h2>" + this.mySection.getDisplayName() + "</h2>");
-
-  var summaryDivId = this.getDivElement().id + SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX;
-  listOfStrings.push("<div id=\"" + summaryDivId + "\"></div>");
-  listOfStrings.push("<p></p>");
-  
   // create the layout editing controls, if we're in edit mode
-  var selectMenuId = this.getDivElement().id + SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX;
-  if (this.isInEditMode()) {
-    listOfStrings.push("<select id=\"" + selectMenuId + "\" class=\"" + SectionView.ELEMENT_CLASS_SECTION_LAYOUT_MENU + "\" name=\"" + selectMenuId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.mySectionNumber + "\">");
-    for (var layoutName in SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName) {
-      listOfStrings.push("<option " + ((this.myLayout.getLayoutName() == layoutName) ? "selected" : "") + " value=\"" + layoutName + "\" onclick=\"SectionView.clickOnLayoutSelectionMenu(event)\">" + layoutName + "</option>:");
-    }
-    listOfStrings.push("</select>");
+  var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this.mySection.getUuid();
+  var selectElement = View.createAndAppendElement(outerDiv, "select", SectionView.ELEMENT_CLASS_SECTION_LAYOUT_MENU, selectMenuId);
+  selectElement.setAttribute("name", selectMenuId);
+  selectElement.setAttribute(SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER, this.mySectionNumber);
+  selectElement.mysectionview = this;
+  for (var layoutName in SectionView.ourHashTableOfLayoutClassesKeyedByLayoutName) {
+    var optionElement = View.createAndAppendElement(selectElement, "option");
+    optionElement.selected = (this.myLayout.getLayoutName() == layoutName);
+    optionElement.setAttribute("value", layoutName);
+    optionElement.setAttribute("onclick", "SectionView.clickOnLayoutSelectionMenu(event)");
+    optionElement.innerHTML = layoutName;
   }
-  
-  // create a div element for the layout class to use
-  var layoutDivId = this.getDivElement().id + SectionView.ELEMENT_ID_LAYOUT_DIV_SUFFIX;
-  listOfStrings.push("<div id=\"" + layoutDivId + "\"></div>");
-  
-  // create the closing </div> for the section
-  listOfStrings.push("</div>");
-  
-  // write out all the new content 
-  var finalString = listOfStrings.join("");
-  this.getDivElement().innerHTML = finalString;
 
-  // attach back-pointers to the newly created UI elements
-  if (this.isInEditMode()) {
-    var selectElement = document.getElementById(selectMenuId);
-    selectElement.mysectionview = this;
-  }
-  
-  // set up the summary text view
-  var summaryElement = document.getElementById(summaryDivId);
-  new MultiLineTextView(this, summaryElement, this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
-  
-  var layoutDivElement = document.getElementById(layoutDivId);
-  this.myLayout.setDivElement(layoutDivElement);
+  // create a div element for the layout class to use
+  this._myLayoutDiv = View.createAndAppendElement(outerDiv, "div");
+  this.myLayout.setDivElement(this._myLayoutDiv);
+  this._myHasEverBeenDisplayedFlag = true;
+  this.refresh();
 };
   
 

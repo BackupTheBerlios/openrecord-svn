@@ -139,6 +139,40 @@ View.prototype.includeOnScreen = function (inBoolean) {
 
 
 // -------------------------------------------------------------------
+// HTML element helper methods
+// -------------------------------------------------------------------
+
+/**
+ * Given an HTML element, we first call document.createElement() to 
+ * create a new element, and then call appendChild() to add the new 
+ * element to the given element.
+ *
+ * @scope    public class method
+ * @param    inElement    The existing element that we should append the new element to. 
+ * @param    inTagName    The HTML tag for the element ("div", "p", "span", etc.). 
+ * @param    inClassName    Optional. The HTML/CSS class to assign to the new element. 
+ * @param    inId    Optional. The HTML id to assign to the new element. 
+ * @return   The newly created HTML element.
+ */
+View.createAndAppendElement = function (inElement, inTagName, inClassName, inId) {
+  Util.assert(inElement instanceof HTMLElement);
+  Util.assert(Util.isString(inTagName));
+  Util.assert(!inClassName || Util.isString(inClassName));
+  Util.assert(!inId || Util.isString(inId));
+
+  var newElement = window.document.createElement(inTagName);
+  if (inClassName) {
+    newElement.className = inClassName;
+  }
+  if (inId) {
+    newElement.id = inId;
+  }
+  inElement.appendChild(newElement);
+  return newElement;
+};
+
+
+// -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------
 

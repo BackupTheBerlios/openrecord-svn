@@ -72,7 +72,6 @@ function PageView(inRootView, inDivElement, inPage) {
   
   this._myPageSummaryView = null;
   this.myListOfSectionViews = [];
-  
 }
 
 
@@ -119,13 +118,11 @@ PageView.prototype.doInitialDisplay = function () {
   var pageDivElement = this.getDivElement();
   pageDivElement.className = (this.isInEditMode()) ? PageView.ELEMENT_CLASS_EDIT_MODE : PageView.ELEMENT_CLASS_VIEW_MODE;
   
-  var headerElement = window.document.createElement("h1"); 
+  var headerElement = View.createAndAppendElement(pageDivElement, "h1");
   headerElement.innerHTML = this.myPage.getDisplayName();
-  pageDivElement.appendChild(headerElement);
 
-  var summaryViewDivElement = window.document.createElement("div"); 
-  pageDivElement.appendChild(summaryViewDivElement);
-  this._myPageSummaryView = new MultiLineTextView(this, summaryViewDivElement, this.myPage, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+  var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
+  this._myPageSummaryView = new MultiLineTextView(this, summaryViewDiv, this.myPage, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
 
   // add <div> elements for each of the sections on the page
   // and create a new SectionView for each section
@@ -133,51 +130,13 @@ PageView.prototype.doInitialDisplay = function () {
   var sectionNumber = 0;
   for (var key in listOfSections) {
     var section = listOfSections[key];
-    var sectionViewDivElement = window.document.createElement("div");
-    pageDivElement.appendChild(sectionViewDivElement);
-    var sectionView = new SectionView(this, sectionViewDivElement, section, sectionNumber);
+    var sectionViewDiv = View.createAndAppendElement(pageDivElement, "div");
+    var sectionView = new SectionView(this, sectionViewDiv, section, sectionNumber);
     sectionNumber += 1;
     this.myListOfSectionViews.push(sectionView);
   }
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
-    
-/*  
-  var listOfStrings = [];
-  var hashTableOfSectionViewsKeyedByDivId = {};
-
-  // add an <h1> heading with the name of the page
-  listOfStrings.push("<h1>" + this.myPage.getDisplayName() + "</h1>");
-
-  var summaryViewDivId = PageView.ELEMENT_ID_SUMMARY_VIEW_DIV_PREFIX + this.myPage.getUuid();
-  listOfStrings.push("<div id=\"" + summaryViewDivId + "\"></div>");
-  
-  // add <div> elements for each of the sections on the page
-  for (var jKey in this.myListOfSectionViews) {
-    var sectionView = this.myListOfSectionViews[jKey];
-    var sectionViewDivId = PageView.ELEMENT_ID_SECTION_DIV_PREFIX + sectionView.mySectionNumber + PageView.ELEMENT_ID_SECTION_DIV_MIDFIX + this.myPage.getUuid();
-    hashTableOfSectionViewsKeyedByDivId[sectionViewDivId] = sectionView;
-    listOfStrings.push("<div id=\"" + sectionViewDivId + "\"></div>");
-  }
-
-  // write out all the new content 
-  var finalString = listOfStrings.join("");
-  var divElement = this.getDivElement();
-  divElement.className = (this.isInEditMode()) ? PageView.ELEMENT_CLASS_EDIT_MODE : PageView.ELEMENT_CLASS_VIEW_MODE;
-  divElement.innerHTML = finalString;
-  this.includeOnScreen(true);
-
-  // set up the summary text view
-  var summaryElement = document.getElementById(summaryViewDivId);
-  new MultiLineTextView(this, this.myPage, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, summaryElement, SectionView.ELEMENT_CLASS_TEXT_VIEW);
-
-  // let each of the sectionViews add their own content
-  for (var divId in hashTableOfSectionViewsKeyedByDivId) {
-    var aSectionView = hashTableOfSectionViewsKeyedByDivId[divId];
-    var sectionDivElement = document.getElementById(divId);
-    aSectionView.setDivElement(sectionDivElement);
-  }
-*/  
 };
 
 
