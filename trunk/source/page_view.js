@@ -42,6 +42,7 @@
 // -------------------------------------------------------------------
 PageView.ELEMENT_ID_SECTION_DIV_PREFIX = "section_view_";
 PageView.ELEMENT_ID_SECTION_DIV_MIDFIX = "_in_page_";
+PageView.ELEMENT_ID_SUMMARY_VIEW_DIV = "summary_view";
 
 PageView.ELEMENT_CLASS_EDIT_MODE = "editmode";
 PageView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
@@ -132,7 +133,7 @@ PageView.prototype.display = function () {
   // add an <h1> heading with the name of the page
   listOfStrings.push("<h1 id=\"" + CompleteView.URL_PAGE_PREFIX + this.myPage.getUuid() + "\">" + this.myPage.getDisplayName() + "</h1>");
   
-	listOfStrings.push("<div id=summaryView></div>");
+  listOfStrings.push("<div id=\"" + PageView.ELEMENT_ID_SUMMARY_VIEW_DIV + "\"></div>");
   
   // add <div> elements for each of the sections on the page
   for (var jKey in this.myListOfSectionViews) {
@@ -148,11 +149,11 @@ PageView.prototype.display = function () {
   this.myDivElement.innerHTML = finalString;
   this.myDivElement.style.display = "block";
 
-	// set up the summary text view
-	var summaryElement = document.getElementById("summaryView");
-	new MultiLineTextView(this.myPage, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, summaryElement,"text_view");
+  // set up the summary text view
+  var summaryElement = document.getElementById(PageView.ELEMENT_ID_SUMMARY_VIEW_DIV);
+  new MultiLineTextView(this.myPage, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, summaryElement,"text_view");
 
-// let each of the sectionViews add their own content
+  // let each of the sectionViews add their own content
   for (var divId in hashTableOfSectionViewsKeyedByDivId) {
     var aSectionView = hashTableOfSectionViewsKeyedByDivId[divId];
     var sectionDivElement = document.getElementById(divId);

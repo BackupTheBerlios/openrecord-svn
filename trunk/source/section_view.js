@@ -56,10 +56,12 @@ SectionView.ELEMENT_CLASS_TITLE = "title";
 SectionView.ELEMENT_CLASS_TEXT_FIELD_IN_TABLE_CELL = "text_field_in_table_cell";
 SectionView.ELEMENT_CLASS_SELECTED = "selected";
 SectionView.ELEMENT_CLASS_MORE_LINK = "more";
+SectionView.ELEMENT_CLASS_TEXT_VIEW = "text_view";
 
 SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX = "_select_menu";
 SectionView.ELEMENT_ID_LAYOUT_DIV_SUFFIX = "_layout_div";
 SectionView.ELEMENT_ID_CELL_MIDFIX = "_cell_";
+SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX = "_summary_div";
 
 SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER = "section_number";
 SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER = "cell_number";
@@ -177,9 +179,9 @@ SectionView.prototype.display = function () {
   listOfStrings.push("<div class=\"" + SectionView.ELEMENT_CLASS_SECTION + "\">");
   listOfStrings.push("<h2>" + this.mySection.getDisplayName() + "</h2>");
 
-	var summaryDivId = this.myDivElement.id + SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX;
-	listOfStrings.push("<div id=\"" + summaryDivId + "\"></div>");
-	
+  var summaryDivId = this.myDivElement.id + SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX;
+  listOfStrings.push("<div id=\"" + summaryDivId + "\"></div>");
+  
   // create the layout editing controls, if we're in edit mode
   var selectMenuId = this.myDivElement.id + SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX;
   if (this.myPageView.isInEditMode()) {
@@ -206,11 +208,11 @@ SectionView.prototype.display = function () {
     var selectElement = document.getElementById(selectMenuId);
     selectElement.mysectionview = this;
   }
-	
-	// set up the summary text view
-	var summaryElement = document.getElementById(summaryDivId);
-	new MultiLineTextView(this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, summaryElement, "text_view");
-	
+  
+  // set up the summary text view
+  var summaryElement = document.getElementById(summaryDivId);
+  new MultiLineTextView(this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, summaryElement, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+  
   var layoutDivElement = document.getElementById(layoutDivId);
   this.myLayout.setDivElement(layoutDivElement);
 };
