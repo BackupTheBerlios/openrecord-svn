@@ -135,7 +135,7 @@ TextView.prototype.startEditing = function() {
       //editField.cols=80; now using css style sheet "text_view"
       var listener = this; 
       Util.addEventListener(editField, "blur", function(event) {listener.onBlur(event);});
-      Util.addEventListener(editField, "keypress", function(event) {listener.onKeyPress(event);});
+      Util.addEventListener(editField, "keyup", function(event) {listener.onKeyUp(event);});
       editField.defaultValue = this.textNode.data;
     }
     editField.style.height = this.getDivElement().offsetHeight + "px";
@@ -193,7 +193,7 @@ TextView.prototype.onBlur = function(inEventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-TextView.prototype.onKeyPress = function(inEventObject) {
+TextView.prototype.onKeyUp = function(inEventObject) {
   var editField = this.editField;
 
   // PENDING: 
@@ -223,12 +223,11 @@ TextView.prototype.onKeyPress = function(inEventObject) {
   }
   */
 
-  // ATTEMPT #2: has no impact
-  /*
+  // ATTEMPT #2: 
+  // slightly clunky, but better than nothing!
   if (editField.scrollHeight > editField.clientHeight) {
-    editField.style.height = editField.scrollHeight;
+    editField.style.height = editField.scrollHeight + "px";
   }
-  */
 
   // ATTEMPT #3: has no impact
   /*
