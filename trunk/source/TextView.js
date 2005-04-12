@@ -50,23 +50,25 @@ TextView.ELEMENT_CLASS_TEXT_BLOCK = "text_block";
  * @scope    public instance constructor
  * @extends  View
  * @param    theSuperview    The view that this view is nested in. 
- * @param    theItem    The Item to be displayed and edited by this view. 
+ * @param    theItem         The Item to be displayed and edited by this view. 
  * @param    theAttribute    The attribute of the item to be displayed.
- * @param    theDivElement    The HTMLDivElement to display the HTML in. 
+ * @param    theElement      The HTMLElement to display the HTML in. 
  * @param    theClassType    A string that gives a class name to assign to the HTML element. 
+ * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
-TextView.prototype = new View();  // makes TextView be a subclass of View
-function TextView(theSuperview, theDivElement, theItem, theAttribute, theClassType) {
+TextView.prototype = new View()  // makes TextView be a subclass of View
+function TextView(theSuperview, theElement, theItem, theAttribute, theClassType, isMultiLine) {
   Util.assert(theItem instanceof Item);
   //Util.assert(theAttribute instanceof Attribute); PENDING need to check that attribute is an attribute
   
   this.setSuperview(theSuperview);
-  this.setDivElement(theDivElement);
+  this.setHTMLElement(theElement);
   this.textItem = theItem;
   this.attribute = theAttribute;
   this.editField = null;
   this.textObj = null;
   this.classType = theClassType;
+  this.isMultiLine = isMultiLine;
   this.isEditing = false;
   this._myHasEverBeenDisplayedFlag = false;
 };
@@ -82,10 +84,10 @@ TextView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this.doInitialDisplay();
   } else {
-    // if (weHaveBeenNotifiedOfChangesTo(this.textItem)) {
-    //   var newText = getNewValueFrom(this.textItem);
-    //   this.textNode.data = newText;
-    // }
+  // if (weHaveBeenNotifiedOfChangesTo(this.textItem)) {
+  //   var newText = getNewValueFrom(this.textItem);
+  //   this.textNode.data = newText;
+  // }
   }
 };
 
@@ -97,10 +99,9 @@ TextView.prototype.refresh = function() {
  * @scope    public instance method
  */
 TextView.prototype.doInitialDisplay = function() {
-  var divElement = this.getDivElement();
-  Util.assert(divElement instanceof HTMLDivElement);
+  var htmlElement = this.getHTMLElement();
   
-  divElement.className = TextView.ELEMENT_CLASS_TEXT_BLOCK;
+  htmlElement.className = TextView.ELEMENT_CLASS_TEXT_BLOCK;
   var textList = this.textItem.getValueListFromAttribute(this.attribute);
   var textString = "";
   if (textList && textList[0]) {
@@ -112,10 +113,10 @@ TextView.prototype.doInitialDisplay = function() {
   // };
   
   this.textNode = document.createTextNode(textString);
-  divElement.appendChild(this.textNode);
+  htmlElement.appendChild(this.textNode);
 
   var listener = this;
-  Util.addEventListener(divElement, "click", function(event) { listener.onClick(event);});
+  Util.addEventListener(htmlElement, "click", function(event) { listener.onClick(event);});
     
   this._myHasEverBeenDisplayedFlag = true;
 };
@@ -130,16 +131,22 @@ TextView.prototype.startEditing = function() {
   if (!this.isEditing) {
     var editField = this.editField;
     if (!editField) {
-      editField = this.editField = document.createElement("textarea");
+      if (this.isMultiLine) {
+        editField = this.editField = document.createElement("textarea");
+      }
+      else {
+        editField = document.createElement("input");
+        editField.type = 'text';
+      }
+      this.editField = editField;
       editField.className = this.classType;
-      //editField.cols=80; now using css style sheet "text_view"
       var listener = this; 
       Util.addEventListener(editField, "blur", function(event) {listener.onBlur(event);});
       Util.addEventListener(editField, "keyup", function(event) {listener.onKeyUp(event);});
       editField.defaultValue = this.textNode.data;
     }
-    editField.style.height = this.getDivElement().offsetHeight + "px";
-    this.getDivElement().replaceChild(editField, this.textNode);
+    editField.style.height = this.getHTMLElement().offsetHeight + "px";
+    this.getHTMLElement().replaceChild(editField, this.textNode);
     editField.focus();
     editField.select();
     this.isEditing = true;
@@ -165,7 +172,7 @@ TextView.prototype.onClick = function(inEventObject) {
   }
 };
 
-
+  
 /**
  * Called when focus leaves the text view.
  *
@@ -181,7 +188,7 @@ TextView.prototype.onBlur = function(inEventObject) {
     this.textItem.clear(this.attribute);
     this.textItem.assign(this.attribute, newText); // PENDING: need to deal with multi valued attrs
     this.textNode.data = newText;
-    this.getDivElement().replaceChild(this.textNode, this.editField);
+    this.getHTMLElement().replaceChild(this.textNode, this.editField);
     this.isEditing = false;
   }
 };

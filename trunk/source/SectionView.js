@@ -35,6 +35,7 @@
 //   Util.js
 //   PageView.js
 //   TablePlugin.js
+//   TextView.js
 // -------------------------------------------------------------------
 
 
@@ -82,20 +83,20 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName = {};
  * @scope    public instance constructor
  * @extends  View
  * @param    inPageView    The PageView that serves as the superview for this view. 
- * @param    inDivElement    The HTMLDivElement to display the HTML in. 
+ * @param    inHTMLElement The HTMLElement to display the HTML in. 
  * @param    inSection    The Section item to be displayed in by this view. 
  * @param    inSectionNumber    The number of the section on the page (1, 2, 3, 4...). 
  * @syntax   var sectionView = new SectionView()
  */
 SectionView.prototype = new View();  // makes SectionView be a subclass of View
-function SectionView(inPageView, inDivElement, inSection, inSectionNumber) {
+function SectionView(inPageView, inHTMLElement, inSection, inSectionNumber) {
   Util.assert(inPageView instanceof PageView);
   Util.assert(inSection instanceof Item);
   
   // instance properties
   // PENDING: these should all be private
   this.setSuperview(inPageView);
-  this.setDivElement(inDivElement);
+  this.setHTMLElement(inHTMLElement);
   this.mySection = inSection;
   this.mySectionNumber = inSectionNumber;
   var query = inSection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
@@ -105,6 +106,7 @@ function SectionView(inPageView, inDivElement, inSection, inSectionNumber) {
   this._myPluginDiv = null;
   this._myHasEverBeenDisplayedFlag = false;
   this._mySectionSummaryView = null;
+  this._myHeaderView = null;
 }
 
 
@@ -183,6 +185,7 @@ SectionView.prototype.refresh = function () {
     // refresh the <h2> element with the value: this.mySection.getDisplayName();  
     this._mySectionSummaryView.refresh();
     this._myPlugin.refresh();
+    this._myHeaderView.refresh();
   }
 };
 
@@ -194,7 +197,7 @@ SectionView.prototype.refresh = function () {
  * @scope    public instance method
  */
 SectionView.prototype.doInitialDisplay = function () {
-  if (!this.getDivElement()) {
+  if (!this.getHTMLElement()) {
     return;
   }
   var selectedPluginName = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_PLUGIN_NAME)[0];
@@ -204,12 +207,14 @@ SectionView.prototype.doInitialDisplay = function () {
     return;
   }
 
-  var sectionDiv = this.getDivElement();
+  var sectionDiv = this.getHTMLElement();
   var outerDiv = View.createAndAppendElement(sectionDiv, "div", SectionView.ELEMENT_CLASS_SECTION);
   var headerH2 = View.createAndAppendElement(outerDiv, "h2");
-  headerH2.innerHTML = this.mySection.getDisplayName();
+  this._myHeaderView = new TextView(this, headerH2, this.mySection,
+    Stevedore.UUID_FOR_ATTRIBUTE_NAME, SectionView.ELEMENT_CLASS_TEXT_VIEW);
   var summaryDiv = View.createAndAppendElement(outerDiv, "div");
-  this._mySectionSummaryView = new TextView(this, summaryDiv, this.mySection, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+  this._mySectionSummaryView = new TextView(this, summaryDiv, this.mySection,
+    Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
   View.createAndAppendElement(outerDiv, "p");
 
   // create the plugin editing controls, if we're in edit mode

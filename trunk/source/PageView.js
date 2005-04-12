@@ -34,6 +34,7 @@
 //   Stevedore.js
 //   Util.js
 //   SectionView.js
+//   TextView.js
 // -------------------------------------------------------------------
 
 
@@ -52,22 +53,23 @@ PageView.ELEMENT_ID_SUMMARY_VIEW_DIV_PREFIX = "_summary_view_for_page_";
  * @scope    public instance constructor
  * @extends  View
  * @param    inRootView    The RootView that this PageView is nested in. 
- * @param    inDivElement    The HTMLDivElement to display the HTML in. 
- * @param    inPage    The page item to be displayed by this view. 
+ * @param    inHTMLElement The HTMLElement to display the HTML in. 
+ * @param    inPage        The page item to be displayed by this view. 
  */
 PageView.prototype = new View();  // makes PageView be a subclass of View
-function PageView(inRootView, inDivElement, inPage) {
+function PageView(inRootView, inHTMLElement, inPage) {
   Util.assert(inRootView instanceof RootView);
-  Util.assert(inDivElement instanceof HTMLDivElement);
+  Util.assert(inHTMLElement instanceof HTMLElement);
   Util.assert(inPage instanceof Item);
 
   // instance properties
   this.setSuperview(inRootView);
-  this.setDivElement(inDivElement);
+  this.setHTMLElement(inHTMLElement);
   this.myPage = inPage;
   this._myHasEverBeenDisplayedFlag = false;
   
   this._myPageSummaryView = null;
+  this._myHeaderText = null;
   this.myListOfSectionViews = [];
 }
 
@@ -93,6 +95,7 @@ PageView.prototype.refresh = function () {
   if (!this._myHasEverBeenDisplayedFlag) {
     this.doInitialDisplay();
   } else {
+    this._myHeaderText.refresh();
     this._myPageSummaryView.refresh();
     for (var key in this.myListOfSectionViews) {
       var sectionView = this.myListOfSectionViews[key];      
@@ -109,15 +112,17 @@ PageView.prototype.refresh = function () {
  * @scope    public instance method
  */
 PageView.prototype.doInitialDisplay = function () {
-  Util.assert(this.getDivElement() instanceof HTMLDivElement);
+  Util.assert(this.getHTMLElement() instanceof HTMLElement);
   
-  var pageDivElement = this.getDivElement();
+  var pageDivElement = this.getHTMLElement();
   
   var headerElement = View.createAndAppendElement(pageDivElement, "h1");
-  headerElement.innerHTML = this.myPage.getDisplayName();
+  this._myHeaderText = new TextView(this, headerElement, this.myPage,
+    Stevedore.UUID_FOR_ATTRIBUTE_NAME, SectionView.ELEMENT_CLASS_TEXT_VIEW);
 
   var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
-  this._myPageSummaryView = new TextView(this, summaryViewDiv, this.myPage, Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+  this._myPageSummaryView = new TextView(this, summaryViewDiv, this.myPage,
+    Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
 
   // add <div> elements for each of the sections on the page
   // and create a new SectionView for each section

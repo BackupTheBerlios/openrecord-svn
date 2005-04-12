@@ -51,20 +51,20 @@ ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_plugin_div_for_item_";
  * @scope    public instance constructor
  * @extends  View
  * @param    inRootView    The RootView that this ItemView is nested in. 
- * @param    inDivElement    The HTMLDivElement to display the HTML in. 
+ * @param    inHTMLElement    The HTMLElement to display the HTML in. 
  * @param    inItem    The item to be displayed by this view. 
  */
 ItemView.prototype = new View();  // makes ItemView be a subclass of View
-function ItemView(inRootView, inDivElement, inItem) {
+function ItemView(inRootView, inHTMLElement, inItem) {
   Util.assert(inItem instanceof Item);
-  Util.assert(inDivElement instanceof HTMLDivElement);
+  Util.assert(inHTMLElement instanceof HTMLElement);
   Util.assert(inRootView instanceof RootView);
 
   // instance properties
   this.setSuperview(inRootView);
-  this.setDivElement(inDivElement);
+  this.setHTMLElement(inHTMLElement);
   this.myItem = inItem;
-  // this.myDivElement = inDivElement;
+  // this.myDivElement = inHTMLElement;
   // this.myRootView = inRootView;
   this.myPlugin = null;
 }
@@ -102,8 +102,6 @@ ItemView.prototype.getPageTitle = function () {
  */
 ItemView.prototype.refresh = function () {
   Util.assert(this.myItem instanceof Item);
-  // Util.assert(this.myDivElement instanceof HTMLDivElement);
-  // RootView.displayTextInDebugTextarea("ItemView.prototype.refresh"); 
   var listOfStrings = [];
 
   // add an <h1> heading with the name of the page
@@ -115,11 +113,11 @@ ItemView.prototype.refresh = function () {
 
   // write out all the new content 
   var finalString = listOfStrings.join("");
-  this.getDivElement().innerHTML = finalString;
+  this.getHTMLElement().innerHTML = finalString;
 
   // let the detailPlugin add its own content
-  var detailPluginDivElement = document.getElementById(detailDivId);
-  this.myPlugin = new DetailPlugin(this, detailPluginDivElement);
+  var detailPluginElement = document.getElementById(detailDivId);
+  this.myPlugin = new DetailPlugin(this, detailPluginElement);
   this.myPlugin.refresh();
 };
 

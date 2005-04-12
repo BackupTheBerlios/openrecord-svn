@@ -44,7 +44,7 @@
 function View() {
   // alert("View constructor");
   this._mySuperview = null;
-  this._myDivElement = null;
+  this._myHTMLElement = null;
 }
 
 
@@ -73,27 +73,27 @@ View.prototype.getSuperview = function () {
 
 
 /**
- * Tells the View what HTMLDivElement to display itself in.
+ * Tells the View what HTMLElement to display itself in.
  *
  * @scope    public instance method
- * @param    inDivElement    The HTMLDivElement to display the view in. 
+ * @param    inHTMLElement    The HTMLDivElement to display the view in. 
  */
-View.prototype.setDivElement = function (inDivElement) {
-  Util.assert(inDivElement instanceof HTMLDivElement);
+View.prototype.setHTMLElement = function (inHTMLElement) {
+  Util.assert(inHTMLElement instanceof HTMLElement);
 
-  this._myDivElement = inDivElement;
+  this._myHTMLElement = inHTMLElement;
   // this.display();
 };
 
 
 /**
- * Returns the HTMLDivElement that the view displays itself in.
+ * Returns the HTMLElement that the view displays itself in.
  *
  * @scope    public instance method
- * @return   An HTMLDivElement. 
+ * @return   An HTMLElement. 
  */
-View.prototype.getDivElement = function () {
-  return this._myDivElement;
+View.prototype.getHTMLElement = function () {
+  return this._myHTMLElement;
 };
 
 
@@ -131,9 +131,9 @@ View.prototype.includeOnScreen = function (inBoolean) {
 
   if (inBoolean) {
     this.refresh();
-    this._myDivElement.style.display = "block";
+    this._myHTMLElement.style.display = "block";
   } else {
-    this._myDivElement.style.display = "none";
+    this._myHTMLElement.style.display = "none";
   }
 };
 

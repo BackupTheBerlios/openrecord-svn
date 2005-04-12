@@ -49,13 +49,13 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_DETA
  * @scope    public instance constructor
  * @extends  View
  * @param    inSuperView    The superview for this view. 
- * @param    inDivElement    The HTMLDivElement to display this view in. 
+ * @param    inHTMLElement    The HTMLElement to display this view in. 
  * @syntax   var detailPlugin = new DetailPlugin()
  */
 DetailPlugin.prototype = new View();  // makes DetailPlugin be a subclass of View
-function DetailPlugin(inSuperView, inDivElement) {
+function DetailPlugin(inSuperView, inHTMLElement) {
   this.setSuperview(inSuperView);
-  this.setDivElement(inDivElement);  
+  this.setHTMLElement(inHTMLElement);  
 }
 
 
@@ -90,7 +90,7 @@ DetailPlugin.prototype.refresh = function () {
 
   // take all the HTML and put it together
   var finalString = listOfStrings.join("");
-  this.getDivElement().innerHTML = finalString;
+  this.getHTMLElement().innerHTML = finalString;
 };
 
 
@@ -100,7 +100,7 @@ DetailPlugin.prototype.refresh = function () {
  * @scope    public instance method
  */
 DetailPlugin.prototype.endOfLife = function () {
-  this.getDivElement().innerHTML = "";
+  this.getHTMLElement().innerHTML = "";
 };
 
 

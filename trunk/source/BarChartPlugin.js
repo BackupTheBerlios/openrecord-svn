@@ -50,13 +50,13 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_BAR_
  * @scope    public instance constructor
  * @extends  View
  * @param    inSectionView    The SectionView that serves as the superview for this view. 
- * @param    inDivElement    The HTMLDivElement to display this view in. 
+ * @param    inHTMLElement    The HTMLElement to display this view in. 
  * @syntax   var barChart = new BarChartPlugin()
  */
 BarChartPlugin.prototype = new View();  // makes BarChartPlugin be a subclass of View
-function BarChartPlugin(inSectionView, inDivElement) {
+function BarChartPlugin(inSectionView, inHTMLElement) {
   this.setSuperview(inSectionView);
-  this.setDivElement(inDivElement);
+  this.setHTMLElement(inHTMLElement);
 }
 
 
@@ -168,7 +168,7 @@ BarChartPlugin.prototype.refresh = function () {
     
   // return all the new content   
   var finalString = listOfStrings.join("");
-  this.getDivElement().innerHTML = finalString;
+  this.getHTMLElement().innerHTML = finalString;
 };
 
 
@@ -178,7 +178,7 @@ BarChartPlugin.prototype.refresh = function () {
  * @scope    public instance method
  */
 BarChartPlugin.prototype.endOfLife = function () {
-  this.getDivElement().innerHTML = "";
+  this.getHTMLElement().innerHTML = "";
 };
 
 

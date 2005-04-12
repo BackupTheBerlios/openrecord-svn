@@ -1,7 +1,7 @@
 // Repository dump, in JSON format
 Stevedore._ourRepositoryInJsonFormat = {
   "format": "2005_MARCH_ITEM_CENTRIC_LIST", 
-  "timestamp": "Fri Mar 18 2005 13:59:58 GMT-0800 (PST)", 
+  "timestamp": "Mon Apr 11 2005 21:58:47 GMT-0700 (PDT)", 
   "data": [
   { "100": { "type": "Uuid", "value": 101 },
     /* Name       */   "102": [{ "type": "StringValue", "value": "Short Name" }, ],
@@ -74,8 +74,8 @@ Stevedore._ourRepositoryInJsonFormat = {
   { "100": { "type": "Uuid", "value": 2000 },
     /* Category   */   "105": [{ "type": "ForeignUuid", "value": 145 }, ],
     /* Short Name */   "101": [{ "type": "StringValue", "value": "1. Welcome!" }, ],
-    /* Name       */   "102": [{ "type": "StringValue", "value": "Welcome to the OpenRecord demo!" }, ],
-    /* Summary    */   "103": [{ "type": "StringValue", "value": "This web site is a demo of the OpenRecord prototype. OpenRecord is a collaborative content management system. OpenRecord is a lot like a wiki, but with twist. Most wikis are designed to let you view and edit pages of text, like a web-based word processor. OpenRecord is designed to let you view and edit items in a database, rather than pages of text. So if a wiki is a web-based collaborative word-processor, then OpenRecord is a web-based collaborative database, like Lotus Agenda. To see more of this demo site, go to the menu bar at the left side of the window and click on the menu item for page 2, 'Books'." }, ],
+    /* Name       */   "102": [{ "type": "StringValue", "value": "Welcome to the OpenRecord demo!!" }, ],
+    /* Summary    */   "103": [{ "type": "StringValue", "value": "This web site is a demo of the OpenRecord prototype. OpenRecord is a collaborative content management system. OpenRecord is a lot like a wiki, but with twist. Most wikis are designed to let you view and edit pages of text, like a web-based word processor. OpenRecord is designed to let you view and edit items in a database, rather than pages of text. So if a wiki is a web-based collaborative word-processor, then OpenRecord is a web-based collaborative database, like Lotus Agenda. To see more of this demo site, go to the menu bar at the left side of the window and click on the menu item for page 2, 'Books'. dfdf" }, ],
   },
   { "100": { "type": "Uuid", "value": 3000 },
     /* Category   */   "105": [{ "type": "ForeignUuid", "value": 145 }, ],

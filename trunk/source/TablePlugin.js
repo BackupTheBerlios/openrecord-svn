@@ -92,12 +92,12 @@ TablePlugin._RowDelegate = function (inContentItem, inRowNumber) {
  * @scope    public instance constructor
  * @extends  View
  * @param    inSectionView    The SectionView that this TablePlugin will appears in. 
- * @param    inDivElement    The HTMLDivElement to display this view in. 
+ * @param    inHTMLElement    The HTMLElement to display this view in. 
  */
 TablePlugin.prototype = new View();  // makes TablePlugin be a subclass of View
-function TablePlugin(inSectionView, inDivElement) {
+function TablePlugin(inSectionView, inHTMLElement) {
   this.setSuperview(inSectionView);
-  this.setDivElement(inDivElement);  
+  this.setHTMLElement(inHTMLElement);  
 
   this.myNumColumns = null;
   this.myNumRows = null;
@@ -222,7 +222,7 @@ TablePlugin.prototype.refresh = function () {
   
   // write out all the new content   
   var finalString = listOfStrings.join("");
-  this.getDivElement().innerHTML = finalString;
+  this.getHTMLElement().innerHTML = finalString;
   
   // attach back-pointers to the newly created UI elements
   for (var elementId in hashTableOfCellDelegatesKeyedByElementId) {
@@ -239,7 +239,7 @@ TablePlugin.prototype.refresh = function () {
  * @scope    public instance method
  */
 TablePlugin.prototype.endOfLife = function () {
-  this.getDivElement().innerHTML = "";
+  this.getHTMLElement().innerHTML = "";
 };
 
 

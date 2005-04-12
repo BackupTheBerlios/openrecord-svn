@@ -48,13 +48,13 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_OUTL
  * @scope    public instance constructor
  * @extends  View
  * @param    inSectionView    The SectionView that serves as the superview for this view. 
- * @param    inDivElement    The HTMLDivElement to display this view in. 
+ * @param    inHTMLElement    The HTMLElement to display this view in. 
  * @syntax   var outline = new OutlinePlugin()
  */
 OutlinePlugin.prototype = new View();  // makes OutlinePlugin be a subclass of View
-function OutlinePlugin(inSectionView, inDivElement) {
+function OutlinePlugin(inSectionView, inHTMLElement) {
   this.setSuperview(inSectionView);
-  this.setDivElement(inDivElement);
+  this.setHTMLElement(inHTMLElement);
 }
 
 
@@ -77,7 +77,7 @@ OutlinePlugin.prototype.getPluginName = function () {
  */
 OutlinePlugin.prototype.refresh = function () {
   var listOfContentItems = this.getSuperview().getListOfContentItems();
-  var outlineDiv = this.getDivElement();
+  var outlineDiv = this.getHTMLElement();
   outlineDiv.innerHTML = "";
   var ulElement = View.createAndAppendElement(outlineDiv, "ul");
   for (var contentItemKey in listOfContentItems) {
@@ -99,7 +99,7 @@ OutlinePlugin.prototype.refresh = function () {
  * @scope    public instance method
  */
 OutlinePlugin.prototype.endOfLife = function () {
-  this.getDivElement().innerHTML = "";
+  this.getHTMLElement().innerHTML = "";
 };
 
 
