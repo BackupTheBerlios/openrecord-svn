@@ -56,7 +56,7 @@ TextView.ELEMENT_CLASS_TEXT_BLOCK = "text_block";
  * @param    theClassType    A string that gives a class name to assign to the HTML element. 
  * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
-TextView.prototype = new View()  // makes TextView be a subclass of View
+TextView.prototype = new View();  // makes TextView be a subclass of View
 function TextView(theSuperview, theElement, theItem, theAttribute, theClassType, isMultiLine) {
   Util.assert(theItem instanceof Item);
   //Util.assert(theAttribute instanceof Attribute); PENDING need to check that attribute is an attribute
