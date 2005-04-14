@@ -1,7 +1,7 @@
 // Repository dump, in JSON format
 Stevedore._ourRepositoryInJsonFormat = {
   "format": "2005_MARCH_ITEM_CENTRIC_LIST", 
-  "timestamp": "Mon Apr 11 2005 21:58:47 GMT-0700 (PDT)", 
+  "timestamp": "Thu Apr 14 2005 13:52:41 GMT-0700 (Pacific Standard Time)", 
   "data": [
   { "100": { "type": "Uuid", "value": 101 },
     /* Name       */   "102": [{ "type": "StringValue", "value": "Short Name" }, ],

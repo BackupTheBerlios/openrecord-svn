@@ -1,5 +1,5 @@
 /*****************************************************************************
- test_page.js
+ UtilTest.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -27,58 +27,42 @@
  liability, or tort (including negligence), arising in any way out of or in 
  connection with the use or distribution of the work.
 *****************************************************************************/
+ 
+var UtilTestVars = null;
 
+function setUp() {
+  UtilTestVars = {};
+  UtilTestVars.theHobbit = "The Hobbit";
+}
 
-// -------------------------------------------------------------------
-// Dependencies:
-//   repository.js
-//   root_view.js
-// -------------------------------------------------------------------
+function testSimplestCase() {
+  assertTrue("This is true", true);
+}
 
-/**
- * Called when the window first loads. Calls all the functions that do 
- * initialization when the page is loaded.
- *
- * @scope    global function
- */
-window.doOnloadActions = function() {  
-  
-  var stevedore = new Stevedore();
-  stevedore._loadItemsFromList(Stevedore._ourRepositoryInJsonFormat);
-  window.rootView = new RootView(stevedore);
-  Util.setTargetsForExternalLinks();
-};
+function testTypeCheckingMethods() {
+  assertTrue('"The Hobbit" is a string', Util.isString("The Hobbit"));
+  assertFalse('"The Hobbit" is not a number', Util.isNumber("The Hobbit"));
+  assertFalse('"The Hobbit" is not numeric', Util.isNumeric("The Hobbit"));
+  assertFalse('"The Hobbit" is not a boolean', Util.isBoolean("The Hobbit"));
+  assertFalse('"The Hobbit" is not an object', Util.isObject("The Hobbit"));
+  assertFalse('"The Hobbit" is not an array', Util.isArray("The Hobbit"));
+  assertFalse('"The Hobbit" is not a hash table', Util.isHashTable("The Hobbit"));
+}
 
+function testMethodsThatOperateOnSets() {
+  var aSet = [];
+  var theHobbit = UtilTestVars.theHobbit;
+  assertFalse('"The Hobbit" is not in an empty set', Util.isObjectInSet(theHobbit, aSet));
+  assertTrue('"The Hobbit" can be added to an empty set', Util.addObjectToSet(theHobbit, aSet));
+  assertTrue('"The Hobbit" is in the set after being added', Util.isObjectInSet(theHobbit, aSet));
+  assertTrue('"The Hobbit" can be removed from a set it is in', Util.removeObjectFromSet(theHobbit, aSet));
+  assertFalse('"The Hobbit" is no longer in a set it was removed from', Util.isObjectInSet(theHobbit, aSet));
+  assertFalse('"The Hobbit" can not be removed twice', Util.removeObjectFromSet(theHobbit, aSet));
+}
 
-/**
- * Called when the user leaves the browser window.  Save any unsaved changes,
- * and prepare to exit.
- *
- * @scope    global function
- */
-window.doOnunloadActions = function() {
-  // stevedore.saveChanges();
-};
-
-window.doOnfocusActions = function() {
-  // window.rootView.displayTextInDebugTextarea("onfocus");
-};
-
-window.doOnblurActions = function() {
-  // window.rootView.displayTextInDebugTextarea("onblur");
-};
-
-
-// -------------------------------------------------------------------
-// Register for window events
-// -------------------------------------------------------------------
-window.onload = window.doOnloadActions;
-window.onunload = window.doOnunloadActions;
-window.onerror = Util.handleError;
-window.onfocus = window.doOnfocusActions;
-window.onblur = window.doOnblurActions;
-// window.onresize = window.doOnresizeActions;
-
+function tearDown() {
+  test = null;
+}
 
 // -------------------------------------------------------------------
 // End of file
