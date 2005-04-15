@@ -23,7 +23,7 @@
       
       function openRecordTestSuite() {
         var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestPage("../../subversive/trunk/source/UtilTest.html");
+        testSuite.addTestPage("../../current/trunk/source/UtilTest.html");
         return testSuite;
       }
     </script>
@@ -44,23 +44,31 @@
     same name as this one, except with a .js extension instead of a .html
     extension.</p>
  
-    <p>To run the tests, you need to use the 
+    <p>The unit tests are set up to run in the
     <a href="http://www.edwardh.com/jsunit/" rel="external">JsUnit framework</a>
     written by 
     <a href="http://www.edwardh.com/" rel="external">Edward Hieatt</a>. </p>
 
-    <p>To run these unit tests over the internet, go to 
-    <a href="http://www.edwardh.com/jsunit/runner/testRunner.html" rel="external">http://www.edwardh.com/jsunit/runner/testRunner.html</a>,
-    enter the URL of this page, and hit the <b>Run</b> button.</p>
+    <p>If you're looking at this page across an "http://" connection, rather
+    than having loaded it as a "file:///", then you may be able to run the
+    unit tests. The web server that served you this page may also have a
+    JsUnit testRunner available. If so, you should be able to run these unit
+    tests by going to
+    <a href="../../../third_party/jsunit/testRunner.html?testpage=" 
+    onclick="href+=window.location.href;" rel="external">the local testRunner 
+    page</a>, and hitting the <b>Run</b> button.</p>
 
     <p>You can also run these unit tests on your local computer. To do that you 
-    first need to download <a href="http://www.edwardh.com/jsunit/" rel="external">JsUnit</a>.</p>
+    first need to download <a href="http://www.edwardh.com/jsunit/" 
+    rel="external">JsUnit</a>.</p>
     
     <p>&nbsp;</p>
     <hr/>
     <p class="copyright">You can copy freely from this work &mdash; copyright 
     rights relinquished under the Creative Commons  
-    <a rel="license external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain Dedication</a>.</p>
+    <a rel="license external" 
+    href="http://creativecommons.org/licenses/publicdomain/">Public Domain 
+    Dedication</a>.</p>
 
 <!-- Creative Commons metadata for Public Domain License 
 
