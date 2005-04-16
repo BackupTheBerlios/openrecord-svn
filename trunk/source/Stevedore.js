@@ -177,6 +177,8 @@ Stevedore.prototype.getHomePage = function () {
 Stevedore.prototype.getListOfResultItemsForQuery = function (inQuery) {
   Util.assert(inQuery instanceof Item);
 
+  var uuid = null;
+  var item = null;
   var listOfQueryResultItems = null;
   var listOfMatchingCategories = inQuery.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
   var listOfMatchingItems = inQuery.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
@@ -193,8 +195,8 @@ Stevedore.prototype.getListOfResultItemsForQuery = function (inQuery) {
     listOfQueryResultItems = [];
     // This is a wildly inefficient search.  But maybe it doesn't matter,
     // because this code should all be replaced someday by server code.
-    for (var uuid in this._myHashTableOfItemsKeyedByUuid) {
-      var item = this._myHashTableOfItemsKeyedByUuid[uuid];
+    for (uuid in this._myHashTableOfItemsKeyedByUuid) {
+      item = this._myHashTableOfItemsKeyedByUuid[uuid];
       var includeItem = true;
       for (var key in listOfMatchingCategories) {
         var category = listOfMatchingCategories[key];
@@ -210,8 +212,8 @@ Stevedore.prototype.getListOfResultItemsForQuery = function (inQuery) {
   
   if (!isItemMatchingQuery && !isCategoryMatchingQuery) {
     listOfQueryResultItems = [];
-    for (var uuid in this._myHashTableOfItemsKeyedByUuid) {
-      var item = this._myHashTableOfItemsKeyedByUuid[uuid];
+    for (uuid in this._myHashTableOfItemsKeyedByUuid) {
+      item = this._myHashTableOfItemsKeyedByUuid[uuid];
       listOfQueryResultItems.push(item);
     }
   }

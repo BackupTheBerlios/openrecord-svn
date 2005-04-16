@@ -316,7 +316,7 @@ RootView.prototype.displayDebugArea = function () {
   var finalString = listOfStrings.join("");
   this.myDebugDivElement.innerHTML = finalString;
   this.myDebugTextarea = document.getElementById(RootView.ELEMENT_ID_DEBUG_TEXTAREA);
-}
+};
 
 
 // -------------------------------------------------------------------
@@ -363,7 +363,7 @@ RootView.displayTextInDebugTextarea = function (inText) {
  * @param    inText    A text string to be displayed. 
  */
 RootView.prototype.displayTextInDebugTextarea = function (inText) {
-  this.myNumberOfCallsToDebug++;
+  this.myNumberOfCallsToDebug += 1;
   if (this.myNumberOfCallsToDebug > 20) {
     return;
   }
@@ -387,7 +387,7 @@ RootView.prototype.displayObjectInDebugTextarea = function (inObject) {
     outputText += property + " == " + inObject[property] + "\n";
   }
   this.displayTextInDebugTextarea(outputText);
-}
+};
 
 
 // -------------------------------------------------------------------

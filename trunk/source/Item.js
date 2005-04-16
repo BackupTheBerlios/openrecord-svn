@@ -147,7 +147,7 @@ Item.prototype.assign = function (inAttribute, inValue) {
   var cleanValue = inValue;
   // alert("assign(" + inAttribute + ", " + inValue + ")");
   if (Util.isString(inValue)) {
-    var cleanValue = Util.getCleanString(inValue);
+    cleanValue = Util.getCleanString(inValue);
   }
   var valueWasSet = this._initializeAttributeValue(inAttribute, cleanValue);
   if (valueWasSet) {

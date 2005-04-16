@@ -177,7 +177,7 @@ Util.assert = function (inBoolean, inMessage) {
  * @return   A boolean value. True if inValue is a string.
  */
 Util.isString = function (inValue) {
-  return (typeof(inValue) == "string");
+  return ((typeof inValue) == "string");
 };
 
 
@@ -189,7 +189,7 @@ Util.isString = function (inValue) {
  * @return   A boolean value. True if inValue is a number.
  */
 Util.isNumber = function (inValue) {
-  return ((typeof(inValue) == "number") && isFinite(inValue));
+  return (((typeof inValue) == "number") && isFinite(inValue));
 };
 
 
@@ -219,7 +219,7 @@ Util.isNumeric = function (inValue) {
  * @return   A boolean value. True if inValue is a boolean.
  */
 Util.isBoolean = function (inValue) {
-  return (typeof(inValue) == "boolean");
+  return ((typeof inValue) == "boolean");
 };
 
 
@@ -231,7 +231,7 @@ Util.isBoolean = function (inValue) {
  * @return   A boolean value. True if inValue is an object.
  */
 Util.isObject = function (inValue) {
-  return (inValue && (typeof(inValue) == "object"));
+  return (inValue && ((typeof inValue) == "object"));
 };
 
 
@@ -243,7 +243,7 @@ Util.isObject = function (inValue) {
  * @return   A boolean value. True if inValue is an array.
  */
 Util.isArray = function (inValue) {
-  return (inValue && (typeof(inValue) == "object") && (inValue.constructor == Array));
+  return (inValue && ((typeof inValue) == "object") && (inValue.constructor == Array));
 };
 
 
@@ -255,7 +255,7 @@ Util.isArray = function (inValue) {
  * @return   A boolean value. True if inValue is a hash table.
  */
 Util.isHashTable = function (inValue) {
-  return (inValue && (typeof(inValue) == "object"));  // PENDING: we should be more restrictive!
+  return (inValue && ((typeof inValue) == "object"));  // PENDING: we should be more restrictive!
 };
 
 

@@ -71,7 +71,7 @@ function TextView(theSuperview, theElement, theItem, theAttribute, theClassType,
   this.isMultiLine = isMultiLine;
   this.isEditing = false;
   this._myHasEverBeenDisplayedFlag = false;
-};
+}
 
 
 /**

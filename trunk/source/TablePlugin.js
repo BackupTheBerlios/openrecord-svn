@@ -67,7 +67,7 @@ TablePlugin._CellDelegate = function (inRowDelegate, inCellElementId, inCellCoun
   this.myColumnNumber = inColumnNumber;
   this.myAttribute = inAttribute;
   this.myTablePlugin = inTablePlugin;
-}
+};
 
 
 /**
@@ -77,12 +77,12 @@ TablePlugin._CellDelegate = function (inRowDelegate, inCellElementId, inCellCoun
  * @scope    private instance constructor
  */
 TablePlugin._RowDelegate = function (inContentItem, inRowNumber) {
-  Util.assert((inContentItem == null) || (inContentItem instanceof Item));
+  Util.assert((inContentItem === null) || (inContentItem instanceof Item));
 
   this.myContentItem = inContentItem;
   this.myRowNumber = inRowNumber;
   this.myArrayOfCellDelegates = new Array();
-}
+};
 
 
 /**
