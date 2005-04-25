@@ -17,13 +17,18 @@
 //       + each file has just one public class
 //       + file names exactly match the name of the class they contain: "Rectangle.js", "FillPattern.js"
 //       + directories are all lower case, with underscores: "basic_shapes"
+//    + unit tests
+//       + a JavaScript code file typically has two associated unit test files
+//       + the unit test files have the suffix "Test"
+//       + example: Book.js has unit test files BookTest.html and BookTest.js
 //    + variable scoping prefixes
 //       + class variables are prefixed with "our"
 //       + instance variables are prefixed with "my"
 //       + global variables are prefixed with "window.global"
 //       + locally scoped variables are not prefixed
 //       + function input parameters are prefixed with "in"
-//       + private variables are prefixed with "_"
+//       + private variables and methods are prefixed with "__"
+//       + protected variables and methods are prefixed with "_"
 //    + class constants are prefixed with the type of the constant -- see LAYOUT_PORTRAIT
 //    + array variables are prefixed with "ListOf" or "HashTableOf" or "ArrayOf"
 //       + var myListOfBooks = []; <-- a "List" has only values, no keys ["Apple", "Orange", "Banana"]
