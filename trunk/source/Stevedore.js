@@ -293,8 +293,8 @@ Stevedore.prototype.getListOfItemsInCategory = function (inCategory) {
  * Marks the beginning of a transaction.
  *
  * Each time you call beginTransaction() you open a new transaction, 
- * which you need to close later using endTransation().  Transactions
- * may be nested, but the beginTransaction and endTransation calls
+ * which you need to close later using endTransaction().  Transactions
+ * may be nested, but the beginTransaction and endTransaction calls
  * always need to come in pairs. 
  *
  * @scope    public instance method
@@ -365,7 +365,7 @@ Stevedore.prototype._getItemFromUuidOrBootstrapItem = function (inUuid, inObserv
 
 
 /**
- * Loads the basic items that needed in order to anything else, like
+ * Loads the basic items needed in order to do anything else, like
  * the items for "name", "attribute", and "category".
  *
  * @scope    private instance method
