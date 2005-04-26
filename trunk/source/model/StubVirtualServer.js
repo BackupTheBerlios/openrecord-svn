@@ -94,15 +94,20 @@ StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
  * Returns a newly created item.
  *
  * @scope    public instance method
+ * @param    inName    Optional. A string, which will be assigned to the name attribute of the new item. 
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created item.
  */
-StubVirtualServer.prototype.newItem = function (inObserver) {
+StubVirtualServer.prototype.newItem = function (inName, inObserver) {
   var uuid = this.__getNewUuid();
   var item = new Item(this.__myWorld, uuid);
   item._initialize(inObserver);
   this.__myHashTableOfItemsKeyedByUuid[uuid] = item;
   this.__myChronologicalListOfNewlyCreatedRecords.push(item);
+  if (inName) { 
+    var attributeCalledName = this.__myWorld.getAttributeCalledName();
+    item.addAttributeValue(attributeCalledName, inName);
+  }
   return item;
 };
 
@@ -170,7 +175,7 @@ StubVirtualServer.prototype._newVote = function (inEntry, inRetainFlag) {
  * @return   A newly created item representing a user.
  */
 StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObserver) {
-  var newUser = this.newItem(inObserver);
+  var newUser = this.newItem(inName, inObserver);
   this.__myListOfUsers.push(newUser);
   this.__myHashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = inAuthentication;
   return newUser;
@@ -280,7 +285,7 @@ StubVirtualServer.prototype.getItemFromUuid = function (inUuid, inObserver) {
  *
  * @scope    public instance method
  */
-StubVirtualServer.saveChangesToServer = function () {
+StubVirtualServer.prototype.saveChangesToServer = function () {
   // The StubVirtualServer doesn't ever actually talk to a server.
   // Other VirtualServer implementations would be expected to actually
   // implement this method such that it saves changes to the server
@@ -511,8 +516,8 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SUMMARY] = "Summary";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_BODY] = "Body";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_CATEGORY] = "Category";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_USERSTAMP] = "Userstamp";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_TIMESTAMP] = "Timestamp";
+  // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_USERSTAMP] = "Userstamp";
+  // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_TIMESTAMP] = "Timestamp";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SECTION] = "Section";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY] = "Query";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY] = "Matching Category";

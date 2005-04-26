@@ -64,6 +64,7 @@ function testLoginLogout() {
   var userChris = world.newUser("Chris Kringle", passwordForChris);
   world.login(userChris, passwordForChris);
   assertTrue('Chris is logged in', world.getCurrentUser() == userChris);
+  world.logout();
   
   world.login(userJane, janesPassword);
   assertTrue('Jane is logged in', world.getCurrentUser() == userJane);
@@ -77,19 +78,22 @@ function testAccessorsForAxiomaticItems() {
   var key;
   var item;
   var world = new World();
+  var listOfAssignedNames;
+  var nameValue;
   
   var listOfAttributes = [];
   listOfAttributes.push(world.getAttributeCalledName());
   listOfAttributes.push(world.getAttributeCalledShortName());
   listOfAttributes.push(world.getAttributeCalledSummary());
   listOfAttributes.push(world.getAttributeCalledCategory());
-  listOfAttributes.push(world.getAttributeCalledOrdinal());
-  listOfAttributes.push(world.getAttributeCalledCreationUserstamp());
-  listOfAttributes.push(world.getAttributeCalledCreationTimestamp());
   for (key in listOfAttributes) {
     item = listOfAttributes[key];
-    var attributeName = item.getName();
-    assertTrue('Every axiomatic attribute has a name', Util.isString(attributeName));
+    listOfAssignedNames = item.getName();
+    assertTrue('Every axiomatic attribute has an array of names', Util.isArray(listOfAssignedNames));
+    assertTrue('Every axiomatic attribute has one name assigned', listOfAssignedNames.length == 1);
+    nameValue = listOfAssignedNames[0];
+    assertTrue('Every axiomatic attribute has a name which is value', (nameValue instanceof Value));
+    assertTrue('Every value can be displayed as a string', Util.isString(nameValue.getDisplayString()));
   }
   
   var listOfCategories = [];
@@ -97,8 +101,12 @@ function testAccessorsForAxiomaticItems() {
   listOfCategories.push(world.getCategoryCalledCategory());
   for (key in listOfCategories) {
     item = listOfCategories[key];
-    var categoryName = item.getName();
-    assertTrue('Every axiomatic category has a name', Util.isString(categoryName));
+    listOfAssignedNames = item.getName();
+    assertTrue('Every axiomatic category has an array of names', Util.isArray(listOfAssignedNames));
+    assertTrue('Every axiomatic category has one name assigned', listOfAssignedNames.length == 1);
+    nameValue = listOfAssignedNames[0];
+    assertTrue('Every axiomatic category has a name which is value', (nameValue instanceof Value));
+    assertTrue('Every value can be displayed as a string', Util.isString(nameValue.getDisplayString()));
   }
 }
 
@@ -106,9 +114,6 @@ function testAccessorsForAxiomaticItems() {
 function testAdditionsAndRetrievals() {
   var world = new World();
   var nameAttribute = world.getAttributeCalledName();
-  var ordinalAttribute = world.getAttributeCalledOrdinal();
-  var userstampAttribute = world.getAttributeCalledCreationUserstamp();
-  var timestampAttribute = world.getAttributeCalledCreationTimestamp();
   
   var janesPassword = "jane's password";
   var listOfCharacters = null;
@@ -117,6 +122,7 @@ function testAdditionsAndRetrievals() {
   var worldRetrievalFilter = null;
   var hasAll;
   
+  var tZero = new Date();
   var userJane = world.newUser("Jane Doe", janesPassword);
   world.login(userJane, janesPassword);
 
@@ -125,24 +131,40 @@ function testAdditionsAndRetrievals() {
   var luck = starWars.addAttributeValue(characterAttribute, "Luck Skywalker");
   var c3po = starWars.addAttributeValue(characterAttribute, "C3PO");
   var r2d2 = starWars.addValue("R2D2");
+  assertTrue('"Star Wars" has not been deleted', !starWars.hasBeenDeleted());
+  assertTrue('"R2D2" has not been deleted', !r2d2.hasBeenDeleted());
+  assertTrue('"R2D2" has not been replaced', !r2d2.hasBeenReplaced());
+
   listOfCharacters = starWars.getValuesForAttribute(characterAttribute);
   hasAll = true;
   hasAll = hasAll &&  Util.isObjectInSet(luck, listOfCharacters);
   hasAll = hasAll &&  Util.isObjectInSet(c3po, listOfCharacters);
   assertTrue('"Star Wars" has characters: luck, c3po', hasAll);
   assertTrue('Exactly 2 characters in the star wars', listOfCharacters.length == 2);
+
   listOfValues = starWars.getValues();
   hasAll = true;
   hasAll = hasAll &&  Util.isObjectInSet(luck, listOfCharacters);
   hasAll = hasAll &&  Util.isObjectInSet(c3po, listOfCharacters);
-  hasAll = hasAll &&  Util.isObjectInSet(r2d2, listOfCharacters);
+  hasAll = hasAll &&  Util.isObjectInSet(r2d2, listOfValues);
   assertTrue('"Star Wars" has values: luck, c3po, r2d2', hasAll);  
+  
+  var ordinalA = starWars.getOrdinalNumberAtCreation();
+  var ordinalB = starWars.getOrdinalNumber();
+  assertTrue('"Star Wars" ordinal values match', ordinalA == ordinalB);  
+  
+  var starWarsTimestamp = starWars.getTimestamp();
+  var now = new Date();
+  // alert("now: " + now + "\nstar wars: " + starWarsTimestamp);
+  assertTrue('"Star Wars" has a timestamp in the past', now >= starWarsTimestamp);  
+  assertTrue('"Star Wars" was created after tZero', starWarsTimestamp >= tZero);  
+
+  var starWarsUserstamp = starWars.getUserstamp();
+  assertTrue('"Star Wars" was made by Jane', starWarsUserstamp == userJane);    
+
   listOfAttributes = starWars.getAttributes();
   hasAll = true;
   hasAll = hasAll &&  Util.isObjectInSet(nameAttribute, listOfAttributes);
-  hasAll = hasAll &&  Util.isObjectInSet(ordinalAttribute, listOfAttributes);
-  hasAll = hasAll &&  Util.isObjectInSet(userstampAttribute, listOfAttributes);
-  hasAll = hasAll &&  Util.isObjectInSet(timestampAttribute, listOfAttributes);
   hasAll = hasAll &&  Util.isObjectInSet(characterAttribute, listOfAttributes);
   assertTrue('"Star Wars" has all 5 expected attributes', hasAll);
   

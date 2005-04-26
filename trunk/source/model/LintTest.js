@@ -39,7 +39,7 @@ var Lint = {};
  * @param    inString    A string containing JavaScript code. 
  * @return   A boolean value. True if the code is good (according to jslint).
  */
-Lint.isCodeCleanInString = function(inString) {
+Lint.isCodeCleanInString = function (inString) {
   jslint.laxLineEnd = false;
   jslint.plusplus = true;
   jslint.cap = false;
@@ -54,23 +54,6 @@ Lint.isCodeCleanInString = function(inString) {
   var allClean = jslingIsOkay && noTabs && noBackspaces && noCarriageReturns && noFormFeeds;
   return (allClean);
 }; 
-
-
-/**
- * Given the URL of a file, returns the contents of the file as a text string.
- *
- * @scope    public class method
- * @param    inUrl    A string with the URL of a file containing JavaScript code. 
- * @return   A string containing the contents of the file.
- */
-// PENDING: move this up into Util.js
-Util.getStringContentsOfFileAtURL = function (inUrl) {
-  var anXMLHttpRequestObject = new XMLHttpRequest();
-  anXMLHttpRequestObject.open("GET", inUrl, false);
-  anXMLHttpRequestObject.send(null);
-  var fileContents = anXMLHttpRequestObject.responseText;
-  return fileContents;
-};
 
 
 /**
@@ -95,8 +78,13 @@ Lint.isCodeCleanAtUrl = function (inUrl) {
  * @param    inFileName    A string with the name of a file containing JavaScript code. 
  * @return   A boolean value. True if the code is good (according to jslint).
  */
+Lint.fooBar = function (inFileName) {
+  alert("in Lint.fooBar for " + inFileName);
+};
+
 Lint.isCodeCleanInFile = function (inFileName) {
-  var url  = "../../current/trunk/source/" + inFileName;
+  // alert("in Lint.isCodeCleanInFile for " + inFileName);
+  var url  = "../../current/trunk/source/model/" + inFileName;
   return Lint.isCodeCleanAtUrl(url);
 };
 
@@ -134,8 +122,7 @@ function testJsLintOnOpenRecordCode() {
     "Value.js",
     "World.js",
     "StubVirtualServer.js",
-    "BigLumpVirtualServer.js",
-    "ModelTest.js"];
+    "BigLumpVirtualServer.js"];
   for (var key in listOfSourceCodeFiles) {
     var fileName = listOfSourceCodeFiles[key];
     assertTrue("jslint says " + fileName + " is clean", Lint.isCodeCleanInFile(fileName));
@@ -144,6 +131,7 @@ function testJsLintOnOpenRecordCode() {
 
 function tearDown() {
 }
+
 
 // -------------------------------------------------------------------
 // End of file

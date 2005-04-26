@@ -45,7 +45,6 @@
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
 function Entry() {
-  throw new Error("Entry is an abstract superclass. You can't create instances of it.");
 }
 
 

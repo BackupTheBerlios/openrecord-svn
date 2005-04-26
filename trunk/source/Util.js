@@ -165,6 +165,40 @@ Util.assert = function (inBoolean, inMessage) {
 };
 
 
+/**
+ * Registers a function to be used to report status messages to the user.
+ *
+ * @scope    public class method
+ * @param    inFunction    A function which takes a single string argument. 
+ */
+Util.setStatusReporter = function (inFunction) {
+  Util.ourStatusReporter = inFunction;
+};
+
+
+/**
+ * Reports a status message to the user.
+ *
+ * @scope    public class method
+ * @param    inMessage    A string with a status message.
+ */
+Util.displayStatusBlurb = function (inMessage) {
+  Util.ourStatusReporter(inMessage);
+};
+
+
+/**
+ * This defaultStatusReporter simply ignores the status report.
+ *
+ * @scope    public class method
+ * @param    inText    The status message to be reported. 
+ */
+Util.defaultStatusReporter = function (inText) {
+  // do nothing!
+};
+Util.ourStatusReporter = Util.defaultStatusReporter;
+
+
 // -------------------------------------------------------------------
 // Type checking methods
 // -------------------------------------------------------------------
@@ -380,6 +414,28 @@ Util.addEventListener = function (inElement, inEventType, inCallback, inCaptures
     }
   } 
 };
+
+
+// -------------------------------------------------------------------
+// File I/O methods
+// -------------------------------------------------------------------
+
+/**
+ * Given the URL of a file, returns the contents of the file as a text string.
+ *
+ * @scope    public class method
+ * @param    inUrl    A string with the URL of a file containing JavaScript code. 
+ * @return   A string containing the contents of the file.
+ */
+// PENDING: move this up into Util.js
+Util.getStringContentsOfFileAtURL = function (inUrl) {
+  var anXMLHttpRequestObject = new XMLHttpRequest();
+  anXMLHttpRequestObject.open("GET", inUrl, false);
+  anXMLHttpRequestObject.send(null);
+  var fileContents = anXMLHttpRequestObject.responseText;
+  return fileContents;
+};
+
 
 // -------------------------------------------------------------------
 // HTML document manipulation

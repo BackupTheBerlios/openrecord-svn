@@ -287,9 +287,13 @@ Item.prototype.getAttributes = function () {
  * @return   A string with a display name for the item.
  */
 Item.prototype.getDisplayName = function (inDefaultString) {
+  var displayName = inDefaultString || "(no name)";
   var listOfNameValues = this.getName();
-  var primaryName = listOfNameValues[0];
-  return primaryName.getDisplayString();
+  if (listOfNameValues.length > 0) {
+    var primaryName = listOfNameValues[0];
+    displayName = primaryName.getDisplayString();
+  }
+  return displayName;
 };
   
 

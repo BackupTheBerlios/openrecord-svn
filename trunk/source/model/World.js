@@ -85,25 +85,26 @@ World.__TUPLE_KEY_OBSERVERS = "observers";
  * @param    inVirtualServer    Optional. The datastore that this world gets its data from. 
  */
 function World(inVirtualServer) {
+  this.__myCountOfNestedTransactions = 0;
+  this.__myHashTableOfObserverListsKeyedByItemUuid = {};
+  this.__myListOfListObserverTuples = [];
+
   this.__myCurrentRetrievalFilter = World.RETRIEVAL_FILTER_LAST_EDIT_WINS;
   if (inVirtualServer) {
     this.__myVirtualServer = inVirtualServer;
   } else {
     this.__myVirtualServer = new StubVirtualServer();
   }
-  this.__myVirtualServer.setWorldAndLoadAxiomaticItems();
-  
-  this.__myHashTableOfObserverListsKeyedByItemUuid = {};
-  this.__myListOfListObserverTuples = [];
+  this.__myVirtualServer.setWorldAndLoadAxiomaticItems(this);
   
   // load the axiomatic attributes
   this.__myAttributeCalledName = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
   this.__myAttributeCalledShortName = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SHORT_NAME);
   this.__myAttributeCalledSummary = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SUMMARY);
   this.__myAttributeCalledCategory = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_CATEGORY);
-  this.__myAttributeCalledOrdinal = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_ORDINAL);
-  this.__myAttributeCalledCreationUserstamp = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_USERSTAMP);
-  this.__myAttributeCalledCreationTimestamp = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_TIMESTAMP);
+  // this.__myAttributeCalledOrdinal = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_ORDINAL);
+  // this.__myAttributeCalledCreationUserstamp = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_USERSTAMP);
+  // this.__myAttributeCalledCreationTimestamp = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_TIMESTAMP);
   this.__myAttributeCalledQuery = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY);
 
   // load the axiomatic categories
@@ -153,7 +154,7 @@ World.prototype.endTransaction = function () {
     // that the world can use to display status info.
     var listOfChangesMade = this.__myVirtualServer.saveChangesToServer();
     if (listOfChangesMade.length > 0) {
-      RootView.displayStatusBlurb(listOfChangesMade.length + " changes made");
+      Util.displayStatusBlurb(listOfChangesMade.length + " changes made");
       this.__notifyObserversOfChanges(listOfChangesMade);
     }
   }
@@ -318,18 +319,6 @@ World.prototype.getAttributeCalledCategory = function () {
   return this.__myAttributeCalledCategory;
 };
 
-World.prototype.getAttributeCalledOrdinal = function () {
-  return this.__myAttributeCalledOrdinal;
-};
-
-World.prototype.getAttributeCalledCreationUserstamp = function () {
-  return this.__myAttributeCalledCreationUserstamp;
-};
-
-World.prototype.getAttributeCalledCreationTimestamp = function () {
-  return this.__myAttributeCalledCreationTimestamp;
-};
-
 World.prototype.getAttributeCalledQuery = function () {
   return this.__myAttributeCalledQuery;
 };
@@ -462,12 +451,32 @@ World.prototype.newUser = function (inName, inAuthentication, inObserver) {
  * Returns a newly created item.
  *
  * @scope    public instance method
+ * @param    inName    Optional. A string, which will be assigned to the name attribute of the new item. 
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created item.
  */
-World.prototype.newItem = function (inObserver) {
+World.prototype.newItem = function (inName, inObserver) {
   this.beginTransaction();
-  var item = this.__myVirtualServer.newItem(inObserver);
+  var item = this.__myVirtualServer.newItem(inName, inObserver);
+  this.endTransaction();
+  return item;
+};
+
+
+/**
+ * Returns a newly created attribute item.
+ *
+ * @scope    public instance method
+ * @param    inName    Optional. A string, which will be assigned to the name attribute of the new item. 
+ * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
+ * @return   A newly created attribute item.
+ */
+World.prototype.newAttribute = function (inName, inObserver) {
+  this.beginTransaction();
+  var item = this.__myVirtualServer.newItem(inName, inObserver);
+  var attributeCalledCategory = this.getAttributeCalledCategory();
+  var categoryCalledAttribute = this.getCategoryCalledAttribute();
+  item.addAttributeValue(attributeCalledCategory, categoryCalledAttribute);
   this.endTransaction();
   return item;
 };
