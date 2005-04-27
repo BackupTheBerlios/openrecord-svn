@@ -50,14 +50,21 @@ function testTypeCheckingMethods() {
 }
 
 function testMethodsThatOperateOnSets() {
-  var aSet = [];
+  var aTinySet = [];
   var theHobbit = UtilTestVars.theHobbit;
-  assertFalse('"The Hobbit" is not in an empty set', Util.isObjectInSet(theHobbit, aSet));
-  assertTrue('"The Hobbit" can be added to an empty set', Util.addObjectToSet(theHobbit, aSet));
-  assertTrue('"The Hobbit" is in the set after being added', Util.isObjectInSet(theHobbit, aSet));
-  assertTrue('"The Hobbit" can be removed from a set it is in', Util.removeObjectFromSet(theHobbit, aSet));
-  assertFalse('"The Hobbit" is no longer in a set it was removed from', Util.isObjectInSet(theHobbit, aSet));
-  assertFalse('"The Hobbit" can not be removed twice', Util.removeObjectFromSet(theHobbit, aSet));
+  assertFalse('"The Hobbit" is not in an empty set', Util.isObjectInSet(theHobbit, aTinySet));
+  assertTrue('"The Hobbit" can be added to an empty set', Util.addObjectToSet(theHobbit, aTinySet));
+  assertTrue('"The Hobbit" is in the set after being added', Util.isObjectInSet(theHobbit, aTinySet));
+  assertTrue('"The Hobbit" can be removed from a set it is in', Util.removeObjectFromSet(theHobbit, aTinySet));
+  assertFalse('"The Hobbit" is no longer in a set it was removed from', Util.isObjectInSet(theHobbit, aTinySet));
+  assertFalse('"The Hobbit" can not be removed twice', Util.removeObjectFromSet(theHobbit, aTinySet));
+
+  setNumber2 = [123, "456", 78.9, new Date(), theHobbit];
+  assertTrue('"The Hobbit" is in setNumber2', Util.isObjectInSet(theHobbit, setNumber2));
+  assertTrue('78.9 is in setNumber2', Util.isObjectInSet(78.9, setNumber2));
+  assertTrue('78.9 and "The Hobbit" is in setNumber2', Util.areObjectsInSet([78.9, theHobbit], setNumber2));
+  assertTrue('All members of setNumber2 are in setNumber2', Util.areObjectsInSet(setNumber2, setNumber2));
+  
 }
 
 function tearDown() {

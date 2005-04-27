@@ -77,6 +77,8 @@ World methods -------------------
   world.newUser()
   
   world.newItem()
+  world.newAttribute()
+  world.newCategory()
   world.getListOfItemsInCategory()
   world.getListOfResultItemsForQuery()
   world.setItemToBeIncludedInQueryResultList()

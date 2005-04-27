@@ -202,7 +202,7 @@ Entry.prototype.getUniqueKeyString = function () {
  * @return   A number.
  */
 Entry.prototype.getOrdinalNumberAtCreation = function () {
-  return (0 - this.__myCreationTimestamp.getUTCMilliseconds());
+  return (0 - this.__myCreationTimestamp.valueOf());
 };
 
 
@@ -322,9 +322,11 @@ Entry.prototype.reorderBetween = function (inEntryFirst, inEntryThird) {
   
   if (inEntryFirst) {
     firstOrdinalNumber = inEntryFirst.getOrdinalNumber();
+    alert("firstOrdinalNumber:" + firstOrdinalNumber);
   }
   if (inEntryThird) {
     thirdOrdinalNumber = inEntryThird.getOrdinalNumber();
+    alert("thirdOrdinalNumber:" + thirdOrdinalNumber);
   }
   
   if (firstOrdinalNumber && thirdOrdinalNumber) {

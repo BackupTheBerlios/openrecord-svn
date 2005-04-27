@@ -464,12 +464,12 @@ World.prototype.newItem = function (inName, inObserver) {
 
 
 /**
- * Returns a newly created attribute item.
+ * Returns a newly created item representing an attribute.
  *
  * @scope    public instance method
  * @param    inName    Optional. A string, which will be assigned to the name attribute of the new item. 
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
- * @return   A newly created attribute item.
+ * @return   A newly created item representing an attribute.
  */
 World.prototype.newAttribute = function (inName, inObserver) {
   this.beginTransaction();
@@ -477,6 +477,25 @@ World.prototype.newAttribute = function (inName, inObserver) {
   var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledAttribute = this.getCategoryCalledAttribute();
   item.addAttributeValue(attributeCalledCategory, categoryCalledAttribute);
+  this.endTransaction();
+  return item;
+};
+
+
+/**
+ * Returns a newly created item representing a category.
+ *
+ * @scope    public instance method
+ * @param    inName    Optional. A string, which will be assigned to the name attribute of the new item. 
+ * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
+ * @return   A newly created item representing a category.
+ */
+World.prototype.newCategory = function (inName, inObserver) {
+  this.beginTransaction();
+  var item = this.__myVirtualServer.newItem(inName, inObserver);
+  var attributeCalledCategory = this.getAttributeCalledCategory();
+  var categoryCalledCategory = this.getCategoryCalledCategory();
+  item.addAttributeValue(attributeCalledCategory, categoryCalledCategory);
   this.endTransaction();
   return item;
 };
@@ -608,6 +627,10 @@ World.prototype.getListOfItemsInCategory = function (inCategory, inObserver) {
  * @param    inObserver    An object or method to be registered as an observer of the item. 
  */
 World.prototype.__addListObserver = function (inList, inObserver) {
+  var observerWasAdded = false;
+  if (!inObserver) {
+    return observerWasAdded;
+  }
   var weNeedToMakeANewTupleForThisList = true;
   var observerWasAdded = false;
   var listOfTuples = this.__myListOfListObserverTuples;

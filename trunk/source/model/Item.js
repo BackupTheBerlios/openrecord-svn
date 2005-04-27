@@ -156,7 +156,8 @@ Item.prototype.addAttributeValue = function (inAttribute, inContentData) {
  * @return   The new replacement value object.
  */
 Item.prototype.replaceValue = function (inValue, inContentData) {
-  return this.replaceValueWithAttributeValue(inValue, null, inContentData);
+  var attribute = inValue.getAttribute();
+  return this.replaceValueWithAttributeValue(inValue, attribute, inContentData);
 };
 
 

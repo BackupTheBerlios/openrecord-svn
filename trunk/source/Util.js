@@ -318,6 +318,29 @@ Util.isObjectInSet = function (inObject, inSet) {
 
 
 /**
+ * Returns true if each of the given objects is a member of the set.  
+ * 
+ * @scope    public class method
+ * @param    inArray    An array of objects to look for. 
+ * @param    inSet    The Array to look for the objects in. 
+ * @return   Returns true if each of the objects was found in the set.
+ */
+Util.areObjectsInSet = function (inArray, inSet) {
+  Util.assert(Util.isArray(inArray));
+  Util.assert(Util.isArray(inSet));
+  
+  for (var key in inArray) {
+    var object = inArray[key];
+    var objectIsInSet = Util.isObjectInSet(object, inSet);
+    if (!objectIsInSet) {
+      return false;
+    }
+  }
+  return true;
+};
+
+
+/**
  * Removes an object from an array.  
  * 
  * @scope    public class method

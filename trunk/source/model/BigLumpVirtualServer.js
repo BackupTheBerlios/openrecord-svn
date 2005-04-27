@@ -258,7 +258,7 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
 
     var timestampString = contents[BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP];
     var userstampUuid = contents[BigLumpVirtualServer.JSON_MEMBER_USERSTAMP];
-    var timestamp = new Date(timestampString);
+    var timestamp = new Date(new Number(timestampString));
     var userstamp = this.__getItemFromUuidOrBootstrapItem(userstampUuid);
 
     if (dehydratedItem) {
@@ -399,7 +399,7 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
       pickleString = '{ "' + BigLumpVirtualServer.JSON_MEMBER_TYPE + '": "' + typeString + '", "' + BigLumpVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString + ' }';
       listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_DATA + '": ' + pickleString + ',\n');
     }
-    listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + record.getTimestamp().getUTCMilliseconds() + '",\n');
+    listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + record.getTimestamp().valueOf() + '",\n');
     listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_USERSTAMP + '": "' + record.getUserstamp()._getUuid() + '"}\n');
     listOfStrings.push('  }');
   }

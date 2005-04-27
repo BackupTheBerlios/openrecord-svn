@@ -30,9 +30,11 @@
  
 var ModelTestVars = null;
 
+
 function setUp() {
   ModelTestVars = {};
 }
+
 
 function testLoginLogout() {
   var world = new World();
@@ -123,11 +125,16 @@ function testAdditionsAndRetrievals() {
   var hasAll;
   
   var tZero = new Date();
+  
+  
+  // operations done by Jane
   var userJane = world.newUser("Jane Doe", janesPassword);
   world.login(userJane, janesPassword);
 
   var characterAttribute = world.newAttribute("Characters");
   var starWars = world.newItem("Star Wars");
+  assertTrue('getDisplayName() works for "Star Wars"', (starWars.getDisplayName() == "Star Wars"));
+
   var luck = starWars.addAttributeValue(characterAttribute, "Luck Skywalker");
   var c3po = starWars.addAttributeValue(characterAttribute, "C3PO");
   var r2d2 = starWars.addValue("R2D2");
@@ -136,17 +143,12 @@ function testAdditionsAndRetrievals() {
   assertTrue('"R2D2" has not been replaced', !r2d2.hasBeenReplaced());
 
   listOfCharacters = starWars.getValuesForAttribute(characterAttribute);
-  hasAll = true;
-  hasAll = hasAll &&  Util.isObjectInSet(luck, listOfCharacters);
-  hasAll = hasAll &&  Util.isObjectInSet(c3po, listOfCharacters);
+  hasAll = Util.areObjectsInSet([luck, c3po], listOfCharacters);
   assertTrue('"Star Wars" has characters: luck, c3po', hasAll);
   assertTrue('Exactly 2 characters in the star wars', listOfCharacters.length == 2);
 
   listOfValues = starWars.getValues();
-  hasAll = true;
-  hasAll = hasAll &&  Util.isObjectInSet(luck, listOfCharacters);
-  hasAll = hasAll &&  Util.isObjectInSet(c3po, listOfCharacters);
-  hasAll = hasAll &&  Util.isObjectInSet(r2d2, listOfValues);
+  hasAll = Util.areObjectsInSet([luck, c3po, r2d2], listOfValues);
   assertTrue('"Star Wars" has values: luck, c3po, r2d2', hasAll);  
   
   var ordinalA = starWars.getOrdinalNumberAtCreation();
@@ -163,10 +165,8 @@ function testAdditionsAndRetrievals() {
   assertTrue('"Star Wars" was made by Jane', starWarsUserstamp == userJane);    
 
   listOfAttributes = starWars.getAttributes();
-  hasAll = true;
-  hasAll = hasAll &&  Util.isObjectInSet(nameAttribute, listOfAttributes);
-  hasAll = hasAll &&  Util.isObjectInSet(characterAttribute, listOfAttributes);
-  assertTrue('"Star Wars" has all 5 expected attributes', hasAll);
+  hasAll = Util.areObjectsInSet([nameAttribute, characterAttribute], listOfAttributes);
+  assertTrue('"Star Wars" has both expected attributes', hasAll);
   
   worldRetrievalFilter = world.getRetrievalFilter();
   assertTrue('Default retrieval filter is "last edit wins"', worldRetrievalFilter == World.RETRIEVAL_FILTER_LAST_EDIT_WINS);
@@ -174,27 +174,148 @@ function testAdditionsAndRetrievals() {
   var luke = starWars.replaceValue(luck, "Luke Skywalker");
   var previousValue = luke.getPreviousValue();
   assertTrue('"Luke" has the previous version "Luck"', previousValue !== null);
+  assertTrue('"Luck" has been replaced', luck.hasBeenReplaced());
+  assertTrue('"Luke" is a value in "Star Wars"', luck.getItem() == starWars);
+
+  listOfValues = starWars.getValues();
+  hasAll = Util.areObjectsInSet([luke, c3po, r2d2], listOfValues);
+  assertTrue('"Star Wars" has values: luke, c3po, r2d2', hasAll);  
+
+  listOfCharacters = starWars.getValuesForAttribute(characterAttribute);
+  hasAll = Util.areObjectsInSet([luke, c3po], listOfCharacters);
+  assertTrue('"Star Wars" has characters: luke, c3po', hasAll);
+  assertTrue('Exactly 2 characters in the star wars', listOfCharacters.length == 2);
 
   world.logout();
   
+  // operations done by Chris
   var passwordForChris = "Kringlishous!";
   var userChris = world.newUser("Chris Kringle", passwordForChris);
   world.login(userChris, passwordForChris);
 
   r2d2 = starWars.replaceValueWithAttributeValue(r2d2, characterAttribute, "R2D2");
-  var hasR2d2;
+  assertTrue('"R2D2" is now character', r2d2.getAttribute() == characterAttribute);
   
   listOfCharacters = starWars.getValuesForAttribute(characterAttribute);
-  hasR2d2 = Util.isObjectInSet(r2d2, listOfCharacters);
+  var hasR2d2 = Util.isObjectInSet(r2d2, listOfCharacters);
+  hasAll = Util.areObjectsInSet([luke, c3po, r2d2], listOfCharacters);
   assertTrue('Chris sees R2D2 as a character', hasR2d2);
+  assertTrue('Chris sees characters: luke, c3po, r2d2', hasAll);
+  assertTrue('Chris sees 3 characters in "Star Wars"', listOfCharacters.length == 3);
+  
+  var attributeCalledName = world.getAttributeCalledName();
+  var theHobbit = world.newItem("The Hobbit");
+  theHobbit.addAttributeValue(attributeCalledName, "There and Back Again");
+  listOfValues = theHobbit.getValuesForAttribute(attributeCalledName);
+  assertTrue('"The Hobbit" has two names', listOfValues.length == 2);
+  assertTrue('getDisplayName() returns the first name', (starWars.getDisplayName() == "Star Wars"));
+  listOfNames = theHobbit.getName();
+  assertTrue('getContentData() returns a string', listOfNames[0].getContentData() == "The Hobbit");
+  hasAll = Util.areObjectsInSet(listOfNames, listOfValues);
+  hasAll = hasAll && Util.areObjectsInSet(listOfValues, listOfNames);
+  assertTrue('getName() matches getValuesForAttribute(attributeCalledName)', hasAll);
   
   world.logout();
 }
 
 
+function testCategories() {
+  var world = new World();
+  var janesPassword = "jane's password";
+  var userJane = world.newUser("Jane Doe", janesPassword);
+  world.login(userJane, janesPassword);
+
+  var attributeCalledCategory = world.getAttributeCalledCategory();
+  var attributeCalledName = world.getAttributeCalledName();
+  var categoryCalledAttribute = world.getCategoryCalledAttribute();
+
+  var isInCategory;
+  isInCategory = attributeCalledName.isInCategory(categoryCalledAttribute);
+  assertTrue('The attribute "Name" is in the category "Attribute"', isInCategory);
+  isInCategory = categoryCalledAttribute.isInCategory(categoryCalledAttribute);
+  assertTrue('The category "Attribute" is NOT in the category "Attribute"', !isInCategory);
+  
+  var theHobbit = world.newItem("The Hobbit");
+  var theWisdomOfCrowds = world.newItem("The Wisdom of Crowds");
+  var theTransparentSociety = world.newItem("The Transparent Society");
+  isInCategory = theHobbit.isInCategory(categoryCalledAttribute);
+  assertTrue('"The Hobbit" is NOT in the category "Attribute"', !isInCategory);
+  
+  var categoryCalledBook = world.newCategory("Book");
+  isInCategory = theHobbit.isInCategory(categoryCalledBook);
+  assertTrue('"The Hobbit" is NOT in the category "Book"', !isInCategory);
+  
+  theHobbit.addAttributeValue(attributeCalledCategory, categoryCalledBook);
+  theWisdomOfCrowds.addAttributeValue(attributeCalledCategory, categoryCalledBook);
+  theTransparentSociety.addAttributeValue(attributeCalledCategory, categoryCalledBook);
+  isInCategory = theHobbit.isInCategory(categoryCalledBook);
+  assertTrue('"The Hobbit" is in the category "Book"', isInCategory);
+ 
+  var allBooks = world.getListOfItemsInCategory(categoryCalledBook);
+  var hasAll = Util.areObjectsInSet([theHobbit, theWisdomOfCrowds, theTransparentSociety], allBooks);
+  assertTrue('All three books are in the category "Book"', hasAll);
+  
+  world.logout();
+}
+
+
+function testOrdinals() {
+  var world = new World();
+  var janesPassword = "jane's password";
+  var userJane = world.newUser("Jane Doe", janesPassword);
+  world.login(userJane, janesPassword);
+  
+  var attributeCalledCategory = world.getAttributeCalledCategory();
+  
+  var apple = world.newItem("Apple");
+  var cupcake = world.newItem("Cupcake");
+  var brownie = world.newItem("Brownie");  
+
+  var categoryCalledFood = world.newCategory("Food");
+  apple.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+  cupcake.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+  brownie.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+
+  var foodItems = world.getListOfItemsInCategory(categoryCalledFood);
+  assertTrue('Apple starts out first in the list"', foodItems[0] == apple);
+  assertTrue('Cupcake starts out second in the list"', foodItems[1] == cupcake);
+  assertTrue('Brownie starts out second in the list"', foodItems[2] == brownie);
+
+  // PENDING: this doesn't work yet
+  // 
+  // brownie.reorderBetween(apple, cupcake);
+  // foodItems = world.getListOfItemsInCategory(categoryCalledFood);
+  // assertTrue('Apple is now first in the list"', foodItems[0] == apple);
+  // assertTrue('Brownie is now second in the list"', foodItems[1] == brownie);
+  // assertTrue('Cupcake is now third in the list"', foodItems[2] == cupcake);
+  
+  world.logout();
+}
+  
+
 function tearDown() {
   ModelTestVars = null;
 }
+
+/*********************************************************************
+Methods that we don't yet have tests for:
+  
+  item.reorderBetween()
+  
+  item.hasBeenDeleted()
+  item.voteToDelete()
+  item.voteToRetain()
+  
+  item.addObserver()
+  item.removeObserver()
+  world.beginTransaction()
+  world.endTransaction()
+
+  world.getListOfResultItemsForQuery()
+  world.setItemToBeIncludedInQueryResultList()
+  world.removeObserverOfList()
+  
+*********************************************************************/
 
 // -------------------------------------------------------------------
 // End of file
