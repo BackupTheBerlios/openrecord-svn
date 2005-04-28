@@ -154,7 +154,7 @@ StubVirtualServer.prototype.newOrdinal = function (inEntry, inOrdinalNumber) {
  * @param    inRetainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  * @return   A newly created vote.
  */
-StubVirtualServer.prototype._newVote = function (inEntry, inRetainFlag) {
+StubVirtualServer.prototype.newVote = function (inEntry, inRetainFlag) {
   var vote = new Vote(inEntry, this.__myWorld.getCurrentUser(), inRetainFlag);
   this.__myChronologicalListOfNewlyCreatedRecords.push(vote);
   return vote;
@@ -310,12 +310,13 @@ StubVirtualServer.prototype.saveChangesToServer = function () {
 StubVirtualServer.prototype.getListOfResultItemsForQuery = function (inQuery, inObserver) {
   Util.assert(inQuery instanceof Item);
   
-  var attributeCalledQueryMatchingCategory = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
-  var attributeCalledQueryMatchingItem = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
+  var attributeCalledQueryMatchingCategory = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
+  var attributeCalledQueryMatchingItem = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
 
   var uuid = null;
   var item = null;
-  var listOfQueryResultItems = null;
+  var key;
+  var listOfQueryResultItems = [];
   var listOfMatchingCategories = inQuery.getValuesForAttribute(attributeCalledQueryMatchingCategory);
   var listOfMatchingItems = inQuery.getValuesForAttribute(attributeCalledQueryMatchingItem);
   var isCategoryMatchingQuery = (listOfMatchingCategories && (listOfMatchingCategories.length > 0));
@@ -324,19 +325,23 @@ StubVirtualServer.prototype.getListOfResultItemsForQuery = function (inQuery, in
   Util.assert(!(isCategoryMatchingQuery && isItemMatchingQuery));
 
   if (isItemMatchingQuery) {
-    listOfQueryResultItems = listOfMatchingItems;
+    for (key in listOfMatchingItems) {
+      var itemValue = listOfMatchingItems[key];
+      item = itemValue.getContentData();
+      listOfQueryResultItems.push(item);
+    }
   }
   
   if (isCategoryMatchingQuery) {
-    listOfQueryResultItems = [];
     // This is a wildly inefficient search.  But maybe it doesn't matter,
     // because this code should all be replaced someday by server code.
     for (uuid in this.__myHashTableOfItemsKeyedByUuid) {
       item = this.__myHashTableOfItemsKeyedByUuid[uuid];
       if (!item.hasBeenDeleted()) {
         var includeItem = true;
-        for (var key in listOfMatchingCategories) {
-          var category = listOfMatchingCategories[key];
+        for (key in listOfMatchingCategories) {
+          var categoryValue = listOfMatchingCategories[key];
+          var category = categoryValue.getContentData();
           if (includeItem && !(item.isInCategory(category))) {
             includeItem = false;
           }
@@ -349,7 +354,6 @@ StubVirtualServer.prototype.getListOfResultItemsForQuery = function (inQuery, in
   }
   
   if (!isItemMatchingQuery && !isCategoryMatchingQuery) {
-    listOfQueryResultItems = [];
     for (uuid in this.__myHashTableOfItemsKeyedByUuid) {
       item = this.__myHashTableOfItemsKeyedByUuid[uuid];
       if (!item.hasBeenDeleted()) {
@@ -377,8 +381,8 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
   Util.assert(inItem instanceof Item);
   Util.assert(inQuery instanceof Item);
 
-  var attributeCalledQueryMatchingCategory = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
-  var attributeCalledQueryMatchingItem = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
+  var attributeCalledQueryMatchingCategory = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
+  var attributeCalledQueryMatchingItem = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
 
   var listOfMatchingCategories = inQuery.getValuesForAttribute(attributeCalledQueryMatchingCategory);
   var listOfMatchingItems = inQuery.getValuesForAttribute(attributeCalledQueryMatchingItem);
@@ -394,7 +398,8 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
   var attributeCalledCategory = this.__myWorld.getAttributeCalledCategory();
   if (isCategoryMatchingQuery) {
     for (var key in listOfMatchingCategories) {
-      var category = listOfMatchingCategories[key];
+      var categoryValue = listOfMatchingCategories[key];
+      var category = categoryValue.getContentData();
       if (!(inItem.isInCategory(category))) {
         inItem.addAttributeValue(attributeCalledCategory, category);
       }

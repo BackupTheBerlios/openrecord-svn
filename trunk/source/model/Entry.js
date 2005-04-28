@@ -202,7 +202,8 @@ Entry.prototype.getUniqueKeyString = function () {
  * @return   A number.
  */
 Entry.prototype.getOrdinalNumberAtCreation = function () {
-  return (0 - this.__myCreationTimestamp.valueOf());
+  // return (0 - this.__myCreationTimestamp.valueOf());
+  return (0 - this.__myUuid);
 };
 
 
@@ -228,6 +229,14 @@ Entry.prototype.getOrdinalNumber = function () {
   
   switch (filter) {
     case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
+      // APPROACH A: 
+      //   I tried this first, but it fails in the unit tests.
+      //   It fails because two objects will have identical timestamps if they
+      //   were created in the same millisecond.  One solution would be to
+      //   create a Timestamp class that offers sub-millisecond timestamp
+      //   resolution.  For example, see scrap_yard/Timestamp.js.  However,
+      //   for now the simplest thing to do is just move on to APPROACH B:
+      /*
       var mostRecentOrdinal = this.__mySetOfOrdinals[0];
       for (key in this.__mySetOfOrdinals) {
         ordinal = this.__mySetOfOrdinals[key];
@@ -235,7 +244,14 @@ Entry.prototype.getOrdinalNumber = function () {
           mostRecentOrdinal = ordinal;
         }
       }
-      ordinalNumber = !mostRecentOrdinal.getOrdinalNumber();
+      */
+      
+      // APPROACH B: 
+      //   This works, provided __mySetOfOrdinals is always initialized in
+      //   chronological order.
+      var mostRecentOrdinal = this.__mySetOfOrdinals[this.__mySetOfOrdinals.length - 1];
+
+      ordinalNumber = mostRecentOrdinal.getOrdinalNumber();
       break;
     case World.RETRIEVAL_FILTER_SINGLE_USER:
       // PENDING: This still needs to be implemented.
@@ -276,6 +292,14 @@ Entry.prototype.hasBeenDeleted = function () {
   
   switch (filter) {
     case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
+      // APPROACH A: 
+      //   I tried this first, but it fails in the unit tests.
+      //   It fails because two objects will have identical timestamps if they
+      //   were created in the same millisecond.  One solution would be to
+      //   create a Timestamp class that offers sub-millisecond timestamp
+      //   resolution.  For example, see scrap_yard/Timestamp.js.  However,
+      //   for now the simplest thing to do is just move on to APPROACH B:
+      /*
       var mostRecentVote = this.__mySetOfVotes[0];
       for (key in this.__mySetOfVotes) {
         vote = this.__mySetOfVotes[key];
@@ -283,6 +307,13 @@ Entry.prototype.hasBeenDeleted = function () {
           mostRecentVote = vote;
         }
       }
+      */
+      
+      // APPROACH B: 
+      //   This works, provided __mySetOfVotes is always initialized in
+      //   chronological order.
+      var mostRecentVote = this.__mySetOfVotes[this.__mySetOfVotes.length - 1];
+      
       hasBeenDeleted = !mostRecentVote.getRetainFlag();
       break;
     case World.RETRIEVAL_FILTER_SINGLE_USER:
@@ -318,15 +349,13 @@ Entry.prototype.reorderBetween = function (inEntryFirst, inEntryThird) {
   var firstOrdinalNumber = null;
   var secondOrdinalNumber = null;
   var thirdOrdinalNumber = null;
-  var arbitraryNumberToMoveUsUpOrDownSlightly = 100;
+  var arbitraryNumberToMoveUsUpOrDownSlightly = 0.01;
   
   if (inEntryFirst) {
     firstOrdinalNumber = inEntryFirst.getOrdinalNumber();
-    alert("firstOrdinalNumber:" + firstOrdinalNumber);
   }
   if (inEntryThird) {
     thirdOrdinalNumber = inEntryThird.getOrdinalNumber();
-    alert("thirdOrdinalNumber:" + thirdOrdinalNumber);
   }
   
   if (firstOrdinalNumber && thirdOrdinalNumber) {
@@ -338,7 +367,7 @@ Entry.prototype.reorderBetween = function (inEntryFirst, inEntryThird) {
   if (!firstOrdinalNumber && thirdOrdinalNumber) {
     secondOrdinalNumber = (firstOrdinalNumber + arbitraryNumberToMoveUsUpOrDownSlightly);
   }
-  
+
   this.getWorld()._newOrdinal(this, secondOrdinalNumber);
 };
 

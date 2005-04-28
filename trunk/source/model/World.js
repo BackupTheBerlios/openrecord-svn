@@ -106,6 +106,8 @@ function World(inVirtualServer) {
   // this.__myAttributeCalledCreationUserstamp = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_USERSTAMP);
   // this.__myAttributeCalledCreationTimestamp = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_TIMESTAMP);
   this.__myAttributeCalledQuery = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY);
+  this.__myAttributeCalledQueryMatchingCategory = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
+  this.__myAttributeCalledQueryMatchingItem = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
 
   // load the axiomatic categories
   this.__myCategoryCalledAttribute = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
@@ -323,6 +325,14 @@ World.prototype.getAttributeCalledQuery = function () {
   return this.__myAttributeCalledQuery;
 };
 
+World.prototype.getAttributeCalledQueryMatchingCategory = function () {
+  return this.__myAttributeCalledQueryMatchingCategory;
+};
+
+World.prototype.getAttributeCalledQueryMatchingItem = function () {
+  return this.__myAttributeCalledQueryMatchingItem;
+};
+
 
 // -------------------------------------------------------------------
 // Accessor methods for axiomatic categories
@@ -502,6 +512,72 @@ World.prototype.newCategory = function (inName, inObserver) {
 
 
 /**
+ * Returns a newly created item representing a query.
+ *
+ * @scope    public instance method
+ * @param    inCategory    Optional. A category item, or an array of category items. 
+ * @return   A newly created item representing a query.
+ */
+World.prototype.newQueryForItemsByCategory = function (inCategory) {
+  this.beginTransaction();
+  var item = this.__myVirtualServer.newItem("A query");
+  var attributeCalledCategory = this.getAttributeCalledCategory();
+  var categoryCalledQuery = this.getCategoryCalledQuery();
+  item.addAttributeValue(attributeCalledCategory, categoryCalledQuery);
+
+  var attributeCalledQueryMatchingCategory = this.getAttributeCalledQueryMatchingCategory();
+  if (inCategory) {
+    if (inCategory instanceof Item) {
+      item.addAttributeValue(attributeCalledQueryMatchingCategory, inCategory);
+    }
+    if (Util.isArray(inCategory)) {
+      var listOfCategories = inCategory;
+      for (var key in listOfCategories) {
+        var category = listOfCategories[key];
+        item.addAttributeValue(attributeCalledQueryMatchingCategory, category);
+      }
+    }
+  }
+
+  this.endTransaction();
+  return item;
+};
+
+
+/**
+ * Returns a newly created item representing a query.
+ *
+ * @scope    public instance method
+ * @param    inItems    Optional. An item, or an array of items. 
+ * @return   A newly created item representing a query.
+ */
+World.prototype.newQueryForSpecificItems = function (inItems) {
+  this.beginTransaction();
+  var item = this.__myVirtualServer.newItem("A query");
+  var attributeCalledCategory = this.getAttributeCalledCategory();
+  var categoryCalledQuery = this.getCategoryCalledQuery();
+  item.addAttributeValue(attributeCalledCategory, categoryCalledQuery);
+
+  var attributeCalledQueryMatchingItem = this.getAttributeCalledQueryMatchingItem();
+  if (inItems) {
+    if (inItems instanceof Item) {
+      item.addAttributeValue(attributeCalledQueryMatchingItem, inItems);
+    }
+    if (Util.isArray(inItems)) {
+      var listOfItems = inItems;
+      for (var key in listOfItems) {
+        var matchingItem = listOfItems[key];
+        item.addAttributeValue(attributeCalledQueryMatchingItem, matchingItem);
+      }
+    }
+  }
+
+  this.endTransaction();
+  return item;
+};
+
+
+/**
  * Returns a newly created value.
  *
  * @scope    public instance method
@@ -632,7 +708,6 @@ World.prototype.__addListObserver = function (inList, inObserver) {
     return observerWasAdded;
   }
   var weNeedToMakeANewTupleForThisList = true;
-  var observerWasAdded = false;
   var listOfTuples = this.__myListOfListObserverTuples;
   for (var key in listOfTuples) {
     var tuple = listOfTuples[key];

@@ -281,41 +281,209 @@ function testOrdinals() {
   assertTrue('Cupcake starts out second in the list"', foodItems[1] == cupcake);
   assertTrue('Brownie starts out second in the list"', foodItems[2] == brownie);
 
-  // PENDING: this doesn't work yet
-  // 
-  // brownie.reorderBetween(apple, cupcake);
-  // foodItems = world.getListOfItemsInCategory(categoryCalledFood);
-  // assertTrue('Apple is now first in the list"', foodItems[0] == apple);
-  // assertTrue('Brownie is now second in the list"', foodItems[1] == brownie);
-  // assertTrue('Cupcake is now third in the list"', foodItems[2] == cupcake);
+  brownie.reorderBetween(apple, cupcake);
+  foodItems = world.getListOfItemsInCategory(categoryCalledFood);
+  assertTrue('Apple is now first in the list"', foodItems[0] == apple);
+  assertTrue('Brownie is now second in the list"', foodItems[1] == brownie);
+  assertTrue('Cupcake is now third in the list"', foodItems[2] == cupcake);
+
+  cupcake.reorderBetween(null, apple);
+  foodItems = world.getListOfItemsInCategory(categoryCalledFood);
+  assertTrue('Apple is now first in the list"', foodItems[0] == cupcake);
+  assertTrue('Brownie is now second in the list"', foodItems[1] == apple);
+  assertTrue('Cupcake is now third in the list"', foodItems[2] == brownie);
+
+  cupcake.reorderBetween(brownie, null);
+  foodItems = world.getListOfItemsInCategory(categoryCalledFood);
+  assertTrue('Apple is now first in the list"', foodItems[0] == apple);
+  assertTrue('Brownie is now second in the list"', foodItems[1] == brownie);
+  assertTrue('Cupcake is now third in the list"', foodItems[2] == cupcake);
   
   world.logout();
 }
+
   
+function testDeletion() {
+  var world = new World();
+  var janesPassword = "jane's password";
+  var userJane = world.newUser("Jane Doe", janesPassword);
+  world.login(userJane, janesPassword);
+  
+  var hydrogen = world.newItem("Hydrogen");
+  var oxygen = world.newItem("Oxygen");
+  
+  assertTrue('Hydrogen starts out not having been deleted"', !hydrogen.hasBeenDeleted());
+
+  hydrogen.voteToDelete();
+  assertTrue('After a voteToDelete(), hydrogen hasBeenDeleted()"', hydrogen.hasBeenDeleted());
+  
+  hydrogen.voteToRetain();
+  assertTrue('After a voteToRetain(), hydrogen no longer hasBeenDeleted()', !hydrogen.hasBeenDeleted());
+
+  world.logout();
+}
+
+
+function testItemObservation() {
+  var world = new World();
+  var janesPassword = "jane's password";
+  var userJane = world.newUser("Jane Doe", janesPassword);
+  world.login(userJane, janesPassword);
+  
+  var tokyo = world.newItem("Tokyo");
+  var seattle = world.newItem("Seattle");
+  
+  var changesObservedByObject = null;
+  var tokyoObserverObject = {};
+  tokyoObserverObject.observedItemHasChanged = function (inItem, inListOfRecords) {
+    changesObservedByObject = inListOfRecords;
+  };
+  tokyo.addObserver(tokyoObserverObject);
+
+  var changesObservedByFunction = null;
+  var tokyoObserverFunction = function (inItem, inListOfRecords) {
+    changesObservedByFunction = inListOfRecords;
+  };
+  tokyo.addObserver(tokyoObserverFunction);
+  
+  seattle.voteToDelete();
+  assertTrue('tokyoObserverObject does not observe Seattle', (changesObservedByObject === null));
+  assertTrue('tokyoObserverFunction does not observe Seattle', (changesObservedByFunction === null));
+
+  tokyo.voteToDelete();
+  assertTrue('tokyoObserverObject does observe Tokyo', (changesObservedByObject != null));
+  assertTrue('tokyoObserverObject sees exactly one change', (changesObservedByObject.length == 1));
+  assertTrue('tokyoObserverFunction does observe Tokyo', (changesObservedByFunction != null));
+  assertTrue('tokyoObserverFunction sees exactly one change', (changesObservedByFunction.length == 1));
+
+  changesObservedByObject = null;
+  changesObservedByFunction = null;
+  world.beginTransaction();
+  tokyo.voteToRetain();
+  tokyo.addValue("Japan");
+  assertTrue('tokyoObserverObject does not yet see changes', (changesObservedByObject === null));
+  assertTrue('tokyoObserverFunction does not yet see changes', (changesObservedByFunction === null));
+  world.endTransaction();
+  assertTrue('tokyoObserverObject now sees changes', (changesObservedByObject != null));
+  assertTrue('tokyoObserverObject now sees two changes', (changesObservedByObject.length == 2));
+  assertTrue('tokyoObserverFunction now sees changes', (changesObservedByFunction != null));
+  assertTrue('tokyoObserverFunction now sees two changes', (changesObservedByFunction.length == 2));
+
+  changesObservedByObject = null;
+  changesObservedByFunction = null;
+  tokyo.removeObserver(tokyoObserverObject);
+  tokyo.removeObserver(tokyoObserverFunction);
+  tokyo.voteToDelete();
+  assertTrue('tokyoObserverObject no longer observes Tokyo', (changesObservedByObject === null));
+  assertTrue('tokyoObserverFunction no longer observes Tokyo', (changesObservedByFunction === null));
+  
+  world.logout();
+}
+
+
+function testListObservation() {
+  var world = new World();
+  var janesPassword = "jane's password";
+  var userJane = world.newUser("Jane Doe", janesPassword);
+  world.login(userJane, janesPassword);
+
+  var attributeCalledCategory = world.getAttributeCalledCategory();
+  
+  var apple = world.newItem("Apple");
+  var brownie = world.newItem("Brownie");  
+  var cupcake = world.newItem("Cupcake");
+
+  var categoryCalledFood = world.newCategory("Food");
+  apple.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+  brownie.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+  cupcake.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+
+  var tokyo = world.newItem("Tokyo");
+  var seattle = world.newItem("Seattle");
+
+  var changesObservedByObject = null;
+  var foodObserverObject = {};
+  foodObserverObject.observedListHasChanged = function (inList, inListOfChangeReports) {
+    changesObservedByObject = inListOfChangeReports;
+  };
+  var foodItems = world.getListOfItemsInCategory(categoryCalledFood, foodObserverObject);
+
+  var changesObservedByFunction = null;
+  var foodObserverFunction = function (inList, inListOfChangeReports) {
+    changesObservedByFunction = inListOfChangeReports;
+  };
+  var alsoFoodItems = world.getListOfItemsInCategory(categoryCalledFood, foodObserverFunction);
+  
+  apple.addValue("Red");
+  assertTrue('foodObserverObject sees a change to apple', (changesObservedByObject != null));
+  assertTrue('foodObserverFunction sees a change to apple', (changesObservedByFunction != null));
+
+  changesObservedByObject = null;
+  changesObservedByFunction = null;
+  tokyo.addValue("Japan");
+  assertTrue('foodObserverObject does not see a change to tokyo', (changesObservedByObject === null));
+  assertTrue('foodObserverFunction does not see a change to tokyo', (changesObservedByFunction === null));
+
+  world.removeListObserver(foodItems, foodObserverObject);
+  world.removeListObserver(alsoFoodItems, foodObserverFunction);
+  brownie.addValue("Brown");
+  assertTrue('foodObserverObject no longer sees changes to food items', (changesObservedByObject === null));
+  assertTrue('foodObserverFunction no longer sees changes to food items', (changesObservedByFunction === null));
+  
+  world.logout();
+}
+
+
+function testQueries() {
+  var world = new World();
+  var janesPassword = "jane's password";
+  var userJane = world.newUser("Jane Doe", janesPassword);
+  world.login(userJane, janesPassword);
+  
+  var attributeCalledCategory = world.getAttributeCalledCategory();
+  
+  var apple = world.newItem("Apple");
+  var brownie = world.newItem("Brownie");  
+  var cupcake = world.newItem("Cupcake");
+
+  var categoryCalledFood = world.newCategory("Food");
+  assertTrue('The category "Food" is an item', (categoryCalledFood instanceof Item));
+  apple.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+  brownie.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+  cupcake.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+
+  var tokyo = world.newItem("Tokyo");
+  var seattle = world.newItem("Seattle");
+
+  var hasAll;
+  var queryForFoods = world.newQueryForItemsByCategory(categoryCalledFood);
+  var queryForCities = world.newQueryForSpecificItems([tokyo, seattle]);
+  
+  var listOfFoods = world.getListOfResultItemsForQuery(queryForFoods);
+  hasAll = Util.areObjectsInSet([apple, brownie, cupcake], listOfFoods);
+  assertTrue('Food query returns 3 foods', listOfFoods.length == 3);
+  assertTrue('Food query returns all 3 foods', hasAll);
+
+  var listOfCities = world.getListOfResultItemsForQuery(queryForCities);
+  hasAll = Util.areObjectsInSet([tokyo, seattle], listOfCities);
+  assertTrue('City query returns 2 cities', listOfCities.length == 2);
+  assertTrue('City query returns all cities', hasAll);
+
+  world.setItemToBeIncludedInQueryResultList(tokyo, queryForFoods);
+  assertTrue('Tokyo is now a food', tokyo.isInCategory(categoryCalledFood));
+
+  listOfFoods = world.getListOfResultItemsForQuery(queryForFoods);
+  hasAll = Util.areObjectsInSet([apple, brownie, cupcake, tokyo], listOfFoods);
+  assertTrue('Food query returns 4 foods', listOfFoods.length == 4);
+  assertTrue('Food query returns all 4 foods', hasAll);
+
+  world.logout();
+}
 
 function tearDown() {
   ModelTestVars = null;
 }
 
-/*********************************************************************
-Methods that we don't yet have tests for:
-  
-  item.reorderBetween()
-  
-  item.hasBeenDeleted()
-  item.voteToDelete()
-  item.voteToRetain()
-  
-  item.addObserver()
-  item.removeObserver()
-  world.beginTransaction()
-  world.endTransaction()
-
-  world.getListOfResultItemsForQuery()
-  world.setItemToBeIncludedInQueryResultList()
-  world.removeObserverOfList()
-  
-*********************************************************************/
 
 // -------------------------------------------------------------------
 // End of file
