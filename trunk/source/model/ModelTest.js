@@ -480,6 +480,15 @@ function testQueries() {
   world.logout();
 }
 
+function testBigLumpVirtualServer() {
+  var fileName = "2005_item_centric_list.json";
+  var url = "../../current/trunk/source/model/" + fileName;
+  var fileContentString = Util.getStringContentsOfFileAtURL(url);
+  var bigLumpVirtualServer = new BigLumpVirtualServer(fileContentString);
+  var world = new World(bigLumpVirtualServer);
+}
+
+
 function tearDown() {
   ModelTestVars = null;
 }

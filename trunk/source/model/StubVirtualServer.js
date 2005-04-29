@@ -511,6 +511,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   var item;
   var value;
   
+  this.__myWorld.beginTransaction();
   var axiomaticUser = this.newUser("Amy ex machina", "null");
   this.__myCurrentUser = axiomaticUser;
   
@@ -567,8 +568,16 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
     item.addAttributeValue(attributeCalledCategory, categoryCalledCategory);
   }
   
-  this.__myChronologicalListOfNewlyCreatedRecords = [];
   this.__myCurrentUser = null;
+
+  for (var key in this.__myChronologicalListOfNewlyCreatedRecords) {
+    var newRecord = this.__myChronologicalListOfNewlyCreatedRecords[key];
+    this.__myChronologicalListOfRecords.push(newRecord);
+  }
+  var listOfNewlyCreatedRecords = this.__myChronologicalListOfNewlyCreatedRecords;
+  this.__myChronologicalListOfNewlyCreatedRecords = [];
+  this.__myWorld.endTransaction();
+  return listOfNewlyCreatedRecords;
 };
 
 

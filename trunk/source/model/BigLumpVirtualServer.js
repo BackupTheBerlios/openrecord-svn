@@ -51,7 +51,7 @@ BigLumpVirtualServer.JSON_FORMAT_2005_MARCH = "2005_MARCH_ITEM_CENTRIC_LIST";
 BigLumpVirtualServer.JSON_FORMAT_2005_APRIL = "2005_APRIL_CHRONOLOGICAL_LIST";
 
 BigLumpVirtualServer.JSON_MEMBER_TYPE = "type";
-BigLumpVirtualServer.JSON_MEMBER_DATA = "value";
+BigLumpVirtualServer.JSON_MEMBER_VALUE = "value";
 BigLumpVirtualServer.JSON_TYPE_STRING_VALUE = "StringValue";
 BigLumpVirtualServer.JSON_TYPE_UUID = "Uuid";
 BigLumpVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
@@ -80,28 +80,29 @@ BigLumpVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "ordinalNumber";
  * @scope    public instance constructor
  * @param    inJsonString    A JSON string literal representing the world of items. 
  */
-BigLumpVirtualServer.prototype = new StubBackingStore();  // makes BigLumpVirtualServer be a subclass of StubBackingStore
+BigLumpVirtualServer.prototype = new StubVirtualServer();  // makes BigLumpVirtualServer be a subclass of StubVirtualServer
 function BigLumpVirtualServer(inJsonString) {
   this.__myDehydratedWorld = inJsonString;
 }
+
+
+/**
+ * Initializes the instance variables for a newly created BigLumpVirtualServer,
+ * and does the initial loading of at least the axiomatic items.
+ *
+ * @scope    public instance method
+ * @param    inWorld    The world that we provide data for. 
+ */
+BigLumpVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
+  this.__initialize(inWorld);
+  this.__loadWorldFromJsonString(this.__myDehydratedWorld);
+};
 
 
 // -------------------------------------------------------------------
 // Private Methods
 // -------------------------------------------------------------------
 
-/**
- * Overrides the superclass method.  The BigLumpVirtualServer 
- * does not create axiomatic items from scratch, but instead loads all
- * the saved items, including the axiomatic items.
- *
- * @scope    private instance method
- */
-BigLumpVirtualServer.prototype.__loadAxiomaticItems = function () {
-  this.__loadWorldFromJsonString(this.__myDehydratedWorld);
-};
-  
-  
 /**
  * Loads a world of items from a dehydrated JSON string.
  *
@@ -141,55 +142,69 @@ BigLumpVirtualServer.prototype.__loadWorldFromJsonString = function (inJsonStrin
  * @param    inListOfItems    A JSON list of dehydrated items. 
  */
 BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function (inListOfItems) {
-  var listOfItems = inListOfItems;
+  var listOfDehydratedItems = inListOfItems;
   var uuid;
   var item;
   
   // Have the StubBackingStore load the axiomatic items, because it will
   // correctly set the creator of those items to be the axiomatic user.
-  this.__loadAxiomaticItems();
+  var listOfAxiomaticRecords = this.__loadAxiomaticItems();
   
+  var hashTableOfAxiomaticItemsKeyedByUuid = {};
+  for (var key in listOfAxiomaticRecords) {
+    var record = listOfAxiomaticRecords[key];
+    if (record instanceof Item) {
+      hashTableOfAxiomaticItemsKeyedByUuid[record._getUuid()] = record;
+    }
+  }
+  
+  this.__myWorld.beginTransaction();
   var guestUser = this.newUser("Guest", null);
   this.__myCurrentUser = guestUser;
-    
-  for (var listKey in listOfItems) {
-    var dehydratedItem = listOfItems[listKey];
+  
+  for (var listKey in listOfDehydratedItems) {
+    var dehydratedItem = listOfDehydratedItems[listKey];
     var dehydratedUuid = dehydratedItem[World.UUID_FOR_ATTRIBUTE_UUID];
-    uuid = dehydratedUuid[BigLumpVirtualServer.JSON_MEMBER_DATA];
-    item = this.__getItemFromUuidOrCreateNewItem(uuid);
-    for (var propertyKey in dehydratedItem) {
-      if (propertyKey != World.UUID_FOR_ATTRIBUTE_UUID) { 
-        var propertyValue = dehydratedItem[propertyKey];
-        var attributeUuid = propertyKey;
-        Util.assert(Util.isArray(propertyValue));
-        for (var valueKey in propertyValue) {
-          var valueObject = propertyValue[valueKey];
-          var valueType = valueObject[BigLumpVirtualServer.JSON_MEMBER_TYPE];
-          var valueValue = valueObject[BigLumpVirtualServer.JSON_MEMBER_DATA];
-          var finalValue = null;
-          switch (valueType) {
-            case BigLumpVirtualServer.JSON_TYPE_FOREIGN_UUID:
-              finalValue = this.__getItemFromUuidOrCreateNewItem(valueValue);
-              break;
-            case BigLumpVirtualServer.JSON_TYPE_STRING_VALUE:
-              finalValue = valueValue;
-              break;
-            case BigLumpVirtualServer.JSON_TYPE_NUMBER_VALUE:
-              finalValue = valueValue;
-              break;
+    uuid = dehydratedUuid[BigLumpVirtualServer.JSON_MEMBER_VALUE];
+    var axiomaticItem = hashTableOfAxiomaticItemsKeyedByUuid[uuid];
+    if (!axiomaticItem) {
+      item = this.__getItemFromUuidOrCreateNewItem(uuid);
+      Util.assert(item instanceof Item);
+      for (var propertyKey in dehydratedItem) {
+        if (propertyKey != World.UUID_FOR_ATTRIBUTE_UUID) { 
+          var propertyValue = dehydratedItem[propertyKey];
+          var attributeUuid = parseInt(propertyKey);
+          Util.assert(Util.isArray(propertyValue));
+          for (var valueKey in propertyValue) {
+            var valueObject = propertyValue[valueKey];
+            var valueType = valueObject[BigLumpVirtualServer.JSON_MEMBER_TYPE];
+            var valueValue = valueObject[BigLumpVirtualServer.JSON_MEMBER_VALUE];
+            var finalValue = null;
+            switch (valueType) {
+              case BigLumpVirtualServer.JSON_TYPE_FOREIGN_UUID:
+                finalValue = this.__getItemFromUuidOrCreateNewItem(valueValue);
+                break;
+              case BigLumpVirtualServer.JSON_TYPE_STRING_VALUE:
+                finalValue = valueValue;
+                break;
+              case BigLumpVirtualServer.JSON_TYPE_NUMBER_VALUE:
+                finalValue = valueValue;
+                break;
+            }
+            var attribute = this.getItemFromUuid(attributeUuid);
+            item.addAttributeValue(attribute, finalValue);
           }
-          var attribute = this.__getItemFromUuidOrCreateNewItem(attributeUuid);
-          item.addAttributeValue(attribute, finalValue);
         }
       }
     }
   }
-  
+
   for (var key in this.__myChronologicalListOfNewlyCreatedRecords) {
     var newRecord = this.__myChronologicalListOfNewlyCreatedRecords[key];
     this.__myChronologicalListOfRecords.push(newRecord);
   }
   this.__myChronologicalListOfNewlyCreatedRecords = [];
+  this.__myWorld.endTransaction();
   this.__myCurrentUser = null;
 };
 
@@ -295,9 +310,9 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
       if (previousValueUuid) {
         previousValue = this.__getValueFromUuidOrBootstrapValue(previousValueUuid);
       }
-      var pickledData = dehydratedValue[BigLumpVirtualServer.JSON_MEMBER_DATA];
+      var pickledData = dehydratedValue[BigLumpVirtualServer.JSON_MEMBER_VALUE];
       var dataType = pickledData[BigLumpVirtualServer.JSON_MEMBER_TYPE];
-      var rawData = pickledData[BigLumpVirtualServer.JSON_MEMBER_DATA];
+      var rawData = pickledData[BigLumpVirtualServer.JSON_MEMBER_VALUE];
       var finalData = null;
       switch (dataType) {
         case BigLumpVirtualServer.JSON_TYPE_RELATED_UUID:
@@ -397,7 +412,7 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
         valueString = contentData._getUuid();
       }
       pickleString = '{ "' + BigLumpVirtualServer.JSON_MEMBER_TYPE + '": "' + typeString + '", "' + BigLumpVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString + ' }';
-      listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_DATA + '": ' + pickleString + ',\n');
+      listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_VALUE + '": ' + pickleString + ',\n');
     }
     listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + record.getTimestamp().valueOf() + '",\n');
     listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_USERSTAMP + '": "' + record.getUserstamp()._getUuid() + '"}\n');
@@ -428,7 +443,13 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
  * @scope    public instance method
  * @return   The list of changes made. 
  */
-BigLumpVirtualServer.saveChangesToServer = function () {
+BigLumpVirtualServer.prototype.saveChangesToServer = function () {
+  var listOfChangesMade;
+  if (this.__myChronologicalListOfNewlyCreatedRecords.length === 0) {
+    listOfChangesMade = [];
+    return listOfChangesMade;
+  }
+  
   var saveChanges = false;
   if (window.location) {
     if (window.location.protocol == "http:") {
@@ -451,7 +472,7 @@ BigLumpVirtualServer.saveChangesToServer = function () {
     this.__myXMLHttpRequestObject.send(this.__getJsonStringRepresentingEntireWorld());
   }
   
-  var listOfChangesMade = this.__myChronologicalListOfNewlyCreatedRecords;
+  listOfChangesMade = this.__myChronologicalListOfNewlyCreatedRecords;
   this.__myChronologicalListOfNewlyCreatedRecords = [];
   return listOfChangesMade;
 };

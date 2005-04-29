@@ -150,10 +150,6 @@ World.prototype.endTransaction = function () {
   //   This is just a stub method for now.  Once we start implementing
   //   support for transactions we'll have to put some real code here.
   if (this.__myCountOfNestedTransactions === 0) {
-    // PENDING: 
-    // World.js should not depend on RootView.js like this.
-    // Instead, the view code should hand the world a "status display function"
-    // that the world can use to display status info.
     var listOfChangesMade = this.__myVirtualServer.saveChangesToServer();
     if (listOfChangesMade.length > 0) {
       Util.displayStatusBlurb(listOfChangesMade.length + " changes made");
