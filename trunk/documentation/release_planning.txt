@@ -49,6 +49,12 @@ Tasks
 ---------------------------------------------------
  + Figure out how to write unit tests for GUI code
 ---------------------------------------------------
+ + Have BigLumpVirtualServer.js be able to load April-2005-format chronological files
+---------------------------------------------------
+ + Create a new VirtualServer.js class that saves changes incrementally
+---------------------------------------------------
+ + Integrate the new data model code into the rest of the app
+---------------------------------------------------
  + BUG: Back button is broken
     The browser's back button doesn't work after you click from 
     page to page in the navbar.
@@ -154,6 +160,17 @@ Tasks
        http://www.python.org/psf/contrib-form.html
 ---------------------------------------------------
  + Move this task list from here into OpenRecord!
+---------------------------------------------------
+ + Consider moving from JavaDoc-style comments to reflection-based comments
+---------------------------------------------------
+ + Consider having a build system
+    A build system could:
+      * run unit tests
+      * run JSLint on the code
+      * compress the code by removing white space and comments
+      * compress the code by copying everything into a single file
+      * generate documentation
+      * remove Util.assert() statements from the code
 ---------------------------------------------------
  + search engine indexing
     Figure out how to make sure that search engines like
