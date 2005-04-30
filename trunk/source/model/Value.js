@@ -196,7 +196,7 @@ Value.prototype.getDisplayString = function () {
   if (this.__myContentData instanceof Item) {
     returnString += this.__myContentData.getDisplayName();
   } else {
-    returnString += this.__myContentData;
+    returnString += "" + this.__myContentData;
   }
   return returnString;
 };

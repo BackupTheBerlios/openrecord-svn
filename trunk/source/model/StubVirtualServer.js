@@ -175,9 +175,15 @@ StubVirtualServer.prototype.newVote = function (inEntry, inRetainFlag) {
  * @return   A newly created item representing a user.
  */
 StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObserver) {
-  var newUser = this.newItem(inName, inObserver);
+  var newUser = this.newItem(null, inObserver);
+  newUser.__myCreationUserstamp = newUser;
   this.__myListOfUsers.push(newUser);
   this.__myHashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = inAuthentication;
+  if (inName) { 
+    var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
+    var value = newUser.addAttributeValue(attributeCalledName, inName);
+    value.__myCreationUserstamp = newUser;
+  }
   return newUser;
 };
 
@@ -512,7 +518,10 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   var value;
   
   this.__myWorld.beginTransaction();
-  var axiomaticUser = this.newUser("Amy ex machina", "null");
+  var axiomaticUser = this.__getItemFromUuidOrCreateNewItem(World.UUID_FOR_USER_AMY);
+  axiomaticUser.__myCreationUserstamp = axiomaticUser;
+  this.__myListOfUsers.push(axiomaticUser);
+  this.__myHashTableOfUserAuthenticationInfo[axiomaticUser.getUniqueKeyString()] = null;
   this.__myCurrentUser = axiomaticUser;
   
   // associate display names with the UUIDs of all the attributes
@@ -529,6 +538,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY] = "Matching Category";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM] = "Matching Item";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_PLUGIN_NAME] = "Plugin Name";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED] = "Unfiled Value";
 
   // create all the Item objects for the attributes
   for (uuid in hashTableOfAttributeNamesKeyedByUuid) {
@@ -548,9 +558,12 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
     this.__getItemFromUuidOrCreateNewItem(uuid);
   }
  
-  // set the display names of all the attributes, and put them in the category called "Attribute"
-  var categoryCalledAttribute = this.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
+  // set the name of the axiomaticUser
   var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
+  axiomaticUser.addAttributeValue(attributeCalledName, "Amy ex machina");
+  
+  // set the names of all the attributes, and put them in the category called "Attribute"
+  var categoryCalledAttribute = this.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
   var attributeCalledCategory = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_CATEGORY);
   for (uuid in hashTableOfAttributeNamesKeyedByUuid) {
     item = this.getItemFromUuid(uuid);
@@ -559,7 +572,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
     item.addAttributeValue(attributeCalledCategory, categoryCalledAttribute);
   }
   
-  // set the display names of all the categories, and put them in the category called "Category"
+  // set the names of all the categories, and put them in the category called "Category"
   var categoryCalledCategory = this.__getItemFromUuidOrCreateNewItem(World.UUID_FOR_CATEGORY_CATEGORY);
   for (uuid in hashTableOfCategoryNamesKeyedByUuid) {
     item = this.getItemFromUuid(uuid);

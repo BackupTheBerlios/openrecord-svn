@@ -112,12 +112,12 @@ Item.prototype._rehydrate = function (inTimestamp, inUserstamp) {
  * list of values.
  *
  * @scope    public instance method
- * @param    inAttribute    The attribute to associate the value with. 
  * @param    inContentData    The content data to initialize the value to.
  * @return   A value object.
  */
 Item.prototype.addValue = function (inContentData) {
-  return this.addAttributeValue(null, inContentData);
+  var attributeCalledUnfiled = this.getWorld().getAttributeCalledUnfiled();
+  return this.addAttributeValue(attributeCalledUnfiled, inContentData);
 };
 
 

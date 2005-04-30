@@ -45,7 +45,7 @@ World.RETRIEVAL_FILTER_SINGLE_USER = "RETRIEVAL_FILTER_SINGLE_USER";
 World.RETRIEVAL_FILTER_DEMOCRATIC = "RETRIEVAL_FILTER_DEMOCRATIC";
 World.RETRIEVAL_FILTER_UNABRIDGED = "RETRIEVAL_FILTER_UNABRIDGED";
 
-World.UUID_FOR_USER_AMY = 1;
+World.UUID_FOR_USER_AMY = 100;
 
 World.UUID_FOR_ATTRIBUTE_UUID = 100;
 World.UUID_FOR_ATTRIBUTE_NAME = 102;
@@ -59,6 +59,7 @@ World.UUID_FOR_ATTRIBUTE_TIMESTAMP = 107;
 World.UUID_FOR_ATTRIBUTE_QUERY = 109;
 World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY = 110;
 World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM = 111;
+World.UUID_FOR_ATTRIBUTE_UNFILED = 112;
 
 World.UUID_FOR_CATEGORY_BOOK = 141;      // here as an example only
 World.UUID_FOR_CATEGORY_MOVIE = 142;     // here as an example only
@@ -108,6 +109,7 @@ function World(inVirtualServer) {
   this.__myAttributeCalledQuery = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY);
   this.__myAttributeCalledQueryMatchingCategory = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
   this.__myAttributeCalledQueryMatchingItem = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
+  this.__myAttributeCalledUnfiled = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_UNFILED);
 
   // load the axiomatic categories
   this.__myCategoryCalledAttribute = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
@@ -327,6 +329,10 @@ World.prototype.getAttributeCalledQueryMatchingCategory = function () {
 
 World.prototype.getAttributeCalledQueryMatchingItem = function () {
   return this.__myAttributeCalledQueryMatchingItem;
+};
+
+World.prototype.getAttributeCalledUnfiled = function () {
+  return this.__myAttributeCalledUnfiled;
 };
 
 

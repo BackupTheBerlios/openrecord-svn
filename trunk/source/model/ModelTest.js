@@ -126,9 +126,10 @@ function testAdditionsAndRetrievals() {
   
   var tZero = new Date();
   
-  
   // operations done by Jane
   var userJane = world.newUser("Jane Doe", janesPassword);
+  assertTrue('The user Jane created the user Jane', (userJane.getUserstamp() == userJane));
+   
   world.login(userJane, janesPassword);
 
   var characterAttribute = world.newAttribute("Characters");
@@ -481,11 +482,32 @@ function testQueries() {
 }
 
 function testBigLumpVirtualServer() {
-  var fileName = "2005_item_centric_list.json";
+  var fileName = "test_data_2005_march_item_centric_list.json";
   var url = "../../current/trunk/source/model/" + fileName;
   var fileContentString = Util.getStringContentsOfFileAtURL(url);
+  
+  // Create a World and a BigLumpVirtualServer, and have the 
+  // BigLumpVirtualServer rehydrate all the dehydrated items 
+  // contained in the fileContentString.  This tests whether
+  // the BigLumpVirtualServer bombs out when it tries to read
+  // the data from a 2005_MARCH_ITEM_CENTRIC_LIST
   var bigLumpVirtualServer = new BigLumpVirtualServer(fileContentString);
   var world = new World(bigLumpVirtualServer);
+  
+  // See if the BigLumpVirtualServer can save items to a
+  // string containing dehydrated items in the 
+  // format of a 2005_APRIL_CHRONOLOGICAL_LIST
+  var dehydratedWorld = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld();
+  
+  // See if the BigLumpVirtualServer can rehydrate all the
+  // dehydrated items from an 2005_APRIL_CHRONOLOGICAL_LIST
+  /*
+  PENDING:
+  var secondBigLumpVirtualServer = new BigLumpVirtualServer(dehydratedWorld);
+  var secondWorld = new World(secondBigLumpVirtualServer);
+  */
+  
+  // bigLumpVirtualServer.saveChangesToServer(true);
 }
 
 

@@ -58,7 +58,7 @@ BigLumpVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
 BigLumpVirtualServer.JSON_TYPE_RELATED_UUID = "RelatedUuid";
 BigLumpVirtualServer.JSON_TYPE_NUMBER_VALUE = "NumberValue";
 
-BigLumpVirtualServer.JSON_MEMBER_WUID = "Wuid";
+BigLumpVirtualServer.JSON_MEMBER_WUID = "uuid";
 
 BigLumpVirtualServer.JSON_MEMBER_ITEM_CLASS = "Item";
 BigLumpVirtualServer.JSON_MEMBER_VALUE_CLASS = "Value";
@@ -115,6 +115,7 @@ BigLumpVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld
 BigLumpVirtualServer.prototype.__loadWorldFromJsonString = function (inJsonString) {
   Util.assert(Util.isString(inJsonString));
   var dehydratedWorld = null;
+  
   eval("dehydratedWorld = " + inJsonString + ";");
   Util.assert(Util.isObject(dehydratedWorld));
   
@@ -142,16 +143,36 @@ BigLumpVirtualServer.prototype.__loadWorldFromJsonString = function (inJsonStrin
  * @param    inListOfItems    A JSON list of dehydrated items. 
  */
 BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function (inListOfItems) {
+
   var listOfDehydratedItems = inListOfItems;
-  var uuid;
+
+  var axiomaticItem;
+  var dehydratedItem;
+  var dehydratedUuid;
   var item;
+  var uuid;
+  var key;
   
   // Have the StubBackingStore load the axiomatic items, because it will
   // correctly set the creator of those items to be the axiomatic user.
   var listOfAxiomaticRecords = this.__loadAxiomaticItems();
   
+  // PENDING:   This method is slow
+  // 
+  // I did some timing tests on April 29, 2005. 
+  //
+  // Here's the summary:
+  //    15 milliseconds to call eval prior to getting to this method
+  //        called in __loadWorldFromJsonString: eval("dehydratedWorld = " + inJsonString + ";");
+  //   516 milliseconds to call this.__loadAxiomaticItems() before getting here
+  // 5,796 milliseconds for all the code from here to the end of the method
+  //
+  // I'm not sure why it's so slow, but we must be doing something that's
+  // needlessly stupid.  It should be possible to make this 10-times faster.
+  PENDINGstartTimer = new Date();
+  
   var hashTableOfAxiomaticItemsKeyedByUuid = {};
-  for (var key in listOfAxiomaticRecords) {
+  for (key in listOfAxiomaticRecords) {
     var record = listOfAxiomaticRecords[key];
     if (record instanceof Item) {
       hashTableOfAxiomaticItemsKeyedByUuid[record._getUuid()] = record;
@@ -162,12 +183,33 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
   var guestUser = this.newUser("Guest", null);
   this.__myCurrentUser = guestUser;
   
-  for (var listKey in listOfDehydratedItems) {
-    var dehydratedItem = listOfDehydratedItems[listKey];
-    var dehydratedUuid = dehydratedItem[World.UUID_FOR_ATTRIBUTE_UUID];
+  // First, go through the whole list of dehydrated items.  Find all 
+  // the UUIDs for all the items, and make Item objects for all of them.
+  // After we've done this step, we'll know the next available UUID,
+  // so we can start assigning new UUIDs to the attribute values.
+  for (key in listOfDehydratedItems) {
+    dehydratedItem = listOfDehydratedItems[key];
+    dehydratedUuid = dehydratedItem[World.UUID_FOR_ATTRIBUTE_UUID];
     uuid = dehydratedUuid[BigLumpVirtualServer.JSON_MEMBER_VALUE];
-    var axiomaticItem = hashTableOfAxiomaticItemsKeyedByUuid[uuid];
+    axiomaticItem = hashTableOfAxiomaticItemsKeyedByUuid[uuid];
     if (!axiomaticItem) {
+      // We only need to rehydrate the non-axiomatic items.
+      // We rely on the StubBackingStore to have loaded the axiomatic items.
+      item = this.__getItemFromUuidOrCreateNewItem(uuid);
+      Util.assert(item instanceof Item);
+    }
+  }
+  
+  // We already have Item objects for all the items we're going to
+  // rehydrate.  Now we can add attributes to them.
+  for (key in listOfDehydratedItems) {
+    dehydratedItem = listOfDehydratedItems[key];
+    dehydratedUuid = dehydratedItem[World.UUID_FOR_ATTRIBUTE_UUID];
+    uuid = dehydratedUuid[BigLumpVirtualServer.JSON_MEMBER_VALUE];
+    axiomaticItem = hashTableOfAxiomaticItemsKeyedByUuid[uuid];
+    if (!axiomaticItem) {
+      // We only need to rehydrate the non-axiomatic items.
+      // We rely on the StubBackingStore to have loaded the axiomatic items.
       item = this.__getItemFromUuidOrCreateNewItem(uuid);
       Util.assert(item instanceof Item);
       for (var propertyKey in dehydratedItem) {
@@ -199,13 +241,18 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
     }
   }
 
-  for (var key in this.__myChronologicalListOfNewlyCreatedRecords) {
+  for (key in this.__myChronologicalListOfNewlyCreatedRecords) {
     var newRecord = this.__myChronologicalListOfNewlyCreatedRecords[key];
     this.__myChronologicalListOfRecords.push(newRecord);
   }
   this.__myChronologicalListOfNewlyCreatedRecords = [];
   this.__myWorld.endTransaction();
   this.__myCurrentUser = null;
+
+  PENDINGstopTimer = new Date();
+  PENDINGelapsedMS = PENDINGstopTimer.valueOf() - PENDINGstartTimer.valueOf();
+  // alert("__loadWorldFromOld2005MarchFormatList took " + PENDINGelapsedMS + " milliseconds");
+
 };
 
 
@@ -340,6 +387,25 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
   
 
 /**
+ * Given a string, returns a copy of the string that is less than
+ * 25 characters long.
+ *
+ * @scope    public instance method
+ * @param    A string that may need truncating.
+ * @return   A string that is. 
+ */
+BigLumpVirtualServer.prototype.truncateString = function (inString) {
+  var maxLength = 30;
+  var ellipsis = "...";
+  if (inString.length > maxLength) {
+    return (inString.substring(0, (maxLength - ellipsis.length)) + ellipsis);
+  } else {
+    return inString;
+  }
+};
+
+
+/**
  * Returns a huge string, containing a JavaScript "object literal"
  * representation of the entire world.
  *
@@ -351,6 +417,9 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
   var listOfStrings = [];
   var key;
   
+  var itemDisplayName;
+  var itemDisplayNameSubstring;
+  
   listOfStrings.push('// Repository dump, in JSON format' + '\n');
   listOfStrings.push('{ ');
   listOfStrings.push('"' + BigLumpVirtualServer.JSON_MEMBER_FORMAT + '": "' + BigLumpVirtualServer.JSON_FORMAT_2005_APRIL + '", ' + '\n');
@@ -359,41 +428,50 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
   var firstEntry = true;
   for (key in this.__myChronologicalListOfRecords) {
     var record = this.__myChronologicalListOfRecords[key];
-    if (!firstEntry) {
+    if (firstEntry) {
+      firstEntry = false;
+    } else {
       listOfStrings.push(',\n');
+      listOfStrings.push('  // -----------------------------------------------------------------------\n');
     }
     if (record instanceof Item) {
       var item = record;
       listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_ITEM_CLASS + '": ' + '{');
-      listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_WUID + '": "' + item._getUuid() + '",\n');
+      itemDisplayNameSubstring = this.truncateString(item.getDisplayName());
+      listOfStrings.push('                             // ' + itemDisplayNameSubstring + '\n');
+      listOfStrings.push('           "' + BigLumpVirtualServer.JSON_MEMBER_WUID + '": "' + item._getUuid() + '",\n');
     }
     if (record instanceof Vote) {
       var vote = record;
-      listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{');
-      listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_ENTRY + '": "' + vote.getEntry()._getUuid() + '",\n');
-      listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '",\n');
+      listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{' + '\n');
+      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ENTRY + '": "' + vote.getEntry()._getUuid() + '",\n');
+      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '",\n');
     }
     if (record instanceof Ordinal) {
       var ordinal = record;
-      listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{');
-      listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_ENTRY + '": "' + ordinal.getEntry()._getUuid() + '",\n');
-      listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '",\n');
+      listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
+      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ENTRY + '": "' + ordinal.getEntry()._getUuid() + '",\n');
+      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '",\n');
     }
     if (record instanceof Value) {
       var value = record;
       listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_VALUE_CLASS + '": ' + '{');
-      listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_WUID + '": "' + value._getUuid() + '",\n');
-      listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_ITEM + '": "' + value.getItem()._getUuid() + '",\n');
+      var valueDisplayNameSubstring = this.truncateString(value.getDisplayString());
+      listOfStrings.push('                             // ' + valueDisplayNameSubstring + '\n');
+      listOfStrings.push('           "' + BigLumpVirtualServer.JSON_MEMBER_WUID + '": "' + value._getUuid() + '",\n');
       var attribute = value.getAttribute();
       if (attribute) {
         var attributeName = attribute.getDisplayName();
-        var attributeNameSubstring = (attributeName + '          ').substring(0, 10);
-        listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_ATTRIBUTE + '": "' + attribute._getUuid() + '",');
-        listOfStrings.push(' /* ' + attributeNameSubstring + ' */ \n');
+        listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ATTRIBUTE + '": "' + attribute._getUuid() + '",');
+        var attributeNameSubstring = this.truncateString(attributeName);
+        listOfStrings.push('                // ' + attributeNameSubstring + '\n');
       }
+      listOfStrings.push('           "' + BigLumpVirtualServer.JSON_MEMBER_ITEM + '": "' + value.getItem()._getUuid() + '",');
+      itemDisplayNameSubstring = this.truncateString(value.getItem().getDisplayName());
+      listOfStrings.push('                // ' + itemDisplayNameSubstring + '\n');
       var previousValue = value.getPreviousValue();
       if (previousValue) {
-        listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": "' + previousValue._getUuid() + '",\n');
+        listOfStrings.push('          "' + BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": "' + previousValue._getUuid() + '",\n');
       }
       var contentData = value.getContentData();
       var pickleString = "";
@@ -409,13 +487,17 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
       }
       if (contentData instanceof Item) {
         typeString = BigLumpVirtualServer.JSON_TYPE_RELATED_UUID;
-        valueString = contentData._getUuid();
+        valueString = '"' + contentData._getUuid() + '"';
       }
       pickleString = '{ "' + BigLumpVirtualServer.JSON_MEMBER_TYPE + '": "' + typeString + '", "' + BigLumpVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString + ' }';
-      listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_VALUE + '": ' + pickleString + ',\n');
+      listOfStrings.push('          "' + BigLumpVirtualServer.JSON_MEMBER_VALUE + '": ' + pickleString + ',\n');
     }
-    listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + record.getTimestamp().valueOf() + '",\n');
-    listOfStrings.push('    "' + BigLumpVirtualServer.JSON_MEMBER_USERSTAMP + '": "' + record.getUserstamp()._getUuid() + '"}\n');
+    Util.assert(record.getUserstamp() !== null);
+    listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_USERSTAMP + '": "' + record.getUserstamp()._getUuid() + '",');
+    var userDisplayName = record.getUserstamp().getDisplayName();
+    var userDisplayNameSubstring = this.truncateString(userDisplayName);
+    listOfStrings.push('                // by (' + userDisplayNameSubstring + ')\n');
+    listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + record.getTimestamp().valueOf() + '" }\n');
     listOfStrings.push('  }');
   }
   listOfStrings.push("  ], \n");
@@ -424,7 +506,9 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
   firstEntry = true;
   for (key in this.__myListOfUsers) {
     var user = this.__myListOfUsers[key];
-    if (!firstEntry) {
+    if (firstEntry) {
+      firstEntry = false;
+    } else {
       listOfStrings.push(', ');
     }
     listOfStrings.push('"' + user._getUuid() + '"');
@@ -441,11 +525,12 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
  * changes.
  *
  * @scope    public instance method
+ * @param    inForceSave    Optional. Forces a save if set to true. 
  * @return   The list of changes made. 
  */
-BigLumpVirtualServer.prototype.saveChangesToServer = function () {
+BigLumpVirtualServer.prototype.saveChangesToServer = function (inForceSave) {
   var listOfChangesMade;
-  if (this.__myChronologicalListOfNewlyCreatedRecords.length === 0) {
+  if (!inForceSave && this.__myChronologicalListOfNewlyCreatedRecords.length === 0) {
     listOfChangesMade = [];
     return listOfChangesMade;
   }
@@ -465,10 +550,13 @@ BigLumpVirtualServer.prototype.saveChangesToServer = function () {
     this.__myChronologicalListOfRecords.push(newRecord);
   }
   
+  this.__myXMLHttpRequestObject = this.__newXMLHttpRequestObject();
   if (saveChanges) {
-    var url = "save_changes.php";
+    var url = "save_lump.php";
+    // var url = "http://localhost:8080/openrecord/demo/current/trunk/source/model/" + "save_lump.php";
+    // var url = "http://localhost:8080/openrecord/demo/current/trunk/source/" + "save_changes.php";
     this.__myXMLHttpRequestObject.open("POST", url, true);
-    this.__myXMLHttpRequestObject.setRequestHeader("Content-Type", "text/xml");
+    this.__myXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
     this.__myXMLHttpRequestObject.send(this.__getJsonStringRepresentingEntireWorld());
   }
   
@@ -496,11 +584,14 @@ BigLumpVirtualServer.prototype.__newXMLHttpRequestObject = function () {
   if (newXMLHttpRequestObject) {
     var self = this;
     newXMLHttpRequestObject.onreadystatechange = function() {
-      window.alert("onreadystatechange:\n" +
-        "readyState: " + self.__myXMLHttpRequestObject.readyState + "\n" +
-        "status: " + self.__myXMLHttpRequestObject.status + "\n" +
-        "statusText: " + self.__myXMLHttpRequestObject.statusText + "\n" +
-        "responseText: " + self.__myXMLHttpRequestObject.responseText + "\n");
+      var statusText = self.__myXMLHttpRequestObject.statusText;
+      if (statusText != "OK") {
+        window.alert("onreadystatechange:\n" +
+          "readyState: " + self.__myXMLHttpRequestObject.readyState + "\n" +
+          "status: " + self.__myXMLHttpRequestObject.status + "\n" +
+          "statusText: " + self.__myXMLHttpRequestObject.statusText + "\n" +
+          "responseText: " + self.__myXMLHttpRequestObject.responseText + "\n");
+      }
     };
   }
   return newXMLHttpRequestObject;
