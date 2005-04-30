@@ -1,0 +1,174 @@
+================================
+Release Planning
+   for release 0.1 of OpenRecord
+================================
+  
+Three iterations that last 1-month each?
+  1. May iteration
+  2. June iteration
+  3. July iteration
+  
+Release 0.1 at the start of August?
+
+
+
+
+===================================================
+"User Stories" to consider including in release 0.1
+===================================================
+ + A user can list of user stories, ordered by priority.
+
+ + A user can see a list of all known tasks.
+ + A user can see a list of all completed tasks.
+ + A user can see a list of the tasks that they have signed up for.
+ + A user can see everything that was ever saved.
+ + A user can see past versions of an item.
+ + A user can see the measured velocity for previous iterations.
+
+ + A user can log into the web site.
+ + A logged-in user can create items to track:
+    tasks, stories, bugs, iterations, and releases.
+ + A logged-in user can delete items (tasks, stories, bugs, etc.).
+ + A logged-in user can edit the attributes of a task, story, bug, etc.
+ + A logged-in user can assign a story to a release.
+ + A logged-in user can assign a task to an iteration.
+ + A logged-in user can sign up to do a task.
+ + A logged-in user can report a bug.
+ + A logged-in user can prioritize a story.
+ + Different users can prioritize stories differently.
+ 
+ + The data store is reliable. Users can trust that data won't be lost.
+ 
+
+ 
+ 
+===================================================
+Tasks
+===================================================
+
+---------------------------------------------------
+ + Figure out how to write unit tests for GUI code
+---------------------------------------------------
+ + BUG: Back button is broken
+    The browser's back button doesn't work after you click from 
+    page to page in the navbar.
+---------------------------------------------------
+ + BUG: problems with HTML in text strings
+    We still have some problems with handling text strings that 
+    have HTML in them. If an item has an attribute value with some 
+    HTML in it, like '<cite>', we incorrectly render it like 
+    '& lt;cite& gt;' instead of '<cite>'
+---------------------------------------------------
+ + Editable Detail Plugin
+    Make a new version of the current DetailPlugin.js.  The 
+    current one just lets the user view the attribute values, 
+    but we should make a better one that lets the user change 
+    the values, and add new values, and add new ad-hoc attributes.
+---------------------------------------------------
+ + List/Detail Combo Plugin
+    We could make a plugin that takes a list of items and
+    displays them in a format like what you see in a mail
+    reader or a news reader.  So you'd have some sort of
+    table-view on top, with one item per row, and then a
+    detail view below, to show more info about a single
+    item.  We could copy a lot of code from the current
+    TablePlugin.js and DetailPlugin.js, so it shouldn't be
+    too hard to make a simple read-only version.
+---------------------------------------------------
+ + Table Plugin with ad-hoc attributes
+    We should change the TablePlugin.js so that the user is
+    able to add new columns on the fly, where each new
+    column is for some new ad-hoc attribute.
+---------------------------------------------------
+ + Multi-valued attributes in table plugin
+    In the table plugin, right now if an attribute has
+    multiple values, the table plugin only shows the first
+    value, and only lets the user edit the first value. We
+    need to have the table plugin support multi-valued
+    attributes.
+---------------------------------------------------
+ + NavBar view
+    We should have a separate class for the NavBar view.
+    The NavBar should automatically update when the name of
+    a page changes, or when a new page gets added. The user
+    should be able to edit the NavBar itself to change the
+    name of a page or to create a new page. The user should
+    be able to drag the menu items up and down to re-order
+    the list.  For a drag-and-drop list example, see:
+    http://tool-man.org/examples/sorting.html
+---------------------------------------------------
+ + Be able to create new pages
+    The user should be able to create a new page in some
+    intuitive way.  Maybe by clicking on a "Add page"
+    button at the bottom of the NavBar, or something like that.
+---------------------------------------------------
+ + Be able to add a new section to a page
+    The user should be able to add a new section to a page.
+---------------------------------------------------
+ + Be able to edit the query of a section
+    The user should be able to see the query that's being
+    used to populate a section. In edit mode, the user
+    should be able to change the query criteria.
+---------------------------------------------------
+ + Support item references in table plugin
+    When editing an item in the table plugin, currently
+    everything you enter is treated as a string literal. If
+    you enter 'Book' in the column for 'Category', that
+    just creates a new string-value "Book", whereas it
+    should create an item reference to the category item
+    named "Book".
+---------------------------------------------------
+ + Be able to edit in outline mode
+    In the outline plugin, add code to handle editing. The
+    user should be able to add new items to an outline,
+    chagne existing items, indent existing items, etc.
+---------------------------------------------------
+ + Have Table plugin group by category
+    Make the Table plugin be about to to show groupings by
+    category. For example, in a table that shows a list of
+    cities, you might want to see them grouped by country.
+---------------------------------------------------
+ + Have Outline plugin group by category
+    Make the Outline plugin be able to show groupings by
+    category. For example, in an outline that shows a list of
+    cities, you might want to see them grouped by country.
+---------------------------------------------------
+ + In Outline plugin, show detail locally
+    When you click on the "more" link in an outline, the
+    detail information should show up on the current page,
+    within the current list item, rather than whisking you
+    away to a completely separate item detail page.
+---------------------------------------------------
+ + Table Plugin sorting, column changing
+   Add 'Table' plugin controls for row sorting, column
+   re-arranging, column hiding, etc.
+---------------------------------------------------
+ + add a login UI
+    Have a UI for logging in. Make sure the user is logged
+    in before allowing changes.
+---------------------------------------------------
+ + Draft a Contributor Agreement
+     We need to draft some sort of Contributor Agreement, like the Apache Contributor Agreement or the Python Contributor Agreement.
+     See:
+       http://www.apache.org/licenses/icla.txt
+       http://www.python.org/psf/contrib-form.html
+---------------------------------------------------
+ + Move this task list from here into OpenRecord!
+---------------------------------------------------
+ + search engine indexing
+    Figure out how to make sure that search engines like
+    Google are able to index all the "virtual" pages that 
+    OpenRecord serves.
+    I don't know just what's involved in making sure the search
+    engines can index a page.  That's something I'll have to
+    learn more about.  If I had to guess, I think we're going to
+    have to do two thing: (1) make each page have it's own real
+    URL, rather than using the #anchor tag scheme that
+    OpenRecord is using now, and (2) have the server generate
+    html pages that have all the content elements already in
+    place, rather than relying on client JavaScript to do all
+    the work.
+---------------------------------------------------
+
+
+
