@@ -55,6 +55,22 @@ Tasks
 ---------------------------------------------------
  + Integrate the new data model code into the rest of the app
 ---------------------------------------------------
+ + Refactor the code in Item.js so that values are stored per-attribute
+---------------------------------------------------
+ + Refactor the data model code so that categories cache their lists of items
+---------------------------------------------------
+ + Consider changing the class names in the data model, thusly:
+      Item.js --> Item.js
+      Entry.js --> IdentifiedRecord.js
+      Value.js --> Entry.js
+      Value.getContentData() --> Entry.getValue()
+    We might also want to add a class called Record.js, as an abstract
+    superclass for Vote, Ordinal, and IdentifiedRecord.
+---------------------------------------------------
+ + Figure out how to use the Venkman profiler, and see what's slow
+---------------------------------------------------
+ + Replace the current fake UUIDs with real UUIDs.
+---------------------------------------------------
  + BUG: Back button is broken
     The browser's back button doesn't work after you click from 
     page to page in the navbar.
