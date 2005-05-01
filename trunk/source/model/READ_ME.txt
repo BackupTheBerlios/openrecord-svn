@@ -34,18 +34,18 @@ Here's a quick overview of the Data Model API that's available for people who ar
 
 Item methods --------------------
 
-  item.addAttributeValue()
-  item.addValue()
-  item.replaceValue()
+  item.addAttributeValue()      --- change to .addEntryForAttribute() ?
+  item.addValue()               --- change to .addEntry() ?
+  item.replaceValue()           --- change to .replaceEntry() ?
   item.replaceValueWithAttributeValue()
   
   item.getAttributes()
-  item.getValuesForAttribute()
-  item.getValues()
+  item.getValuesForAttribute()  --- change to .getEntriesForAttribute() ?
+  item.getValues()              --- change to .getEntries() ?
   
   item.getDisplayName()
-  item.getName()
-  item.getShortName()
+  item.getName()                --- change to .getNameEntries() ?
+  item.getShortName()           --- change to .getShortNameEntries() ?
   
   item.isInCategory()
   item.reorderBetween()
@@ -73,18 +73,82 @@ World methods -------------------
   world.logout()
   
   world.getUsers()
-  world.getCurrentUser()
+  world.getCurrentUser()       --- change to .getLoggedInUser() ?
   world.newUser()
   
   world.newItem()
   world.newAttribute()
   world.newCategory()
-  world.getListOfItemsInCategory()
-  world.getListOfResultItemsForQuery()
+  world.newQueryForItemsByCategory()
+  world.newQueryForSpecificItems()
+  world.getListOfItemsInCategory()     --- change to getItemsInCategory() ?
+  world.getListOfResultItemsForQuery() --- change to getResultItemsForQuery() ?
   world.setItemToBeIncludedInQueryResultList()
-  world.removeObserverOfList()
+  world.removeListObserver()
+  world.addItemObserver()
+  world.removeItemObserver()
   
   world.beginTransaction()
   world.endTransaction()
 
+  
 
+---------------------------------
+Alternative Terminology Ideas
+---------------------------------
+Item ----- example: a book called "The Hobbit"
+  Object
+  Record
+
+Attribute ----- examples: "Author", "Publication Date"
+  Property
+  Aspect
+  Field
+  
+Kind ----- deprecated
+  Table
+  Class
+  
+Value ----- example: "1938"
+  Assignement
+  Datum
+  AttributeValue
+  Aspect
+  
+Data ----- example: "1938"
+  Value
+  Datum
+
+Relationship ----- example: "hobbit.author <--> tolkien.books"
+  Item Reference
+  Reference
+  Link
+  Connection
+  Yoke
+  Relation
+  Bond
+  Attachment
+  Arrow
+
+WatchList
+  ListOfItems
+  LiveList
+  
+ObservableQuery
+  Query
+  
+World
+  Corpus
+  Archive
+  
+Spare words
+  Axiom
+  Axiomatic Item
+  Assignement
+  Aspect
+  Datum
+  Entry
+  Version
+  Revision
+  Corpus
+ 

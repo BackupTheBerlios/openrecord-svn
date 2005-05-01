@@ -1,8 +1,17 @@
-================================
+================================================================
 Release Planning
    for release 0.1 of OpenRecord
-================================
-  
+================================================================
+ Copyright rights relinquished under the Creative Commons  
+ Public Domain Dedication:
+    http://creativecommons.org/licenses/publicdomain/
+----------------------------------------------------------------
+    
+    
+
+===================================================
+Iterations
+===================================================
 Three iterations that last 1-month each?
   1. May iteration
   2. June iteration
@@ -25,7 +34,7 @@ Release 0.1 at the start of August?
  + A user can see past versions of an item.
  + A user can see the measured velocity for previous iterations.
 
- + A user can log into the web site.
+ + A user can log into the web site, and log out.
  + A logged-in user can create items to track:
     tasks, stories, bugs, iterations, and releases.
  + A logged-in user can delete items (tasks, stories, bugs, etc.).
@@ -38,6 +47,11 @@ Release 0.1 at the start of August?
  + Different users can prioritize stories differently.
  
  + The data store is reliable. Users can trust that data won't be lost.
+ 
+ + We can move all the content on the current "static" openrecord.org 
+   site to a new replacement openrecord.org site built using the 
+   OpenRecord software.
+ + A logged-in user can write up weekly status reports.
  
 
  
@@ -187,6 +201,10 @@ Tasks
       * compress the code by copying everything into a single file
       * generate documentation
       * remove Util.assert() statements from the code
+---------------------------------------------------
+ + Skins/Themes/Chrome
+    Make it possible for different web sites to each of their own
+    logos, color-schemes, and branding.
 ---------------------------------------------------
  + search engine indexing
     Figure out how to make sure that search engines like
