@@ -157,20 +157,6 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
   // correctly set the creator of those items to be the axiomatic user.
   var listOfAxiomaticRecords = this.__loadAxiomaticItems();
   
-  // PENDING:   This method is slow
-  // 
-  // I did some timing tests on April 29, 2005. 
-  //
-  // Here's the summary:
-  //    15 milliseconds to call eval prior to getting to this method
-  //        called in __loadWorldFromJsonString: eval("dehydratedWorld = " + inJsonString + ";");
-  //   516 milliseconds to call this.__loadAxiomaticItems() before getting here
-  // 5,796 milliseconds for all the code from here to the end of the method
-  //
-  // I'm not sure why it's so slow, but we must be doing something that's
-  // needlessly stupid.  It should be possible to make this 10-times faster.
-  PENDINGstartTimer = new Date();
-  
   var hashTableOfAxiomaticItemsKeyedByUuid = {};
   for (key in listOfAxiomaticRecords) {
     var record = listOfAxiomaticRecords[key];
@@ -248,11 +234,6 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
   this.__myChronologicalListOfNewlyCreatedRecords = [];
   this.__myWorld.endTransaction();
   this.__myCurrentUser = null;
-
-  PENDINGstopTimer = new Date();
-  PENDINGelapsedMS = PENDINGstopTimer.valueOf() - PENDINGstartTimer.valueOf();
-  // alert("__loadWorldFromOld2005MarchFormatList took " + PENDINGelapsedMS + " milliseconds");
-
 };
 
 
