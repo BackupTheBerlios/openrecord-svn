@@ -423,7 +423,7 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
   listOfStrings.push('// Repository dump, in JSON format' + '\n');
   listOfStrings.push('{ ');
   listOfStrings.push('"' + BigLumpVirtualServer.JSON_MEMBER_FORMAT + '": "' + BigLumpVirtualServer.JSON_FORMAT_2005_APRIL + '", ' + '\n');
-  listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + fileTimestamp.toString() + '", ' + '\n');
+  //listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + fileTimestamp.toString() + '", ' + '\n');
   listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_DATA + '": ' + '[' + '\n');
   var firstEntry = true;
   for (key in this.__myChronologicalListOfRecords) {
@@ -514,7 +514,7 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
     listOfStrings.push('"' + user._getUuid() + '"');
   }
   listOfStrings.push("]\n");
-  listOfStrings.push("}");
+  listOfStrings.push("}\n");
   var finalString = listOfStrings.join("");
   return finalString;
 };

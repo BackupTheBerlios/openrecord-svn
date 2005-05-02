@@ -374,7 +374,7 @@ Item.prototype.isInCategory = function (inCategory) {
   }
   
   // look at all the categories this item is assigned to, and see if one of them
-  // is in turn in the categoery "inCategory"
+  // is in turn in the category "inCategory"
   for (key in valueList) {
     value = valueList[key];
     // PENDING: 

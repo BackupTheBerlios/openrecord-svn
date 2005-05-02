@@ -56,7 +56,7 @@
 //    + "End of file" ending
 //
 // + scoping
-//    + locally scoped variables are declared before being used: "var foo", not "foo
+//    + locally scoped variables are declared before being used: "var foo", not "foo"
 //    + global variables are not used, except for class names
 //    + instance methods are defined on the prototype -- see getArea()
 //    + accessor methods never have side-effects
@@ -124,7 +124,7 @@ Rectangle.ourHashTableOfColorsKeyedBySize = new Array();
 
 
 /**
- * Each Rectangle instances represents a single rectangle.
+ * Each Rectangle instance represents a single rectangle.
  *
  * @scope    public instance constructor
  * @syntax   var rect = new Rectangle()
@@ -141,7 +141,7 @@ function Rectangle() {
 // -------------------------------------------------------------------
 
 /**
- * Given two Rectangle object, returns new Rectangle large enough
+ * Given two Rectangle objects, returns new Rectangle large enough
  * to encompass both of the given Rectangles.
  *
  * @scope    public class method

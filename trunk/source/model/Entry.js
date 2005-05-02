@@ -97,8 +97,8 @@ Entry.prototype._initializeEntry = function () {
  * @param    inUserstamp    The user who created this item. 
  */
 Entry.prototype._rehydrateEntry = function (inTimestamp, inUserstamp) {
-  this.__myCreationTimestamp = new Date();
-  this.__myCreationUserstamp = this.getWorld().getCurrentUser();
+  this.__myCreationTimestamp = inTimestamp;
+  this.__myCreationUserstamp = inUserstamp;
 };
 
 

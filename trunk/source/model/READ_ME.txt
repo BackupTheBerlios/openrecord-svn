@@ -4,7 +4,7 @@ Experimental Data Model Framework
 
 This directory, named "model", contains 8 or 10 JavaScript classes.  Together these JavaScript classes form an experimental data model framework.  
 
-This isn't a finished product, just a sort of experimental prototype, or maybe an extreme progamming "spike solution".  Right now this is still a work in progress.  The code doesn't run yet, it doesn't pass its unit tests, and it isn't as clean and tidy as I would like it to be.  But all the pieces are in place, and there's enough detail here to give you a good sense of what this solution would look like.
+This isn't a finished product, just a sort of experimental prototype, or maybe an extreme programming "spike solution".  Right now this is still a work in progress.  The code doesn't run yet, it doesn't pass its unit tests, and it isn't as clean and tidy as I would like it to be.  But all the pieces are in place, and there's enough detail here to give you a good sense of what this solution would look like.
 
 
 ---------------------------------

@@ -1,6 +1,5 @@
 // Repository dump, in JSON format
 { "format": "2005_APRIL_CHRONOLOGICAL_LIST", 
-  "timestamp": "Fri Apr 29 2005 17:04:23 GMT-0700 (Pacific Standard Time)", 
   "data": [
   { "Item": {                             // Amy ex machina
            "uuid": "100",

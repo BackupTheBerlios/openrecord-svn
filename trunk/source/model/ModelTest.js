@@ -146,7 +146,7 @@ function testAdditionsAndRetrievals() {
   listOfCharacters = starWars.getValuesForAttribute(characterAttribute);
   hasAll = Util.areObjectsInSet([luck, c3po], listOfCharacters);
   assertTrue('"Star Wars" has characters: luck, c3po', hasAll);
-  assertTrue('Exactly 2 characters in the star wars', listOfCharacters.length == 2);
+  assertTrue('Exactly 2 characters in Star Wars', listOfCharacters.length == 2);
 
   listOfValues = starWars.getValues();
   hasAll = Util.areObjectsInSet([luck, c3po, r2d2], listOfValues);
@@ -176,7 +176,7 @@ function testAdditionsAndRetrievals() {
   var previousValue = luke.getPreviousValue();
   assertTrue('"Luke" has the previous version "Luck"', previousValue !== null);
   assertTrue('"Luck" has been replaced', luck.hasBeenReplaced());
-  assertTrue('"Luke" is a value in "Star Wars"', luck.getItem() == starWars);
+  assertTrue('"Luck" is a value in "Star Wars"', luck.getItem() == starWars);
 
   listOfValues = starWars.getValues();
   hasAll = Util.areObjectsInSet([luke, c3po, r2d2], listOfValues);
@@ -290,9 +290,9 @@ function testOrdinals() {
 
   cupcake.reorderBetween(null, apple);
   foodItems = world.getListOfItemsInCategory(categoryCalledFood);
-  assertTrue('Apple is now first in the list"', foodItems[0] == cupcake);
-  assertTrue('Brownie is now second in the list"', foodItems[1] == apple);
-  assertTrue('Cupcake is now third in the list"', foodItems[2] == brownie);
+  assertTrue('Cupcake is now first in the list"', foodItems[0] == cupcake);
+  assertTrue('Apple is now second in the list"', foodItems[1] == apple);
+  assertTrue('Brownie is now third in the list"', foodItems[2] == brownie);
 
   cupcake.reorderBetween(brownie, null);
   foodItems = world.getListOfItemsInCategory(categoryCalledFood);
@@ -479,6 +479,16 @@ function testQueries() {
   assertTrue('Food query returns all 4 foods', hasAll);
 
   world.logout();
+}
+
+function testBigLumpVirtualServerStringOutput() {
+  var fileName = "test_data_2005_april_chronological_lump.json";
+  var url = "../../current/trunk/source/model/" + fileName;
+  var fileContentString = Util.getStringContentsOfFileAtURL(url);
+  var bigLumpVirtualServer = new BigLumpVirtualServer(fileContentString);
+  var world = new World(bigLumpVirtualServer);
+  var reconstructedString = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld(); 
+  assert("reconstructed string equals original string", fileContentString == reconstructedString);
 }
 
 function testBigLumpVirtualServer() {

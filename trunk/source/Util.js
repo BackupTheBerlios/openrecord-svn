@@ -147,16 +147,22 @@ Util.handleError = function (inMessage, inUrl, inLine) {
  * @param    inMessage    Optional. A string describing the assertion.
  */
 Util.assert = function (inBoolean, inMessage) {
-  var exception = new Error();  // create an exception, just to get a stack trace
-  var stackString = exception.stack;
-  var stackList = stackString.split("\n");
-  stackList.shift(); // get rid of the "ReferenceError()@:0" at the start of the list
-  stackList.shift(); // get rid of the "(false)@file ... util.js:67" at the start of the list
-  stackList.pop();   // get rid of the trailing "\n"
-  stackList.pop();   // get rid of the "@:0" at the end of the list
-  stackString = stackList.join("\n");
   if (Util.isBoolean(inBoolean)) {
     if (!inBoolean) {    
+      var exception = new Error();  // create an exception, just to get a stack trace
+      var stackString = exception.stack;
+      var stackList = stackString.split("\n");
+      stackList.shift(); // get rid of the "ReferenceError()@:0" at the start of the list
+      stackList.shift(); // get rid of the "(false)@file ... util.js:67" at the start of the list
+      stackList.pop();   // get rid of the trailing "\n"
+      stackList.pop();   // get rid of the "@:0" at the end of the list
+      for (var key in stackList) {
+        var string = stackList[key];
+        var result = string.match(/[^\/]*$/);
+        stackList[key] = result[0];
+      }
+      stackString = stackList.join("\n");
+
       Util.ourErrorReporter("An assert statement failed.\nThe method Util.assert() was called with a 'false' value.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
     }
   } else {
