@@ -22,16 +22,16 @@ Release 0.1 at the start of August?
 
 
 
-===================================================
-"User Stories" to consider including in release 0.1
-===================================================
- + A user can list of user stories, ordered by priority.
+=======================================================
+"User Stories" we want to include in release 0.1
+=======================================================
+ + A user can see a list of user stories, sorted by the "priority" attribute.
+ + A user can see a list of tasks planned for an iteration
+ + A user can see a list of tasks finished in an iteration.
 
  + A user can see a list of all known tasks.
  + A user can see a list of all completed tasks.
  + A user can see a list of the tasks that they have signed up for.
- + A user can see everything that was ever saved.
- + A user can see past versions of an item.
  + A user can see the measured velocity for previous iterations.
 
  + A user can log into the web site, and log out.
@@ -39,15 +39,24 @@ Release 0.1 at the start of August?
     tasks, stories, bugs, iterations, and releases.
  + A logged-in user can delete items (tasks, stories, bugs, etc.).
  + A logged-in user can edit the attributes of a task, story, bug, etc.
+ + A logged-in user can assign a task to a user story.
  + A logged-in user can assign a story to a release.
  + A logged-in user can assign a task to an iteration.
  + A logged-in user can sign up to do a task.
  + A logged-in user can report a bug.
- + A logged-in user can prioritize a story.
- + Different users can prioritize stories differently.
+ + A logged-in user can assign a number to the "priority" attribute of a story.
+ + Different users can each have their own "priority" attribute; each user can prioritize a story differently.
  
  + The data store is reliable. Users can trust that data won't be lost.
  
+ 
+ 
+ 
+=======================================================
+"User Stories" we want to defer until after release 0.1
+=======================================================
+ + A user can see everything that was ever saved.
+ + A user can see past versions of an item.
  + We can move all the content on the current "static" openrecord.org 
    site to a new replacement openrecord.org site built using the 
    OpenRecord software.
@@ -56,9 +65,34 @@ Release 0.1 at the start of August?
 
  
  
-===================================================
-Tasks
-===================================================
+=======================================================
+Tasks we need to do for the release 0.1 user stories
+=======================================================
+
+iwd == an "ideal working day", with just coding, and no distractions
+
+Who    | Priority | Estimate| Task
+-------+----------+---------+----------------------------------------------
+Mignon |  High    | 1   iwd | UI for adding an attribute to an item, and setting the expected data type of an attribute
+Mignon |  High    | 1   iwd | UI for creating a new category
+Mignon |  High    | 1   iwd | UI for deleting a row from a table 
+ Chao  |  High    | 1.5 iwd | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
+ Chao  |  High    | 0.5 iwd | UI to sort a table when you click on a column header
+Brian  |  High    | 1   iwd | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
+Brian  |  High    | 2   iwd | Convert UI code to use new data model
+       |  High    |         | UI for entering a number literal (instead of a string literal) in a table
+       |  High    |         | UI for entering references to categories or to other items
+       | Medium   |         | UI for adding a new section to a page
+       | Medium   |         | UI for editing the query that a section uses
+       | Medium   |         | UI for editing the query that a section uses
+       | Medium   |         | Verify/fix the bug that happens when you call the PHP server code with no POST data
+       | Medium   |         | Replace the Edit/Save button with a Lock/Unlock UI; automatically save changes as they happen
+       | Medium   |         | Replace the BigLumpVirtualServer with an IncrementalChangesVirtualServer; Change PHP code to append to the data file
+       |   Low    |         | Convert UI code from DOM level 0 to DOM level 2
+       |   Low    |         | Write a plugin view that calculates and displays the measured project velocity
+       |   Low    |         | UI for creating a new page
+       |   Low    |         | UI for creating a new user
+
 
 ---------------------------------------------------
  + Figure out how to write unit tests for GUI code
