@@ -94,6 +94,57 @@ Brian  |  High    | 2   iwd | Convert UI code to use new data model
        |   Low    |         | UI for creating a new user
 
 
+       
+       
+=======================================================
+Categories and Attributes we might use for release 0.1
+=======================================================
+(*) == reference to another item
+
+User Story
+  name
+  summary
+  priority
+  release this story is assigned to (*)
+  
+Iteration
+  name
+  date completed
+  tasks we plan to do in this iteration (*)
+  release (*)
+  
+Release
+  name
+  date completed
+  iterations leading up to this release (*)
+  user stories assigned to this release (*)
+  
+User
+  name
+  tasks this person is signed-up for (*)
+  
+Task
+  name
+  summary
+  user story (or category) this task falls into (*)
+  person who has signed-up to do this task (*)
+  estimate of how long this task will take
+  iteration in which we plan to do this task (*)
+  iteration in which this task was started (*)
+  iteration in which this task was finished (*)
+  status text
+  
+Bug
+  name
+  summary
+  (most Bug items will also be categorized as Task items, so each Bug will also have all the attributes of a Task)
+  
+
+
+       
+=======================================================
+Tasks we want to defer until after release 0.1
+=======================================================
 ---------------------------------------------------
  + Figure out how to write unit tests for GUI code
 ---------------------------------------------------
