@@ -1,3 +1,12 @@
+================================================================
+Architecture Overview Diagram for OpenRecord 
+================================================================
+ Copyright rights relinquished under the Creative Commons  
+ Public Domain Dedication:
+    http://creativecommons.org/licenses/publicdomain/
+----------------------------------------------------------------
+
+
 
 +-----------------------------------------------------------------------+
 | CLIENT-SIDE: entirely JavaScript, CSS, and XHTML                      |
@@ -10,15 +19,23 @@
 | presentation |  SectionView                                        |  |
 | layer        |  PageView                                           |  |
 |              |  ItemView                                           |  |
-|              |  CompleteView                                       |  |
+|              |  RootView                                           |  |
 |              +-----------------------------------------------------+  |
-|                  |           |                                        |
-|                  | Query API |                                        |
-|                  VVVVVVVVVVVVV                                        |
+|                  | Data  |                                            |
+|                  | Model |                                            |
+|                  |  API  |                                            |
+|                  VVVVVVVVV                                            |
 |              +-----------------------------------------------------+  |
-| model layer  |  Stevedore                                          |  |
+| model layer  |  World                                              |  |
 |              |  Item                                               |  |
-|              |  Query                                              |  |
+|              |  Entry                                              |  |
+|              |  Vote                                               |  |
+|              |  Ordinal                                            |  |
+|              |  IdentifiedRecord                                   |  |
+|              +-----------------------------------------------------+  |
+|              |  VirtualServer                                      |  |
+|              |  StubVirtualServer                                  |  |
+|              |  BigLumpVirtualServer                               |  |
 |              +-------+   +-----------------------------------------+  |
 |                      |   |                                            |
 +----------------------|   |--------------------------------------------+

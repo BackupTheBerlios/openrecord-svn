@@ -1,6 +1,10 @@
-=================================
+================================================================
 Experimental Data Model Framework
-=================================
+================================================================
+ Copyright rights relinquished under the Creative Commons  
+ Public Domain Dedication:
+    http://creativecommons.org/licenses/publicdomain/
+----------------------------------------------------------------
 
 This directory, named "model", contains 8 or 10 JavaScript classes.  Together these JavaScript classes form an experimental data model framework.  
 

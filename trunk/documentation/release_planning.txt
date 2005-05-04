@@ -97,25 +97,10 @@ Brian  |  High    | 2   iwd | Convert UI code to use new data model
 ---------------------------------------------------
  + Figure out how to write unit tests for GUI code
 ---------------------------------------------------
- + Have BigLumpVirtualServer.js be able to load April-2005-format chronological files
----------------------------------------------------
- + Create a new VirtualServer.js class that saves changes incrementally
----------------------------------------------------
- + Integrate the new data model code into the rest of the app
----------------------------------------------------
- + Refactor the code in Item.js so that values are stored per-attribute
----------------------------------------------------
  + Refactor the data model code so that categories cache their lists of items
 ---------------------------------------------------
- + Consider changing the class names in the data model, thusly:
-      Item.js --> Item.js
-      Entry.js --> IdentifiedRecord.js
-      Value.js --> Entry.js
-      Value.getContentData() --> Entry.getValue()
-    We might also want to add a class called Record.js, as an abstract
+ + We might also want to add a class called Record.js, as an abstract
     superclass for Vote, Ordinal, and IdentifiedRecord.
----------------------------------------------------
- + Figure out how to use the Venkman profiler, and see what's slow
 ---------------------------------------------------
  + Replace the current fake UUIDs with real UUIDs.
 ---------------------------------------------------
@@ -172,9 +157,6 @@ Brian  |  High    | 2   iwd | Convert UI code to use new data model
     intuitive way.  Maybe by clicking on a "Add page"
     button at the bottom of the NavBar, or something like that.
 ---------------------------------------------------
- + Be able to add a new section to a page
-    The user should be able to add a new section to a page.
----------------------------------------------------
  + Be able to edit the query of a section
     The user should be able to see the query that's being
     used to populate a section. In edit mode, the user
@@ -212,10 +194,6 @@ Brian  |  High    | 2   iwd | Convert UI code to use new data model
  + Table Plugin sorting, column changing
    Add 'Table' plugin controls for row sorting, column
    re-arranging, column hiding, etc.
----------------------------------------------------
- + add a login UI
-    Have a UI for logging in. Make sure the user is logged
-    in before allowing changes.
 ---------------------------------------------------
  + Draft a Contributor Agreement
      We need to draft some sort of Contributor Agreement, like the Apache Contributor Agreement or the Python Contributor Agreement.
