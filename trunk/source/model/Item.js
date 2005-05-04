@@ -33,14 +33,14 @@
 // Dependencies:
 //   Util.js
 //   World.js
-//   Value.js
+//   Entry.js
 //   IdentifiedRecord.js
 // -------------------------------------------------------------------
 
 
 /**
  * Instances of the Item class know how to store and retrieve their
- * attribute values.
+ * attribute entries.
  *
  * WARNING: This constructor method should be called ONLY from a 
  * VirtualServer implementation.
@@ -49,14 +49,14 @@
  * constructor, call the newItem() method on World: world.newItem()
  * 
  * @scope    protected instance constructor
- * @param    inWorld    The world that this value is a part of. 
- * @param    inUuid    The UUID for this value. 
+ * @param    inWorld    The world that this item is a part of. 
+ * @param    inUuid    The UUID for this item. 
  */
 Item.prototype = new IdentifiedRecord();  // makes Item be a subclass of IdentifiedRecord
 function Item(inWorld, inUuid) {
   this._IdentifiedRecord(inWorld, inUuid);
   
-  this.__myListOfValues = null;
+  this.__myListOfEntries = null;
 }
 
 
@@ -66,7 +66,7 @@ function Item(inWorld, inUuid) {
  * WARNING: This method should be called ONLY from a 
  * VirtualServer implementation.
  *
- * This method is NOT used for setting the properties of values that
+ * This method is NOT used for setting the properties of entries that
  * are being rehydrated from a dehydrated JSON string.  For that, you
  * need to call item.rehydrate();
  *
@@ -76,7 +76,7 @@ function Item(inWorld, inUuid) {
 Item.prototype._initialize = function (inObserver) {
   this._initializeIdentifiedRecord();
 
-  this.__myListOfValues = [];
+  this.__myListOfEntries = [];
   if (inObserver) {
     this.addObserver(inObserver);
   }
@@ -84,13 +84,13 @@ Item.prototype._initialize = function (inObserver) {
 
 
 /**
- * Sets the properties of a newly rehydrated value object.
+ * Sets the properties of a newly rehydrated item object.
  *
  * WARNING: This method should be called ONLY from a 
  * VirtualServer implementation.
  *
  * This method should only be called from VirtualServer code that is
- * rehydrating dehydrated value objects. 
+ * rehydrating dehydrated item objects. 
  *
  * @scope    protected instance method
  * @param    inTimestamp    A Date object with the creation timestamp for this item. 
@@ -99,83 +99,83 @@ Item.prototype._initialize = function (inObserver) {
 Item.prototype._rehydrate = function (inTimestamp, inUserstamp) {
   this._rehydrateIdentifiedRecord(inTimestamp, inUserstamp);
   
-  this.__myListOfValues = [];
+  this.__myListOfEntries = [];
 };
 
 
 // -------------------------------------------------------------------
-// Value adding methods
+// Entry adding methods
 // -------------------------------------------------------------------
 
 /**
- * Creates a new value object and adds the new value to the item's 
- * list of values.
+ * Creates a new entry object and adds the new entry to the item's 
+ * list of entries.
  *
  * @scope    public instance method
- * @param    inContentData    The content data to initialize the value to.
- * @return   A value object.
+ * @param    inContentData    The content data to initialize the entry to.
+ * @return   An entry object.
  */
-Item.prototype.addValue = function (inContentData) {
+Item.prototype.addEntry = function (inContentData) {
   var attributeCalledUnfiled = this.getWorld().getAttributeCalledUnfiled();
-  return this.addAttributeValue(attributeCalledUnfiled, inContentData);
+  return this.addAttributeEntry(attributeCalledUnfiled, inContentData);
 };
 
 
 /**
- * Assigns a value to an attribute in this item.
+ * Assigns an entry to an attribute in this item.
  *
- * Given an attribute and content data, creates a value object with the 
- * content data, and sets the item's attribute to the new value.
+ * Given an attribute and content data, creates an entry object with the 
+ * content data, and sets the item's attribute to the new entry.
  * For example, to make a Kermit green:
  * <pre>
- *    kermit.addAttributeValue(color, "green");
+ *    kermit.addAttributeEntry(color, "green");
  * </pre>
- * Attributes can always have more than one assigned value, so
+ * Attributes can always have more than one assigned entry, so
  * you can make Kermit be both blue and green by doing:
  * <pre>
- *    kermit.addAttributeValue(color, "green");
- *    kermit.addAttributeValue(color, "blue");
+ *    kermit.addAttributeEntry(color, "green");
+ *    kermit.addAttributeEntry(color, "blue");
  * </pre>
  *
  * @scope    public instance method
- * @param    inAttribute    The attribute to assign the value to. 
- * @param    inContentData    The content data to initialize the value with.
- * @return   A value object.
+ * @param    inAttribute    The attribute to assign the entry to. 
+ * @param    inContentData    The content data to initialize the entry with.
+ * @return   An entry object.
  */
-Item.prototype.addAttributeValue = function (inAttribute, inContentData) {
-  return this.replaceValueWithAttributeValue(null, inAttribute, inContentData);
+Item.prototype.addAttributeEntry = function (inAttribute, inContentData) {
+  return this.replaceEntryWithAttributeEntry(null, inAttribute, inContentData);
 };
 
 
 /**
- * Replaces an existing value with a new value.
+ * Replaces an existing entry with a new entry.
  *
  * @scope    public instance method
- * @param    inValue    The old value to be replaced.
- * @param    inContentData    The content data to initialize the new value to.
- * @return   The new replacement value object.
+ * @param    inEntry    The old entry to be replaced.
+ * @param    inContentData    The content data to initialize the new entry to.
+ * @return   The new replacement entry object.
  */
-Item.prototype.replaceValue = function (inValue, inContentData) {
-  var attribute = inValue.getAttribute();
-  return this.replaceValueWithAttributeValue(inValue, attribute, inContentData);
+Item.prototype.replaceEntry = function (inEntry, inContentData) {
+  var attribute = inEntry.getAttribute();
+  return this.replaceEntryWithAttributeEntry(inEntry, attribute, inContentData);
 };
 
 
 /**
- * Replaces an existing value with a new value, and assigns the new value
+ * Replaces an existing entry with a new entry, and assigns the new entry
  * to an attribute.
  *
  * @scope    public instance method
- * @param    inValue    The old value to be replaced.
- * @param    inAttribute    The attribute to assign the value to. 
- * @param    inContentData    The content data to initialize the new value to.
- * @return   The new replacement value object.
+ * @param    inEntry    The old entry to be replaced.
+ * @param    inAttribute    The attribute to assign the entry to. 
+ * @param    inContentData    The content data to initialize the new entry to.
+ * @return   The new replacement entry object.
  */
-Item.prototype.replaceValueWithAttributeValue = function (inValue, inAttribute, inContentData) {
-  var itemOrValue = inValue || this;
-  var value = this.getWorld()._newValue(itemOrValue, inAttribute, inContentData);
-  this.__myListOfValues.push(value);
-  return value;
+Item.prototype.replaceEntryWithAttributeEntry = function (inEntry, inAttribute, inContentData) {
+  var itemOrEntry = inEntry || this;
+  var entry = this.getWorld()._newEntry(itemOrEntry, inAttribute, inContentData);
+  this.__myListOfEntries.push(entry);
+  return entry;
 };
 
 
@@ -184,55 +184,55 @@ Item.prototype.replaceValueWithAttributeValue = function (inValue, inAttribute, 
 // -------------------------------------------------------------------
 
 /**
- * Given an attribute, this method returns the list of all the values that 
+ * Given an attribute, this method returns the list of all the entries that 
  * have been assigned to that attribute for this item.
  *
  * For example, to find out what color Kermit is: 
  * <pre>
- *    var valueList = kermit.getValuesForAttribute(color);
- *    for (var i = 0; i < valueList.length; ++i) {
- *      alert("Kermit is " + valueList[i]);
+ *    var entryList = kermit.getEntriesForAttribute(color);
+ *    for (var i = 0; i < entryList.length; ++i) {
+ *      alert("Kermit is " + entryList[i].getDisplayString());
  *    }
  * </pre>
  *
  * @scope    public instance method
- * @param    inAttribute    An attribute that we want to know the values of. 
- * @return   A list of value objects.
+ * @param    inAttribute    An attribute that we want to know the entries of. 
+ * @return   A list of entry objects.
  */
-Item.prototype.getValuesForAttribute = function (inAttribute) {
-  var listOfValuesForAttribute = [];
-  var listOfValues = this.getValues();
-  for (var key in listOfValues) {
-    var value = listOfValues[key];
-    var attribute = value.getAttribute();
+Item.prototype.getEntriesForAttribute = function (inAttribute) {
+  var listOfEntriesForAttribute = [];
+  var listOfEntries = this.getEntries();
+  for (var key in listOfEntries) {
+    var entry = listOfEntries[key];
+    var attribute = entry.getAttribute();
     if (attribute == inAttribute) {
-      listOfValuesForAttribute.push(value);
+      listOfEntriesForAttribute.push(entry);
     }
   }
-  listOfValuesForAttribute.sort(IdentifiedRecord.compareOrdinals);
-  return listOfValuesForAttribute;
+  listOfEntriesForAttribute.sort(IdentifiedRecord.compareOrdinals);
+  return listOfEntriesForAttribute;
 };
 
 
 /**
- * Returns a list of all the values assigned to an item.
+ * Returns a list of all the entries assigned to an item.
  *
  * @scope    public instance method
- * @return   A list of value objects.
+ * @return   A list of entry objects.
  */
-Item.prototype.getValues = function () {
+Item.prototype.getEntries = function () {
   var filter = this.getWorld().getRetrievalFilter();
-  var listOfValues = this.__myListOfValues;
-  var filteredListOfValues = [];
+  var listOfEntries = this.__myListOfEntries;
+  var filteredListOfEntries = [];
   var key;
-  var value;
+  var entry;
   
   switch (filter) {
     case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
-      for (key in listOfValues) {
-        value = listOfValues[key];
-        if (!value.hasBeenReplaced() && !value.hasBeenDeleted()) {
-          filteredListOfValues.push(value);
+      for (key in listOfEntries) {
+        entry = listOfEntries[key];
+        if (!entry.hasBeenReplaced() && !entry.hasBeenDeleted()) {
+          filteredListOfEntries.push(entry);
         }
       }
       break;
@@ -245,20 +245,20 @@ Item.prototype.getValues = function () {
       Util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_UNABRIDGED:
-      filteredListOfValues = listOfValues;
+      filteredListOfEntries = listOfEntries;
       break;
     default:
       // We should never get here.  If we get here, it's an error.
       Util.assert(false);
       break;
   }
-  filteredListOfValues.sort(IdentifiedRecord.compareOrdinals);
-  return filteredListOfValues;
+  filteredListOfEntries.sort(IdentifiedRecord.compareOrdinals);
+  return filteredListOfEntries;
 };
 
 
 /**
- * Returns a list of all the attributes that this item has values
+ * Returns a list of all the attributes that this item has entries
  * assigned to.
  *
  * @scope    public instance method
@@ -266,10 +266,10 @@ Item.prototype.getValues = function () {
  */
 Item.prototype.getAttributes = function () {
   var listOfAttributes = [];
-  var listOfValues = this.getValues();
-  for (var key in listOfValues) {
-    var value = listOfValues[key];
-    var attribute = value.getAttribute();
+  var listOfEntries = this.getEntries();
+  for (var key in listOfEntries) {
+    var entry = listOfEntries[key];
+    var attribute = entry.getAttribute();
     Util.addObjectToSet(attribute, listOfAttributes);
   }
   listOfAttributes.sort(IdentifiedRecord.compareOrdinals);
@@ -289,9 +289,9 @@ Item.prototype.getAttributes = function () {
  */
 Item.prototype.getDisplayName = function (inDefaultString) {
   var displayName = inDefaultString || "(no name)";
-  var listOfNameValues = this.getName();
-  if (listOfNameValues.length > 0) {
-    var primaryName = listOfNameValues[0];
+  var listOfNameEntries = this.getName();
+  if (listOfNameEntries.length > 0) {
+    var primaryName = listOfNameEntries[0];
     displayName = primaryName.getDisplayString();
   }
   return displayName;
@@ -299,26 +299,26 @@ Item.prototype.getDisplayName = function (inDefaultString) {
   
 
 /**
- * Returns a list of the values assigned to the "name" attribute.
+ * Returns a list of the entries assigned to the "name" attribute.
  *
  * @scope    public instance method
- * @return   A list of the values assigned to the "name" attribute.
+ * @return   A list of the entries assigned to the "name" attribute.
  */
 Item.prototype.getName = function (inDefaultString) {
   var attributeCalledName = this.getWorld().getAttributeCalledName();
-  return this.getValuesForAttribute(attributeCalledName);
+  return this.getEntriesForAttribute(attributeCalledName);
 };
 
 
 /**
- * Returns a list of the values assigned to the "short name" attribute.
+ * Returns a list of the entries assigned to the "short name" attribute.
  *
  * @scope    public instance method
- * @return   A list of the values assigned to the "short name" attribute.
+ * @return   A list of the entries assigned to the "short name" attribute.
  */
 Item.prototype.getShortName = function (inDefaultString) {
   var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
-  return this.getValuesForAttribute(attributeCalledShortName);
+  return this.getEntriesForAttribute(attributeCalledShortName);
 };
 
 
@@ -331,7 +331,7 @@ Item.prototype.getShortName = function (inDefaultString) {
 Item.prototype.toString = function () {
   var returnString = "[Item #" + this.getUniqueKeyString() + " ";
   var attributeCategory = this.getWorld().getAttributeCalledCategory();
-  var listOfCategories = this.getValuesForAttribute(attributeCategory);
+  var listOfCategories = this.getEntriesForAttribute(attributeCategory);
   for (var key in listOfCategories) {
     var category = listOfCategories[key];
     Util.assert(category instanceof Item);
@@ -361,22 +361,22 @@ Item.prototype.isInCategory = function (inCategory) {
   Util.assert(inCategory instanceof Item);
 
   var categoryAttribute = this.getWorld().getAttributeCalledCategory();
-  var valueList = this.getValuesForAttribute(categoryAttribute);
+  var entryList = this.getEntriesForAttribute(categoryAttribute);
   var key;
-  var value;
+  var entry;
   
   // look at all the categories this item is assigned to, and see if one of them is "inCategory"
-  for (key in valueList) {
-    value = valueList[key];
-    if (value.getContentData() == inCategory) {
+  for (key in entryList) {
+    entry = entryList[key];
+    if (entry.getContentData() == inCategory) {
       return true;
     }
   }
   
   // look at all the categories this item is assigned to, and see if one of them
   // is in turn in the category "inCategory"
-  for (key in valueList) {
-    value = valueList[key];
+  for (key in entryList) {
+    entry = entryList[key];
     // PENDING: 
     //   This will go into an infinite loop if there is ever a cycle in the category 
     //   assignments, like: A is in category B, and B is in C, and C is in A.
@@ -385,7 +385,7 @@ Item.prototype.isInCategory = function (inCategory) {
     //   Do we also need to register as an observer of something, so that if we later
     //   become a member of that category in question, then we can notify whoever
     //   is observing us?
-    if ((value.getContentData() != this) && (value.getContentData().isInCategory(inCategory))) {
+    if ((entry.getContentData() != this) && (entry.getContentData().isInCategory(inCategory))) {
       return true;
     }
   }
@@ -426,17 +426,17 @@ Item.prototype.removeObserver = function (inObserver) {
 // -------------------------------------------------------------------
 
 /**
- * Adds a new value to the item when the items and values are first
+ * Adds a new entry to the item when the items and entries are first
  * being loaded by the backing store.
  *
  * WARNING: This method should be called ONLY from the  
- * value._rehydrate() method.
+ * entry._rehydrate() method.
  * 
  * @scope    protected instance method
- * @param    inValue    The value to be associated with this item. 
+ * @param    inEntry    The entry to be associated with this item. 
  */
-Item.prototype._addRehydratedValue = function (inValue) {
-  this.__myListOfValues.push(inValue);
+Item.prototype._addRehydratedEntry = function (inEntry) {
+  this.__myListOfEntries.push(inEntry);
 };
   
 

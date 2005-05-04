@@ -39,7 +39,7 @@
 
 /**
  * The IdentifiedRecord class serves as an abstract superclass for the class Item
- * and the class Value.
+ * and the class Entry.
  *
  * @scope    public instance constructor
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
@@ -56,8 +56,8 @@ function IdentifiedRecord() {
  * Called from the constructor function of each subclass of IdentifiedRecord.
  *
  * @scope    protected instance method
- * @param    inWorld    The world that this value is a part of. 
- * @param    inUuid    The UUID for this value. 
+ * @param    inWorld    The world that this IdentifiedRecord is a part of. 
+ * @param    inUuid    The UUID for this IdentifiedRecord. 
  */
 IdentifiedRecord.prototype._IdentifiedRecord = function (inWorld, inUuid) {
   Util.assert(!inUuid || Util.isNumeric(inUuid));
@@ -120,10 +120,10 @@ IdentifiedRecord.prototype._getUuid = function () {
 
 
 /**
- * Records a user's vote to retain or delete this value.
+ * Records a user's vote to retain or delete this IdentifiedRecord.
  *
  * @scope    protected instance method
- * @param    inVote    A vote to retain or delete this value. 
+ * @param    inVote    A vote to retain or delete this IdentifiedRecord. 
  */
 IdentifiedRecord.prototype._addVote = function (inVote) {
   if (!this.__mySetOfVotes) {
@@ -134,10 +134,10 @@ IdentifiedRecord.prototype._addVote = function (inVote) {
 
 
 /**
- * Records the ordinal number that a user sets for this value.
+ * Records the ordinal number that a user sets for this IdentifiedRecord.
  *
  * @scope    protected instance method
- * @param    inOrdinal    A vote to retain or delete this value. 
+ * @param    inOrdinal    A vote to retain or delete this IdentifiedRecord. 
  */
 IdentifiedRecord.prototype._addOrdinal = function (inOrdinal) {
   if (!this.__mySetOfOrdinals) {

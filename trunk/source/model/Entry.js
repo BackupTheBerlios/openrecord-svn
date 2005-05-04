@@ -1,5 +1,5 @@
 /*****************************************************************************
- Value.js
+ Entry.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -38,25 +38,25 @@
 // -------------------------------------------------------------------
 
 /**
- * Instances of the Value class represent literal values, like strings
- * and numbers.
+ * Instances of the Entry class hold literal values (like strings
+ * and numbers), or reference values (pointers to Items).
  *
  * WARNING: This constructor method should be called ONLY from a 
  * VirtualServer implementation.
  *
  * If you're writing code in a view class, instead of calling this
- * constructor, call a method on Item, like item.addAttributeValue()
+ * constructor, call a method on Item, like item.addAttributeEntry()
  *
  * @scope    protected instance constructor
- * @param    inWorld    The world that this value is a part of. 
- * @param    inUuid    The UUID for this value. 
+ * @param    inWorld    The world that this entry is a part of. 
+ * @param    inUuid    The UUID for this entry. 
  */
-Value.prototype = new IdentifiedRecord();  // makes Value be a subclass of IdentifiedRecord
-function Value(inWorld, inUuid) {
+Entry.prototype = new IdentifiedRecord();  // makes Entry be a subclass of IdentifiedRecord
+function Entry(inWorld, inUuid) {
   this._IdentifiedRecord(inWorld, inUuid);
  
-  this.__myPreviousValue = null;
-  this.__myListOfSubsequentValues = [];
+  this.__myPreviousEntry = null;
+  this.__myListOfSubsequentEntries = [];
   this.__myItem = null;
 
   this.__myAttribute = null;
@@ -65,30 +65,30 @@ function Value(inWorld, inUuid) {
 
 
 /**
- * Initializes a new value that has just been created by a user action.
+ * Initializes a new entry that has just been created by a user action.
  *
  * WARNING: This method should be called ONLY from a 
  * VirtualServer implementation.
  *
- * This method is NOT used for setting the properties of values that
+ * This method is NOT used for setting the properties of entrys that
  * are being rehydrated from a dehydrated JSON string.  For that, you
- * need to call value.rehydrate();
+ * need to call entry.rehydrate();
  *
  * @scope    protected instance method
- * @param    inItemOrValue    The item that this is a value of, or the old value that this value replaces. 
- * @param    inAttribute    The attribute that this value is assigned to. May be null. 
- * @param    inContentData    The content datat to initialize the value with. 
+ * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry replaces. 
+ * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
+ * @param    inContentData    The content data to initialize the entry with. 
  */
-Value.prototype._initialize = function (inItemOrValue, inAttribute, inContentData) {
+Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inContentData) {
   this._initializeIdentifiedRecord();
 
-  if (inItemOrValue instanceof Value) {
-    this.__myPreviousValue = inItemOrValue;
-    this.__myItem = this.__myPreviousValue.getItem();
-    this.__myPreviousValue.__addSubsequentValue(this);
+  if (inItemOrEntry instanceof Entry) {
+    this.__myPreviousEntry = inItemOrEntry;
+    this.__myItem = this.__myPreviousEntry.getItem();
+    this.__myPreviousEntry.__addSubsequentEntry(this);
   } else {
-    this.__myPreviousValue = null;
-    this.__myItem = inItemOrValue;
+    this.__myPreviousEntry = null;
+    this.__myItem = inItemOrEntry;
   }
   
   this.__myAttribute = inAttribute;
@@ -102,37 +102,37 @@ Value.prototype._initialize = function (inItemOrValue, inAttribute, inContentDat
 
 
 /**
- * Sets the properties of a newly rehydrated value object.
+ * Sets the properties of a newly rehydrated entry object.
  *
  * WARNING: This method should be called ONLY from a 
  * VirtualServer implementation.
  *
  * This method should only be called from VirtualServer code that is
- * rehydrating dehydrated value objects. 
+ * rehydrating dehydrated entry objects. 
  *
  * @scope    protected instance method
- * @param    inItemOrValue    The item that this is a value of, or the old value that this value replaces. 
- * @param    inAttribute    The attribute that this value is assigned to. May be null. 
- * @param    inContentData    The content data to initialize the value with. 
- * @param    inTimestamp    A Date object with the creation timestamp for this value. 
- * @param    inUserstamp    The user who created this value. 
+ * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry replaces. 
+ * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
+ * @param    inContentData    The content data to initialize the entry with. 
+ * @param    inTimestamp    A Date object with the creation timestamp for this entry. 
+ * @param    inUserstamp    The user who created this entry. 
  */
-Value.prototype._rehydrate = function (inItemOrValue, inAttribute, inContentData, inTimestamp, inUserstamp) {
+Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inContentData, inTimestamp, inUserstamp) {
   this._rehydrateIdentifiedRecord(inTimestamp, inUserstamp);
 
-  if (inItemOrValue instanceof Value) {
-    this.__myPreviousValue = inItemOrValue;
-    this.__myItem = this.__myPreviousValue.getItem();
-    this.__myPreviousValue.__addSubsequentValue(this);
+  if (inItemOrEntry instanceof Entry) {
+    this.__myPreviousEntry = inItemOrEntry;
+    this.__myItem = this.__myPreviousEntry.getItem();
+    this.__myPreviousEntry.__addSubsequentEntry(this);
   } else {
-    this.__myPreviousValue = null;
-    this.__myItem = inItemOrValue;
+    this.__myPreviousEntry = null;
+    this.__myItem = inItemOrEntry;
   }
 
   this.__myAttribute = inAttribute;
   this.__myContentData = inContentData;
 
-  this.__myItem._addRehydratedValue(this);
+  this.__myItem._addRehydratedEntry(this);
 };
 
 
@@ -141,57 +141,57 @@ Value.prototype._rehydrate = function (inItemOrValue, inAttribute, inContentData
 // -------------------------------------------------------------------
 
 /**
- * Returns the item that this is a value of.
+ * Returns the item that this is a entry of.
  *
  * @scope    public instance method
- * @return   The item that this is a value of.
+ * @return   The item that this is a entry of.
  */
-Value.prototype.getItem = function () {
+Entry.prototype.getItem = function () {
   return this.__myItem;
 };
 
 
 /**
- * If this value was established as the replacement for a previous
- * value, this method returns the previous value.
+ * If this entry was established as the replacement for a previous
+ * entry, this method returns the previous entry.
  *
  * @scope    public instance method
- * @return   The previous value, which this value replaces. 
+ * @return   The previous entry, which this entry replaces. 
  */
-Value.prototype.getPreviousValue = function () {
-  return this.__myPreviousValue;
+Entry.prototype.getPreviousEntry = function () {
+  return this.__myPreviousEntry;
 };
 
 
 /**
- * Returns the attribute that this value was assigned to, if any.
+ * Returns the attribute that this entry was assigned to, if any.
  *
  * @scope    public instance method
  * @return   An attribute item.
  */
-Value.prototype.getAttribute = function () {
+Entry.prototype.getAttribute = function () {
   return this.__myAttribute;
 };
 
 
 /**
- * Returns the content data that this value holds.
+ * Returns the content data that this entry holds.
  *
  * @scope    public instance method
- * @return   The content data this value was initialized to hold.
+ * @return   The content data this entry was initialized to hold.
  */
-Value.prototype.getContentData = function () {
+Entry.prototype.getContentData = function () {
   return this.__myContentData;
 };
 
 
 /**
- * Returns the content data of this value as a string.
+ * Returns the content data of this entry as a string.
  *
  * @scope    public instance method
- * @return   A string representing the literal data in this value.
+ * @return   A string representing the literal data in this entry.
  */
-Value.prototype.getDisplayString = function () {
+Entry.prototype.getDisplayString = function () {
   var returnString = "";
   if (this.__myContentData instanceof Item) {
     returnString += this.__myContentData.getDisplayName();
@@ -208,23 +208,23 @@ Value.prototype.getDisplayString = function () {
  * @scope    public instance method
  * @return   A string with a description of the item.
  */
-Value.prototype.toString = function () {
-  var returnString = "[Value #" + this.getUniqueKeyString() + 
+Entry.prototype.toString = function () {
+  var returnString = "[Entry #" + this.getUniqueKeyString() + 
     " \"" + this.getDisplayString() + "\"" + "]";
   return returnString;
 };
 
 
 /**
- * Returns true if the value has been replaced by a subsequent value.
+ * Returns true if the entry has been replaced by a subsequent entry.
  *
  * @scope    public instance method
- * @return   True if this value has been replaced. False if it has not.
+ * @return   True if this entry has been replaced. False if it has not.
  */
-Value.prototype.hasBeenReplaced = function () {
-  var listOfValues = this.__myListOfSubsequentValues;
+Entry.prototype.hasBeenReplaced = function () {
+  var listOfEntries = this.__myListOfSubsequentEntries;
 
-  if (!listOfValues || listOfValues.length === 0) {
+  if (!listOfEntries || listOfEntries.length === 0) {
     return false;
   }
   
@@ -255,13 +255,13 @@ Value.prototype.hasBeenReplaced = function () {
 // -------------------------------------------------------------------
 
 /**
- * Called by a subsquent value, to tell this value that it has been replaced.
+ * Called by a subsquent entry, to tell this entry that it has been replaced.
  *
  * @scope    private instance method
- * @param    inValue    The value that replaces this one.
+ * @param    inEntry    The entry that replaces this one.
  */
-Value.prototype.__addSubsequentValue = function (inValue) {
-  this.__myListOfSubsequentValues.push(inValue);
+Entry.prototype.__addSubsequentEntry = function (inEntry) {
+  this.__myListOfSubsequentEntries.push(inEntry);
 };
 
 

@@ -36,7 +36,7 @@
 //   Item.js
 //   IdentifiedRecord.js
 //   Ordinal.js
-//   Value.js
+//   Entry.js
 //   Vote.js
 //   Vote.js
 // -------------------------------------------------------------------
@@ -63,7 +63,7 @@ StubVirtualServer.prototype.__initialize = function (inWorld) {
   
   this.__myNextAvailableUuid = 1;
   this.__myHashTableOfItemsKeyedByUuid = {};
-  this.__myHashTableOfValuesKeyedByUuid = {};
+  this.__myHashTableOfEntriesKeyedByUuid = {};
   this.__myChronologicalListOfRecords = [];
   this.__myChronologicalListOfNewlyCreatedRecords = [];
   
@@ -106,28 +106,28 @@ StubVirtualServer.prototype.newItem = function (inName, inObserver) {
   this.__myChronologicalListOfNewlyCreatedRecords.push(item);
   if (inName) { 
     var attributeCalledName = this.__myWorld.getAttributeCalledName();
-    item.addAttributeValue(attributeCalledName, inName);
+    item.addAttributeEntry(attributeCalledName, inName);
   }
   return item;
 };
 
 
 /**
- * Returns a newly created value.
+ * Returns a newly created entry.
  *
  * @scope    public instance method
- * @param    inItemOrValue    The item that this is a value of, or the old value that this value is replacing. 
- * @param    inAttribute    The attribute that this value is assigned to. May be null. 
- * @param    inContentData    The content datat to initialize the value with. 
- * @return   A newly created value.
+ * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry is replacing. 
+ * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
+ * @param    inContentData    The content datat to initialize the entry with. 
+ * @return   A newly created entry.
  */
-StubVirtualServer.prototype.newValue = function (inItemOrValue, inAttribute, inContentData) {
+StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inContentData) {
   var uuid = this.__getNewUuid();
-  var value = new Value(this.__myWorld, uuid);
-  value._initialize(inItemOrValue, inAttribute, inContentData);
-  this.__myHashTableOfValuesKeyedByUuid[uuid] = value;
-  this.__myChronologicalListOfNewlyCreatedRecords.push(value);
-  return value;
+  var entry = new Entry(this.__myWorld, uuid);
+  entry._initialize(inItemOrEntry, inAttribute, inContentData);
+  this.__myHashTableOfEntriesKeyedByUuid[uuid] = entry;
+  this.__myChronologicalListOfNewlyCreatedRecords.push(entry);
+  return entry;
 };
  
 
@@ -181,8 +181,8 @@ StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObse
   this.__myHashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = inAuthentication;
   if (inName) { 
     var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
-    var value = newUser.addAttributeValue(attributeCalledName, inName);
-    value.__myCreationUserstamp = newUser;
+    var entry = newUser.addAttributeEntry(attributeCalledName, inName);
+    entry.__myCreationUserstamp = newUser;
   }
   return newUser;
 };
@@ -323,8 +323,8 @@ StubVirtualServer.prototype.getListOfResultItemsForQuery = function (inQuery, in
   var item = null;
   var key;
   var listOfQueryResultItems = [];
-  var listOfMatchingCategories = inQuery.getValuesForAttribute(attributeCalledQueryMatchingCategory);
-  var listOfMatchingItems = inQuery.getValuesForAttribute(attributeCalledQueryMatchingItem);
+  var listOfMatchingCategories = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingCategory);
+  var listOfMatchingItems = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingItem);
   var isCategoryMatchingQuery = (listOfMatchingCategories && (listOfMatchingCategories.length > 0));
   var isItemMatchingQuery = (listOfMatchingItems && (listOfMatchingItems.length > 0));
 
@@ -332,8 +332,8 @@ StubVirtualServer.prototype.getListOfResultItemsForQuery = function (inQuery, in
 
   if (isItemMatchingQuery) {
     for (key in listOfMatchingItems) {
-      var itemValue = listOfMatchingItems[key];
-      item = itemValue.getContentData();
+      var itemEntry = listOfMatchingItems[key];
+      item = itemEntry.getContentData();
       listOfQueryResultItems.push(item);
     }
   }
@@ -346,8 +346,8 @@ StubVirtualServer.prototype.getListOfResultItemsForQuery = function (inQuery, in
       if (!item.hasBeenDeleted()) {
         var includeItem = true;
         for (key in listOfMatchingCategories) {
-          var categoryValue = listOfMatchingCategories[key];
-          var category = categoryValue.getContentData();
+          var categoryEntry = listOfMatchingCategories[key];
+          var category = categoryEntry.getContentData();
           if (includeItem && !(item.isInCategory(category))) {
             includeItem = false;
           }
@@ -390,24 +390,24 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
   var attributeCalledQueryMatchingCategory = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
   var attributeCalledQueryMatchingItem = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
 
-  var listOfMatchingCategories = inQuery.getValuesForAttribute(attributeCalledQueryMatchingCategory);
-  var listOfMatchingItems = inQuery.getValuesForAttribute(attributeCalledQueryMatchingItem);
+  var listOfMatchingCategories = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingCategory);
+  var listOfMatchingItems = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingItem);
   var isCategoryMatchingQuery = (listOfMatchingCategories && (listOfMatchingCategories.length > 0));
   var isItemMatchingQuery = (listOfMatchingItems && (listOfMatchingItems.length > 0));
 
   Util.assert(!(isCategoryMatchingQuery && isItemMatchingQuery));
 
   if (isItemMatchingQuery) {
-    inQuery.addAttributeValue(attributeCalledQueryMatchingItem, inItem);
+    inQuery.addAttributeEntry(attributeCalledQueryMatchingItem, inItem);
   }
   
   var attributeCalledCategory = this.__myWorld.getAttributeCalledCategory();
   if (isCategoryMatchingQuery) {
     for (var key in listOfMatchingCategories) {
-      var categoryValue = listOfMatchingCategories[key];
-      var category = categoryValue.getContentData();
+      var categoryEntry = listOfMatchingCategories[key];
+      var category = categoryEntry.getContentData();
       if (!(inItem.isInCategory(category))) {
-        inItem.addAttributeValue(attributeCalledCategory, category);
+        inItem.addAttributeEntry(attributeCalledCategory, category);
       }
     }
   }
@@ -442,24 +442,24 @@ StubVirtualServer.prototype.getListOfItemsInCategory = function (inCategory) {
 // -------------------------------------------------------------------
 
 /**
- * Given a UUID, returns the item or value identified by that UUID.
+ * Given a UUID, returns the item or entry identified by that UUID.
  *
  * @scope    private instance method
- * @param    inUuid    The UUID of the item or value to be returned. 
- * @return   The item or value identified by the given UUID.
+ * @param    inUuid    The UUID of the item or entry to be returned. 
+ * @return   The item or entry identified by the given UUID.
  */
 StubVirtualServer.prototype.__getIdentifiedRecordFromUuid = function (inUuid) {
   var item = this.getItemFromUuid(inUuid);
   if (item) {
     return item;
   } else {
-    return this.__myHashTableOfValuesKeyedByUuid[inUuid];
+    return this.__myHashTableOfEntriesKeyedByUuid[inUuid];
   }
 };
 
 
 /**
- * Creates a brand new UUID to allocate to an item or value.
+ * Creates a brand new UUID to allocate to an item or entry.
  *
  * @scope    private instance method
  * @return   A newly created UUID.
@@ -515,7 +515,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   var uuid;
   var name;
   var item;
-  var value;
+  var entry;
   
   this.__myWorld.beginTransaction();
   var axiomaticUser = this.__getItemFromUuidOrCreateNewItem(World.UUID_FOR_USER_AMY);
@@ -538,7 +538,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY] = "Matching Category";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM] = "Matching Item";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_PLUGIN_NAME] = "Plugin Name";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED] = "Unfiled Value";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED] = "Unfiled Entry";
 
   // create all the Item objects for the attributes
   for (uuid in hashTableOfAttributeNamesKeyedByUuid) {
@@ -560,7 +560,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
  
   // set the name of the axiomaticUser
   var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
-  axiomaticUser.addAttributeValue(attributeCalledName, "Amy ex machina");
+  axiomaticUser.addAttributeEntry(attributeCalledName, "Amy ex machina");
   
   // set the names of all the attributes, and put them in the category called "Attribute"
   var categoryCalledAttribute = this.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
@@ -568,8 +568,8 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   for (uuid in hashTableOfAttributeNamesKeyedByUuid) {
     item = this.getItemFromUuid(uuid);
     name = hashTableOfAttributeNamesKeyedByUuid[uuid];
-    item.addAttributeValue(attributeCalledName, name);
-    item.addAttributeValue(attributeCalledCategory, categoryCalledAttribute);
+    item.addAttributeEntry(attributeCalledName, name);
+    item.addAttributeEntry(attributeCalledCategory, categoryCalledAttribute);
   }
   
   // set the names of all the categories, and put them in the category called "Category"
@@ -577,8 +577,8 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   for (uuid in hashTableOfCategoryNamesKeyedByUuid) {
     item = this.getItemFromUuid(uuid);
     name = hashTableOfCategoryNamesKeyedByUuid[uuid];
-    item.addAttributeValue(attributeCalledName, name);
-    item.addAttributeValue(attributeCalledCategory, categoryCalledCategory);
+    item.addAttributeEntry(attributeCalledName, name);
+    item.addAttributeEntry(attributeCalledCategory, categoryCalledCategory);
   }
   
   this.__myCurrentUser = null;

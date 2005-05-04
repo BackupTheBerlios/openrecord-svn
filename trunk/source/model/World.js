@@ -176,7 +176,7 @@ World.prototype.__notifyObserversOfChanges = function (inListOfNewlyCreatedRecor
   var uuid;
   var item;
   var observer;
-  var itemOrValue;
+  var itemOrEntry;
   var listOfRecordsForItem;
   
   // Look at each of the newly created records to see what item it changes,
@@ -190,15 +190,15 @@ World.prototype.__notifyObserversOfChanges = function (inListOfNewlyCreatedRecor
       item = record;
     }
     if ((record instanceof Vote) || (record instanceof Ordinal)) {
-      itemOrValue = record.getIdentifiedRecord();
-      if (itemOrValue instanceof Item) {
-        item = itemOrValue;
+      itemOrEntry = record.getIdentifiedRecord();
+      if (itemOrEntry instanceof Item) {
+        item = itemOrEntry;
       }
-       if (itemOrValue instanceof Value) {
-        item = itemOrValue.getItem();
+       if (itemOrEntry instanceof Entry) {
+        item = itemOrEntry.getItem();
       }
     }
-    if (record instanceof Value) {
+    if (record instanceof Entry) {
       item = record.getItem();
     }
     if (item) {
@@ -488,7 +488,7 @@ World.prototype.newAttribute = function (inName, inObserver) {
   var item = this.__myVirtualServer.newItem(inName, inObserver);
   var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledAttribute = this.getCategoryCalledAttribute();
-  item.addAttributeValue(attributeCalledCategory, categoryCalledAttribute);
+  item.addAttributeEntry(attributeCalledCategory, categoryCalledAttribute);
   this.endTransaction();
   return item;
 };
@@ -507,7 +507,7 @@ World.prototype.newCategory = function (inName, inObserver) {
   var item = this.__myVirtualServer.newItem(inName, inObserver);
   var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledCategory = this.getCategoryCalledCategory();
-  item.addAttributeValue(attributeCalledCategory, categoryCalledCategory);
+  item.addAttributeEntry(attributeCalledCategory, categoryCalledCategory);
   this.endTransaction();
   return item;
 };
@@ -525,18 +525,18 @@ World.prototype.newQueryForItemsByCategory = function (inCategory) {
   var item = this.__myVirtualServer.newItem("A query");
   var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledQuery = this.getCategoryCalledQuery();
-  item.addAttributeValue(attributeCalledCategory, categoryCalledQuery);
+  item.addAttributeEntry(attributeCalledCategory, categoryCalledQuery);
 
   var attributeCalledQueryMatchingCategory = this.getAttributeCalledQueryMatchingCategory();
   if (inCategory) {
     if (inCategory instanceof Item) {
-      item.addAttributeValue(attributeCalledQueryMatchingCategory, inCategory);
+      item.addAttributeEntry(attributeCalledQueryMatchingCategory, inCategory);
     }
     if (Util.isArray(inCategory)) {
       var listOfCategories = inCategory;
       for (var key in listOfCategories) {
         var category = listOfCategories[key];
-        item.addAttributeValue(attributeCalledQueryMatchingCategory, category);
+        item.addAttributeEntry(attributeCalledQueryMatchingCategory, category);
       }
     }
   }
@@ -558,18 +558,18 @@ World.prototype.newQueryForSpecificItems = function (inItems) {
   var item = this.__myVirtualServer.newItem("A query");
   var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledQuery = this.getCategoryCalledQuery();
-  item.addAttributeValue(attributeCalledCategory, categoryCalledQuery);
+  item.addAttributeEntry(attributeCalledCategory, categoryCalledQuery);
 
   var attributeCalledQueryMatchingItem = this.getAttributeCalledQueryMatchingItem();
   if (inItems) {
     if (inItems instanceof Item) {
-      item.addAttributeValue(attributeCalledQueryMatchingItem, inItems);
+      item.addAttributeEntry(attributeCalledQueryMatchingItem, inItems);
     }
     if (Util.isArray(inItems)) {
       var listOfItems = inItems;
       for (var key in listOfItems) {
         var matchingItem = listOfItems[key];
-        item.addAttributeValue(attributeCalledQueryMatchingItem, matchingItem);
+        item.addAttributeEntry(attributeCalledQueryMatchingItem, matchingItem);
       }
     }
   }
@@ -580,19 +580,19 @@ World.prototype.newQueryForSpecificItems = function (inItems) {
 
 
 /**
- * Returns a newly created value.
+ * Returns a newly created entry.
  *
  * @scope    public instance method
- * @param    inItemOrValue    The item that this is a value of, or the old value that this value is replacing. 
- * @param    inAttribute    The attribute that this value is assigned to. May be null. 
- * @param    inContentData    The content datat to initialize the value with. 
- * @return   A newly created value.
+ * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry is replacing. 
+ * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
+ * @param    inContentData    The content data to initialize the entry with. 
+ * @return   A newly created entry.
  */
-World.prototype._newValue = function (inItemOrValue, inAttribute, inContentData) {
+World.prototype._newEntry = function (inItemOrEntry, inAttribute, inContentData) {
   this.beginTransaction();
-  var value = this.__myVirtualServer.newValue(inItemOrValue, inAttribute, inContentData);
+  var entry = this.__myVirtualServer.newEntry(inItemOrEntry, inAttribute, inContentData);
   this.endTransaction();
-  return value;
+  return entry;
 };
 
 
@@ -794,7 +794,7 @@ World.prototype.removeItemObserver = function (inItem, inObserver) {
 // -------------------------------------------------------------------
 
 World.UUID_FOR_ATTRIBUTE_SECTION = 108;
-World.UUID_FOR_ATTRIBUTE_PLUGIN_NAME = 112;
+World.UUID_FOR_ATTRIBUTE_PLUGIN_NAME = 113;
 
 World.UUID_FOR_CATEGORY_PAGE = 145;
 World.UUID_FOR_CATEGORY_SECTION = 146;

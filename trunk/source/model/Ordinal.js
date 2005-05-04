@@ -37,10 +37,10 @@
 
 /**
  * Each instance of the Ordinal class keeps track of the fact that
- * a user set an ordinal number for an item or a value of an item.
+ * a user set an ordinal number for an item or a entry of an item.
  *
  * @scope    public instance constructor
- * @param    inIdentifiedRecord    The item or value that this vote is attached to. 
+ * @param    inIdentifiedRecord    The item or entry that this vote is attached to. 
  * @param    inUser    The user who voted. 
  * @param    inOrdinalNumber    The ordinal number itself. 
  * @param    inTimestamp    Optional. The time the vote was made. 

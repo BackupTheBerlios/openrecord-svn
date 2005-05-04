@@ -37,10 +37,10 @@
 
 /**
  * Each instance of the Vote class keeps track of a vote to retain or delete
- * an item or a value of an item.
+ * an item or a entry of an item.
  *
  * @scope    public instance constructor
- * @param    inIdentifiedRecord    The item or value that this vote is attached to. 
+ * @param    inIdentifiedRecord    The item or entry that this vote is attached to. 
  * @param    inUser    The user who voted. 
  * @param    inRetainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  * @param    inTimestamp    Optional. The time the vote was made. 

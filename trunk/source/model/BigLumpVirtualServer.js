@@ -35,7 +35,7 @@
 //   World.js
 //   Item.js
 //   Vote.js
-//   Value.js
+//   Entry.js
 //   Ordinal.js
 // -------------------------------------------------------------------
 
@@ -61,12 +61,12 @@ BigLumpVirtualServer.JSON_TYPE_NUMBER_VALUE = "NumberValue";
 BigLumpVirtualServer.JSON_MEMBER_WUID = "uuid";
 
 BigLumpVirtualServer.JSON_MEMBER_ITEM_CLASS = "Item";
-BigLumpVirtualServer.JSON_MEMBER_VALUE_CLASS = "Value";
+BigLumpVirtualServer.JSON_MEMBER_ENTRY_CLASS = "Entry";
 BigLumpVirtualServer.JSON_MEMBER_VOTE_CLASS = "Vote";
 BigLumpVirtualServer.JSON_MEMBER_ORDINAL_CLASS = "Ordinal";
 
 BigLumpVirtualServer.JSON_MEMBER_ATTRIBUTE = "attribute";
-BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE = "previousValue";
+BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE = "previousEntry";
 BigLumpVirtualServer.JSON_MEMBER_USERSTAMP = "userstamp";
 BigLumpVirtualServer.JSON_MEMBER_RECORD = "record";
 BigLumpVirtualServer.JSON_MEMBER_ITEM = "item";
@@ -172,7 +172,7 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
   // First, go through the whole list of dehydrated items.  Find all 
   // the UUIDs for all the items, and make Item objects for all of them.
   // After we've done this step, we'll know the next available UUID,
-  // so we can start assigning new UUIDs to the attribute values.
+  // so we can start assigning new UUIDs to the attribute entries.
   for (key in listOfDehydratedItems) {
     dehydratedItem = listOfDehydratedItems[key];
     dehydratedUuid = dehydratedItem[World.UUID_FOR_ATTRIBUTE_UUID];
@@ -203,10 +203,10 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
           var propertyValue = dehydratedItem[propertyKey];
           var attributeUuid = parseInt(propertyKey);
           Util.assert(Util.isArray(propertyValue));
-          for (var valueKey in propertyValue) {
-            var valueObject = propertyValue[valueKey];
-            var valueType = valueObject[BigLumpVirtualServer.JSON_MEMBER_TYPE];
-            var valueValue = valueObject[BigLumpVirtualServer.JSON_MEMBER_VALUE];
+          for (var entryKey in propertyValue) {
+            var entryObject = propertyValue[entryKey];
+            var valueType = entryObject[BigLumpVirtualServer.JSON_MEMBER_TYPE];
+            var valueValue = entryObject[BigLumpVirtualServer.JSON_MEMBER_VALUE];
             var finalValue = null;
             switch (valueType) {
               case BigLumpVirtualServer.JSON_TYPE_FOREIGN_UUID:
@@ -220,7 +220,7 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
                 break;
             }
             var attribute = this.getItemFromUuid(attributeUuid);
-            item.addAttributeValue(attribute, finalValue);
+            item.addAttributeEntry(attribute, finalValue);
           }
         }
       }
@@ -257,27 +257,27 @@ StubVirtualServer.prototype.__getItemFromUuidOrBootstrapItem = function (inUuid)
 
 
 /**
- * Given a UUID, either (a) returns the existing value identified by that UUID, 
- * or (b) creates an new value object, set its UUID, and returns that object.
+ * Given a UUID, either (a) returns the existing entry identified by that UUID, 
+ * or (b) creates an new entry object, set its UUID, and returns that object.
  *
  * @scope    private instance method
- * @param    inUuid    The UUID of the value to be returned. 
- * @return   The value identified by the given UUID.
+ * @param    inUuid    The UUID of the entry to be returned. 
+ * @return   The entry identified by the given UUID.
  */
-StubVirtualServer.prototype.__getValueFromUuidOrBootstrapValue = function (inUuid) {
-  var value = this.__myHashTableOfValuesKeyedByUuid[inUuid];
-  if (!value) {
+StubVirtualServer.prototype.__getEntryFromUuidOrBootstrapEntry = function (inUuid) {
+  var entry = this.__myHashTableOfEntriesKeyedByUuid[inUuid];
+  if (!entry) {
     this.__myNextAvailableUuid = Math.max(this.__myNextAvailableUuid, (inUuid + 1));   
-    value = new Value(this.__myWorld, inUuid);
-    this.__myHashTableOfValuesKeyedByUuid[inUuid] = value;
+    entry = new Entry(this.__myWorld, inUuid);
+    this.__myHashTableOfEntriesKeyedByUuid[inUuid] = entry;
   }
-  return value;
+  return entry;
 };
 
 
 /**
  * Loads a world of items from a dehydrated list of entries, where those
- * entries may represent items, values, votes, or ordinal settings.
+ * entries may represent items, entries, votes, or ordinal settings.
  *
  * @scope    private instance method
  * @param    inJsonString    A JSON string literal representing the world of items. 
@@ -295,9 +295,9 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
     var dehydratedItem = dehydratedRecord[BigLumpVirtualServer.JSON_MEMBER_ITEM_CLASS];
     var dehydratedVote = dehydratedRecord[BigLumpVirtualServer.JSON_MEMBER_VOTE_CLASS];
     var dehydratedOrdinal = dehydratedRecord[BigLumpVirtualServer.JSON_MEMBER_ORDINAL_CLASS];
-    var dehydratedValue = dehydratedRecord[BigLumpVirtualServer.JSON_MEMBER_VALUE_CLASS];
+    var dehydratedEntry = dehydratedRecord[BigLumpVirtualServer.JSON_MEMBER_ENTRY_CLASS];
 
-    var contents = dehydratedItem || dehydratedVote || dehydratedOrdinal || dehydratedValue;
+    var contents = dehydratedItem || dehydratedVote || dehydratedOrdinal || dehydratedEntry;
 
     var timestampString = contents[BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP];
     var userstampUuid = contents[BigLumpVirtualServer.JSON_MEMBER_USERSTAMP];
@@ -324,21 +324,21 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
       var ordinal = new Ordinal(identifiedRecord, userstamp, ordinalNumber, timestamp);
       this.__myChronologicalListOfRecords.push(ordinal);
     }
-    if (dehydratedValue) {
-      var valueUuid = dehydratedValue[BigLumpVirtualServer.JSON_MEMBER_WUID];
-      itemUuid = dehydratedValue[BigLumpVirtualServer.JSON_MEMBER_ITEM];
+    if (dehydratedEntry) {
+      var entryUuid = dehydratedEntry[BigLumpVirtualServer.JSON_MEMBER_WUID];
+      itemUuid = dehydratedEntry[BigLumpVirtualServer.JSON_MEMBER_ITEM];
       item = this.__getItemFromUuidOrBootstrapItem(itemUuid);
-      var attributeUuid = dehydratedValue[BigLumpVirtualServer.JSON_MEMBER_ATTRIBUTE];
+      var attributeUuid = dehydratedEntry[BigLumpVirtualServer.JSON_MEMBER_ATTRIBUTE];
       var attribute = null;
       if (attributeUuid) {
         attribute = this.__getItemFromUuidOrBootstrapItem(attributeUuid);
       }
-      var previousValueUuid = dehydratedValue[BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE];
-      var previousValue = null;
-      if (previousValueUuid) {
-        previousValue = this.__getValueFromUuidOrBootstrapValue(previousValueUuid);
+      var previousEntryUuid = dehydratedEntry[BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE];
+      var previousEntry = null;
+      if (previousEntryUuid) {
+        previousEntry = this.__getEntryFromUuidOrBootstrapEntry(previousEntryUuid);
       }
-      var pickledData = dehydratedValue[BigLumpVirtualServer.JSON_MEMBER_VALUE];
+      var pickledData = dehydratedEntry[BigLumpVirtualServer.JSON_MEMBER_VALUE];
       var dataType = pickledData[BigLumpVirtualServer.JSON_MEMBER_TYPE];
       var rawData = pickledData[BigLumpVirtualServer.JSON_MEMBER_VALUE];
       var finalData = null;
@@ -353,10 +353,10 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
           finalData = rawData;
           break;
       }
-      var value = this.__getValueFromUuidOrBootstrapValue(valueUuid);
-      var itemOrValue = previousValue || item;
-      value._rehydrate(itemOrValue, attribute, finalData, timestamp, userstamp);
-      this.__myChronologicalListOfRecords.push(value);
+      var entry = this.__getEntryFromUuidOrBootstrapEntry(entryUuid);
+      var itemOrEntry = previousEntry || item;
+      entry._rehydrate(itemOrEntry, attribute, finalData, timestamp, userstamp);
+      this.__myChronologicalListOfRecords.push(entry);
     }
   }
   for (key in inListOfUsers) {
@@ -434,27 +434,27 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
       listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getIdentifiedRecord()._getUuid() + '",\n');
       listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '",\n');
     }
-    if (record instanceof Value) {
-      var value = record;
-      listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_VALUE_CLASS + '": ' + '{');
-      var valueDisplayNameSubstring = this.truncateString(value.getDisplayString());
-      listOfStrings.push('                             // ' + valueDisplayNameSubstring + '\n');
-      listOfStrings.push('           "' + BigLumpVirtualServer.JSON_MEMBER_WUID + '": "' + value._getUuid() + '",\n');
-      var attribute = value.getAttribute();
+    if (record instanceof Entry) {
+      var entry = record;
+      listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_ENTRY_CLASS + '": ' + '{');
+      var entryDisplayNameSubstring = this.truncateString(entry.getDisplayString());
+      listOfStrings.push('                             // ' + entryDisplayNameSubstring + '\n');
+      listOfStrings.push('           "' + BigLumpVirtualServer.JSON_MEMBER_WUID + '": "' + entry._getUuid() + '",\n');
+      var attribute = entry.getAttribute();
       if (attribute) {
         var attributeName = attribute.getDisplayName();
         listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ATTRIBUTE + '": "' + attribute._getUuid() + '",');
         var attributeNameSubstring = this.truncateString(attributeName);
         listOfStrings.push('                // ' + attributeNameSubstring + '\n');
       }
-      listOfStrings.push('           "' + BigLumpVirtualServer.JSON_MEMBER_ITEM + '": "' + value.getItem()._getUuid() + '",');
-      itemDisplayNameSubstring = this.truncateString(value.getItem().getDisplayName());
+      listOfStrings.push('           "' + BigLumpVirtualServer.JSON_MEMBER_ITEM + '": "' + entry.getItem()._getUuid() + '",');
+      itemDisplayNameSubstring = this.truncateString(entry.getItem().getDisplayName());
       listOfStrings.push('                // ' + itemDisplayNameSubstring + '\n');
-      var previousValue = value.getPreviousValue();
-      if (previousValue) {
-        listOfStrings.push('          "' + BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": "' + previousValue._getUuid() + '",\n');
+      var previousEntry = entry.getPreviousEntry();
+      if (previousEntry) {
+        listOfStrings.push('          "' + BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": "' + previousEntry._getUuid() + '",\n');
       }
-      var contentData = value.getContentData();
+      var contentData = entry.getContentData();
       var pickleString = "";
       var typeString = null;
       var valueString = null;

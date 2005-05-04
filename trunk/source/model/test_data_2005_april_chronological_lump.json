@@ -61,10 +61,16 @@
       "timestamp": "1114819457234" }
   },
   // -----------------------------------------------------------------------
-  { "Item": {                             // Unfiled Value
+  { "Item": {                             // Unfiled Entry
            "uuid": "112",
       "userstamp": "100",                // by (Amy ex machina)
       "timestamp": "1114819457234" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Plugin Name
+           "uuid": "113",
+      "userstamp": "100",                // by (Amy ex machina)
+      "timestamp": "1114819457240" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Attribute
@@ -97,7 +103,7 @@
       "timestamp": "1114819457281" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Amy ex machina
+  { "Entry": {                             // Amy ex machina
            "uuid": "1471",
       "attribute": "102",                // Name
            "item": "100",                // Amy ex machina
@@ -106,7 +112,7 @@
       "timestamp": "1114819457281" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Name
+  { "Entry": {                             // Name
            "uuid": "1472",
       "attribute": "102",                // Name
            "item": "102",                // Name
@@ -115,7 +121,7 @@
       "timestamp": "1114819457312" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "1473",
       "attribute": "105",                // Category
            "item": "102",                // Name
@@ -124,7 +130,7 @@
       "timestamp": "1114819457312" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Short Name
+  { "Entry": {                             // Short Name
            "uuid": "1474",
       "attribute": "102",                // Name
            "item": "101",                // Short Name
@@ -133,7 +139,7 @@
       "timestamp": "1114819457328" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "1475",
       "attribute": "105",                // Category
            "item": "101",                // Short Name
@@ -142,7 +148,7 @@
       "timestamp": "1114819457343" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Summary
+  { "Entry": {                             // Summary
            "uuid": "1476",
       "attribute": "102",                // Name
            "item": "103",                // Summary
@@ -151,7 +157,7 @@
       "timestamp": "1114819457359" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "1477",
       "attribute": "105",                // Category
            "item": "103",                // Summary
@@ -160,7 +166,7 @@
       "timestamp": "1114819457359" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Body
+  { "Entry": {                             // Body
            "uuid": "1478",
       "attribute": "102",                // Name
            "item": "104",                // Body
@@ -169,7 +175,7 @@
       "timestamp": "1114819457375" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "1479",
       "attribute": "105",                // Category
            "item": "104",                // Body
@@ -178,7 +184,7 @@
       "timestamp": "1114819457390" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "1480",
       "attribute": "102",                // Name
            "item": "105",                // Category
@@ -187,7 +193,7 @@
       "timestamp": "1114819457406" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "1481",
       "attribute": "105",                // Category
            "item": "105",                // Category
@@ -196,7 +202,7 @@
       "timestamp": "1114819457406" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Section
+  { "Entry": {                             // Section
            "uuid": "1482",
       "attribute": "102",                // Name
            "item": "108",                // Section
@@ -205,7 +211,7 @@
       "timestamp": "1114819457421" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "1483",
       "attribute": "105",                // Category
            "item": "108",                // Section
@@ -214,7 +220,7 @@
       "timestamp": "1114819457437" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query
+  { "Entry": {                             // Query
            "uuid": "1484",
       "attribute": "102",                // Name
            "item": "109",                // Query
@@ -223,7 +229,7 @@
       "timestamp": "1114819457453" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "1485",
       "attribute": "105",                // Category
            "item": "109",                // Query
@@ -232,7 +238,7 @@
       "timestamp": "1114819457453" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Matching Category
+  { "Entry": {                             // Matching Category
            "uuid": "1486",
       "attribute": "102",                // Name
            "item": "110",                // Matching Category
@@ -241,7 +247,7 @@
       "timestamp": "1114819457468" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "1487",
       "attribute": "105",                // Category
            "item": "110",                // Matching Category
@@ -250,7 +256,7 @@
       "timestamp": "1114819457484" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Matching Item
+  { "Entry": {                             // Matching Item
            "uuid": "1488",
       "attribute": "102",                // Name
            "item": "111",                // Matching Item
@@ -259,7 +265,7 @@
       "timestamp": "1114819457500" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "1489",
       "attribute": "105",                // Category
            "item": "111",                // Matching Item
@@ -268,25 +274,43 @@
       "timestamp": "1114819457500" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Unfiled Value
+  { "Entry": {                             // Unfiled Entry
            "uuid": "1490",
       "attribute": "102",                // Name
-           "item": "112",                // Unfiled Value
-          "value": { "type": "StringValue", "value": "Unfiled Value" },
+           "item": "112",                // Unfiled Entry
+          "value": { "type": "StringValue", "value": "Unfiled Entry" },
       "userstamp": "100",                // by (Amy ex machina)
       "timestamp": "1114819457515" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "1491",
       "attribute": "105",                // Category
-           "item": "112",                // Unfiled Value
+           "item": "112",                // Unfiled Entry
           "value": { "type": "RelatedUuid", "value": "143" },
       "userstamp": "100",                // by (Amy ex machina)
       "timestamp": "1114819457531" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Plugin Name
+           "uuid": "1469",
+      "attribute": "102",                // Name
+           "item": "113",                // Plugin Name
+          "value": { "type": "StringValue", "value": "Plugin Name" },
+      "userstamp": "100",                // by (Amy ex machina)
+      "timestamp": "1114819457537" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Attribute
+           "uuid": "1470",
+      "attribute": "105",                // Category
+           "item": "113",                // Plugin Name
+          "value": { "type": "RelatedUuid", "value": "143" },
+      "userstamp": "100",                // by (Amy ex machina)
+      "timestamp": "1114819457543" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Attribute
            "uuid": "1492",
       "attribute": "102",                // Name
            "item": "143",                // Attribute
@@ -295,7 +319,7 @@
       "timestamp": "1114819457546" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "1493",
       "attribute": "105",                // Category
            "item": "143",                // Attribute
@@ -304,7 +328,7 @@
       "timestamp": "1114819457562" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "1494",
       "attribute": "102",                // Name
            "item": "144",                // Category
@@ -313,7 +337,7 @@
       "timestamp": "1114819457562" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "1495",
       "attribute": "105",                // Category
            "item": "144",                // Category
@@ -322,7 +346,7 @@
       "timestamp": "1114819457578" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Page
+  { "Entry": {                             // Page
            "uuid": "1496",
       "attribute": "102",                // Name
            "item": "145",                // Page
@@ -331,7 +355,7 @@
       "timestamp": "1114819457593" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "1497",
       "attribute": "105",                // Category
            "item": "145",                // Page
@@ -340,7 +364,7 @@
       "timestamp": "1114819457609" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Section
+  { "Entry": {                             // Section
            "uuid": "1498",
       "attribute": "102",                // Name
            "item": "146",                // Section
@@ -349,7 +373,7 @@
       "timestamp": "1114819457625" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "1499",
       "attribute": "105",                // Category
            "item": "146",                // Section
@@ -358,7 +382,7 @@
       "timestamp": "1114819457625" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query
+  { "Entry": {                             // Query
            "uuid": "1500",
       "attribute": "102",                // Name
            "item": "147",                // Query
@@ -367,7 +391,7 @@
       "timestamp": "1114819457640" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "1501",
       "attribute": "105",                // Category
            "item": "147",                // Query
@@ -382,7 +406,7 @@
       "timestamp": "1114819457671" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Guest
+  { "Entry": {                             // Guest
            "uuid": "1503",
       "attribute": "102",                // Name
            "item": "1502",                // Guest
@@ -841,7 +865,7 @@
       "timestamp": "1114819458484" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Userstamp
+  { "Entry": {                             // Userstamp
            "uuid": "6014",
       "attribute": "102",                // Name
            "item": "106",                // Userstamp
@@ -850,7 +874,7 @@
       "timestamp": "1114819458515" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "6015",
       "attribute": "105",                // Category
            "item": "106",                // Userstamp
@@ -859,7 +883,7 @@
       "timestamp": "1114819458531" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Timestamp
+  { "Entry": {                             // Timestamp
            "uuid": "6016",
       "attribute": "102",                // Name
            "item": "107",                // Timestamp
@@ -868,7 +892,7 @@
       "timestamp": "1114819458562" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "6017",
       "attribute": "105",                // Category
            "item": "107",                // Timestamp
@@ -877,7 +901,7 @@
       "timestamp": "1114819458578" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Page
+  { "Entry": {                             // Page
            "uuid": "6018",
       "attribute": "105",                // Category
            "item": "2000",                // Welcome to the OpenRecord d...
@@ -886,7 +910,7 @@
       "timestamp": "1114819458609" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 1. Welcome!
+  { "Entry": {                             // 1. Welcome!
            "uuid": "6019",
       "attribute": "101",                // Short Name
            "item": "2000",                // Welcome to the OpenRecord d...
@@ -895,7 +919,7 @@
       "timestamp": "1114819458625" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Welcome to the OpenRecord d...
+  { "Entry": {                             // Welcome to the OpenRecord d...
            "uuid": "6020",
       "attribute": "102",                // Name
            "item": "2000",                // Welcome to the OpenRecord d...
@@ -904,7 +928,7 @@
       "timestamp": "1114819458640" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // This web site is a demo of ...
+  { "Entry": {                             // This web site is a demo of ...
            "uuid": "6021",
       "attribute": "103",                // Summary
            "item": "2000",                // Welcome to the OpenRecord d...
@@ -913,7 +937,7 @@
       "timestamp": "1114819458656" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Page
+  { "Entry": {                             // Page
            "uuid": "6022",
       "attribute": "105",                // Category
            "item": "3000",                // Book Lists
@@ -922,7 +946,7 @@
       "timestamp": "1114819458765" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 2. Books
+  { "Entry": {                             // 2. Books
            "uuid": "6023",
       "attribute": "101",                // Short Name
            "item": "3000",                // Book Lists
@@ -931,7 +955,7 @@
       "timestamp": "1114819458781" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book Lists
+  { "Entry": {                             // Book Lists
            "uuid": "6024",
       "attribute": "102",                // Name
            "item": "3000",                // Book Lists
@@ -940,7 +964,7 @@
       "timestamp": "1114819458796" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // In the lists on this page, ...
+  { "Entry": {                             // In the lists on this page, ...
            "uuid": "6025",
       "attribute": "103",                // Summary
            "item": "3000",                // Book Lists
@@ -949,7 +973,7 @@
       "timestamp": "1114819458812" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Books
+  { "Entry": {                             // All Books
            "uuid": "6026",
       "attribute": "108",                // Section
            "item": "3000",                // Book Lists
@@ -958,7 +982,7 @@
       "timestamp": "1114819458828" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // One Book
+  { "Entry": {                             // One Book
            "uuid": "6027",
       "attribute": "108",                // Section
            "item": "3000",                // Book Lists
@@ -967,7 +991,7 @@
       "timestamp": "1114819458843" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Section
+  { "Entry": {                             // Section
            "uuid": "6028",
       "attribute": "105",                // Category
            "item": "3010",                // All Books
@@ -976,7 +1000,7 @@
       "timestamp": "1114819458875" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Books
+  { "Entry": {                             // All Books
            "uuid": "6029",
       "attribute": "102",                // Name
            "item": "3010",                // All Books
@@ -985,16 +1009,16 @@
       "timestamp": "1114819458890" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Table
+  { "Entry": {                             // Table
            "uuid": "6030",
-      "attribute": "112",                // Unfiled Value
+      "attribute": "113",                // Plugin Name
            "item": "3010",                // All Books
           "value": { "type": "StringValue", "value": "Table" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458906" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all books
+  { "Entry": {                             // Query for all books
            "uuid": "6031",
       "attribute": "109",                // Query
            "item": "3010",                // All Books
@@ -1003,7 +1027,7 @@
       "timestamp": "1114819458921" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // This section shows a list o...
+  { "Entry": {                             // This section shows a list o...
            "uuid": "6032",
       "attribute": "103",                // Summary
            "item": "3010",                // All Books
@@ -1012,7 +1036,7 @@
       "timestamp": "1114819458937" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Section
+  { "Entry": {                             // Section
            "uuid": "6033",
       "attribute": "105",                // Category
            "item": "3020",                // One Book
@@ -1021,7 +1045,7 @@
       "timestamp": "1114819458968" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // One Book
+  { "Entry": {                             // One Book
            "uuid": "6034",
       "attribute": "102",                // Name
            "item": "3020",                // One Book
@@ -1030,16 +1054,16 @@
       "timestamp": "1114819458984" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Detail
+  { "Entry": {                             // Detail
            "uuid": "6035",
-      "attribute": "112",                // Unfiled Value
+      "attribute": "113",                // Plugin Name
            "item": "3020",                // One Book
           "value": { "type": "StringValue", "value": "Detail" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459000" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for one book
+  { "Entry": {                             // Query for one book
            "uuid": "6036",
       "attribute": "109",                // Query
            "item": "3020",                // One Book
@@ -1048,7 +1072,7 @@
       "timestamp": "1114819459031" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // This section shows a just a...
+  { "Entry": {                             // This section shows a just a...
            "uuid": "6037",
       "attribute": "103",                // Summary
            "item": "3020",                // One Book
@@ -1057,7 +1081,7 @@
       "timestamp": "1114819459046" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query
+  { "Entry": {                             // Query
            "uuid": "6038",
       "attribute": "105",                // Category
            "item": "3011",                // Query for all books
@@ -1066,7 +1090,7 @@
       "timestamp": "1114819459078" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all books
+  { "Entry": {                             // Query for all books
            "uuid": "6039",
       "attribute": "102",                // Name
            "item": "3011",                // Query for all books
@@ -1075,7 +1099,7 @@
       "timestamp": "1114819459093" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6040",
       "attribute": "110",                // Matching Category
            "item": "3011",                // Query for all books
@@ -1084,7 +1108,7 @@
       "timestamp": "1114819459109" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query
+  { "Entry": {                             // Query
            "uuid": "6041",
       "attribute": "105",                // Category
            "item": "3021",                // Query for one book
@@ -1093,7 +1117,7 @@
       "timestamp": "1114819459140" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for one book
+  { "Entry": {                             // Query for one book
            "uuid": "6042",
       "attribute": "102",                // Name
            "item": "3021",                // Query for one book
@@ -1102,7 +1126,7 @@
       "timestamp": "1114819459156" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // HTTP: The Definitive Guide
+  { "Entry": {                             // HTTP: The Definitive Guide
            "uuid": "6043",
       "attribute": "111",                // Matching Item
            "item": "3021",                // Query for one book
@@ -1111,7 +1135,7 @@
       "timestamp": "1114819459171" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "6044",
       "attribute": "105",                // Category
            "item": "3104",                // Book
@@ -1120,7 +1144,7 @@
       "timestamp": "1114819459203" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6045",
       "attribute": "102",                // Name
            "item": "3104",                // Book
@@ -1129,7 +1153,7 @@
       "timestamp": "1114819459218" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6046",
       "attribute": "105",                // Category
            "item": "3205",                // HTTP: The Definitive Guide
@@ -1138,7 +1162,7 @@
       "timestamp": "1114819459234" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // HTTP: The Definitive Guide
+  { "Entry": {                             // HTTP: The Definitive Guide
            "uuid": "6047",
       "attribute": "102",                // Name
            "item": "3205",                // HTTP: The Definitive Guide
@@ -1147,7 +1171,7 @@
       "timestamp": "1114819459250" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // David Gourley and Brian Totty
+  { "Entry": {                             // David Gourley and Brian Totty
            "uuid": "6048",
       "attribute": "3101",                // Author
            "item": "3205",                // HTTP: The Definitive Guide
@@ -1156,7 +1180,7 @@
       "timestamp": "1114819459281" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 1565925092
+  { "Entry": {                             // 1565925092
            "uuid": "6049",
       "attribute": "3103",                // ISBN
            "item": "3205",                // HTTP: The Definitive Guide
@@ -1165,7 +1189,7 @@
       "timestamp": "1114819459296" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // O'Reilly
+  { "Entry": {                             // O'Reilly
            "uuid": "6050",
       "attribute": "3102",                // Publisher
            "item": "3205",                // HTTP: The Definitive Guide
@@ -1174,7 +1198,7 @@
       "timestamp": "1114819459312" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "6051",
       "attribute": "105",                // Category
            "item": "3101",                // Author
@@ -1183,7 +1207,7 @@
       "timestamp": "1114819459343" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Author
+  { "Entry": {                             // Author
            "uuid": "6052",
       "attribute": "102",                // Name
            "item": "3101",                // Author
@@ -1192,7 +1216,7 @@
       "timestamp": "1114819459359" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "6053",
       "attribute": "105",                // Category
            "item": "3102",                // Publisher
@@ -1201,7 +1225,7 @@
       "timestamp": "1114819459390" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Publisher
+  { "Entry": {                             // Publisher
            "uuid": "6054",
       "attribute": "102",                // Name
            "item": "3102",                // Publisher
@@ -1210,7 +1234,7 @@
       "timestamp": "1114819459406" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "6055",
       "attribute": "105",                // Category
            "item": "3103",                // ISBN
@@ -1219,7 +1243,7 @@
       "timestamp": "1114819459437" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // ISBN
+  { "Entry": {                             // ISBN
            "uuid": "6056",
       "attribute": "102",                // Name
            "item": "3103",                // ISBN
@@ -1228,7 +1252,7 @@
       "timestamp": "1114819459453" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6057",
       "attribute": "105",                // Category
            "item": "3201",                // The Transparent Society
@@ -1237,7 +1261,7 @@
       "timestamp": "1114819459468" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // The Transparent Society
+  { "Entry": {                             // The Transparent Society
            "uuid": "6058",
       "attribute": "102",                // Name
            "item": "3201",                // The Transparent Society
@@ -1246,7 +1270,7 @@
       "timestamp": "1114819459484" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // David Brin
+  { "Entry": {                             // David Brin
            "uuid": "6059",
       "attribute": "3101",                // Author
            "item": "3201",                // The Transparent Society
@@ -1255,7 +1279,7 @@
       "timestamp": "1114819459515" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Perseus Publishing
+  { "Entry": {                             // Perseus Publishing
            "uuid": "6060",
       "attribute": "3102",                // Publisher
            "item": "3201",                // The Transparent Society
@@ -1264,7 +1288,7 @@
       "timestamp": "1114819459531" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 0738201448
+  { "Entry": {                             // 0738201448
            "uuid": "6061",
       "attribute": "3103",                // ISBN
            "item": "3201",                // The Transparent Society
@@ -1273,7 +1297,7 @@
       "timestamp": "1114819459546" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6062",
       "attribute": "105",                // Category
            "item": "3202",                // The Hobbit
@@ -1282,7 +1306,7 @@
       "timestamp": "1114819459578" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // The Hobbit
+  { "Entry": {                             // The Hobbit
            "uuid": "6063",
       "attribute": "102",                // Name
            "item": "3202",                // The Hobbit
@@ -1291,7 +1315,7 @@
       "timestamp": "1114819459593" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // J.R.R. Tolkien
+  { "Entry": {                             // J.R.R. Tolkien
            "uuid": "6064",
       "attribute": "3101",                // Author
            "item": "3202",                // The Hobbit
@@ -1300,7 +1324,7 @@
       "timestamp": "1114819459609" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // HarperCollins
+  { "Entry": {                             // HarperCollins
            "uuid": "6065",
       "attribute": "3102",                // Publisher
            "item": "3202",                // The Hobbit
@@ -1309,7 +1333,7 @@
       "timestamp": "1114819459625" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Houghton Mifflin
+  { "Entry": {                             // Houghton Mifflin
            "uuid": "6066",
       "attribute": "3102",                // Publisher
            "item": "3202",                // The Hobbit
@@ -1318,7 +1342,7 @@
       "timestamp": "1114819459640" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 0618002219
+  { "Entry": {                             // 0618002219
            "uuid": "6067",
       "attribute": "3103",                // ISBN
            "item": "3202",                // The Hobbit
@@ -1327,7 +1351,7 @@
       "timestamp": "1114819459656" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6068",
       "attribute": "105",                // Category
            "item": "3203",                // The Wisdom of Crowds
@@ -1336,7 +1360,7 @@
       "timestamp": "1114819459687" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // The Wisdom of Crowds
+  { "Entry": {                             // The Wisdom of Crowds
            "uuid": "6069",
       "attribute": "102",                // Name
            "item": "3203",                // The Wisdom of Crowds
@@ -1345,7 +1369,7 @@
       "timestamp": "1114819459703" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // James Surowiecki
+  { "Entry": {                             // James Surowiecki
            "uuid": "6070",
       "attribute": "3101",                // Author
            "item": "3203",                // The Wisdom of Crowds
@@ -1354,7 +1378,7 @@
       "timestamp": "1114819459718" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 0385503865
+  { "Entry": {                             // 0385503865
            "uuid": "6071",
       "attribute": "3103",                // ISBN
            "item": "3203",                // The Wisdom of Crowds
@@ -1363,7 +1387,7 @@
       "timestamp": "1114819459750" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Doubleday
+  { "Entry": {                             // Doubleday
            "uuid": "6072",
       "attribute": "3102",                // Publisher
            "item": "3203",                // The Wisdom of Crowds
@@ -1372,7 +1396,7 @@
       "timestamp": "1114819459765" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6073",
       "attribute": "105",                // Category
            "item": "3204",                // Shrinking Violets and Caspa...
@@ -1381,7 +1405,7 @@
       "timestamp": "1114819459796" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Shrinking Violets and Caspa...
+  { "Entry": {                             // Shrinking Violets and Caspa...
            "uuid": "6074",
       "attribute": "102",                // Name
            "item": "3204",                // Shrinking Violets and Caspa...
@@ -1390,7 +1414,7 @@
       "timestamp": "1114819459812" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Patricia A. McDaniel
+  { "Entry": {                             // Patricia A. McDaniel
            "uuid": "6075",
       "attribute": "3101",                // Author
            "item": "3204",                // Shrinking Violets and Caspa...
@@ -1399,7 +1423,7 @@
       "timestamp": "1114819459828" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 0814756778
+  { "Entry": {                             // 0814756778
            "uuid": "6076",
       "attribute": "3103",                // ISBN
            "item": "3204",                // Shrinking Violets and Caspa...
@@ -1408,7 +1432,7 @@
       "timestamp": "1114819459843" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // NYU Press
+  { "Entry": {                             // NYU Press
            "uuid": "6077",
       "attribute": "3102",                // Publisher
            "item": "3204",                // Shrinking Violets and Caspa...
@@ -1417,7 +1441,7 @@
       "timestamp": "1114819459859" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Page
+  { "Entry": {                             // Page
            "uuid": "6078",
       "attribute": "105",                // Category
            "item": "4000",                // Bugs and Features to Implement
@@ -1426,7 +1450,7 @@
       "timestamp": "1114819459890" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 3. Bug List
+  { "Entry": {                             // 3. Bug List
            "uuid": "6079",
       "attribute": "101",                // Short Name
            "item": "4000",                // Bugs and Features to Implement
@@ -1435,7 +1459,7 @@
       "timestamp": "1114819459906" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Bugs and Features to Implement
+  { "Entry": {                             // Bugs and Features to Implement
            "uuid": "6080",
       "attribute": "102",                // Name
            "item": "4000",                // Bugs and Features to Implement
@@ -1444,7 +1468,7 @@
       "timestamp": "1114819459921" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // This page is where I keep t...
+  { "Entry": {                             // This page is where I keep t...
            "uuid": "6081",
       "attribute": "103",                // Summary
            "item": "4000",                // Bugs and Features to Implement
@@ -1453,7 +1477,7 @@
       "timestamp": "1114819459953" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Features
+  { "Entry": {                             // All Features
            "uuid": "6082",
       "attribute": "108",                // Section
            "item": "4000",                // Bugs and Features to Implement
@@ -1462,7 +1486,7 @@
       "timestamp": "1114819459968" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Bugs
+  { "Entry": {                             // All Bugs
            "uuid": "6083",
       "attribute": "108",                // Section
            "item": "4000",                // Bugs and Features to Implement
@@ -1471,7 +1495,7 @@
       "timestamp": "1114819459984" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All 'Closed' Bugs and Features
+  { "Entry": {                             // All 'Closed' Bugs and Features
            "uuid": "6084",
       "attribute": "108",                // Section
            "item": "4000",                // Bugs and Features to Implement
@@ -1480,7 +1504,7 @@
       "timestamp": "1114819460000" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All 'Closed' Bugs
+  { "Entry": {                             // All 'Closed' Bugs
            "uuid": "6085",
       "attribute": "108",                // Section
            "item": "4000",                // Bugs and Features to Implement
@@ -1489,7 +1513,7 @@
       "timestamp": "1114819460015" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Section
+  { "Entry": {                             // Section
            "uuid": "6086",
       "attribute": "105",                // Category
            "item": "4010",                // All Features
@@ -1498,7 +1522,7 @@
       "timestamp": "1114819460031" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Features
+  { "Entry": {                             // All Features
            "uuid": "6087",
       "attribute": "102",                // Name
            "item": "4010",                // All Features
@@ -1507,16 +1531,16 @@
       "timestamp": "1114819460046" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Outline
+  { "Entry": {                             // Outline
            "uuid": "6088",
-      "attribute": "112",                // Unfiled Value
+      "attribute": "113",                // Plugin Name
            "item": "4010",                // All Features
           "value": { "type": "StringValue", "value": "Outline" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460062" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all features
+  { "Entry": {                             // Query for all features
            "uuid": "6089",
       "attribute": "109",                // Query
            "item": "4010",                // All Features
@@ -1525,7 +1549,7 @@
       "timestamp": "1114819460156" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Section
+  { "Entry": {                             // Section
            "uuid": "6090",
       "attribute": "105",                // Category
            "item": "4020",                // All Bugs
@@ -1534,7 +1558,7 @@
       "timestamp": "1114819460187" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Bugs
+  { "Entry": {                             // All Bugs
            "uuid": "6091",
       "attribute": "102",                // Name
            "item": "4020",                // All Bugs
@@ -1543,16 +1567,16 @@
       "timestamp": "1114819460203" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Outline
+  { "Entry": {                             // Outline
            "uuid": "6092",
-      "attribute": "112",                // Unfiled Value
+      "attribute": "113",                // Plugin Name
            "item": "4020",                // All Bugs
           "value": { "type": "StringValue", "value": "Outline" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460218" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all bugs
+  { "Entry": {                             // Query for all bugs
            "uuid": "6093",
       "attribute": "109",                // Query
            "item": "4020",                // All Bugs
@@ -1561,7 +1585,7 @@
       "timestamp": "1114819460250" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Section
+  { "Entry": {                             // Section
            "uuid": "6094",
       "attribute": "105",                // Category
            "item": "4030",                // All 'Closed' Bugs and Features
@@ -1570,7 +1594,7 @@
       "timestamp": "1114819460265" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All 'Closed' Bugs and Features
+  { "Entry": {                             // All 'Closed' Bugs and Features
            "uuid": "6095",
       "attribute": "102",                // Name
            "item": "4030",                // All 'Closed' Bugs and Features
@@ -1579,16 +1603,16 @@
       "timestamp": "1114819460281" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Outline
+  { "Entry": {                             // Outline
            "uuid": "6096",
-      "attribute": "112",                // Unfiled Value
+      "attribute": "113",                // Plugin Name
            "item": "4030",                // All 'Closed' Bugs and Features
           "value": { "type": "StringValue", "value": "Outline" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460312" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all closed items
+  { "Entry": {                             // Query for all closed items
            "uuid": "6097",
       "attribute": "109",                // Query
            "item": "4030",                // All 'Closed' Bugs and Features
@@ -1597,7 +1621,7 @@
       "timestamp": "1114819460328" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Section
+  { "Entry": {                             // Section
            "uuid": "6098",
       "attribute": "105",                // Category
            "item": "4040",                // All 'Closed' Bugs
@@ -1606,7 +1630,7 @@
       "timestamp": "1114819460359" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All 'Closed' Bugs
+  { "Entry": {                             // All 'Closed' Bugs
            "uuid": "6099",
       "attribute": "102",                // Name
            "item": "4040",                // All 'Closed' Bugs
@@ -1615,16 +1639,16 @@
       "timestamp": "1114819460359" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Outline
+  { "Entry": {                             // Outline
            "uuid": "6100",
-      "attribute": "112",                // Unfiled Value
+      "attribute": "113",                // Plugin Name
            "item": "4040",                // All 'Closed' Bugs
           "value": { "type": "StringValue", "value": "Outline" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460390" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all closed bugs
+  { "Entry": {                             // Query for all closed bugs
            "uuid": "6101",
       "attribute": "109",                // Query
            "item": "4040",                // All 'Closed' Bugs
@@ -1633,7 +1657,7 @@
       "timestamp": "1114819460406" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query
+  { "Entry": {                             // Query
            "uuid": "6102",
       "attribute": "105",                // Category
            "item": "4011",                // Query for all features
@@ -1642,7 +1666,7 @@
       "timestamp": "1114819460421" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all features
+  { "Entry": {                             // Query for all features
            "uuid": "6103",
       "attribute": "102",                // Name
            "item": "4011",                // Query for all features
@@ -1651,7 +1675,7 @@
       "timestamp": "1114819460437" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6104",
       "attribute": "110",                // Matching Category
            "item": "4011",                // Query for all features
@@ -1660,7 +1684,7 @@
       "timestamp": "1114819460468" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query
+  { "Entry": {                             // Query
            "uuid": "6105",
       "attribute": "105",                // Category
            "item": "4021",                // Query for all bugs
@@ -1669,7 +1693,7 @@
       "timestamp": "1114819460484" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all bugs
+  { "Entry": {                             // Query for all bugs
            "uuid": "6106",
       "attribute": "102",                // Name
            "item": "4021",                // Query for all bugs
@@ -1678,7 +1702,7 @@
       "timestamp": "1114819460500" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Bug
+  { "Entry": {                             // Bug
            "uuid": "6107",
       "attribute": "110",                // Matching Category
            "item": "4021",                // Query for all bugs
@@ -1687,7 +1711,7 @@
       "timestamp": "1114819460531" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query
+  { "Entry": {                             // Query
            "uuid": "6108",
       "attribute": "105",                // Category
            "item": "4031",                // Query for all closed items
@@ -1696,7 +1720,7 @@
       "timestamp": "1114819460546" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all closed items
+  { "Entry": {                             // Query for all closed items
            "uuid": "6109",
       "attribute": "102",                // Name
            "item": "4031",                // Query for all closed items
@@ -1705,7 +1729,7 @@
       "timestamp": "1114819460562" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Closed Tasks
+  { "Entry": {                             // Closed Tasks
            "uuid": "6110",
       "attribute": "110",                // Matching Category
            "item": "4031",                // Query for all closed items
@@ -1714,7 +1738,7 @@
       "timestamp": "1114819460578" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query
+  { "Entry": {                             // Query
            "uuid": "6111",
       "attribute": "105",                // Category
            "item": "4041",                // Query for all closed bugs
@@ -1723,7 +1747,7 @@
       "timestamp": "1114819460609" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all closed bugs
+  { "Entry": {                             // Query for all closed bugs
            "uuid": "6112",
       "attribute": "102",                // Name
            "item": "4041",                // Query for all closed bugs
@@ -1732,7 +1756,7 @@
       "timestamp": "1114819460625" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Bug
+  { "Entry": {                             // Bug
            "uuid": "6113",
       "attribute": "110",                // Matching Category
            "item": "4041",                // Query for all closed bugs
@@ -1741,7 +1765,7 @@
       "timestamp": "1114819460640" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Closed Tasks
+  { "Entry": {                             // Closed Tasks
            "uuid": "6114",
       "attribute": "110",                // Matching Category
            "item": "4041",                // Query for all closed bugs
@@ -1750,7 +1774,7 @@
       "timestamp": "1114819460656" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "6115",
       "attribute": "105",                // Category
            "item": "4102",                // Feature
@@ -1759,7 +1783,7 @@
       "timestamp": "1114819460687" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6116",
       "attribute": "102",                // Name
            "item": "4102",                // Feature
@@ -1768,7 +1792,7 @@
       "timestamp": "1114819460703" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "6117",
       "attribute": "105",                // Category
            "item": "4101",                // Bug
@@ -1777,7 +1801,7 @@
       "timestamp": "1114819460718" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Bug
+  { "Entry": {                             // Bug
            "uuid": "6118",
       "attribute": "102",                // Name
            "item": "4101",                // Bug
@@ -1786,7 +1810,7 @@
       "timestamp": "1114819460734" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "6119",
       "attribute": "105",                // Category
            "item": "4103",                // Closed Tasks
@@ -1795,7 +1819,7 @@
       "timestamp": "1114819460765" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Closed Tasks
+  { "Entry": {                             // Closed Tasks
            "uuid": "6120",
       "attribute": "102",                // Name
            "item": "4103",                // Closed Tasks
@@ -1804,7 +1828,7 @@
       "timestamp": "1114819460781" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Bug
+  { "Entry": {                             // Bug
            "uuid": "6121",
       "attribute": "105",                // Category
            "item": "4201",                // The browser's back button d...
@@ -1813,7 +1837,7 @@
       "timestamp": "1114819460812" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // The browser's back button d...
+  { "Entry": {                             // The browser's back button d...
            "uuid": "6122",
       "attribute": "102",                // Name
            "item": "4201",                // The browser's back button d...
@@ -1822,7 +1846,7 @@
       "timestamp": "1114819460828" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Bug
+  { "Entry": {                             // Bug
            "uuid": "6123",
       "attribute": "105",                // Category
            "item": "4202",                // When editing an item in a t...
@@ -1831,7 +1855,7 @@
       "timestamp": "1114819460859" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // When editing an item in a t...
+  { "Entry": {                             // When editing an item in a t...
            "uuid": "6124",
       "attribute": "102",                // Name
            "item": "4202",                // When editing an item in a t...
@@ -1840,7 +1864,7 @@
       "timestamp": "1114819460875" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Bug
+  { "Entry": {                             // Bug
            "uuid": "6125",
       "attribute": "105",                // Category
            "item": "4203",                // After editing an item in a ...
@@ -1849,7 +1873,7 @@
       "timestamp": "1114819460906" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // After editing an item in a ...
+  { "Entry": {                             // After editing an item in a ...
            "uuid": "6126",
       "attribute": "102",                // Name
            "item": "4203",                // After editing an item in a ...
@@ -1858,7 +1882,7 @@
       "timestamp": "1114819460921" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Bug
+  { "Entry": {                             // Bug
            "uuid": "6127",
       "attribute": "105",                // Category
            "item": "4204",                // If an item has an attribute...
@@ -1867,7 +1891,7 @@
       "timestamp": "1114819460937" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Closed Tasks
+  { "Entry": {                             // Closed Tasks
            "uuid": "6128",
       "attribute": "105",                // Category
            "item": "4204",                // If an item has an attribute...
@@ -1876,7 +1900,7 @@
       "timestamp": "1114819460953" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // If an item has an attribute...
+  { "Entry": {                             // If an item has an attribute...
            "uuid": "6129",
       "attribute": "102",                // Name
            "item": "4204",                // If an item has an attribute...
@@ -1885,7 +1909,7 @@
       "timestamp": "1114819460968" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Bug
+  { "Entry": {                             // Bug
            "uuid": "6130",
       "attribute": "105",                // Category
            "item": "4205",                // Store only 'clean' text in ...
@@ -1894,7 +1918,7 @@
       "timestamp": "1114819461000" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Closed Tasks
+  { "Entry": {                             // Closed Tasks
            "uuid": "6131",
       "attribute": "105",                // Category
            "item": "4205",                // Store only 'clean' text in ...
@@ -1903,7 +1927,7 @@
       "timestamp": "1114819461015" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Store only 'clean' text in ...
+  { "Entry": {                             // Store only 'clean' text in ...
            "uuid": "6132",
       "attribute": "102",                // Name
            "item": "4205",                // Store only 'clean' text in ...
@@ -1912,7 +1936,7 @@
       "timestamp": "1114819461031" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6133",
       "attribute": "105",                // Category
            "item": "4302",                // Make it possible for a text...
@@ -1921,7 +1945,7 @@
       "timestamp": "1114819461062" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Closed Tasks
+  { "Entry": {                             // Closed Tasks
            "uuid": "6134",
       "attribute": "105",                // Category
            "item": "4302",                // Make it possible for a text...
@@ -1930,7 +1954,7 @@
       "timestamp": "1114819461078" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Make it possible for a text...
+  { "Entry": {                             // Make it possible for a text...
            "uuid": "6135",
       "attribute": "102",                // Name
            "item": "4302",                // Make it possible for a text...
@@ -1939,7 +1963,7 @@
       "timestamp": "1114819461093" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6136",
       "attribute": "105",                // Category
            "item": "4304",                // Make it possible to assign ...
@@ -1948,7 +1972,7 @@
       "timestamp": "1114819461125" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Make it possible to assign ...
+  { "Entry": {                             // Make it possible to assign ...
            "uuid": "6137",
       "attribute": "102",                // Name
            "item": "4304",                // Make it possible to assign ...
@@ -1957,7 +1981,7 @@
       "timestamp": "1114819461140" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6138",
       "attribute": "105",                // Category
            "item": "4305",                // Allow for entering number-v...
@@ -1966,7 +1990,7 @@
       "timestamp": "1114819461171" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Allow for entering number-v...
+  { "Entry": {                             // Allow for entering number-v...
            "uuid": "6139",
       "attribute": "102",                // Name
            "item": "4305",                // Allow for entering number-v...
@@ -1975,7 +1999,7 @@
       "timestamp": "1114819461187" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6140",
       "attribute": "105",                // Category
            "item": "4306",                // Have table mode show multi-...
@@ -1984,7 +2008,7 @@
       "timestamp": "1114819461218" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Have table mode show multi-...
+  { "Entry": {                             // Have table mode show multi-...
            "uuid": "6141",
       "attribute": "102",                // Name
            "item": "4306",                // Have table mode show multi-...
@@ -1993,7 +2017,7 @@
       "timestamp": "1114819461234" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6142",
       "attribute": "105",                // Category
            "item": "4307",                // When you assign a value to ...
@@ -2002,7 +2026,7 @@
       "timestamp": "1114819461250" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // When you assign a value to ...
+  { "Entry": {                             // When you assign a value to ...
            "uuid": "6143",
       "attribute": "102",                // Name
            "item": "4307",                // When you assign a value to ...
@@ -2011,7 +2035,7 @@
       "timestamp": "1114819461265" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6144",
       "attribute": "105",                // Category
            "item": "4308",                // Clean up all the code that ...
@@ -2020,7 +2044,7 @@
       "timestamp": "1114819461296" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Clean up all the code that ...
+  { "Entry": {                             // Clean up all the code that ...
            "uuid": "6145",
       "attribute": "102",                // Name
            "item": "4308",                // Clean up all the code that ...
@@ -2029,7 +2053,7 @@
       "timestamp": "1114819461312" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6146",
       "attribute": "105",                // Category
            "item": "4309",                // Be able to create new pages
@@ -2038,7 +2062,7 @@
       "timestamp": "1114819461343" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Be able to create new pages
+  { "Entry": {                             // Be able to create new pages
            "uuid": "6147",
       "attribute": "102",                // Name
            "item": "4309",                // Be able to create new pages
@@ -2047,7 +2071,7 @@
       "timestamp": "1114819461359" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6148",
       "attribute": "105",                // Category
            "item": "4310",                // Be able to add a new sectio...
@@ -2056,7 +2080,7 @@
       "timestamp": "1114819461390" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Be able to add a new sectio...
+  { "Entry": {                             // Be able to add a new sectio...
            "uuid": "6149",
       "attribute": "102",                // Name
            "item": "4310",                // Be able to add a new sectio...
@@ -2065,7 +2089,7 @@
       "timestamp": "1114819461406" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6150",
       "attribute": "105",                // Category
            "item": "4311",                // Observable queries: all ite...
@@ -2074,7 +2098,7 @@
       "timestamp": "1114819461437" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Observable queries: all ite...
+  { "Entry": {                             // Observable queries: all ite...
            "uuid": "6151",
       "attribute": "102",                // Name
            "item": "4311",                // Observable queries: all ite...
@@ -2083,7 +2107,7 @@
       "timestamp": "1114819461453" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6152",
       "attribute": "105",                // Category
            "item": "4312",                // Observable queries: limit r...
@@ -2092,7 +2116,7 @@
       "timestamp": "1114819461484" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Observable queries: limit r...
+  { "Entry": {                             // Observable queries: limit r...
            "uuid": "6153",
       "attribute": "102",                // Name
            "item": "4312",                // Observable queries: limit r...
@@ -2101,7 +2125,7 @@
       "timestamp": "1114819461484" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6154",
       "attribute": "105",                // Category
            "item": "4313",                // Be able to edit the query o...
@@ -2110,7 +2134,7 @@
       "timestamp": "1114819461515" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Be able to edit the query o...
+  { "Entry": {                             // Be able to edit the query o...
            "uuid": "6155",
       "attribute": "102",                // Name
            "item": "4313",                // Be able to edit the query o...
@@ -2119,7 +2143,7 @@
       "timestamp": "1114819461531" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6156",
       "attribute": "105",                // Category
            "item": "4314",                // Make it possible to add new...
@@ -2128,7 +2152,7 @@
       "timestamp": "1114819461562" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Make it possible to add new...
+  { "Entry": {                             // Make it possible to add new...
            "uuid": "6157",
       "attribute": "102",                // Name
            "item": "4314",                // Make it possible to add new...
@@ -2137,7 +2161,7 @@
       "timestamp": "1114819461578" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6158",
       "attribute": "105",                // Category
            "item": "4315",                // Figure out how to declare d...
@@ -2146,7 +2170,7 @@
       "timestamp": "1114819461687" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Figure out how to declare d...
+  { "Entry": {                             // Figure out how to declare d...
            "uuid": "6159",
       "attribute": "102",                // Name
            "item": "4315",                // Figure out how to declare d...
@@ -2155,7 +2179,7 @@
       "timestamp": "1114819461703" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6160",
       "attribute": "105",                // Category
            "item": "4316",                // URLs with anchor-dot-notati...
@@ -2164,7 +2188,7 @@
       "timestamp": "1114819461718" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // URLs with anchor-dot-notati...
+  { "Entry": {                             // URLs with anchor-dot-notati...
            "uuid": "6161",
       "attribute": "102",                // Name
            "item": "4316",                // URLs with anchor-dot-notati...
@@ -2173,7 +2197,7 @@
       "timestamp": "1114819461734" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6162",
       "attribute": "105",                // Category
            "item": "4317",                // Support for reference-value...
@@ -2182,7 +2206,7 @@
       "timestamp": "1114819461765" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Support for reference-value...
+  { "Entry": {                             // Support for reference-value...
            "uuid": "6163",
       "attribute": "102",                // Name
            "item": "4317",                // Support for reference-value...
@@ -2191,7 +2215,7 @@
       "timestamp": "1114819461781" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6164",
       "attribute": "105",                // Category
            "item": "4318",                // Write unit tests using jsunit
@@ -2200,7 +2224,7 @@
       "timestamp": "1114819461812" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Write unit tests using jsunit
+  { "Entry": {                             // Write unit tests using jsunit
            "uuid": "6165",
       "attribute": "102",                // Name
            "item": "4318",                // Write unit tests using jsunit
@@ -2209,7 +2233,7 @@
       "timestamp": "1114819461828" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6166",
       "attribute": "105",                // Category
            "item": "4319",                // Try to write a unit test th...
@@ -2218,7 +2242,7 @@
       "timestamp": "1114819461859" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Try to write a unit test th...
+  { "Entry": {                             // Try to write a unit test th...
            "uuid": "6167",
       "attribute": "102",                // Name
            "item": "4319",                // Try to write a unit test th...
@@ -2227,7 +2251,7 @@
       "timestamp": "1114819461875" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6168",
       "attribute": "105",                // Category
            "item": "4320",                // In 'Outline' plugin, have c...
@@ -2236,7 +2260,7 @@
       "timestamp": "1114819461906" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // In 'Outline' plugin, have c...
+  { "Entry": {                             // In 'Outline' plugin, have c...
            "uuid": "6169",
       "attribute": "102",                // Name
            "item": "4320",                // In 'Outline' plugin, have c...
@@ -2245,7 +2269,7 @@
       "timestamp": "1114819461921" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6170",
       "attribute": "105",                // Category
            "item": "4321",                // Add 'Table' plugin controls...
@@ -2254,7 +2278,7 @@
       "timestamp": "1114819461953" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Add 'Table' plugin controls...
+  { "Entry": {                             // Add 'Table' plugin controls...
            "uuid": "6171",
       "attribute": "102",                // Name
            "item": "4321",                // Add 'Table' plugin controls...
@@ -2263,7 +2287,7 @@
       "timestamp": "1114819461968" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6172",
       "attribute": "105",                // Category
            "item": "4322",                // In 'Outline' plugin, be abl...
@@ -2272,7 +2296,7 @@
       "timestamp": "1114819462000" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // In 'Outline' plugin, be abl...
+  { "Entry": {                             // In 'Outline' plugin, be abl...
            "uuid": "6173",
       "attribute": "102",                // Name
            "item": "4322",                // In 'Outline' plugin, be abl...
@@ -2281,7 +2305,7 @@
       "timestamp": "1114819462000" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6174",
       "attribute": "105",                // Category
            "item": "4323",                // In 'Table' plugin, be able ...
@@ -2290,7 +2314,7 @@
       "timestamp": "1114819462031" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // In 'Table' plugin, be able ...
+  { "Entry": {                             // In 'Table' plugin, be able ...
            "uuid": "6175",
       "attribute": "102",                // Name
            "item": "4323",                // In 'Table' plugin, be able ...
@@ -2299,7 +2323,7 @@
       "timestamp": "1114819462046" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6176",
       "attribute": "105",                // Category
            "item": "4324",                // Be able to edit in outline ...
@@ -2308,7 +2332,7 @@
       "timestamp": "1114819462078" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Be able to edit in outline ...
+  { "Entry": {                             // Be able to edit in outline ...
            "uuid": "6177",
       "attribute": "102",                // Name
            "item": "4324",                // Be able to edit in outline ...
@@ -2317,7 +2341,7 @@
       "timestamp": "1114819462093" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6178",
       "attribute": "105",                // Category
            "item": "4325",                // Set up a subversion server ...
@@ -2326,7 +2350,7 @@
       "timestamp": "1114819462125" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Set up a subversion server ...
+  { "Entry": {                             // Set up a subversion server ...
            "uuid": "6179",
       "attribute": "102",                // Name
            "item": "4325",                // Set up a subversion server ...
@@ -2335,7 +2359,7 @@
       "timestamp": "1114819462140" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Page
+  { "Entry": {                             // Page
            "uuid": "6180",
       "attribute": "105",                // Category
            "item": "5000",                // Charities
@@ -2344,7 +2368,7 @@
       "timestamp": "1114819462171" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 4. Charities
+  { "Entry": {                             // 4. Charities
            "uuid": "6181",
       "attribute": "101",                // Short Name
            "item": "5000",                // Charities
@@ -2353,7 +2377,7 @@
       "timestamp": "1114819462187" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Charities
+  { "Entry": {                             // Charities
            "uuid": "6182",
       "attribute": "102",                // Name
            "item": "5000",                // Charities
@@ -2362,7 +2386,7 @@
       "timestamp": "1114819462203" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Charities
+  { "Entry": {                             // All Charities
            "uuid": "6183",
       "attribute": "108",                // Section
            "item": "5000",                // Charities
@@ -2371,7 +2395,7 @@
       "timestamp": "1114819462234" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Section
+  { "Entry": {                             // Section
            "uuid": "6184",
       "attribute": "105",                // Category
            "item": "5010",                // All Charities
@@ -2380,7 +2404,7 @@
       "timestamp": "1114819462250" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Charities
+  { "Entry": {                             // All Charities
            "uuid": "6185",
       "attribute": "102",                // Name
            "item": "5010",                // All Charities
@@ -2389,16 +2413,16 @@
       "timestamp": "1114819462265" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Bar Chart
+  { "Entry": {                             // Bar Chart
            "uuid": "6186",
-      "attribute": "112",                // Unfiled Value
+      "attribute": "113",                // Plugin Name
            "item": "5010",                // All Charities
           "value": { "type": "StringValue", "value": "Bar Chart" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462281" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all charities
+  { "Entry": {                             // Query for all charities
            "uuid": "6187",
       "attribute": "109",                // Query
            "item": "5010",                // All Charities
@@ -2407,7 +2431,7 @@
       "timestamp": "1114819462312" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query
+  { "Entry": {                             // Query
            "uuid": "6188",
       "attribute": "105",                // Category
            "item": "5011",                // Query for all charities
@@ -2416,7 +2440,7 @@
       "timestamp": "1114819462343" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all charities
+  { "Entry": {                             // Query for all charities
            "uuid": "6189",
       "attribute": "102",                // Name
            "item": "5011",                // Query for all charities
@@ -2425,7 +2449,7 @@
       "timestamp": "1114819462359" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Charity
+  { "Entry": {                             // Charity
            "uuid": "6190",
       "attribute": "110",                // Matching Category
            "item": "5011",                // Query for all charities
@@ -2434,7 +2458,7 @@
       "timestamp": "1114819462375" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Category
+  { "Entry": {                             // Category
            "uuid": "6191",
       "attribute": "105",                // Category
            "item": "5101",                // Charity
@@ -2443,7 +2467,7 @@
       "timestamp": "1114819462406" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Charity
+  { "Entry": {                             // Charity
            "uuid": "6192",
       "attribute": "102",                // Name
            "item": "5101",                // Charity
@@ -2452,7 +2476,7 @@
       "timestamp": "1114819462421" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Attribute
+  { "Entry": {                             // Attribute
            "uuid": "6193",
       "attribute": "105",                // Category
            "item": "5102",                // 2003 Expenses (in $US million)
@@ -2461,7 +2485,7 @@
       "timestamp": "1114819462437" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 2003 Expenses (in $US million)
+  { "Entry": {                             // 2003 Expenses (in $US million)
            "uuid": "6194",
       "attribute": "102",                // Name
            "item": "5102",                // 2003 Expenses (in $US million)
@@ -2470,7 +2494,7 @@
       "timestamp": "1114819462453" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Charity
+  { "Entry": {                             // Charity
            "uuid": "6195",
       "attribute": "105",                // Category
            "item": "5201",                // The Global Fund for Women
@@ -2479,7 +2503,7 @@
       "timestamp": "1114819462484" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // The Global Fund for Women
+  { "Entry": {                             // The Global Fund for Women
            "uuid": "6196",
       "attribute": "102",                // Name
            "item": "5201",                // The Global Fund for Women
@@ -2488,7 +2512,7 @@
       "timestamp": "1114819462500" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 8.2
+  { "Entry": {                             // 8.2
            "uuid": "6197",
       "attribute": "5102",                // 2003 Expenses (in $US million)
            "item": "5201",                // The Global Fund for Women
@@ -2497,7 +2521,7 @@
       "timestamp": "1114819462531" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Charity
+  { "Entry": {                             // Charity
            "uuid": "6198",
       "attribute": "105",                // Category
            "item": "5202",                // Pathfinder International
@@ -2506,7 +2530,7 @@
       "timestamp": "1114819462546" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Pathfinder International
+  { "Entry": {                             // Pathfinder International
            "uuid": "6199",
       "attribute": "102",                // Name
            "item": "5202",                // Pathfinder International
@@ -2515,7 +2539,7 @@
       "timestamp": "1114819462562" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 44.9
+  { "Entry": {                             // 44.9
            "uuid": "6200",
       "attribute": "5102",                // 2003 Expenses (in $US million)
            "item": "5202",                // Pathfinder International
@@ -2524,7 +2548,7 @@
       "timestamp": "1114819462578" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Charity
+  { "Entry": {                             // Charity
            "uuid": "6201",
       "attribute": "105",                // Category
            "item": "5203",                // The Global Fund to Fight AI...
@@ -2533,7 +2557,7 @@
       "timestamp": "1114819462609" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // The Global Fund to Fight AI...
+  { "Entry": {                             // The Global Fund to Fight AI...
            "uuid": "6202",
       "attribute": "102",                // Name
            "item": "5203",                // The Global Fund to Fight AI...
@@ -2542,7 +2566,7 @@
       "timestamp": "1114819462625" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 64.7
+  { "Entry": {                             // 64.7
            "uuid": "6203",
       "attribute": "5102",                // 2003 Expenses (in $US million)
            "item": "5203",                // The Global Fund to Fight AI...
@@ -2551,7 +2575,7 @@
       "timestamp": "1114819462640" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6204",
       "attribute": "105",                // Category
            "item": "5204",                // The Gumption Memo
@@ -2560,7 +2584,7 @@
       "timestamp": "1114819462671" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // The Gumption Memo
+  { "Entry": {                             // The Gumption Memo
            "uuid": "6205",
       "attribute": "102",                // Name
            "item": "5204",                // The Gumption Memo
@@ -2569,7 +2593,7 @@
       "timestamp": "1114819462687" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Brian Skinner
+  { "Entry": {                             // Brian Skinner
            "uuid": "6206",
       "attribute": "3101",                // Author
            "item": "5204",                // The Gumption Memo
@@ -2578,7 +2602,7 @@
       "timestamp": "1114819462703" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Kinkos
+  { "Entry": {                             // Kinkos
            "uuid": "6207",
       "attribute": "3102",                // Publisher
            "item": "5204",                // The Gumption Memo
@@ -2587,7 +2611,7 @@
       "timestamp": "1114819462734" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6208",
       "attribute": "105",                // Category
            "item": "5205",                // Deceit and Denial
@@ -2596,7 +2620,7 @@
       "timestamp": "1114819462765" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Deceit and Denial
+  { "Entry": {                             // Deceit and Denial
            "uuid": "6209",
       "attribute": "102",                // Name
            "item": "5205",                // Deceit and Denial
@@ -2605,7 +2629,7 @@
       "timestamp": "1114819462781" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Gerald Markowitz and David ...
+  { "Entry": {                             // Gerald Markowitz and David ...
            "uuid": "6210",
       "attribute": "3101",                // Author
            "item": "5205",                // Deceit and Denial
@@ -2614,7 +2638,7 @@
       "timestamp": "1114819462796" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // University of California
+  { "Entry": {                             // University of California
            "uuid": "6211",
       "attribute": "3102",                // Publisher
            "item": "5205",                // Deceit and Denial
@@ -2623,7 +2647,7 @@
       "timestamp": "1114819462812" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 0520240634
+  { "Entry": {                             // 0520240634
            "uuid": "6212",
       "attribute": "3103",                // ISBN
            "item": "5205",                // Deceit and Denial
@@ -2632,7 +2656,7 @@
       "timestamp": "1114819462828" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6213",
       "attribute": "105",                // Category
            "item": "5207",                // Have a 'Find' UI that does ...
@@ -2641,7 +2665,7 @@
       "timestamp": "1114819462859" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Have a 'Find' UI that does ...
+  { "Entry": {                             // Have a 'Find' UI that does ...
            "uuid": "6214",
       "attribute": "102",                // Name
            "item": "5207",                // Have a 'Find' UI that does ...
@@ -2650,7 +2674,7 @@
       "timestamp": "1114819462875" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6215",
       "attribute": "105",                // Category
            "item": "5208",                // Be able to 'delete' items (...
@@ -2659,7 +2683,7 @@
       "timestamp": "1114819462906" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Be able to 'delete' items (...
+  { "Entry": {                             // Be able to 'delete' items (...
            "uuid": "6216",
       "attribute": "102",                // Name
            "item": "5208",                // Be able to 'delete' items (...
@@ -2668,7 +2692,7 @@
       "timestamp": "1114819462921" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Feature
+  { "Entry": {                             // Feature
            "uuid": "6217",
       "attribute": "105",                // Category
            "item": "5209",                // Make view.display() *not* r...
@@ -2677,7 +2701,7 @@
       "timestamp": "1114819462953" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Make view.display() *not* r...
+  { "Entry": {                             // Make view.display() *not* r...
            "uuid": "6218",
       "attribute": "102",                // Name
            "item": "5209",                // Make view.display() *not* r...
@@ -2686,7 +2710,7 @@
       "timestamp": "1114819462968" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Page
+  { "Entry": {                             // Page
            "uuid": "6219",
       "attribute": "105",                // Category
            "item": "6000",                // All Items
@@ -2695,7 +2719,7 @@
       "timestamp": "1114819463000" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 5. All Items
+  { "Entry": {                             // 5. All Items
            "uuid": "6220",
       "attribute": "101",                // Short Name
            "item": "6000",                // All Items
@@ -2704,7 +2728,7 @@
       "timestamp": "1114819463015" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Items
+  { "Entry": {                             // All Items
            "uuid": "6221",
       "attribute": "102",                // Name
            "item": "6000",                // All Items
@@ -2713,7 +2737,7 @@
       "timestamp": "1114819463031" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Items
+  { "Entry": {                             // All Items
            "uuid": "6222",
       "attribute": "108",                // Section
            "item": "6000",                // All Items
@@ -2722,7 +2746,7 @@
       "timestamp": "1114819463046" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Section
+  { "Entry": {                             // Section
            "uuid": "6223",
       "attribute": "105",                // Category
            "item": "6010",                // All Items
@@ -2731,7 +2755,7 @@
       "timestamp": "1114819463078" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // All Items
+  { "Entry": {                             // All Items
            "uuid": "6224",
       "attribute": "102",                // Name
            "item": "6010",                // All Items
@@ -2740,16 +2764,16 @@
       "timestamp": "1114819463156" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Table
+  { "Entry": {                             // Table
            "uuid": "6225",
-      "attribute": "112",                // Unfiled Value
+      "attribute": "113",                // Plugin Name
            "item": "6010",                // All Items
           "value": { "type": "StringValue", "value": "Table" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819463171" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all items
+  { "Entry": {                             // Query for all items
            "uuid": "6226",
       "attribute": "109",                // Query
            "item": "6010",                // All Items
@@ -2758,7 +2782,7 @@
       "timestamp": "1114819463203" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query
+  { "Entry": {                             // Query
            "uuid": "6227",
       "attribute": "105",                // Category
            "item": "6011",                // Query for all items
@@ -2767,7 +2791,7 @@
       "timestamp": "1114819463234" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Query for all items
+  { "Entry": {                             // Query for all items
            "uuid": "6228",
       "attribute": "102",                // Name
            "item": "6011",                // Query for all items
@@ -2776,7 +2800,7 @@
       "timestamp": "1114819463234" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6229",
       "attribute": "105",                // Category
            "item": "6012",                // JavaScript: The Definitive ...
@@ -2785,7 +2809,7 @@
       "timestamp": "1114819463265" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // JavaScript: The Definitive ...
+  { "Entry": {                             // JavaScript: The Definitive ...
            "uuid": "6230",
       "attribute": "102",                // Name
            "item": "6012",                // JavaScript: The Definitive ...
@@ -2794,7 +2818,7 @@
       "timestamp": "1114819463281" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // David Flanagan
+  { "Entry": {                             // David Flanagan
            "uuid": "6231",
       "attribute": "3101",                // Author
            "item": "6012",                // JavaScript: The Definitive ...
@@ -2803,7 +2827,7 @@
       "timestamp": "1114819463312" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // O'Reilly
+  { "Entry": {                             // O'Reilly
            "uuid": "6232",
       "attribute": "3102",                // Publisher
            "item": "6012",                // JavaScript: The Definitive ...
@@ -2812,7 +2836,7 @@
       "timestamp": "1114819463328" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // 0596000480
+  { "Entry": {                             // 0596000480
            "uuid": "6233",
       "attribute": "3103",                // ISBN
            "item": "6012",                // JavaScript: The Definitive ...
@@ -2821,7 +2845,7 @@
       "timestamp": "1114819463343" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // Book
+  { "Entry": {                             // Book
            "uuid": "6234",
       "attribute": "105",                // Category
            "item": "6013",                // The Two Towers
@@ -2830,7 +2854,7 @@
       "timestamp": "1114819463375" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // The Two Towers
+  { "Entry": {                             // The Two Towers
            "uuid": "6235",
       "attribute": "102",                // Name
            "item": "6013",                // The Two Towers
@@ -2839,7 +2863,7 @@
       "timestamp": "1114819463390" }
   },
   // -----------------------------------------------------------------------
-  { "Value": {                             // J.R.R. Tolkien
+  { "Entry": {                             // J.R.R. Tolkien
            "uuid": "6236",
       "attribute": "3101",                // Author
            "item": "6013",                // The Two Towers

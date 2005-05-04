@@ -119,7 +119,7 @@ function testJsLintOnOpenRecordCode() {
     "Vote.js",
     "IdentifiedRecord.js",
     "Item.js",
-    "Value.js",
+    "Entry.js",
     "World.js",
     "StubVirtualServer.js",
     "BigLumpVirtualServer.js"];

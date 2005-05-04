@@ -81,7 +81,7 @@ function testAccessorsForAxiomaticItems() {
   var item;
   var world = new World();
   var listOfAssignedNames;
-  var nameValue;
+  var nameEntry;
   
   var listOfAttributes = [];
   listOfAttributes.push(world.getAttributeCalledName());
@@ -93,9 +93,9 @@ function testAccessorsForAxiomaticItems() {
     listOfAssignedNames = item.getName();
     assertTrue('Every axiomatic attribute has an array of names', Util.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic attribute has one name assigned', listOfAssignedNames.length == 1);
-    nameValue = listOfAssignedNames[0];
-    assertTrue('Every axiomatic attribute has a name which is value', (nameValue instanceof Value));
-    assertTrue('Every value can be displayed as a string', Util.isString(nameValue.getDisplayString()));
+    nameEntry = listOfAssignedNames[0];
+    assertTrue('Every axiomatic attribute has a name which is an entry', (nameEntry instanceof Entry));
+    assertTrue('Every entry can be displayed as a string', Util.isString(nameEntry.getDisplayString()));
   }
   
   var listOfCategories = [];
@@ -106,9 +106,9 @@ function testAccessorsForAxiomaticItems() {
     listOfAssignedNames = item.getName();
     assertTrue('Every axiomatic category has an array of names', Util.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic category has one name assigned', listOfAssignedNames.length == 1);
-    nameValue = listOfAssignedNames[0];
-    assertTrue('Every axiomatic category has a name which is value', (nameValue instanceof Value));
-    assertTrue('Every value can be displayed as a string', Util.isString(nameValue.getDisplayString()));
+    nameEntry = listOfAssignedNames[0];
+    assertTrue('Every axiomatic category has a name which is entry', (nameEntry instanceof Entry));
+    assertTrue('Every entry can be displayed as a string', Util.isString(nameEntry.getDisplayString()));
   }
 }
 
@@ -119,7 +119,7 @@ function testAdditionsAndRetrievals() {
   
   var janesPassword = "jane's password";
   var listOfCharacters = null;
-  var listOfValues = null;
+  var listOfEntries = null;
   var listOfAttributes = null;
   var worldRetrievalFilter = null;
   var hasAll;
@@ -136,21 +136,21 @@ function testAdditionsAndRetrievals() {
   var starWars = world.newItem("Star Wars");
   assertTrue('getDisplayName() works for "Star Wars"', (starWars.getDisplayName() == "Star Wars"));
 
-  var luck = starWars.addAttributeValue(characterAttribute, "Luck Skywalker");
-  var c3po = starWars.addAttributeValue(characterAttribute, "C3PO");
-  var r2d2 = starWars.addValue("R2D2");
+  var luck = starWars.addAttributeEntry(characterAttribute, "Luck Skywalker");
+  var c3po = starWars.addAttributeEntry(characterAttribute, "C3PO");
+  var r2d2 = starWars.addEntry("R2D2");
   assertTrue('"Star Wars" has not been deleted', !starWars.hasBeenDeleted());
   assertTrue('"R2D2" has not been deleted', !r2d2.hasBeenDeleted());
   assertTrue('"R2D2" has not been replaced', !r2d2.hasBeenReplaced());
 
-  listOfCharacters = starWars.getValuesForAttribute(characterAttribute);
+  listOfCharacters = starWars.getEntriesForAttribute(characterAttribute);
   hasAll = Util.areObjectsInSet([luck, c3po], listOfCharacters);
   assertTrue('"Star Wars" has characters: luck, c3po', hasAll);
   assertTrue('Exactly 2 characters in Star Wars', listOfCharacters.length == 2);
 
-  listOfValues = starWars.getValues();
-  hasAll = Util.areObjectsInSet([luck, c3po, r2d2], listOfValues);
-  assertTrue('"Star Wars" has values: luck, c3po, r2d2', hasAll);  
+  listOfEntries = starWars.getEntries();
+  hasAll = Util.areObjectsInSet([luck, c3po, r2d2], listOfEntries);
+  assertTrue('"Star Wars" has entries: luck, c3po, r2d2', hasAll);  
   
   var ordinalA = starWars.getOrdinalNumberAtCreation();
   var ordinalB = starWars.getOrdinalNumber();
@@ -172,17 +172,17 @@ function testAdditionsAndRetrievals() {
   worldRetrievalFilter = world.getRetrievalFilter();
   assertTrue('Default retrieval filter is "last edit wins"', worldRetrievalFilter == World.RETRIEVAL_FILTER_LAST_EDIT_WINS);
   
-  var luke = starWars.replaceValue(luck, "Luke Skywalker");
-  var previousValue = luke.getPreviousValue();
-  assertTrue('"Luke" has the previous version "Luck"', previousValue !== null);
+  var luke = starWars.replaceEntry(luck, "Luke Skywalker");
+  var previousEntry = luke.getPreviousEntry();
+  assertTrue('"Luke" has the previous version "Luck"', previousEntry !== null);
   assertTrue('"Luck" has been replaced', luck.hasBeenReplaced());
-  assertTrue('"Luck" is a value in "Star Wars"', luck.getItem() == starWars);
+  assertTrue('"Luck" is a entry in "Star Wars"', luck.getItem() == starWars);
 
-  listOfValues = starWars.getValues();
-  hasAll = Util.areObjectsInSet([luke, c3po, r2d2], listOfValues);
-  assertTrue('"Star Wars" has values: luke, c3po, r2d2', hasAll);  
+  listOfEntries = starWars.getEntries();
+  hasAll = Util.areObjectsInSet([luke, c3po, r2d2], listOfEntries);
+  assertTrue('"Star Wars" has entries: luke, c3po, r2d2', hasAll);  
 
-  listOfCharacters = starWars.getValuesForAttribute(characterAttribute);
+  listOfCharacters = starWars.getEntriesForAttribute(characterAttribute);
   hasAll = Util.areObjectsInSet([luke, c3po], listOfCharacters);
   assertTrue('"Star Wars" has characters: luke, c3po', hasAll);
   assertTrue('Exactly 2 characters in the star wars', listOfCharacters.length == 2);
@@ -194,10 +194,10 @@ function testAdditionsAndRetrievals() {
   var userChris = world.newUser("Chris Kringle", passwordForChris);
   world.login(userChris, passwordForChris);
 
-  r2d2 = starWars.replaceValueWithAttributeValue(r2d2, characterAttribute, "R2D2");
+  r2d2 = starWars.replaceEntryWithAttributeEntry(r2d2, characterAttribute, "R2D2");
   assertTrue('"R2D2" is now character', r2d2.getAttribute() == characterAttribute);
   
-  listOfCharacters = starWars.getValuesForAttribute(characterAttribute);
+  listOfCharacters = starWars.getEntriesForAttribute(characterAttribute);
   var hasR2d2 = Util.isObjectInSet(r2d2, listOfCharacters);
   hasAll = Util.areObjectsInSet([luke, c3po, r2d2], listOfCharacters);
   assertTrue('Chris sees R2D2 as a character', hasR2d2);
@@ -206,15 +206,15 @@ function testAdditionsAndRetrievals() {
   
   var attributeCalledName = world.getAttributeCalledName();
   var theHobbit = world.newItem("The Hobbit");
-  theHobbit.addAttributeValue(attributeCalledName, "There and Back Again");
-  listOfValues = theHobbit.getValuesForAttribute(attributeCalledName);
-  assertTrue('"The Hobbit" has two names', listOfValues.length == 2);
+  theHobbit.addAttributeEntry(attributeCalledName, "There and Back Again");
+  listOfEntries = theHobbit.getEntriesForAttribute(attributeCalledName);
+  assertTrue('"The Hobbit" has two names', listOfEntries.length == 2);
   assertTrue('getDisplayName() returns the first name', (starWars.getDisplayName() == "Star Wars"));
   listOfNames = theHobbit.getName();
   assertTrue('getContentData() returns a string', listOfNames[0].getContentData() == "The Hobbit");
-  hasAll = Util.areObjectsInSet(listOfNames, listOfValues);
-  hasAll = hasAll && Util.areObjectsInSet(listOfValues, listOfNames);
-  assertTrue('getName() matches getValuesForAttribute(attributeCalledName)', hasAll);
+  hasAll = Util.areObjectsInSet(listOfNames, listOfEntries);
+  hasAll = hasAll && Util.areObjectsInSet(listOfEntries, listOfNames);
+  assertTrue('getName() matches getEntriesForAttribute(attributeCalledName)', hasAll);
   
   world.logout();
 }
@@ -246,9 +246,9 @@ function testCategories() {
   isInCategory = theHobbit.isInCategory(categoryCalledBook);
   assertTrue('"The Hobbit" is NOT in the category "Book"', !isInCategory);
   
-  theHobbit.addAttributeValue(attributeCalledCategory, categoryCalledBook);
-  theWisdomOfCrowds.addAttributeValue(attributeCalledCategory, categoryCalledBook);
-  theTransparentSociety.addAttributeValue(attributeCalledCategory, categoryCalledBook);
+  theHobbit.addAttributeEntry(attributeCalledCategory, categoryCalledBook);
+  theWisdomOfCrowds.addAttributeEntry(attributeCalledCategory, categoryCalledBook);
+  theTransparentSociety.addAttributeEntry(attributeCalledCategory, categoryCalledBook);
   isInCategory = theHobbit.isInCategory(categoryCalledBook);
   assertTrue('"The Hobbit" is in the category "Book"', isInCategory);
  
@@ -273,9 +273,9 @@ function testOrdinals() {
   var brownie = world.newItem("Brownie");  
 
   var categoryCalledFood = world.newCategory("Food");
-  apple.addAttributeValue(attributeCalledCategory, categoryCalledFood);
-  cupcake.addAttributeValue(attributeCalledCategory, categoryCalledFood);
-  brownie.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+  apple.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
+  cupcake.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
+  brownie.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
 
   var foodItems = world.getListOfItemsInCategory(categoryCalledFood);
   assertTrue('Apple starts out first in the list"', foodItems[0] == apple);
@@ -361,7 +361,7 @@ function testItemObservation() {
   changesObservedByFunction = null;
   world.beginTransaction();
   tokyo.voteToRetain();
-  tokyo.addValue("Japan");
+  tokyo.addEntry("Japan");
   assertTrue('tokyoObserverObject does not yet see changes', (changesObservedByObject === null));
   assertTrue('tokyoObserverFunction does not yet see changes', (changesObservedByFunction === null));
   world.endTransaction();
@@ -395,9 +395,9 @@ function testListObservation() {
   var cupcake = world.newItem("Cupcake");
 
   var categoryCalledFood = world.newCategory("Food");
-  apple.addAttributeValue(attributeCalledCategory, categoryCalledFood);
-  brownie.addAttributeValue(attributeCalledCategory, categoryCalledFood);
-  cupcake.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+  apple.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
+  brownie.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
+  cupcake.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
 
   var tokyo = world.newItem("Tokyo");
   var seattle = world.newItem("Seattle");
@@ -415,19 +415,19 @@ function testListObservation() {
   };
   var alsoFoodItems = world.getListOfItemsInCategory(categoryCalledFood, foodObserverFunction);
   
-  apple.addValue("Red");
+  apple.addEntry("Red");
   assertTrue('foodObserverObject sees a change to apple', (changesObservedByObject != null));
   assertTrue('foodObserverFunction sees a change to apple', (changesObservedByFunction != null));
 
   changesObservedByObject = null;
   changesObservedByFunction = null;
-  tokyo.addValue("Japan");
+  tokyo.addEntry("Japan");
   assertTrue('foodObserverObject does not see a change to tokyo', (changesObservedByObject === null));
   assertTrue('foodObserverFunction does not see a change to tokyo', (changesObservedByFunction === null));
 
   world.removeListObserver(foodItems, foodObserverObject);
   world.removeListObserver(alsoFoodItems, foodObserverFunction);
-  brownie.addValue("Brown");
+  brownie.addEntry("Brown");
   assertTrue('foodObserverObject no longer sees changes to food items', (changesObservedByObject === null));
   assertTrue('foodObserverFunction no longer sees changes to food items', (changesObservedByFunction === null));
   
@@ -449,9 +449,9 @@ function testQueries() {
 
   var categoryCalledFood = world.newCategory("Food");
   assertTrue('The category "Food" is an item', (categoryCalledFood instanceof Item));
-  apple.addAttributeValue(attributeCalledCategory, categoryCalledFood);
-  brownie.addAttributeValue(attributeCalledCategory, categoryCalledFood);
-  cupcake.addAttributeValue(attributeCalledCategory, categoryCalledFood);
+  apple.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
+  brownie.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
+  cupcake.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
 
   var tokyo = world.newItem("Tokyo");
   var seattle = world.newItem("Seattle");
@@ -488,6 +488,17 @@ function testBigLumpVirtualServerStringOutput() {
   var bigLumpVirtualServer = new BigLumpVirtualServer(fileContentString);
   var world = new World(bigLumpVirtualServer);
   var reconstructedString = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld(); 
+  // var beginMismatch = 0;
+  // for (var i = 0; i < fileContentString.length; ++i) {
+  //   if (fileContentString.charAt(i) != reconstructedString.charAt(i)) {
+  //     beginMismatch = i;
+  //     break;
+  //   }
+  // }
+  // alert("beginMismatch = " + beginMismatch);
+  // alert("testBigLumpVirtualServerStringOutput\n" + 
+  //  fileContentString.substring(beginMismatch, (beginMismatch + 500)) + "\n" +
+  //  reconstructedString.substring(beginMismatch, (beginMismatch + 500)));
   assert("reconstructed string equals original string", fileContentString == reconstructedString);
 }
 
