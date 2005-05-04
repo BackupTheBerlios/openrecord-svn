@@ -1,5 +1,5 @@
 /*****************************************************************************
- Entry.js
+ IdentifiedRecord.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -38,13 +38,13 @@
 // -------------------------------------------------------------------
 
 /**
- * The Entry class serves as an abstract superclass for the class Item
+ * The IdentifiedRecord class serves as an abstract superclass for the class Item
  * and the class Value.
  *
  * @scope    public instance constructor
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
-function Entry() {
+function IdentifiedRecord() {
 }
 
 
@@ -53,13 +53,13 @@ function Entry() {
 // -------------------------------------------------------------------
 
 /**
- * Called from the constructor function of each subclass of Entry.
+ * Called from the constructor function of each subclass of IdentifiedRecord.
  *
  * @scope    protected instance method
  * @param    inWorld    The world that this value is a part of. 
  * @param    inUuid    The UUID for this value. 
  */
-Entry.prototype._Entry = function (inWorld, inUuid) {
+IdentifiedRecord.prototype._IdentifiedRecord = function (inWorld, inUuid) {
   Util.assert(!inUuid || Util.isNumeric(inUuid));
   
   this.__myWorld = inWorld;
@@ -75,20 +75,20 @@ Entry.prototype._Entry = function (inWorld, inUuid) {
 
 
 /**
- * Initializes a new entry that has just been created by a user action.
+ * Initializes a new identifiedRecord that has just been created by a user action.
  *
  * WARNING: This method should be called ONLY from subclasses.
  *
  * @scope    protected instance method
  */
-Entry.prototype._initializeEntry = function () {
+IdentifiedRecord.prototype._initializeIdentifiedRecord = function () {
   this.__myCreationTimestamp = new Date();
   this.__myCreationUserstamp = this.getWorld().getCurrentUser();
 };
 
 
 /**
- * Sets the properties of a newly rehydrated entry object.
+ * Sets the properties of a newly rehydrated identifiedRecord object.
  *
  * WARNING: This method should be called ONLY from subclasses.
  *
@@ -96,7 +96,7 @@ Entry.prototype._initializeEntry = function () {
  * @param    inTimestamp    A Date object with the creation timestamp for this item. 
  * @param    inUserstamp    The user who created this item. 
  */
-Entry.prototype._rehydrateEntry = function (inTimestamp, inUserstamp) {
+IdentifiedRecord.prototype._rehydrateIdentifiedRecord = function (inTimestamp, inUserstamp) {
   this.__myCreationTimestamp = inTimestamp;
   this.__myCreationUserstamp = inUserstamp;
 };
@@ -114,7 +114,7 @@ Entry.prototype._rehydrateEntry = function (inTimestamp, inUserstamp) {
  * @scope    protected instance method
  * @return   The UUID of the item.
  */
-Entry.prototype._getUuid = function () {
+IdentifiedRecord.prototype._getUuid = function () {
   return this.__myUuid;
 };
 
@@ -125,7 +125,7 @@ Entry.prototype._getUuid = function () {
  * @scope    protected instance method
  * @param    inVote    A vote to retain or delete this value. 
  */
-Entry.prototype._addVote = function (inVote) {
+IdentifiedRecord.prototype._addVote = function (inVote) {
   if (!this.__mySetOfVotes) {
     this.__mySetOfVotes = [];
   }
@@ -139,7 +139,7 @@ Entry.prototype._addVote = function (inVote) {
  * @scope    protected instance method
  * @param    inOrdinal    A vote to retain or delete this value. 
  */
-Entry.prototype._addOrdinal = function (inOrdinal) {
+IdentifiedRecord.prototype._addOrdinal = function (inOrdinal) {
   if (!this.__mySetOfOrdinals) {
     this.__mySetOfOrdinals = [];
   }
@@ -157,7 +157,7 @@ Entry.prototype._addOrdinal = function (inOrdinal) {
  * @scope    public instance method
  * @return   A world object.
  */
-Entry.prototype.getWorld = function () {
+IdentifiedRecord.prototype.getWorld = function () {
   return this.__myWorld;
 };
 
@@ -168,7 +168,7 @@ Entry.prototype.getWorld = function () {
  * @scope    public instance method
  * @return   A Date object.
  */
-Entry.prototype.getTimestamp = function () {
+IdentifiedRecord.prototype.getTimestamp = function () {
   return this.__myCreationTimestamp;
 };
 
@@ -179,7 +179,7 @@ Entry.prototype.getTimestamp = function () {
  * @scope    public instance method
  * @return   A user item.
  */
-Entry.prototype.getUserstamp = function () {
+IdentifiedRecord.prototype.getUserstamp = function () {
   return this.__myCreationUserstamp;
 };
 
@@ -190,18 +190,18 @@ Entry.prototype.getUserstamp = function () {
  * @scope    public instance method
  * @return   A string which can serve as a unique key.
  */
-Entry.prototype.getUniqueKeyString = function () {
+IdentifiedRecord.prototype.getUniqueKeyString = function () {
   return this.__myUuid;
 };
 
 
 /**
- * Returns the ordinal number that this entry was given at creation. 
+ * Returns the ordinal number that this identifiedRecord was given at creation. 
  *
  * @scope    public instance method
  * @return   A number.
  */
-Entry.prototype.getOrdinalNumberAtCreation = function () {
+IdentifiedRecord.prototype.getOrdinalNumberAtCreation = function () {
   // return (0 - this.__myCreationTimestamp.valueOf());
   return (0 - this.__myUuid);
 };
@@ -212,12 +212,12 @@ Entry.prototype.getOrdinalNumberAtCreation = function () {
 // -------------------------------------------------------------------
 
 /**
- * Returns the ordinal number for this entry. 
+ * Returns the ordinal number for this identifiedRecord. 
  *
  * @scope    public instance method
  * @return   A number.
  */
-Entry.prototype.getOrdinalNumber = function () {
+IdentifiedRecord.prototype.getOrdinalNumber = function () {
   if (!this.__mySetOfOrdinals || this.__mySetOfOrdinals.length === 0) {
     return this.getOrdinalNumberAtCreation();
   }
@@ -275,12 +275,12 @@ Entry.prototype.getOrdinalNumber = function () {
 
 
 /**
- * Returns true if this entry has been deleted. 
+ * Returns true if this identifiedRecord has been deleted. 
  *
  * @scope    public instance method
  * @return   A boolean.
  */
-Entry.prototype.hasBeenDeleted = function () {
+IdentifiedRecord.prototype.hasBeenDeleted = function () {
   if (!this.__mySetOfVotes || this.__mySetOfVotes.length === 0) {
     return false;
   }
@@ -337,25 +337,25 @@ Entry.prototype.hasBeenDeleted = function () {
 
 
 /**
- * Moves this entry to a new position in a list, by creating a new
- * ordinal for this entry with an ordinal number that is set such
- * that this entry appears between two other entries.
+ * Moves this identifiedRecord to a new position in a list, by creating a new
+ * ordinal for this identifiedRecord with an ordinal number that is set such
+ * that this identifiedRecord appears between two other entries.
  *
  * @scope    public instance method
- * @param    inEntryFirst    The entry that should come before this one. 
- * @param    inEntryThird    The entry that should come after this one. 
+ * @param    inIdentifiedRecordFirst    The identifiedRecord that should come before this one. 
+ * @param    inIdentifiedRecordThird    The identifiedRecord that should come after this one. 
  */
-Entry.prototype.reorderBetween = function (inEntryFirst, inEntryThird) {
+IdentifiedRecord.prototype.reorderBetween = function (inIdentifiedRecordFirst, inIdentifiedRecordThird) {
   var firstOrdinalNumber = null;
   var secondOrdinalNumber = null;
   var thirdOrdinalNumber = null;
   var arbitraryNumberToMoveUsUpOrDownSlightly = 0.01;
   
-  if (inEntryFirst) {
-    firstOrdinalNumber = inEntryFirst.getOrdinalNumber();
+  if (inIdentifiedRecordFirst) {
+    firstOrdinalNumber = inIdentifiedRecordFirst.getOrdinalNumber();
   }
-  if (inEntryThird) {
-    thirdOrdinalNumber = inEntryThird.getOrdinalNumber();
+  if (inIdentifiedRecordThird) {
+    thirdOrdinalNumber = inIdentifiedRecordThird.getOrdinalNumber();
   }
   
   if (firstOrdinalNumber && thirdOrdinalNumber) {
@@ -373,21 +373,21 @@ Entry.prototype.reorderBetween = function (inEntryFirst, inEntryThird) {
 
 
 /**
- * Registers a vote to delete this entry. 
+ * Registers a vote to delete this identifiedRecord. 
  *
  * @scope    public instance method
  */
-Entry.prototype.voteToDelete = function () {
+IdentifiedRecord.prototype.voteToDelete = function () {
   this.getWorld()._newVote(this, false);
 };
 
 
 /**
- * Registers a vote to retain this entry. 
+ * Registers a vote to retain this identifiedRecord. 
  *
  * @scope    public instance method
  */
-Entry.prototype.voteToRetain = function () {
+IdentifiedRecord.prototype.voteToRetain = function () {
   this.getWorld()._newVote(this, true);
 };
 
@@ -397,13 +397,13 @@ Entry.prototype.voteToRetain = function () {
 // -------------------------------------------------------------------
 
 /**
- * Registers a vote to retain this entry. 
+ * Registers a vote to retain this identifiedRecord. 
  *
  * @scope    public class method
  */
-Entry.compareOrdinals = function (inEntryOne, inEntryTwo) {
-  var ordinalNumberOne = inEntryOne.getOrdinalNumber();
-  var ordinalNumberTwo = inEntryTwo.getOrdinalNumber();
+IdentifiedRecord.compareOrdinals = function (inIdentifiedRecordOne, inIdentifiedRecordTwo) {
+  var ordinalNumberOne = inIdentifiedRecordOne.getOrdinalNumber();
+  var ordinalNumberTwo = inIdentifiedRecordTwo.getOrdinalNumber();
   return (ordinalNumberTwo - ordinalNumberOne);
 };
 

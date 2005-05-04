@@ -34,7 +34,7 @@
 //   Util.js
 //   World.js
 //   Value.js
-//   Entry.js
+//   IdentifiedRecord.js
 // -------------------------------------------------------------------
 
 
@@ -52,9 +52,9 @@
  * @param    inWorld    The world that this value is a part of. 
  * @param    inUuid    The UUID for this value. 
  */
-Item.prototype = new Entry();  // makes Item be a subclass of Entry
+Item.prototype = new IdentifiedRecord();  // makes Item be a subclass of IdentifiedRecord
 function Item(inWorld, inUuid) {
-  this._Entry(inWorld, inUuid);
+  this._IdentifiedRecord(inWorld, inUuid);
   
   this.__myListOfValues = null;
 }
@@ -74,7 +74,7 @@ function Item(inWorld, inUuid) {
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  */
 Item.prototype._initialize = function (inObserver) {
-  this._initializeEntry();
+  this._initializeIdentifiedRecord();
 
   this.__myListOfValues = [];
   if (inObserver) {
@@ -97,7 +97,7 @@ Item.prototype._initialize = function (inObserver) {
  * @param    inUserstamp    The user who created this item. 
  */
 Item.prototype._rehydrate = function (inTimestamp, inUserstamp) {
-  this._rehydrateEntry(inTimestamp, inUserstamp);
+  this._rehydrateIdentifiedRecord(inTimestamp, inUserstamp);
   
   this.__myListOfValues = [];
 };
@@ -209,7 +209,7 @@ Item.prototype.getValuesForAttribute = function (inAttribute) {
       listOfValuesForAttribute.push(value);
     }
   }
-  listOfValuesForAttribute.sort(Entry.compareOrdinals);
+  listOfValuesForAttribute.sort(IdentifiedRecord.compareOrdinals);
   return listOfValuesForAttribute;
 };
 
@@ -252,7 +252,7 @@ Item.prototype.getValues = function () {
       Util.assert(false);
       break;
   }
-  filteredListOfValues.sort(Entry.compareOrdinals);
+  filteredListOfValues.sort(IdentifiedRecord.compareOrdinals);
   return filteredListOfValues;
 };
 
@@ -272,7 +272,7 @@ Item.prototype.getAttributes = function () {
     var attribute = value.getAttribute();
     Util.addObjectToSet(attribute, listOfAttributes);
   }
-  listOfAttributes.sort(Entry.compareOrdinals);
+  listOfAttributes.sort(IdentifiedRecord.compareOrdinals);
   return listOfAttributes;
 };
 

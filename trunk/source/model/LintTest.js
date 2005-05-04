@@ -117,7 +117,7 @@ function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
     "Ordinal.js",
     "Vote.js",
-    "Entry.js",
+    "IdentifiedRecord.js",
     "Item.js",
     "Value.js",
     "World.js",

@@ -34,7 +34,7 @@
 //   Util.js
 //   Item.js
 //   World.js
-//   Entry.js
+//   IdentifiedRecord.js
 // -------------------------------------------------------------------
 
 /**
@@ -51,9 +51,9 @@
  * @param    inWorld    The world that this value is a part of. 
  * @param    inUuid    The UUID for this value. 
  */
-Value.prototype = new Entry();  // makes Value be a subclass of Entry
+Value.prototype = new IdentifiedRecord();  // makes Value be a subclass of IdentifiedRecord
 function Value(inWorld, inUuid) {
-  this._Entry(inWorld, inUuid);
+  this._IdentifiedRecord(inWorld, inUuid);
  
   this.__myPreviousValue = null;
   this.__myListOfSubsequentValues = [];
@@ -80,7 +80,7 @@ function Value(inWorld, inUuid) {
  * @param    inContentData    The content datat to initialize the value with. 
  */
 Value.prototype._initialize = function (inItemOrValue, inAttribute, inContentData) {
-  this._initializeEntry();
+  this._initializeIdentifiedRecord();
 
   if (inItemOrValue instanceof Value) {
     this.__myPreviousValue = inItemOrValue;
@@ -118,7 +118,7 @@ Value.prototype._initialize = function (inItemOrValue, inAttribute, inContentDat
  * @param    inUserstamp    The user who created this value. 
  */
 Value.prototype._rehydrate = function (inItemOrValue, inAttribute, inContentData, inTimestamp, inUserstamp) {
-  this._rehydrateEntry(inTimestamp, inUserstamp);
+  this._rehydrateIdentifiedRecord(inTimestamp, inUserstamp);
 
   if (inItemOrValue instanceof Value) {
     this.__myPreviousValue = inItemOrValue;

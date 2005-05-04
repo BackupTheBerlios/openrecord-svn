@@ -34,7 +34,7 @@
 //   Util.js
 //   World.js
 //   Item.js
-//   Entry.js
+//   IdentifiedRecord.js
 //   Ordinal.js
 //   Value.js
 //   Vote.js
@@ -135,12 +135,12 @@ StubVirtualServer.prototype.newValue = function (inItemOrValue, inAttribute, inC
  * Returns a newly created ordinal.
  *
  * @scope    public instance method
- * @param    inEntry    The entry that this is an ordinal for. 
+ * @param    inIdentifiedRecord    The identifiedRecord that this is an ordinal for. 
  * @param    inOrdinalNumber    The ordinal number itself. 
  * @return   A newly created ordinal.
  */
-StubVirtualServer.prototype.newOrdinal = function (inEntry, inOrdinalNumber) {
-  var ordinal = new Ordinal(inEntry, this.__myWorld.getCurrentUser(), inOrdinalNumber);
+StubVirtualServer.prototype.newOrdinal = function (inIdentifiedRecord, inOrdinalNumber) {
+  var ordinal = new Ordinal(inIdentifiedRecord, this.__myWorld.getCurrentUser(), inOrdinalNumber);
   this.__myChronologicalListOfNewlyCreatedRecords.push(ordinal);
   return ordinal;
 };
@@ -150,12 +150,12 @@ StubVirtualServer.prototype.newOrdinal = function (inEntry, inOrdinalNumber) {
  * Returns a newly created vote.
  *
  * @scope    public instance method
- * @param    inEntry    The entry to attach this vote to. 
+ * @param    inIdentifiedRecord    The identifiedRecord to attach this vote to. 
  * @param    inRetainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  * @return   A newly created vote.
  */
-StubVirtualServer.prototype.newVote = function (inEntry, inRetainFlag) {
-  var vote = new Vote(inEntry, this.__myWorld.getCurrentUser(), inRetainFlag);
+StubVirtualServer.prototype.newVote = function (inIdentifiedRecord, inRetainFlag) {
+  var vote = new Vote(inIdentifiedRecord, this.__myWorld.getCurrentUser(), inRetainFlag);
   this.__myChronologicalListOfNewlyCreatedRecords.push(vote);
   return vote;
 };
@@ -368,7 +368,7 @@ StubVirtualServer.prototype.getListOfResultItemsForQuery = function (inQuery, in
     }
   }
   
-  listOfQueryResultItems.sort(Entry.compareOrdinals);
+  listOfQueryResultItems.sort(IdentifiedRecord.compareOrdinals);
   return listOfQueryResultItems; 
 };
 
@@ -432,7 +432,7 @@ StubVirtualServer.prototype.getListOfItemsInCategory = function (inCategory) {
       listOfItems.push(item);
     }
   }
-  listOfItems.sort(Entry.compareOrdinals);
+  listOfItems.sort(IdentifiedRecord.compareOrdinals);
   return listOfItems; 
 };
 
@@ -448,7 +448,7 @@ StubVirtualServer.prototype.getListOfItemsInCategory = function (inCategory) {
  * @param    inUuid    The UUID of the item or value to be returned. 
  * @return   The item or value identified by the given UUID.
  */
-StubVirtualServer.prototype.__getEntryFromUuid = function (inUuid) {
+StubVirtualServer.prototype.__getIdentifiedRecordFromUuid = function (inUuid) {
   var item = this.getItemFromUuid(inUuid);
   if (item) {
     return item;

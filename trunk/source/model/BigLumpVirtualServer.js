@@ -68,7 +68,7 @@ BigLumpVirtualServer.JSON_MEMBER_ORDINAL_CLASS = "Ordinal";
 BigLumpVirtualServer.JSON_MEMBER_ATTRIBUTE = "attribute";
 BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE = "previousValue";
 BigLumpVirtualServer.JSON_MEMBER_USERSTAMP = "userstamp";
-BigLumpVirtualServer.JSON_MEMBER_ENTRY = "entry";
+BigLumpVirtualServer.JSON_MEMBER_RECORD = "record";
 BigLumpVirtualServer.JSON_MEMBER_ITEM = "item";
 BigLumpVirtualServer.JSON_MEMBER_RETAIN_FLAG = "retainFlag";
 BigLumpVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "ordinalNumber";
@@ -286,8 +286,8 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
   var key;
   var itemUuid;
   var item;
-  var entryUuid;
-  var entry;
+  var identifiedRecordUuid;
+  var identifiedRecord;
   
   for (key in inListOfRecords) {
     var dehydratedRecord = inListOfRecords[key];
@@ -312,16 +312,16 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
     }
     if (dehydratedVote) {
       var retainFlag = dehydratedVote[BigLumpVirtualServer.JSON_MEMBER_RETAIN_FLAG];
-      entryUuid = dehydratedVote[BigLumpVirtualServer.JSON_MEMBER_ENTRY];
-      entry = this.__getEntryFromUuid(entryUuid);
-      var vote = new Vote(entry, userstamp, retainFlag, timestamp);
+      identifiedRecordUuid = dehydratedVote[BigLumpVirtualServer.JSON_MEMBER_RECORD];
+      identifiedRecord = this.__getIdentifiedRecordFromUuid(identifiedRecordUuid);
+      var vote = new Vote(identifiedRecord, userstamp, retainFlag, timestamp);
       this.__myChronologicalListOfRecords.push(vote);
     }
     if (dehydratedOrdinal) {
       var ordinalNumber = dehydratedVote[BigLumpVirtualServer.JSON_MEMBER_ORDINAL_NUMBER];
-      entryUuid = dehydratedVote[BigLumpVirtualServer.JSON_MEMBER_ENTRY];
-      entry = this.__getEntryFromUuid(entryUuid);
-      var ordinal = new Ordinal(entry, userstamp, ordinalNumber, timestamp);
+      identifiedRecordUuid = dehydratedVote[BigLumpVirtualServer.JSON_MEMBER_RECORD];
+      identifiedRecord = this.__getIdentifiedRecordFromUuid(identifiedRecordUuid);
+      var ordinal = new Ordinal(identifiedRecord, userstamp, ordinalNumber, timestamp);
       this.__myChronologicalListOfRecords.push(ordinal);
     }
     if (dehydratedValue) {
@@ -406,11 +406,11 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
   listOfStrings.push('"' + BigLumpVirtualServer.JSON_MEMBER_FORMAT + '": "' + BigLumpVirtualServer.JSON_FORMAT_2005_APRIL + '", ' + '\n');
   //listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + fileTimestamp.toString() + '", ' + '\n');
   listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_DATA + '": ' + '[' + '\n');
-  var firstEntry = true;
+  var firstIdentifiedRecord = true;
   for (key in this.__myChronologicalListOfRecords) {
     var record = this.__myChronologicalListOfRecords[key];
-    if (firstEntry) {
-      firstEntry = false;
+    if (firstIdentifiedRecord) {
+      firstIdentifiedRecord = false;
     } else {
       listOfStrings.push(',\n');
       listOfStrings.push('  // -----------------------------------------------------------------------\n');
@@ -425,13 +425,13 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
     if (record instanceof Vote) {
       var vote = record;
       listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{' + '\n');
-      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ENTRY + '": "' + vote.getEntry()._getUuid() + '",\n');
+      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getIdentifiedRecord()._getUuid() + '",\n');
       listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '",\n');
     }
     if (record instanceof Ordinal) {
       var ordinal = record;
       listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
-      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ENTRY + '": "' + ordinal.getEntry()._getUuid() + '",\n');
+      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getIdentifiedRecord()._getUuid() + '",\n');
       listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '",\n');
     }
     if (record instanceof Value) {
@@ -484,11 +484,11 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
   listOfStrings.push("  ], \n");
   listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_USERS + '": ' + '[');
 
-  firstEntry = true;
+  firstIdentifiedRecord = true;
   for (key in this.__myListOfUsers) {
     var user = this.__myListOfUsers[key];
-    if (firstEntry) {
-      firstEntry = false;
+    if (firstIdentifiedRecord) {
+      firstIdentifiedRecord = false;
     } else {
       listOfStrings.push(', ');
     }

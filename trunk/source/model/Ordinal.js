@@ -32,7 +32,7 @@
 // -------------------------------------------------------------------
 // Dependencies:
 //   User.js
-//   Entry.js
+//   IdentifiedRecord.js
 // -------------------------------------------------------------------
 
 /**
@@ -40,13 +40,13 @@
  * a user set an ordinal number for an item or a value of an item.
  *
  * @scope    public instance constructor
- * @param    inEntry    The item or value that this vote is attached to. 
+ * @param    inIdentifiedRecord    The item or value that this vote is attached to. 
  * @param    inUser    The user who voted. 
  * @param    inOrdinalNumber    The ordinal number itself. 
  * @param    inTimestamp    Optional. The time the vote was made. 
  */
-function Ordinal(inEntry, inUser, inOrdinalNumber, inTimestamp) {
-  this.__myEntry = inEntry;
+function Ordinal(inIdentifiedRecord, inUser, inOrdinalNumber, inTimestamp) {
+  this.__myIdentifiedRecord = inIdentifiedRecord;
   this.__myUserstamp = inUser;
   this.__myOrdinalNumber = inOrdinalNumber;
   if (inTimestamp) {
@@ -54,11 +54,11 @@ function Ordinal(inEntry, inUser, inOrdinalNumber, inTimestamp) {
   } else {
     this.__myTimestamp = new Date();
   }
-  this.__myEntry._addOrdinal(this);
+  this.__myIdentifiedRecord._addOrdinal(this);
 }
 
-Ordinal.prototype.getEntry = function () {
-  return this.__myEntry;
+Ordinal.prototype.getIdentifiedRecord = function () {
+  return this.__myIdentifiedRecord;
 };
 
 Ordinal.prototype.getTimestamp = function () {

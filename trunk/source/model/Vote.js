@@ -32,7 +32,7 @@
 // -------------------------------------------------------------------
 // Dependencies:
 //   User.js
-//   Entry.js
+//   IdentifiedRecord.js
 // -------------------------------------------------------------------
 
 /**
@@ -40,13 +40,13 @@
  * an item or a value of an item.
  *
  * @scope    public instance constructor
- * @param    inEntry    The item or value that this vote is attached to. 
+ * @param    inIdentifiedRecord    The item or value that this vote is attached to. 
  * @param    inUser    The user who voted. 
  * @param    inRetainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  * @param    inTimestamp    Optional. The time the vote was made. 
  */
-function Vote(inEntry, inUser, inRetainFlag, inTimestamp) {
-  this.__myEntry = inEntry;
+function Vote(inIdentifiedRecord, inUser, inRetainFlag, inTimestamp) {
+  this.__myIdentifiedRecord = inIdentifiedRecord;
   this.__myUserstamp = inUser;
   this.__myRetainFlag = inRetainFlag;
   if (inTimestamp) {
@@ -54,11 +54,11 @@ function Vote(inEntry, inUser, inRetainFlag, inTimestamp) {
   } else {
     this.__myTimestamp = new Date();
   }
-  this.__myEntry._addVote(this);
+  this.__myIdentifiedRecord._addVote(this);
 }
 
-Vote.prototype.getEntry = function () {
-  return this.__myEntry;
+Vote.prototype.getIdentifiedRecord = function () {
+  return this.__myIdentifiedRecord;
 };
 
 Vote.prototype.getTimestamp = function () {
