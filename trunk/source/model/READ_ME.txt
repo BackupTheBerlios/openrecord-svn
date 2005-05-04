@@ -12,12 +12,13 @@ Terminology
 ---------------------------------
 Here's a quick overview of the terminology and concepts...
 
-Item -- items have attribute values
-Value -- an attribute value attached to an item
-  
-Entry -- the abstract superclass for Item and Value
-Ordinal -- keeps track of where an Entry should appear in a list
-Vote -- keeps track of who thinks an Entry should be replaced/deleted
+Item -- items can have values assigned to their attributes
+Entry -- a value that has been assigned to an attribute of an item
+value -- the literal value held in an Entry, or a reference value held in an Entry
+
+IdentifiedRecord -- the abstract superclass for Item and Entry
+Ordinal -- keeps track of where an IdentifiedRecord should appear in a list
+Vote -- keeps track of who thinks an IdentifiedRecord should be replaced/deleted
 Record -- an Item, Value, Ordinal, or Vote -- things that have to be recorded
 
 World -- a set of items, like the "OpenAgenda" world or the "CoolChaser" world
@@ -34,18 +35,18 @@ Here's a quick overview of the Data Model API that's available for people who ar
 
 Item methods --------------------
 
-  item.addAttributeValue()      --- change to .addEntryForAttribute() ?
-  item.addValue()               --- change to .addEntry() ?
-  item.replaceValue()           --- change to .replaceEntry() ?
-  item.replaceValueWithAttributeValue()
+  item.addEntryForAttribute() 
+  item.addEntry()
+  item.replaceEntry()
+  item.replaceEntryWithEntryForAttribute()
   
   item.getAttributes()
-  item.getValuesForAttribute()  --- change to .getEntriesForAttribute() ?
-  item.getValues()              --- change to .getEntries() ?
+  item.getEntriesForAttribute()
+  item.getEntries()
   
   item.getDisplayName()
-  item.getName()                --- change to .getNameEntries() ?
-  item.getShortName()           --- change to .getShortNameEntries() ?
+  item.getNameEntries()
+  item.getShortNameEntries()
   
   item.isInCategory()
   item.reorderBetween()
@@ -58,13 +59,20 @@ Item methods --------------------
   item.removeObserver()
 
   
-Value methods ------------------- 
+Entry methods ------------------- 
 
-  value.hasBeenReplaced()
-  value.getPreviousValue()
-  value.getAttribute()
-  value.getItem()
-  value.getContentData()
+  entry.getValue()
+  entry.getAttribute()
+  entry.getItem()
+
+  entry.reorderBetween()
+
+  entry.hasBeenReplaced()
+  entry.getPreviousEntry()
+  entry.hasBeenDeleted()
+
+  entry.voteToDelete()
+  entry.voteToRetain()
 
   
 World methods ------------------- 
@@ -73,7 +81,7 @@ World methods -------------------
   world.logout()
   
   world.getUsers()
-  world.getCurrentUser()       --- change to .getLoggedInUser() ?
+  world.getCurrentUser()
   world.newUser()
   
   world.newItem()
@@ -81,8 +89,9 @@ World methods -------------------
   world.newCategory()
   world.newQueryForItemsByCategory()
   world.newQueryForSpecificItems()
-  world.getListOfItemsInCategory()     --- change to getItemsInCategory() ?
-  world.getListOfResultItemsForQuery() --- change to getResultItemsForQuery() ?
+  
+  world.getItemsInCategory()
+  world.getResultItemsForQuery() 
   world.setItemToBeIncludedInQueryResultList()
   world.removeListObserver()
   world.addItemObserver()
@@ -109,14 +118,17 @@ Kind ----- deprecated
   Table
   Class
   
-Value ----- example: "1938"
+Category ----- examples: "Book", "Movie", "Person"
+  Tag
+  
+Entry ----- example: ("1938" is the value of the attribute "Publication Date" for the item "The Hobbit")
   Assignement
   Datum
   AttributeValue
   Aspect
   
-Data ----- example: "1938"
-  Value
+Value ----- example: "1938"
+  Data
   Datum
 
 Relationship ----- example: "hobbit.author <--> tolkien.books"

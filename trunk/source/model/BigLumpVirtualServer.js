@@ -220,7 +220,7 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
                 break;
             }
             var attribute = this.getItemFromUuid(attributeUuid);
-            item.addAttributeEntry(attribute, finalValue);
+            item.addEntryForAttribute(attribute, finalValue);
           }
         }
       }
@@ -454,7 +454,7 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
       if (previousEntry) {
         listOfStrings.push('          "' + BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": "' + previousEntry._getUuid() + '",\n');
       }
-      var contentData = entry.getContentData();
+      var contentData = entry.getValue();
       var pickleString = "";
       var typeString = null;
       var valueString = null;

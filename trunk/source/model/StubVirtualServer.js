@@ -106,7 +106,7 @@ StubVirtualServer.prototype.newItem = function (inName, inObserver) {
   this.__myChronologicalListOfNewlyCreatedRecords.push(item);
   if (inName) { 
     var attributeCalledName = this.__myWorld.getAttributeCalledName();
-    item.addAttributeEntry(attributeCalledName, inName);
+    item.addEntryForAttribute(attributeCalledName, inName);
   }
   return item;
 };
@@ -118,13 +118,13 @@ StubVirtualServer.prototype.newItem = function (inName, inObserver) {
  * @scope    public instance method
  * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry is replacing. 
  * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
- * @param    inContentData    The content datat to initialize the entry with. 
+ * @param    inValue    The value to initialize the entry with. 
  * @return   A newly created entry.
  */
-StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inContentData) {
+StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inValue) {
   var uuid = this.__getNewUuid();
   var entry = new Entry(this.__myWorld, uuid);
-  entry._initialize(inItemOrEntry, inAttribute, inContentData);
+  entry._initialize(inItemOrEntry, inAttribute, inValue);
   this.__myHashTableOfEntriesKeyedByUuid[uuid] = entry;
   this.__myChronologicalListOfNewlyCreatedRecords.push(entry);
   return entry;
@@ -181,7 +181,7 @@ StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObse
   this.__myHashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = inAuthentication;
   if (inName) { 
     var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
-    var entry = newUser.addAttributeEntry(attributeCalledName, inName);
+    var entry = newUser.addEntryForAttribute(attributeCalledName, inName);
     entry.__myCreationUserstamp = newUser;
   }
   return newUser;
@@ -313,7 +313,7 @@ StubVirtualServer.prototype.saveChangesToServer = function () {
  * @param    inQuery    A query item. 
  * @return   A list of items.
  */
-StubVirtualServer.prototype.getListOfResultItemsForQuery = function (inQuery, inObserver) {
+StubVirtualServer.prototype.getResultItemsForQuery = function (inQuery, inObserver) {
   Util.assert(inQuery instanceof Item);
   
   var attributeCalledQueryMatchingCategory = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
@@ -333,7 +333,7 @@ StubVirtualServer.prototype.getListOfResultItemsForQuery = function (inQuery, in
   if (isItemMatchingQuery) {
     for (key in listOfMatchingItems) {
       var itemEntry = listOfMatchingItems[key];
-      item = itemEntry.getContentData();
+      item = itemEntry.getValue();
       listOfQueryResultItems.push(item);
     }
   }
@@ -347,7 +347,7 @@ StubVirtualServer.prototype.getListOfResultItemsForQuery = function (inQuery, in
         var includeItem = true;
         for (key in listOfMatchingCategories) {
           var categoryEntry = listOfMatchingCategories[key];
-          var category = categoryEntry.getContentData();
+          var category = categoryEntry.getValue();
           if (includeItem && !(item.isInCategory(category))) {
             includeItem = false;
           }
@@ -398,16 +398,16 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
   Util.assert(!(isCategoryMatchingQuery && isItemMatchingQuery));
 
   if (isItemMatchingQuery) {
-    inQuery.addAttributeEntry(attributeCalledQueryMatchingItem, inItem);
+    inQuery.addEntryForAttribute(attributeCalledQueryMatchingItem, inItem);
   }
   
   var attributeCalledCategory = this.__myWorld.getAttributeCalledCategory();
   if (isCategoryMatchingQuery) {
     for (var key in listOfMatchingCategories) {
       var categoryEntry = listOfMatchingCategories[key];
-      var category = categoryEntry.getContentData();
+      var category = categoryEntry.getValue();
       if (!(inItem.isInCategory(category))) {
-        inItem.addAttributeEntry(attributeCalledCategory, category);
+        inItem.addEntryForAttribute(attributeCalledCategory, category);
       }
     }
   }
@@ -422,7 +422,7 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
  * @param    inCategory    A category item. 
  * @return   A list of items.
  */
-StubVirtualServer.prototype.getListOfItemsInCategory = function (inCategory) {
+StubVirtualServer.prototype.getItemsInCategory = function (inCategory) {
   Util.assert(inCategory instanceof Item);
 
   var listOfItems = [];
@@ -560,7 +560,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
  
   // set the name of the axiomaticUser
   var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
-  axiomaticUser.addAttributeEntry(attributeCalledName, "Amy ex machina");
+  axiomaticUser.addEntryForAttribute(attributeCalledName, "Amy ex machina");
   
   // set the names of all the attributes, and put them in the category called "Attribute"
   var categoryCalledAttribute = this.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
@@ -568,8 +568,8 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   for (uuid in hashTableOfAttributeNamesKeyedByUuid) {
     item = this.getItemFromUuid(uuid);
     name = hashTableOfAttributeNamesKeyedByUuid[uuid];
-    item.addAttributeEntry(attributeCalledName, name);
-    item.addAttributeEntry(attributeCalledCategory, categoryCalledAttribute);
+    item.addEntryForAttribute(attributeCalledName, name);
+    item.addEntryForAttribute(attributeCalledCategory, categoryCalledAttribute);
   }
   
   // set the names of all the categories, and put them in the category called "Category"
@@ -577,8 +577,8 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   for (uuid in hashTableOfCategoryNamesKeyedByUuid) {
     item = this.getItemFromUuid(uuid);
     name = hashTableOfCategoryNamesKeyedByUuid[uuid];
-    item.addAttributeEntry(attributeCalledName, name);
-    item.addAttributeEntry(attributeCalledCategory, categoryCalledCategory);
+    item.addEntryForAttribute(attributeCalledName, name);
+    item.addEntryForAttribute(attributeCalledCategory, categoryCalledCategory);
   }
   
   this.__myCurrentUser = null;

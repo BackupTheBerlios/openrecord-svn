@@ -488,7 +488,7 @@ World.prototype.newAttribute = function (inName, inObserver) {
   var item = this.__myVirtualServer.newItem(inName, inObserver);
   var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledAttribute = this.getCategoryCalledAttribute();
-  item.addAttributeEntry(attributeCalledCategory, categoryCalledAttribute);
+  item.addEntryForAttribute(attributeCalledCategory, categoryCalledAttribute);
   this.endTransaction();
   return item;
 };
@@ -507,7 +507,7 @@ World.prototype.newCategory = function (inName, inObserver) {
   var item = this.__myVirtualServer.newItem(inName, inObserver);
   var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledCategory = this.getCategoryCalledCategory();
-  item.addAttributeEntry(attributeCalledCategory, categoryCalledCategory);
+  item.addEntryForAttribute(attributeCalledCategory, categoryCalledCategory);
   this.endTransaction();
   return item;
 };
@@ -525,18 +525,18 @@ World.prototype.newQueryForItemsByCategory = function (inCategory) {
   var item = this.__myVirtualServer.newItem("A query");
   var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledQuery = this.getCategoryCalledQuery();
-  item.addAttributeEntry(attributeCalledCategory, categoryCalledQuery);
+  item.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
 
   var attributeCalledQueryMatchingCategory = this.getAttributeCalledQueryMatchingCategory();
   if (inCategory) {
     if (inCategory instanceof Item) {
-      item.addAttributeEntry(attributeCalledQueryMatchingCategory, inCategory);
+      item.addEntryForAttribute(attributeCalledQueryMatchingCategory, inCategory);
     }
     if (Util.isArray(inCategory)) {
       var listOfCategories = inCategory;
       for (var key in listOfCategories) {
         var category = listOfCategories[key];
-        item.addAttributeEntry(attributeCalledQueryMatchingCategory, category);
+        item.addEntryForAttribute(attributeCalledQueryMatchingCategory, category);
       }
     }
   }
@@ -558,18 +558,18 @@ World.prototype.newQueryForSpecificItems = function (inItems) {
   var item = this.__myVirtualServer.newItem("A query");
   var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledQuery = this.getCategoryCalledQuery();
-  item.addAttributeEntry(attributeCalledCategory, categoryCalledQuery);
+  item.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
 
   var attributeCalledQueryMatchingItem = this.getAttributeCalledQueryMatchingItem();
   if (inItems) {
     if (inItems instanceof Item) {
-      item.addAttributeEntry(attributeCalledQueryMatchingItem, inItems);
+      item.addEntryForAttribute(attributeCalledQueryMatchingItem, inItems);
     }
     if (Util.isArray(inItems)) {
       var listOfItems = inItems;
       for (var key in listOfItems) {
         var matchingItem = listOfItems[key];
-        item.addAttributeEntry(attributeCalledQueryMatchingItem, matchingItem);
+        item.addEntryForAttribute(attributeCalledQueryMatchingItem, matchingItem);
       }
     }
   }
@@ -585,12 +585,12 @@ World.prototype.newQueryForSpecificItems = function (inItems) {
  * @scope    public instance method
  * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry is replacing. 
  * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
- * @param    inContentData    The content data to initialize the entry with. 
+ * @param    inValue    The value to initialize the entry with. 
  * @return   A newly created entry.
  */
-World.prototype._newEntry = function (inItemOrEntry, inAttribute, inContentData) {
+World.prototype._newEntry = function (inItemOrEntry, inAttribute, inValue) {
   this.beginTransaction();
-  var entry = this.__myVirtualServer.newEntry(inItemOrEntry, inAttribute, inContentData);
+  var entry = this.__myVirtualServer.newEntry(inItemOrEntry, inAttribute, inValue);
   this.endTransaction();
   return entry;
 };
@@ -654,8 +654,8 @@ World.prototype.getItemFromUuid = function (inUuid, inObserver) {
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A list of items.
  */
-World.prototype.getListOfResultItemsForQuery = function (inQuery, inObserver) {
-  var listOfItems = this.__myVirtualServer.getListOfResultItemsForQuery(inQuery);
+World.prototype.getResultItemsForQuery = function (inQuery, inObserver) {
+  var listOfItems = this.__myVirtualServer.getResultItemsForQuery(inQuery);
   this.__addListObserver(listOfItems, inObserver);
   return listOfItems;
 };
@@ -684,8 +684,8 @@ World.prototype.setItemToBeIncludedInQueryResultList = function (inItem, inQuery
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A list of items.
  */
-World.prototype.getListOfItemsInCategory = function (inCategory, inObserver) {
-  var listOfItems = this.__myVirtualServer.getListOfItemsInCategory(inCategory);
+World.prototype.getItemsInCategory = function (inCategory, inObserver) {
+  var listOfItems = this.__myVirtualServer.getItemsInCategory(inCategory);
   this.__addListObserver(listOfItems, inObserver);
   return listOfItems;
 };

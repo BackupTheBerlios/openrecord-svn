@@ -90,7 +90,7 @@ function testAccessorsForAxiomaticItems() {
   listOfAttributes.push(world.getAttributeCalledCategory());
   for (key in listOfAttributes) {
     item = listOfAttributes[key];
-    listOfAssignedNames = item.getName();
+    listOfAssignedNames = item.getNameEntries();
     assertTrue('Every axiomatic attribute has an array of names', Util.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic attribute has one name assigned', listOfAssignedNames.length == 1);
     nameEntry = listOfAssignedNames[0];
@@ -103,7 +103,7 @@ function testAccessorsForAxiomaticItems() {
   listOfCategories.push(world.getCategoryCalledCategory());
   for (key in listOfCategories) {
     item = listOfCategories[key];
-    listOfAssignedNames = item.getName();
+    listOfAssignedNames = item.getNameEntries();
     assertTrue('Every axiomatic category has an array of names', Util.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic category has one name assigned', listOfAssignedNames.length == 1);
     nameEntry = listOfAssignedNames[0];
@@ -136,8 +136,8 @@ function testAdditionsAndRetrievals() {
   var starWars = world.newItem("Star Wars");
   assertTrue('getDisplayName() works for "Star Wars"', (starWars.getDisplayName() == "Star Wars"));
 
-  var luck = starWars.addAttributeEntry(characterAttribute, "Luck Skywalker");
-  var c3po = starWars.addAttributeEntry(characterAttribute, "C3PO");
+  var luck = starWars.addEntryForAttribute(characterAttribute, "Luck Skywalker");
+  var c3po = starWars.addEntryForAttribute(characterAttribute, "C3PO");
   var r2d2 = starWars.addEntry("R2D2");
   assertTrue('"Star Wars" has not been deleted', !starWars.hasBeenDeleted());
   assertTrue('"R2D2" has not been deleted', !r2d2.hasBeenDeleted());
@@ -194,7 +194,7 @@ function testAdditionsAndRetrievals() {
   var userChris = world.newUser("Chris Kringle", passwordForChris);
   world.login(userChris, passwordForChris);
 
-  r2d2 = starWars.replaceEntryWithAttributeEntry(r2d2, characterAttribute, "R2D2");
+  r2d2 = starWars.replaceEntryWithEntryForAttribute(r2d2, characterAttribute, "R2D2");
   assertTrue('"R2D2" is now character', r2d2.getAttribute() == characterAttribute);
   
   listOfCharacters = starWars.getEntriesForAttribute(characterAttribute);
@@ -206,12 +206,12 @@ function testAdditionsAndRetrievals() {
   
   var attributeCalledName = world.getAttributeCalledName();
   var theHobbit = world.newItem("The Hobbit");
-  theHobbit.addAttributeEntry(attributeCalledName, "There and Back Again");
+  theHobbit.addEntryForAttribute(attributeCalledName, "There and Back Again");
   listOfEntries = theHobbit.getEntriesForAttribute(attributeCalledName);
   assertTrue('"The Hobbit" has two names', listOfEntries.length == 2);
   assertTrue('getDisplayName() returns the first name', (starWars.getDisplayName() == "Star Wars"));
-  listOfNames = theHobbit.getName();
-  assertTrue('getContentData() returns a string', listOfNames[0].getContentData() == "The Hobbit");
+  listOfNames = theHobbit.getNameEntries();
+  assertTrue('getContentData() returns a string', listOfNames[0].getValue() == "The Hobbit");
   hasAll = Util.areObjectsInSet(listOfNames, listOfEntries);
   hasAll = hasAll && Util.areObjectsInSet(listOfEntries, listOfNames);
   assertTrue('getName() matches getEntriesForAttribute(attributeCalledName)', hasAll);
@@ -246,13 +246,13 @@ function testCategories() {
   isInCategory = theHobbit.isInCategory(categoryCalledBook);
   assertTrue('"The Hobbit" is NOT in the category "Book"', !isInCategory);
   
-  theHobbit.addAttributeEntry(attributeCalledCategory, categoryCalledBook);
-  theWisdomOfCrowds.addAttributeEntry(attributeCalledCategory, categoryCalledBook);
-  theTransparentSociety.addAttributeEntry(attributeCalledCategory, categoryCalledBook);
+  theHobbit.addEntryForAttribute(attributeCalledCategory, categoryCalledBook);
+  theWisdomOfCrowds.addEntryForAttribute(attributeCalledCategory, categoryCalledBook);
+  theTransparentSociety.addEntryForAttribute(attributeCalledCategory, categoryCalledBook);
   isInCategory = theHobbit.isInCategory(categoryCalledBook);
   assertTrue('"The Hobbit" is in the category "Book"', isInCategory);
  
-  var allBooks = world.getListOfItemsInCategory(categoryCalledBook);
+  var allBooks = world.getItemsInCategory(categoryCalledBook);
   var hasAll = Util.areObjectsInSet([theHobbit, theWisdomOfCrowds, theTransparentSociety], allBooks);
   assertTrue('All three books are in the category "Book"', hasAll);
   
@@ -273,29 +273,29 @@ function testOrdinals() {
   var brownie = world.newItem("Brownie");  
 
   var categoryCalledFood = world.newCategory("Food");
-  apple.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
-  cupcake.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
-  brownie.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
+  apple.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
+  cupcake.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
+  brownie.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
 
-  var foodItems = world.getListOfItemsInCategory(categoryCalledFood);
+  var foodItems = world.getItemsInCategory(categoryCalledFood);
   assertTrue('Apple starts out first in the list"', foodItems[0] == apple);
   assertTrue('Cupcake starts out second in the list"', foodItems[1] == cupcake);
   assertTrue('Brownie starts out second in the list"', foodItems[2] == brownie);
 
   brownie.reorderBetween(apple, cupcake);
-  foodItems = world.getListOfItemsInCategory(categoryCalledFood);
+  foodItems = world.getItemsInCategory(categoryCalledFood);
   assertTrue('Apple is now first in the list"', foodItems[0] == apple);
   assertTrue('Brownie is now second in the list"', foodItems[1] == brownie);
   assertTrue('Cupcake is now third in the list"', foodItems[2] == cupcake);
 
   cupcake.reorderBetween(null, apple);
-  foodItems = world.getListOfItemsInCategory(categoryCalledFood);
+  foodItems = world.getItemsInCategory(categoryCalledFood);
   assertTrue('Cupcake is now first in the list"', foodItems[0] == cupcake);
   assertTrue('Apple is now second in the list"', foodItems[1] == apple);
   assertTrue('Brownie is now third in the list"', foodItems[2] == brownie);
 
   cupcake.reorderBetween(brownie, null);
-  foodItems = world.getListOfItemsInCategory(categoryCalledFood);
+  foodItems = world.getItemsInCategory(categoryCalledFood);
   assertTrue('Apple is now first in the list"', foodItems[0] == apple);
   assertTrue('Brownie is now second in the list"', foodItems[1] == brownie);
   assertTrue('Cupcake is now third in the list"', foodItems[2] == cupcake);
@@ -395,9 +395,9 @@ function testListObservation() {
   var cupcake = world.newItem("Cupcake");
 
   var categoryCalledFood = world.newCategory("Food");
-  apple.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
-  brownie.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
-  cupcake.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
+  apple.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
+  brownie.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
+  cupcake.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
 
   var tokyo = world.newItem("Tokyo");
   var seattle = world.newItem("Seattle");
@@ -407,13 +407,13 @@ function testListObservation() {
   foodObserverObject.observedListHasChanged = function (inList, inListOfChangeReports) {
     changesObservedByObject = inListOfChangeReports;
   };
-  var foodItems = world.getListOfItemsInCategory(categoryCalledFood, foodObserverObject);
+  var foodItems = world.getItemsInCategory(categoryCalledFood, foodObserverObject);
 
   var changesObservedByFunction = null;
   var foodObserverFunction = function (inList, inListOfChangeReports) {
     changesObservedByFunction = inListOfChangeReports;
   };
-  var alsoFoodItems = world.getListOfItemsInCategory(categoryCalledFood, foodObserverFunction);
+  var alsoFoodItems = world.getItemsInCategory(categoryCalledFood, foodObserverFunction);
   
   apple.addEntry("Red");
   assertTrue('foodObserverObject sees a change to apple', (changesObservedByObject != null));
@@ -449,9 +449,9 @@ function testQueries() {
 
   var categoryCalledFood = world.newCategory("Food");
   assertTrue('The category "Food" is an item', (categoryCalledFood instanceof Item));
-  apple.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
-  brownie.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
-  cupcake.addAttributeEntry(attributeCalledCategory, categoryCalledFood);
+  apple.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
+  brownie.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
+  cupcake.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
 
   var tokyo = world.newItem("Tokyo");
   var seattle = world.newItem("Seattle");
@@ -460,12 +460,12 @@ function testQueries() {
   var queryForFoods = world.newQueryForItemsByCategory(categoryCalledFood);
   var queryForCities = world.newQueryForSpecificItems([tokyo, seattle]);
   
-  var listOfFoods = world.getListOfResultItemsForQuery(queryForFoods);
+  var listOfFoods = world.getResultItemsForQuery(queryForFoods);
   hasAll = Util.areObjectsInSet([apple, brownie, cupcake], listOfFoods);
   assertTrue('Food query returns 3 foods', listOfFoods.length == 3);
   assertTrue('Food query returns all 3 foods', hasAll);
 
-  var listOfCities = world.getListOfResultItemsForQuery(queryForCities);
+  var listOfCities = world.getResultItemsForQuery(queryForCities);
   hasAll = Util.areObjectsInSet([tokyo, seattle], listOfCities);
   assertTrue('City query returns 2 cities', listOfCities.length == 2);
   assertTrue('City query returns all cities', hasAll);
@@ -473,7 +473,7 @@ function testQueries() {
   world.setItemToBeIncludedInQueryResultList(tokyo, queryForFoods);
   assertTrue('Tokyo is now a food', tokyo.isInCategory(categoryCalledFood));
 
-  listOfFoods = world.getListOfResultItemsForQuery(queryForFoods);
+  listOfFoods = world.getResultItemsForQuery(queryForFoods);
   hasAll = Util.areObjectsInSet([apple, brownie, cupcake, tokyo], listOfFoods);
   assertTrue('Food query returns 4 foods', listOfFoods.length == 4);
   assertTrue('Food query returns all 4 foods', hasAll);

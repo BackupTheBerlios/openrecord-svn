@@ -60,7 +60,7 @@ function Entry(inWorld, inUuid) {
   this.__myItem = null;
 
   this.__myAttribute = null;
-  this.__myContentData = null;
+  this.__myValue = null;
 }
 
 
@@ -77,9 +77,9 @@ function Entry(inWorld, inUuid) {
  * @scope    protected instance method
  * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry replaces. 
  * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
- * @param    inContentData    The content data to initialize the entry with. 
+ * @param    inValue    The value to initialize the entry with. 
  */
-Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inContentData) {
+Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue) {
   this._initializeIdentifiedRecord();
 
   if (inItemOrEntry instanceof Entry) {
@@ -93,10 +93,10 @@ Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inContentDat
   
   this.__myAttribute = inAttribute;
 
-  if (Util.isString(inContentData)) {
-    this.__myContentData = Util.getCleanString(inContentData);
+  if (Util.isString(inValue)) {
+    this.__myValue = Util.getCleanString(inValue);
   } else {
-    this.__myContentData = inContentData;
+    this.__myValue = inValue;
   }
 };
 
@@ -113,11 +113,11 @@ Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inContentDat
  * @scope    protected instance method
  * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry replaces. 
  * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
- * @param    inContentData    The content data to initialize the entry with. 
+ * @param    inValue    The value to initialize the entry with. 
  * @param    inTimestamp    A Date object with the creation timestamp for this entry. 
  * @param    inUserstamp    The user who created this entry. 
  */
-Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inContentData, inTimestamp, inUserstamp) {
+Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inTimestamp, inUserstamp) {
   this._rehydrateIdentifiedRecord(inTimestamp, inUserstamp);
 
   if (inItemOrEntry instanceof Entry) {
@@ -130,7 +130,7 @@ Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inContentData
   }
 
   this.__myAttribute = inAttribute;
-  this.__myContentData = inContentData;
+  this.__myValue = inValue;
 
   this.__myItem._addRehydratedEntry(this);
 };
@@ -175,28 +175,28 @@ Entry.prototype.getAttribute = function () {
 
 
 /**
- * Returns the content data that this entry holds.
+ * Returns the value that this entry holds.
  *
  * @scope    public instance method
- * @return   The content data this entry was initialized to hold.
+ * @return   The value this entry was initialized to hold.
  */
-Entry.prototype.getContentData = function () {
-  return this.__myContentData;
+Entry.prototype.getValue = function () {
+  return this.__myValue;
 };
 
 
 /**
- * Returns the content data of this entry as a string.
+ * Returns the value of this entry as a string.
  *
  * @scope    public instance method
  * @return   A string representing the literal data in this entry.
  */
 Entry.prototype.getDisplayString = function () {
   var returnString = "";
-  if (this.__myContentData instanceof Item) {
-    returnString += this.__myContentData.getDisplayName();
+  if (this.__myValue instanceof Item) {
+    returnString += this.__myValue.getDisplayName();
   } else {
-    returnString += "" + this.__myContentData;
+    returnString += "" + this.__myValue;
   }
   return returnString;
 };

@@ -112,38 +112,38 @@ Item.prototype._rehydrate = function (inTimestamp, inUserstamp) {
  * list of entries.
  *
  * @scope    public instance method
- * @param    inContentData    The content data to initialize the entry to.
+ * @param    inValue    The value to initialize the entry to.
  * @return   An entry object.
  */
-Item.prototype.addEntry = function (inContentData) {
+Item.prototype.addEntry = function (inValue) {
   var attributeCalledUnfiled = this.getWorld().getAttributeCalledUnfiled();
-  return this.addAttributeEntry(attributeCalledUnfiled, inContentData);
+  return this.addEntryForAttribute(attributeCalledUnfiled, inValue);
 };
 
 
 /**
  * Assigns an entry to an attribute in this item.
  *
- * Given an attribute and content data, creates an entry object with the 
- * content data, and sets the item's attribute to the new entry.
+ * Given an attribute and value, creates an entry object with the 
+ * value, and sets the item's attribute to the new entry.
  * For example, to make a Kermit green:
  * <pre>
- *    kermit.addAttributeEntry(color, "green");
+ *    kermit.addEntryForAttribute(color, "green");
  * </pre>
  * Attributes can always have more than one assigned entry, so
  * you can make Kermit be both blue and green by doing:
  * <pre>
- *    kermit.addAttributeEntry(color, "green");
- *    kermit.addAttributeEntry(color, "blue");
+ *    kermit.addEntryForAttribute(color, "green");
+ *    kermit.addEntryForAttribute(color, "blue");
  * </pre>
  *
  * @scope    public instance method
  * @param    inAttribute    The attribute to assign the entry to. 
- * @param    inContentData    The content data to initialize the entry with.
+ * @param    inValue    The value to initialize the entry with.
  * @return   An entry object.
  */
-Item.prototype.addAttributeEntry = function (inAttribute, inContentData) {
-  return this.replaceEntryWithAttributeEntry(null, inAttribute, inContentData);
+Item.prototype.addEntryForAttribute = function (inAttribute, inValue) {
+  return this.replaceEntryWithEntryForAttribute(null, inAttribute, inValue);
 };
 
 
@@ -152,12 +152,12 @@ Item.prototype.addAttributeEntry = function (inAttribute, inContentData) {
  *
  * @scope    public instance method
  * @param    inEntry    The old entry to be replaced.
- * @param    inContentData    The content data to initialize the new entry to.
+ * @param    inValue    The value to initialize the new entry to.
  * @return   The new replacement entry object.
  */
-Item.prototype.replaceEntry = function (inEntry, inContentData) {
+Item.prototype.replaceEntry = function (inEntry, inValue) {
   var attribute = inEntry.getAttribute();
-  return this.replaceEntryWithAttributeEntry(inEntry, attribute, inContentData);
+  return this.replaceEntryWithEntryForAttribute(inEntry, attribute, inValue);
 };
 
 
@@ -168,12 +168,12 @@ Item.prototype.replaceEntry = function (inEntry, inContentData) {
  * @scope    public instance method
  * @param    inEntry    The old entry to be replaced.
  * @param    inAttribute    The attribute to assign the entry to. 
- * @param    inContentData    The content data to initialize the new entry to.
+ * @param    inValue    The value to initialize the new entry to.
  * @return   The new replacement entry object.
  */
-Item.prototype.replaceEntryWithAttributeEntry = function (inEntry, inAttribute, inContentData) {
+Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribute, inValue) {
   var itemOrEntry = inEntry || this;
-  var entry = this.getWorld()._newEntry(itemOrEntry, inAttribute, inContentData);
+  var entry = this.getWorld()._newEntry(itemOrEntry, inAttribute, inValue);
   this.__myListOfEntries.push(entry);
   return entry;
 };
@@ -289,7 +289,7 @@ Item.prototype.getAttributes = function () {
  */
 Item.prototype.getDisplayName = function (inDefaultString) {
   var displayName = inDefaultString || "(no name)";
-  var listOfNameEntries = this.getName();
+  var listOfNameEntries = this.getNameEntries();
   if (listOfNameEntries.length > 0) {
     var primaryName = listOfNameEntries[0];
     displayName = primaryName.getDisplayString();
@@ -304,7 +304,7 @@ Item.prototype.getDisplayName = function (inDefaultString) {
  * @scope    public instance method
  * @return   A list of the entries assigned to the "name" attribute.
  */
-Item.prototype.getName = function (inDefaultString) {
+Item.prototype.getNameEntries = function (inDefaultString) {
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   return this.getEntriesForAttribute(attributeCalledName);
 };
@@ -316,7 +316,7 @@ Item.prototype.getName = function (inDefaultString) {
  * @scope    public instance method
  * @return   A list of the entries assigned to the "short name" attribute.
  */
-Item.prototype.getShortName = function (inDefaultString) {
+Item.prototype.getShortNameEntries = function (inDefaultString) {
   var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
   return this.getEntriesForAttribute(attributeCalledShortName);
 };
@@ -368,7 +368,7 @@ Item.prototype.isInCategory = function (inCategory) {
   // look at all the categories this item is assigned to, and see if one of them is "inCategory"
   for (key in entryList) {
     entry = entryList[key];
-    if (entry.getContentData() == inCategory) {
+    if (entry.getValue() == inCategory) {
       return true;
     }
   }
@@ -385,7 +385,7 @@ Item.prototype.isInCategory = function (inCategory) {
     //   Do we also need to register as an observer of something, so that if we later
     //   become a member of that category in question, then we can notify whoever
     //   is observing us?
-    if ((entry.getContentData() != this) && (entry.getContentData().isInCategory(inCategory))) {
+    if ((entry.getValue() != this) && (entry.getValue().isInCategory(inCategory))) {
       return true;
     }
   }
