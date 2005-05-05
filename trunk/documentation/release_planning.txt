@@ -78,7 +78,7 @@ Mignon |  High    | 1   iwd | UI for creating a new category
 Mignon |  High    | 1   iwd | UI for deleting a row from a table 
  Chao  |  High    | 1.5 iwd | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
  Chao  |  High    | 0.5 iwd | UI to sort a table when you click on a column header
-Brian  |  High    | 1   iwd | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
+Brian  |   done   | 1   iwd | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
 Brian  |  High    | 2   iwd | Convert UI code to use new data model
        |  High    |         | UI for entering a number literal (instead of a string literal) in a table
        |  High    |         | UI for entering references to categories or to other items

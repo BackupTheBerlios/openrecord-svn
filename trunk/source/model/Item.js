@@ -56,7 +56,9 @@ Item.prototype = new IdentifiedRecord();  // makes Item be a subclass of Identif
 function Item(inWorld, inUuid) {
   this._IdentifiedRecord(inWorld, inUuid);
   
-  this.__myListOfEntries = null;
+  // DELETE_ME
+  // this.__myListOfEntries = null;
+  this.__myHashTableOfEntryListsKeyedByAttributeUuid = {};
 }
 
 
@@ -76,7 +78,8 @@ function Item(inWorld, inUuid) {
 Item.prototype._initialize = function (inObserver) {
   this._initializeIdentifiedRecord();
 
-  this.__myListOfEntries = [];
+  // DELETE_ME
+  // this.__myListOfEntries = [];
   if (inObserver) {
     this.addObserver(inObserver);
   }
@@ -99,7 +102,8 @@ Item.prototype._initialize = function (inObserver) {
 Item.prototype._rehydrate = function (inTimestamp, inUserstamp) {
   this._rehydrateIdentifiedRecord(inTimestamp, inUserstamp);
   
-  this.__myListOfEntries = [];
+  // DELETE_ME
+  // this.__myListOfEntries = [];
 };
 
 
@@ -174,8 +178,11 @@ Item.prototype.replaceEntry = function (inEntry, inValue) {
 Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribute, inValue) {
   var itemOrEntry = inEntry || this;
   var entry = this.getWorld()._newEntry(itemOrEntry, inAttribute, inValue);
-  this.__myListOfEntries.push(entry);
+  // DELETE_ME
+  // this.__myListOfEntries.push(entry);
+  this.__addEntryToListOfEntriesForAttribute(entry);
   return entry;
+  
 };
 
 
@@ -200,6 +207,45 @@ Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribut
  * @return   A list of entry objects.
  */
 Item.prototype.getEntriesForAttribute = function (inAttribute) {
+  var listOfEntriesForAttribute = this.__myHashTableOfEntryListsKeyedByAttributeUuid[inAttribute._getUuid()];
+  if (!listOfEntriesForAttribute) {
+    listOfEntriesForAttribute = [];
+  }
+  
+  var entry;
+  var key;
+  var filter = this.getWorld().getRetrievalFilter();
+  var filteredListOfEntries = [];
+  
+  switch (filter) {
+    case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
+      for (key in listOfEntriesForAttribute) {
+        entry = listOfEntriesForAttribute[key];
+        if (!entry.hasBeenReplaced() && !entry.hasBeenDeleted()) {
+          filteredListOfEntries.push(entry);
+        }
+      }
+      break;
+    case World.RETRIEVAL_FILTER_SINGLE_USER:
+      // PENDING: This still needs to be implemented.
+      Util.assert(false);
+      break;
+    case World.RETRIEVAL_FILTER_DEMOCRATIC:
+      // PENDING: This still needs to be implemented.
+      Util.assert(false);
+      break;
+    case World.RETRIEVAL_FILTER_UNABRIDGED:
+      filteredListOfEntries = listOfEntries;
+      break;
+    default:
+      // We should never get here.  If we get here, it's an error.
+      Util.assert(false);
+      break;
+  }
+  filteredListOfEntries.sort(IdentifiedRecord.compareOrdinals);
+  return filteredListOfEntries;
+
+  /* DELETE_ME
   var listOfEntriesForAttribute = [];
   var listOfEntries = this.getEntries();
   for (var key in listOfEntries) {
@@ -211,6 +257,7 @@ Item.prototype.getEntriesForAttribute = function (inAttribute) {
   }
   listOfEntriesForAttribute.sort(IdentifiedRecord.compareOrdinals);
   return listOfEntriesForAttribute;
+  */
 };
 
 
@@ -221,6 +268,18 @@ Item.prototype.getEntriesForAttribute = function (inAttribute) {
  * @return   A list of entry objects.
  */
 Item.prototype.getEntries = function () {
+  var listOfAllEntries = [];
+  
+  for (var uuid in this.__myHashTableOfEntryListsKeyedByAttributeUuid) {
+    var listOfEntriesForAttribute = this.__myHashTableOfEntryListsKeyedByAttributeUuid[uuid];
+    for (var key in listOfEntriesForAttribute) {
+      var entry = listOfEntriesForAttribute[key];
+      listOfAllEntries.push(entry);
+    }
+  }
+  return listOfAllEntries;
+  
+/* DELETE_ME
   var filter = this.getWorld().getRetrievalFilter();
   var listOfEntries = this.__myListOfEntries;
   var filteredListOfEntries = [];
@@ -254,6 +313,7 @@ Item.prototype.getEntries = function () {
   }
   filteredListOfEntries.sort(IdentifiedRecord.compareOrdinals);
   return filteredListOfEntries;
+*/
 };
 
 
@@ -266,6 +326,15 @@ Item.prototype.getEntries = function () {
  */
 Item.prototype.getAttributes = function () {
   var listOfAttributes = [];
+  
+  for (var uuid in this.__myHashTableOfEntryListsKeyedByAttributeUuid) {
+    var attribute = this.getWorld().getItemFromUuid(uuid);
+    listOfAttributes.push(attribute);
+  }
+  return listOfAttributes;
+
+  /* DELETE_ME
+  var listOfAttributes = [];
   var listOfEntries = this.getEntries();
   for (var key in listOfEntries) {
     var entry = listOfEntries[key];
@@ -274,6 +343,7 @@ Item.prototype.getAttributes = function () {
   }
   listOfAttributes.sort(IdentifiedRecord.compareOrdinals);
   return listOfAttributes;
+  */
 };
 
 
@@ -436,9 +506,30 @@ Item.prototype.removeObserver = function (inObserver) {
  * @param    inEntry    The entry to be associated with this item. 
  */
 Item.prototype._addRehydratedEntry = function (inEntry) {
-  this.__myListOfEntries.push(inEntry);
+  this.__addEntryToListOfEntriesForAttribute(inEntry);
 };
   
+
+// -------------------------------------------------------------------
+// Private Methods
+// -------------------------------------------------------------------
+
+/**
+ * Adds an entry to the list of entries that have been set for this item.
+ * 
+ * @scope    private instance method
+ * @param    inEntry    The entry to be associated with this item. 
+ */
+Item.prototype.__addEntryToListOfEntriesForAttribute = function (inEntry) {
+  var attributeUuid = inEntry.getAttribute()._getUuid();
+  var listOfEntries = this.__myHashTableOfEntryListsKeyedByAttributeUuid[attributeUuid];
+  if (!listOfEntries) {
+    listOfEntries = [];
+    this.__myHashTableOfEntryListsKeyedByAttributeUuid[attributeUuid] = listOfEntries;
+  }
+  listOfEntries.push(inEntry);
+};
+
 
 // -------------------------------------------------------------------
 // End of file
