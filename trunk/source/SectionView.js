@@ -104,7 +104,6 @@ function SectionView(inPageView, inHTMLElement, inSection, inSectionNumber) {
 
   this._myPlugin = null;
   this._myPluginDiv = null;
-  this._myHasEverBeenDisplayedFlag = false;
   this._mySectionSummaryView = null;
   this._myHeaderView = null;
 }

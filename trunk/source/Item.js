@@ -123,6 +123,17 @@ Item.prototype.getValueListFromAttribute = function (inAttribute) {
   return (valueList || null);
 };
 
+/**
+ * Utility function to return just the first value of an item's attribute
+ */
+Item.prototype.getSingleValueFromAttribute = function(inAttribute) {
+  var valueList = this.getValueListFromAttribute(inAttribute);
+  var singleValue = "";
+  if (valueList) {
+    singleValue = SectionView.getStringForValue(valueList[0]);
+  }
+  return singleValue;
+}
 
 /**
  * Assigns a value to an attribute in this item.

@@ -47,42 +47,8 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_TABL
 // -------------------------------------------------------------------
 // TablePlugin public class constants
 // -------------------------------------------------------------------
-TablePlugin.ELEMENT_ID_CURRENT_EDIT_FIELD = "current_edit_field";
-
-
-/**
- * When the TablePlugin creates an HTML table, it sets up each HTML "td" table 
- * cell element in the table to point to a corresponding CellDelegate instance.
- *
- * @scope    private instance constructor
- */
-TablePlugin._CellDelegate = function (inRowDelegate, inCellElementId, inCellCount, inColumnNumber, inAttribute, inTablePlugin) {
-  Util.assert(inRowDelegate instanceof TablePlugin._RowDelegate);
-  Util.assert(inAttribute instanceof Item);
-  Util.assert(inTablePlugin instanceof TablePlugin);
-
-  this.myRowDelegate = inRowDelegate;
-  this.myCellElementId = inCellElementId;
-  this.myCellCount = inCellCount;
-  this.myColumnNumber = inColumnNumber;
-  this.myAttribute = inAttribute;
-  this.myTablePlugin = inTablePlugin;
-};
-
-
-/**
- * When the TablePlugin creates an HTML table, it sets up each HTML "tr" table
- * row element in the table to point to a corresponding RowDelegate instance.
- *
- * @scope    private instance constructor
- */
-TablePlugin._RowDelegate = function (inContentItem, inRowNumber) {
-  Util.assert((inContentItem === null) || (inContentItem instanceof Item));
-
-  this.myContentItem = inContentItem;
-  this.myRowNumber = inRowNumber;
-  this.myArrayOfCellDelegates = new Array();
-};
+TablePlugin.ASCENDING_GIF = "ascending.gif";
+TablePlugin.DESCENDING_GIF = "descending.gif";
 
 
 /**
@@ -95,14 +61,16 @@ TablePlugin._RowDelegate = function (inContentItem, inRowNumber) {
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  */
 TablePlugin.prototype = new View();  // makes TablePlugin be a subclass of View
-function TablePlugin(inSectionView, inHTMLElement) {
+function TablePlugin(inSectionView, inHTMLElement, inCellPrefix, inClassType, inCellClass) {
   this.setSuperview(inSectionView);
   this.setHTMLElement(inHTMLElement);  
 
-  this.myNumColumns = null;
-  this.myNumRows = null;
-  this.myArrayOfRowDelegates = new Array();
-  this.myNewItemCreatedFlag = false;
+  // PENDING should probably make this independent of sectionview
+  this.myClass = inClassType || SectionView.ELEMENT_CLASS_SIMPLE_TABLE;
+  this.myCellClass = inCellClass || SectionView.ELEMENT_CLASS_PLAIN;
+  this.myTable = null;
+  this._sortAttribute = null;
+  this._ascendingOrder = true;
 }
 
 
@@ -116,7 +84,98 @@ TablePlugin.prototype.getPluginName = function () {
   return SectionView.PLUGIN_TABLE;
 };
 
+/**
+  * Comparison function to sort table
+  */
+TablePlugin.prototype.compareItemByAttribute = function (a,b) {
+  Util.assert(this._sortAttribute != null);
+  var strA = a.getSingleValueFromAttribute(this._sortAttribute).toLowerCase();
+  var strB = b.getSingleValueFromAttribute(this._sortAttribute).toLowerCase();
+  var ascendingInt = this._ascendingOrder ? -1 : 1;
+  if (strA < strB) return ascendingInt;
+  if (strA == strB) return 0;
+  return -ascendingInt;
+}
+
+TablePlugin.prototype.fetchItems = function() {
+  // PENDING: how do we know our superview responds to getthis._listOfItems()? 
+  this._listOfItems = this.getSuperview().getListOfContentItems();
+}
+
+TablePlugin.prototype._buildAttributeHash = function() {
+  // find the union of the attribute lists of all the content items
+  var hashTableOfAttributesKeyedByUuid = {};
+  var numCols = 0;
+  for (var iKey in this._listOfItems) {
+    contentItem = this._listOfItems[iKey];
+    var listOfAttributesForItem = contentItem.getListOfAttributeUuids();
+    for (var attributeKey in listOfAttributesForItem) {
+      var attributeUuid = listOfAttributesForItem[attributeKey];
+      if (attributeUuid != Stevedore.UUID_FOR_ATTRIBUTE_CATEGORY) {
+        hashTableOfAttributesKeyedByUuid[attributeUuid] = this.getStevedore().getItemFromUuid(attributeUuid);
+      }
+    }
+    numCols++;
+  }
+  this._attributesKeyedByUuid = hashTableOfAttributesKeyedByUuid;
+  this._numberOfColumns = numCols;
+}
+
+TablePlugin.prototype._buildTableCells = function() {  
+  // add all the table body rows
+  var numRows = 1; // start from 1 to account for header row
+  for (var kKey in this._listOfItems) {
+    var contentItem = this._listOfItems[kKey];
+    var aRow = this.myTable.insertRow(numRows++); 
+    var columnCount = 0;
+    for (var lKey in this._attributesKeyedByUuid) {
+      var attribute = this._attributesKeyedByUuid[lKey];
+      this._insertCell(aRow,columnCount,contentItem,attribute);
+      columnCount += 1;
+    }
+  }  
+}
+
+TablePlugin.prototype._buildHeader = function() {
+  // add header row
+  var headerRow = this.myTable.insertRow(0);
+  for (var jKey in this._attributesKeyedByUuid) {
+    var attribute = this._attributesKeyedByUuid[jKey];
+    if (!this._sortAttribute) this._sortAttribute = attribute;
+    var aCell = document.createElement("th");
+    var headerStr = attribute.getDisplayName();
+    aCell.appendChild(document.createTextNode(headerStr));
+    if (this._sortAttribute == attribute)
+      aCell.appendChild(this.getSortIcon());
+    aCell.onclick = this.clickOnHeader.bindAsEventListener(this, attribute);
+    
+    headerRow.appendChild(aCell);
+  }
+}
+
+TablePlugin.prototype.doInitialDisplay = function() {
+  // get list of items and attributes
+  this.fetchItems();
+  this._buildAttributeHash()
   
+  //create new table, remove old table if already exists
+  if (this.myTable != null)
+    this._myHTMLElement.removeChild(this.myTable);
+  this.myTable = document.createElement("table");
+  this.myTable.className = this.myClass;
+  
+  this._buildHeader();
+
+  // sort the list of items. SIDE EFFECT, table header needs to be built before items are sorted
+  // because default _sortAttribute is specified there if not previously specificed
+  var staticThis = this;
+  this._listOfItems.sort(function(a,b) {return staticThis.compareItemByAttribute(a,b);}); // need to sort after header row added because default sort attribute is set there
+
+  this._buildTableCells();
+  
+  this._myHTMLElement.appendChild(this.myTable);
+}
+
 /**
  * Re-creates all the HTML for the TablePlugin, and hands the HTML to the 
  * browser to be re-drawn.
@@ -124,114 +183,33 @@ TablePlugin.prototype.getPluginName = function () {
  * @scope    public instance method
  */
 TablePlugin.prototype.refresh = function () {
-  var listOfStrings = [];
-  var hashTableOfAttributesKeyedByUuid = {};
-  var hashTableOfCellDelegatesKeyedByElementId = {};
-  var attribute = null;
-  var attributeUuid = null;
-  var contentItem = null;
-  var columnCount = 0;
-  
-  // find the union of the attribute lists of all the content items
-  // PENDING: how do we know our superview responds to getListOfContentItems()? 
-  var listOfContentItems = this.getSuperview().getListOfContentItems();
-  for (var iKey in listOfContentItems) {
-    contentItem = listOfContentItems[iKey];
-    var listOfAttributesForItem = contentItem.getListOfAttributeUuids();
-    for (var attributeKey in listOfAttributesForItem) {
-      attributeUuid = listOfAttributesForItem[attributeKey];
-      if (attributeUuid != Stevedore.UUID_FOR_ATTRIBUTE_CATEGORY) {
-        hashTableOfAttributesKeyedByUuid[attributeUuid] = this.getStevedore().getItemFromUuid(attributeUuid);
-      }
-    }
-  }
-
-  // add the table header row
-  listOfStrings.push("<table class=\"" + SectionView.ELEMENT_CLASS_SIMPLE_TABLE + "\">");
-  listOfStrings.push("<tr>");
-  this.myNumColumns = 0;
-  for (var jKey in hashTableOfAttributesKeyedByUuid) {
-    attribute = hashTableOfAttributesKeyedByUuid[jKey];
-    this.myNumColumns += 1;
-    listOfStrings.push("<th>" + attribute.getDisplayName() + "</th>");
-  }
-  listOfStrings.push("</tr>");
-  
-  // add all the table body rows
-  var cellCount = 0;
-  var cellIdPrefix = SectionView.ELEMENT_ID_CELL_PREFIX + this.getSuperview().mySectionNumber + SectionView.ELEMENT_ID_CELL_MIDFIX;
-  var cellId = "";
-  this.myNumRows = 0;
-  for (var kKey in listOfContentItems) {
-    contentItem = listOfContentItems[kKey];
-    listOfStrings.push("<tr>");
-    var rowDelegate = new TablePlugin._RowDelegate(contentItem, this.myNumRows);
-    this.myArrayOfRowDelegates[this.myNumRows] = rowDelegate;
-    this.myNumRows += 1;
-    columnCount = 0;
-    for (var lKey in hashTableOfAttributesKeyedByUuid) {
-      attribute = hashTableOfAttributesKeyedByUuid[lKey];
-      cellCount += 1;
-      cellId = cellIdPrefix + cellCount;
-      var valueList = contentItem.getValueListFromAttribute(attribute);
-      var string = "";
-      if (valueList) {
-        string = SectionView.getStringForValue(valueList[0]);
-      }
-      if (this.isInEditMode()) {
-        listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.getSuperview().mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TablePlugin.clickOnCell(event)\">" + string + "</td>");
-        var cellDelegate = new TablePlugin._CellDelegate(rowDelegate, cellId, cellCount, columnCount, attribute, this);
-        rowDelegate.myArrayOfCellDelegates[columnCount] = cellDelegate;
-        hashTableOfCellDelegatesKeyedByElementId[cellId] = cellDelegate;
-      } else {
-        // if (columnCount == 0) {
-        //   string = "<a href=\"" + RootView.URL_HASH_ITEM_PREFIX + contentItem.getUuid() + "\" onclick=\"RootView.clickOnLocalLink(event)\">" + string + "</a>";
-        // }
-        listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\">" + string + "</td>");
-      }
-      columnCount += 1;
-    }
-    listOfStrings.push("</tr>");
-  }  
-
-  // if we're in edit mode, add a row at the bottom of the table for entering new items
-  var firstCell = true;
-  var lastRowDelegate = new TablePlugin._RowDelegate(null, this.myNumRows);
-  this.myArrayOfRowDelegates[this.myNumRows] = lastRowDelegate;
-  this.myNumRows += 1;
-  if (this.isInEditMode()) {
-    listOfStrings.push("<tr>");
-    columnCount = 0;
-    for (var mKey in hashTableOfAttributesKeyedByUuid) {
-      attribute = hashTableOfAttributesKeyedByUuid[mKey];
-      var contentString = (firstCell) ? "&gt;" : "";
-      firstCell = false;
-      cellCount += 1;
-      cellId = cellIdPrefix + cellCount;
-      listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_NEW_ITEM + "\" id=\"" + cellId + "\" " + SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER + "=\"" + this.getSuperview().mySectionNumber + "\" " + SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER + "=\"" + cellCount + "\" onclick=\"TablePlugin.clickOnCell(event)\">" + contentString + "</td>");
-      var lastRowCellDelegate = new TablePlugin._CellDelegate(lastRowDelegate, cellId, cellCount, columnCount, attribute, this);
-      lastRowDelegate.myArrayOfCellDelegates[columnCount] = lastRowCellDelegate;
-      hashTableOfCellDelegatesKeyedByElementId[cellId] = lastRowCellDelegate;
-      columnCount += 1;
-    }
-    listOfStrings.push("</tr>");
-  }
-
-
-  listOfStrings.push("</table>");
-  
-  // write out all the new content   
-  var finalString = listOfStrings.join("");
-  this.getHTMLElement().innerHTML = finalString;
-  
-  // attach back-pointers to the newly created UI elements
-  for (var elementId in hashTableOfCellDelegatesKeyedByElementId) {
-    var aCellDelegate = hashTableOfCellDelegatesKeyedByElementId[elementId];
-    var cellElement = document.getElementById(elementId);
-    cellElement.mydelegate = aCellDelegate;
+  if (!this._myHasEverBeenDisplayedFlag) {
+    this.doInitialDisplay();
+  } else {
+    var a = 1;
+  // PENDING new content model with obversable queries
   }
 };
-  
+
+/**
+  * returns the right image name for the header column that is being sorted
+  */
+TablePlugin.prototype.getSortIcon = function () {
+  var imageName = this._ascendingOrder ? TablePlugin.ASCENDING_GIF : TablePlugin.DESCENDING_GIF;
+  var image =  Util.getImage(imageName);
+  image.align = "middle";
+  return image;
+}
+
+TablePlugin.prototype._insertCell = function(row, col, item, attribute, keyFunc) {
+  var aCell = row.insertCell(col);
+  aCell.className = this.myCellClass;
+  var aTextView = new TextView(this, aCell, item, attribute, this.myCellClass);
+  aTextView.refresh();
+  aCell.or_textView = aTextView;
+  if (this.isInEditMode())
+    aCell.onkeypress = this.keyPressOnEditField.bindAsEventListener(this, aTextView);
+}
 
 /**
  * Does final clean-up.
@@ -242,6 +220,23 @@ TablePlugin.prototype.endOfLife = function () {
   this.getHTMLElement().innerHTML = "";
 };
 
+/**
+ * Called when the user clicks on table header. Resorts table accordingly.
+ * 
+ * @scope    public class method
+ */
+TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
+  if (clickAttribute == this._sortAttribute) {
+    this._ascendingOrder = !this._ascendingOrder;
+  }
+  else {
+    this._sortAttribute = clickAttribute;
+  };
+  this.doInitialDisplay();
+}
+  
+  
+// FOLLOWING methods are no longer used
 
 /**
  * Called when the user clicks on a table cell.
@@ -371,9 +366,8 @@ TablePlugin.leaveEditField = function () {
  * 
  * @scope    public class method
  */
-TablePlugin.keyPressOnEditField = function (inEventObject) {
+TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) {
   var eventObject = inEventObject;
-  if (!eventObject) { eventObject = window.event; }
   var asciiValueOfKey = eventObject.keyCode;
   var shiftKeyPressed = eventObject.shiftKey;
   
@@ -408,48 +402,45 @@ TablePlugin.keyPressOnEditField = function (inEventObject) {
   }
   
   if (move) {
-    var currentEditField = document.getElementById(TablePlugin.ELEMENT_ID_CURRENT_EDIT_FIELD);
-    Util.assert(currentEditField == Util.getTargetFromEvent(eventObject));
-
-    var cellElement = currentEditField.parentNode;
-    var cellDelegate = cellElement.mydelegate;
-    var tablePlugin = cellDelegate.myTablePlugin;
-    var sectionView = tablePlugin.mySectionView;
+    var cellElement = aTextView.getHTMLElement();
     var userHitReturnInLastRow = false;
-    var nextCellDelegate = null;
     var shiftBy;
+    var numCols = this._numberOfColumns;
+    var numRows = this._listOfItems.length;
+    var nextCell;
+    var htmlRow = cellElement.parentNode;
     
     if (move == MOVE_LEFT || move == MOVE_RIGHT) {
       shiftBy = (move == MOVE_LEFT) ? -1 : 1;
-      var nextColumnNumber = cellDelegate.myColumnNumber + shiftBy;
+      var nextColumnNumber = cellElement.cellIndex + shiftBy;
       // PENDING: We should be able to do this in one line, using a modulo operator
       if (nextColumnNumber < 0) {
-        nextColumnNumber = (tablePlugin.myNumColumns - 1);
+        nextColumnNumber = (numCols - 1);
       }
-      if (nextColumnNumber >= tablePlugin.myNumColumns) {
+      if (nextColumnNumber >= numCols) {
         nextColumnNumber = 0;
       }
-      nextCellDelegate = cellDelegate.myRowDelegate.myArrayOfCellDelegates[nextColumnNumber];
+      nextCell = htmlRow.cells[nextColumnNumber];
     }
     
     if (move == MOVE_UP || move == MOVE_DOWN) {
       shiftBy = (move == MOVE_UP) ? -1 : 1;
-      var nextRowNumber = cellDelegate.myRowDelegate.myRowNumber + shiftBy;
-      if (nextRowNumber < 0) {
-        nextRowNumber = (tablePlugin.myNumRows - 1);
+      var nextRowNumber = htmlRow.rowIndex + shiftBy;
+      if (nextRowNumber < 1) {
+        nextRowNumber = numRows;
       }
-      if (nextRowNumber >= tablePlugin.myNumRows) {
-        nextRowNumber = 0;
+      if (nextRowNumber > numRows) {
+        nextRowNumber = 1;
         userHitReturnInLastRow = true;
       }
-      var nextRowDelegate = tablePlugin.myArrayOfRowDelegates[nextRowNumber];
-      nextCellDelegate = nextRowDelegate.myArrayOfCellDelegates[cellDelegate.myColumnNumber];
+      var nextRow = this.myTable.rows[nextRowNumber];
+      nextCell = nextRow.cells[cellElement.cellIndex];
     }
     
-    var nextCellId = nextCellDelegate.myCellElementId;    
-    var nextCell = document.getElementById(nextCellId);
-    TablePlugin.leaveEditField();
-    if (userHitReturnInLastRow && tablePlugin.myNewItemCreatedFlag) {
+    aTextView.stopEditing();
+    var nextTextView = nextCell.or_textView;
+    nextTextView.startEditing();
+/*    if (userHitReturnInLastRow && tablePlugin.myNewItemCreatedFlag) {
       tablePlugin.myNewItemCreatedFlag = false;
       tablePlugin.refresh();
       tablePlugin.startEditingInCellForNewItemAtColumn(cellDelegate.myColumnNumber);
@@ -457,8 +448,9 @@ TablePlugin.keyPressOnEditField = function (inEventObject) {
       if (nextCell) {
         TablePlugin.startEditingInCell(nextCell);
       }
-    }
+    } */
   }
+  return !move;
 };
 
 

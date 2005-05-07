@@ -283,6 +283,27 @@ Tasks we want to defer until after release 0.1
     place, rather than relying on client JavaScript to do all
     the work.
 ---------------------------------------------------
++ Rationalize CSS style sheets
+    Need to figure out a consistent "style" for using style sheets applicable
+    to the way we architect our view widgets
+---------------------------------------------------
++ Bug: Figure out why swapping between editField and textNode is causing slight visual padding
+---------------------------------------------------
++ Q: Should we consider subclassing from DOM objects? e.g. TablePlugin can be subclassed from HTMLTableElement?
+---------------------------------------------------
++ Q: Should getListofContentItems() in superview be replaced by an argument into plugin's constructor
+  Also, should plugin get a CSS class?
+---------------------------------------------------
++ Q: Should we decouple plugins from SectionView? in general, should we make objects less tightly coupled?
+  Parent objects can know about children objects, but not vice versa.
+---------------------------------------------------
++ Q: How exactly should entering new items UI work? Not clear when an item is saved
+---------------------------------------------------
++ Bug: up down arrows not working for table editing. Not sure why
+---------------------------------------------------
 
+
+
+   
 
 

@@ -1,7 +1,7 @@
 // Repository dump, in JSON format
 Stevedore._ourRepositoryInJsonFormat = {
   "format": "2005_MARCH_ITEM_CENTRIC_LIST", 
-  "timestamp": "Thu Apr 14 2005 13:52:41 GMT-0700 (Pacific Standard Time)", 
+  "timestamp": "Fri May 06 2005 15:32:00 GMT-0700 (PDT)", 
   "data": [
   { "100": { "type": "Uuid", "value": 101 },
     /* Name       */   "102": [{ "type": "StringValue", "value": "Short Name" }, ],
@@ -89,7 +89,7 @@ Stevedore._ourRepositoryInJsonFormat = {
     /* Name       */   "102": [{ "type": "StringValue", "value": "All Books" }, ],
     /* Plugin Nam */   "112": [{ "type": "StringValue", "value": "Table" }, ],
     /* Query      */   "109": [{ "type": "ForeignUuid", "value": 3011 }, ],
-    /* Summary    */   "103": [{ "type": "StringValue", "value": "This section shows a list of all the books in the repository." }, ],
+    /* Summary    */   "103": [{ "type": "StringValue", "value": "This section shows a list of all the books in the repositories." }, ],
   },
   { "100": { "type": "Uuid", "value": 3020 },
     /* Category   */   "105": [{ "type": "ForeignUuid", "value": 146 }, ],
@@ -382,7 +382,7 @@ Stevedore._ourRepositoryInJsonFormat = {
   },
   { "100": { "type": "Uuid", "value": 5205 },
     /* Category   */   "105": [{ "type": "ForeignUuid", "value": 3104 }, ],
-    /* Name       */   "102": [{ "type": "StringValue", "value": "Deceit and Denial" }, ],
+    /* Name       */   "102": [{ "type": "StringValue", "value": "Deceit and Denials" }, ],
     /* Author     */   "3101": [{ "type": "StringValue", "value": "Gerald Markowitz and David Rosner" }, ],
     /* Publisher  */   "3102": [{ "type": "StringValue", "value": "University of California" }, ],
     /* ISBN       */   "3103": [{ "type": "StringValue", "value": "0520240634" }, ],

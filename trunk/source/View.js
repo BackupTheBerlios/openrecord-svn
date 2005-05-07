@@ -45,6 +45,8 @@ function View() {
   // alert("View constructor");
   this._mySuperview = null;
   this._myHTMLElement = null;
+  this._myHasEverBeenDisplayedFlag = false;
+  
 }
 
 

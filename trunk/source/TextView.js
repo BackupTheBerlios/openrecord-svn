@@ -66,11 +66,10 @@ function TextView(theSuperview, theElement, theItem, theAttribute, theClassType,
   this.textItem = theItem;
   this.attribute = theAttribute;
   this.editField = null;
-  this.textObj = null;
   this.classType = theClassType;
   this.isMultiLine = isMultiLine;
   this.isEditing = false;
-  this._myHasEverBeenDisplayedFlag = false;
+  this._proxyOnKeyFunction = null;
 }
 
 
@@ -101,12 +100,7 @@ TextView.prototype.refresh = function() {
 TextView.prototype.doInitialDisplay = function() {
   var htmlElement = this.getHTMLElement();
   
-  htmlElement.className = TextView.ELEMENT_CLASS_TEXT_BLOCK;
-  var textList = this.textItem.getValueListFromAttribute(this.attribute);
-  var textString = "";
-  if (textList && textList[0]) {
-    textString = textList[0];
-  }
+  var textString = this.textItem.getSingleValueFromAttribute(this.attribute);
   // PENDING: need to deal with multi valued attrs
   // for (var i in textList) {
   //   textString = textList[i] + "\n" + textString;
@@ -115,8 +109,7 @@ TextView.prototype.doInitialDisplay = function() {
   this.textNode = document.createTextNode(textString);
   htmlElement.appendChild(this.textNode);
 
-  var listener = this;
-  Util.addEventListener(htmlElement, "click", function(event) { listener.onClick(event);});
+  htmlElement.onclick =  this.onClick.bindAsEventListener(this);
     
   this._myHasEverBeenDisplayedFlag = true;
 };
@@ -141,14 +134,15 @@ TextView.prototype.startEditing = function() {
       this.editField = editField;
       editField.className = this.classType;
       var listener = this; 
-      Util.addEventListener(editField, "blur", function(event) {listener.onBlur(event);});
-      Util.addEventListener(editField, "keyup", function(event) {listener.onKeyUp(event);});
+      editField.onblur = this.onBlur.bindAsEventListener(this);
+      editField.onkeypress = this.onKeyPress.bindAsEventListener(this);
       editField.defaultValue = this.textNode.data;
     }
-    editField.style.height = this.getHTMLElement().offsetHeight + "px";
+    editField.style.width = this.getHTMLElement().offsetWidth + "px";    
+    editField.style.height = (this.getHTMLElement().offsetHeight) + "px";
     this.getHTMLElement().replaceChild(editField, this.textNode);
-    editField.focus();
     editField.select();
+    //editField.focus();
     this.isEditing = true;
   }
 };
@@ -183,6 +177,10 @@ TextView.prototype.onClick = function(inEventObject) {
  * @param    inEventObject    An event object. 
  */
 TextView.prototype.onBlur = function(inEventObject) {
+  this.stopEditing();
+};
+
+TextView.prototype.stopEditing = function() {
   if (this.isEditing) {
     var newText = this.editField.value;
     this.textItem.clear(this.attribute);
@@ -191,8 +189,7 @@ TextView.prototype.onBlur = function(inEventObject) {
     this.getHTMLElement().replaceChild(this.textNode, this.editField);
     this.isEditing = false;
   }
-};
-
+}
 
 /**
  * Called when the user types in editField
@@ -200,7 +197,7 @@ TextView.prototype.onBlur = function(inEventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-TextView.prototype.onKeyUp = function(inEventObject) {
+TextView.prototype.onKeyPress = function(inEventObject) {
   var editField = this.editField;
 
   // PENDING: 

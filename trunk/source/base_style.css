@@ -407,7 +407,7 @@ div.content_area {
 }
 
 td.plain {
-  text-align: left;
+	text-align: left;
 }
 
 td.yup {
@@ -448,13 +448,14 @@ td.total {
   background: rgb(90%, 90%, 90%);
 }
 
-input.text_field_in_table_cell {
-  border-width: 0px;
-  width: 100%;
-  background: rgb(100%, 100%, 40%);
+input.plain {
+	border: 0px;
+	width: 100%;
+	background: rgb(100%, 100%, 40%);
+	padding: 0px;
 }
 
-input.text_field_in_table_cell:hover {
+input.plain:hover {
   border-width: 0px;
   width: 100%;
   background: rgb(100%, 100%, 40%);
@@ -537,6 +538,7 @@ li.detail {
   /* overflow: visible; */
 }
 
+/* obsolete? 
 div.editmode .text_block:hover {
   background: rgb(100%, 100%, 70%);
   border: thin solid rgb(70%, 70%, 70%);
@@ -548,7 +550,7 @@ div.editmode .text_block {
 
 div.viewmode .text_block {
   border: solid thin rgb(100%, 100%, 100%); 
-}
+} */
 
 /****************************************/
 /* PENDING -- time to delete these?     */

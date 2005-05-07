@@ -66,7 +66,6 @@ function PageView(inRootView, inHTMLElement, inPage) {
   this.setSuperview(inRootView);
   this.setHTMLElement(inHTMLElement);
   this.myPage = inPage;
-  this._myHasEverBeenDisplayedFlag = false;
   
   this._myPageSummaryView = null;
   this._myHeaderText = null;
