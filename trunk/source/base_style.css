@@ -526,6 +526,11 @@ li.detail {
 
 
 /****************************************/
+/* Control span styles                     */
+.control_span {
+  font-size: x-small;
+}
+/****************************************/
 /* Text view styles                     */
 
 .text_view {

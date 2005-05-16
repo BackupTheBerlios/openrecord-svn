@@ -42,7 +42,6 @@
 // -------------------------------------------------------------------
 RootView.ELEMENT_CLASS_PAGE_EDIT_BUTTON = "page_edit_button";
 
-RootView.ELEMENT_ID_EDIT_BUTTON = "edit_button";
 RootView.ELEMENT_ID_DEBUG_TEXTAREA = "debug_textarea";
 
 RootView.URL_PAGE_PREFIX = "page";
@@ -52,6 +51,9 @@ RootView.URL_HASH_ITEM_PREFIX = "#" + RootView.URL_ITEM_PREFIX;
 
 RootView.ELEMENT_CLASS_EDIT_MODE = "editmode";
 RootView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
+
+RootView.COOKIE_NAME = "user";
+RootView.CONTROL_SPAN_CLASS = "control_span"
 
 
 // -------------------------------------------------------------------
@@ -75,10 +77,11 @@ function RootView(inStevedore) {
 
   // instance properties
   this._myStevedore = inStevedore;
-  this.myEditButtonId = RootView.ELEMENT_ID_EDIT_BUTTON;
   this.myEditMode = false;
   this.myNumberOfCallsToDebug = 0;
   this.myDebugTextarea = null;
+  this.myCookie = new Cookie(document,RootView.COOKIE_NAME,10*365*24)
+  this.myCookie.load();
   
   this._myHashTableOfItemViewsKeyedByUuid = {};
   this._myHashTableOfPageViewsKeyedByUuid = {};
@@ -105,6 +108,7 @@ function RootView(inStevedore) {
   var logoSpan = View.createAndAppendElement(headerP, "span", "logo");
   logoSpan.innerHTML = '<a href="http://openrecord.org"><span class="logostart">open</span><span class="logomiddle">record</span><span class="logoend">.org</span></a>';
   var mainControlSpan = View.createAndAppendElement(headerP, "span", null, "main_control_span");
+  mainControlSpan.className = RootView.CONTROL_SPAN_CLASS;
   View.createAndAppendElement(headerP, "br");
   var navbarDiv = View.createAndAppendElement(rootDiv, "div", "navbar");
   var contentAreaDiv = View.createAndAppendElement(rootDiv, "div", "content_area");
@@ -254,24 +258,79 @@ RootView.prototype.display = function () {
  * @scope    public instance method
  */
 RootView.prototype.displayControlSpan = function () {
-  Util.assert(this.myMainControlSpanElement instanceof HTMLSpanElement);
+  var mySpan = this.myMainControlSpanElement;
+  Util.assert(mySpan instanceof HTMLSpanElement);
+  for (var i = mySpan.childNodes.length-1;i >= 0; i--) {
+    mySpan.removeChild(mySpan.childNodes[i]);
+  }
 
-  var listOfStrings = [];
-  
-  var buttonValue = (this.myEditMode) ? "Save" : "Edit";
-  listOfStrings.push("<input type=\"button\" class=\"" + RootView.ELEMENT_CLASS_PAGE_EDIT_BUTTON + "\" id=\"" + this.myEditButtonId + "\" name=\"editbutton\" value=\"" + buttonValue + "\"></input>");
-
-  // write out the new control span content 
-  var finalString = listOfStrings.join("");
-  this.myMainControlSpanElement.innerHTML = finalString;
-
-  // add event handlers for the newly created control span UI elements
-  var editButton = document.getElementById(this.myEditButtonId);
-  var listener = this;
-  Util.addEventListener(editButton, "click",
-    function(event) { listener.clickOnEditButton(event);});
+  var username = this.myCookie.username;
+  var knownUser = username != null;
+  if (!knownUser) {username = "guest. Your username: "};
+  var welcomeNode = document.createTextNode("Hello, " + username);
+  mySpan.appendChild(welcomeNode);
+  if (knownUser) { 
+    welcomeNode.appendData(". ");
+    var signoutLink = document.createElement("a");
+    signoutLink.appendChild(document.createTextNode("Sign out"));
+    signoutLink.onclick = this.clickOnSignoutButton.bindAsEventListener(this);
+    mySpan.appendChild(signoutLink);
+    var editButton = document.createElement("input");
+    editButton.type = "button";
+    editButton.value = (this.myEditMode) ? "Save" : "Edit";
+    editButton.onclick = this.clickOnEditButton.bindAsEventListener(this);
+    mySpan.appendChild(editButton);
+  }
+  else {
+    this.usernameInput = document.createElement("input");
+    this.usernameInput.size=10;
+    this.usernameInput.onkeypress = this.signinKeyPress.bindAsEventListener(this);
+    var signinButton = document.createElement("input");
+    signinButton.value = "Sign in";
+    signinButton.type = "button";
+    signinButton.onclick = this.clickOnSignInButton.bindAsEventListener(this);
+    mySpan.appendChild(this.usernameInput);
+    mySpan.appendChild(signinButton)
+  }
 };
 
+RootView.prototype.clickOnSignoutButton = function(inEventObject) {
+// called when sign out button is clicked
+  if (this.myEditMode) {this.setEditMode(false)};
+  this.myCookie.username = null;
+  this.myCookie.store();
+  this.displayControlSpan();
+}
+
+RootView.prototype.signinKeyPress = function(inEventObject) {
+// called when sign in input field is typed with keystroke
+// see if <return> is pressed, if so, similate clicking on sign in button
+  if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
+    this.clickOnSignInButton(inEventObject);
+  }
+}
+
+RootView.prototype.clickOnSignInButton = function(inEventObject) {
+// called when sign in button is clicked
+  function isValidUsername(username) {
+    // PENDING: hard coded to validate for alphanumeric usernames of 3 or more characters
+    if (!username) return false;
+    return username.search(/\w{3,}/) >= 0;
+  }
+  
+  var newUsername = this.usernameInput.value;
+  if (isValidUsername(newUsername)) {
+    this.myCookie.username = newUsername;
+    this.myCookie.store();
+    this.displayControlSpan();
+  }
+  else {
+    var newErrorNode = document.createTextNode("\n Your username must be 3 or more alphanumeric characters!");
+    if (this.errorNode) {this.myMainControlSpanElement.replaceChild(newErrorNode,this.errorNode)}
+    else {this.myMainControlSpanElement.appendChild(newErrorNode) }
+    this.errorNode = newErrorNode;
+  }
+}
 
 /**
  * Re-creates the HTML for the Navbar, and hands the HTML to the browser 
@@ -437,23 +496,27 @@ RootView.clickOnLocalLink = function (inEventObject) {
  * @param    inEventObject    An event object. 
  */
 RootView.prototype.clickOnEditButton = function (inEventObject) {
-  var stevedore = this.getStevedore();
-  if (this.myEditMode) {
-    stevedore.endTransaction();
-    window.document.body.style.cursor = "auto";
-  } else {
-    stevedore.beginTransaction();
-    window.document.body.style.cursor = "crosshair";
-  }
-  this.myEditMode = !this.myEditMode;
-  this.display();
-  // this.displayTextInDebugTextarea(this.myEditMode);
-  if (!this.myEditMode && window.location && (window.location.protocol == "file:")) {
-    RootView.displayTextInDebugTextarea(stevedore._getJsonStringRepresentingAllItems());
-  }
+  this.setEditMode(!this.myEditMode);
 };
 
-
+RootView.prototype.setEditMode = function (newVal) {
+  if (newVal != this.myEditMode) {
+    var stevedore = this.getStevedore();
+    if (this.myEditMode) {
+      stevedore.endTransaction();
+      window.document.body.style.cursor = "auto";
+    } else {
+      stevedore.beginTransaction();
+      window.document.body.style.cursor = "crosshair";
+    }
+    this.myEditMode = !this.myEditMode;
+    this.display();
+    // this.displayTextInDebugTextarea(this.myEditMode);
+    if (!this.myEditMode && window.location && (window.location.protocol == "file:")) {
+      RootView.displayTextInDebugTextarea(stevedore._getJsonStringRepresentingAllItems());
+    }
+  }
+}
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------
