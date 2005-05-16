@@ -103,9 +103,9 @@ TablePlugin.prototype.fetchItems = function() {
 }
 
 TablePlugin.prototype._buildAttributeHash = function() {
+// create a hashtable consisting of all the attributes of the content items in this table
   // find the union of the attribute lists of all the content items
   var hashTableOfAttributesKeyedByUuid = {};
-  var numCols = 0;
   for (var iKey in this._listOfItems) {
     contentItem = this._listOfItems[iKey];
     var listOfAttributesForItem = contentItem.getListOfAttributeUuids();
@@ -115,13 +115,12 @@ TablePlugin.prototype._buildAttributeHash = function() {
         hashTableOfAttributesKeyedByUuid[attributeUuid] = this.getStevedore().getItemFromUuid(attributeUuid);
       }
     }
-    numCols++;
   }
   this._attributesKeyedByUuid = hashTableOfAttributesKeyedByUuid;
-  this._numberOfColumns = numCols;
 }
 
-TablePlugin.prototype._buildTableCells = function() {  
+TablePlugin.prototype._buildTableBody = function() {  
+// constructs the table body
   // add all the table body rows
   var numRows = 1; // start from 1 to account for header row
   for (var kKey in this._listOfItems) {
@@ -136,9 +135,11 @@ TablePlugin.prototype._buildTableCells = function() {
   }  
 }
 
+// construct the table header
 TablePlugin.prototype._buildHeader = function() {
   // add header row
   var headerRow = this.myTable.insertRow(0);
+  var numCols = 0;
   for (var jKey in this._attributesKeyedByUuid) {
     var attribute = this._attributesKeyedByUuid[jKey];
     if (!this._sortAttribute) this._sortAttribute = attribute;
@@ -150,7 +151,9 @@ TablePlugin.prototype._buildHeader = function() {
     aCell.onclick = this.clickOnHeader.bindAsEventListener(this, attribute);
     
     headerRow.appendChild(aCell);
+    numCols++;
   }
+  this._numberOfColumns = numCols;
 }
 
 TablePlugin.prototype.doInitialDisplay = function() {
@@ -171,7 +174,7 @@ TablePlugin.prototype.doInitialDisplay = function() {
   var staticThis = this;
   this._listOfItems.sort(function(a,b) {return staticThis.compareItemByAttribute(a,b);}); // need to sort after header row added because default sort attribute is set there
 
-  this._buildTableCells();
+  this._buildTableBody();
   
   this._myHTMLElement.appendChild(this.myTable);
 }
@@ -201,7 +204,10 @@ TablePlugin.prototype.getSortIcon = function () {
   return image;
 }
 
-TablePlugin.prototype._insertCell = function(row, col, item, attribute, keyFunc) {
+// Insert a table cell into table's row & col, with data from a given item and attribute
+// Each table cell is displayed with a TextView object
+// The HTML table cell links to the TextView object with the attribute "or_textView"
+TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   var aCell = row.insertCell(col);
   aCell.className = this.myCellClass;
   var aTextView = new TextView(this, aCell, item, attribute, this.myCellClass);
@@ -280,6 +286,8 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
   }
   
   if (move) {
+    Util.isNumber(this._numberOfColumns);
+    Util.isArray(this._listOfItems);
     var cellElement = aTextView.getHTMLElement();
     var userHitReturnInLastRow = false;
     var shiftBy;
@@ -290,20 +298,14 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
     
     if (move == MOVE_LEFT || move == MOVE_RIGHT) {
       shiftBy = (move == MOVE_LEFT) ? -1 : 1;
-      var nextColumnNumber = cellElement.cellIndex + shiftBy;
-      // PENDING: We should be able to do this in one line, using a modulo operator
-      if (nextColumnNumber < 0) {
-        nextColumnNumber = (numCols - 1);
-      }
-      if (nextColumnNumber >= numCols) {
-        nextColumnNumber = 0;
-      }
+      var nextColumnNumber = (cellElement.cellIndex + shiftBy) % numCols
       nextCell = htmlRow.cells[nextColumnNumber];
     }
     
     if (move == MOVE_UP || move == MOVE_DOWN) {
       shiftBy = (move == MOVE_UP) ? -1 : 1;
       var nextRowNumber = htmlRow.rowIndex + shiftBy;
+      // can't use modulo because of table header row
       if (nextRowNumber < 1) {
         nextRowNumber = numRows;
       }
