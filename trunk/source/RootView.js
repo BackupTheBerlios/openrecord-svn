@@ -53,7 +53,7 @@ RootView.ELEMENT_CLASS_EDIT_MODE = "editmode";
 RootView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
 
 RootView.COOKIE_NAME = "user";
-RootView.CONTROL_SPAN_CLASS = "control_span"
+RootView.CONTROL_SPAN_CLASS = "control_span";
 
 
 // -------------------------------------------------------------------
@@ -80,7 +80,7 @@ function RootView(inStevedore) {
   this.myEditMode = false;
   this.myNumberOfCallsToDebug = 0;
   this.myDebugTextarea = null;
-  this.myCookie = new Cookie(document,RootView.COOKIE_NAME,10*365*24)
+  this.myCookie = new Cookie(document,RootView.COOKIE_NAME,10*365*24);
   this.myCookie.load();
   
   this._myHashTableOfItemViewsKeyedByUuid = {};
@@ -260,13 +260,13 @@ RootView.prototype.display = function () {
 RootView.prototype.displayControlSpan = function () {
   var mySpan = this.myMainControlSpanElement;
   Util.assert(mySpan instanceof HTMLSpanElement);
-  for (var i = mySpan.childNodes.length-1;i >= 0; i--) {
+  for (var i = mySpan.childNodes.length-1;i >= 0; --i) {
     mySpan.removeChild(mySpan.childNodes[i]);
   }
 
   var username = this.myCookie.username;
-  var knownUser = username != null;
-  if (!knownUser) {username = "guest. Your username: "};
+  var knownUser = username !== null;
+  if (!knownUser) {username = "guest. Your username: ";}
   var welcomeNode = document.createTextNode("Hello, " + username);
   mySpan.appendChild(welcomeNode);
   if (knownUser) { 
@@ -290,17 +290,17 @@ RootView.prototype.displayControlSpan = function () {
     signinButton.type = "button";
     signinButton.onclick = this.clickOnSignInButton.bindAsEventListener(this);
     mySpan.appendChild(this.usernameInput);
-    mySpan.appendChild(signinButton)
+    mySpan.appendChild(signinButton);
   }
 };
 
 RootView.prototype.clickOnSignoutButton = function(inEventObject) {
 // called when sign out button is clicked
-  if (this.myEditMode) {this.setEditMode(false)};
+  if (this.myEditMode) {this.setEditMode(false);}
   this.myCookie.username = null;
   this.myCookie.store();
   this.displayControlSpan();
-}
+};
 
 RootView.prototype.signinKeyPress = function(inEventObject) {
 // called when sign in input field is typed with keystroke
@@ -308,13 +308,13 @@ RootView.prototype.signinKeyPress = function(inEventObject) {
   if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
     this.clickOnSignInButton(inEventObject);
   }
-}
+};
 
 RootView.prototype.clickOnSignInButton = function(inEventObject) {
 // called when sign in button is clicked
   function isValidUsername(username) {
     // PENDING: hard coded to validate for alphanumeric usernames of 3 or more characters
-    if (!username) return false;
+    if (!username) {return false;}
     return username.search(/\w{3,}/) >= 0;
   }
   
@@ -326,11 +326,11 @@ RootView.prototype.clickOnSignInButton = function(inEventObject) {
   }
   else {
     var newErrorNode = document.createTextNode("\n Your username must be 3 or more alphanumeric characters!");
-    if (this.errorNode) {this.myMainControlSpanElement.replaceChild(newErrorNode,this.errorNode)}
-    else {this.myMainControlSpanElement.appendChild(newErrorNode) }
+    if (this.errorNode) {this.myMainControlSpanElement.replaceChild(newErrorNode,this.errorNode);}
+    else {this.myMainControlSpanElement.appendChild(newErrorNode); }
     this.errorNode = newErrorNode;
   }
-}
+};
 
 /**
  * Re-creates the HTML for the Navbar, and hands the HTML to the browser 
@@ -516,7 +516,7 @@ RootView.prototype.setEditMode = function (newVal) {
       RootView.displayTextInDebugTextarea(stevedore._getJsonStringRepresentingAllItems());
     }
   }
-}
+};
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------

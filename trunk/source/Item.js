@@ -133,7 +133,7 @@ Item.prototype.getSingleValueFromAttribute = function(inAttribute) {
     singleValue = SectionView.getStringForValue(valueList[0]);
   }
   return singleValue;
-}
+};
 
 /**
  * Assigns a value to an attribute in this item.

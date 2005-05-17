@@ -460,11 +460,12 @@ Function.prototype.bindAsEventListener = function (object) {
     var preappliedArguments = arguments;
     return function (event) {
         var args = [event || window.event];
-        for (var i = 1; i < preappliedArguments.length; i++)
+        for (var i = 1; i < preappliedArguments.length; ++i) {
           args.push(preappliedArguments[i]);
+        }
         method.apply(object, args);
     };
-}
+};
 
 // -------------------------------------------------------------------
 // File I/O methods

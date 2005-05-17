@@ -130,7 +130,7 @@ function testJsLintOnOpenRecordCode() {
     "UtilTest.js"];
   for (var key in listOfSourceCodeFiles) {
     var fileName = listOfSourceCodeFiles[key];
-    assertTrue("jslint says Util.js is clean", Lint.isCodeCleanInFile(fileName));
+    assertTrue("jslint says " + fileName + " is clean", Lint.isCodeCleanInFile(fileName));
   }
 }
 

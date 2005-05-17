@@ -88,19 +88,19 @@ TablePlugin.prototype.getPluginName = function () {
   * Comparison function to sort table
   */
 TablePlugin.prototype.compareItemByAttribute = function (a,b) {
-  Util.assert(this._sortAttribute != null);
+  Util.assert(this._sortAttribute !== null);
   var strA = a.getSingleValueFromAttribute(this._sortAttribute).toLowerCase();
   var strB = b.getSingleValueFromAttribute(this._sortAttribute).toLowerCase();
   var ascendingInt = this._ascendingOrder ? -1 : 1;
-  if (strA < strB) return ascendingInt;
-  if (strA == strB) return 0;
+  if (strA < strB) {return ascendingInt;}
+  if (strA == strB) {return 0;}
   return -ascendingInt;
-}
+};
 
 TablePlugin.prototype.fetchItems = function() {
   // PENDING: how do we know our superview responds to getthis._listOfItems()? 
   this._listOfItems = this.getSuperview().getListOfContentItems();
-}
+};
 
 TablePlugin.prototype._buildAttributeHash = function() {
 // create a hashtable consisting of all the attributes of the content items in this table
@@ -117,7 +117,7 @@ TablePlugin.prototype._buildAttributeHash = function() {
     }
   }
   this._attributesKeyedByUuid = hashTableOfAttributesKeyedByUuid;
-}
+};
 
 TablePlugin.prototype._buildTableBody = function() {  
 // constructs the table body
@@ -125,7 +125,8 @@ TablePlugin.prototype._buildTableBody = function() {
   var numRows = 1; // start from 1 to account for header row
   for (var kKey in this._listOfItems) {
     var contentItem = this._listOfItems[kKey];
-    var aRow = this.myTable.insertRow(numRows++); 
+    var aRow = this.myTable.insertRow(numRows); 
+    ++numRows;
     var columnCount = 0;
     for (var lKey in this._attributesKeyedByUuid) {
       var attribute = this._attributesKeyedByUuid[lKey];
@@ -133,7 +134,7 @@ TablePlugin.prototype._buildTableBody = function() {
       columnCount += 1;
     }
   }  
-}
+};
 
 // construct the table header
 TablePlugin.prototype._buildHeader = function() {
@@ -142,28 +143,28 @@ TablePlugin.prototype._buildHeader = function() {
   var numCols = 0;
   for (var jKey in this._attributesKeyedByUuid) {
     var attribute = this._attributesKeyedByUuid[jKey];
-    if (!this._sortAttribute) this._sortAttribute = attribute;
+    if (!this._sortAttribute) {this._sortAttribute = attribute;}
     var aCell = document.createElement("th");
     var headerStr = attribute.getDisplayName();
     aCell.appendChild(document.createTextNode(headerStr));
-    if (this._sortAttribute == attribute)
-      aCell.appendChild(this.getSortIcon());
+    if (this._sortAttribute == attribute) {
+      aCell.appendChild(this.getSortIcon());}
     aCell.onclick = this.clickOnHeader.bindAsEventListener(this, attribute);
     
     headerRow.appendChild(aCell);
-    numCols++;
+    ++numCols;
   }
   this._numberOfColumns = numCols;
-}
+};
 
 TablePlugin.prototype.doInitialDisplay = function() {
   // get list of items and attributes
   this.fetchItems();
-  this._buildAttributeHash()
+  this._buildAttributeHash();
   
   //create new table, remove old table if already exists
-  if (this.myTable != null)
-    this._myHTMLElement.removeChild(this.myTable);
+  if (this.myTable) {
+    this._myHTMLElement.removeChild(this.myTable); }
   this.myTable = document.createElement("table");
   this.myTable.className = this.myClass;
   
@@ -177,7 +178,7 @@ TablePlugin.prototype.doInitialDisplay = function() {
   this._buildTableBody();
   
   this._myHTMLElement.appendChild(this.myTable);
-}
+};
 
 /**
  * Re-creates all the HTML for the TablePlugin, and hands the HTML to the 
@@ -202,7 +203,7 @@ TablePlugin.prototype.getSortIcon = function () {
   var image =  Util.getImage(imageName);
   image.align = "middle";
   return image;
-}
+};
 
 // Insert a table cell into table's row & col, with data from a given item and attribute
 // Each table cell is displayed with a TextView object
@@ -213,9 +214,12 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   var aTextView = new TextView(this, aCell, item, attribute, this.myCellClass);
   aTextView.refresh();
   aCell.or_textView = aTextView;
-  if (this.isInEditMode())
+  if (this.isInEditMode()) {
     aCell.onkeypress = this.keyPressOnEditField.bindAsEventListener(this, aTextView);
-}
+    var listener = this;
+    aTextView.setKeyPressFunction(function (evt, aTxtView) {listener.keyPressOnEditField(evt, aTxtView);});
+  }
+};
 
 /**
  * Does final clean-up.
@@ -237,9 +241,9 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
   }
   else {
     this._sortAttribute = clickAttribute;
-  };
+  }
   this.doInitialDisplay();
-}
+};
   
 /**
  * Called when the user types a character when editing a table cell. 
@@ -285,7 +289,7 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
       break;
   }
   
-  if (move) {
+if (move) {
     Util.isNumber(this._numberOfColumns);
     Util.isArray(this._listOfItems);
     var cellElement = aTextView.getHTMLElement();
@@ -298,23 +302,29 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
     
     if (move == MOVE_LEFT || move == MOVE_RIGHT) {
       shiftBy = (move == MOVE_LEFT) ? -1 : 1;
-      var nextColumnNumber = (cellElement.cellIndex + shiftBy) % numCols
+      var nextColumnNumber = (cellElement.cellIndex + shiftBy);
+      if (nextColumnNumber < 0) {
+        nextColumnNumber = numCols-1;
+      }
+      else if (nextColumnNumber >= numCols) {
+        nextColumnNumber = 0;
+      }
       nextCell = htmlRow.cells[nextColumnNumber];
     }
     
     if (move == MOVE_UP || move == MOVE_DOWN) {
       shiftBy = (move == MOVE_UP) ? -1 : 1;
       var nextRowNumber = htmlRow.rowIndex + shiftBy;
-      // can't use modulo because of table header row
+      // rowNumber cannot be zero which is the header row
       if (nextRowNumber < 1) {
         nextRowNumber = numRows;
       }
-      if (nextRowNumber > numRows) {
+      else if (nextRowNumber > numRows) {
         nextRowNumber = 1;
         userHitReturnInLastRow = true;
       }
       var nextRow = this.myTable.rows[nextRowNumber];
-      nextCell = nextRow.cells[cellElement.cellIndex];
+    nextCell = nextRow.cells[cellElement.cellIndex];
     }
     
     aTextView.stopEditing();

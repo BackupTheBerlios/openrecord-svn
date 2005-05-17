@@ -189,7 +189,18 @@ TextView.prototype.stopEditing = function() {
     this.getHTMLElement().replaceChild(this.textNode, this.editField);
     this.isEditing = false;
   }
-}
+};
+
+
+/**
+ * Sets a function to be used when onkeypress is called to the TextView
+ *
+ * @scope    public instance method
+ * @param    inEventObject    An event object. 
+ */
+TextView.prototype.setKeyPressFunction = function(keyPressFunction) {
+  this._keyPressFunction = keyPressFunction;
+};
 
 /**
  * Called when the user types in editField
@@ -198,6 +209,9 @@ TextView.prototype.stopEditing = function() {
  * @param    inEventObject    An event object. 
  */
 TextView.prototype.onKeyPress = function(inEventObject) {
+  if (this._keyPressFunction && this._keyPressFunction(inEventObject, this)) {
+    return true;
+  }
   var editField = this.editField;
 
   // PENDING: 
