@@ -374,7 +374,7 @@ Item.prototype.getDisplayName = function (inDefaultString) {
  * @scope    public instance method
  * @return   A list of the entries assigned to the "name" attribute.
  */
-Item.prototype.getNameEntries = function (inDefaultString) {
+Item.prototype.getNameEntries = function () {
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   return this.getEntriesForAttribute(attributeCalledName);
 };
@@ -386,9 +386,28 @@ Item.prototype.getNameEntries = function (inDefaultString) {
  * @scope    public instance method
  * @return   A list of the entries assigned to the "short name" attribute.
  */
-Item.prototype.getShortNameEntries = function (inDefaultString) {
+Item.prototype.getShortNameEntries = function () {
   var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
   return this.getEntriesForAttribute(attributeCalledShortName);
+};
+
+
+/**
+ * Returns just the first value of an item's attribute.
+ *
+ * @scope    public instance method
+ * @return   A string with a description of the item.
+ */
+Item.prototype.getSingleStringValueFromAttribute = function (inAttribute) {
+  var listOfEntries = this.getEntriesForAttribute(inAttribute);
+  var singleStringValue = "";
+  if (listOfEntries) {
+    firstEntry = listOfEntries[0];
+    if (firstEntry) {
+      singleStringValue = firstEntry.getDisplayString();
+    }
+  }
+  return singleStringValue;
 };
 
 

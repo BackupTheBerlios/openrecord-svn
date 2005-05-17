@@ -31,7 +31,7 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   Stevedore.js
+//   World.js
 //   SectionView.js
 //   Util.js
 // -------------------------------------------------------------------
@@ -116,25 +116,23 @@ DetailPlugin.prototype.getXhtmlTableForItem = function (inItem) {
   Util.assert(inItem instanceof Item);
   
   var listOfStrings = [];
-  var stevedore = this.getStevedore();
-  var attributeCalledName = stevedore.getItemFromUuid(Stevedore.UUID_FOR_ATTRIBUTE_NAME);
+  var attributeCalledName = this.getWorld().getAttributeCalledName();
   
   listOfStrings.push("<table class=\"" + SectionView.ELEMENT_CLASS_SIMPLE_TABLE + "\">");
   listOfStrings.push("<tr>");
   listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_LABEL + " " + SectionView.ELEMENT_CLASS_TITLE + "\">" + attributeCalledName.getDisplayName() + "</td>");
   listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_TITLE + "\">" + inItem.getDisplayName() + "</td>");
   listOfStrings.push("</tr>");
-  var listOfAttributeUuids = inItem.getListOfAttributeUuids();
-  for (var key in listOfAttributeUuids) { 
-    var attributeUuid = listOfAttributeUuids[key];
-    if (attributeUuid != attributeCalledName.getUuid()) {
+  var listOfAttributes = inItem.getAttributes();
+  for (var key in listOfAttributes) { 
+    var attribute = listOfAttributes[key];
+    if (attribute != attributeCalledName) {
       listOfStrings.push("<tr>");
-      var attribute = stevedore.getItemFromUuid(attributeUuid);
       listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_LABEL + "\">" + attribute.getDisplayName() + "</td>");
-      var valueList = inItem.getValueListFromAttribute(attributeUuid); 
+      var listOfEntries = inItem.getEntriesForAttribute(attribute); 
       listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\">");
-      for (var j = 0; j < valueList.length; ++j) {
-        listOfStrings.push(SectionView.getStringForValue(valueList[j]) + "<br/>");
+      for (var j = 0; j < listOfEntries.length; ++j) {
+        listOfStrings.push(listOfEntries[j].getDisplayString() + "<br/>");
       }
       listOfStrings.push("</td>");
       listOfStrings.push("</tr>");

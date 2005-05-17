@@ -31,7 +31,7 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   Stevedore.js
+//   World.js
 //   SectionView.js
 // -------------------------------------------------------------------
 
@@ -85,7 +85,12 @@ OutlinePlugin.prototype.refresh = function () {
     var liElement = View.createAndAppendElement(ulElement, "li");
     View.createAndAppendTextNode(liElement, contentItem.getDisplayName("{no name}") + " ");
     var anchorElement = View.createAndAppendElement(liElement, "a", SectionView.ELEMENT_CLASS_MORE_LINK);
-    anchorElement.setAttribute("href", RootView.URL_HASH_ITEM_PREFIX + contentItem.getUuid());
+
+    // PENDING: 
+    //  We shouldn't call the private method _getUuid()
+    //  We need a better way to get the URL for a content item
+    anchorElement.setAttribute("href", RootView.URL_HASH_ITEM_PREFIX + contentItem._getUuid());
+
     // View.createAndAppendTextNode(anchorElement, "(more &#8658;)");
     anchorElement.innerHTML = "(more &#8658;)";
     Util.addEventListener(anchorElement, "click", RootView.clickOnLocalLink);

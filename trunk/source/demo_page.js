@@ -31,8 +31,8 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   repository.js
-//   root_view.js
+//   World.js
+//   RootView.js
 // -------------------------------------------------------------------
 
 /**
@@ -42,10 +42,18 @@
  * @scope    global function
  */
 window.doOnloadActions = function() {  
+  var fileName = "test_data_2005_april_chronological_lump.json";
+  // var fileName = "test_data_2005_march_item_centric_list.json";
+  var url = "model/" + fileName;
+  var fileContentString = Util.getStringContentsOfFileAtURL(url);
   
-  var stevedore = new Stevedore();
-  stevedore._loadItemsFromList(Stevedore._ourRepositoryInJsonFormat);
-  window.rootView = new RootView(stevedore);
+  // Create a World and a BigLumpVirtualServer, and have the 
+  // BigLumpVirtualServer rehydrate all the dehydrated items 
+  // contained in the fileContentString.  
+  var bigLumpVirtualServer = new BigLumpVirtualServer(fileContentString);
+  var world = new World(bigLumpVirtualServer);
+  window.rootView = new RootView(world);
+  
   Util.setTargetsForExternalLinks();
 };
 
@@ -57,7 +65,7 @@ window.doOnloadActions = function() {
  * @scope    global function
  */
 window.doOnunloadActions = function() {
-  // stevedore.saveChanges();
+  // world.saveChanges();
 };
 
 window.doOnfocusActions = function() {

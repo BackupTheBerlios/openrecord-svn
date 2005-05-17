@@ -2,7 +2,9 @@
  Util.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
+    Chih-Chao Lam <chao@cs.stanford.edu>
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -208,6 +210,18 @@ Util.ourStatusReporter = Util.defaultStatusReporter;
 // -------------------------------------------------------------------
 // Type checking methods
 // -------------------------------------------------------------------
+
+/**
+ * Returns true if the given value is a function.
+ *
+ * @scope    public class method
+ * @param    inValue    Any object or literal value. 
+ * @return   A boolean value. True if inValue is a function.
+ */
+Util.isFunction = function (inValue) {
+  return ((typeof inValue) == "function");
+};
+
 
 /**
  * Returns true if the given value is a string.
@@ -478,7 +492,6 @@ Function.prototype.bindAsEventListener = function (object) {
  * @param    inUrl    A string with the URL of a file containing JavaScript code. 
  * @return   A string containing the contents of the file.
  */
-// PENDING: move this up into Util.js
 Util.getStringContentsOfFileAtURL = function (inUrl) {
   var anXMLHttpRequestObject = new XMLHttpRequest();
   anXMLHttpRequestObject.open("GET", inUrl, false);
@@ -513,11 +526,20 @@ Util.setTargetsForExternalLinks = function () {
   }
 };
 
-Util.getImage = function(imageName) {
-  var image = document.createElement("img");
-  image.src = "images/" + imageName;
-  return image;
+
+/**
+ * Given the filename of an image, returns an HTML img element.
+ * 
+ * @scope    public class method
+ * @return   An HTML "img" element.
+ */
+Util.createImageElement = function (imageFileName) {
+  var imagesDirectory = "images/"; // PENDING: this shouldn't be hard-coded in Util
+  var imageElement = document.createElement("img");
+  imageElement.src = imagesDirectory + imageFileName;
+  return imageElement;
 };
+
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------

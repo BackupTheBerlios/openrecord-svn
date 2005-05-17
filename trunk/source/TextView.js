@@ -2,8 +2,9 @@
  TextView.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
- and Chih-Chao Lam <chao@cs.stanford.edu>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
+    Chih-Chao Lam <chao@cs.stanford.edu>
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -63,12 +64,12 @@ function TextView(theSuperview, theElement, theItem, theAttribute, theClassType,
   
   this.setSuperview(theSuperview);
   this.setHTMLElement(theElement);
-  this.textItem = theItem;
-  this.attribute = theAttribute;
-  this.editField = null;
-  this.classType = theClassType;
-  this.isMultiLine = isMultiLine;
-  this.isEditing = false;
+  this._item = theItem;
+  this._attribute = theAttribute;
+  this._editField = null;
+  this._classType = theClassType;
+  this._isMultiLine = isMultiLine;
+  this._isEditing = false;
   this._proxyOnKeyFunction = null;
 }
 
@@ -83,8 +84,8 @@ TextView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this.doInitialDisplay();
   } else {
-  // if (weHaveBeenNotifiedOfChangesTo(this.textItem)) {
-  //   var newText = getNewValueFrom(this.textItem);
+  // if (weHaveBeenNotifiedOfChangesTo(this._item)) {
+  //   var newText = getNewValueFrom(this._item);
   //   this.textNode.data = newText;
   // }
   }
@@ -100,7 +101,7 @@ TextView.prototype.refresh = function() {
 TextView.prototype.doInitialDisplay = function() {
   var htmlElement = this.getHTMLElement();
   
-  var textString = this.textItem.getSingleValueFromAttribute(this.attribute);
+  var textString = this._item.getSingleStringValueFromAttribute(this._attribute);
   // PENDING: need to deal with multi valued attrs
   // for (var i in textList) {
   //   textString = textList[i] + "\n" + textString;
@@ -121,18 +122,18 @@ TextView.prototype.doInitialDisplay = function() {
  * @scope    public instance method
  */
 TextView.prototype.startEditing = function() {
-  if (!this.isEditing) {
-    var editField = this.editField;
+  if (!this._isEditing) {
+    var editField = this._editField;
     if (!editField) {
-      if (this.isMultiLine) {
-        editField = this.editField = document.createElement("textarea");
+      if (this._isMultiLine) {
+        editField = this._editField = document.createElement("textarea");
       }
       else {
         editField = document.createElement("input");
         editField.type = 'text';
       }
-      this.editField = editField;
-      editField.className = this.classType;
+      this._editField = editField;
+      editField.className = this._classType;
       var listener = this; 
       editField.onblur = this.onBlur.bindAsEventListener(this);
       editField.onkeypress = this.onKeyPress.bindAsEventListener(this);
@@ -143,7 +144,7 @@ TextView.prototype.startEditing = function() {
     this.getHTMLElement().replaceChild(editField, this.textNode);
     editField.select();
     //editField.focus();
-    this.isEditing = true;
+    this._isEditing = true;
   }
 };
 
@@ -180,14 +181,28 @@ TextView.prototype.onBlur = function(inEventObject) {
   this.stopEditing();
 };
 
+
+/**
+ * Called when it's time to stop editing and save the changes.
+ *
+ * @scope    public instance method
+ */
 TextView.prototype.stopEditing = function() {
-  if (this.isEditing) {
-    var newText = this.editField.value;
-    this.textItem.clear(this.attribute);
-    this.textItem.assign(this.attribute, newText); // PENDING: need to deal with multi valued attrs
+  if (this._isEditing) {
+    var newText = this._editField.value;
+    
+    // PENDING: need to properly handle multi-valued attributes
+    var listOfEntries = this._item.getEntriesForAttribute(this._attribute);
+    if (listOfEntries && listOfEntries[0]) {
+      var oldEntry = listOfEntries[0];
+      this._item.replaceEntry(oldEntry, newText);
+    } else {
+      this._item.addEntryForAttribute(this._attribute, newText);
+    }
+    
     this.textNode.data = newText;
-    this.getHTMLElement().replaceChild(this.textNode, this.editField);
-    this.isEditing = false;
+    this.getHTMLElement().replaceChild(this.textNode, this._editField);
+    this._isEditing = false;
   }
 };
 
@@ -202,6 +217,7 @@ TextView.prototype.setKeyPressFunction = function(keyPressFunction) {
   this._keyPressFunction = keyPressFunction;
 };
 
+
 /**
  * Called when the user types in editField
  *
@@ -212,7 +228,7 @@ TextView.prototype.onKeyPress = function(inEventObject) {
   if (this._keyPressFunction && this._keyPressFunction(inEventObject, this)) {
     return true;
   }
-  var editField = this.editField;
+  var editField = this._editField;
 
   // PENDING: 
   // Here are some failed attempts at trying to get the editField to 

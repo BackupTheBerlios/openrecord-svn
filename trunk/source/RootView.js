@@ -32,7 +32,7 @@
 // -------------------------------------------------------------------
 // Dependencies:
 //   PageView.js
-//   Stevedore.js
+//   World.js
 //   Util.js
 // -------------------------------------------------------------------
 
@@ -55,6 +55,10 @@ RootView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
 RootView.COOKIE_NAME = "user";
 RootView.CONTROL_SPAN_CLASS = "control_span";
 
+RootView.UUID_FOR_HOME_PAGE = 2000;
+RootView.UUID_FOR_CATEGORY_PAGE = 145;
+RootView.UUID_FOR_CATEGORY_SECTION = 146;  // PENDING: not used?
+
 
 // -------------------------------------------------------------------
 // RootView class properties
@@ -70,13 +74,13 @@ RootView.ourSingleInstance = null;
  * @scope    public instance constructor
  * @syntax   var rootView = new RootView()
  */
-function RootView(inStevedore) {
+function RootView(inWorld) {
   RootView.ourSingleInstance = this;
    
-  Util.assert(inStevedore instanceof Stevedore);
+  Util.assert(inWorld instanceof World);
 
   // instance properties
-  this._myStevedore = inStevedore;
+  this._myWorld = inWorld;
   this.myEditMode = false;
   this.myNumberOfCallsToDebug = 0;
   this.myDebugTextarea = null;
@@ -88,11 +92,11 @@ function RootView(inStevedore) {
   this._myCurrentContentView = null;
   
   this.myHashTableOfPagesKeyedByUuid = {};
-  var categoryPage = this._myStevedore.getItemFromUuid(Stevedore.UUID_FOR_CATEGORY_PAGE);
-  var listOfPages = this._myStevedore.getListOfItemsInCategory(categoryPage);
+  var categoryCalledPage = this._myWorld.getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
+  var listOfPages = this._myWorld.getItemsInCategory(categoryCalledPage);
   for (var key in listOfPages) {
     var page = listOfPages[key];
-    this.myHashTableOfPagesKeyedByUuid[page.getUuid()] = page; 
+    this.myHashTableOfPagesKeyedByUuid[page._getUuid()] = page; 
   }
 
   window.document.body.innerHTML = "";
@@ -101,7 +105,7 @@ function RootView(inStevedore) {
   for (var uuid in this.myHashTableOfPagesKeyedByUuid) {
     var aPage = this.myHashTableOfPagesKeyedByUuid[uuid];
     var anchor = View.createAndAppendElement(rootDiv, "a");
-    anchor.setAttribute("name", RootView.URL_PAGE_PREFIX + aPage.getUuid());
+    anchor.setAttribute("name", RootView.URL_PAGE_PREFIX + aPage._getUuid());
   }
   
   var headerP = View.createAndAppendElement(rootDiv, "p", "header");
@@ -141,13 +145,13 @@ function RootView(inStevedore) {
 // -------------------------------------------------------------------
 
 /**
- * Returns the Stevedore instance that this RootView is using.
+ * Returns the World instance that this RootView is using.
  *
  * @scope    public instance method
- * @return   A Stevedore object. 
+ * @return   A World object. 
  */
-RootView.prototype.getStevedore = function () {
-  return this._myStevedore;
+RootView.prototype.getWorld = function () {
+  return this._myWorld;
 };
 
 
@@ -162,6 +166,17 @@ RootView.prototype.isInEditMode = function () {
 };
 
   
+/**
+ * Returns the page item to be used as the home page.
+ *
+ * @scope    public instance method
+ * @return   A page item.
+ */
+RootView.prototype.getHomePage = function () {
+  return this.getWorld().getItemFromUuid(RootView.UUID_FOR_HOME_PAGE);
+};
+
+
 /**
  * Gets the browser URL from window.location, finds or creates a corresponding
  * PageView or ItemView, and sets the current content view to the newly selected
@@ -187,7 +202,7 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
         uuidNumber = parseInt(uuidText);
         contentViewToSwitchTo = this._myHashTableOfItemViewsKeyedByUuid[uuidNumber];
         if (!contentViewToSwitchTo) {
-          itemFromUuid = this._myStevedore.getItemFromUuid(uuidNumber);
+          itemFromUuid = this._myWorld.getItemFromUuid(uuidNumber);
           if (itemFromUuid) {
             divElement = window.document.createElement("div"); 
             this._myContentViewDivElement.appendChild(divElement);
@@ -215,13 +230,13 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
   }
   
   if (!contentViewToSwitchTo) {
-    var page = this._myStevedore.getHomePage();
-    contentViewToSwitchTo = this._myHashTableOfPageViewsKeyedByUuid[page.getUuid()];
+    var page = this.getHomePage();
+    contentViewToSwitchTo = this._myHashTableOfPageViewsKeyedByUuid[page._getUuid()];
     if (!contentViewToSwitchTo) {
       divElement = window.document.createElement("div"); 
       this._myContentViewDivElement.appendChild(divElement);
       contentViewToSwitchTo = new PageView(this, divElement, page);
-      this._myHashTableOfPageViewsKeyedByUuid[page.getUuid()] = contentViewToSwitchTo;
+      this._myHashTableOfPageViewsKeyedByUuid[page._getUuid()] = contentViewToSwitchTo;
     }
   }
   if (this._myCurrentContentView) {
@@ -341,14 +356,15 @@ RootView.prototype.clickOnSignInButton = function(inEventObject) {
 RootView.prototype.displayNavbar = function () {
   Util.assert(this.myNavbarDivElement instanceof HTMLDivElement);
 
+  var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
   var listOfStrings = [];
 
   listOfStrings.push("<ul class=\"menu\">");
   
   for (var uuid in this.myHashTableOfPagesKeyedByUuid) {
     var page = this.myHashTableOfPagesKeyedByUuid[uuid];
-    var menuText = page.getShortName();
-    var menuUrl = RootView.URL_HASH_PAGE_PREFIX + page.getUuid();
+    var menuText = page.getSingleStringValueFromAttribute(attributeCalledShortName);
+    var menuUrl = RootView.URL_HASH_PAGE_PREFIX + page._getUuid();
     listOfStrings.push("<li class=\"menu_item\"><a href=\"" + menuUrl + "\" onclick=\"RootView.clickOnLocalLink(event)\">" + menuText + "</a></li>");
   }
 
@@ -501,20 +517,20 @@ RootView.prototype.clickOnEditButton = function (inEventObject) {
 
 RootView.prototype.setEditMode = function (newVal) {
   if (newVal != this.myEditMode) {
-    var stevedore = this.getStevedore();
+    var world = this.getWorld();
     if (this.myEditMode) {
-      stevedore.endTransaction();
+      world.endTransaction();
       window.document.body.style.cursor = "auto";
     } else {
-      stevedore.beginTransaction();
+      world.beginTransaction();
       window.document.body.style.cursor = "crosshair";
     }
     this.myEditMode = !this.myEditMode;
     this.display();
     // this.displayTextInDebugTextarea(this.myEditMode);
-    if (!this.myEditMode && window.location && (window.location.protocol == "file:")) {
-      RootView.displayTextInDebugTextarea(stevedore._getJsonStringRepresentingAllItems());
-    }
+    // if (!this.myEditMode && window.location && (window.location.protocol == "file:")) {
+    //  RootView.displayTextInDebugTextarea(world._getJsonStringRepresentingAllItems());
+    // }
   }
 };
 // -------------------------------------------------------------------

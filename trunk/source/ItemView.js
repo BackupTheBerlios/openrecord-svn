@@ -31,7 +31,7 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   Stevedore.js
+//   World.js
 //   Util.js
 //   RootView.js
 //   DetailPlugin.js
@@ -90,7 +90,8 @@ ItemView.prototype.getListOfContentItems = function () {
  * @return   A string that gives the name of the page.
  */
 ItemView.prototype.getPageTitle = function () {
-  return this.myItem.getShortName();
+  var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
+  return this.myItem.getSingleStringValueFromAttribute(attributeCalledShortName);
 };
 
 
@@ -102,13 +103,15 @@ ItemView.prototype.getPageTitle = function () {
  */
 ItemView.prototype.refresh = function () {
   Util.assert(this.myItem instanceof Item);
+  
+  // PENDING: this needs to be changed from DOM level 0 to DOM level 2.
   var listOfStrings = [];
 
   // add an <h1> heading with the name of the page
-  listOfStrings.push("<h1 id=\"" + RootView.URL_ITEM_PREFIX + this.myItem.getUuid() + "\">" + this.myItem.getDisplayName() + "</h1>");
+  listOfStrings.push("<h1 id=\"" + RootView.URL_ITEM_PREFIX + this.myItem._getUuid() + "\">" + this.myItem.getDisplayName() + "</h1>");
 
   // add a <div> element for the detail plugin
-  var detailDivId = ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this.myItem.getUuid();
+  var detailDivId = ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this.myItem._getUuid();
   listOfStrings.push("<div id=\"" + detailDivId + "\"></div>");
 
   // write out all the new content 

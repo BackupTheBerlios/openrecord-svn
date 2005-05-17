@@ -95,6 +95,8 @@ function BigLumpVirtualServer(inJsonString) {
  */
 BigLumpVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
   this.__initialize(inWorld);
+  // var shortString = this.__myDehydratedWorld.substring(0, 200);
+  // alert(shortString);
   this.__loadWorldFromJsonString(this.__myDehydratedWorld);
 };
 

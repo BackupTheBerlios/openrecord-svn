@@ -2,7 +2,9 @@
  TablePlugin.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
+    Chih-Chao Lam <chao@cs.stanford.edu>
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -31,7 +33,7 @@
  
 // -------------------------------------------------------------------
 // Dependencies:
-//   Stevedore.js
+//   World.js
 //   SectionView.js
 //   PageView.js
 //   Util.js
@@ -84,43 +86,67 @@ TablePlugin.prototype.getPluginName = function () {
   return SectionView.PLUGIN_TABLE;
 };
 
+
 /**
-  * Comparison function to sort table
-  */
-TablePlugin.prototype.compareItemByAttribute = function (a,b) {
+ * Comparison function to sort items.
+ *
+ * @scope    public instance method
+ * @param    itemA    One of the two items to be compared. 
+ * @param    itemB    One of the two items to be compared. 
+ * @return   This method returns 0 if the items are comparable. If _ascendingOrder is true, itemA is less than itemB, this method returns -1, otherwise it returns +1. 
+ */
+TablePlugin.prototype.compareItemByAttribute = function (itemA, itemB) {
   Util.assert(this._sortAttribute !== null);
-  var strA = a.getSingleValueFromAttribute(this._sortAttribute).toLowerCase();
-  var strB = b.getSingleValueFromAttribute(this._sortAttribute).toLowerCase();
+  var strA = itemA.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
+  var strB = itemB.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
   var ascendingInt = this._ascendingOrder ? -1 : 1;
   if (strA < strB) {return ascendingInt;}
   if (strA == strB) {return 0;}
   return -ascendingInt;
 };
 
+
+/**
+ * Gets the list of content items to display.
+ *
+ * @scope    PENDING
+ */
 TablePlugin.prototype.fetchItems = function() {
   // PENDING: how do we know our superview responds to getthis._listOfItems()? 
   this._listOfItems = this.getSuperview().getListOfContentItems();
 };
 
+
+/**
+ * Creates a hashtable containing all the attributes of the content items 
+ * in this table.  Finds the union of the attribute lists of all the content items.
+ *
+ * @scope    private instance method
+ */
 TablePlugin.prototype._buildAttributeHash = function() {
-// create a hashtable consisting of all the attributes of the content items in this table
-  // find the union of the attribute lists of all the content items
-  var hashTableOfAttributesKeyedByUuid = {};
+  var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
+  var hashTableOfAttributes = {};
   for (var iKey in this._listOfItems) {
     contentItem = this._listOfItems[iKey];
-    var listOfAttributesForItem = contentItem.getListOfAttributeUuids();
+    var listOfAttributesForItem = contentItem.getAttributes();
     for (var attributeKey in listOfAttributesForItem) {
-      var attributeUuid = listOfAttributesForItem[attributeKey];
-      if (attributeUuid != Stevedore.UUID_FOR_ATTRIBUTE_CATEGORY) {
-        hashTableOfAttributesKeyedByUuid[attributeUuid] = this.getStevedore().getItemFromUuid(attributeUuid);
+      var attribute = listOfAttributesForItem[attributeKey];
+      if (attribute != attributeCalledCategory) {
+        var attributeKey = attribute.getUniqueKeyString();
+        hashTableOfAttributes[attributeKey] = attribute;
       }
     }
   }
-  this._attributesKeyedByUuid = hashTableOfAttributesKeyedByUuid;
+  this._hashTableOfAttributes = hashTableOfAttributes;
 };
 
+
+/**
+ * Constructs the table body 
+ *
+ * @scope    private instance method
+ */
 TablePlugin.prototype._buildTableBody = function() {  
-// constructs the table body
   // add all the table body rows
   var numRows = 1; // start from 1 to account for header row
   for (var kKey in this._listOfItems) {
@@ -128,21 +154,26 @@ TablePlugin.prototype._buildTableBody = function() {
     var aRow = this.myTable.insertRow(numRows); 
     ++numRows;
     var columnCount = 0;
-    for (var lKey in this._attributesKeyedByUuid) {
-      var attribute = this._attributesKeyedByUuid[lKey];
-      this._insertCell(aRow,columnCount,contentItem,attribute);
+    for (var lKey in this._hashTableOfAttributes) {
+      var attribute = this._hashTableOfAttributes[lKey];
+      this._insertCell(aRow, columnCount, contentItem, attribute);
       columnCount += 1;
     }
   }  
 };
 
-// construct the table header
+
+/**
+ * Constructs the table header 
+ *
+ * @scope    private instance method
+ */
 TablePlugin.prototype._buildHeader = function() {
   // add header row
   var headerRow = this.myTable.insertRow(0);
   var numCols = 0;
-  for (var jKey in this._attributesKeyedByUuid) {
-    var attribute = this._attributesKeyedByUuid[jKey];
+  for (var jKey in this._hashTableOfAttributes) {
+    var attribute = this._hashTableOfAttributes[jKey];
     if (!this._sortAttribute) {this._sortAttribute = attribute;}
     var aCell = document.createElement("th");
     var headerStr = attribute.getDisplayName();
@@ -157,6 +188,13 @@ TablePlugin.prototype._buildHeader = function() {
   this._numberOfColumns = numCols;
 };
 
+
+/**
+ * Re-creates all the HTML for the TablePlugin, and hands the HTML to the 
+ * browser to be re-drawn.
+ *
+ * @scope    public instance method
+ */
 TablePlugin.prototype.doInitialDisplay = function() {
   // get list of items and attributes
   this.fetchItems();
@@ -180,6 +218,7 @@ TablePlugin.prototype.doInitialDisplay = function() {
   this._myHTMLElement.appendChild(this.myTable);
 };
 
+
 /**
  * Re-creates all the HTML for the TablePlugin, and hands the HTML to the 
  * browser to be re-drawn.
@@ -195,19 +234,29 @@ TablePlugin.prototype.refresh = function () {
   }
 };
 
+
 /**
-  * returns the right image name for the header column that is being sorted
-  */
+ * Returns an HTML image element for the header column that is being sorted.
+ *
+ * @scope    public instance method
+ * @return   An HTML image element
+ */
 TablePlugin.prototype.getSortIcon = function () {
   var imageName = this._ascendingOrder ? TablePlugin.ASCENDING_GIF : TablePlugin.DESCENDING_GIF;
-  var image =  Util.getImage(imageName);
+  var image =  Util.createImageElement(imageName);
   image.align = "middle";
   return image;
 };
 
-// Insert a table cell into table's row & col, with data from a given item and attribute
-// Each table cell is displayed with a TextView object
-// The HTML table cell links to the TextView object with the attribute "or_textView"
+
+/**
+ * Inserts a table cell into table's row & col, with data from a given item and
+ * attribute. Each table cell is displayed with a TextView object.  The HTML 
+ * table cell links to the TextView object with the attribute "or_textView"
+ *
+ * @scope    public instance method
+ * @return   An HTML image element
+ */
 TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   var aCell = row.insertCell(col);
   aCell.className = this.myCellClass;
@@ -221,6 +270,7 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   }
 };
 
+
 /**
  * Does final clean-up.
  *
@@ -229,6 +279,7 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
 TablePlugin.prototype.endOfLife = function () {
   this.getHTMLElement().innerHTML = "";
 };
+
 
 /**
  * Called when the user clicks on table header. Resorts table accordingly.
@@ -245,6 +296,7 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
   this.doInitialDisplay();
 };
   
+
 /**
  * Called when the user types a character when editing a table cell. 
  *
@@ -253,6 +305,7 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
  * to call this method directly.
  * 
  * @scope    public class method
+ * @return   Returns true if the keyPress is a letter, or false if the keyPress is an arrow key or a key that moves the cursor to another cell. 
  */
 TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) {
   var eventObject = inEventObject;
@@ -289,7 +342,7 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
       break;
   }
   
-if (move) {
+  if (move) {
     Util.isNumber(this._numberOfColumns);
     Util.isArray(this._listOfItems);
     var cellElement = aTextView.getHTMLElement();

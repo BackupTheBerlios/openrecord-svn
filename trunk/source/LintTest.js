@@ -125,8 +125,6 @@ function testJsLintOnOpenRecordCode() {
     "DetailPlugin.js",
     "BarChartPlugin.js",
     "demo_page.js",
-    "Item.js",
-    "Stevedore.js",
     "UtilTest.js"];
   for (var key in listOfSourceCodeFiles) {
     var fileName = listOfSourceCodeFiles[key];

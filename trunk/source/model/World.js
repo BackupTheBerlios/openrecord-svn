@@ -788,46 +788,6 @@ World.prototype.removeItemObserver = function (inItem, inObserver) {
   return observerWasRemoved;
 };
 
-
-// -------------------------------------------------------------------
-// Code that should move up into the view layer
-// -------------------------------------------------------------------
-
-World.UUID_FOR_ATTRIBUTE_SECTION = 108;
-World.UUID_FOR_ATTRIBUTE_PLUGIN_NAME = 113;
-
-World.UUID_FOR_CATEGORY_PAGE = 145;
-World.UUID_FOR_CATEGORY_SECTION = 146;
-
-World.UUID_FOR_HOME_PAGE = 2000;
-
-/**
- * Returns the page item to be used as the home page.
- *
- * @scope    public instance method
- * @return   A page item.
- */
-// PENDING: 
-// We should move this method up into the view code.
-// It shouldn't be down here in the model layer.
-World.prototype.getHomePage = function () {
-  return this.getItemFromUuid(World.UUID_FOR_HOME_PAGE);
-};
-
-
-/**
- * Returns true if the given value is a function.
- *
- * @scope    public class method
- * @param    inValue    Any object or literal value. 
- * @return   A boolean value. True if inValue is a function.
- */
-// PENDING: 
-// Need to move this up into Util.js.
-Util.isFunction = function (inValue) {
-  return ((typeof inValue) == "function");
-};
-
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------

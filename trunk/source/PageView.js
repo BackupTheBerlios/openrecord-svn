@@ -31,7 +31,7 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   Stevedore.js
+//   World.js
 //   Util.js
 //   SectionView.js
 //   TextView.js
@@ -44,6 +44,8 @@
 PageView.ELEMENT_ID_SECTION_DIV_PREFIX = "section_view_";
 PageView.ELEMENT_ID_SECTION_DIV_MIDFIX = "_in_page_";
 PageView.ELEMENT_ID_SUMMARY_VIEW_DIV_PREFIX = "_summary_view_for_page_";
+
+PageView.UUID_FOR_ATTRIBUTE_SECTION = 108;
 
 
 /**
@@ -80,7 +82,8 @@ function PageView(inRootView, inHTMLElement, inPage) {
  * @return   A string that gives the name of the page.
  */
 PageView.prototype.getPageTitle = function () {
-  return this.myPage.getShortName();
+  var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
+  return this.myPage.getSingleStringValueFromAttribute(attributeCalledShortName);
 };
 
   
@@ -113,22 +116,27 @@ PageView.prototype.refresh = function () {
 PageView.prototype.doInitialDisplay = function () {
   Util.assert(this.getHTMLElement() instanceof HTMLElement);
   
+  var attributeCalledName = this.getWorld().getAttributeCalledName();
+  var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
+
   var pageDivElement = this.getHTMLElement();
   
   var headerElement = View.createAndAppendElement(pageDivElement, "h1");
   this._myHeaderText = new TextView(this, headerElement, this.myPage,
-    Stevedore.UUID_FOR_ATTRIBUTE_NAME, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+    attributeCalledName, SectionView.ELEMENT_CLASS_TEXT_VIEW);
 
   var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
   this._myPageSummaryView = new TextView(this, summaryViewDiv, this.myPage,
-    Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
+    attributeCalledSummary, SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
 
   // add <div> elements for each of the sections on the page
   // and create a new SectionView for each section
-  var listOfSections = this.myPage.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_SECTION);
+  var attributeCalledSection = this.getWorld().getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTION);
+  var listOfEntriesForSections = this.myPage.getEntriesForAttribute(attributeCalledSection);
   var sectionNumber = 0;
-  for (var key in listOfSections) {
-    var section = listOfSections[key];
+  for (var key in listOfEntriesForSections) {
+    var entryForSection = listOfEntriesForSections[key];
+    var section = entryForSection.getValue();
     var sectionViewDiv = View.createAndAppendElement(pageDivElement, "div");
     var sectionView = new SectionView(this, sectionViewDiv, section, sectionNumber);
     sectionNumber += 1;

@@ -5,13 +5,13 @@
 //    + jslint should return "ok" when it looks at the code (with strictest settings)
 //    + do not use "with"
 //    + do not use "new Function"
-//    + do not use ++ and --
+//    + use ++i and --i instead of i++ and i-- (prefix instead of postfix)
 // 
 // + naming conventions
 //    + capitalization
 //       + classes are initial caps (CamelCaps): "Rectangle", "FillPattern"
 //       + all variable names and methods names are mixedCaps: "fillPattern"
-//       + acronyms appear in initial caps: "myHtmlString", not "myHTMLString"
+//       + acronyms appear in initial caps: "htmlString", not "HTMLString"
 //       + constants are all caps, with underscores: FILL_PATTERN_SOLID
 //    + file names
 //       + each file has just one public class
@@ -23,17 +23,18 @@
 //       + example: Book.js has unit test files BookTest.html and BookTest.js
 //    + variable scoping prefixes
 //       + class variables are prefixed with "our"
-//       + instance variables are prefixed with "my"
+//       + [DEPRECATED: instance variables are prefixed with "my"]
 //       + global variables are prefixed with "window.global"
 //       + locally scoped variables are not prefixed
-//       + function input parameters are prefixed with "in"
-//       + private variables and methods are prefixed with "__"
-//       + protected variables and methods are prefixed with "_"
+//       + non-public variables and methods are prefixed with "_" (use "_" for private, protected, or package)
+//       + [DEPRECATED: function input parameters are prefixed with "in"]
+//       + [DEPRECATED: private variables and methods are prefixed with "__"]
+//       + [DEPRECATED: protected variables and methods are prefixed with "_"]
 //    + class constants are prefixed with the type of the constant -- see LAYOUT_PORTRAIT
-//    + array variables are prefixed with "ListOf" or "HashTableOf" or "ArrayOf"
-//       + var myListOfBooks = []; <-- a "List" has only values, no keys ["Apple", "Orange", "Banana"]
-//       + var myHashTableOfBooksKeyedByTitle = {}; <-- a "HashTable" is an associative array with key-value pairs
-//       + var myArrayOfBooks = new Array(); <-- an "Array" has values that are indexed by number array[23] = "Apple"
+//    + array variables are prefixed with "listOf" or "hashTableOf" or "arrayOf"
+//       + var listOfBooks = []; <-- a "List" has only values, no keys ["Apple", "Orange", "Banana"]
+//       + var hashTableOfBooksKeyedByTitle = {}; <-- a "HashTable" is an associative array with key-value pairs
+//       + var arrayOfBooks = new Array(); <-- an "Array" has values that are indexed by number arrayOfFruit[23] = "Apple"
 //    + accessor methods are prefixed with "get" or "is" -- e.g. oval.getArea(), oval.isCircle()
 //       + any method that returns a value and does not change an object's state should be a "get" or "is" method
 //       + any method that does change an object's state should be a "set" method
@@ -41,7 +42,7 @@
 //
 // + compatiblity with other browsers and other JavaScript libraries 
 //    + use "get" and "set" accessors -- do *not* assign Mozilla "getter" and "setter" methods
-//    + add methods in your own namespace -- do *not* extend built-in objects: String.prototype.toEsperanto = function ...
+//    + [DEPRECATED: add methods in your own namespace -- do *not* extend built-in objects: String.prototype.toEsperanto = function ...]
 //
 // + indenting, tabs, and line ending characters
 //    + 2-space indenting

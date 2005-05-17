@@ -100,13 +100,13 @@ View.prototype.getHTMLElement = function () {
 
 
 /**
- * Returns the Stevedore instance that this view is using.
+ * Returns the World instance that this view is using.
  *
  * @scope    public instance method
- * @return   A Stevedore object. 
+ * @return   A World object. 
  */
-View.prototype.getStevedore = function () {
-  return this._mySuperview.getStevedore();
+View.prototype.getWorld = function () {
+  return this._mySuperview.getWorld();
 };
 
 

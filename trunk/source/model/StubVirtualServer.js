@@ -533,11 +533,11 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_CATEGORY] = "Category";
   // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_USERSTAMP] = "Userstamp";
   // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_TIMESTAMP] = "Timestamp";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SECTION] = "Section";
+  // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SECTION] = "Section";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY] = "Query";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY] = "Matching Category";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM] = "Matching Item";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_PLUGIN_NAME] = "Plugin Name";
+  // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_PLUGIN_NAME] = "Plugin Name";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED] = "Unfiled Entry";
 
   // create all the Item objects for the attributes
@@ -549,8 +549,8 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   var hashTableOfCategoryNamesKeyedByUuid = {};
   hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_ATTRIBUTE] = "Attribute";
   hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_CATEGORY] = "Category";
-  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_PAGE] = "Page";
-  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_SECTION] = "Section";
+  // hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_PAGE] = "Page";
+  // hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_SECTION] = "Section";
   hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_QUERY] = "Query";
 
   // create all the Item objects for the categories

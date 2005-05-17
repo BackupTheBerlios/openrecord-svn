@@ -31,7 +31,7 @@
 
 // -------------------------------------------------------------------
 // Dependencies:
-//   Stevedore.js
+//   World.js
 //   Util.js
 //   PageView.js
 //   TablePlugin.js
@@ -69,6 +69,7 @@ SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX = "_summary_div";
 SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER = "section_number";
 SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER = "cell_number";
 
+SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME = 113;
 
 // -------------------------------------------------------------------
 // SectionView class properties
@@ -99,8 +100,7 @@ function SectionView(inPageView, inHTMLElement, inSection, inSectionNumber) {
   this.setHTMLElement(inHTMLElement);
   this.mySection = inSection;
   this.mySectionNumber = inSectionNumber;
-  var query = inSection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
-  this.myListOfContentItems = this.getStevedore().getListOfResultItemsForQuery(query); 
+  this.myListOfContentItems = this.getListOfContentItems();
 
   this._myPlugin = null;
   this._myPluginDiv = null;
@@ -120,6 +120,7 @@ function SectionView(inPageView, inHTMLElement, inSection, inSectionNumber) {
  * @param    inValue    A string or an Item. 
  * @return   A string.
  */
+ /* DEPRECATED: instead use Entry.prototype.getDisplayString
 SectionView.getStringForValue = function (inValue) {
   var string = "";
   if (Util.isString(inValue)) {
@@ -130,7 +131,7 @@ SectionView.getStringForValue = function (inValue) {
   }
   return string;
 };
-
+*/
 
 // -------------------------------------------------------------------
 // Public instance methods
@@ -165,8 +166,14 @@ SectionView.prototype.getPluginFromPluginName = function (inPluginName, inPlugin
  * @return   A list of content items.
  */
 SectionView.prototype.getListOfContentItems = function () {
-  var query = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
-  this.myListOfContentItems = this.getStevedore().getListOfResultItemsForQuery(query); 
+  var attributeCalledQuery = this.getWorld().getAttributeCalledQuery();
+  var listOfEntries = this.mySection.getEntriesForAttribute(attributeCalledQuery);
+  if (listOfEntries && listOfEntries[0]) {
+    var query = listOfEntries[0].getValue();
+    this.myListOfContentItems = this.getWorld().getResultItemsForQuery(query); 
+  } else {
+    this.myListOfContentItems = [];
+  }
   return this.myListOfContentItems;
 };
 
@@ -199,9 +206,9 @@ SectionView.prototype.doInitialDisplay = function () {
   if (!this.getHTMLElement()) {
     return;
   }
-  var selectedPluginName = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_PLUGIN_NAME)[0];
-  var query = this.mySection.getValueListFromAttribute(Stevedore.UUID_FOR_ATTRIBUTE_QUERY)[0];
-  this.myListOfContentItems = this.getStevedore().getListOfResultItemsForQuery(query); 
+  var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
+  var selectedPluginName = this.mySection.getSingleStringValueFromAttribute(attributeCalledPluginName);
+  this.myListOfContentItems = this.getListOfContentItems();
   if (!this.myListOfContentItems) {
     return;
   }
@@ -209,15 +216,18 @@ SectionView.prototype.doInitialDisplay = function () {
   var sectionDiv = this.getHTMLElement();
   var outerDiv = View.createAndAppendElement(sectionDiv, "div", SectionView.ELEMENT_CLASS_SECTION);
   var headerH2 = View.createAndAppendElement(outerDiv, "h2");
+  var attributeCalledName = this.getWorld().getAttributeCalledName();
+  var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
   this._myHeaderView = new TextView(this, headerH2, this.mySection,
-    Stevedore.UUID_FOR_ATTRIBUTE_NAME, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+    attributeCalledName, SectionView.ELEMENT_CLASS_TEXT_VIEW);
   var summaryDiv = View.createAndAppendElement(outerDiv, "div");
   this._mySectionSummaryView = new TextView(this, summaryDiv, this.mySection,
-    Stevedore.UUID_FOR_ATTRIBUTE_SUMMARY, SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
+    attributeCalledSummary, SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
   View.createAndAppendElement(outerDiv, "p");
 
   // create the plugin editing controls, if we're in edit mode
-  var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this.mySection.getUuid();
+  // PENDING: We shouldn't call the private method _getUuid()
+  var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this.mySection._getUuid();
   var selectElement = View.createAndAppendElement(outerDiv, "select", SectionView.ELEMENT_CLASS_SECTION_PLUGIN_MENU, selectMenuId);
   selectElement.setAttribute("name", selectMenuId);
   selectElement.setAttribute(SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER, this.mySectionNumber);
@@ -258,15 +268,20 @@ SectionView.prototype.clickOnPluginSelectionMenu = function (inEventObject) {
   
   var selectElement = optionElement.parentNode;
   var newChoiceName = optionElement.value;
-
+  var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
  
   if (this._myPlugin.getPluginName() == newChoiceName) {
     return;
   } else {
     this._myPlugin.endOfLife();
     this._myPlugin = this.getPluginFromPluginName(newChoiceName, this._myPluginDiv);
-    this.mySection.clear(Stevedore.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
-    this.mySection.assign(Stevedore.UUID_FOR_ATTRIBUTE_PLUGIN_NAME, newChoiceName);
+    var pluginNameEntries = this.mySection.getEntriesForAttribute(attributeCalledPluginName);
+    if (pluginNameEntries && pluginNameEntries[0]) {
+      var oldEntry = pluginNameEntries[0];
+      this.mySection.replaceEntry(oldEntry, newChoiceName);
+    } else {
+      this.mySection.addEntryForAttribute(attributeCalledPluginName, newChoiceName);
+    }
     this.refresh();
   }
 };

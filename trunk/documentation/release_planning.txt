@@ -77,7 +77,7 @@ Mignon |  High    | 1   iwd | UI for adding an attribute to an item, and setting
 Mignon |  High    | 1   iwd | UI for creating a new category
 Mignon |  High    | 1   iwd | UI for deleting a row from a table 
  Chao  |  High    | 1.5 iwd | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
- Chao  |  High    | 0.5 iwd | UI to sort a table when you click on a column header
+ Chao  |   done   | 0.5 iwd | UI to sort a table when you click on a column header
 Brian  |   done   | 1   iwd | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
 Brian  |  High    | 2   iwd | Convert UI code to use new data model
        |  High    |         | UI for entering a number literal (instead of a string literal) in a table
@@ -283,24 +283,23 @@ Tasks we want to defer until after release 0.1
     place, rather than relying on client JavaScript to do all
     the work.
 ---------------------------------------------------
-+ Rationalize CSS style sheets
+ + Rationalize CSS style sheets
     Need to figure out a consistent "style" for using style sheets applicable
     to the way we architect our view widgets
 ---------------------------------------------------
-+ Bug: Figure out why swapping between editField and textNode is causing slight visual padding
+ + Bug: Figure out why swapping between editField and textNode is causing slight visual padding
 ---------------------------------------------------
-+ Q: Should we consider subclassing from DOM objects? e.g. TablePlugin can be subclassed from HTMLTableElement?
+ + Q: Should we consider subclassing from DOM objects? e.g. TablePlugin can be subclassed from HTMLTableElement?
 ---------------------------------------------------
-+ Q: Should getListofContentItems() in superview be replaced by an argument into plugin's constructor
-  Also, should plugin get a CSS class?
+ + Q: Should getListofContentItems() in superview be replaced by an argument into plugin's constructor
+   Also, should plugin get a CSS class?
 ---------------------------------------------------
-+ Q: Should we decouple plugins from SectionView? in general, should we make objects less tightly coupled?
-  Parent objects can know about children objects, but not vice versa.
+ + Q: Should we decouple plugins from SectionView? in general, should we make objects less tightly coupled?
+   Parent objects can know about children objects, but not vice versa.
 ---------------------------------------------------
-+ Q: How exactly should entering new items UI work? Not clear when an item is saved
+ + Q: How exactly should entering new items UI work? Not clear when an item is saved
 ---------------------------------------------------
-+ Bug: up down arrows not working for table editing. Not sure why
----------------------------------------------------
+
 
 
 
