@@ -83,6 +83,7 @@ BarChartPlugin.prototype.refresh = function () {
   var contentItem = null;
   var attribute = null;
   var listOfEntries;
+  var firstEntry;
   var attributeKey;
   var hashTableOfNumericValueIncidenceKeyedByAttributeKey = {};
   var hashTableOfAttributesKeyedByAttributeKey = {};
@@ -99,7 +100,7 @@ BarChartPlugin.prototype.refresh = function () {
       hashTableOfAttributesKeyedByAttributeKey[attributeKeyString] = attribute;
       listOfEntries = contentItem.getEntriesForAttribute(attribute);
       if (listOfEntries) {
-        var firstEntry = listOfEntries[0];
+        firstEntry = listOfEntries[0];
         if (firstEntry) {
           var value = firstEntry.getValue();
           if (Util.isNumber(value)) {
@@ -163,7 +164,7 @@ BarChartPlugin.prototype.refresh = function () {
     if (selectedAttribute) {
       listOfEntries = contentItem.getEntriesForAttribute(selectedAttribute);
       if (listOfEntries && listOfEntries[0]) {
-        var firstEntry = listOfEntries[0];
+        firstEntry = listOfEntries[0];
         var firstValue = firstEntry.getValue();
         if (Util.isNumber(firstValue)) {
           numericValue = firstValue;

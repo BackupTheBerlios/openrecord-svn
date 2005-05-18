@@ -127,13 +127,13 @@ TablePlugin.prototype._buildAttributeHash = function() {
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var hashTableOfAttributes = {};
   for (var iKey in this._listOfItems) {
-    contentItem = this._listOfItems[iKey];
+    var contentItem = this._listOfItems[iKey];
     var listOfAttributesForItem = contentItem.getAttributes();
     for (var attributeKey in listOfAttributesForItem) {
       var attribute = listOfAttributesForItem[attributeKey];
       if (attribute != attributeCalledCategory) {
-        var attributeKey = attribute.getUniqueKeyString();
-        hashTableOfAttributes[attributeKey] = attribute;
+        var attributeKeyString = attribute.getUniqueKeyString();
+        hashTableOfAttributes[attributeKeyString] = attribute;
       }
     }
   }

@@ -2923,6 +2923,26 @@
           "value": { "type": "StringValue", "value": "" },
       "userstamp": "62361",                // by (Brian Skinner)
       "timestamp": "1116453615828" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // 
+           "uuid": "623634",
+      "attribute": "3102",                // Publisher
+           "item": "6013",                // The Two Towers
+          "previousEntry": "623632",
+          "value": { "type": "StringValue", "value": "" },
+      "userstamp": "62361",                // by (Brian Skinner)
+      "timestamp": "1116454258203" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // 
+           "uuid": "623635",
+      "attribute": "3103",                // ISBN
+           "item": "6013",                // The Two Towers
+          "previousEntry": "623633",
+          "value": { "type": "StringValue", "value": "" },
+      "userstamp": "62361",                // by (Brian Skinner)
+      "timestamp": "1116454259640" }
   }  ], 
   "users": ["100", "1502", "62361"]
 }
