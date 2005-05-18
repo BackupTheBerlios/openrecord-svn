@@ -279,17 +279,38 @@ RootView.prototype.displayControlSpan = function () {
     mySpan.removeChild(mySpan.childNodes[i]);
   }
 
-  var username = this.myCookie.username;
-  var knownUser = username !== null;
-  if (!knownUser) {username = "guest. Your username: ";}
-  var welcomeNode = document.createTextNode("Hello, " + username);
+  var currentUser = this.getWorld().getCurrentUser();
+  if (!currentUser) {
+    // alert("displayControlSpan: !currentUser");
+    var userUuid = this.myCookie.userUuid;
+    // alert("displayControlSpan: userUuid = " + userUuid);
+    if (userUuid) {
+      var userToLoginAs = this.getWorld().getItemFromUuid(userUuid);
+      if (userToLoginAs) { 
+        this.getWorld().login(userToLoginAs, "PENDING: magic super password");
+        currentUser = this.getWorld().getCurrentUser();
+      }
+      if (!currentUser) {
+        this.myCookie.userUuid = null;
+        this.myCookie.store();
+      }
+    }
+  }
+  var welcomeText = "";
+  if (currentUser) {
+    welcomeText = "Hello " + currentUser.getDisplayName() + ". ";
+  } else {
+    welcomeText = "Welcome. Please sign in: "; 
+  }
+  var welcomeNode = document.createTextNode(welcomeText);
   mySpan.appendChild(welcomeNode);
-  if (knownUser) { 
-    welcomeNode.appendData(". ");
+  if (currentUser) { 
     var signoutLink = document.createElement("a");
     signoutLink.appendChild(document.createTextNode("Sign out"));
     signoutLink.onclick = this.clickOnSignoutButton.bindAsEventListener(this);
     mySpan.appendChild(signoutLink);
+    var space = document.createTextNode(" ");
+    mySpan.appendChild(space);
     var editButton = document.createElement("input");
     editButton.type = "button";
     editButton.value = (this.myEditMode) ? "Save" : "Edit";
@@ -309,43 +330,94 @@ RootView.prototype.displayControlSpan = function () {
   }
 };
 
+
+/**
+ * Called when sign out button is clicked.
+ *
+ * @scope    PENDING
+ */
 RootView.prototype.clickOnSignoutButton = function(inEventObject) {
-// called when sign out button is clicked
   if (this.myEditMode) {this.setEditMode(false);}
-  this.myCookie.username = null;
+  this.myCookie.userUuid = null;
   this.myCookie.store();
+  this.getWorld().logout();
   this.displayControlSpan();
 };
 
+
+/**
+ * Called when sign in input field is typed with keystroke.
+ *
+ * @scope    PENDING
+ */
 RootView.prototype.signinKeyPress = function(inEventObject) {
-// called when sign in input field is typed with keystroke
-// see if <return> is pressed, if so, similate clicking on sign in button
+  // see if <return> is pressed, if so, similate clicking on sign in button
   if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
     this.clickOnSignInButton(inEventObject);
   }
 };
 
+
+/**
+ * Called when sign in button is clicked.
+ *
+ * @scope    PENDING
+ */
 RootView.prototype.clickOnSignInButton = function(inEventObject) {
-// called when sign in button is clicked
+  
   function isValidUsername(username) {
     // PENDING: hard coded to validate for alphanumeric usernames of 3 or more characters
     if (!username) {return false;}
     return username.search(/\w{3,}/) >= 0;
   }
   
-  var newUsername = this.usernameInput.value;
-  if (isValidUsername(newUsername)) {
-    this.myCookie.username = newUsername;
+  var listOfUsers = this.getWorld().getUsers();
+  var userNameEntered = this.usernameInput.value;
+  var currentUser = null;
+  for (var key in listOfUsers) {
+    if (!currentUser) {
+      var user = listOfUsers[key];
+      var lowerCaseUserName = user.getDisplayName().toLowerCase();
+      var lowerCaseUserNameEntered = userNameEntered.toLowerCase();
+      var numberOfCharactersToCompare = lowerCaseUserNameEntered.length;
+      var shortUserName = lowerCaseUserName.substring(0, numberOfCharactersToCompare);
+      if (shortUserName == lowerCaseUserNameEntered) {
+        // we have a match!
+        this.getWorld().login(user, "PENDING: magic super password");
+        currentUser = this.getWorld().getCurrentUser(); 
+      }
+    }
+  }
+  
+  if (currentUser) {
+    this.myCookie.userUuid = currentUser._getUuid();
     this.myCookie.store();
     this.displayControlSpan();
-  }
-  else {
-    var newErrorNode = document.createTextNode("\n Your username must be 3 or more alphanumeric characters!");
-    if (this.errorNode) {this.myMainControlSpanElement.replaceChild(newErrorNode,this.errorNode);}
-    else {this.myMainControlSpanElement.appendChild(newErrorNode); }
-    this.errorNode = newErrorNode;
+  } else {
+    if (isValidUsername(userNameEntered)) {
+      var newUser = this.getWorld().newUser(userNameEntered, "dummy password");
+      var loginSuccess = this.getWorld().login(newUser, "dummy password");
+      var userUuid;
+      if (loginSuccess) {
+        userUuid = newUser._getUuid();
+      } else {
+        userUuid = null;
+      }
+      this.myCookie.userUuid = userUuid;
+      this.myCookie.store();
+      this.displayControlSpan();
+    } else {
+      var newErrorNode = document.createTextNode("\n Your username must be 3 or more alphanumeric characters!");
+      if (this.errorNode) {
+        this.myMainControlSpanElement.replaceChild(newErrorNode,this.errorNode);
+      } else {
+        this.myMainControlSpanElement.appendChild(newErrorNode); 
+      }
+      this.errorNode = newErrorNode;
+    }
   }
 };
+
 
 /**
  * Re-creates the HTML for the Navbar, and hands the HTML to the browser 

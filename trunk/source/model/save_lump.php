@@ -1,5 +1,5 @@
 <?php
-$datastoreFilename = "2005_april_chronological_lump.json";
+$datastoreFilename = "../repositories/demo_page/2005_april_chronological_lump.json";
 $contentToWrite = "" . $HTTP_RAW_POST_DATA . "";
 /* 
 $contentToWrite = "start " . $_POST["foo"] . " middle " . $_POST["foo"] . " end";

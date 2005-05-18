@@ -250,6 +250,11 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
 StubVirtualServer.prototype.__getItemFromUuidOrBootstrapItem = function (inUuid) {
   var item = this.getItemFromUuid(inUuid);
   if (!item) {
+    if (Util.isString(inUuid)) {
+      Util.assert(Util.isNumeric(inUuid));
+      inUuid = parseInt(inUuid);
+    }
+    Util.assert(Util.isNumber(inUuid));
     this.__myNextAvailableUuid = Math.max(this.__myNextAvailableUuid, (inUuid + 1));   
     item = new Item(this.__myWorld, inUuid);
     this.__myHashTableOfItemsKeyedByUuid[inUuid] = item;
@@ -269,6 +274,11 @@ StubVirtualServer.prototype.__getItemFromUuidOrBootstrapItem = function (inUuid)
 StubVirtualServer.prototype.__getEntryFromUuidOrBootstrapEntry = function (inUuid) {
   var entry = this.__myHashTableOfEntriesKeyedByUuid[inUuid];
   if (!entry) {
+    if (Util.isString(inUuid)) {
+      Util.assert(Util.isNumeric(inUuid));
+      inUuid = parseInt(inUuid);
+    }
+    Util.assert(Util.isNumber(inUuid));
     this.__myNextAvailableUuid = Math.max(this.__myNextAvailableUuid, (inUuid + 1));   
     entry = new Entry(this.__myWorld, inUuid);
     this.__myHashTableOfEntriesKeyedByUuid[inUuid] = entry;
@@ -535,7 +545,7 @@ BigLumpVirtualServer.prototype.saveChangesToServer = function (inForceSave) {
   
   this.__myXMLHttpRequestObject = this.__newXMLHttpRequestObject();
   if (saveChanges) {
-    var url = "save_lump.php";
+    var url = "model/save_lump.php";
     // var url = "http://localhost:8080/openrecord/demo/current/trunk/source/model/" + "save_lump.php";
     // var url = "http://localhost:8080/openrecord/demo/current/trunk/source/" + "save_changes.php";
     this.__myXMLHttpRequestObject.open("POST", url, true);

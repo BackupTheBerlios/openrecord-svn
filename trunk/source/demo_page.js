@@ -42,9 +42,10 @@
  * @scope    global function
  */
 window.doOnloadActions = function() {  
-  var fileName = "test_data_2005_april_chronological_lump.json";
-  // var fileName = "test_data_2005_march_item_centric_list.json";
-  var url = "model/" + fileName;
+  // var fileName = "test_data_2005_april_chronological_lump.json";
+  // var url = "model/" + fileName;
+  var fileName = "2005_april_chronological_lump.json";
+  var url = "repositories/demo_page/" + fileName;
   var fileContentString = Util.getStringContentsOfFileAtURL(url);
   
   // Create a World and a BigLumpVirtualServer, and have the 
