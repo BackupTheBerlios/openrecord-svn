@@ -78,8 +78,9 @@ Mignon |  High    | 1   iwd | UI for creating a new category
 Mignon |  High    | 1   iwd | UI for deleting a row from a table 
  Chao  |  High    | 1.5 iwd | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
  Chao  |   done   | 0.5 iwd | UI to sort a table when you click on a column header
+       |  High    | 0   iwd | UI for entering a new row in a table
 Brian  |   done   | 1   iwd | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
-Brian  |  High    | 2   iwd | Convert UI code to use new data model
+Brian  |   done   | 2   iwd | Convert UI code to use new data model
        |  High    |         | UI for entering a number literal (instead of a string literal) in a table
        |  High    |         | UI for entering references to categories or to other items
        | Medium   |         | UI for adding a new section to a page
@@ -287,7 +288,9 @@ Tasks we want to defer until after release 0.1
     Need to figure out a consistent "style" for using style sheets applicable
     to the way we architect our view widgets
 ---------------------------------------------------
- + Bug: Figure out why swapping between editField and textNode is causing slight visual padding
+ + Bug: Extra cell padding when editing table cells
+    Figure out why swapping between editField and textNode is causing 
+    slight visual padding
 ---------------------------------------------------
  + Q: Should we consider subclassing from DOM objects? e.g. TablePlugin can be subclassed from HTMLTableElement?
 ---------------------------------------------------
@@ -298,6 +301,12 @@ Tasks we want to defer until after release 0.1
    Parent objects can know about children objects, but not vice versa.
 ---------------------------------------------------
  + Q: How exactly should entering new items UI work? Not clear when an item is saved
+---------------------------------------------------
+ + Escape key
+    When the user is typing in a field, if they press the Escape key we  
+    should undo anything they've done, and revert the field to its orginal 
+    state.  To see what this should feel like, try hitting Escape in the 
+    Firefox URL field after you've made done some typing.
 ---------------------------------------------------
 
 
