@@ -476,6 +476,33 @@ World.prototype.newItem = function (inName, inObserver) {
 
 
 /**
+ * Returns a newly created "provisional" item.  At the time this item is 
+ * created, it will only exist in local memory.  Unlike normal items, 
+ * provisional items are not saved to the repository at the time they 
+ * are created.  The provisional item is saved to the repository when 
+ * an entry is set for one of the item's attributes.
+ *
+ * @scope    public instance method
+ * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
+ * @return   A newly created provisional item.
+ */
+World.prototype.newProvisionalItem = function (inObserver) {
+  return this.__myVirtualServer.newProvisionalItem(inObserver);
+};
+
+
+/**
+ * Records the fact that a provisional item just became real.
+ *
+ * @scope    package instance method
+ * @param    inItem    The item that was provisional and just became real. 
+ */
+World.prototype._provisionalItemJustBecameReal = function (inItem) {
+  this.__myVirtualServer._provisionalItemJustBecameReal(inItem);
+};
+
+
+/**
  * Returns a newly created item representing an attribute.
  *
  * @scope    public instance method

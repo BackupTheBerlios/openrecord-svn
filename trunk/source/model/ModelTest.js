@@ -500,6 +500,15 @@ function testBigLumpVirtualServerStringOutput() {
   //  fileContentString.substring(beginMismatch, (beginMismatch + 500)) + "\n" +
   //  reconstructedString.substring(beginMismatch, (beginMismatch + 500)));
   assert("reconstructed string equals original string", fileContentString == reconstructedString);
+  
+  // var newItem = world.newProvisionalItem();
+  // reconstructedString = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld(); 
+  // assert("reconstructed string equals original string", fileContentString == reconstructedString);
+  // var attributeCalledName = world.getAttributeCalledName();
+  // newItem.addEntryForAttribute(attributeCalledName, "Jimmy Carter");
+  // reconstructedString = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld(); 
+  // assert("reconstructed string no longer equals original string", fileContentString != reconstructedString);
+  
 }
 
 function testBigLumpVirtualServer() {

@@ -99,16 +99,60 @@ StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
  * @return   A newly created item.
  */
 StubVirtualServer.prototype.newItem = function (inName, inObserver) {
-  var uuid = this.__getNewUuid();
-  var item = new Item(this.__myWorld, uuid);
-  item._initialize(inObserver);
-  this.__myHashTableOfItemsKeyedByUuid[uuid] = item;
-  this.__myChronologicalListOfNewlyCreatedRecords.push(item);
+  var item = this._createNewItem(inObserver, false);
   if (inName) { 
     var attributeCalledName = this.__myWorld.getAttributeCalledName();
     item.addEntryForAttribute(attributeCalledName, inName);
   }
   return item;
+};
+
+
+/**
+ * Returns a newly created "provisional" item.  At the time this item is 
+ * created, it will only exist in local memory.  Unlike normal items, 
+ * provisional items are not saved to the repository at the time they 
+ * are created.  The provisional item is saved to the repository when 
+ * an entry is set for one of the item's attributes.
+ *
+ * @scope    public instance method
+ * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
+ * @return   A newly created provisional item.
+ */
+StubVirtualServer.prototype.newProvisionalItem = function (inObserver) {
+  var item = this._createNewItem(inObserver, true);
+  return item;
+};
+
+
+/**
+ * Returns a newly created item: either a provisional item or a normal item.
+ *
+ * @scope    private instance method
+ * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
+ * @param    inProvisionalFlag    True if the item is provisional; false if the item is normal. 
+ * @return   A newly created item.
+ */
+StubVirtualServer.prototype._createNewItem = function (inObserver, inProvisionalFlag) {
+  var uuid = this.__getNewUuid();
+  var item = new Item(this.__myWorld, uuid);
+  item._initialize(inObserver, inProvisionalFlag);
+  this.__myHashTableOfItemsKeyedByUuid[uuid] = item;
+  if (!inProvisionalFlag) {
+    this.__myChronologicalListOfNewlyCreatedRecords.push(item);
+  }
+  return item;
+};
+
+
+/**
+ * Records the fact that a provisional item just became real.
+ *
+ * @scope    package instance method
+ * @param    inItem    The item that was provisional and just became real. 
+ */
+StubVirtualServer.prototype._provisionalItemJustBecameReal = function (inItem) {
+  this.__myChronologicalListOfNewlyCreatedRecords.push(inItem);
 };
 
 

@@ -56,9 +56,8 @@ Item.prototype = new IdentifiedRecord();  // makes Item be a subclass of Identif
 function Item(inWorld, inUuid) {
   this._IdentifiedRecord(inWorld, inUuid);
   
-  // DELETE_ME
-  // this.__myListOfEntries = null;
   this.__myHashTableOfEntryListsKeyedByAttributeUuid = {};
+  this.__myProvisionalFlag = false;
 }
 
 
@@ -74,12 +73,14 @@ function Item(inWorld, inUuid) {
  *
  * @scope    protected instance method
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
+ * @param    inProvisionalFlag    True if the item is provisional; false if the item is normal. 
  */
-Item.prototype._initialize = function (inObserver) {
+Item.prototype._initialize = function (inObserver, inProvisionalFlag) {
   this._initializeIdentifiedRecord();
 
-  // DELETE_ME
-  // this.__myListOfEntries = [];
+  if (inProvisionalFlag) {
+    this.__myProvisionalFlag = true;
+  }
   if (inObserver) {
     this.addObserver(inObserver);
   }
@@ -100,10 +101,8 @@ Item.prototype._initialize = function (inObserver) {
  * @param    inUserstamp    The user who created this item. 
  */
 Item.prototype._rehydrate = function (inTimestamp, inUserstamp) {
+  this.__myProvisionalFlag = false;
   this._rehydrateIdentifiedRecord(inTimestamp, inUserstamp);
-  
-  // DELETE_ME
-  // this.__myListOfEntries = [];
 };
 
 
@@ -176,10 +175,13 @@ Item.prototype.replaceEntry = function (inEntry, inValue) {
  * @return   The new replacement entry object.
  */
 Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribute, inValue) {
+  if (this.__myProvisionalFlag) {
+    this.__myProvisionalFlag = false;
+    this.getWorld()._provisionalItemJustBecameReal(this);
+  }
+  
   var itemOrEntry = inEntry || this;
   var entry = this.getWorld()._newEntry(itemOrEntry, inAttribute, inValue);
-  // DELETE_ME
-  // this.__myListOfEntries.push(entry);
   this.__addEntryToListOfEntriesForAttribute(entry);
   return entry;
   
