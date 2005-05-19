@@ -2943,6 +2943,54 @@
           "value": { "type": "StringValue", "value": "" },
       "userstamp": "62361",                // by (Brian Skinner)
       "timestamp": "1116454259640" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // none
+           "uuid": "623636",
+      "attribute": "3103",                // ISBN
+           "item": "5204",                // The Gumption Memo
+          "value": { "type": "StringValue", "value": "none" },
+      "userstamp": "62361",                // by (Brian Skinner)
+      "timestamp": "1116524940750" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // 0814756778
+           "uuid": "623637",
+      "attribute": "3103",                // ISBN
+           "item": "3204",                // Shrinking Violets and Caspa...
+          "previousEntry": "6076",
+          "value": { "type": "StringValue", "value": "0814756778" },
+      "userstamp": "62361",                // by (Brian Skinner)
+      "timestamp": "1116524942718" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Chih-Chao Lam
+           "uuid": "623638",
+      "userstamp": "623638",                // by (Chih-Chao Lam)
+      "timestamp": "1116525064062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Chih-Chao Lam
+           "uuid": "623639",
+      "attribute": "102",                // Name
+           "item": "623638",                // Chih-Chao Lam
+          "value": { "type": "StringValue", "value": "Chih-Chao Lam" },
+      "userstamp": "623638",                // by (Chih-Chao Lam)
+      "timestamp": "1116525064062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // 
+           "uuid": "623640",
+      "attribute": "3103",                // ISBN
+           "item": "5204",                // The Gumption Memo
+          "previousEntry": "623636",
+          "value": { "type": "StringValue", "value": "" },
+      "userstamp": "623638",                // by (Chih-Chao Lam)
+      "timestamp": "1116525088906" }
   }  ], 
-  "users": ["100", "1502", "62361"]
+  "users": [
+    { "uuid": "100", "password": null },
+    { "uuid": "1502", "password": "abracadabra" },
+    { "uuid": "62361", "password": "abracadabra" },
+    { "uuid": "623638", "password": "abracadabra" } ]
 }

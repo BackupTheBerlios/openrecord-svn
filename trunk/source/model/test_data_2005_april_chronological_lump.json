@@ -2871,5 +2871,7 @@
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819463406" }
   }  ], 
-  "users": ["100", "1502"]
+  "users": [
+    { "uuid": "100", "password": null },
+    { "uuid": "1502", "password": "abracadabra" } ]
 }

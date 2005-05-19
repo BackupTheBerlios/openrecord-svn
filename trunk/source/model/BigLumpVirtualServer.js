@@ -59,6 +59,7 @@ BigLumpVirtualServer.JSON_TYPE_RELATED_UUID = "RelatedUuid";
 BigLumpVirtualServer.JSON_TYPE_NUMBER_VALUE = "NumberValue";
 
 BigLumpVirtualServer.JSON_MEMBER_WUID = "uuid";
+BigLumpVirtualServer.JSON_MEMBER_PASSWORD = "password";
 
 BigLumpVirtualServer.JSON_MEMBER_ITEM_CLASS = "Item";
 BigLumpVirtualServer.JSON_MEMBER_ENTRY_CLASS = "Entry";
@@ -372,9 +373,15 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
     }
   }
   for (key in inListOfUsers) {
-    var userUuid = inListOfUsers[key];
+    var dehydratedUserData = inListOfUsers[key];
+    var userUuid = dehydratedUserData[BigLumpVirtualServer.JSON_MEMBER_WUID];
+    var userPassword = dehydratedUserData[BigLumpVirtualServer.JSON_MEMBER_PASSWORD];
+    
     var user = this.getItemFromUuid(userUuid);
-    this.__myListOfUsers.push(user);
+    if (user) {
+      this.__myListOfUsers.push(user);
+      this.__myHashTableOfUserAuthenticationInfo[user.getUniqueKeyString()] = userPassword;
+    }
   }
 };
   
@@ -494,19 +501,27 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
     listOfStrings.push('  }');
   }
   listOfStrings.push("  ], \n");
-  listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_USERS + '": ' + '[');
-
+  
+  // write out the list of users
+  listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_USERS + '": ' + '[\n');
   firstIdentifiedRecord = true;
   for (key in this.__myListOfUsers) {
     var user = this.__myListOfUsers[key];
     if (firstIdentifiedRecord) {
       firstIdentifiedRecord = false;
     } else {
-      listOfStrings.push(', ');
+      listOfStrings.push(',\n');
     }
-    listOfStrings.push('"' + user._getUuid() + '"');
+    var password = this.__myHashTableOfUserAuthenticationInfo[user.getUniqueKeyString()];
+    var passwordString = "null";
+    if (password) {
+      passwordString = '"' + password + '"';
+    }
+    listOfStrings.push('    { "' + BigLumpVirtualServer.JSON_MEMBER_WUID + '": "' + user._getUuid() + '", ');
+    listOfStrings.push('"' + BigLumpVirtualServer.JSON_MEMBER_PASSWORD + '": ' + passwordString + ' }');
   }
-  listOfStrings.push("]\n");
+  listOfStrings.push(" ]\n");
+  
   listOfStrings.push("}\n");
   var finalString = listOfStrings.join("");
   return finalString;

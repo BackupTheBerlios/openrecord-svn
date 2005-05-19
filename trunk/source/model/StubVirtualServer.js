@@ -239,9 +239,9 @@ StubVirtualServer.prototype.login = function (inUser, inAuthentication) {
   var successfulAuthentication = (realAuthentication == inAuthentication);
   
   // PENDING: temporary hack
-  if (!successfulAuthentication) {
-    successfulAuthentication = ("PENDING: magic super password" == inAuthentication);
-  }
+  // if (!successfulAuthentication) {
+  //  successfulAuthentication = ("PENDING: magic super password" == inAuthentication);
+  // }
   
   if (successfulAuthentication) {
     this.__myCurrentUser = inUser;

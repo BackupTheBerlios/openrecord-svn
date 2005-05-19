@@ -2,7 +2,9 @@
  RootView.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
+    Chih-Chao Lam <chao@cs.stanford.edu>
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -287,7 +289,8 @@ RootView.prototype.displayControlSpan = function () {
     if (userUuid) {
       var userToLoginAs = this.getWorld().getItemFromUuid(userUuid);
       if (userToLoginAs) { 
-        this.getWorld().login(userToLoginAs, "PENDING: magic super password");
+        // PENDING: need to use a real password instead of "abracadabra"
+        this.getWorld().login(userToLoginAs, "abracadabra");
         currentUser = this.getWorld().getCurrentUser();
       }
       if (!currentUser) {
@@ -373,8 +376,10 @@ RootView.prototype.clickOnSignInButton = function(inEventObject) {
   
   var listOfUsers = this.getWorld().getUsers();
   var userNameEntered = this.usernameInput.value;
+  var key;
   var currentUser = null;
-  for (var key in listOfUsers) {
+  
+  for (key in listOfUsers) {
     if (!currentUser) {
       var user = listOfUsers[key];
       var lowerCaseUserName = user.getDisplayName().toLowerCase();
@@ -383,7 +388,7 @@ RootView.prototype.clickOnSignInButton = function(inEventObject) {
       var shortUserName = lowerCaseUserName.substring(0, numberOfCharactersToCompare);
       if (shortUserName == lowerCaseUserNameEntered) {
         // we have a match!
-        this.getWorld().login(user, "PENDING: magic super password");
+        this.getWorld().login(user, "abracadabra"); // PENDING: user real password
         currentUser = this.getWorld().getCurrentUser(); 
       }
     }
@@ -395,8 +400,8 @@ RootView.prototype.clickOnSignInButton = function(inEventObject) {
     this.displayControlSpan();
   } else {
     if (isValidUsername(userNameEntered)) {
-      var newUser = this.getWorld().newUser(userNameEntered, "dummy password");
-      var loginSuccess = this.getWorld().login(newUser, "dummy password");
+      var newUser = this.getWorld().newUser(userNameEntered, "abracadabra"); // PENDING: user real password
+      var loginSuccess = this.getWorld().login(newUser, "abracadabra"); // PENDING: user real password
       var userUuid;
       if (loginSuccess) {
         userUuid = newUser._getUuid();
