@@ -78,13 +78,9 @@ Lint.isCodeCleanAtUrl = function (inUrl) {
  * @param    inFileName    A string with the name of a file containing JavaScript code. 
  * @return   A boolean value. True if the code is good (according to jslint).
  */
-Lint.fooBar = function (inFileName) {
-  alert("in Lint.fooBar for " + inFileName);
-};
-
 Lint.isCodeCleanInFile = function (inFileName) {
   // alert("in Lint.isCodeCleanInFile for " + inFileName);
-  var url  = "../../current/trunk/source/model/" + inFileName;
+  var url  = "../../../source/model/" + inFileName;
   return Lint.isCodeCleanAtUrl(url);
 };
 

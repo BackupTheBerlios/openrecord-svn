@@ -483,7 +483,7 @@ function testQueries() {
 
 function testBigLumpVirtualServerStringOutput() {
   var fileName = "test_data_2005_april_chronological_lump.json";
-  var url = "../../current/trunk/source/model/" + fileName;
+  var url = "../../../source/model/" + fileName;
   var fileContentString = Util.getStringContentsOfFileAtURL(url);
   var bigLumpVirtualServer = new BigLumpVirtualServer(fileContentString);
   var world = new World(bigLumpVirtualServer);
@@ -513,7 +513,7 @@ function testBigLumpVirtualServerStringOutput() {
 
 function testBigLumpVirtualServer() {
   var fileName = "test_data_2005_march_item_centric_list.json";
-  var url = "../../current/trunk/source/model/" + fileName;
+  var url = "../../../source/model/" + fileName;
   var fileContentString = Util.getStringContentsOfFileAtURL(url);
   
   // Create a World and a BigLumpVirtualServer, and have the 

@@ -82,7 +82,7 @@ Lint.isCodeCleanAtUrl = function(inUrl) {
  * @return   A boolean value. True if the code is good (according to jslint).
  */
 Lint.isCodeCleanInFile = function(inFileName) {
-  var url  = "../../current/trunk/source/" + inFileName;
+  var url  = "../../../source/" + inFileName;
   return Lint.isCodeCleanAtUrl(url);
 };
 
