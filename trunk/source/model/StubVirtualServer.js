@@ -91,14 +91,30 @@ StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
 // -------------------------------------------------------------------
 
 /**
+ * Throws an Error if there is no user currently logged in.
+ *
+ * @scope    private instance method
+ * @throws   Throws an Error if no user is logged in.
+ */
+StubVirtualServer.prototype._throwErrorIfNoUserIsLoggedIn = function () {
+  if (!this.__myCurrentUser) {
+    var error = new Error("No user is logged in.  You can't write to the repository when nobody is logged in.");
+    throw error;
+  }
+};
+
+
+/**
  * Returns a newly created item.
  *
  * @scope    public instance method
  * @param    inName    Optional. A string, which will be assigned to the name attribute of the new item. 
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created item.
+ * @throws   Throws an Error if no user is logged in.
  */
 StubVirtualServer.prototype.newItem = function (inName, inObserver) {
+  this._throwErrorIfNoUserIsLoggedIn();
   var item = this._createNewItem(inObserver, false);
   if (inName) { 
     var attributeCalledName = this.__myWorld.getAttributeCalledName();
@@ -118,8 +134,10 @@ StubVirtualServer.prototype.newItem = function (inName, inObserver) {
  * @scope    public instance method
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created provisional item.
+ * @throws   Throws an Error if no user is logged in.
  */
 StubVirtualServer.prototype.newProvisionalItem = function (inObserver) {
+  this._throwErrorIfNoUserIsLoggedIn();
   var item = this._createNewItem(inObserver, true);
   return item;
 };
@@ -164,8 +182,10 @@ StubVirtualServer.prototype._provisionalItemJustBecameReal = function (inItem) {
  * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
  * @param    inValue    The value to initialize the entry with. 
  * @return   A newly created entry.
+ * @throws   Throws an Error if no user is logged in.
  */
 StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inValue) {
+  this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this.__getNewUuid();
   var entry = new Entry(this.__myWorld, uuid);
   entry._initialize(inItemOrEntry, inAttribute, inValue);
@@ -182,8 +202,10 @@ StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inV
  * @param    inIdentifiedRecord    The identifiedRecord that this is an ordinal for. 
  * @param    inOrdinalNumber    The ordinal number itself. 
  * @return   A newly created ordinal.
+ * @throws   Throws an Error if no user is logged in.
  */
 StubVirtualServer.prototype.newOrdinal = function (inIdentifiedRecord, inOrdinalNumber) {
+  this._throwErrorIfNoUserIsLoggedIn();
   var ordinal = new Ordinal(inIdentifiedRecord, this.__myWorld.getCurrentUser(), inOrdinalNumber);
   this.__myChronologicalListOfNewlyCreatedRecords.push(ordinal);
   return ordinal;
@@ -197,8 +219,10 @@ StubVirtualServer.prototype.newOrdinal = function (inIdentifiedRecord, inOrdinal
  * @param    inIdentifiedRecord    The identifiedRecord to attach this vote to. 
  * @param    inRetainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  * @return   A newly created vote.
+ * @throws   Throws an Error if no user is logged in.
  */
 StubVirtualServer.prototype.newVote = function (inIdentifiedRecord, inRetainFlag) {
+  this._throwErrorIfNoUserIsLoggedIn();
   var vote = new Vote(inIdentifiedRecord, this.__myWorld.getCurrentUser(), inRetainFlag);
   this.__myChronologicalListOfNewlyCreatedRecords.push(vote);
   return vote;
@@ -217,16 +241,25 @@ StubVirtualServer.prototype.newVote = function (inIdentifiedRecord, inRetainFlag
  * @param    inAuthentication    A string which will be used as the login password for the user. 
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created item representing a user.
+ * @throws   Throws an Error if a user is logged in.
  */
 StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObserver) {
-  var newUser = this.newItem(null, inObserver);
+  if (this.__myCurrentUser) {
+    var error = new Error("A user is logged in.  You can't create a new user when somebody is already logged in.");
+    throw error;
+  }
+
+  var newUser = this._createNewItem(inObserver, false);
   newUser.__myCreationUserstamp = newUser;
   this.__myListOfUsers.push(newUser);
   this.__myHashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = inAuthentication;
+
   if (inName) { 
+    this.__myCurrentUser = newUser;
     var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
     var entry = newUser.addEntryForAttribute(attributeCalledName, inName);
-    entry.__myCreationUserstamp = newUser;
+    // entry.__myCreationUserstamp = newUser;
+    this.__myCurrentUser = null;
   }
   return newUser;
 };

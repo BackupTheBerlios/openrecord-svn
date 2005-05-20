@@ -71,8 +71,23 @@ function testLoginLogout() {
   world.login(userJane, janesPassword);
   assertTrue('Jane is logged in', world.getCurrentUser() == userJane);
   assertFalse('Chris is not logged in', world.getCurrentUser() == userChris);
-  
+  var caughtError = false;
+  var oprahsPassword = "Oprah's password";
+  try {
+    var userOprah = world.newUser("Oprah", oprahsPassword);
+  } catch (error) {
+    caughtError = true;
+  }
+  assertTrue("We can't create a new user while Jane is logged in", caughtError);
   world.logout();
+  
+  caughtError = false;
+  try {
+    var newItem = world.newItem("The Great Wall of China");
+  } catch (error) {
+    caughtError = true;
+  }
+  assertTrue("We can't create a new item without being logged in", caughtError);
 }
   
 
@@ -501,9 +516,12 @@ function testBigLumpVirtualServerStringOutput() {
   //  reconstructedString.substring(beginMismatch, (beginMismatch + 500)));
   assert("reconstructed string equals original string", fileContentString == reconstructedString);
   
-  // var newItem = world.newProvisionalItem();
-  // reconstructedString = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld(); 
-  // assert("reconstructed string equals original string", fileContentString == reconstructedString);
+  var guestUser = world.getItemFromUuid(1502);
+  var loginSuccess = world.login(guestUser, "abracadabra");
+  assertTrue('Can log in as Guest', loginSuccess);
+  var newItem = world.newProvisionalItem();
+  reconstructedString = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld(); 
+  assert("reconstructed string equals original string", fileContentString == reconstructedString);
   // var attributeCalledName = world.getAttributeCalledName();
   // newItem.addEntryForAttribute(attributeCalledName, "Jimmy Carter");
   // reconstructedString = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld(); 
