@@ -117,6 +117,7 @@ Item.prototype._rehydrate = function (inTimestamp, inUserstamp) {
  * @scope    public instance method
  * @param    inValue    The value to initialize the entry to.
  * @return   An entry object.
+ * @throws   Throws an Error if no user is logged in.
  */
 Item.prototype.addEntry = function (inValue) {
   var attributeCalledUnfiled = this.getWorld().getAttributeCalledUnfiled();
@@ -144,6 +145,7 @@ Item.prototype.addEntry = function (inValue) {
  * @param    inAttribute    The attribute to assign the entry to. 
  * @param    inValue    The value to initialize the entry with.
  * @return   An entry object.
+ * @throws   Throws an Error if no user is logged in.
  */
 Item.prototype.addEntryForAttribute = function (inAttribute, inValue) {
   return this.replaceEntryWithEntryForAttribute(null, inAttribute, inValue);
@@ -157,6 +159,7 @@ Item.prototype.addEntryForAttribute = function (inAttribute, inValue) {
  * @param    inEntry    The old entry to be replaced.
  * @param    inValue    The value to initialize the new entry to.
  * @return   The new replacement entry object.
+ * @throws   Throws an Error if no user is logged in.
  */
 Item.prototype.replaceEntry = function (inEntry, inValue) {
   var attribute = inEntry.getAttribute();
@@ -173,6 +176,7 @@ Item.prototype.replaceEntry = function (inEntry, inValue) {
  * @param    inAttribute    The attribute to assign the entry to. 
  * @param    inValue    The value to initialize the new entry to.
  * @return   The new replacement entry object.
+ * @throws   Throws an Error if no user is logged in.
  */
 Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribute, inValue) {
   if (this.__myProvisionalFlag) {
@@ -184,7 +188,6 @@ Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribut
   var entry = this.getWorld()._newEntry(itemOrEntry, inAttribute, inValue);
   this.__addEntryToListOfEntriesForAttribute(entry);
   return entry;
-  
 };
 
 
@@ -246,20 +249,6 @@ Item.prototype.getEntriesForAttribute = function (inAttribute) {
   }
   filteredListOfEntries.sort(IdentifiedRecord.compareOrdinals);
   return filteredListOfEntries;
-
-  /* DELETE_ME
-  var listOfEntriesForAttribute = [];
-  var listOfEntries = this.getEntries();
-  for (var key in listOfEntries) {
-    var entry = listOfEntries[key];
-    var attribute = entry.getAttribute();
-    if (attribute == inAttribute) {
-      listOfEntriesForAttribute.push(entry);
-    }
-  }
-  listOfEntriesForAttribute.sort(IdentifiedRecord.compareOrdinals);
-  return listOfEntriesForAttribute;
-  */
 };
 
 
@@ -280,42 +269,6 @@ Item.prototype.getEntries = function () {
     }
   }
   return listOfAllEntries;
-  
-/* DELETE_ME
-  var filter = this.getWorld().getRetrievalFilter();
-  var listOfEntries = this.__myListOfEntries;
-  var filteredListOfEntries = [];
-  var key;
-  var entry;
-  
-  switch (filter) {
-    case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
-      for (key in listOfEntries) {
-        entry = listOfEntries[key];
-        if (!entry.hasBeenReplaced() && !entry.hasBeenDeleted()) {
-          filteredListOfEntries.push(entry);
-        }
-      }
-      break;
-    case World.RETRIEVAL_FILTER_SINGLE_USER:
-      // PENDING: This still needs to be implemented.
-      Util.assert(false);
-      break;
-    case World.RETRIEVAL_FILTER_DEMOCRATIC:
-      // PENDING: This still needs to be implemented.
-      Util.assert(false);
-      break;
-    case World.RETRIEVAL_FILTER_UNABRIDGED:
-      filteredListOfEntries = listOfEntries;
-      break;
-    default:
-      // We should never get here.  If we get here, it's an error.
-      Util.assert(false);
-      break;
-  }
-  filteredListOfEntries.sort(IdentifiedRecord.compareOrdinals);
-  return filteredListOfEntries;
-*/
 };
 
 
@@ -334,18 +287,6 @@ Item.prototype.getAttributes = function () {
     listOfAttributes.push(attribute);
   }
   return listOfAttributes;
-
-  /* DELETE_ME
-  var listOfAttributes = [];
-  var listOfEntries = this.getEntries();
-  for (var key in listOfEntries) {
-    var entry = listOfEntries[key];
-    var attribute = entry.getAttribute();
-    Util.addObjectToSet(attribute, listOfAttributes);
-  }
-  listOfAttributes.sort(IdentifiedRecord.compareOrdinals);
-  return listOfAttributes;
-  */
 };
 
 
@@ -464,6 +405,7 @@ Item.prototype.isInCategory = function (inCategory) {
     }
   }
   
+  /*
   // look at all the categories this item is assigned to, and see if one of them
   // is in turn in the category "inCategory"
   for (key in entryList) {
@@ -480,6 +422,7 @@ Item.prototype.isInCategory = function (inCategory) {
       return true;
     }
   }
+  */
   return false;
 };
  

@@ -446,6 +446,7 @@ World.prototype.getCurrentUser = function () {
  * @param    inAuthentication    A string which will be used as the login password for the user. 
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created item representing a user.
+ * @throws   Throws an Error if a user is logged in.
  */
 World.prototype.newUser = function (inName, inAuthentication, inObserver) {
   this.beginTransaction();
@@ -466,6 +467,7 @@ World.prototype.newUser = function (inName, inAuthentication, inObserver) {
  * @param    inName    Optional. A string, which will be assigned to the name attribute of the new item. 
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created item.
+ * @throws   Throws an Error if no user is logged in.
  */
 World.prototype.newItem = function (inName, inObserver) {
   this.beginTransaction();
@@ -485,6 +487,7 @@ World.prototype.newItem = function (inName, inObserver) {
  * @scope    public instance method
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created provisional item.
+ * @throws   Throws an Error if no user is logged in.
  */
 World.prototype.newProvisionalItem = function (inObserver) {
   return this.__myVirtualServer.newProvisionalItem(inObserver);
@@ -509,6 +512,7 @@ World.prototype._provisionalItemJustBecameReal = function (inItem) {
  * @param    inName    Optional. A string, which will be assigned to the name attribute of the new item. 
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created item representing an attribute.
+ * @throws   Throws an Error if no user is logged in.
  */
 World.prototype.newAttribute = function (inName, inObserver) {
   this.beginTransaction();
@@ -528,6 +532,7 @@ World.prototype.newAttribute = function (inName, inObserver) {
  * @param    inName    Optional. A string, which will be assigned to the name attribute of the new item. 
  * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created item representing a category.
+ * @throws   Throws an Error if no user is logged in.
  */
 World.prototype.newCategory = function (inName, inObserver) {
   this.beginTransaction();
@@ -696,6 +701,7 @@ World.prototype.getResultItemsForQuery = function (inQuery, inObserver) {
  * @scope    public instance method
  * @param    inItem    An item, which will be modified so that it matches the query. 
  * @param    inQuery    A query item. 
+ * @throws   Throws an Error if no user is logged in.
  */
 World.prototype.setItemToBeIncludedInQueryResultList = function (inItem, inQuery) {
   this.__myVirtualServer.setItemToBeIncludedInQueryResultList(inItem, inQuery);
