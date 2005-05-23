@@ -69,18 +69,18 @@ Release 0.1 at the start of August?
 Tasks we need to do for the release 0.1 user stories
 =======================================================
 
-iwd == an "ideal working day", with just coding, and no distractions
+ied == an "ideal engineering day", with just coding, and no distractions
 
 Who    | Priority | Estimate| Task
 -------+----------+---------+----------------------------------------------
-Mignon |  High    | 1   iwd | UI for adding an attribute to an item, and setting the expected data type of an attribute
-Mignon |  High    | 1   iwd | UI for creating a new category
-Mignon |  High    | 1   iwd | UI for deleting a row from a table 
- Chao  |  High    | 1.5 iwd | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
- Chao  |   done   | 0.5 iwd | UI to sort a table when you click on a column header
-       |  High    | 0   iwd | UI for entering a new row in a table
-Brian  |   done   | 1   iwd | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
-Brian  |   done   | 2   iwd | Convert UI code to use new data model
+Mignon |  High    | 1   ied | UI for adding an attribute to an item, and setting the expected data type of an attribute
+Mignon |  High    | 1   ied | UI for creating a new category
+Mignon |  High    | 1   ied | UI for deleting a row from a table 
+ Chao  |  High    | 1.5 ied | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
+ Chao  |   done   | 0.5 ied | UI to sort a table when you click on a column header
+       |  High    | 0   ied | UI for entering a new row in a table
+Brian  |   done   | 1   ied | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
+Brian  |   done   | 2   ied | Convert UI code to use new data model
        |  High    |         | UI for entering a number literal (instead of a string literal) in a table
        |  High    |         | UI for entering references to categories or to other items
        | Medium   |         | UI for adding a new section to a page
@@ -93,7 +93,7 @@ Brian  |   done   | 2   iwd | Convert UI code to use new data model
        |   Low    |         | Write a plugin view that calculates and displays the measured project velocity
        |   Low    |         | UI for creating a new page
        |   Low    |         | UI for creating a new user
-
+ 
 
        
        
@@ -141,8 +141,8 @@ Bug
   (most Bug items will also be categorized as Task items, so each Bug will also have all the attributes of a Task)
   
 
-
-       
+   
+  
 =======================================================
 Tasks we want to defer until after release 0.1
 =======================================================
@@ -308,10 +308,30 @@ Tasks we want to defer until after release 0.1
     state.  To see what this should feel like, try hitting Escape in the 
     Firefox URL field after you've made done some typing.
 ---------------------------------------------------
-
-
-
-
-   
+ + UI design/improvement for:
+    - toggle for "edit"/"view" or "editable"/"locked"
+    - adding a row to a table
+    - deleting a row from a table
+    - dragging rows up and down to re-order (conflict with sort columns?)
+    - adding an entry to a table cell
+    - replacing an entry with new text
+    - adding a new column to a table
+    - creating a new attribute
+    - setting the expected data type of an attribute
+    - doing data type validation on a new entry
+    - adding a cell entry which is a reference to another item
+    - creating a new category & putting things in categories
+    - creating a new user account for yourself
+    - logging in and logging out
+    - creating a new page
+    - creating a new section on a page
+    - editing the query for a section
+    - GUI feedback to show what text is editable?
+---------------------------------------------------
+ + talk about different designs for:
+    - doing authentication (e.g. where to store passwords?)
+    - representing queries (hold query matching criteria in normal attributes?)
+    - ad-hoc queries as well as persistant queries?
+    - bi-directional references as a type of entry?
 
 
