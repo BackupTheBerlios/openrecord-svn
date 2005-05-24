@@ -382,10 +382,6 @@ Item.prototype.toString = function () {
  * Given a category, returns "true" if the item has been assigned to 
  * that category.
  *
- * Also returns true if the item has been assigned to some category which is in
- * turn assigned to the given category, and so on, up the chain of category 
- * assignments.
- *
  * @scope    public instance method
  * @return   A boolean.  True if the item has been assigned to the category.
  */
@@ -394,18 +390,21 @@ Item.prototype.isInCategory = function (inCategory) {
 
   var categoryAttribute = this.getWorld().getAttributeCalledCategory();
   var entryList = this.getEntriesForAttribute(categoryAttribute);
-  var key;
-  var entry;
   
-  // look at all the categories this item is assigned to, and see if one of them is "inCategory"
-  for (key in entryList) {
-    entry = entryList[key];
+  // look at all the categories this item is assigned to, 
+  // and see if one of them is "inCategory"
+  for (var key in entryList) {
+    var entry = entryList[key];
     if (entry.getValue() == inCategory) {
       return true;
     }
   }
   
   /*
+   * Also returns true if the item has been assigned to some category which is in
+   * turn assigned to the given category, and so on, up the chain of category 
+   * assignments.
+   *
   // look at all the categories this item is assigned to, and see if one of them
   // is in turn in the category "inCategory"
   for (key in entryList) {
