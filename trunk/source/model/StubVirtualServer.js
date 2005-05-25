@@ -312,8 +312,13 @@ StubVirtualServer.prototype.login = function (inUser, inAuthentication) {
     return false;
   }
 
+  if (inUser._getUuid() == World.UUID_FOR_USER_AMY) {
+    // nobody is allowed to log in as the axiomatic user
+    return false;
+  }
+  
   var realAuthentication = this.__getAuthenticationInfoForUser(inUser);
-  var successfulAuthentication = (realAuthentication == inAuthentication);
+  var successfulAuthentication = ((realAuthentication == inAuthentication) || !realAuthentication);
   
   // PENDING: temporary hack
   // if (!successfulAuthentication) {

@@ -165,13 +165,13 @@ TablePlugin.prototype._buildTableBody = function() {
   var numRows = 0; // start from 0 to account for header row
   for (var kKey in this._listOfItems) {
     var contentItem = this._listOfItems[kKey];
-    this._insertRow(contentItem,++numRows);
+    this._insertRow(contentItem, ++numRows);
   }  
   
   if (this.isInEditMode()) {
     // add one more row to allow users to add a new item to the table
     var newItem = this.getWorld().newProvisionalItem();
-    this._insertRow(newItem,++numRows,true);
+    this._insertRow(newItem, ++numRows, true);
   }
 };
 
@@ -215,7 +215,8 @@ TablePlugin.prototype.doInitialDisplay = function() {
   
   //create new table, remove old table if already exists
   if (this.myTable) {
-    this._myHTMLElement.removeChild(this.myTable); }
+    this._myHTMLElement.removeChild(this.myTable); 
+  }
   this.myTable = document.createElement("table");
   this.myTable.className = this.myClass;
   

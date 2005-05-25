@@ -93,7 +93,7 @@ Brian  |   done   | 1   ied | Replace the BigLumpVirtualServer with an DeltaVirt
        |   Low    |         | Write a plugin view that calculates and displays the measured project velocity
        |   Low    |         | UI for creating a new page
  Chao  |   done   |         | UI for creating a new user
-       |  High    | 0   ied | Fix bug that creates duplicate entries when no change was made
+Brian  | Medium   | 1   ied | Ensure that UUIDs are unique in multi-user use case
  
 
        

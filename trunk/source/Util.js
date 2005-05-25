@@ -458,6 +458,7 @@ Util.addEventListener = function (inElement, inEventType, inCallback, inCaptures
   } 
 };
 
+
 /**
  * When passing an EventListener (e.g. onclick) a function, it is often useful to
  * 1) have the function be called by an instance of an object
@@ -470,16 +471,17 @@ Util.addEventListener = function (inElement, inEventType, inCallback, inCaptures
  * concat'd with an array, hence the mod.
  */
 Function.prototype.bindAsEventListener = function (object) {
-    var method = this;
-    var preappliedArguments = arguments;
-    return function (event) {
-        var args = [event || window.event];
-        for (var i = 1; i < preappliedArguments.length; ++i) {
-          args.push(preappliedArguments[i]);
-        }
-        method.apply(object, args);
-    };
+  var method = this;
+  var preappliedArguments = arguments;
+  return function (event) {
+    var args = [event || window.event];
+    for (var i = 1; i < preappliedArguments.length; ++i) {
+      args.push(preappliedArguments[i]);
+    }
+    method.apply(object, args);
+  };
 };
+
 
 // -------------------------------------------------------------------
 // File I/O methods
@@ -539,6 +541,56 @@ Util.createImageElement = function (imageFileName) {
   imageElement.src = imagesDirectory + imageFileName;
   return imageElement;
 };
+
+
+/**
+ * Given an HTML element, find the real left offset for the element,  
+ * meaning the distance in pixels from the left edge of the page.
+ *
+ * @scope    public class method
+ * @param    inHtmlElement    The HTML element that we want the left offest of. 
+ * @return   An integer value equal to the number of pixels from the left of the page to inHtmlElement.
+ */
+Util.getOffsetLeftFromElement = function (inHtmlElement) {
+  var cumulativeOffset = 0;
+  if (inHtmlElement.offsetParent) {
+    while (inHtmlElement.offsetParent) {
+      cumulativeOffset += inHtmlElement.offsetLeft;
+      inHtmlElement = inHtmlElement.offsetParent;
+    }
+  } else {
+    if (inHtmlElement.x) {
+      cumulativeOffset += inHtmlElement.x;
+    }
+  }
+  return cumulativeOffset;
+};
+
+
+/**
+ * Given an HTML element, find the real top offset for the element,  
+ * meaning the distance in pixels from the top edge of the page.
+ *
+ * @scope    public class method
+ * @param    inHtmlElement    The HTML element that we want the top offest of. 
+ * @return   An integer value equal to the number of pixels from the top of the page to inHtmlElement.
+ */
+Util.getOffsetTopFromElement = function (inHtmlElement) {
+  var cumulativeOffset = 0;
+  if (inHtmlElement.offsetParent) {
+    while (inHtmlElement.offsetParent) {
+      cumulativeOffset += inHtmlElement.offsetTop;
+      inHtmlElement = inHtmlElement.offsetParent;
+    }
+  } else {
+    if (inHtmlElement.y) {
+      cumulativeOffset += inHtmlElement.y;
+    }
+  }
+  return cumulativeOffset;
+};
+
+
 
 // -------------------------------------------------------------------
 // End of file

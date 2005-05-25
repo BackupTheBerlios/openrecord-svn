@@ -130,7 +130,7 @@ LoginView.prototype._rebuildView = function () {
     this.passwordInput.size = 10;
     this.passwordInput.type = "password";
     this.passwordInput.value = "randomdots";
-    this.passwordInput.onkeypress = this.createAccountPasswordKeyPress.bindAsEventListener(this);
+    this.passwordInput.onkeypress = this._createAccountPasswordKeyPress.bindAsEventListener(this);
 
     var newAcctButton = document.createElement("input");
     newAcctButton.value = "Create New Account";
@@ -179,12 +179,15 @@ LoginView.prototype._rebuildView = function () {
     this.usernameInput = document.createElement("input");
     this.usernameInput.size = 20;
     this.usernameInput.value = "Albert Einstein";
-
+    
     this.passwordInput = document.createElement("input");
     this.passwordInput.size = 10;
     this.passwordInput.type = "password";
     this.passwordInput.value = "randomdots";
-    this.passwordInput.onkeypress = this.signinPasswordKeyPress.bindAsEventListener(this);
+    this.passwordInput.onkeypress = this._signinPasswordKeyPress.bindAsEventListener(this);
+    this.passwordInput.onfocus = this._signinPasswordFocus.bindAsEventListener(this);
+
+    this._myUsernameSuggestionBox = new SuggestionBox(this.usernameInput, this.getWorld().getUsers(), this.passwordInput);
 
     var signinButton = document.createElement("input");
     signinButton.value = "Sign in";
@@ -217,23 +220,34 @@ LoginView.prototype._clickOnSignoutLink = function(inEventObject) {
 
 
 /**
+ * Called when sign in password input field gets focus.
+ *
+ * @scope    private instance method
+ */
+LoginView.prototype._signinPasswordFocus = function(inEventObject) {
+  this.passwordInput.value = "";
+};
+
+
+/**
  * Called when sign in password input field is typed with keystroke.
  *
  * @scope    private instance method
  */
-LoginView.prototype.signinPasswordKeyPress = function(inEventObject) {
+LoginView.prototype._signinPasswordKeyPress = function(inEventObject) {
   // see if <return> is pressed, if so, similate clicking on sign in button
   if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
     this._clickOnSignInButton(inEventObject);
   }
 };
 
+
 /**
  * Called when create account password input field is typed with keystroke.
  *
  * @scope    private instance method
  */
-LoginView.prototype.createAccountPasswordKeyPress = function(inEventObject) {
+LoginView.prototype._createAccountPasswordKeyPress = function(inEventObject) {
   // see if <return> is pressed, if so, similate clicking on sign in button
   if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
     this._clickOnNewAcctButton(inEventObject);
@@ -251,7 +265,8 @@ LoginView.prototype._clickOnCreateAccountLink = function(inEventObject) {
   this._rebuildView();
 };
 
-
+// Chih-Chao Lam
+// Mignon Belongie
 /**
  * Called when the user clicks on the "Create New Account" button.
  *
@@ -260,6 +275,9 @@ LoginView.prototype._clickOnCreateAccountLink = function(inEventObject) {
 LoginView.prototype._clickOnNewAcctButton = function(inEventObject) {
   var username = this.usernameInput.value;
   var password = this.passwordInput.value;
+  if (password === null) {
+    password = "";
+  }
   this._createNewUser(username, password);
   this._isCreatingNewAccount = false;
   this._rebuildView();
@@ -287,7 +305,11 @@ LoginView.prototype._clickOnSignInButton = function(inEventObject) {
       var shortUserName = lowerCaseUserName.substring(0, numberOfCharactersToCompare);
       if (shortUserName == lowerCaseUserNameEntered) {
         // we have a match!
-        this._loginUser(user, this.passwordInput.value);
+        var password = this.passwordInput.value;
+        if (password === null) {
+          password = "";
+        }
+        this._loginUser(user, password);
         return;
       }
     }
@@ -308,7 +330,7 @@ LoginView.prototype._clickOnEditButton = function (inEventObject) {
 };
 
 
-LoginView.prototype._loginUser = function(user, password) {
+LoginView.prototype._loginUser = function (user, password) {
   var loginSuccess = this.getWorld().login(user, password); 
   if (loginSuccess) {
     var userUuid = user._getUuid();
@@ -317,7 +339,7 @@ LoginView.prototype._loginUser = function(user, password) {
     this.myCookie.store();
     this._rebuildView();
   } else {
-    this._reportError("Login failed. Incorrect password.");
+    this._reportError("Login failed. Wrong password.");
   }
 };
 
@@ -334,7 +356,7 @@ LoginView.prototype._reportError = function (errorStr) {
 };
 
 
-LoginView.prototype._createNewUser = function(username, password) {
+LoginView.prototype._createNewUser = function (username, password) {
   function isValidUsername(username) {
     // PENDING: hard coded to validate for alphanumeric usernames of 3 or more characters
     if (!username) {return false;}
@@ -346,6 +368,111 @@ LoginView.prototype._createNewUser = function(username, password) {
     this._loginUser(newUser,password);
   } else {
     this._reportError("\n Your username must be 3 or more alphanumeric characters!");
+  }
+};
+
+
+// -------------------------------------------------------------------
+// Suggestion box methods
+// -------------------------------------------------------------------
+function SuggestionBox(inHTMLInputField, inListOfEntries, inNextHTMLField) {
+  this._myInputField = inHTMLInputField;
+  this._myListOfEntries = inListOfEntries.sort(SuggestionBox.compareEntryDisplayNames);
+  this._myNextField = inNextHTMLField;
+  
+  this._mySuggestionBoxDivElement = document.createElement('div');
+  // this._mySuggestionBoxDivElement.style.visibility = "hidden";
+  this._mySuggestionBoxDivElement.style.zIndex = 11;
+  this._mySuggestionBoxDivElement.style.display = "none";
+  document.body.appendChild(this._mySuggestionBoxDivElement);
+  
+  this._myInputField.onkeyup = this._keyPressOnInputField.bindAsEventListener(this);
+  this._myInputField.onfocus = this._focusOnInputField.bindAsEventListener(this);
+  this._myInputField.onblur = this._blurOnInputField.bindAsEventListener(this);
+  this._keyPressOnInputField();
+}
+
+SuggestionBox.compareEntryDisplayNames = function (inEntryOne, inEntryTwo) {
+  var displayNameOne = inEntryOne.getDisplayName();
+  var displayNameTwo = inEntryTwo.getDisplayName();
+  if (displayNameOne == displayNameTwo) {
+    return 0;
+  } else {
+    return (displayNameOne > displayNameTwo) ?  1 : -1;
+  }
+};
+
+SuggestionBox.prototype._focusOnInputField = function (inEventObject) {
+  this._myInputField.value = "";
+  this._redisplaySuggestionBox();
+};
+
+
+SuggestionBox.prototype._keyPressOnInputField = function (inEventObject) {
+  this._redisplaySuggestionBox();
+};
+
+
+SuggestionBox.prototype._blurOnInputField = function (inEventObject) {
+  // make the suggestion box disappear
+  this._mySuggestionBoxDivElement.style.display = "none";
+};
+
+
+SuggestionBox.prototype._clickOnSelection = function (inEventObject, inString) {
+  this._myInputField.value = inString;
+  this._myNextField.select();
+};
+
+
+SuggestionBox.prototype._redisplaySuggestionBox = function () {
+  var partialInputString = this._myInputField.value;
+  var listOfMatchingStrings = [];
+  var key;
+  
+  for (key in this._myListOfEntries) {
+    var entry = this._myListOfEntries[key];
+    var lowerCaseEntryString = entry.getDisplayName().toLowerCase();
+    var lowerCaseInputString = partialInputString.toLowerCase();
+    var numberOfCharactersToCompare = lowerCaseInputString.length;
+    var shortEntryString = lowerCaseEntryString.substring(0, numberOfCharactersToCompare);
+    if (shortEntryString == lowerCaseInputString) {
+      // we have a match!
+      listOfMatchingStrings.push(entry.getDisplayName());
+    }
+  }
+  
+  if (listOfMatchingStrings.length === 0) {
+    // make the suggestion box disappear
+    this._mySuggestionBoxDivElement.style.display = "none";
+  } else {
+    this._mySuggestionBoxDivElement.innerHTML = "";
+    var table = document.createElement('table');
+    var rowNumber = 0;
+    var columnNumber = 0;
+    for (key in listOfMatchingStrings) {
+      var string = listOfMatchingStrings[key];
+      var textNode = document.createTextNode(string);
+      var row = table.insertRow(rowNumber);
+      var cell = row.insertCell(columnNumber);
+      cell.appendChild(textNode);
+      cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, string);
+      rowNumber += 1;
+    }
+    this._mySuggestionBoxDivElement.appendChild(table);
+    
+    // set-up the suggestion box to open just below the input field it comes from
+    var suggestionBoxTop = Util.getOffsetTopFromElement(this._myInputField) + this._myInputField.offsetHeight;
+    var suggestionBoxLeft = Util.getOffsetLeftFromElement(this._myInputField);
+    this._mySuggestionBoxDivElement.style.top = suggestionBoxTop + "px"; 
+    this._mySuggestionBoxDivElement.style.left = suggestionBoxLeft + "px";
+    // alert(this._myInputField.offsetWidth);
+    this._mySuggestionBoxDivElement.style.width = (this._myInputField.offsetWidth - 2)+ "px";
+    
+    // this._mySuggestionBoxDivElement.style.zIndex = 11;
+    this._mySuggestionBoxDivElement.className = "suggestion_box";
+    this._mySuggestionBoxDivElement.style.visibility = "visible";
+    this._mySuggestionBoxDivElement.style.display = "block";
   }
 };
 
