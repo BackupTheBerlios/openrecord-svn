@@ -142,24 +142,37 @@ TablePlugin.prototype._buildAttributeHash = function() {
 
 
 /**
+ * Inserts a table row at rowNum given contentItem
+ *
+ * @scope    private instance method
+ */
+TablePlugin.prototype._insertRow = function(contentItem, rowNum) {
+  var aRow = this.myTable.insertRow(rowNum); 
+  var columnCount = -1;
+  for (var lKey in this._hashTableOfAttributes) {
+    var attribute = this._hashTableOfAttributes[lKey];
+    this._insertCell(aRow, ++columnCount, contentItem, attribute);
+  }
+};
+
+/**
  * Constructs the table body 
  *
  * @scope    private instance method
  */
 TablePlugin.prototype._buildTableBody = function() {  
-  // add all the table body rows
-  var numRows = 1; // start from 1 to account for header row
+  // add the table body rows from query
+  var numRows = 0; // start from 0 to account for header row
   for (var kKey in this._listOfItems) {
     var contentItem = this._listOfItems[kKey];
-    var aRow = this.myTable.insertRow(numRows); 
-    ++numRows;
-    var columnCount = 0;
-    for (var lKey in this._hashTableOfAttributes) {
-      var attribute = this._hashTableOfAttributes[lKey];
-      this._insertCell(aRow, columnCount, contentItem, attribute);
-      columnCount += 1;
-    }
+    this._insertRow(contentItem,++numRows);
   }  
+  
+  if (this.isInEditMode()) {
+    // add one more row to allow users to add a new item to the table
+    var newItem = this.getWorld().newProvisionalItem();
+    this._insertRow(newItem,++numRows,true);
+  }
 };
 
 
@@ -261,10 +274,10 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   var aCell = row.insertCell(col);
   aCell.className = this.myCellClass;
   var aTextView = new TextView(this, aCell, item, attribute, this.myCellClass);
-  aTextView.refresh();
   aCell.or_textView = aTextView;
+  aTextView.refresh();
   if (this.isInEditMode()) {
-    aCell.onkeypress = this.keyPressOnEditField.bindAsEventListener(this, aTextView);
+    //aCell.onkeypress = this.keyPressOnEditField.bindAsEventListener(this, aTextView);
     var listener = this;
     aTextView.setKeyPressFunction(function (evt, aTxtView) {listener.keyPressOnEditField(evt, aTxtView);});
   }
@@ -350,6 +363,7 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
     var shiftBy;
     var numCols = this._numberOfColumns;
     var numRows = this._listOfItems.length;
+    if (this.isInEditMode()) {++numRows;} // to account for extra new provisional row
     var nextCell;
     var htmlRow = cellElement.parentNode;
     

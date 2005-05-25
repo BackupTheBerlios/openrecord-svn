@@ -123,7 +123,7 @@ PageView.prototype.doInitialDisplay = function () {
   
   var headerElement = View.createAndAppendElement(pageDivElement, "h1");
   this._myHeaderText = new TextView(this, headerElement, this.myPage,
-    attributeCalledName, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+    attributeCalledName, SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
 
   var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
   this._myPageSummaryView = new TextView(this, summaryViewDiv, this.myPage,

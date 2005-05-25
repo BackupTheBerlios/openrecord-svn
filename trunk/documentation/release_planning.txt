@@ -292,13 +292,15 @@ Tasks we want to defer until after release 0.1
     Figure out why swapping between editField and textNode is causing 
     slight visual padding
 ---------------------------------------------------
- + Q: Should we consider subclassing from DOM objects? e.g. TablePlugin can be subclassed from HTMLTableElement?
----------------------------------------------------
- + Q: Should getListofContentItems() in superview be replaced by an argument into plugin's constructor
+ + Need to rationalize View api and document public api
+    - wire up superview/subview after creation of subview
+    - get rid of display()
+    - rename refersh()
+    - settle on standard constructor parameters
+ Q: Should getListofContentItems() in superview be replaced by an argument into plugin's constructor
    Also, should plugin get a CSS class?
----------------------------------------------------
- + Q: Should we decouple plugins from SectionView? in general, should we make objects less tightly coupled?
-   Parent objects can know about children objects, but not vice versa.
+ Q: Should we decouple plugins from SectionView? in general, should we make objects less tightly coupled?
+     Parent objects can know about children objects, but not vice versa.
 ---------------------------------------------------
  + Q: How exactly should entering new items UI work? Not clear when an item is saved
 ---------------------------------------------------

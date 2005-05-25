@@ -295,6 +295,16 @@ Item.prototype.getAttributes = function () {
 // -------------------------------------------------------------------
 
 /**
+ * Returns whether item is provisional
+ *
+ * @scope    public instance method
+ * @return   Boolean whether item is provisional
+ */
+Item.prototype.isProvisional = function() {
+  return this.__myProvisionalFlag;
+};
+
+/**
  * Returns a display name for the item.
  *
  * @scope    public instance method

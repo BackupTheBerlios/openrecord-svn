@@ -193,7 +193,12 @@ View.createAndAppendTextNode = function (inElement, inText) {
   return newTextNode;
 };
 
-
+View.prototype.getRootView = function() {
+  if (!this.getSuperview()) {return null;}
+  else {
+    return this.getSuperview().getRootView();
+  }
+};
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------

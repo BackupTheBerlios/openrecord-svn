@@ -407,7 +407,11 @@ div.content_area {
 }
 
 td.plain {
+  font-family: Arial, Verdana, sans-serif;
   text-align: left;
+  border: none;
+  padding: 0px;
+  margin: 0px;
 }
 
 td.yup {
@@ -449,6 +453,7 @@ td.total {
 }
 
 input.plain {
+  font-family: Arial, Verdana, sans-serif;
   border: 0px;
   width: 100%;
   background: rgb(100%, 100%, 40%);

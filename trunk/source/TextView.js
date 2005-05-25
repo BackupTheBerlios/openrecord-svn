@@ -42,6 +42,7 @@
 // TextView public class constants
 // -------------------------------------------------------------------
 TextView.ELEMENT_CLASS_TEXT_BLOCK = "text_block";
+TextView.PROVISIOINAL_COLOR = '#999999';
 
 
 /**
@@ -71,6 +72,8 @@ function TextView(theSuperview, theElement, theItem, theAttribute, theClassType,
   this._isMultiLine = isMultiLine;
   this._isEditing = false;
   this._proxyOnKeyFunction = null;
+  this._isProvisional = this._item.isProvisional();
+  if (this._isProvisional) {this._provisionalText = this._attribute.getDisplayName();}
 }
 
 
@@ -101,12 +104,17 @@ TextView.prototype.refresh = function() {
 TextView.prototype.doInitialDisplay = function() {
   var htmlElement = this.getHTMLElement();
   
-  var textString = this._item.getSingleStringValueFromAttribute(this._attribute);
+  var textString = this._isProvisional ? this._provisionalText :
+    this._item.getSingleStringValueFromAttribute(this._attribute);
   // PENDING: need to deal with multi valued attrs
   // for (var i in textList) {
   //   textString = textList[i] + "\n" + textString;
   // };
   
+  if (this._isProvisional) {
+    this._oldColor = htmlElement.style.color;
+    htmlElement.style.color = TextView.PROVISIOINAL_COLOR;
+  }
   this.textNode = document.createTextNode(textString);
   htmlElement.appendChild(this.textNode);
 
@@ -137,7 +145,7 @@ TextView.prototype.startEditing = function() {
       var listener = this; 
       editField.onblur = this.onBlur.bindAsEventListener(this);
       editField.onkeypress = this.onKeyPress.bindAsEventListener(this);
-      editField.defaultValue = this.textNode.data;
+      editField.defaultValue = this._isProvisional ? '' : this.textNode.data;
     }
     editField.style.width = this.getHTMLElement().offsetWidth + "px";    
     editField.style.height = (this.getHTMLElement().offsetHeight) + "px";
@@ -190,14 +198,21 @@ TextView.prototype.onBlur = function(inEventObject) {
 TextView.prototype.stopEditing = function() {
   if (this._isEditing) {
     var newText = this._editField.value;
+    var htmlElement = this.getHTMLElement();
     
-    // PENDING: need to properly handle multi-valued attributes
-    var listOfEntries = this._item.getEntriesForAttribute(this._attribute);
-    if (listOfEntries && listOfEntries[0]) {
-      var oldEntry = listOfEntries[0];
-      this._item.replaceEntry(oldEntry, newText);
-    } else {
-      this._item.addEntryForAttribute(this._attribute, newText);
+    if (this._isProvisional && newText === '') {
+      newText = this._provisionalText;
+    }
+    else {
+      // PENDING: need to properly handle multi-valued attributes
+      if (this._isProvisional) {htmlElement.style.color = this._oldColor;}
+      var listOfEntries = this._item.getEntriesForAttribute(this._attribute);
+      if (listOfEntries && listOfEntries[0]) {
+        var oldEntry = listOfEntries[0];
+        this._item.replaceEntry(oldEntry, newText);
+      } else {
+        this._item.addEntryForAttribute(this._attribute, newText);
+      }
     }
     
     this.textNode.data = newText;

@@ -54,7 +54,6 @@ RootView.URL_HASH_ITEM_PREFIX = "#" + RootView.URL_ITEM_PREFIX;
 RootView.ELEMENT_CLASS_EDIT_MODE = "editmode";
 RootView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
 
-RootView.COOKIE_NAME = "user";
 RootView.CONTROL_SPAN_CLASS = "control_span";
 
 RootView.UUID_FOR_HOME_PAGE = 2000;
@@ -86,8 +85,6 @@ function RootView(inWorld) {
   this.myEditMode = false;
   this.myNumberOfCallsToDebug = 0;
   this.myDebugTextarea = null;
-  this.myCookie = new Cookie(document,RootView.COOKIE_NAME,10*365*24);
-  this.myCookie.load();
   
   this._myHashTableOfItemViewsKeyedByUuid = {};
   this._myHashTableOfPageViewsKeyedByUuid = {};
@@ -260,7 +257,7 @@ RootView.prototype.display = function () {
 
   document.title = this._myCurrentContentView.getPageTitle() + " - openagenda.org";
   this._myRootDiv.className = (this.isInEditMode()) ? RootView.ELEMENT_CLASS_EDIT_MODE : RootView.ELEMENT_CLASS_VIEW_MODE;
-  this.displayControlSpan();
+  this._displayLoginSpan();
   this.displayNavbar();
   this.displayDebugArea();
   this._myCurrentContentView.includeOnScreen(true);
@@ -268,162 +265,12 @@ RootView.prototype.display = function () {
 };
 
 
-/**
- * Re-creates the HTML for the chrome area containing the controls,
- * and hands the HTML to the browser to be re-drawn.
- *
- * @scope    public instance method
- */
-RootView.prototype.displayControlSpan = function () {
-  var mySpan = this.myMainControlSpanElement;
-  Util.assert(mySpan instanceof HTMLSpanElement);
-  for (var i = mySpan.childNodes.length-1;i >= 0; --i) {
-    mySpan.removeChild(mySpan.childNodes[i]);
-  }
-
-  var currentUser = this.getWorld().getCurrentUser();
-  if (!currentUser) {
-    // alert("displayControlSpan: !currentUser");
-    var userUuid = this.myCookie.userUuid;
-    // alert("displayControlSpan: userUuid = " + userUuid);
-    if (userUuid) {
-      var userToLoginAs = this.getWorld().getItemFromUuid(userUuid);
-      if (userToLoginAs) { 
-        // PENDING: need to use a real password instead of "abracadabra"
-        this.getWorld().login(userToLoginAs, "abracadabra");
-        currentUser = this.getWorld().getCurrentUser();
-      }
-      if (!currentUser) {
-        this.myCookie.userUuid = null;
-        this.myCookie.store();
-      }
-    }
-  }
-  var welcomeText = "";
-  if (currentUser) {
-    welcomeText = "Hello " + currentUser.getDisplayName() + ". ";
-  } else {
-    welcomeText = "Welcome. Please sign in: "; 
-  }
-  var welcomeNode = document.createTextNode(welcomeText);
-  mySpan.appendChild(welcomeNode);
-  if (currentUser) { 
-    var signoutLink = document.createElement("a");
-    signoutLink.appendChild(document.createTextNode("Sign out"));
-    signoutLink.onclick = this.clickOnSignoutButton.bindAsEventListener(this);
-    mySpan.appendChild(signoutLink);
-    var space = document.createTextNode(" ");
-    mySpan.appendChild(space);
-    var editButton = document.createElement("input");
-    editButton.type = "button";
-    editButton.value = (this.myEditMode) ? "Save" : "Edit";
-    editButton.onclick = this.clickOnEditButton.bindAsEventListener(this);
-    mySpan.appendChild(editButton);
-  }
-  else {
-    this.usernameInput = document.createElement("input");
-    this.usernameInput.size=10;
-    this.usernameInput.onkeypress = this.signinKeyPress.bindAsEventListener(this);
-    var signinButton = document.createElement("input");
-    signinButton.value = "Sign in";
-    signinButton.type = "button";
-    signinButton.onclick = this.clickOnSignInButton.bindAsEventListener(this);
-    mySpan.appendChild(this.usernameInput);
-    mySpan.appendChild(signinButton);
+RootView.prototype._displayLoginSpan = function() {
+  if (!this.loginView) {
+    this.loginView = new LoginView(this,this.myMainControlSpanElement);
+    this.loginView.refresh();
   }
 };
-
-
-/**
- * Called when sign out button is clicked.
- *
- * @scope    PENDING
- */
-RootView.prototype.clickOnSignoutButton = function(inEventObject) {
-  if (this.myEditMode) {this.setEditMode(false);}
-  this.myCookie.userUuid = null;
-  this.myCookie.store();
-  this.getWorld().logout();
-  this.displayControlSpan();
-};
-
-
-/**
- * Called when sign in input field is typed with keystroke.
- *
- * @scope    PENDING
- */
-RootView.prototype.signinKeyPress = function(inEventObject) {
-  // see if <return> is pressed, if so, similate clicking on sign in button
-  if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
-    this.clickOnSignInButton(inEventObject);
-  }
-};
-
-
-/**
- * Called when sign in button is clicked.
- *
- * @scope    PENDING
- */
-RootView.prototype.clickOnSignInButton = function(inEventObject) {
-  
-  function isValidUsername(username) {
-    // PENDING: hard coded to validate for alphanumeric usernames of 3 or more characters
-    if (!username) {return false;}
-    return username.search(/\w{3,}/) >= 0;
-  }
-  
-  var listOfUsers = this.getWorld().getUsers();
-  var userNameEntered = this.usernameInput.value;
-  var key;
-  var currentUser = null;
-  
-  for (key in listOfUsers) {
-    if (!currentUser) {
-      var user = listOfUsers[key];
-      var lowerCaseUserName = user.getDisplayName().toLowerCase();
-      var lowerCaseUserNameEntered = userNameEntered.toLowerCase();
-      var numberOfCharactersToCompare = lowerCaseUserNameEntered.length;
-      var shortUserName = lowerCaseUserName.substring(0, numberOfCharactersToCompare);
-      if (shortUserName == lowerCaseUserNameEntered) {
-        // we have a match!
-        this.getWorld().login(user, "abracadabra"); // PENDING: user real password
-        currentUser = this.getWorld().getCurrentUser(); 
-      }
-    }
-  }
-  
-  if (currentUser) {
-    this.myCookie.userUuid = currentUser._getUuid();
-    this.myCookie.store();
-    this.displayControlSpan();
-  } else {
-    if (isValidUsername(userNameEntered)) {
-      var newUser = this.getWorld().newUser(userNameEntered, "abracadabra"); // PENDING: user real password
-      var loginSuccess = this.getWorld().login(newUser, "abracadabra"); // PENDING: user real password
-      var userUuid;
-      if (loginSuccess) {
-        userUuid = newUser._getUuid();
-      } else {
-        userUuid = null;
-      }
-      this.myCookie.userUuid = userUuid;
-      this.myCookie.store();
-      this.displayControlSpan();
-    } else {
-      var newErrorNode = document.createTextNode("\n Your username must be 3 or more alphanumeric characters!");
-      if (this.errorNode) {
-        this.myMainControlSpanElement.replaceChild(newErrorNode,this.errorNode);
-      } else {
-        this.myMainControlSpanElement.appendChild(newErrorNode); 
-      }
-      this.errorNode = newErrorNode;
-    }
-  }
-};
-
-
 /**
  * Re-creates the HTML for the Navbar, and hands the HTML to the browser 
  * to be re-drawn.
@@ -597,10 +444,10 @@ RootView.prototype.setEditMode = function (newVal) {
     var world = this.getWorld();
     if (this.myEditMode) {
       world.endTransaction();
-      window.document.body.style.cursor = "auto";
+      //window.document.body.style.cursor = "auto";
     } else {
       world.beginTransaction();
-      window.document.body.style.cursor = "crosshair";
+      //window.document.body.style.cursor = "crosshair";
     }
     this.myEditMode = !this.myEditMode;
     this.display();
@@ -610,6 +457,11 @@ RootView.prototype.setEditMode = function (newVal) {
     // }
   }
 };
+
+RootView.prototype.getRootView = function () {
+  return this;
+};
+
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------
