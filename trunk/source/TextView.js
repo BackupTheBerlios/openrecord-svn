@@ -41,7 +41,7 @@
 // -------------------------------------------------------------------
 // TextView public class constants
 // -------------------------------------------------------------------
-TextView.ELEMENT_CLASS_TEXT_BLOCK = "text_block";
+TextView.ELEMENT_CLASS_TEXT_BLOCK = "text_block"; 
 TextView.PROVISIOINAL_COLOR = '#999999';
 
 
