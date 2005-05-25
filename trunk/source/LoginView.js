@@ -2,7 +2,9 @@
  LoginView.js
 
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
+    Chih-Chao Lam <chao@cs.stanford.edu>
 
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -38,7 +40,12 @@
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// LoginView public class constants
+// -------------------------------------------------------------------
 LoginView.COOKIE_NAME = "useruuid";
+
+
 /**
  * The LoginView uses an instance of a LoginView to display an Item in the
  * browser window.
@@ -57,9 +64,11 @@ function LoginView(inSuperView, inHTMLElement) {
   this.setSuperview(inSuperView);
   this.setHTMLElement(inHTMLElement);
   this._isCreatingNewAccount = false;
-  this.myCookie = new Cookie(document,LoginView.COOKIE_NAME,10*365*24);  // PENDING: hardcode expiration to 10yrs
+  var tenYearCookieExpiration = 10*365*24;   // PENDING: hardcode expiration to 10yrs
+  this.myCookie = new Cookie(document, LoginView.COOKIE_NAME, tenYearCookieExpiration);
   this.myCookie.load();
 }
+
 
 /**
  * Re-creates all the HTML for the LoginView, and hands the HTML to the 
@@ -72,6 +81,7 @@ LoginView.prototype.refresh = function () {
     this._rebuildView();
   }
 };
+
 
 /**
  * Re-creates the HTML for the chrome area containing the controls,
@@ -138,7 +148,7 @@ LoginView.prototype._rebuildView = function () {
     mySpan.appendChild(space);
     var editButton = document.createElement("input");
     editButton.type = "button";
-    editButton.value = (this.isInEditMode()) ? "Save" : "Edit";
+    editButton.value = (this.isInEditMode()) ? "Lock out edits" : "Edit";
     editButton.onclick = this._clickOnEditButton.bindAsEventListener(this);
     mySpan.appendChild(editButton);
   }
@@ -175,7 +185,7 @@ LoginView.prototype._rebuildView = function () {
 /**
  * Called when sign out button is clicked.
  *
- * @scope    PENDING
+ * @scope    private instance method
  */
 LoginView.prototype._clickOnSignoutLink = function(inEventObject) {
   if (this.isInEditMode()) {this.getRootView().setEditMode(false);}
@@ -189,7 +199,7 @@ LoginView.prototype._clickOnSignoutLink = function(inEventObject) {
 /**
  * Called when sign in input field is typed with keystroke.
  *
- * @scope    PENDING
+ * @scope    private instance method
  */
 LoginView.prototype.signinKeyPress = function(inEventObject) {
   // see if <return> is pressed, if so, similate clicking on sign in button
@@ -198,11 +208,23 @@ LoginView.prototype.signinKeyPress = function(inEventObject) {
   }
 };
 
+
+/**
+ * Called when the user clicks on the "Create Account" link.
+ *
+ * @scope    private instance method
+ */
 LoginView.prototype._clickOnCreateAccountLink = function(inEventObject) {
   this._isCreatingNewAccount = true;
   this._rebuildView();
 };
 
+
+/**
+ * Called when the user clicks on the "Create New Account" button.
+ *
+ * @scope    private instance method
+ */
 LoginView.prototype._clickOnNewAcctButton = function(inEventObject) {
   var username = this.usernameInput.value;
   var password = this.passwordInput.value;
@@ -211,10 +233,11 @@ LoginView.prototype._clickOnNewAcctButton = function(inEventObject) {
   this._rebuildView();
 };
 
+
 /**
- * Called when sign in button is clicked.
+ * Called when the user clicks on the "Sign in" button.
  *
- * @scope    PENDING
+ * @scope    private instance method
  */
 LoginView.prototype._clickOnSignInButton = function(inEventObject) {
 
@@ -232,13 +255,26 @@ LoginView.prototype._clickOnSignInButton = function(inEventObject) {
       var shortUserName = lowerCaseUserName.substring(0, numberOfCharactersToCompare);
       if (shortUserName == lowerCaseUserNameEntered) {
         // we have a match!
-        this._loginUser(user, this.passwordInput.value); // PENDING: user real password
+        this._loginUser(user, this.passwordInput.value);
         return;
       }
     }
   }
   this._reportError("Login failed. Unknown user.");
 };
+
+
+/**
+ * Called when the user clicks on the "Edit" button.
+ *
+ * @scope    private instance method
+ * @param    inEventObject    An event object. 
+ */
+LoginView.prototype._clickOnEditButton = function (inEventObject) {
+  this.getRootView().setEditMode(!this.isInEditMode());
+  this._rebuildView();
+};
+
 
 LoginView.prototype._loginUser = function(user, password) {
   var loginSuccess = this.getWorld().login(user, password); 
@@ -253,6 +289,7 @@ LoginView.prototype._loginUser = function(user, password) {
   }
 };
 
+
 LoginView.prototype._reportError = function (errorStr) {
   var newErrorNode = document.createTextNode(errorStr);
   var mySpan = this.getHTMLElement();
@@ -263,6 +300,7 @@ LoginView.prototype._reportError = function (errorStr) {
   }
   this.errorNode = newErrorNode;
 };
+
 
 LoginView.prototype._createNewUser = function(username, password) {
   function isValidUsername(username) {
@@ -277,11 +315,6 @@ LoginView.prototype._createNewUser = function(username, password) {
   } else {
     this._reportError("\n Your username must be 3 or more alphanumeric characters!");
   }
-};
-
-LoginView.prototype._clickOnEditButton = function (inEventObject) {
-  this.getRootView().setEditMode(!this.isInEditMode());
-  this._rebuildView();
 };
 
 

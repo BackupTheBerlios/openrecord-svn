@@ -435,19 +435,26 @@ RootView.clickOnLocalLink = function (inEventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-RootView.prototype.clickOnEditButton = function (inEventObject) {
-  this.setEditMode(!this.myEditMode);
-};
+// RootView.prototype.clickOnEditButton = function (inEventObject) {
+//  this.setEditMode(!this.myEditMode);
+// };
 
-RootView.prototype.setEditMode = function (newVal) {
-  if (newVal != this.myEditMode) {
+
+/**
+ * Switches the UI into and out of edit mode.
+ *
+ * @scope    public instance method
+ * @param    inEditModeFlag    A boolean. True to switch into edit mode, false to switch out.
+ */
+RootView.prototype.setEditMode = function (inEditModeFlag) {
+  if (inEditModeFlag != this.myEditMode) {
     var world = this.getWorld();
     if (this.myEditMode) {
-      world.endTransaction();
-      //window.document.body.style.cursor = "auto";
+      // world.endTransaction();
+      // window.document.body.style.cursor = "auto";
     } else {
-      world.beginTransaction();
-      //window.document.body.style.cursor = "crosshair";
+      // world.beginTransaction();
+      // window.document.body.style.cursor = "crosshair";
     }
     this.myEditMode = !this.myEditMode;
     this.display();
@@ -458,6 +465,13 @@ RootView.prototype.setEditMode = function (newVal) {
   }
 };
 
+
+/**
+ * Overrides the View method and returns this view.
+ *
+ * @scope    public instance method
+ * @return   This view.
+ */
 RootView.prototype.getRootView = function () {
   return this;
 };
