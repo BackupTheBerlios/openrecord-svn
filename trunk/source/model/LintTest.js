@@ -118,7 +118,7 @@ function testJsLintOnOpenRecordCode() {
     "Entry.js",
     "World.js",
     "StubVirtualServer.js",
-    "BigLumpVirtualServer.js"];
+    "DeltaVirtualServer.js"];
   for (var key in listOfSourceCodeFiles) {
     var fileName = listOfSourceCodeFiles[key];
     assertTrue("jslint says " + fileName + " is clean", Lint.isCodeCleanInFile(fileName));

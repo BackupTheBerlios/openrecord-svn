@@ -496,6 +496,7 @@ function testQueries() {
   world.logout();
 }
 
+/*
 function testBigLumpVirtualServerStringOutput() {
   var fileName = "test_data_2005_april_chronological_lump.json";
   var url = "../../../source/model/" + fileName;
@@ -528,7 +529,9 @@ function testBigLumpVirtualServerStringOutput() {
   // assert("reconstructed string no longer equals original string", fileContentString != reconstructedString);
   
 }
+*/
 
+/*
 function testBigLumpVirtualServer() {
   var fileName = "test_data_2005_march_item_centric_list.json";
   var url = "../../../source/model/" + fileName;
@@ -549,15 +552,13 @@ function testBigLumpVirtualServer() {
   
   // See if the BigLumpVirtualServer can rehydrate all the
   // dehydrated items from an 2005_APRIL_CHRONOLOGICAL_LIST
-  /*
-  PENDING:
-  var secondBigLumpVirtualServer = new BigLumpVirtualServer(dehydratedWorld);
-  var secondWorld = new World(secondBigLumpVirtualServer);
-  */
+  // PENDING:
+  // var secondBigLumpVirtualServer = new BigLumpVirtualServer(dehydratedWorld);
+  // var secondWorld = new World(secondBigLumpVirtualServer);
   
   // bigLumpVirtualServer.saveChangesToServer(true);
 }
-
+*/
 
 function tearDown() {
   ModelTestVars = null;

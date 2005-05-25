@@ -1,5 +1,5 @@
 /*****************************************************************************
- BigLumpVirtualServer.js
+ DeltaVirtualServer.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -41,64 +41,69 @@
 
 
 // -------------------------------------------------------------------
-// BigLumpVirtualServer public class constants
+// DeltaVirtualServer public class constants
 // -------------------------------------------------------------------
-BigLumpVirtualServer.JSON_MEMBER_FORMAT = "format";
-BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP = "timestamp";
-BigLumpVirtualServer.JSON_MEMBER_DATA = "data";
-BigLumpVirtualServer.JSON_MEMBER_USERS = "users";
-BigLumpVirtualServer.JSON_FORMAT_2005_MARCH = "2005_MARCH_ITEM_CENTRIC_LIST";
-BigLumpVirtualServer.JSON_FORMAT_2005_APRIL = "2005_APRIL_CHRONOLOGICAL_LIST";
+DeltaVirtualServer.JSON_MEMBER_FORMAT = "format";
+DeltaVirtualServer.JSON_MEMBER_TIMESTAMP = "timestamp";
+DeltaVirtualServer.JSON_MEMBER_DATA = "data";
+DeltaVirtualServer.JSON_MEMBER_RECORDS = "records";
+DeltaVirtualServer.JSON_MEMBER_USERS = "users";
 
-BigLumpVirtualServer.JSON_MEMBER_TYPE = "type";
-BigLumpVirtualServer.JSON_MEMBER_VALUE = "value";
-BigLumpVirtualServer.JSON_TYPE_STRING_VALUE = "StringValue";
-BigLumpVirtualServer.JSON_TYPE_UUID = "Uuid";
-BigLumpVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
-BigLumpVirtualServer.JSON_TYPE_RELATED_UUID = "RelatedUuid";
-BigLumpVirtualServer.JSON_TYPE_NUMBER_VALUE = "NumberValue";
+DeltaVirtualServer.JSON_FORMAT_2005_MARCH = "2005_MARCH_ITEM_CENTRIC_LIST";
+DeltaVirtualServer.JSON_FORMAT_2005_APRIL = "2005_APRIL_CHRONOLOGICAL_LIST";
+DeltaVirtualServer.JSON_FORMAT_2005_MAY_RECORDS = "2005_MAY_CHRONOLOGICAL_LIST";
+DeltaVirtualServer.JSON_FORMAT_2005_MAY_USERS = "2005_MAY_USER_LIST";
 
-BigLumpVirtualServer.JSON_MEMBER_WUID = "uuid";
-BigLumpVirtualServer.JSON_MEMBER_PASSWORD = "password";
+DeltaVirtualServer.JSON_MEMBER_TYPE = "type";
+DeltaVirtualServer.JSON_MEMBER_VALUE = "value";
+DeltaVirtualServer.JSON_TYPE_STRING_VALUE = "StringValue";
+DeltaVirtualServer.JSON_TYPE_UUID = "Uuid";
+DeltaVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
+DeltaVirtualServer.JSON_TYPE_RELATED_UUID = "RelatedUuid";
+DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE = "NumberValue";
 
-BigLumpVirtualServer.JSON_MEMBER_ITEM_CLASS = "Item";
-BigLumpVirtualServer.JSON_MEMBER_ENTRY_CLASS = "Entry";
-BigLumpVirtualServer.JSON_MEMBER_VOTE_CLASS = "Vote";
-BigLumpVirtualServer.JSON_MEMBER_ORDINAL_CLASS = "Ordinal";
+DeltaVirtualServer.JSON_MEMBER_WUID = "uuid";
+DeltaVirtualServer.JSON_MEMBER_PASSWORD = "password";
 
-BigLumpVirtualServer.JSON_MEMBER_ATTRIBUTE = "attribute";
-BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE = "previousEntry";
-BigLumpVirtualServer.JSON_MEMBER_USERSTAMP = "userstamp";
-BigLumpVirtualServer.JSON_MEMBER_RECORD = "record";
-BigLumpVirtualServer.JSON_MEMBER_ITEM = "item";
-BigLumpVirtualServer.JSON_MEMBER_RETAIN_FLAG = "retainFlag";
-BigLumpVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "ordinalNumber";
+DeltaVirtualServer.JSON_MEMBER_ITEM_CLASS = "Item";
+DeltaVirtualServer.JSON_MEMBER_ENTRY_CLASS = "Entry";
+DeltaVirtualServer.JSON_MEMBER_VOTE_CLASS = "Vote";
+DeltaVirtualServer.JSON_MEMBER_ORDINAL_CLASS = "Ordinal";
+
+DeltaVirtualServer.JSON_MEMBER_ATTRIBUTE = "attribute";
+DeltaVirtualServer.JSON_MEMBER_PREVIOUS_VALUE = "previousEntry";
+DeltaVirtualServer.JSON_MEMBER_USERSTAMP = "userstamp";
+DeltaVirtualServer.JSON_MEMBER_RECORD = "record";
+DeltaVirtualServer.JSON_MEMBER_ITEM = "item";
+DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG = "retainFlag";
+DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "ordinalNumber";
+
 
 /**
- * The BigLumpVirtualServer is a datastore that loads and saves
+ * The DeltaVirtualServer is a datastore that loads and saves
  * an entire World of items as a single monolithic JSON string.
  *
  * @scope    public instance constructor
- * @param    inJsonString    A JSON string literal representing the world of items. 
+ * @param    inJsonRepositoryString    A JSON string literal representing the world of items. 
+ * @param    inJsonUserList    A JSON string literal listing user UUIDs and passwords. 
  */
-BigLumpVirtualServer.prototype = new StubVirtualServer();  // makes BigLumpVirtualServer be a subclass of StubVirtualServer
-function BigLumpVirtualServer(inJsonString) {
-  this.__myDehydratedWorld = inJsonString;
+DeltaVirtualServer.prototype = new StubVirtualServer();  // makes DeltaVirtualServer be a subclass of StubVirtualServer
+function DeltaVirtualServer(inJsonRepositoryString, inJsonUserList) {
+  this._myDehydratedWorld = inJsonRepositoryString;
+  this._myDehydratedUserList = inJsonUserList;
 }
 
 
 /**
- * Initializes the instance variables for a newly created BigLumpVirtualServer,
+ * Initializes the instance variables for a newly created DeltaVirtualServer,
  * and does the initial loading of at least the axiomatic items.
  *
  * @scope    public instance method
  * @param    inWorld    The world that we provide data for. 
  */
-BigLumpVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
+DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
   this.__initialize(inWorld);
-  // var shortString = this.__myDehydratedWorld.substring(0, 200);
-  // alert(shortString);
-  this.__loadWorldFromJsonString(this.__myDehydratedWorld);
+  this._loadWorldFromJsonStrings(this._myDehydratedWorld, this._myDehydratedUserList);
 };
 
 
@@ -113,29 +118,49 @@ BigLumpVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld
  * instances of items corresponding to the dehydrated data.
  * 
  * @scope    private instance method
- * @param    inJsonString    A JSON string literal representing the world of items. 
+ * @param    inJsonRepositoryString    A JSON string literal representing the world of items. 
+ * @param    inJsonUserList    A JSON string literal listing user UUIDs and passwords. 
  */
-BigLumpVirtualServer.prototype.__loadWorldFromJsonString = function (inJsonString) {
-  Util.assert(Util.isString(inJsonString));
-  var dehydratedWorld = null;
+DeltaVirtualServer.prototype._loadWorldFromJsonStrings = function (inJsonRepositoryString, inJsonUserList) {
+
+  // load the list of records
+  Util.assert(Util.isString(inJsonRepositoryString));
+  var dehydratedRecords = null;
+  eval("dehydratedRecords = " + inJsonRepositoryString + ";");
+  Util.assert(Util.isObject(dehydratedRecords));
+  var recordFormat = dehydratedRecords[DeltaVirtualServer.JSON_MEMBER_FORMAT];
+  Util.assert(recordFormat == DeltaVirtualServer.JSON_FORMAT_2005_MAY_RECORDS);
+  var listOfRecords = dehydratedRecords[DeltaVirtualServer.JSON_MEMBER_RECORDS];
+  Util.assert(Util.isArray(listOfRecords));
   
-  eval("dehydratedWorld = " + inJsonString + ";");
-  Util.assert(Util.isObject(dehydratedWorld));
+  // load the list of users
+  Util.assert(Util.isString(inJsonUserList));
+  var dehydratedUserList = null;
+  eval("dehydratedUserList = " + inJsonUserList + ";");
+  Util.assert(Util.isObject(dehydratedUserList));
+  var userListFormat = dehydratedUserList[DeltaVirtualServer.JSON_MEMBER_FORMAT];
+  Util.assert(userListFormat == DeltaVirtualServer.JSON_FORMAT_2005_MAY_USERS);
+  var listOfUsers = dehydratedUserList[DeltaVirtualServer.JSON_MEMBER_USERS];
+  Util.assert(Util.isArray(listOfUsers));
+
+  this.__loadWorldFromListOfRecordsAndUsers(listOfRecords, listOfUsers);
   
-  var fileFormat = dehydratedWorld[BigLumpVirtualServer.JSON_MEMBER_FORMAT];
-  if (fileFormat == BigLumpVirtualServer.JSON_FORMAT_2005_MARCH) {
+  /* DELETE_ME:
+  var fileFormat = dehydratedWorld[DeltaVirtualServer.JSON_MEMBER_FORMAT];
+  if (fileFormat == DeltaVirtualServer.JSON_FORMAT_2005_MARCH) {
     // this is an old file format, circa 2005-March-16
-    var listOfItems = dehydratedWorld[BigLumpVirtualServer.JSON_MEMBER_DATA];
+    var listOfItems = dehydratedWorld[DeltaVirtualServer.JSON_MEMBER_DATA];
     Util.assert(Util.isArray(listOfItems));
     this.__loadWorldFromOld2005MarchFormatList(listOfItems);
   } else {
     // this is newer file format, circa 2005-April-21
-    Util.assert(fileFormat == BigLumpVirtualServer.JSON_FORMAT_2005_APRIL);
-    var listOfRecords = dehydratedWorld[BigLumpVirtualServer.JSON_MEMBER_DATA];
-    var listOfUsers = dehydratedWorld[BigLumpVirtualServer.JSON_MEMBER_USERS];
+    Util.assert(fileFormat == DeltaVirtualServer.JSON_FORMAT_2005_APRIL);
+    var listOfRecords = dehydratedWorld[DeltaVirtualServer.JSON_MEMBER_DATA];
+    var listOfUsers = dehydratedWorld[DeltaVirtualServer.JSON_MEMBER_USERS];
     Util.assert(Util.isArray(listOfRecords));
     this.__loadWorldFromListOfRecordsAndUsers(listOfRecords, listOfUsers);
   }
+  */
 };
   
 
@@ -145,7 +170,7 @@ BigLumpVirtualServer.prototype.__loadWorldFromJsonString = function (inJsonStrin
  * @scope    private instance method
  * @param    inListOfItems    A JSON list of dehydrated items. 
  */
-BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function (inListOfItems) {
+DeltaVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function (inListOfItems) {
 
   var listOfDehydratedItems = inListOfItems;
 
@@ -179,7 +204,7 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
   for (key in listOfDehydratedItems) {
     dehydratedItem = listOfDehydratedItems[key];
     dehydratedUuid = dehydratedItem[World.UUID_FOR_ATTRIBUTE_UUID];
-    uuid = dehydratedUuid[BigLumpVirtualServer.JSON_MEMBER_VALUE];
+    uuid = dehydratedUuid[DeltaVirtualServer.JSON_MEMBER_VALUE];
     axiomaticItem = hashTableOfAxiomaticItemsKeyedByUuid[uuid];
     if (!axiomaticItem) {
       // We only need to rehydrate the non-axiomatic items.
@@ -194,7 +219,7 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
   for (key in listOfDehydratedItems) {
     dehydratedItem = listOfDehydratedItems[key];
     dehydratedUuid = dehydratedItem[World.UUID_FOR_ATTRIBUTE_UUID];
-    uuid = dehydratedUuid[BigLumpVirtualServer.JSON_MEMBER_VALUE];
+    uuid = dehydratedUuid[DeltaVirtualServer.JSON_MEMBER_VALUE];
     axiomaticItem = hashTableOfAxiomaticItemsKeyedByUuid[uuid];
     if (!axiomaticItem) {
       // We only need to rehydrate the non-axiomatic items.
@@ -208,17 +233,17 @@ BigLumpVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function 
           Util.assert(Util.isArray(propertyValue));
           for (var entryKey in propertyValue) {
             var entryObject = propertyValue[entryKey];
-            var valueType = entryObject[BigLumpVirtualServer.JSON_MEMBER_TYPE];
-            var valueValue = entryObject[BigLumpVirtualServer.JSON_MEMBER_VALUE];
+            var valueType = entryObject[DeltaVirtualServer.JSON_MEMBER_TYPE];
+            var valueValue = entryObject[DeltaVirtualServer.JSON_MEMBER_VALUE];
             var finalValue = null;
             switch (valueType) {
-              case BigLumpVirtualServer.JSON_TYPE_FOREIGN_UUID:
+              case DeltaVirtualServer.JSON_TYPE_FOREIGN_UUID:
                 finalValue = this.__getItemFromUuidOrCreateNewItem(valueValue);
                 break;
-              case BigLumpVirtualServer.JSON_TYPE_STRING_VALUE:
+              case DeltaVirtualServer.JSON_TYPE_STRING_VALUE:
                 finalValue = valueValue;
                 break;
-              case BigLumpVirtualServer.JSON_TYPE_NUMBER_VALUE:
+              case DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE:
                 finalValue = valueValue;
                 break;
             }
@@ -295,7 +320,7 @@ StubVirtualServer.prototype.__getEntryFromUuidOrBootstrapEntry = function (inUui
  * @scope    private instance method
  * @param    inJsonString    A JSON string literal representing the world of items. 
  */
-BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (inListOfRecords, inListOfUsers) {
+DeltaVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (inListOfRecords, inListOfUsers) {
   var key;
   var itemUuid;
   var item;
@@ -305,64 +330,64 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
   for (key in inListOfRecords) {
     var dehydratedRecord = inListOfRecords[key];
 
-    var dehydratedItem = dehydratedRecord[BigLumpVirtualServer.JSON_MEMBER_ITEM_CLASS];
-    var dehydratedVote = dehydratedRecord[BigLumpVirtualServer.JSON_MEMBER_VOTE_CLASS];
-    var dehydratedOrdinal = dehydratedRecord[BigLumpVirtualServer.JSON_MEMBER_ORDINAL_CLASS];
-    var dehydratedEntry = dehydratedRecord[BigLumpVirtualServer.JSON_MEMBER_ENTRY_CLASS];
+    var dehydratedItem = dehydratedRecord[DeltaVirtualServer.JSON_MEMBER_ITEM_CLASS];
+    var dehydratedVote = dehydratedRecord[DeltaVirtualServer.JSON_MEMBER_VOTE_CLASS];
+    var dehydratedOrdinal = dehydratedRecord[DeltaVirtualServer.JSON_MEMBER_ORDINAL_CLASS];
+    var dehydratedEntry = dehydratedRecord[DeltaVirtualServer.JSON_MEMBER_ENTRY_CLASS];
 
     var contents = dehydratedItem || dehydratedVote || dehydratedOrdinal || dehydratedEntry;
 
-    var timestampString = contents[BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP];
-    var userstampUuid = contents[BigLumpVirtualServer.JSON_MEMBER_USERSTAMP];
+    var timestampString = contents[DeltaVirtualServer.JSON_MEMBER_TIMESTAMP];
+    var userstampUuid = contents[DeltaVirtualServer.JSON_MEMBER_USERSTAMP];
     var timestamp = new Date(new Number(timestampString));
     var userstamp = this.__getItemFromUuidOrBootstrapItem(userstampUuid);
 
     if (dehydratedItem) {
-      itemUuid = dehydratedItem[BigLumpVirtualServer.JSON_MEMBER_WUID];
+      itemUuid = dehydratedItem[DeltaVirtualServer.JSON_MEMBER_WUID];
       item = this.__getItemFromUuidOrBootstrapItem(itemUuid);
       item._rehydrate(timestamp, userstamp);
       this.__myChronologicalListOfRecords.push(item);
     }
     if (dehydratedVote) {
-      var retainFlag = dehydratedVote[BigLumpVirtualServer.JSON_MEMBER_RETAIN_FLAG];
-      identifiedRecordUuid = dehydratedVote[BigLumpVirtualServer.JSON_MEMBER_RECORD];
+      var retainFlag = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG];
+      identifiedRecordUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RECORD];
       identifiedRecord = this.__getIdentifiedRecordFromUuid(identifiedRecordUuid);
       var vote = new Vote(identifiedRecord, userstamp, retainFlag, timestamp);
       this.__myChronologicalListOfRecords.push(vote);
     }
     if (dehydratedOrdinal) {
-      var ordinalNumber = dehydratedVote[BigLumpVirtualServer.JSON_MEMBER_ORDINAL_NUMBER];
-      identifiedRecordUuid = dehydratedVote[BigLumpVirtualServer.JSON_MEMBER_RECORD];
+      var ordinalNumber = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER];
+      identifiedRecordUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RECORD];
       identifiedRecord = this.__getIdentifiedRecordFromUuid(identifiedRecordUuid);
       var ordinal = new Ordinal(identifiedRecord, userstamp, ordinalNumber, timestamp);
       this.__myChronologicalListOfRecords.push(ordinal);
     }
     if (dehydratedEntry) {
-      var entryUuid = dehydratedEntry[BigLumpVirtualServer.JSON_MEMBER_WUID];
-      itemUuid = dehydratedEntry[BigLumpVirtualServer.JSON_MEMBER_ITEM];
+      var entryUuid = dehydratedEntry[DeltaVirtualServer.JSON_MEMBER_WUID];
+      itemUuid = dehydratedEntry[DeltaVirtualServer.JSON_MEMBER_ITEM];
       item = this.__getItemFromUuidOrBootstrapItem(itemUuid);
-      var attributeUuid = dehydratedEntry[BigLumpVirtualServer.JSON_MEMBER_ATTRIBUTE];
+      var attributeUuid = dehydratedEntry[DeltaVirtualServer.JSON_MEMBER_ATTRIBUTE];
       var attribute = null;
       if (attributeUuid) {
         attribute = this.__getItemFromUuidOrBootstrapItem(attributeUuid);
       }
-      var previousEntryUuid = dehydratedEntry[BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE];
+      var previousEntryUuid = dehydratedEntry[DeltaVirtualServer.JSON_MEMBER_PREVIOUS_VALUE];
       var previousEntry = null;
       if (previousEntryUuid) {
         previousEntry = this.__getEntryFromUuidOrBootstrapEntry(previousEntryUuid);
       }
-      var pickledData = dehydratedEntry[BigLumpVirtualServer.JSON_MEMBER_VALUE];
-      var dataType = pickledData[BigLumpVirtualServer.JSON_MEMBER_TYPE];
-      var rawData = pickledData[BigLumpVirtualServer.JSON_MEMBER_VALUE];
+      var pickledData = dehydratedEntry[DeltaVirtualServer.JSON_MEMBER_VALUE];
+      var dataType = pickledData[DeltaVirtualServer.JSON_MEMBER_TYPE];
+      var rawData = pickledData[DeltaVirtualServer.JSON_MEMBER_VALUE];
       var finalData = null;
       switch (dataType) {
-        case BigLumpVirtualServer.JSON_TYPE_RELATED_UUID:
+        case DeltaVirtualServer.JSON_TYPE_RELATED_UUID:
           finalData = this.__getItemFromUuidOrBootstrapItem(rawData);
           break;
-        case BigLumpVirtualServer.JSON_TYPE_STRING_VALUE:
+        case DeltaVirtualServer.JSON_TYPE_STRING_VALUE:
           finalData = rawData;
           break;
-        case BigLumpVirtualServer.JSON_TYPE_NUMBER_VALUE:
+        case DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE:
           finalData = rawData;
           break;
       }
@@ -374,8 +399,8 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
   }
   for (key in inListOfUsers) {
     var dehydratedUserData = inListOfUsers[key];
-    var userUuid = dehydratedUserData[BigLumpVirtualServer.JSON_MEMBER_WUID];
-    var userPassword = dehydratedUserData[BigLumpVirtualServer.JSON_MEMBER_PASSWORD];
+    var userUuid = dehydratedUserData[DeltaVirtualServer.JSON_MEMBER_WUID];
+    var userPassword = dehydratedUserData[DeltaVirtualServer.JSON_MEMBER_PASSWORD];
     
     var user = this.getItemFromUuid(userUuid);
     if (user) {
@@ -391,10 +416,10 @@ BigLumpVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (
  * 25 characters long.
  *
  * @scope    public instance method
- * @param    A string that may need truncating.
+ * @param    inString    A string that may need truncating.
  * @return   A string that is. 
  */
-BigLumpVirtualServer.prototype.truncateString = function (inString) {
+DeltaVirtualServer.prototype.truncateString = function (inString) {
   var maxLength = 30;
   var ellipsis = "...";
   if (inString.length > maxLength) {
@@ -406,105 +431,120 @@ BigLumpVirtualServer.prototype.truncateString = function (inString) {
 
 
 /**
- * Returns a huge string, containing a JavaScript "object literal"
- * representation of the entire world.
+ * Returns a big string, containing JavaScript "object literal"
+ * representations of the records.
  *
  * @scope    private instance method
- * @return   A JSON string literal, representing all the items in the world. 
+ * @param    inListOfRecords    A list of the records to include in the JSON string.
+ * @return   A JSON string literal, representing the records. 
  */
-BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function () {
-  var fileTimestamp = new Date();
-  var listOfStrings = [];
+DeltaVirtualServer.prototype.__getJsonStringRepresentingRecords = function (inListOfRecords) {
+
   var key;
-  
-  var itemDisplayName;
-  var itemDisplayNameSubstring;
-  
-  listOfStrings.push('// Repository dump, in JSON format' + '\n');
-  listOfStrings.push('{ ');
-  listOfStrings.push('"' + BigLumpVirtualServer.JSON_MEMBER_FORMAT + '": "' + BigLumpVirtualServer.JSON_FORMAT_2005_APRIL + '", ' + '\n');
-  //listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + fileTimestamp.toString() + '", ' + '\n');
-  listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_DATA + '": ' + '[' + '\n');
+  var listOfStrings = [];
   var firstIdentifiedRecord = true;
-  for (key in this.__myChronologicalListOfRecords) {
-    var record = this.__myChronologicalListOfRecords[key];
+  var itemDisplayNameSubstring;
+
+  for (key in inListOfRecords) {
+    var record = inListOfRecords[key];
     if (firstIdentifiedRecord) {
       firstIdentifiedRecord = false;
     } else {
       listOfStrings.push(',\n');
-      listOfStrings.push('  // -----------------------------------------------------------------------\n');
     }
+    listOfStrings.push('  // -----------------------------------------------------------------------\n');
     if (record instanceof Item) {
       var item = record;
-      listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_ITEM_CLASS + '": ' + '{');
+      listOfStrings.push('  { "' + DeltaVirtualServer.JSON_MEMBER_ITEM_CLASS + '": ' + '{');
       itemDisplayNameSubstring = this.truncateString(item.getDisplayName());
       listOfStrings.push('                             // ' + itemDisplayNameSubstring + '\n');
-      listOfStrings.push('           "' + BigLumpVirtualServer.JSON_MEMBER_WUID + '": "' + item._getUuid() + '",\n');
+      listOfStrings.push('           "' + DeltaVirtualServer.JSON_MEMBER_WUID + '": "' + item._getUuid() + '",\n');
     }
     if (record instanceof Vote) {
       var vote = record;
-      listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{' + '\n');
-      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getIdentifiedRecord()._getUuid() + '",\n');
-      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '",\n');
+      listOfStrings.push('  { "' + DeltaVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{' + '\n');
+      listOfStrings.push('      "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getIdentifiedRecord()._getUuid() + '",\n');
+      listOfStrings.push('      "' + DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '",\n');
     }
     if (record instanceof Ordinal) {
       var ordinal = record;
-      listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
-      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getIdentifiedRecord()._getUuid() + '",\n');
-      listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '",\n');
+      listOfStrings.push('  { "' + DeltaVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
+      listOfStrings.push('      "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getIdentifiedRecord()._getUuid() + '",\n');
+      listOfStrings.push('      "' + DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '",\n');
     }
     if (record instanceof Entry) {
       var entry = record;
-      listOfStrings.push('  { "' + BigLumpVirtualServer.JSON_MEMBER_ENTRY_CLASS + '": ' + '{');
+      listOfStrings.push('  { "' + DeltaVirtualServer.JSON_MEMBER_ENTRY_CLASS + '": ' + '{');
       var entryDisplayNameSubstring = this.truncateString(entry.getDisplayString());
       listOfStrings.push('                             // ' + entryDisplayNameSubstring + '\n');
-      listOfStrings.push('           "' + BigLumpVirtualServer.JSON_MEMBER_WUID + '": "' + entry._getUuid() + '",\n');
+      listOfStrings.push('           "' + DeltaVirtualServer.JSON_MEMBER_WUID + '": "' + entry._getUuid() + '",\n');
       var attribute = entry.getAttribute();
       if (attribute) {
         var attributeName = attribute.getDisplayName();
-        listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_ATTRIBUTE + '": "' + attribute._getUuid() + '",');
+        listOfStrings.push('      "' + DeltaVirtualServer.JSON_MEMBER_ATTRIBUTE + '": "' + attribute._getUuid() + '",');
         var attributeNameSubstring = this.truncateString(attributeName);
         listOfStrings.push('                // ' + attributeNameSubstring + '\n');
       }
-      listOfStrings.push('           "' + BigLumpVirtualServer.JSON_MEMBER_ITEM + '": "' + entry.getItem()._getUuid() + '",');
+      listOfStrings.push('           "' + DeltaVirtualServer.JSON_MEMBER_ITEM + '": "' + entry.getItem()._getUuid() + '",');
       itemDisplayNameSubstring = this.truncateString(entry.getItem().getDisplayName());
       listOfStrings.push('                // ' + itemDisplayNameSubstring + '\n');
       var previousEntry = entry.getPreviousEntry();
       if (previousEntry) {
-        listOfStrings.push('          "' + BigLumpVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": "' + previousEntry._getUuid() + '",\n');
+        listOfStrings.push('   "' + DeltaVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": "' + previousEntry._getUuid() + '",\n');
       }
       var contentData = entry.getValue();
       var pickleString = "";
       var typeString = null;
       var valueString = null;
       if (Util.isNumber(contentData)) {
-        typeString = BigLumpVirtualServer.JSON_TYPE_NUMBER_VALUE;
+        typeString = DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE;
         valueString = contentData;
       }
       if (Util.isString(contentData)) {
-        typeString = BigLumpVirtualServer.JSON_TYPE_STRING_VALUE;
+        typeString = DeltaVirtualServer.JSON_TYPE_STRING_VALUE;
         valueString = '"' + contentData + '"';
       }
       if (contentData instanceof Item) {
-        typeString = BigLumpVirtualServer.JSON_TYPE_RELATED_UUID;
+        typeString = DeltaVirtualServer.JSON_TYPE_RELATED_UUID;
         valueString = '"' + contentData._getUuid() + '"';
       }
-      pickleString = '{ "' + BigLumpVirtualServer.JSON_MEMBER_TYPE + '": "' + typeString + '", "' + BigLumpVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString + ' }';
-      listOfStrings.push('          "' + BigLumpVirtualServer.JSON_MEMBER_VALUE + '": ' + pickleString + ',\n');
+      pickleString = '{ "' + DeltaVirtualServer.JSON_MEMBER_TYPE + '": "' + typeString + '", "' + DeltaVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString + ' }';
+      listOfStrings.push('          "' + DeltaVirtualServer.JSON_MEMBER_VALUE + '": ' + pickleString + ',\n');
     }
     Util.assert(record.getUserstamp() !== null);
-    listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_USERSTAMP + '": "' + record.getUserstamp()._getUuid() + '",');
+    listOfStrings.push('      "' + DeltaVirtualServer.JSON_MEMBER_USERSTAMP + '": "' + record.getUserstamp()._getUuid() + '",');
     var userDisplayName = record.getUserstamp().getDisplayName();
     var userDisplayNameSubstring = this.truncateString(userDisplayName);
     listOfStrings.push('                // by (' + userDisplayNameSubstring + ')\n');
-    listOfStrings.push('      "' + BigLumpVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + record.getTimestamp().valueOf() + '" }\n');
+    listOfStrings.push('      "' + DeltaVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + record.getTimestamp().valueOf() + '" }\n');
     listOfStrings.push('  }');
   }
-  listOfStrings.push("  ], \n");
   
-  // write out the list of users
-  listOfStrings.push('  "' + BigLumpVirtualServer.JSON_MEMBER_USERS + '": ' + '[\n');
-  firstIdentifiedRecord = true;
+  var finalString = listOfStrings.join("");
+  return finalString;
+};
+
+
+/**
+ * Returns a string containing a JavaScript "object literal" with a list of
+ * all the user UUIDs and passwords.
+ *
+ * @scope    private instance method
+ * @param    inChromeFlag    True if the return string should contain "chrome".
+ * @return   A JSON string literal with a list of user UUIDs and passwords. 
+ */
+DeltaVirtualServer.prototype.__getJsonStringRepresentingUserList = function (inChromeFlag) {
+  var listOfStrings = [];
+  var key;
+
+  if (inChromeFlag) {
+    listOfStrings.push('// User list, in JSON format' + '\n');
+    listOfStrings.push('{ ');
+    listOfStrings.push('"' + DeltaVirtualServer.JSON_MEMBER_FORMAT + '": "' + DeltaVirtualServer.JSON_FORMAT_2005_MAY_USERS + '", ' + '\n');    
+  }
+  
+  listOfStrings.push('  "' + DeltaVirtualServer.JSON_MEMBER_USERS + '": ' + '[\n');
+  var firstIdentifiedRecord = true;
   for (key in this.__myListOfUsers) {
     var user = this.__myListOfUsers[key];
     if (firstIdentifiedRecord) {
@@ -517,10 +557,44 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
     if (password) {
       passwordString = '"' + password + '"';
     }
-    listOfStrings.push('    { "' + BigLumpVirtualServer.JSON_MEMBER_WUID + '": "' + user._getUuid() + '", ');
-    listOfStrings.push('"' + BigLumpVirtualServer.JSON_MEMBER_PASSWORD + '": ' + passwordString + ' }');
+    listOfStrings.push('    { "' + DeltaVirtualServer.JSON_MEMBER_WUID + '": "' + user._getUuid() + '", ');
+    listOfStrings.push('"' + DeltaVirtualServer.JSON_MEMBER_PASSWORD + '": ' + passwordString + ' }');
   }
   listOfStrings.push(" ]\n");
+  
+  if (inChromeFlag) {
+    listOfStrings.push('}\n');
+  }
+  
+  var finalString = listOfStrings.join("");
+  return finalString;
+};
+
+
+/**
+ * Returns a huge string, containing a JavaScript "object literal"
+ * representation of the entire world.
+ *
+ * @scope    private instance method
+ * @return   A JSON string literal, representing all the items in the world. 
+ */
+DeltaVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function () {
+  var listOfStrings = [];
+  
+  listOfStrings.push('// Repository dump, in JSON format' + '\n');
+  listOfStrings.push('{ ');
+  listOfStrings.push('"' + DeltaVirtualServer.JSON_MEMBER_FORMAT + '": "' + DeltaVirtualServer.JSON_FORMAT_2005_APRIL + '", ' + '\n');
+  listOfStrings.push('  "' + DeltaVirtualServer.JSON_MEMBER_DATA + '": ' + '[' + '\n');
+
+  var jsonStringForRecords = this.__getJsonStringRepresentingRecords(this.__myChronologicalListOfRecords);
+  listOfStrings.push(jsonStringForRecords);
+
+  listOfStrings.push("  ], \n");
+  
+  // write out the list of users
+  var withChrome = false;
+  var jsonStringForUserList = this.__getJsonStringRepresentingUserList(withChrome);
+  listOfStrings.push(jsonStringForUserList);
   
   listOfStrings.push("}\n");
   var finalString = listOfStrings.join("");
@@ -536,7 +610,7 @@ BigLumpVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function
  * @param    inForceSave    Optional. Forces a save if set to true. 
  * @return   The list of changes made. 
  */
-BigLumpVirtualServer.prototype.saveChangesToServer = function (inForceSave) {
+DeltaVirtualServer.prototype.saveChangesToServer = function (inForceSave) {
   var listOfChangesMade;
   if (!inForceSave && this.__myChronologicalListOfNewlyCreatedRecords.length === 0) {
     listOfChangesMade = [];
@@ -553,19 +627,71 @@ BigLumpVirtualServer.prototype.saveChangesToServer = function (inForceSave) {
     }
   }
   
-  for (var key in this.__myChronologicalListOfNewlyCreatedRecords) {
-    var newRecord = this.__myChronologicalListOfNewlyCreatedRecords[key];
+  var key;
+  var newRecord;
+  for (key in this.__myChronologicalListOfNewlyCreatedRecords) {
+    newRecord = this.__myChronologicalListOfNewlyCreatedRecords[key];
     this.__myChronologicalListOfRecords.push(newRecord);
   }
   
-  this.__myXMLHttpRequestObject = this.__newXMLHttpRequestObject();
+  var saveListOfUsers = false;
+  var listOfUsers = this.getUsers();
+  for (key in this.__myChronologicalListOfNewlyCreatedRecords) {
+    newRecord = this.__myChronologicalListOfNewlyCreatedRecords[key];
+    if (Util.isObjectInSet(newRecord, listOfUsers)) {
+      saveListOfUsers = true;
+      break;
+    }
+  }
+ 
   if (saveChanges) {
-    var url = "model/save_lump.php";
-    // var url = "http://localhost:8080/openrecord/demo/current/trunk/source/model/" + "save_lump.php";
-    // var url = "http://localhost:8080/openrecord/demo/current/trunk/source/" + "save_changes.php";
-    this.__myXMLHttpRequestObject.open("POST", url, true);
+    var url;
+    var recordsToAppend;
+    var textToAppend;
+    
+    // OLD: used for saving a the entire world as one lump
+    // url = "model/save_lump.php";
+    // this.__myXMLHttpRequestObject.open("POST", url, true);
+    // this.__myXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
+    // this.__myXMLHttpRequestObject.send(this.__getJsonStringRepresentingEntireWorld());
+    
+    // NEW: used for saving just the changes
+    url = "model/append_to_repository_file.php";
+    recordsToAppend = this.__myChronologicalListOfNewlyCreatedRecords;
+    textToAppend = ",\n" + this.__getJsonStringRepresentingRecords(recordsToAppend);
+    var asynchronous;
+    asynchronous = true;
+    
+    // PENDING: 
+    // It might be more efficient to re-use the XMLHttpRequestObject,
+    // rather than creating a new one for new request.  But re-using 
+    // them is complicated, because the requests are asynchronous, so
+    // we need to check to see if the last request is done before we 
+    // can start a new request.
+    this.__myXMLHttpRequestObject = this.__newXMLHttpRequestObject();
+    this.__myXMLHttpRequestObject.open("POST", url, asynchronous);
     this.__myXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
-    this.__myXMLHttpRequestObject.send(this.__getJsonStringRepresentingEntireWorld());
+    this.__myXMLHttpRequestObject.send(textToAppend);
+    
+    // NEW: used for saving just the user list
+    if (saveListOfUsers) {
+      url = "model/replace_user_file.php";
+      var withChrome = true;
+      textToAppend = this.__getJsonStringRepresentingUserList(withChrome);
+      asynchronous = true;
+      
+      // PENDING: 
+      // It might be more efficient to re-use the XMLHttpRequestObject,
+      // rather than creating a new one for new request.  But re-using 
+      // them is complicated, because the requests are asynchronous, so
+      // we need to check to see if the last request is done before we 
+      // can start a new request.
+      this._myUserListXMLHttpRequestObject = this.__newXMLHttpRequestObject();
+      
+      this._myUserListXMLHttpRequestObject.open("POST", url, asynchronous);
+      this._myUserListXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
+      this._myUserListXMLHttpRequestObject.send(textToAppend);
+    }
   }
   
   listOfChangesMade = this.__myChronologicalListOfNewlyCreatedRecords;
@@ -580,7 +706,7 @@ BigLumpVirtualServer.prototype.saveChangesToServer = function (inForceSave) {
  * @scope    private instance method
  * @return   A newly created XMLHttpRequest object. 
  */
-BigLumpVirtualServer.prototype.__newXMLHttpRequestObject = function () {
+DeltaVirtualServer.prototype.__newXMLHttpRequestObject = function () {
   var newXMLHttpRequestObject = null;
   if (window.XMLHttpRequest) {
     newXMLHttpRequestObject = new XMLHttpRequest();
@@ -590,15 +716,14 @@ BigLumpVirtualServer.prototype.__newXMLHttpRequestObject = function () {
     }
   }
   if (newXMLHttpRequestObject) {
-    var self = this;
     newXMLHttpRequestObject.onreadystatechange = function() {
-      var statusText = self.__myXMLHttpRequestObject.statusText;
+      var statusText = newXMLHttpRequestObject.statusText;
       if (statusText != "OK") {
         window.alert("onreadystatechange:\n" +
-          "readyState: " + self.__myXMLHttpRequestObject.readyState + "\n" +
-          "status: " + self.__myXMLHttpRequestObject.status + "\n" +
-          "statusText: " + self.__myXMLHttpRequestObject.statusText + "\n" +
-          "responseText: " + self.__myXMLHttpRequestObject.responseText + "\n");
+          "readyState: " + newXMLHttpRequestObject.readyState + "\n" +
+          "status: " + newXMLHttpRequestObject.status + "\n" +
+          "statusText: " + newXMLHttpRequestObject.statusText + "\n" +
+          "responseText: " + newXMLHttpRequestObject.responseText + "\n");
       }
     };
   }

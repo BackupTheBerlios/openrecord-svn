@@ -29,7 +29,7 @@ World -- a set of items, like the "OpenAgenda" world or the "CoolChaser" world
 Server -- server-side code to run queries and deliver items to the browser
 VirtualServer -- client-side proxy, by which a World talks to a Server
 StubVirtualServer -- a simple VirtualServer which doesn't even talk to a Server
-BigLumpVirtualServer -- a simple VirtualServer that transfers data in big lumps
+DeltaVirtualServer -- a VirtualServer that transfers changed data in incremental deltas
 
 
 ---------------------------------

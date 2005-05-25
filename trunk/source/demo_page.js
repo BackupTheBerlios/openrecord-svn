@@ -42,17 +42,23 @@
  * @scope    global function
  */
 window.doOnloadActions = function() {  
-  // var fileName = "test_data_2005_april_chronological_lump.json";
-  // var url = "model/" + fileName;
-  var fileName = "2005_april_chronological_lump.json";
-  var url = "repositories/demo_page/" + fileName;
-  var fileContentString = Util.getStringContentsOfFileAtURL(url);
   
-  // Create a World and a BigLumpVirtualServer, and have the 
-  // BigLumpVirtualServer rehydrate all the dehydrated items 
+  var pathToDemoRepository = "repositories/demo_page/";
+  
+  var repositoryFileName = "2005_may_chronological_list.json";
+  var repositoryUrl = pathToDemoRepository + repositoryFileName;
+  var repositoryContentString = Util.getStringContentsOfFileAtURL(repositoryUrl);
+  repositoryContentString += " ] }";
+  
+  var userListFileName = "2005_may_user_list.json";
+  var userListUrl = pathToDemoRepository + userListFileName;
+  var userListContentString = Util.getStringContentsOfFileAtURL(userListUrl);
+  
+  // Create a World and a DeltaVirtualServer, and have the 
+  // DeltaVirtualServer rehydrate all the dehydrated items 
   // contained in the fileContentString.  
-  var bigLumpVirtualServer = new BigLumpVirtualServer(fileContentString);
-  var world = new World(bigLumpVirtualServer);
+  var deltaVirtualServer = new DeltaVirtualServer(repositoryContentString, userListContentString);
+  var world = new World(deltaVirtualServer);
   window.rootView = new RootView(world);
   
   Util.setTargetsForExternalLinks();

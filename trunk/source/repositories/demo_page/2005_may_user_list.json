@@ -1,0 +1,6 @@
+// User list, in JSON format
+{ "format": "2005_MAY_USER_LIST", 
+  "users": [
+    { "uuid": "100", "password": null },
+    { "uuid": "1502", "password": "abracadabra" } ]
+}
