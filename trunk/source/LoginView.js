@@ -94,6 +94,7 @@ LoginView.prototype._rebuildView = function () {
   
   //get rid of all child nodes 
   mySpan.innerHTML = '';
+  
   var currentUser = this.getWorld().getCurrentUser();
   if (!currentUser) {
     // alert("displayControlSpan: !currentUser");
@@ -112,19 +113,24 @@ LoginView.prototype._rebuildView = function () {
       }
     }
   }
+  
   var welcomeText, welcomeNode;
   if (this._isCreatingNewAccount) {
+    // The user wants to create a new account.
+    // Create a line that looks like this:
+    //   Please enter new name and password:  _username_  _password_  [Create New Account]
+    
     welcomeText = "Please enter new name and password:";
     welcomeNode = document.createTextNode(welcomeText);
     this.usernameInput = document.createElement("input");
-    this.usernameInput.size=10;
-    this.usernameInput.onkeypress = this.signinKeyPress.bindAsEventListener(this);
-    this.usernameInput.value = "Your name here";
-
+    this.usernameInput.size = 20;
+    this.usernameInput.value = "Albert Einstein";
+    
     var passwordInput = document.createElement("input");
     this.passwordInput.size = 10;
     this.passwordInput.type = "password";
     this.passwordInput.value = "randomdots";
+    this.passwordInput.onkeypress = this.createAccountPasswordKeyPress.bindAsEventListener(this);
 
     var newAcctButton = document.createElement("input");
     newAcctButton.value = "Create New Account";
@@ -132,20 +138,28 @@ LoginView.prototype._rebuildView = function () {
     newAcctButton.onclick = this._clickOnNewAcctButton.bindAsEventListener(this);
     mySpan.appendChild(welcomeNode);
     mySpan.appendChild(this.usernameInput);
+    mySpan.appendChild(document.createTextNode(" "));
     mySpan.appendChild(this.passwordInput);
+    mySpan.appendChild(document.createTextNode(" "));
     mySpan.appendChild(newAcctButton);
     this.usernameInput.select();
   }
   else if (currentUser) { 
+    // The user is already logged in.
+    // Create a line that looks like this:
+    //   Hello Jane Doe.  _Sign out_  [Edit]
+    
     welcomeText = "Hello " + currentUser.getDisplayName() + ". ";
     welcomeNode = document.createTextNode(welcomeText);
     mySpan.appendChild(welcomeNode);
+
     var signoutLink = document.createElement("a");
     signoutLink.appendChild(document.createTextNode("Sign out"));
     signoutLink.onclick = this._clickOnSignoutLink.bindAsEventListener(this);
     mySpan.appendChild(signoutLink);
-    var space = document.createTextNode(" ");
-    mySpan.appendChild(space);
+
+    mySpan.appendChild(document.createTextNode(" "));
+
     var editButton = document.createElement("input");
     editButton.type = "button";
     editButton.value = (this.isInEditMode()) ? "Lock out edits" : "Edit";
@@ -153,20 +167,24 @@ LoginView.prototype._rebuildView = function () {
     mySpan.appendChild(editButton);
   }
   else {
+    // The user has not yet signed in.
+    // Create a line that looks like this:
+    //   _Create Account_  or sign in:  _username_  _password_  [Sign in]
+    
     var createAcctLink = document.createElement("a");
     createAcctLink.appendChild(document.createTextNode("Create Account"));
 
     welcomeText = " or sign in: "; 
     welcomeNode = document.createTextNode(welcomeText);
     this.usernameInput = document.createElement("input");
-    this.usernameInput.size=10;
-    this.usernameInput.onkeypress = this.signinKeyPress.bindAsEventListener(this);
-    this.usernameInput.value = "Your name here";
+    this.usernameInput.size = 20;
+    this.usernameInput.value = "Albert Einstein";
 
     this.passwordInput = document.createElement("input");
     this.passwordInput.size = 10;
     this.passwordInput.type = "password";
     this.passwordInput.value = "randomdots";
+    this.passwordInput.onkeypress = this.signinPasswordKeyPress.bindAsEventListener(this);
 
     var signinButton = document.createElement("input");
     signinButton.value = "Sign in";
@@ -176,7 +194,9 @@ LoginView.prototype._rebuildView = function () {
     mySpan.appendChild(createAcctLink);
     mySpan.appendChild(welcomeNode);
     mySpan.appendChild(this.usernameInput);
+    mySpan.appendChild(document.createTextNode(" "));
     mySpan.appendChild(this.passwordInput);
+    mySpan.appendChild(document.createTextNode(" "));
     mySpan.appendChild(signinButton);
   }
 };
@@ -197,14 +217,26 @@ LoginView.prototype._clickOnSignoutLink = function(inEventObject) {
 
 
 /**
- * Called when sign in input field is typed with keystroke.
+ * Called when sign in password input field is typed with keystroke.
  *
  * @scope    private instance method
  */
-LoginView.prototype.signinKeyPress = function(inEventObject) {
+LoginView.prototype.signinPasswordKeyPress = function(inEventObject) {
   // see if <return> is pressed, if so, similate clicking on sign in button
   if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
     this._clickOnSignInButton(inEventObject);
+  }
+};
+
+/**
+ * Called when create account password input field is typed with keystroke.
+ *
+ * @scope    private instance method
+ */
+LoginView.prototype.createAccountPasswordKeyPress = function(inEventObject) {
+  // see if <return> is pressed, if so, similate clicking on sign in button
+  if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
+    this._clickOnNewAcctButton(inEventObject);
   }
 };
 

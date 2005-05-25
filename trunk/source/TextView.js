@@ -211,7 +211,9 @@ TextView.prototype.stopEditing = function() {
         var oldEntry = listOfEntries[0];
         this._item.replaceEntry(oldEntry, newText);
       } else {
-        this._item.addEntryForAttribute(this._attribute, newText);
+        if (newText) {
+          this._item.addEntryForAttribute(this._attribute, newText);
+        }
       }
     }
     
@@ -289,4 +291,3 @@ TextView.prototype.onKeyPress = function(inEventObject) {
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------
-  

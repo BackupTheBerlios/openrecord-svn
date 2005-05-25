@@ -179,6 +179,17 @@ Item.prototype.replaceEntry = function (inEntry, inValue) {
  * @throws   Throws an Error if no user is logged in.
  */
 Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribute, inValue) {
+
+  // If we've just been asked to replace the string "Foo" with the string "Foo",
+  // then don't even bother creating a new entry. 
+  if (inEntry) {
+    var oldValue = inEntry.getValue();
+    var oldAttribute = inEntry.getAttribute();
+    if ((oldValue == inValue) && (oldAttribute == inAttribute)) {
+      return null;
+    }
+  }
+  
   if (this.__myProvisionalFlag) {
     this.__myProvisionalFlag = false;
     this.getWorld()._provisionalItemJustBecameReal(this);

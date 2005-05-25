@@ -92,7 +92,7 @@ Brian  |   done   | 1   ied | Replace the BigLumpVirtualServer with an DeltaVirt
        |   Low    |         | Convert UI code from DOM level 0 to DOM level 2
        |   Low    |         | Write a plugin view that calculates and displays the measured project velocity
        |   Low    |         | UI for creating a new page
-       |   Low    |         | UI for creating a new user
+ Chao  |   done   |         | UI for creating a new user
        |  High    | 0   ied | Fix bug that creates duplicate entries when no change was made
  
 

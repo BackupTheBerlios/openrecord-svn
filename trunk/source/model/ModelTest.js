@@ -211,7 +211,10 @@ function testAdditionsAndRetrievals() {
 
   r2d2 = starWars.replaceEntryWithEntryForAttribute(r2d2, characterAttribute, "R2D2");
   assertTrue('"R2D2" is now character', r2d2.getAttribute() == characterAttribute);
-  
+
+  var failure = starWars.replaceEntry(r2d2, "R2D2");
+  assertTrue("Can't replace a value with an identical value", failure === null);
+
   listOfCharacters = starWars.getEntriesForAttribute(characterAttribute);
   var hasR2d2 = Util.isObjectInSet(r2d2, listOfCharacters);
   hasAll = Util.areObjectsInSet([luke, c3po, r2d2], listOfCharacters);
@@ -367,9 +370,9 @@ function testItemObservation() {
   assertTrue('tokyoObserverFunction does not observe Seattle', (changesObservedByFunction === null));
 
   tokyo.voteToDelete();
-  assertTrue('tokyoObserverObject does observe Tokyo', (changesObservedByObject != null));
+  assertTrue('tokyoObserverObject does observe Tokyo', (changesObservedByObject !== null));
   assertTrue('tokyoObserverObject sees exactly one change', (changesObservedByObject.length == 1));
-  assertTrue('tokyoObserverFunction does observe Tokyo', (changesObservedByFunction != null));
+  assertTrue('tokyoObserverFunction does observe Tokyo', (changesObservedByFunction !== null));
   assertTrue('tokyoObserverFunction sees exactly one change', (changesObservedByFunction.length == 1));
 
   changesObservedByObject = null;
@@ -380,9 +383,9 @@ function testItemObservation() {
   assertTrue('tokyoObserverObject does not yet see changes', (changesObservedByObject === null));
   assertTrue('tokyoObserverFunction does not yet see changes', (changesObservedByFunction === null));
   world.endTransaction();
-  assertTrue('tokyoObserverObject now sees changes', (changesObservedByObject != null));
+  assertTrue('tokyoObserverObject now sees changes', (changesObservedByObject !== null));
   assertTrue('tokyoObserverObject now sees two changes', (changesObservedByObject.length == 2));
-  assertTrue('tokyoObserverFunction now sees changes', (changesObservedByFunction != null));
+  assertTrue('tokyoObserverFunction now sees changes', (changesObservedByFunction !== null));
   assertTrue('tokyoObserverFunction now sees two changes', (changesObservedByFunction.length == 2));
 
   changesObservedByObject = null;
@@ -431,8 +434,8 @@ function testListObservation() {
   var alsoFoodItems = world.getItemsInCategory(categoryCalledFood, foodObserverFunction);
   
   apple.addEntry("Red");
-  assertTrue('foodObserverObject sees a change to apple', (changesObservedByObject != null));
-  assertTrue('foodObserverFunction sees a change to apple', (changesObservedByFunction != null));
+  assertTrue('foodObserverObject sees a change to apple', (changesObservedByObject !== null));
+  assertTrue('foodObserverFunction sees a change to apple', (changesObservedByFunction !== null));
 
   changesObservedByObject = null;
   changesObservedByFunction = null;
