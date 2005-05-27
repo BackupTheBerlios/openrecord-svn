@@ -67,6 +67,38 @@ function testMethodsThatOperateOnSets() {
   
 }
 
+function testMethodsForWorkingWithUuids() {
+  
+  var uuidString = Util.generateRandomUuid();
+  assertTrue('UUIDs have 36 characters', (uuidString.length == 36));
+
+  var validCharacters = "0123456789abcedfABCDEF-";
+  var character;
+  var position;
+  for (var i = 0; i < 36; ++i) {
+    character = uuidString.charAt(i);
+    position = validCharacters.indexOf(character);
+    assertTrue('UUIDs have only valid characters', (position != -1));
+  }
+  
+  var arrayOfParts = uuidString.split("-");
+  assertTrue('UUIDs have 5 sections separated by 4 hypens', (arrayOfParts.length == 5));
+  assertTrue('Section 0 has 8 characters', (arrayOfParts[0].length == 8));
+  assertTrue('Section 1 has 4 characters', (arrayOfParts[1].length == 4));
+  assertTrue('Section 2 has 4 characters', (arrayOfParts[2].length == 4));
+  assertTrue('Section 3 has 4 characters', (arrayOfParts[3].length == 4));
+  assertTrue('Section 4 has 8 characters', (arrayOfParts[4].length == 12));
+  
+  var section2 = arrayOfParts[2];
+  assertTrue('Section 2 starts with a 4', (section2.charAt(0) == "4"));
+  
+  var section3 = arrayOfParts[3];
+  var validCharactersForStartOfSection3 = "89abAB";
+  character = section3.charAt(0);
+  position = validCharactersForStartOfSection3.indexOf(character);
+  assertTrue('Section 3 starts with 8, 9, A, or B', (position != -1));
+}
+
 function tearDown() {
   test = null;
 }

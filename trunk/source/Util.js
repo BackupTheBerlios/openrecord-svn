@@ -408,6 +408,47 @@ Util.addObjectToSet = function (inObject, inSet) {
 
 
 // -------------------------------------------------------------------
+// Methods for working with UUIDs
+// -------------------------------------------------------------------
+
+/**
+ * Generates a random UUID.  Hopefully this conforms to the existing
+ * standards for UUIDs and GUIDs.  For more info, see 
+ * http://www.webdav.org/specs/draft-leach-uuids-guids-01.txt
+ * 
+ * @scope    public class method
+ * @return   Returns a 36 character string, which will look something like "3B12F1DF-5232-4804-997E-917BF397618A".
+ */
+Util.generateRandomUuid = function () {
+  
+  function getRandom32bitNumber() {
+    return Math.floor( (Math.random() % 1) * Math.pow(2, 32) );
+  }
+  
+  function getEightCharacterHexString() {
+    var hexRadix = 16;
+    var eightCharacterString = getRandom32bitNumber().toString(hexRadix);
+    while (eightCharacterString.length < 8) {
+      eightCharacterString = "0" + eightCharacterString;
+    }
+    return eightCharacterString;
+  }
+  
+  var hyphen = "-";
+  var versionCodeForRandomlyGeneratedUuids = "4";
+  var variantCodeForStandardUuids = "8";
+  var a = getEightCharacterHexString();
+  var b = getEightCharacterHexString();
+  b = b.substring(0, 4) + hyphen + versionCodeForRandomlyGeneratedUuids + b.substring(5, 8);
+  var c = getEightCharacterHexString();
+  c = variantCodeForStandardUuids + c.substring(1, 4) + hyphen + c.substring(4, 8);
+  var d = getEightCharacterHexString();
+  var result = a + hyphen + b + hyphen + c + d;
+  
+  return result;
+}
+
+// -------------------------------------------------------------------
 // Methods that deal with event handling
 // -------------------------------------------------------------------
 
