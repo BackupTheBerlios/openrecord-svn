@@ -61,7 +61,7 @@ function StubVirtualServer() {
 StubVirtualServer.prototype.__initialize = function (inWorld) {
   this.__myWorld = inWorld;
   
-  this.__myNextAvailableUuid = 1;
+  // this.__myNextAvailableUuid = 1;
   this.__myHashTableOfItemsKeyedByUuid = {};
   this.__myHashTableOfEntriesKeyedByUuid = {};
   this.__myChronologicalListOfRecords = [];
@@ -372,7 +372,7 @@ StubVirtualServer.prototype.logout = function () {
  * @return   The item identified by the given UUID.
  */
 StubVirtualServer.prototype.getItemFromUuid = function (inUuid, inObserver) {
-  Util.assert(Util.isNumeric(inUuid));
+  // Util.assert(Util.isNumeric(inUuid));
   
   var item = this.__myHashTableOfItemsKeyedByUuid[inUuid];
   if (item && inObserver) {
@@ -562,8 +562,9 @@ StubVirtualServer.prototype.__getIdentifiedRecordFromUuid = function (inUuid) {
  * @return   A newly created UUID.
  */
 StubVirtualServer.prototype.__getNewUuid = function () {
-  var newUuid = this.__myNextAvailableUuid;
-  this.__myNextAvailableUuid += 1;
+  // var newUuid = this.__myNextAvailableUuid;
+  // this.__myNextAvailableUuid += 1;
+  var newUuid = Util.generateRandomUuid();
   return newUuid;
 };
 
@@ -592,12 +593,21 @@ StubVirtualServer.prototype.__getAuthenticationInfoForUser = function (inUser) {
 StubVirtualServer.prototype.__getItemFromUuidOrCreateNewItem = function (inUuid) {
   var item = this.getItemFromUuid(inUuid);
   if (!item) {
-    if (Util.isString(inUuid)) {
-      Util.assert(Util.isNumeric(inUuid));
-      inUuid = parseInt(inUuid);
+    /*
+    var uuidAsInt = null;
+    if (Util.isNumber(inUuid)) {
+      uuidAsInt = inUuid;
+    } else {
+      if (Util.isString(inUuid) && Util.isNumeric(inUuid)) {
+        uuidAsInt = parseInt(inUuid);
+      }
     }
-    Util.assert(Util.isNumber(inUuid));
-    this.__myNextAvailableUuid = Math.max(this.__myNextAvailableUuid, (inUuid + 1));   
+    if (uuidAsInt) {
+      Util.assert(Util.isNumber(uuidAsInt));
+      this.__myNextAvailableUuid = Math.max(this.__myNextAvailableUuid, (uuidAsInt + 1));   
+    }
+    */
+
     item = new Item(this.__myWorld, inUuid);
     item._initialize();
     this.__myHashTableOfItemsKeyedByUuid[inUuid] = item;
@@ -633,8 +643,6 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SUMMARY] = "Summary";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_BODY] = "Body";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_CATEGORY] = "Category";
-  // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_USERSTAMP] = "Userstamp";
-  // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_TIMESTAMP] = "Timestamp";
   // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SECTION] = "Section";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY] = "Query";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY] = "Matching Category";

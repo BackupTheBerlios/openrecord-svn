@@ -45,9 +45,10 @@ World.RETRIEVAL_FILTER_SINGLE_USER = "RETRIEVAL_FILTER_SINGLE_USER";
 World.RETRIEVAL_FILTER_DEMOCRATIC = "RETRIEVAL_FILTER_DEMOCRATIC";
 World.RETRIEVAL_FILTER_UNABRIDGED = "RETRIEVAL_FILTER_UNABRIDGED";
 
+// World.UUID_FOR_ATTRIBUTE_UUID = 100;
+/*
 World.UUID_FOR_USER_AMY = 100;
 
-World.UUID_FOR_ATTRIBUTE_UUID = 100;
 World.UUID_FOR_ATTRIBUTE_NAME = 102;
 World.UUID_FOR_ATTRIBUTE_SHORT_NAME = 101;
 World.UUID_FOR_ATTRIBUTE_SUMMARY = 103;
@@ -66,6 +67,27 @@ World.UUID_FOR_CATEGORY_MOVIE = 142;     // here as an example only
 World.UUID_FOR_CATEGORY_ATTRIBUTE = 143;
 World.UUID_FOR_CATEGORY_CATEGORY = 144;
 World.UUID_FOR_CATEGORY_QUERY = 147;
+*/
+
+// "00000000-ce7f-11d9-8cd5-0011113ae5d6";
+
+World.UUID_FOR_USER_AMY              = "00000100-ce7f-11d9-8cd5-0011113ae5d6";
+
+World.UUID_FOR_ATTRIBUTE_NAME        = "00000101-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_SHORT_NAME  = "00000102-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_SUMMARY     = "00000103-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_BODY        = "00000104-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_CATEGORY    = "00000105-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_QUERY       = "00000106-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY = "00000107-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM = "00000108-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_UNFILED     = "00000109-ce7f-11d9-8cd5-0011113ae5d6";
+
+World.UUID_FOR_CATEGORY_BOOK         = "0000010e-ce7f-11d9-8cd5-0011113ae5d6";  // here as an example only
+World.UUID_FOR_CATEGORY_MOVIE        = "0000010f-ce7f-11d9-8cd5-0011113ae5d6";  // here as an example only
+World.UUID_FOR_CATEGORY_ATTRIBUTE    = "00000110-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_CATEGORY_CATEGORY     = "00000111-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_CATEGORY_QUERY        = "00000112-ce7f-11d9-8cd5-0011113ae5d6";
 
 
 // -------------------------------------------------------------------
@@ -103,9 +125,6 @@ function World(inVirtualServer) {
   this.__myAttributeCalledShortName = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SHORT_NAME);
   this.__myAttributeCalledSummary = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SUMMARY);
   this.__myAttributeCalledCategory = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_CATEGORY);
-  // this.__myAttributeCalledOrdinal = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_ORDINAL);
-  // this.__myAttributeCalledCreationUserstamp = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_USERSTAMP);
-  // this.__myAttributeCalledCreationTimestamp = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_TIMESTAMP);
   this.__myAttributeCalledQuery = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY);
   this.__myAttributeCalledQueryMatchingCategory = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
   this.__myAttributeCalledQueryMatchingItem = this.__myVirtualServer.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);

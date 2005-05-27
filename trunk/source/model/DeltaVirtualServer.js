@@ -170,6 +170,7 @@ DeltaVirtualServer.prototype._loadWorldFromJsonStrings = function (inJsonReposit
  * @scope    private instance method
  * @param    inListOfItems    A JSON list of dehydrated items. 
  */
+/*
 DeltaVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function (inListOfItems) {
 
   var listOfDehydratedItems = inListOfItems;
@@ -263,7 +264,7 @@ DeltaVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function (i
   this.__myWorld.endTransaction();
   this.__myCurrentUser = null;
 };
-
+*/
 
 /**
  * Given a UUID, either (a) returns the existing item identified by that UUID, 
@@ -276,12 +277,20 @@ DeltaVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function (i
 StubVirtualServer.prototype.__getItemFromUuidOrBootstrapItem = function (inUuid) {
   var item = this.getItemFromUuid(inUuid);
   if (!item) {
-    if (Util.isString(inUuid)) {
-      Util.assert(Util.isNumeric(inUuid));
-      inUuid = parseInt(inUuid);
+    /*
+    var uuidAsInt = null;
+    if (Util.isNumber(inUuid)) {
+      uuidAsInt = inUuid;
+    } else {
+      if (Util.isString(inUuid) && Util.isNumeric(inUuid)) {
+        uuidAsInt = parseInt(inUuid);
+      }
     }
-    Util.assert(Util.isNumber(inUuid));
-    this.__myNextAvailableUuid = Math.max(this.__myNextAvailableUuid, (inUuid + 1));   
+    if (uuidAsInt) {
+      Util.assert(Util.isNumber(uuidAsInt));
+      this.__myNextAvailableUuid = Math.max(this.__myNextAvailableUuid, (uuidAsInt + 1));   
+    }
+    */
     item = new Item(this.__myWorld, inUuid);
     this.__myHashTableOfItemsKeyedByUuid[inUuid] = item;
   }
@@ -300,12 +309,20 @@ StubVirtualServer.prototype.__getItemFromUuidOrBootstrapItem = function (inUuid)
 StubVirtualServer.prototype.__getEntryFromUuidOrBootstrapEntry = function (inUuid) {
   var entry = this.__myHashTableOfEntriesKeyedByUuid[inUuid];
   if (!entry) {
-    if (Util.isString(inUuid)) {
-      Util.assert(Util.isNumeric(inUuid));
-      inUuid = parseInt(inUuid);
+    /*
+    var uuidAsInt = null;
+    if (Util.isNumber(inUuid)) {
+      uuidAsInt = inUuid;
+    } else {
+      if (Util.isString(inUuid) && Util.isNumeric(inUuid)) {
+        uuidAsInt = parseInt(inUuid);
+      }
     }
-    Util.assert(Util.isNumber(inUuid));
-    this.__myNextAvailableUuid = Math.max(this.__myNextAvailableUuid, (inUuid + 1));   
+    if (uuidAsInt) {
+      Util.assert(Util.isNumber(uuidAsInt));
+      this.__myNextAvailableUuid = Math.max(this.__myNextAvailableUuid, (uuidAsInt + 1));   
+    }
+    */
     entry = new Entry(this.__myWorld, inUuid);
     this.__myHashTableOfEntriesKeyedByUuid[inUuid] = entry;
   }

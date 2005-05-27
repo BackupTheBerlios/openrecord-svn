@@ -60,7 +60,7 @@ function IdentifiedRecord() {
  * @param    inUuid    The UUID for this IdentifiedRecord. 
  */
 IdentifiedRecord.prototype._IdentifiedRecord = function (inWorld, inUuid) {
-  Util.assert(!inUuid || Util.isNumeric(inUuid));
+  // Util.assert(!inUuid || Util.isNumeric(inUuid));
   
   this.__myWorld = inWorld;
   this.__myUuid = inUuid;

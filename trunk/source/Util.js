@@ -66,7 +66,7 @@ Util.ASCII_VALUE_FOR_RIGHT_ARROW = 39; // 124
 Util.ASCII_VALUE_FOR_DOWN_ARROW = 40;  // 125
 
 // Number of seconds between October 15, 1582 and January 1, 1970
-// Util.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800.000l;
+// Util.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800;
 Util.GREGORIAN_CHANGE_OFFSET_IN_HOURS = 3394248;
 
 
@@ -479,10 +479,15 @@ Util.generateRandomUuid = function () {
  * code running in a browser doesn't have access to the IEEE 802.3 address
  * of the computer, so we generate a random pseudonode value instead.
  * Hopefully this implementation conforms to the existing standards for 
- * UUIDs and GUIDs.  For more info, see 
- * http://www.webdav.org/specs/draft-leach-uuids-guids-01.txt
- * http://www.infonuovo.com/dma/csdocs/sketch/instidid.htm
+ * UUIDs and GUIDs.  
  * 
+ * For more info, see 
+ *   http://www.webdav.org/specs/draft-leach-uuids-guids-01.txt
+ *   http://www.infonuovo.com/dma/csdocs/sketch/instidid.htm
+ *   http://kruithof.xs4all.nl/uuid/uuidgen
+ *   http://www.opengroup.org/onlinepubs/009629399/apdxa.htm#tagcjh_20
+ *   http://jakarta.apache.org/commons/sandbox/id/apidocs/org/apache/commons/id/uuid/clock/Clock.html
+ *
  * @scope    public class method
  * @return   Returns a 36 character string, which will look something like "3B12F1DF-5232-1804-897E-917BF397618A".
  */

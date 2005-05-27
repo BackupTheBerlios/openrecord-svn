@@ -2,401 +2,401 @@
 { "format": "2005_MAY_CHRONOLOGICAL_LIST", 
   "records": [
   { "Item": {                             // Amy ex machina
-           "uuid": "100",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000100-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457156" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Name
-           "uuid": "102",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000101-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457171" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Short Name
-           "uuid": "101",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000102-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457171" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Summary
-           "uuid": "103",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000103-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457187" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Body
-           "uuid": "104",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000104-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457187" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Category
-           "uuid": "105",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000105-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457203" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Section
-           "uuid": "108",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000300-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457203" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Query
-           "uuid": "109",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000106-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457218" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Matching Category
-           "uuid": "110",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000107-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457218" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Matching Item
-           "uuid": "111",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000108-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457234" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Unfiled Entry
-           "uuid": "112",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000109-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457234" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Plugin Name
-           "uuid": "113",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000400-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457240" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Attribute
-           "uuid": "143",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457250" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Category
-           "uuid": "144",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457250" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Page
-           "uuid": "145",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000200-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457265" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Section
-           "uuid": "146",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457265" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Query
-           "uuid": "147",
-      "userstamp": "100",                // by (Amy ex machina)
+           "uuid": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457281" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Amy ex machina
            "uuid": "1471",
-      "attribute": "102",                // Name
-           "item": "100",                // Amy ex machina
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // Amy ex machina
           "value": { "type": "StringValue", "value": "Amy ex machina" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457281" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Name
            "uuid": "1472",
-      "attribute": "102",                // Name
-           "item": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
           "value": { "type": "StringValue", "value": "Name" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1473",
-      "attribute": "105",                // Category
-           "item": "102",                // Name
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Short Name
            "uuid": "1474",
-      "attribute": "102",                // Name
-           "item": "101",                // Short Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
           "value": { "type": "StringValue", "value": "Short Name" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457328" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1475",
-      "attribute": "105",                // Category
-           "item": "101",                // Short Name
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457343" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Summary
            "uuid": "1476",
-      "attribute": "102",                // Name
-           "item": "103",                // Summary
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
           "value": { "type": "StringValue", "value": "Summary" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457359" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1477",
-      "attribute": "105",                // Category
-           "item": "103",                // Summary
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457359" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Body
            "uuid": "1478",
-      "attribute": "102",                // Name
-           "item": "104",                // Body
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000104-ce7f-11d9-8cd5-0011113ae5d6",                // Body
           "value": { "type": "StringValue", "value": "Body" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457375" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1479",
-      "attribute": "105",                // Category
-           "item": "104",                // Body
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000104-ce7f-11d9-8cd5-0011113ae5d6",                // Body
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457390" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "1480",
-      "attribute": "102",                // Name
-           "item": "105",                // Category
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
           "value": { "type": "StringValue", "value": "Category" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457406" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1481",
-      "attribute": "105",                // Category
-           "item": "105",                // Category
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457406" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "1482",
-      "attribute": "102",                // Name
-           "item": "108",                // Section
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
           "value": { "type": "StringValue", "value": "Section" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457421" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1483",
-      "attribute": "105",                // Category
-           "item": "108",                // Section
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457437" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "1484",
-      "attribute": "102",                // Name
-           "item": "109",                // Query
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
           "value": { "type": "StringValue", "value": "Query" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457453" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1485",
-      "attribute": "105",                // Category
-           "item": "109",                // Query
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457453" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Matching Category
            "uuid": "1486",
-      "attribute": "102",                // Name
-           "item": "110",                // Matching Category
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
           "value": { "type": "StringValue", "value": "Matching Category" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457468" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1487",
-      "attribute": "105",                // Category
-           "item": "110",                // Matching Category
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457484" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Matching Item
            "uuid": "1488",
-      "attribute": "102",                // Name
-           "item": "111",                // Matching Item
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
           "value": { "type": "StringValue", "value": "Matching Item" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457500" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1489",
-      "attribute": "105",                // Category
-           "item": "111",                // Matching Item
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457500" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Unfiled Entry
            "uuid": "1490",
-      "attribute": "102",                // Name
-           "item": "112",                // Unfiled Entry
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000109-ce7f-11d9-8cd5-0011113ae5d6",                // Unfiled Entry
           "value": { "type": "StringValue", "value": "Unfiled Entry" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457515" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1491",
-      "attribute": "105",                // Category
-           "item": "112",                // Unfiled Entry
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000109-ce7f-11d9-8cd5-0011113ae5d6",                // Unfiled Entry
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457531" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Plugin Name
            "uuid": "1469",
-      "attribute": "102",                // Name
-           "item": "113",                // Plugin Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
           "value": { "type": "StringValue", "value": "Plugin Name" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457537" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1470",
-      "attribute": "105",                // Category
-           "item": "113",                // Plugin Name
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457543" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "1492",
-      "attribute": "102",                // Name
-           "item": "143",                // Attribute
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000110-ce7f-11d9-8cd5-0011113ae5d6",                // Attribute
           "value": { "type": "StringValue", "value": "Attribute" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457546" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "1493",
-      "attribute": "105",                // Category
-           "item": "143",                // Attribute
-          "value": { "type": "RelatedUuid", "value": "144" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000110-ce7f-11d9-8cd5-0011113ae5d6",                // Attribute
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457562" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "1494",
-      "attribute": "102",                // Name
-           "item": "144",                // Category
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000111-ce7f-11d9-8cd5-0011113ae5d6",                // Category
           "value": { "type": "StringValue", "value": "Category" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457562" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "1495",
-      "attribute": "105",                // Category
-           "item": "144",                // Category
-          "value": { "type": "RelatedUuid", "value": "144" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000111-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457578" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Page
            "uuid": "1496",
-      "attribute": "102",                // Name
-           "item": "145",                // Page
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000200-ce7f-11d9-8cd5-0011113ae5d6",                // Page
           "value": { "type": "StringValue", "value": "Page" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457593" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "1497",
-      "attribute": "105",                // Category
-           "item": "145",                // Page
-          "value": { "type": "RelatedUuid", "value": "144" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000200-ce7f-11d9-8cd5-0011113ae5d6",                // Page
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457609" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "1498",
-      "attribute": "102",                // Name
-           "item": "146",                // Section
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000201-ce7f-11d9-8cd5-0011113ae5d6",                // Section
           "value": { "type": "StringValue", "value": "Section" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457625" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "1499",
-      "attribute": "105",                // Category
-           "item": "146",                // Section
-          "value": { "type": "RelatedUuid", "value": "144" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000201-ce7f-11d9-8cd5-0011113ae5d6",                // Section
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457625" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "1500",
-      "attribute": "102",                // Name
-           "item": "147",                // Query
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000112-ce7f-11d9-8cd5-0011113ae5d6",                // Query
           "value": { "type": "StringValue", "value": "Query" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457640" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "1501",
-      "attribute": "105",                // Category
-           "item": "147",                // Query
-          "value": { "type": "RelatedUuid", "value": "144" },
-      "userstamp": "100",                // by (Amy ex machina)
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000112-ce7f-11d9-8cd5-0011113ae5d6",                // Query
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
   // -----------------------------------------------------------------------
@@ -408,27 +408,15 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Guest
            "uuid": "1503",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "1502",                // Guest
           "value": { "type": "StringValue", "value": "Guest" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819457671" }
   },
   // -----------------------------------------------------------------------
-  { "Item": {                             // Userstamp
-           "uuid": "106",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819457687" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Timestamp
-           "uuid": "107",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819457703" }
-  },
-  // -----------------------------------------------------------------------
   { "Item": {                             // Welcome to the OpenRecord d...
-           "uuid": "2000",
+           "uuid": "00000210-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819457718" }
   },
@@ -865,55 +853,19 @@
       "timestamp": "1114819458484" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Userstamp
-           "uuid": "6014",
-      "attribute": "102",                // Name
-           "item": "106",                // Userstamp
-          "value": { "type": "StringValue", "value": "Userstamp" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458515" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Attribute
-           "uuid": "6015",
-      "attribute": "105",                // Category
-           "item": "106",                // Userstamp
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458531" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Timestamp
-           "uuid": "6016",
-      "attribute": "102",                // Name
-           "item": "107",                // Timestamp
-          "value": { "type": "StringValue", "value": "Timestamp" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458562" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Attribute
-           "uuid": "6017",
-      "attribute": "105",                // Category
-           "item": "107",                // Timestamp
-          "value": { "type": "RelatedUuid", "value": "143" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458578" }
-  },
-  // -----------------------------------------------------------------------
   { "Entry": {                             // Page
            "uuid": "6018",
-      "attribute": "105",                // Category
-           "item": "2000",                // Welcome to the OpenRecord d...
-          "value": { "type": "RelatedUuid", "value": "145" },
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "00000210-ce7f-11d9-8cd5-0011113ae5d6",                // Welcome to the OpenRecord d...
+          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458609" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // 1. Welcome!
            "uuid": "6019",
-      "attribute": "101",                // Short Name
-           "item": "2000",                // Welcome to the OpenRecord d...
+      "attribute": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
+           "item": "00000210-ce7f-11d9-8cd5-0011113ae5d6",                // Welcome to the OpenRecord d...
           "value": { "type": "StringValue", "value": "1. Welcome!" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458625" }
@@ -921,8 +873,8 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Welcome to the OpenRecord d...
            "uuid": "6020",
-      "attribute": "102",                // Name
-           "item": "2000",                // Welcome to the OpenRecord d...
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "00000210-ce7f-11d9-8cd5-0011113ae5d6",                // Welcome to the OpenRecord d...
           "value": { "type": "StringValue", "value": "Welcome to the OpenRecord demo!" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458640" }
@@ -930,8 +882,8 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // This web site is a demo of ...
            "uuid": "6021",
-      "attribute": "103",                // Summary
-           "item": "2000",                // Welcome to the OpenRecord d...
+      "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
+           "item": "00000210-ce7f-11d9-8cd5-0011113ae5d6",                // Welcome to the OpenRecord d...
           "value": { "type": "StringValue", "value": "This web site is a demo of the OpenRecord prototype. OpenRecord is a collaborative content management system. OpenRecord is a lot like a wiki, but with twist. Most wikis are designed to let you view and edit pages of text, like a web-based word processor. OpenRecord is designed to let you view and edit items in a database, rather than pages of text. So if a wiki is a web-based collaborative word-processor, then OpenRecord is a web-based collaborative database, like Lotus Agenda. To see more of this demo site, go to the menu bar at the left side of the window and click on the menu item for page 2, 'Books'." },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458656" }
@@ -939,16 +891,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Page
            "uuid": "6022",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3000",                // Book Lists
-          "value": { "type": "RelatedUuid", "value": "145" },
+          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458765" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // 2. Books
            "uuid": "6023",
-      "attribute": "101",                // Short Name
+      "attribute": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
            "item": "3000",                // Book Lists
           "value": { "type": "StringValue", "value": "2. Books" },
       "userstamp": "1502",                // by (Guest)
@@ -957,7 +909,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book Lists
            "uuid": "6024",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3000",                // Book Lists
           "value": { "type": "StringValue", "value": "Book Lists" },
       "userstamp": "1502",                // by (Guest)
@@ -966,7 +918,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // In the lists on this page, ...
            "uuid": "6025",
-      "attribute": "103",                // Summary
+      "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "3000",                // Book Lists
           "value": { "type": "StringValue", "value": "In the lists on this page, each book is an item in the OpenRecord repository. If you edit the page, you can change how each list of books is displayed." },
       "userstamp": "1502",                // by (Guest)
@@ -975,7 +927,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Books
            "uuid": "6026",
-      "attribute": "108",                // Section
+      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "3000",                // Book Lists
           "value": { "type": "RelatedUuid", "value": "3010" },
       "userstamp": "1502",                // by (Guest)
@@ -984,7 +936,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // One Book
            "uuid": "6027",
-      "attribute": "108",                // Section
+      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "3000",                // Book Lists
           "value": { "type": "RelatedUuid", "value": "3020" },
       "userstamp": "1502",                // by (Guest)
@@ -993,16 +945,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "6028",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3010",                // All Books
-          "value": { "type": "RelatedUuid", "value": "146" },
+          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458875" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Books
            "uuid": "6029",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3010",                // All Books
           "value": { "type": "StringValue", "value": "All Books" },
       "userstamp": "1502",                // by (Guest)
@@ -1011,7 +963,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Table
            "uuid": "6030",
-      "attribute": "113",                // Plugin Name
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "3010",                // All Books
           "value": { "type": "StringValue", "value": "Table" },
       "userstamp": "1502",                // by (Guest)
@@ -1020,7 +972,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all books
            "uuid": "6031",
-      "attribute": "109",                // Query
+      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "3010",                // All Books
           "value": { "type": "RelatedUuid", "value": "3011" },
       "userstamp": "1502",                // by (Guest)
@@ -1029,7 +981,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // This section shows a list o...
            "uuid": "6032",
-      "attribute": "103",                // Summary
+      "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "3010",                // All Books
           "value": { "type": "StringValue", "value": "This section shows a list of all the books in the repository." },
       "userstamp": "1502",                // by (Guest)
@@ -1038,16 +990,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "6033",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3020",                // One Book
-          "value": { "type": "RelatedUuid", "value": "146" },
+          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458968" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // One Book
            "uuid": "6034",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3020",                // One Book
           "value": { "type": "StringValue", "value": "One Book" },
       "userstamp": "1502",                // by (Guest)
@@ -1056,7 +1008,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Detail
            "uuid": "6035",
-      "attribute": "113",                // Plugin Name
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "3020",                // One Book
           "value": { "type": "StringValue", "value": "Detail" },
       "userstamp": "1502",                // by (Guest)
@@ -1065,7 +1017,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for one book
            "uuid": "6036",
-      "attribute": "109",                // Query
+      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "3020",                // One Book
           "value": { "type": "RelatedUuid", "value": "3021" },
       "userstamp": "1502",                // by (Guest)
@@ -1074,7 +1026,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // This section shows a just a...
            "uuid": "6037",
-      "attribute": "103",                // Summary
+      "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "3020",                // One Book
           "value": { "type": "StringValue", "value": "This section shows a just a single selected book. The section is populated using a query that asks for just a single book item." },
       "userstamp": "1502",                // by (Guest)
@@ -1083,16 +1035,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "6038",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3011",                // Query for all books
-          "value": { "type": "RelatedUuid", "value": "147" },
+          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459078" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all books
            "uuid": "6039",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3011",                // Query for all books
           "value": { "type": "StringValue", "value": "Query for all books" },
       "userstamp": "1502",                // by (Guest)
@@ -1101,7 +1053,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6040",
-      "attribute": "110",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "3011",                // Query for all books
           "value": { "type": "RelatedUuid", "value": "3104" },
       "userstamp": "1502",                // by (Guest)
@@ -1110,16 +1062,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "6041",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3021",                // Query for one book
-          "value": { "type": "RelatedUuid", "value": "147" },
+          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459140" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for one book
            "uuid": "6042",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3021",                // Query for one book
           "value": { "type": "StringValue", "value": "Query for one book" },
       "userstamp": "1502",                // by (Guest)
@@ -1128,7 +1080,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // HTTP: The Definitive Guide
            "uuid": "6043",
-      "attribute": "111",                // Matching Item
+      "attribute": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
            "item": "3021",                // Query for one book
           "value": { "type": "RelatedUuid", "value": "3205" },
       "userstamp": "1502",                // by (Guest)
@@ -1137,16 +1089,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "6044",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3104",                // Book
-          "value": { "type": "RelatedUuid", "value": "144" },
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459203" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6045",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3104",                // Book
           "value": { "type": "StringValue", "value": "Book" },
       "userstamp": "1502",                // by (Guest)
@@ -1155,7 +1107,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6046",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3205",                // HTTP: The Definitive Guide
           "value": { "type": "RelatedUuid", "value": "3104" },
       "userstamp": "1502",                // by (Guest)
@@ -1164,7 +1116,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // HTTP: The Definitive Guide
            "uuid": "6047",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3205",                // HTTP: The Definitive Guide
           "value": { "type": "StringValue", "value": "HTTP: The Definitive Guide" },
       "userstamp": "1502",                // by (Guest)
@@ -1200,16 +1152,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "6051",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3101",                // Author
-          "value": { "type": "RelatedUuid", "value": "143" },
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459343" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Author
            "uuid": "6052",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3101",                // Author
           "value": { "type": "StringValue", "value": "Author" },
       "userstamp": "1502",                // by (Guest)
@@ -1218,16 +1170,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "6053",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3102",                // Publisher
-          "value": { "type": "RelatedUuid", "value": "143" },
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459390" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Publisher
            "uuid": "6054",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3102",                // Publisher
           "value": { "type": "StringValue", "value": "Publisher" },
       "userstamp": "1502",                // by (Guest)
@@ -1236,16 +1188,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "6055",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3103",                // ISBN
-          "value": { "type": "RelatedUuid", "value": "143" },
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459437" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // ISBN
            "uuid": "6056",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3103",                // ISBN
           "value": { "type": "StringValue", "value": "ISBN" },
       "userstamp": "1502",                // by (Guest)
@@ -1254,7 +1206,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6057",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3201",                // The Transparent Society
           "value": { "type": "RelatedUuid", "value": "3104" },
       "userstamp": "1502",                // by (Guest)
@@ -1263,7 +1215,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // The Transparent Society
            "uuid": "6058",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3201",                // The Transparent Society
           "value": { "type": "StringValue", "value": "The Transparent Society" },
       "userstamp": "1502",                // by (Guest)
@@ -1299,7 +1251,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6062",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3202",                // The Hobbit
           "value": { "type": "RelatedUuid", "value": "3104" },
       "userstamp": "1502",                // by (Guest)
@@ -1308,7 +1260,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // The Hobbit
            "uuid": "6063",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3202",                // The Hobbit
           "value": { "type": "StringValue", "value": "The Hobbit" },
       "userstamp": "1502",                // by (Guest)
@@ -1353,7 +1305,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6068",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3203",                // The Wisdom of Crowds
           "value": { "type": "RelatedUuid", "value": "3104" },
       "userstamp": "1502",                // by (Guest)
@@ -1362,7 +1314,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // The Wisdom of Crowds
            "uuid": "6069",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3203",                // The Wisdom of Crowds
           "value": { "type": "StringValue", "value": "The Wisdom of Crowds" },
       "userstamp": "1502",                // by (Guest)
@@ -1398,7 +1350,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6073",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3204",                // Shrinking Violets and Caspa...
           "value": { "type": "RelatedUuid", "value": "3104" },
       "userstamp": "1502",                // by (Guest)
@@ -1407,7 +1359,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Shrinking Violets and Caspa...
            "uuid": "6074",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3204",                // Shrinking Violets and Caspa...
           "value": { "type": "StringValue", "value": "Shrinking Violets and Caspar Milquetoasts" },
       "userstamp": "1502",                // by (Guest)
@@ -1443,16 +1395,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Page
            "uuid": "6078",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4000",                // Bugs and Features to Implement
-          "value": { "type": "RelatedUuid", "value": "145" },
+          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459890" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // 3. Bug List
            "uuid": "6079",
-      "attribute": "101",                // Short Name
+      "attribute": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
            "item": "4000",                // Bugs and Features to Implement
           "value": { "type": "StringValue", "value": "3. Bug List" },
       "userstamp": "1502",                // by (Guest)
@@ -1461,7 +1413,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bugs and Features to Implement
            "uuid": "6080",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4000",                // Bugs and Features to Implement
           "value": { "type": "StringValue", "value": "Bugs and Features to Implement" },
       "userstamp": "1502",                // by (Guest)
@@ -1470,7 +1422,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // This page is where I keep t...
            "uuid": "6081",
-      "attribute": "103",                // Summary
+      "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "4000",                // Bugs and Features to Implement
           "value": { "type": "StringValue", "value": "This page is where I keep track of the programming work I need to do on the OpenRecord software project. I'm keeping track of bugs that need to be fixed, as well as some of the new features that I want to implement before too long." },
       "userstamp": "1502",                // by (Guest)
@@ -1479,7 +1431,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Features
            "uuid": "6082",
-      "attribute": "108",                // Section
+      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "4000",                // Bugs and Features to Implement
           "value": { "type": "RelatedUuid", "value": "4010" },
       "userstamp": "1502",                // by (Guest)
@@ -1488,7 +1440,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Bugs
            "uuid": "6083",
-      "attribute": "108",                // Section
+      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "4000",                // Bugs and Features to Implement
           "value": { "type": "RelatedUuid", "value": "4020" },
       "userstamp": "1502",                // by (Guest)
@@ -1497,7 +1449,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // All 'Closed' Bugs and Features
            "uuid": "6084",
-      "attribute": "108",                // Section
+      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "4000",                // Bugs and Features to Implement
           "value": { "type": "RelatedUuid", "value": "4030" },
       "userstamp": "1502",                // by (Guest)
@@ -1506,7 +1458,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // All 'Closed' Bugs
            "uuid": "6085",
-      "attribute": "108",                // Section
+      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "4000",                // Bugs and Features to Implement
           "value": { "type": "RelatedUuid", "value": "4040" },
       "userstamp": "1502",                // by (Guest)
@@ -1515,16 +1467,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "6086",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4010",                // All Features
-          "value": { "type": "RelatedUuid", "value": "146" },
+          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460031" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Features
            "uuid": "6087",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4010",                // All Features
           "value": { "type": "StringValue", "value": "All Features" },
       "userstamp": "1502",                // by (Guest)
@@ -1533,7 +1485,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Outline
            "uuid": "6088",
-      "attribute": "113",                // Plugin Name
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "4010",                // All Features
           "value": { "type": "StringValue", "value": "Outline" },
       "userstamp": "1502",                // by (Guest)
@@ -1542,7 +1494,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all features
            "uuid": "6089",
-      "attribute": "109",                // Query
+      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "4010",                // All Features
           "value": { "type": "RelatedUuid", "value": "4011" },
       "userstamp": "1502",                // by (Guest)
@@ -1551,16 +1503,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "6090",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4020",                // All Bugs
-          "value": { "type": "RelatedUuid", "value": "146" },
+          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460187" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Bugs
            "uuid": "6091",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4020",                // All Bugs
           "value": { "type": "StringValue", "value": "All Bugs" },
       "userstamp": "1502",                // by (Guest)
@@ -1569,7 +1521,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Outline
            "uuid": "6092",
-      "attribute": "113",                // Plugin Name
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "4020",                // All Bugs
           "value": { "type": "StringValue", "value": "Outline" },
       "userstamp": "1502",                // by (Guest)
@@ -1578,7 +1530,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all bugs
            "uuid": "6093",
-      "attribute": "109",                // Query
+      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "4020",                // All Bugs
           "value": { "type": "RelatedUuid", "value": "4021" },
       "userstamp": "1502",                // by (Guest)
@@ -1587,16 +1539,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "6094",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4030",                // All 'Closed' Bugs and Features
-          "value": { "type": "RelatedUuid", "value": "146" },
+          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460265" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // All 'Closed' Bugs and Features
            "uuid": "6095",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4030",                // All 'Closed' Bugs and Features
           "value": { "type": "StringValue", "value": "All 'Closed' Bugs and Features" },
       "userstamp": "1502",                // by (Guest)
@@ -1605,7 +1557,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Outline
            "uuid": "6096",
-      "attribute": "113",                // Plugin Name
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "4030",                // All 'Closed' Bugs and Features
           "value": { "type": "StringValue", "value": "Outline" },
       "userstamp": "1502",                // by (Guest)
@@ -1614,7 +1566,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all closed items
            "uuid": "6097",
-      "attribute": "109",                // Query
+      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "4030",                // All 'Closed' Bugs and Features
           "value": { "type": "RelatedUuid", "value": "4031" },
       "userstamp": "1502",                // by (Guest)
@@ -1623,16 +1575,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "6098",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4040",                // All 'Closed' Bugs
-          "value": { "type": "RelatedUuid", "value": "146" },
+          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460359" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // All 'Closed' Bugs
            "uuid": "6099",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4040",                // All 'Closed' Bugs
           "value": { "type": "StringValue", "value": "All 'Closed' Bugs" },
       "userstamp": "1502",                // by (Guest)
@@ -1641,7 +1593,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Outline
            "uuid": "6100",
-      "attribute": "113",                // Plugin Name
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "4040",                // All 'Closed' Bugs
           "value": { "type": "StringValue", "value": "Outline" },
       "userstamp": "1502",                // by (Guest)
@@ -1650,7 +1602,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all closed bugs
            "uuid": "6101",
-      "attribute": "109",                // Query
+      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "4040",                // All 'Closed' Bugs
           "value": { "type": "RelatedUuid", "value": "4041" },
       "userstamp": "1502",                // by (Guest)
@@ -1659,16 +1611,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "6102",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4011",                // Query for all features
-          "value": { "type": "RelatedUuid", "value": "147" },
+          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460421" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all features
            "uuid": "6103",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4011",                // Query for all features
           "value": { "type": "StringValue", "value": "Query for all features" },
       "userstamp": "1502",                // by (Guest)
@@ -1677,7 +1629,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6104",
-      "attribute": "110",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "4011",                // Query for all features
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -1686,16 +1638,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "6105",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4021",                // Query for all bugs
-          "value": { "type": "RelatedUuid", "value": "147" },
+          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460484" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all bugs
            "uuid": "6106",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4021",                // Query for all bugs
           "value": { "type": "StringValue", "value": "Query for all bugs" },
       "userstamp": "1502",                // by (Guest)
@@ -1704,7 +1656,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bug
            "uuid": "6107",
-      "attribute": "110",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "4021",                // Query for all bugs
           "value": { "type": "RelatedUuid", "value": "4101" },
       "userstamp": "1502",                // by (Guest)
@@ -1713,16 +1665,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "6108",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4031",                // Query for all closed items
-          "value": { "type": "RelatedUuid", "value": "147" },
+          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460546" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all closed items
            "uuid": "6109",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4031",                // Query for all closed items
           "value": { "type": "StringValue", "value": "Query for all closed items" },
       "userstamp": "1502",                // by (Guest)
@@ -1731,7 +1683,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Closed Tasks
            "uuid": "6110",
-      "attribute": "110",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "4031",                // Query for all closed items
           "value": { "type": "RelatedUuid", "value": "4103" },
       "userstamp": "1502",                // by (Guest)
@@ -1740,16 +1692,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "6111",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4041",                // Query for all closed bugs
-          "value": { "type": "RelatedUuid", "value": "147" },
+          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460609" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all closed bugs
            "uuid": "6112",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4041",                // Query for all closed bugs
           "value": { "type": "StringValue", "value": "Query for all closed bugs" },
       "userstamp": "1502",                // by (Guest)
@@ -1758,7 +1710,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bug
            "uuid": "6113",
-      "attribute": "110",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "4041",                // Query for all closed bugs
           "value": { "type": "RelatedUuid", "value": "4101" },
       "userstamp": "1502",                // by (Guest)
@@ -1767,7 +1719,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Closed Tasks
            "uuid": "6114",
-      "attribute": "110",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "4041",                // Query for all closed bugs
           "value": { "type": "RelatedUuid", "value": "4103" },
       "userstamp": "1502",                // by (Guest)
@@ -1776,16 +1728,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "6115",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4102",                // Feature
-          "value": { "type": "RelatedUuid", "value": "144" },
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460687" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6116",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4102",                // Feature
           "value": { "type": "StringValue", "value": "Feature" },
       "userstamp": "1502",                // by (Guest)
@@ -1794,16 +1746,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "6117",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4101",                // Bug
-          "value": { "type": "RelatedUuid", "value": "144" },
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460718" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bug
            "uuid": "6118",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4101",                // Bug
           "value": { "type": "StringValue", "value": "Bug" },
       "userstamp": "1502",                // by (Guest)
@@ -1812,16 +1764,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "6119",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4103",                // Closed Tasks
-          "value": { "type": "RelatedUuid", "value": "144" },
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460765" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Closed Tasks
            "uuid": "6120",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4103",                // Closed Tasks
           "value": { "type": "StringValue", "value": "Closed Tasks" },
       "userstamp": "1502",                // by (Guest)
@@ -1830,7 +1782,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bug
            "uuid": "6121",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4201",                // The browser's back button d...
           "value": { "type": "RelatedUuid", "value": "4101" },
       "userstamp": "1502",                // by (Guest)
@@ -1839,7 +1791,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // The browser's back button d...
            "uuid": "6122",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4201",                // The browser's back button d...
           "value": { "type": "StringValue", "value": "The browser's back button doesn't work after you click from page to page in the navbar." },
       "userstamp": "1502",                // by (Guest)
@@ -1848,7 +1800,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bug
            "uuid": "6123",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4202",                // When editing an item in a t...
           "value": { "type": "RelatedUuid", "value": "4101" },
       "userstamp": "1502",                // by (Guest)
@@ -1857,7 +1809,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // When editing an item in a t...
            "uuid": "6124",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4202",                // When editing an item in a t...
           "value": { "type": "StringValue", "value": "When editing an item in a table view, everything you enter is treated as a string literal. If you enter 'Book' in the column for 'Category', that does not make your item into a Book." },
       "userstamp": "1502",                // by (Guest)
@@ -1866,7 +1818,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bug
            "uuid": "6125",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4203",                // After editing an item in a ...
           "value": { "type": "RelatedUuid", "value": "4101" },
       "userstamp": "1502",                // by (Guest)
@@ -1875,7 +1827,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // After editing an item in a ...
            "uuid": "6126",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4203",                // After editing an item in a ...
           "value": { "type": "StringValue", "value": "After editing an item in a table view, the section queries should be re-evalutated to see if membership has changed." },
       "userstamp": "1502",                // by (Guest)
@@ -1884,7 +1836,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bug
            "uuid": "6127",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4204",                // If an item has an attribute...
           "value": { "type": "RelatedUuid", "value": "4101" },
       "userstamp": "1502",                // by (Guest)
@@ -1893,7 +1845,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Closed Tasks
            "uuid": "6128",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4204",                // If an item has an attribute...
           "value": { "type": "RelatedUuid", "value": "4103" },
       "userstamp": "1502",                // by (Guest)
@@ -1902,7 +1854,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // If an item has an attribute...
            "uuid": "6129",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4204",                // If an item has an attribute...
           "value": { "type": "StringValue", "value": "If an item has an attribute value with some HTML in it, like '&amp;lt;cite&amp;gt;', we incorrectly render it like '&amp; lt;cite&amp; gt;' instead of '&amp;lt;cite&amp;gt;'" },
       "userstamp": "1502",                // by (Guest)
@@ -1911,7 +1863,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bug
            "uuid": "6130",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4205",                // Store only 'clean' text in ...
           "value": { "type": "RelatedUuid", "value": "4101" },
       "userstamp": "1502",                // by (Guest)
@@ -1920,7 +1872,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Closed Tasks
            "uuid": "6131",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4205",                // Store only 'clean' text in ...
           "value": { "type": "RelatedUuid", "value": "4103" },
       "userstamp": "1502",                // by (Guest)
@@ -1929,7 +1881,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Store only 'clean' text in ...
            "uuid": "6132",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4205",                // Store only 'clean' text in ...
           "value": { "type": "StringValue", "value": "Store only 'clean' text in the repository. Do cleaning on data entry, not on data display. Clean means no stuff like &amp;lt; and &amp;gt; and double-quotes" },
       "userstamp": "1502",                // by (Guest)
@@ -1938,7 +1890,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6133",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4302",                // Make it possible for a text...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -1947,7 +1899,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Closed Tasks
            "uuid": "6134",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4302",                // Make it possible for a text...
           "value": { "type": "RelatedUuid", "value": "4103" },
       "userstamp": "1502",                // by (Guest)
@@ -1956,7 +1908,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Make it possible for a text...
            "uuid": "6135",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4302",                // Make it possible for a text...
           "value": { "type": "StringValue", "value": "Make it possible for a text string to contain a reference to an item" },
       "userstamp": "1502",                // by (Guest)
@@ -1965,7 +1917,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6136",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4304",                // Make it possible to assign ...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -1974,7 +1926,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Make it possible to assign ...
            "uuid": "6137",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4304",                // Make it possible to assign ...
           "value": { "type": "StringValue", "value": "Make it possible to assign items to categories -- allow for entering reference-values, not just string-values" },
       "userstamp": "1502",                // by (Guest)
@@ -1983,7 +1935,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6138",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4305",                // Allow for entering number-v...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -1992,7 +1944,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Allow for entering number-v...
            "uuid": "6139",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4305",                // Allow for entering number-v...
           "value": { "type": "StringValue", "value": "Allow for entering number-values, not just string-values" },
       "userstamp": "1502",                // by (Guest)
@@ -2001,7 +1953,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6140",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4306",                // Have table mode show multi-...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2010,7 +1962,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Have table mode show multi-...
            "uuid": "6141",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4306",                // Have table mode show multi-...
           "value": { "type": "StringValue", "value": "Have table mode show multi-valued attributes" },
       "userstamp": "1502",                // by (Guest)
@@ -2019,7 +1971,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6142",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4307",                // When you assign a value to ...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2028,7 +1980,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // When you assign a value to ...
            "uuid": "6143",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4307",                // When you assign a value to ...
           "value": { "type": "StringValue", "value": "When you assign a value to an item, mark it with a timestamp" },
       "userstamp": "1502",                // by (Guest)
@@ -2037,7 +1989,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6144",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4308",                // Clean up all the code that ...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2046,7 +1998,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Clean up all the code that ...
            "uuid": "6145",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4308",                // Clean up all the code that ...
           "value": { "type": "StringValue", "value": "Clean up all the code that assumes single-valued attributes -- search for '[0]'" },
       "userstamp": "1502",                // by (Guest)
@@ -2055,7 +2007,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6146",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4309",                // Be able to create new pages
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2064,7 +2016,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Be able to create new pages
            "uuid": "6147",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4309",                // Be able to create new pages
           "value": { "type": "StringValue", "value": "Be able to create new pages" },
       "userstamp": "1502",                // by (Guest)
@@ -2073,7 +2025,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6148",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4310",                // Be able to add a new sectio...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2082,7 +2034,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Be able to add a new sectio...
            "uuid": "6149",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4310",                // Be able to add a new sectio...
           "value": { "type": "StringValue", "value": "Be able to add a new section to a page" },
       "userstamp": "1502",                // by (Guest)
@@ -2091,7 +2043,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6150",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4311",                // Observable queries: all ite...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2100,7 +2052,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Observable queries: all ite...
            "uuid": "6151",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4311",                // Observable queries: all ite...
           "value": { "type": "StringValue", "value": "Observable queries: all items, limited to a requested subset based on kind and category (e.g. 'All fiction books')" },
       "userstamp": "1502",                // by (Guest)
@@ -2109,7 +2061,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6152",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4312",                // Observable queries: limit r...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2118,7 +2070,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Observable queries: limit r...
            "uuid": "6153",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4312",                // Observable queries: limit r...
           "value": { "type": "StringValue", "value": "Observable queries: limit results to just a requested subset of the attributes (e.g. just the names of the books)" },
       "userstamp": "1502",                // by (Guest)
@@ -2127,7 +2079,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6154",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4313",                // Be able to edit the query o...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2136,7 +2088,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Be able to edit the query o...
            "uuid": "6155",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4313",                // Be able to edit the query o...
           "value": { "type": "StringValue", "value": "Be able to edit the query of a section" },
       "userstamp": "1502",                // by (Guest)
@@ -2145,7 +2097,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6156",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4314",                // Make it possible to add new...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2154,7 +2106,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Make it possible to add new...
            "uuid": "6157",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4314",                // Make it possible to add new...
           "value": { "type": "StringValue", "value": "Make it possible to add new attributes to a table view" },
       "userstamp": "1502",                // by (Guest)
@@ -2163,7 +2115,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6158",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4315",                // Figure out how to declare d...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2172,7 +2124,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Figure out how to declare d...
            "uuid": "6159",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4315",                // Figure out how to declare d...
           "value": { "type": "StringValue", "value": "Figure out how to declare dependencies more rigorously, and then have automatic unit tests that verify the dependencies." },
       "userstamp": "1502",                // by (Guest)
@@ -2181,7 +2133,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6160",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4316",                // URLs with anchor-dot-notati...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2190,7 +2142,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // URLs with anchor-dot-notati...
            "uuid": "6161",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4316",                // URLs with anchor-dot-notati...
           "value": { "type": "StringValue", "value": "URLs with anchor-dot-notation: http://www.foo.org/item.html#573.654.765" },
       "userstamp": "1502",                // by (Guest)
@@ -2199,7 +2151,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6162",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4317",                // Support for reference-value...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2208,7 +2160,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Support for reference-value...
            "uuid": "6163",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4317",                // Support for reference-value...
           "value": { "type": "StringValue", "value": "Support for reference-values as well as string-values" },
       "userstamp": "1502",                // by (Guest)
@@ -2217,7 +2169,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6164",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4318",                // Write unit tests using jsunit
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2226,7 +2178,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Write unit tests using jsunit
            "uuid": "6165",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4318",                // Write unit tests using jsunit
           "value": { "type": "StringValue", "value": "Write unit tests using jsunit" },
       "userstamp": "1502",                // by (Guest)
@@ -2235,7 +2187,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6166",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4319",                // Try to write a unit test th...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2244,7 +2196,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Try to write a unit test th...
            "uuid": "6167",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4319",                // Try to write a unit test th...
           "value": { "type": "StringValue", "value": "Try to write a unit test that calls jslint" },
       "userstamp": "1502",                // by (Guest)
@@ -2253,7 +2205,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6168",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4320",                // In 'Outline' plugin, have c...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2262,7 +2214,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // In 'Outline' plugin, have c...
            "uuid": "6169",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4320",                // In 'Outline' plugin, have c...
           "value": { "type": "StringValue", "value": "In 'Outline' plugin, have controls to optionally show more detail" },
       "userstamp": "1502",                // by (Guest)
@@ -2271,7 +2223,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6170",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4321",                // Add 'Table' plugin controls...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2280,7 +2232,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Add 'Table' plugin controls...
            "uuid": "6171",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4321",                // Add 'Table' plugin controls...
           "value": { "type": "StringValue", "value": "Add 'Table' plugin controls for row sorting, column re-arranging, column hiding, etc." },
       "userstamp": "1502",                // by (Guest)
@@ -2289,7 +2241,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6172",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4322",                // In 'Outline' plugin, be abl...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2298,7 +2250,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // In 'Outline' plugin, be abl...
            "uuid": "6173",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4322",                // In 'Outline' plugin, be abl...
           "value": { "type": "StringValue", "value": "In 'Outline' plugin, be able to group by category" },
       "userstamp": "1502",                // by (Guest)
@@ -2307,7 +2259,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6174",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4323",                // In 'Table' plugin, be able ...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2316,7 +2268,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // In 'Table' plugin, be able ...
            "uuid": "6175",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4323",                // In 'Table' plugin, be able ...
           "value": { "type": "StringValue", "value": "In 'Table' plugin, be able to group by category" },
       "userstamp": "1502",                // by (Guest)
@@ -2325,7 +2277,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6176",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4324",                // Be able to edit in outline ...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2334,7 +2286,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Be able to edit in outline ...
            "uuid": "6177",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4324",                // Be able to edit in outline ...
           "value": { "type": "StringValue", "value": "Be able to edit in outline mode" },
       "userstamp": "1502",                // by (Guest)
@@ -2343,7 +2295,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6178",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4325",                // Set up a subversion server ...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2352,7 +2304,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Set up a subversion server ...
            "uuid": "6179",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4325",                // Set up a subversion server ...
           "value": { "type": "StringValue", "value": "Set up a subversion server and have the OpenRecord code publicly available" },
       "userstamp": "1502",                // by (Guest)
@@ -2361,16 +2313,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Page
            "uuid": "6180",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5000",                // Charities
-          "value": { "type": "RelatedUuid", "value": "145" },
+          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462171" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // 4. Charities
            "uuid": "6181",
-      "attribute": "101",                // Short Name
+      "attribute": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
            "item": "5000",                // Charities
           "value": { "type": "StringValue", "value": "4. Charities" },
       "userstamp": "1502",                // by (Guest)
@@ -2379,7 +2331,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Charities
            "uuid": "6182",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5000",                // Charities
           "value": { "type": "StringValue", "value": "Charities" },
       "userstamp": "1502",                // by (Guest)
@@ -2388,7 +2340,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Charities
            "uuid": "6183",
-      "attribute": "108",                // Section
+      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "5000",                // Charities
           "value": { "type": "RelatedUuid", "value": "5010" },
       "userstamp": "1502",                // by (Guest)
@@ -2397,16 +2349,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "6184",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5010",                // All Charities
-          "value": { "type": "RelatedUuid", "value": "146" },
+          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462250" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Charities
            "uuid": "6185",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5010",                // All Charities
           "value": { "type": "StringValue", "value": "All Charities" },
       "userstamp": "1502",                // by (Guest)
@@ -2415,7 +2367,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bar Chart
            "uuid": "6186",
-      "attribute": "113",                // Plugin Name
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "5010",                // All Charities
           "value": { "type": "StringValue", "value": "Bar Chart" },
       "userstamp": "1502",                // by (Guest)
@@ -2424,7 +2376,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all charities
            "uuid": "6187",
-      "attribute": "109",                // Query
+      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "5010",                // All Charities
           "value": { "type": "RelatedUuid", "value": "5011" },
       "userstamp": "1502",                // by (Guest)
@@ -2433,16 +2385,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "6188",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5011",                // Query for all charities
-          "value": { "type": "RelatedUuid", "value": "147" },
+          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462343" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all charities
            "uuid": "6189",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5011",                // Query for all charities
           "value": { "type": "StringValue", "value": "Query for all charities" },
       "userstamp": "1502",                // by (Guest)
@@ -2451,7 +2403,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Charity
            "uuid": "6190",
-      "attribute": "110",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "5011",                // Query for all charities
           "value": { "type": "RelatedUuid", "value": "5101" },
       "userstamp": "1502",                // by (Guest)
@@ -2460,16 +2412,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "6191",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5101",                // Charity
-          "value": { "type": "RelatedUuid", "value": "144" },
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462406" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Charity
            "uuid": "6192",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5101",                // Charity
           "value": { "type": "StringValue", "value": "Charity" },
       "userstamp": "1502",                // by (Guest)
@@ -2478,16 +2430,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "6193",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5102",                // 2003 Expenses (in $US million)
-          "value": { "type": "RelatedUuid", "value": "143" },
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462437" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // 2003 Expenses (in $US million)
            "uuid": "6194",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5102",                // 2003 Expenses (in $US million)
           "value": { "type": "StringValue", "value": "2003 Expenses (in $US million)" },
       "userstamp": "1502",                // by (Guest)
@@ -2496,7 +2448,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Charity
            "uuid": "6195",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5201",                // The Global Fund for Women
           "value": { "type": "RelatedUuid", "value": "5101" },
       "userstamp": "1502",                // by (Guest)
@@ -2505,7 +2457,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // The Global Fund for Women
            "uuid": "6196",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5201",                // The Global Fund for Women
           "value": { "type": "StringValue", "value": "The Global Fund for Women" },
       "userstamp": "1502",                // by (Guest)
@@ -2523,7 +2475,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Charity
            "uuid": "6198",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5202",                // Pathfinder International
           "value": { "type": "RelatedUuid", "value": "5101" },
       "userstamp": "1502",                // by (Guest)
@@ -2532,7 +2484,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Pathfinder International
            "uuid": "6199",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5202",                // Pathfinder International
           "value": { "type": "StringValue", "value": "Pathfinder International" },
       "userstamp": "1502",                // by (Guest)
@@ -2550,7 +2502,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Charity
            "uuid": "6201",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5203",                // The Global Fund to Fight AI...
           "value": { "type": "RelatedUuid", "value": "5101" },
       "userstamp": "1502",                // by (Guest)
@@ -2559,7 +2511,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // The Global Fund to Fight AI...
            "uuid": "6202",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5203",                // The Global Fund to Fight AI...
           "value": { "type": "StringValue", "value": "The Global Fund to Fight AIDS, TB, and Malaria" },
       "userstamp": "1502",                // by (Guest)
@@ -2577,7 +2529,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6204",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5204",                // The Gumption Memo
           "value": { "type": "RelatedUuid", "value": "3104" },
       "userstamp": "1502",                // by (Guest)
@@ -2586,7 +2538,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // The Gumption Memo
            "uuid": "6205",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5204",                // The Gumption Memo
           "value": { "type": "StringValue", "value": "The Gumption Memo" },
       "userstamp": "1502",                // by (Guest)
@@ -2613,7 +2565,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6208",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5205",                // Deceit and Denial
           "value": { "type": "RelatedUuid", "value": "3104" },
       "userstamp": "1502",                // by (Guest)
@@ -2622,7 +2574,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Deceit and Denial
            "uuid": "6209",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5205",                // Deceit and Denial
           "value": { "type": "StringValue", "value": "Deceit and Denial" },
       "userstamp": "1502",                // by (Guest)
@@ -2658,7 +2610,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6213",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5207",                // Have a 'Find' UI that does ...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2667,7 +2619,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Have a 'Find' UI that does ...
            "uuid": "6214",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5207",                // Have a 'Find' UI that does ...
           "value": { "type": "StringValue", "value": "Have a 'Find' UI that does keystroke-by-keystroke filtering" },
       "userstamp": "1502",                // by (Guest)
@@ -2676,7 +2628,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6215",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5208",                // Be able to 'delete' items (...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2685,7 +2637,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Be able to 'delete' items (...
            "uuid": "6216",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5208",                // Be able to 'delete' items (...
           "value": { "type": "StringValue", "value": "Be able to 'delete' items (or mark them as 'dead' or 'defunct' or something)" },
       "userstamp": "1502",                // by (Guest)
@@ -2694,7 +2646,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6217",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5209",                // Make view.display() *not* r...
           "value": { "type": "RelatedUuid", "value": "4102" },
       "userstamp": "1502",                // by (Guest)
@@ -2703,7 +2655,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Make view.display() *not* r...
            "uuid": "6218",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5209",                // Make view.display() *not* r...
           "value": { "type": "StringValue", "value": "Make view.display() *not* re-create all the HTML every time" },
       "userstamp": "1502",                // by (Guest)
@@ -2712,16 +2664,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Page
            "uuid": "6219",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "6000",                // All Items
-          "value": { "type": "RelatedUuid", "value": "145" },
+          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819463000" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // 5. All Items
            "uuid": "6220",
-      "attribute": "101",                // Short Name
+      "attribute": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
            "item": "6000",                // All Items
           "value": { "type": "StringValue", "value": "5. All Items" },
       "userstamp": "1502",                // by (Guest)
@@ -2730,7 +2682,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Items
            "uuid": "6221",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6000",                // All Items
           "value": { "type": "StringValue", "value": "All Items" },
       "userstamp": "1502",                // by (Guest)
@@ -2739,7 +2691,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Items
            "uuid": "6222",
-      "attribute": "108",                // Section
+      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "6000",                // All Items
           "value": { "type": "RelatedUuid", "value": "6010" },
       "userstamp": "1502",                // by (Guest)
@@ -2748,16 +2700,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "6223",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "6010",                // All Items
-          "value": { "type": "RelatedUuid", "value": "146" },
+          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819463078" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // All Items
            "uuid": "6224",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6010",                // All Items
           "value": { "type": "StringValue", "value": "All Items" },
       "userstamp": "1502",                // by (Guest)
@@ -2766,7 +2718,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Table
            "uuid": "6225",
-      "attribute": "113",                // Plugin Name
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "6010",                // All Items
           "value": { "type": "StringValue", "value": "Table" },
       "userstamp": "1502",                // by (Guest)
@@ -2775,7 +2727,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all items
            "uuid": "6226",
-      "attribute": "109",                // Query
+      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "6010",                // All Items
           "value": { "type": "RelatedUuid", "value": "6011" },
       "userstamp": "1502",                // by (Guest)
@@ -2784,16 +2736,16 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "6227",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "6011",                // Query for all items
-          "value": { "type": "RelatedUuid", "value": "147" },
+          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819463234" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Query for all items
            "uuid": "6228",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6011",                // Query for all items
           "value": { "type": "StringValue", "value": "Query for all items" },
       "userstamp": "1502",                // by (Guest)
@@ -2802,7 +2754,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6229",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "6012",                // JavaScript: The Definitive ...
           "value": { "type": "RelatedUuid", "value": "3104" },
       "userstamp": "1502",                // by (Guest)
@@ -2811,7 +2763,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // JavaScript: The Definitive ...
            "uuid": "6230",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6012",                // JavaScript: The Definitive ...
           "value": { "type": "StringValue", "value": "JavaScript: The Definitive Guide" },
       "userstamp": "1502",                // by (Guest)
@@ -2847,7 +2799,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "6234",
-      "attribute": "105",                // Category
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "6013",                // The Two Towers
           "value": { "type": "RelatedUuid", "value": "3104" },
       "userstamp": "1502",                // by (Guest)
@@ -2856,7 +2808,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // The Two Towers
            "uuid": "6235",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6013",                // The Two Towers
           "value": { "type": "StringValue", "value": "The Two Towers" },
       "userstamp": "1502",                // by (Guest)
@@ -2889,7 +2841,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Brian Douglas Skinner
            "uuid": "6240",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6239",                // Brian Douglas Skinner
           "value": { "type": "StringValue", "value": "Brian Douglas Skinner" },
       "userstamp": "6239",                // by (Brian Douglas Skinner)
@@ -2904,7 +2856,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Chih-Chao Lam
            "uuid": "6242",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6241",                // Chih-Chao Lam
           "value": { "type": "StringValue", "value": "Chih-Chao Lam" },
       "userstamp": "6241",                // by (Chih-Chao Lam)
@@ -2919,7 +2871,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Mignon Belongie
            "uuid": "6244",
-      "attribute": "102",                // Name
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6243",                // Mignon Belongie
           "value": { "type": "StringValue", "value": "Mignon Belongie" },
       "userstamp": "6243",                // by (Mignon Belongie)
