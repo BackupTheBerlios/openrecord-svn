@@ -491,6 +491,45 @@ Util.generateTimeBasedUuid = function () {
     Util._ourUuidClockSeqString = variantCodeForDCEUuids + eightCharacterHexString.substring(0, 3);
   }
   
+  // Ideally, what we would like to do is just say:
+  //   var now = new Date();
+  //   var millisecondsPerSecond = 1000;
+  //
+  //   var millisecondsSince1970 = now.valueOf();
+  //   var secondsBetween1852and1970 = Util.GREGORIAN_CHANGE_OFFSET_IN_SECONDS;
+  //   var millisecondsBetween1852and1970 = secondsBetween1852and1970 * millisecondsPerSecond;
+  //   var millisecondsSince1852 = millisecondsBetween1852and1970 + millisecondsSince1970;
+  // 
+  //   var microsecondsPerMilliseconds = 1000;
+  //   var microsecondsSince1852 = millisecondsSince1852 * microsecondsPerMilliseconds;
+  //   var hundredNanosecondIntervalsPerMicroseconds = 10;
+  //   var hundredNanosecondIntervalsSince1852 = microsecondsSince1852 * hundredNanosecondIntervalsPerMicroseconds;
+  // 
+  //   var hexRadix = 16;
+  //   var hexTimeString = hundredNanosecondIntervalsSince1852.toString(hexRadix);
+  //   Util.assert(hexTimeString.length == 15);
+  //   var hexTimeHigh = hexTimeString.substring(0, 3);
+  //   var hexTimeMid = hexTimeString.substring(3, 7);
+  //   var hexTimeLow = hexTimeString.substring(7, 15);
+  // 
+  // However, that won't work, because JavaScript only has 32-bit ints and
+  // 64-bit floats, so it's only good at doing math with numbers that are
+  // roughly on the order of 10^10, or 10^15.  The number that we're trying
+  // to arrive at, hundredNanosecondIntervalsSince1852, will be about 10^17.
+  // So, to do the math, we'll have to break big numbers down into parts,
+  // and do the operations piecemeal.  For a good example of this, see
+  // the safe_add() method on line 182 of .../trunk/third_party/md5/md5.js
+  var hexTimeHigh = "NOT";
+  var hexTimeMid = "OKAY";
+  var hexTimeLow = "PENDING:";
+  
+  var hyphen = "-";
+  var versionCodeForTimeBasedUuids = "1"; // 8 == binary2hex("0001")
+  var resultUuid = hexTimeLow + hyphen + hexTimeMid + hyphen +
+        versionCodeForTimeBasedUuids + hexTimeHigh + hyphen +
+        Util._ourUuidClockSeqString + hyphen + Util._ourUuidPsuedoNodeString;
+        
+  /*
   var now = new Date();
   var millisecondsSince1970 = now.valueOf();
   var millisecondsPerHour = 3600000; 
@@ -500,7 +539,9 @@ Util.generateTimeBasedUuid = function () {
   var foo = partialHoursSince1970inMS / millisecondsPerHour;
   alert(hoursSince1970 + "\n" + wholeHoursSince1970 + "\n" + foo);
   var hoursSince1582 = Util.GREGORIAN_CHANGE_OFFSET_IN_HOURS + wholeHoursSince1970;
-  return hoursSince1970;
+  */
+  
+  return null;
 };
 
 
