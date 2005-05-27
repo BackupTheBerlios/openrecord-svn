@@ -76,7 +76,7 @@ Who    | Priority | Estimate| Task
 Mignon |  High    | 1   ied | UI for adding an attribute to an item, and setting the expected data type of an attribute
 Mignon |  High    | 1   ied | UI for creating a new category
 Mignon |  High    | 1   ied | UI for deleting a row from a table 
- Chao  |  High    | 1.5 ied | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
+ Chao  |   done   | 1.5 ied | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
  Chao  |   done   | 0.5 ied | UI to sort a table when you click on a column header
  Chao  |  High    | 0   ied | UI for entering a new row in a table
 Brian  |   done   | 1   ied | Data model: change "Value" to "Entry"; refactor entries to be per-attribute

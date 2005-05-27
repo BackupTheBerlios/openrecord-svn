@@ -162,7 +162,7 @@ LoginView.prototype._rebuildView = function () {
 
     var editButton = document.createElement("input");
     editButton.type = "button";
-    editButton.value = (this.isInEditMode()) ? "Lock out edits" : "Edit";
+    editButton.value = (this.isInEditMode()) ? "Done editing" : "Edit";
     editButton.onclick = this._clickOnEditButton.bindAsEventListener(this);
     mySpan.appendChild(editButton);
   }
