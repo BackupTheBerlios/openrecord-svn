@@ -67,6 +67,13 @@ function testMethodsThatOperateOnSets() {
   
 }
 
+function testEncryptionMethods() {
+  var longString = "When in the course of human events: d41d8cd98f00b204e9800998ecf8427e";
+  assertTrue('md5 of "" is correct', (Util.hex_md5("") == "d41d8cd98f00b204e9800998ecf8427e"));
+  assertTrue('md5 of "iggy" is correct', (Util.hex_md5("iggy") == "0e026f55a72c0861a93e750c2a5427b1"));
+  assertTrue('md5 of longString is correct', (Util.hex_md5(longString) == "4d694e03af399831c6f0c1f1bcc2fc93"));
+}
+
 function testMethodsForWorkingWithUuids() {
   
   var uuidString = Util.generateRandomUuid();

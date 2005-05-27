@@ -252,7 +252,12 @@ StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObse
   var newUser = this._createNewItem(inObserver, false);
   newUser.__myCreationUserstamp = newUser;
   this.__myListOfUsers.push(newUser);
-  this.__myHashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = inAuthentication;
+  
+  var md5Authentication = null;
+  if (inAuthentication) {
+    md5Authentication = Util.hex_md5(inAuthentication);
+  }
+  this.__myHashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = md5Authentication;
 
   if (inName) { 
     this.__myCurrentUser = newUser;
@@ -296,10 +301,10 @@ StubVirtualServer.prototype.getCurrentUser = function () {
  *
  * @scope    public instance method
  * @param    inUser    The user to be logged in. 
- * @param    inAuthentication    Authentication info for the user. 
+ * @param    inPassword    Password supplied at login. 
  * @return   True if we were able to log in the user. False if the login failed.
  */
-StubVirtualServer.prototype.login = function (inUser, inAuthentication) {
+StubVirtualServer.prototype.login = function (inUser, inPassword) {
   
   // Only one user can be logged in at once.  We consider it an error
   // if you try to log in a new user before logging out the old one.
@@ -317,8 +322,12 @@ StubVirtualServer.prototype.login = function (inUser, inAuthentication) {
     return false;
   }
   
+  var md5hashOfPassword = null;
+  if (inPassword) {
+    md5hashOfPassword = Util.hex_md5(inPassword);
+  }
   var realAuthentication = this.__getAuthenticationInfoForUser(inUser);
-  var successfulAuthentication = ((realAuthentication == inAuthentication) || !realAuthentication);
+  var successfulAuthentication = ((realAuthentication == md5hashOfPassword) || !realAuthentication);
   
   // PENDING: temporary hack
   // if (!successfulAuthentication) {

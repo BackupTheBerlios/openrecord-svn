@@ -2,8 +2,8 @@
 { "format": "2005_MAY_USER_LIST", 
   "users": [
     { "uuid": "100", "password": null },
-    { "uuid": "1502", "password": "guest" },
-    { "uuid": "6239", "password": "b" },
+    { "uuid": "1502", "password": "084e0343a0486ff05530df6c705c8bb4" },
+    { "uuid": "6239", "password": "92eb5ffee6ae2fec3ad71c777531578f" },
     { "uuid": "6241", "password": null },
     { "uuid": "6243", "password": null } ]
 }

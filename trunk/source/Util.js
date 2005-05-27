@@ -418,6 +418,16 @@ Util.addObjectToSet = function (inObject, inSet) {
 
 
 // -------------------------------------------------------------------
+// Methods for doing encryption
+// -------------------------------------------------------------------
+
+Util.hex_md5 = function (inString) {
+  // Calls the hex_md5() function in .../trunk/third_party/md5/md5.js
+  return hex_md5(inString);
+};
+
+
+// -------------------------------------------------------------------
 // Methods for working with UUIDs
 // -------------------------------------------------------------------
 
