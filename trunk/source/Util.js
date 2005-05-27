@@ -65,6 +65,16 @@ Util.ASCII_VALUE_FOR_UP_ARROW = 38;    // 126
 Util.ASCII_VALUE_FOR_RIGHT_ARROW = 39; // 124
 Util.ASCII_VALUE_FOR_DOWN_ARROW = 40;  // 125
 
+// Number of seconds between October 15, 1582 and January 1, 1970
+// Util.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800.000l;
+Util.GREGORIAN_CHANGE_OFFSET_IN_HOURS = 3394248;
+
+
+// -------------------------------------------------------------------
+// Util global class variables
+// -------------------------------------------------------------------
+Util._ourUuidPsuedoNodeString = null;
+Util._ourUuidClockSeqString = null;
 
 // -------------------------------------------------------------------
 // String manipulation methods
@@ -411,42 +421,88 @@ Util.addObjectToSet = function (inObject, inSet) {
 // Methods for working with UUIDs
 // -------------------------------------------------------------------
 
+Util.getRandom32bitNumber = function () {
+  return Math.floor( (Math.random() % 1) * Math.pow(2, 32) );
+};
+
+
+Util.getRandomEightCharacterHexString = function () {
+  // PENDING: 
+  // This isn't really random.  We should find some source of real 
+  // randomness, and feed it to an MD5 hash algorithm.     
+  var hexRadix = 16;
+  var eightCharacterString = Util.getRandom32bitNumber().toString(hexRadix);
+  while (eightCharacterString.length < 8) {
+    eightCharacterString = "0" + eightCharacterString;
+  }
+  return eightCharacterString;
+};
+
+
 /**
- * Generates a random UUID.  Hopefully this conforms to the existing
- * standards for UUIDs and GUIDs.  For more info, see 
+ * Generates a random UUID, meaning a "version 4" UUID.  Hopefully this 
+ * implementation conforms to the existing standards for UUIDs and GUIDs.  
+ * For more info, see 
  * http://www.webdav.org/specs/draft-leach-uuids-guids-01.txt
  * 
  * @scope    public class method
- * @return   Returns a 36 character string, which will look something like "3B12F1DF-5232-4804-997E-917BF397618A".
+ * @return   Returns a 36 character string, which will look something like "3B12F1DF-5232-4804-897E-917BF397618A".
  */
 Util.generateRandomUuid = function () {
-  
-  function getRandom32bitNumber() {
-    return Math.floor( (Math.random() % 1) * Math.pow(2, 32) );
-  }
-  
-  function getEightCharacterHexString() {
-    var hexRadix = 16;
-    var eightCharacterString = getRandom32bitNumber().toString(hexRadix);
-    while (eightCharacterString.length < 8) {
-      eightCharacterString = "0" + eightCharacterString;
-    }
-    return eightCharacterString;
-  }
-  
   var hyphen = "-";
-  var versionCodeForRandomlyGeneratedUuids = "4";
-  var variantCodeForStandardUuids = "8";
-  var a = getEightCharacterHexString();
-  var b = getEightCharacterHexString();
+  var versionCodeForRandomlyGeneratedUuids = "4"; // 8 == binary2hex("0100")
+  var variantCodeForDCEUuids = "8"; // 8 == binary2hex("1000")
+  var a = Util.getRandomEightCharacterHexString();
+  var b = Util.getRandomEightCharacterHexString();
   b = b.substring(0, 4) + hyphen + versionCodeForRandomlyGeneratedUuids + b.substring(5, 8);
-  var c = getEightCharacterHexString();
-  c = variantCodeForStandardUuids + c.substring(1, 4) + hyphen + c.substring(4, 8);
-  var d = getEightCharacterHexString();
+  var c = Util.getRandomEightCharacterHexString();
+  c = variantCodeForDCEUuids + c.substring(1, 4) + hyphen + c.substring(4, 8);
+  var d = Util.getRandomEightCharacterHexString();
   var result = a + hyphen + b + hyphen + c + d;
   
   return result;
-}
+};
+
+
+/**
+ * Generates a time-based UUID, meaning a "version 1" UUID.  JavaScript
+ * code running in a browser doesn't have access to the IEEE 802.3 address
+ * of the computer, so we generate a random pseudonode value instead.
+ * Hopefully this implementation conforms to the existing standards for 
+ * UUIDs and GUIDs.  For more info, see 
+ * http://www.webdav.org/specs/draft-leach-uuids-guids-01.txt
+ * http://www.infonuovo.com/dma/csdocs/sketch/instidid.htm
+ * 
+ * @scope    public class method
+ * @return   Returns a 36 character string, which will look something like "3B12F1DF-5232-1804-897E-917BF397618A".
+ */
+Util.generateTimeBasedUuid = function () {
+  if (!Util._ourUuidPsuedoNodeString) {
+    var partOne = Util.getRandomEightCharacterHexString();
+    var partTwo = Util.getRandomEightCharacterHexString();
+    var sixteenCharacterHexString = partOne + partTwo;
+    var pseudonodeIndicatorBit = "8"; // 8 == binary2hex("1000")
+    Util._ourUuidPsuedoNodeString = pseudonodeIndicatorBit + sixteenCharacterHexString.substring(0, 11);
+  }
+  
+  if (!Util._ourUuidClockSeqString) {
+    var variantCodeForDCEUuids = "8"; // 8 == binary2hex("1000")
+    var eightCharacterHexString = Util.getRandomEightCharacterHexString();
+    Util._ourUuidClockSeqString = variantCodeForDCEUuids + eightCharacterHexString.substring(0, 3);
+  }
+  
+  var now = new Date();
+  var millisecondsSince1970 = now.valueOf();
+  var millisecondsPerHour = 3600000; 
+  var hoursSince1970 = millisecondsSince1970 / millisecondsPerHour;
+  var wholeHoursSince1970 = Math.floor(hoursSince1970);
+  var partialHoursSince1970inMS = millisecondsSince1970 - (wholeHoursSince1970 * millisecondsPerHour);
+  var foo = partialHoursSince1970inMS / millisecondsPerHour;
+  alert(hoursSince1970 + "\n" + wholeHoursSince1970 + "\n" + foo);
+  var hoursSince1582 = Util.GREGORIAN_CHANGE_OFFSET_IN_HOURS + wholeHoursSince1970;
+  return hoursSince1970;
+};
+
 
 // -------------------------------------------------------------------
 // Methods that deal with event handling

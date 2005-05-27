@@ -59,7 +59,7 @@ function testMethodsThatOperateOnSets() {
   assertFalse('"The Hobbit" is no longer in a set it was removed from', Util.isObjectInSet(theHobbit, aTinySet));
   assertFalse('"The Hobbit" can not be removed twice', Util.removeObjectFromSet(theHobbit, aTinySet));
 
-  setNumber2 = [123, "456", 78.9, new Date(), theHobbit];
+  var setNumber2 = [123, "456", 78.9, new Date(), theHobbit];
   assertTrue('"The Hobbit" is in setNumber2', Util.isObjectInSet(theHobbit, setNumber2));
   assertTrue('78.9 is in setNumber2', Util.isObjectInSet(78.9, setNumber2));
   assertTrue('78.9 and "The Hobbit" is in setNumber2', Util.areObjectsInSet([78.9, theHobbit], setNumber2));
@@ -97,6 +97,8 @@ function testMethodsForWorkingWithUuids() {
   character = section3.charAt(0);
   position = validCharactersForStartOfSection3.indexOf(character);
   assertTrue('Section 3 starts with 8, 9, A, or B', (position != -1));
+  
+  // var uuidString = Util.generateTimeBasedUuid();
 }
 
 function tearDown() {
