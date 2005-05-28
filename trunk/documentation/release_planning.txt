@@ -77,7 +77,7 @@ Mignon |  High    | 1   ied | UI for adding an attribute to an item, and setting
 Mignon |  High    | 1   ied | UI for creating a new category
 Mignon |  High    | 1   ied | UI for deleting a row from a table 
  Chao  |   done   | 1.5 ied | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
- Chao  |   done   | 0.5 ied | UI to sort a table when you click on a column header
+ Chao  |   done   | 0.5 ied | UI to sort a table when you click on a column header (2 ied, needed to refactor TablePlugin to DOM level 2)
 Brian  |   done   | 1   ied | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
 Brian  |   done   | 2   ied | Convert UI code to use new data model
        |  High    |         | UI for entering a number literal (instead of a string literal) in a table
@@ -93,7 +93,7 @@ Brian  |   done   | 1   ied | Replace the BigLumpVirtualServer with an DeltaVirt
        |   Low    |         | UI for creating a new page
  Chao  |   done   |         | UI for creating a new user
 -------+----------+---------+----------------------------------------------
- Chao  |  High    | 0   ied | UI for entering a new row in a table
+ Chao  |  done    | 0   ied | UI for entering a new row in a table (1.5 ied actual)
 Brian  |   done   | 1   ied | Ensure that UUIDs are unique in multi-user use case
  
 

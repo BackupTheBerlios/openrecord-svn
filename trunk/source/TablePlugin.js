@@ -180,16 +180,18 @@ TablePlugin.prototype.observedItemHasChanged = function(item) {
   // called when a provisional item becomes a real item
   item.removeObserver(this); //now that provisional item is real, we stop observing it
   this.getWorld().setItemToBeIncludedInQueryResultList(item,this._query);
-  this._listOfItems.push(item);
+  this._listOfItems.push(item); // moving this line affects code below
+  
+  // tell provisional item views they are no longer provisional
+  var oldProvisionalRow = this.myTable.rows[this._listOfItems.length];
+  for (var i=0; i < oldProvisionalRow.cells.length; ++i) {
+    var aCell = oldProvisionalRow.cells[i];
+    aCell.or_textView.noLongerProvisional();
+  }
+
+  // create new provisional item now that old one has become real
   var newItem = this.getWorld().newProvisionalItem(this);
   var aRow = this._insertRow(newItem, this._listOfItems.length+1, true);
-  if (this._selectProvisionalCell) {
-    // select the newly created provisional item, usually when return or tab was typed on attribute of old provisional item
-    this._selectProvisionalCell = false;
-    selectCell = aRow.cells[0];
-    var selectTextView = selectCell.or_textView;
-    selectTextView.startEditing();
-  }
 };
 
 /**
@@ -375,7 +377,10 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
   if (move) {
     Util.isNumber(this._numberOfColumns);
     Util.isArray(this._listOfItems);
-    aTextView.stopEditing(); // need to be called because provisional item may create new row
+    
+    // line below needs to be called here i.e. early because stopping an edit may change a provisional item
+    // to become a "real" one thereby  creating new row for the next provisional item
+    aTextView.stopEditing();
 
     var cellElement = aTextView.getHTMLElement();
     var userHitReturnInLastRow = false;
@@ -407,17 +412,11 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
         nextRowNumber = numRows;
       }
       else if (nextRowNumber > numRows) {
-/*        if (this.isInEditMode()) {
-          // let observable handle editMode changes
-          // so don't do anything here
-          this._selectProvisionalCell = true;
-          return false;
-        }*/
         nextRowNumber = 1;
         userHitReturnInLastRow = true;
       }
       var nextRow = this.myTable.rows[nextRowNumber];
-    nextCell = nextRow.cells[cellElement.cellIndex];
+      nextCell = nextRow.cells[cellElement.cellIndex];
     }
     
     var nextTextView = nextCell.or_textView;

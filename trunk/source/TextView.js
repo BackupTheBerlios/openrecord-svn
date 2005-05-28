@@ -85,7 +85,7 @@ function TextView(theSuperview, theElement, theItem, theAttribute, theClassType,
  */
 TextView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
-    this.doInitialDisplay();
+    this._buildView();
   } else {
   // if (weHaveBeenNotifiedOfChangesTo(this._item)) {
   //   var newText = getNewValueFrom(this._item);
@@ -101,8 +101,9 @@ TextView.prototype.refresh = function() {
  *
  * @scope    public instance method
  */
-TextView.prototype.doInitialDisplay = function() {
+TextView.prototype._buildView = function() {
   var htmlElement = this.getHTMLElement();
+  htmlElement.innerHTML = '';
   
   var textString = this._isProvisional ? this._provisionalText :
     this._item.getSingleStringValueFromAttribute(this._attribute);
@@ -198,16 +199,21 @@ TextView.prototype.onBlur = function(inEventObject) {
 TextView.prototype.stopEditing = function() {
   if (this._isEditing) {
     var newText = this._editField.value;
+    var stillProvisional = this._isProvisional && newText === '';
     var htmlElement = this.getHTMLElement();
     
     this._isEditing = false;
-    
-    if (this._isProvisional && newText === '') {
+  
+    if (stillProvisional) {
       newText = this._provisionalText;
     }
-    else {
+    this.textNode.data = newText;
+    this.getHTMLElement().replaceChild(this.textNode, this._editField);
+    
+    // we need this block to be after all display related code, because this may trigger an observer call
+    if (!stillProvisional) {
+      // write out new entry for attribute
       // PENDING: need to properly handle multi-valued attributes
-      if (this._isProvisional) {htmlElement.style.color = this._oldColor;}
       var listOfEntries = this._item.getEntriesForAttribute(this._attribute);
       if (listOfEntries && listOfEntries[0]) {
         var oldEntry = listOfEntries[0];
@@ -218,8 +224,6 @@ TextView.prototype.stopEditing = function() {
         }
       }
     }
-    this.textNode.data = newText;
-    this.getHTMLElement().replaceChild(this.textNode, this._editField);
   }
 };
 
@@ -288,6 +292,13 @@ TextView.prototype.onKeyPress = function(inEventObject) {
   */
 };
 
+TextView.prototype.noLongerProvisional = function() {
+  if (this._isProvisional) {
+    this._isProvisional = false;
+    this.getHTMLElement().style.color = this._oldColor;
+    this._buildView();
+  }
+};
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------
