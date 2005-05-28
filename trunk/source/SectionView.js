@@ -154,7 +154,7 @@ SectionView.prototype.getPluginFromPluginName = function (inPluginName, inPlugin
   var newPlugin = null;
   var pluginClass = SectionView.ourHashTableOfPluginClassesKeyedByPluginName[inPluginName];
   if (pluginClass) {
-    newPlugin = new pluginClass(this, inPluginDiv);
+    newPlugin = new pluginClass(this, inPluginDiv, this.getQuery());
   }
   return newPlugin;
 };
@@ -163,6 +163,7 @@ SectionView.prototype.getPluginFromPluginName = function (inPluginName, inPlugin
 /**
  * Returns a list of content items to be displayed in this SectionView.
  *
+ * @deprecated WILL BE REMOVED ONCE ALL PLUGINS ARE CONVERTED TO RECEIVE A QUERY
  * @scope    public instance method
  * @return   A list of content items.
  */
@@ -178,6 +179,17 @@ SectionView.prototype.getListOfContentItems = function () {
   return this.myListOfContentItems;
 };
 
+/**
+ * Returns query associated to this section.
+ *
+ * @scope    public instance method
+ * @return   query associated to this section.
+ */
+SectionView.prototype.getQuery = function () {
+  var attributeCalledQuery = this.getWorld().getAttributeCalledQuery();
+  var listOfEntries = this.mySection.getEntriesForAttribute(attributeCalledQuery);
+  return (listOfEntries && listOfEntries[0]) ? listOfEntries[0].getValue() : null;
+};
 
 /**
  * Updates the HTML elements in this view to reflect any changes in 

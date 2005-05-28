@@ -63,7 +63,7 @@ TablePlugin.DESCENDING_GIF = "descending.gif";
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  */
 TablePlugin.prototype = new View();  // makes TablePlugin be a subclass of View
-function TablePlugin(inSectionView, inHTMLElement, inCellPrefix, inClassType, inCellClass) {
+function TablePlugin(inSectionView, inHTMLElement, inQuery, inCellPrefix, inClassType, inCellClass) {
   this.setSuperview(inSectionView);
   this.setHTMLElement(inHTMLElement);  
 
@@ -71,6 +71,7 @@ function TablePlugin(inSectionView, inHTMLElement, inCellPrefix, inClassType, in
   this.myClass = inClassType || SectionView.ELEMENT_CLASS_SIMPLE_TABLE;
   this.myCellClass = inCellClass || SectionView.ELEMENT_CLASS_PLAIN;
   this.myTable = null;
+  this._query = inQuery;
   this._sortAttribute = null;
   this._ascendingOrder = true;
 }
@@ -112,8 +113,7 @@ TablePlugin.prototype.compareItemByAttribute = function (itemA, itemB) {
  * @scope    PENDING
  */
 TablePlugin.prototype.fetchItems = function() {
-  // PENDING: how do we know our superview responds to getthis._listOfItems()? 
-  this._listOfItems = this.getSuperview().getListOfContentItems();
+  this._listOfItems = this._query ? this.getWorld().getResultItemsForQuery(this._query) : [];
 };
 
 
@@ -153,6 +153,7 @@ TablePlugin.prototype._insertRow = function(contentItem, rowNum) {
     var attribute = this._hashTableOfAttributes[lKey];
     this._insertCell(aRow, ++columnCount, contentItem, attribute);
   }
+  return aRow;
 };
 
 /**
@@ -170,11 +171,26 @@ TablePlugin.prototype._buildTableBody = function() {
   
   if (this.isInEditMode()) {
     // add one more row to allow users to add a new item to the table
-    var newItem = this.getWorld().newProvisionalItem();
+    var newItem = this.getWorld().newProvisionalItem(this);
     this._insertRow(newItem, ++numRows, true);
   }
 };
 
+TablePlugin.prototype.observedItemHasChanged = function(item) {
+  // called when a provisional item becomes a real item
+  item.removeObserver(this); //now that provisional item is real, we stop observing it
+  this.getWorld().setItemToBeIncludedInQueryResultList(item,this._query);
+  this._listOfItems.push(item);
+  var newItem = this.getWorld().newProvisionalItem(this);
+  var aRow = this._insertRow(newItem, this._listOfItems.length+1, true);
+  if (this._selectProvisionalCell) {
+    // select the newly created provisional item, usually when return or tab was typed on attribute of old provisional item
+    this._selectProvisionalCell = false;
+    selectCell = aRow.cells[0];
+    var selectTextView = selectCell.or_textView;
+    selectTextView.startEditing();
+  }
+};
 
 /**
  * Constructs the table header 
@@ -208,7 +224,7 @@ TablePlugin.prototype._buildHeader = function() {
  *
  * @scope    public instance method
  */
-TablePlugin.prototype.doInitialDisplay = function() {
+TablePlugin.prototype._buildTable = function() {
   // get list of items and attributes
   this.fetchItems();
   this._buildAttributeHash();
@@ -241,7 +257,7 @@ TablePlugin.prototype.doInitialDisplay = function() {
  */
 TablePlugin.prototype.refresh = function () {
   if (!this._myHasEverBeenDisplayedFlag) {
-    this.doInitialDisplay();
+    this._buildTable();
   } else {
     var a = 1;
   // PENDING new content model with obversable queries
@@ -307,7 +323,7 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
   else {
     this._sortAttribute = clickAttribute;
   }
-  this.doInitialDisplay();
+  this._buildTable();
 };
   
 
@@ -359,6 +375,8 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
   if (move) {
     Util.isNumber(this._numberOfColumns);
     Util.isArray(this._listOfItems);
+    aTextView.stopEditing(); // need to be called because provisional item may create new row
+
     var cellElement = aTextView.getHTMLElement();
     var userHitReturnInLastRow = false;
     var shiftBy;
@@ -368,6 +386,7 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
     var nextCell;
     var htmlRow = cellElement.parentNode;
     
+
     if (move == MOVE_LEFT || move == MOVE_RIGHT) {
       shiftBy = (move == MOVE_LEFT) ? -1 : 1;
       var nextColumnNumber = (cellElement.cellIndex + shiftBy);
@@ -388,6 +407,12 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
         nextRowNumber = numRows;
       }
       else if (nextRowNumber > numRows) {
+/*        if (this.isInEditMode()) {
+          // let observable handle editMode changes
+          // so don't do anything here
+          this._selectProvisionalCell = true;
+          return false;
+        }*/
         nextRowNumber = 1;
         userHitReturnInLastRow = true;
       }
@@ -395,7 +420,6 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
     nextCell = nextRow.cells[cellElement.cellIndex];
     }
     
-    aTextView.stopEditing();
     var nextTextView = nextCell.or_textView;
     nextTextView.startEditing();
 /*    if (userHitReturnInLastRow && tablePlugin.myNewItemCreatedFlag) {

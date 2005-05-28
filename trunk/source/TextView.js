@@ -200,6 +200,8 @@ TextView.prototype.stopEditing = function() {
     var newText = this._editField.value;
     var htmlElement = this.getHTMLElement();
     
+    this._isEditing = false;
+    
     if (this._isProvisional && newText === '') {
       newText = this._provisionalText;
     }
@@ -216,10 +218,8 @@ TextView.prototype.stopEditing = function() {
         }
       }
     }
-    
     this.textNode.data = newText;
     this.getHTMLElement().replaceChild(this.textNode, this._editField);
-    this._isEditing = false;
   }
 };
 

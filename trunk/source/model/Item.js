@@ -197,7 +197,6 @@ Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribut
   
   var itemOrEntry = inEntry || this;
   var entry = this.getWorld()._newEntry(itemOrEntry, inAttribute, inValue);
-  this.__addEntryToListOfEntriesForAttribute(entry);
   return entry;
 };
 

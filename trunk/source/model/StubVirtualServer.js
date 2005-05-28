@@ -189,6 +189,9 @@ StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inV
   var uuid = this.__getNewUuid();
   var entry = new Entry(this.__myWorld, uuid);
   entry._initialize(inItemOrEntry, inAttribute, inValue);
+  var item = inItemOrEntry instanceof Item ? inItemOrEntry : inItemOrEntry.getItem();
+  item.__addEntryToListOfEntriesForAttribute(entry); // PENDING eeks calling a protected method!
+  
   this.__myHashTableOfEntriesKeyedByUuid[uuid] = entry;
   this.__myChronologicalListOfNewlyCreatedRecords.push(entry);
   return entry;
