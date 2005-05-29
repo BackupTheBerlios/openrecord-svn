@@ -72,10 +72,23 @@ function TextView(theSuperview, theElement, theItem, theAttribute, theClassType,
   this._isMultiLine = isMultiLine;
   this._isEditing = false;
   this._proxyOnKeyFunction = null;
+  
   this._isProvisional = this._item.isProvisional();
   if (this._isProvisional) {this._provisionalText = this._attribute.getDisplayName();}
+  
 }
 
+
+TextView.prototype._setupSuggestionBox = function() {
+  if (this._suggestions) {
+    var suggestionBox = new AttributeSuggestionBox(this._editField, this._suggestions);
+    this._suggestionBox = suggestionBox;
+  }
+};
+
+TextView.prototype.setSuggestions = function(suggestionList) {
+  this._suggestions = suggestionList;
+};
 
 /**
  * Updates the HTML elements in this view to reflect any changes in 
@@ -146,10 +159,14 @@ TextView.prototype.startEditing = function() {
       var listener = this; 
       editField.onblur = this.onBlur.bindAsEventListener(this);
       editField.onkeypress = this.onKeyPress.bindAsEventListener(this);
+      editField.onkeyup = this.onKeyUp.bindAsEventListener(this);
+      editField.onfocus = this.onFocus.bindAsEventListener(this);
       editField.defaultValue = this._isProvisional ? '' : this.textNode.data;
     }
     editField.style.width = this.getHTMLElement().offsetWidth + "px";    
     editField.style.height = (this.getHTMLElement().offsetHeight) + "px";
+    
+    this._setupSuggestionBox();
     this.getHTMLElement().replaceChild(editField, this.textNode);
     editField.select();
     //editField.focus();
@@ -176,7 +193,10 @@ TextView.prototype.onClick = function(inEventObject) {
   }
 };
 
-  
+TextView.prototype.onFocus = function(inEventObject) {
+  if (this._suggestionBox) {this._suggestionBox._focusOnInputField(inEventObject);}
+};
+
 /**
  * Called when focus leaves the text view.
  *
@@ -204,10 +224,12 @@ TextView.prototype.stopEditing = function() {
     
     this._isEditing = false;
   
+    if (this._suggestionBox) {this._suggestionBox._blurOnInputField();}
     if (stillProvisional) {
       newText = this._provisionalText;
     }
     this.textNode.data = newText;
+    this._suggestionBox = null;
     this.getHTMLElement().replaceChild(this.textNode, this._editField);
     
     // we need this block to be after all display related code, because this may trigger an observer call
@@ -238,6 +260,9 @@ TextView.prototype.setKeyPressFunction = function(keyPressFunction) {
   this._keyPressFunction = keyPressFunction;
 };
 
+TextView.prototype.onKeyUp = function(inEventObject) {
+  if (this._suggestionBox) {this._suggestionBox._keyPressOnInputField(inEventObject);}
+};
 
 /**
  * Called when the user types in editField
@@ -299,6 +324,109 @@ TextView.prototype.noLongerProvisional = function() {
     this._buildView();
   }
 };
+
+// -------------------------------------------------------------------
+// Suggestion box methods
+// -------------------------------------------------------------------
+function AttributeSuggestionBox(inHTMLInputField, inListOfEntries) {
+  this._myInputField = inHTMLInputField;
+  this._myListOfEntries = inListOfEntries.sort(AttributeSuggestionBox.compareEntryDisplayNames);
+
+  this._myAttributeSuggestionBoxDivElement = document.createElement('div');
+  // this._myAttributeSuggestionBoxDivElement.style.visibility = "hidden";
+  this._myAttributeSuggestionBoxDivElement.style.zIndex = 11;
+  this._myAttributeSuggestionBoxDivElement.style.display = "none";
+  document.body.appendChild(this._myAttributeSuggestionBoxDivElement);
+
+ /* this._myInputField.onkeyup = this._keyPressOnInputField.bindAsEventListener(this);
+  this._myInputField.onfocus = this._focusOnInputField.bindAsEventListener(this);
+  this._myInputField.onblur = this._blurOnInputField.bindAsEventListener(this); */
+  //this._keyPressOnInputField();
+}
+
+AttributeSuggestionBox.compareEntryDisplayNames = function (inEntryOne, inEntryTwo) {
+  var displayNameOne = inEntryOne.getDisplayString();
+  var displayNameTwo = inEntryTwo.getDisplayString();
+  if (displayNameOne == displayNameTwo) {
+    return 0;
+  } else {
+    return (displayNameOne > displayNameTwo) ?  1 : -1;
+  }
+};
+
+AttributeSuggestionBox.prototype._focusOnInputField = function (inEventObject) {
+  //this._myInputField.value = "";
+  this._redisplayAttributeSuggestionBox();
+};
+
+
+AttributeSuggestionBox.prototype._keyPressOnInputField = function (inEventObject) {
+  this._redisplayAttributeSuggestionBox();
+};
+
+
+AttributeSuggestionBox.prototype._blurOnInputField = function () {
+  // make the suggestion box disappear
+  this._myAttributeSuggestionBoxDivElement.style.display = "none";
+};
+
+
+AttributeSuggestionBox.prototype._clickOnSelection = function (inEventObject, inString) {
+  this._myInputField.value = inString;
+};
+
+
+AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () {
+  var partialInputString = this._myInputField.value;
+  var listOfMatchingStrings = [];
+  var key;
+
+  for (key in this._myListOfEntries) {
+    var entry = this._myListOfEntries[key];
+    var lowerCaseEntryString = entry.getDisplayString().toLowerCase();
+    var lowerCaseInputString = partialInputString.toLowerCase();
+    var numberOfCharactersToCompare = lowerCaseInputString.length;
+    var shortEntryString = lowerCaseEntryString.substring(0, numberOfCharactersToCompare);
+    if (shortEntryString == lowerCaseInputString) {
+      // we have a match!
+      listOfMatchingStrings.push(entry.getDisplayString());
+    }
+  }
+
+  if (listOfMatchingStrings.length === 0) {
+    // make the suggestion box disappear
+    this._myAttributeSuggestionBoxDivElement.style.display = "none";
+  } else {
+    this._myAttributeSuggestionBoxDivElement.innerHTML = "";
+    var table = document.createElement('table');
+    var rowNumber = 0;
+    var columnNumber = 0;
+    for (key in listOfMatchingStrings) {
+      var string = listOfMatchingStrings[key];
+      var textNode = document.createTextNode(string);
+      var row = table.insertRow(rowNumber);
+      var cell = row.insertCell(columnNumber);
+      cell.appendChild(textNode);
+      cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, string);
+      rowNumber += 1;
+    }
+    this._myAttributeSuggestionBoxDivElement.appendChild(table);
+
+    // set-up the suggestion box to open just below the input field it comes from
+    var AttributeSuggestionBoxTop = Util.getOffsetTopFromElement(this._myInputField) + this._myInputField.offsetHeight;
+    var AttributeSuggestionBoxLeft = Util.getOffsetLeftFromElement(this._myInputField);
+    this._myAttributeSuggestionBoxDivElement.style.top = AttributeSuggestionBoxTop + "px"; 
+    this._myAttributeSuggestionBoxDivElement.style.left = AttributeSuggestionBoxLeft + "px";
+    // alert(this._myInputField.offsetWidth);
+    this._myAttributeSuggestionBoxDivElement.style.width = (this._myInputField.offsetWidth - 2)+ "px";
+
+    // this._myAttributeSuggestionBoxDivElement.style.zIndex = 11;
+    this._myAttributeSuggestionBoxDivElement.className = "suggestion_box";
+    this._myAttributeSuggestionBoxDivElement.style.visibility = "visible";
+    this._myAttributeSuggestionBoxDivElement.style.display = "block";
+  }
+};
+
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------

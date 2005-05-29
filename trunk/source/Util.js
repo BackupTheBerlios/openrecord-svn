@@ -416,7 +416,20 @@ Util.addObjectToSet = function (inObject, inSet) {
   return true;
 };
 
-
+/**
+ * Return the values of a HashTable in the form of an Array
+ * Analogous to Python hash.values() 
+ * 
+ * @scope    public class method
+ * @param    inHashTable   hashTable to be worked on
+ * @return   values of a HashTable in the form of an Array
+ */
+Util.hashTableValues = function(inHashTable) {
+  Util.assert(Util.isHashTable(inHashTable));
+  var returnArray = [];
+  for (var key in inHashTable) {returnArray.push(inHashTable[key]);}
+  return returnArray;
+};
 // -------------------------------------------------------------------
 // Methods for doing encryption
 // -------------------------------------------------------------------
