@@ -126,6 +126,7 @@ TablePlugin.prototype.fetchItems = function() {
 TablePlugin.prototype._buildAttributeHash = function() {
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var hashTableOfAttributes = {};
+  var hashTableOfEntries = {};
   for (var iKey in this._listOfItems) {
     var contentItem = this._listOfItems[iKey];
     var listOfAttributesForItem = contentItem.getAttributes();
@@ -134,9 +135,25 @@ TablePlugin.prototype._buildAttributeHash = function() {
       if (attribute != attributeCalledCategory) {
         var attributeKeyString = attribute.getUniqueKeyString();
         hashTableOfAttributes[attributeKeyString] = attribute;
+        
+        // build entries representing this attribute in this table 
+        // PENDING we may only want to do this for certain attributes
+        if (!hashTableOfEntries[attributeKeyString]) {
+          hashTableOfEntries[attributeKeyString] = {};
+        }
+        var itemEntries = contentItem.getEntriesForAttribute(attribute);
+        for (var entryKey in itemEntries) {
+          var entry = itemEntries[entryKey];
+          hashTableOfEntries[attributeKeyString][entry.getUniqueKeyString()] = entry;
+        }
       }
     }
   }
+  
+  for (attributeKey in hashTableOfEntries) {
+    hashTableOfEntries[attributeKey] = Util.hashTableValues(hashTableOfEntries[attributeKey]);
+  }
+  this._hashTableOfEntries = hashTableOfEntries;
   this._hashTableOfAttributes = hashTableOfAttributes;
 };
 
@@ -298,6 +315,7 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   if (this.isInEditMode()) {
     //aCell.onkeypress = this.keyPressOnEditField.bindAsEventListener(this, aTextView);
     var listener = this;
+    aTextView.setSuggestions(this._hashTableOfEntries[attribute.getUniqueKeyString()]);
     aTextView.setKeyPressFunction(function (evt, aTxtView) {listener.keyPressOnEditField(evt, aTxtView);});
   }
 };
