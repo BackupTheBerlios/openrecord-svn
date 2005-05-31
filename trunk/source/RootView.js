@@ -411,8 +411,8 @@ RootView.prototype._displayLoginSpan = function() {
 RootView.prototype._displayNavbar = function () {
   if (!this.navbarView) {
     this.navbarView = new NavbarView(this, this.myNavbarDivElement);
-    this.navbarView.refresh();
   }
+  this.navbarView.refresh();
 };
 
 
