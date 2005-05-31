@@ -220,6 +220,17 @@ SectionView.prototype.doInitialDisplay = function () {
   }
   var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
   var selectedPluginName = this.mySection.getSingleStringValueFromAttribute(attributeCalledPluginName);
+  var attributeCalledQueryMatchingCategory = this.getWorld().getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
+  var listOfMatchingCategories = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingCategory);
+  var isCategoryMatchingQuery = (listOfMatchingCategories && (listOfMatchingCategories.length > 0));
+  var selectedCategoryName = isCategoryMatchingQuery? listOfMatchingCategories[0].getValue().getDisplayName() : "no category selected";
+  var isEmptyQuery = false;
+  if (!isCategoryMatchingQuery) {
+    var attributeCalledQueryMatchingItem = this.getWorld().getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
+    var listOfMatchingItems = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingItem);
+    var isItemMatchingQuery = (listOfMatchingItems && (listOfMatchingItems.length > 0));
+    isEmptyQuery = !isItemMatchingQuery;
+  }
   this.myListOfContentItems = this.getListOfContentItems();
   if (!this.myListOfContentItems) {
     return;
@@ -241,16 +252,32 @@ SectionView.prototype.doInitialDisplay = function () {
   // PENDING: We shouldn't call the private method _getUuid()
   var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this.mySection._getUuid();
   var selectElement = View.createAndAppendElement(outerDiv, "select", RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL, selectMenuId);
+  var optionElement;
+  var listener;
   selectElement.setAttribute("name", selectMenuId);
   selectElement.setAttribute(SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER, this.mySectionNumber);
   for (var pluginName in SectionView.ourHashTableOfPluginClassesKeyedByPluginName) {
-    var optionElement = View.createAndAppendElement(selectElement, "option");
+    optionElement = View.createAndAppendElement(selectElement, "option");
     optionElement.selected = (selectedPluginName == pluginName);
     optionElement.setAttribute("value", pluginName);
     // Util.addEventListener(optionElement, "click", SectionView.clickOnPluginSelectionMenu);
-    var listener = this; 
+    listener = this; 
     Util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
     optionElement.innerHTML = pluginName;
+  }
+
+  if (isCategoryMatchingQuery || isEmptyQuery) {
+    var querySelectElement = View.createAndAppendElement(outerDiv, "select", RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL);
+    var listOfCategories = this.getWorld().getCategories();
+    for (var key in listOfCategories) {
+      var category = listOfCategories[key];
+      optionElement = View.createAndAppendElement(querySelectElement, "option");
+      optionElement.selected = (selectedCategoryName == category.getDisplayName());
+      optionElement.setAttribute("value", category._getUuid());
+      listener = this; 
+      Util.addEventListener(optionElement, "click", function(event) {listener.clickOnQueryCategorySelectionMenu(event);});
+      optionElement.innerHTML = category.getDisplayName();
+    }
   }
 
   // create a div element for the plugin class to use
@@ -298,6 +325,53 @@ SectionView.prototype.clickOnPluginSelectionMenu = function (inEventObject) {
   }
 };
 
+
+/**
+ * Called when the user clicks on a control for selecting a category for a query.
+ * Called from an HTML option element within an HTML select element.
+ *
+ * @scope    public instance method
+ * @param    inEventObject    An event object. 
+ */
+SectionView.prototype.clickOnQueryCategorySelectionMenu = function (inEventObject) {
+  var eventObject = inEventObject || window.event;
+  var optionElement = Util.getTargetFromEvent(eventObject);
+  // PENDING: We could replace the lines above with "var optionElement = this;"
+  // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
+  
+  var selectElement = optionElement.parentNode;
+  var newChoiceUuid = optionElement.value;
+  var newQueryMatchingCategory = this.getWorld().getItemFromUuid(newChoiceUuid);
+  var newChoiceName = newQueryMatchingCategory.getDisplayName();
+  
+  var attributeCalledQueryMatchingCategory = this.getWorld().getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
+  var listOfMatchingCategories = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingCategory);
+  var currentQueryMatchingCategoryEntry = listOfMatchingCategories.length > 0? listOfMatchingCategories[0] : null;
+  var currentQueryMatchingCategory = listOfMatchingCategories.length > 0? listOfMatchingCategories[0].getValue() : null;
+  var currentCategoryName = currentQueryMatchingCategory? currentQueryMatchingCategory.getDisplayName() : "none";
+ 
+  if (currentCategoryName == newChoiceName) {
+    return;
+  } else {
+    if (currentQueryMatchingCategory) {
+      this.getQuery().replaceEntry(currentQueryMatchingCategoryEntry, newQueryMatchingCategory);
+    } else {
+      this.getQuery().addEntryForAttribute(attributeCalledQueryMatchingCategory, newQueryMatchingCategory);
+    }
+    var pluginName = this._myPlugin.getPluginName();
+    this._myPlugin.endOfLife();
+    this._myPlugin = this.getPluginFromPluginName(pluginName, this._myPluginDiv);
+    var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
+    var pluginNameEntries = this.mySection.getEntriesForAttribute(attributeCalledPluginName);
+    if (pluginNameEntries && pluginNameEntries[0]) {
+      var oldEntry = pluginNameEntries[0];
+      this.mySection.replaceEntry(oldEntry, pluginName);
+    } else {
+      this.mySection.addEntryForAttribute(attributeCalledPluginName, pluginName);
+    }
+    this.refresh();
+  }
+};
 
 // -------------------------------------------------------------------
 // End of file

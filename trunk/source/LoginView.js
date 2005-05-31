@@ -274,8 +274,6 @@ LoginView.prototype._clickOnCreateAccountLink = function(inEventObject) {
   this._rebuildView();
 };
 
-// Chih-Chao Lam
-// Mignon Belongie
 /**
  * Called when the user clicks on the "Create New Account" button.
  *

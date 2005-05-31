@@ -222,6 +222,7 @@ Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribut
  * @return   A list of entry objects.
  */
 Item.prototype.getEntriesForAttribute = function (inAttribute) {
+  Util.assert(inAttribute instanceof IdentifiedRecord);
   var listOfEntriesForAttribute = this.__myHashTableOfEntryListsKeyedByAttributeUuid[inAttribute._getUuid()];
   if (!listOfEntriesForAttribute) {
     listOfEntriesForAttribute = [];
