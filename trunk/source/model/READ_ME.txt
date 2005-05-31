@@ -126,7 +126,7 @@ Category ----- examples: "Book", "Movie", "Person"
   Tag
   
 Entry ----- example: ("1938" is the value of the attribute "Publication Date" for the item "The Hobbit")
-  Assignement
+  Assignment
   Datum
   AttributeValue
   Aspect
@@ -160,7 +160,7 @@ World
 Spare words
   Axiom
   Axiomatic Item
-  Assignement
+  Assignment
   Aspect
   Datum
   Entry

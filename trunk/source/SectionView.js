@@ -48,7 +48,6 @@ SectionView.PLUGIN_DETAIL = "Detail";
 SectionView.PLUGIN_BAR_CHART = "Bar Chart";
 
 SectionView.ELEMENT_CLASS_SECTION = "section";
-SectionView.ELEMENT_CLASS_SECTION_PLUGIN_MENU = "section_plugin_menu";
 SectionView.ELEMENT_CLASS_SIMPLE_TABLE = "simple_table";
 SectionView.ELEMENT_CLASS_NEW_ITEM = "newitem";
 SectionView.ELEMENT_CLASS_PLAIN = "plain";
@@ -241,7 +240,7 @@ SectionView.prototype.doInitialDisplay = function () {
   // create the plugin editing controls, if we're in edit mode
   // PENDING: We shouldn't call the private method _getUuid()
   var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this.mySection._getUuid();
-  var selectElement = View.createAndAppendElement(outerDiv, "select", SectionView.ELEMENT_CLASS_SECTION_PLUGIN_MENU, selectMenuId);
+  var selectElement = View.createAndAppendElement(outerDiv, "select", RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL, selectMenuId);
   selectElement.setAttribute("name", selectMenuId);
   selectElement.setAttribute(SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER, this.mySectionNumber);
   for (var pluginName in SectionView.ourHashTableOfPluginClassesKeyedByPluginName) {

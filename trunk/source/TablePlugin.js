@@ -279,7 +279,7 @@ TablePlugin.prototype.refresh = function () {
     this._buildTable();
   } else {
     var a = 1;
-  // PENDING new content model with obversable queries
+  // PENDING new content model with observable queries
   }
 };
 

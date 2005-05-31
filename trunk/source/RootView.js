@@ -53,6 +53,7 @@ RootView.URL_HASH_ITEM_PREFIX = "#" + RootView.URL_ITEM_PREFIX;
 
 RootView.ELEMENT_CLASS_EDIT_MODE = "editmode";
 RootView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
+RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL = "edit_mode_only_control";
 
 RootView.CONTROL_SPAN_CLASS = "control_span";
 
@@ -194,7 +195,6 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
     if (window.location.hash) {
       var originalHash = window.location.hash;
       var uuidText = null;
-      var uuidNumber = null;
       var pageFromUuid = null;
       var itemFromUuid = null;
       var divElement = null;
@@ -202,29 +202,27 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
       var isUrlForItem = (originalHash.indexOf(RootView.URL_HASH_ITEM_PREFIX) != -1);
       if (isUrlForItem) {
         uuidText = originalHash.replace(RootView.URL_HASH_ITEM_PREFIX, "");
-        uuidNumber = parseInt(uuidText);
-        contentViewToSwitchTo = this._myHashTableOfItemViewsKeyedByUuid[uuidNumber];
+        contentViewToSwitchTo = this._myHashTableOfItemViewsKeyedByUuid[uuidText];
         if (!contentViewToSwitchTo) {
-          itemFromUuid = this._myWorld.getItemFromUuid(uuidNumber);
+          itemFromUuid = this._myWorld.getItemFromUuid(uuidText);
           if (itemFromUuid) {
             divElement = window.document.createElement("div"); 
             this._myContentViewDivElement.appendChild(divElement);
             contentViewToSwitchTo = new ItemView(this, divElement, itemFromUuid);
-            this._myHashTableOfItemViewsKeyedByUuid[uuidNumber] = contentViewToSwitchTo;
+            this._myHashTableOfItemViewsKeyedByUuid[uuidText] = contentViewToSwitchTo;
           }
         }
       } else {
         if (isUrlForPage) {
           uuidText = originalHash.replace(RootView.URL_HASH_PAGE_PREFIX, "");
-          uuidNumber = parseInt(uuidText);
-          contentViewToSwitchTo = this._myHashTableOfPageViewsKeyedByUuid[uuidNumber];
+          contentViewToSwitchTo = this._myHashTableOfPageViewsKeyedByUuid[uuidText];
           if (!contentViewToSwitchTo) {
-            pageFromUuid = this.myHashTableOfPagesKeyedByUuid[uuidNumber];
+            pageFromUuid = this.myHashTableOfPagesKeyedByUuid[uuidText];
             if (pageFromUuid) {
               divElement = window.document.createElement("div"); 
               this._myContentViewDivElement.appendChild(divElement);
               contentViewToSwitchTo = new PageView(this, divElement, pageFromUuid);
-              this._myHashTableOfPageViewsKeyedByUuid[uuidNumber] = contentViewToSwitchTo;
+              this._myHashTableOfPageViewsKeyedByUuid[uuidText] = contentViewToSwitchTo;
             }
           }
         } 
@@ -275,6 +273,58 @@ RootView.prototype._displayLoginSpan = function() {
     this.loginView.refresh();
   }
 };
+
+
+/**
+ * Called when the user clicks on the "Create New Page" button.
+ *
+ * @scope    private instance method
+ */
+RootView.prototype._clickOnNewPageButton = function(inEventObject, button) {
+  this.getWorld().beginTransaction();
+  var newPage = this.getWorld().newItem("new page");
+  var shortName = this.getWorld().getAttributeCalledShortName();
+  var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
+  var attributeCalledQuery = this.getWorld().getAttributeCalledQuery();
+  var categoryCalledQuery = this.getWorld().getCategoryCalledQuery();
+  var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
+  var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
+  var attributeCalledSection = this.getWorld().getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTION);
+  var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
+  var categoryCalledSection = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_SECTION);
+  newPage.addEntryForAttribute(shortName, "new page");
+  newPage.addEntryForAttribute(attributeCalledCategory, categoryCalledPage);
+  newPage.addEntryForAttribute(attributeCalledSummary, "this is a new page");
+  var newSection = this.getWorld().newItem("new section");
+  newSection.addEntryForAttribute(attributeCalledCategory, categoryCalledSection);
+  newPage.addEntryForAttribute(attributeCalledSection, newSection);
+  newSection.addEntryForAttribute(attributeCalledPluginName, SectionView.PLUGIN_TABLE);
+  var newQuery = this.getWorld().newItem("new query");
+  newQuery.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
+  newSection.addEntryForAttribute(attributeCalledQuery, newQuery);
+  this.getWorld().endTransaction();
+  
+  this.myHashTableOfPagesKeyedByUuid[newPage._getUuid()] = newPage;
+  window.location = this.getUrl(newPage);
+  RootView.ourSingleInstance.setCurrentContentViewFromUrl();
+};
+
+
+RootView.prototype.getUrl = function (item) {
+  Util.assert(item instanceof Item);
+  var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
+  var prefix;
+  if (item.isInCategory(categoryCalledPage)) {
+    prefix = RootView.URL_HASH_PAGE_PREFIX;
+  }
+  else {
+    prefix = RootView.URL_HASH_ITEM_PREFIX;
+  }
+  var url = prefix + item._getUuid();
+  return url;
+};
+
+
 /**
  * Re-creates the HTML for the Navbar, and hands the HTML to the browser 
  * to be re-drawn.
@@ -302,6 +352,11 @@ RootView.prototype.displayNavbar = function () {
   // write out the new control span content 
   var finalString = listOfStrings.join("");
   this.myNavbarDivElement.innerHTML = finalString;
+  
+  var newPageButton = View.createAndAppendElement(this.myNavbarDivElement, "input", RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL);
+  newPageButton.type = "button";
+  newPageButton.value = "Create New Page";
+  newPageButton.onclick = this._clickOnNewPageButton.bindAsEventListener(this, newPageButton);
 };
 
 

@@ -232,11 +232,11 @@ div.viewmode .header {
   float: right;
 }
 
-div.editmode .section_plugin_menu {
+div.editmode .edit_mode_only_control {
   display: block;
 }
 
-div.viewmode .section_plugin_menu {
+div.viewmode .edit_mode_only_control {
   display: none;
 }
 

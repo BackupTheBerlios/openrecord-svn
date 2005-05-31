@@ -42,7 +42,7 @@
 // TextView public class constants
 // -------------------------------------------------------------------
 TextView.ELEMENT_CLASS_TEXT_BLOCK = "text_block"; 
-TextView.PROVISIOINAL_COLOR = '#999999';
+TextView.PROVISIONAL_COLOR = '#999999';
 
 
 /**
@@ -127,7 +127,7 @@ TextView.prototype._buildView = function() {
   
   if (this._isProvisional) {
     this._oldColor = htmlElement.style.color;
-    htmlElement.style.color = TextView.PROVISIOINAL_COLOR;
+    htmlElement.style.color = TextView.PROVISIONAL_COLOR;
   }
   this.textNode = document.createTextNode(textString);
   htmlElement.appendChild(this.textNode);
