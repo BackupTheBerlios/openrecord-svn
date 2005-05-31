@@ -471,12 +471,14 @@ StubVirtualServer.prototype.getResultItemsForQuery = function (inQuery, inObserv
   }
   
   if (!isItemMatchingQuery && !isCategoryMatchingQuery) {
+    /*
     for (uuid in this.__myHashTableOfItemsKeyedByUuid) {
       item = this.__myHashTableOfItemsKeyedByUuid[uuid];
       if (!item.hasBeenDeleted()) {
         listOfQueryResultItems.push(item);
       }
     }
+    */
   }
   
   listOfQueryResultItems.sort(IdentifiedRecord.compareOrdinals);

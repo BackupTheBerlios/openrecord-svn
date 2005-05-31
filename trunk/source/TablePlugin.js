@@ -155,6 +155,11 @@ TablePlugin.prototype._buildAttributeHash = function() {
   }
   this._hashTableOfEntries = hashTableOfEntries;
   this._hashTableOfAttributes = hashTableOfAttributes;
+  if (Util.lengthOfHashTable(this._hashTableOfAttributes) < 1) {
+    var attributeCalledName = this.getWorld().getAttributeCalledName();
+    var key = attributeCalledName.getUniqueKeyString();
+    this._hashTableOfAttributes[key] = attributeCalledName;
+  }
 };
 
 

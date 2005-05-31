@@ -416,20 +416,42 @@ Util.addObjectToSet = function (inObject, inSet) {
   return true;
 };
 
+
+/**
+ * Returns the number of values in a hash table. 
+ * 
+ * @scope    public class method
+ * @param    inHashTable   A hashTable containing values.
+ * @return   The number of values in inHashTable.
+ */
+Util.lengthOfHashTable = function(inHashTable) {
+  Util.assert(Util.isHashTable(inHashTable));
+  var count = 0;
+  for (var key in inHashTable) {
+    count += 1;
+  }
+  return count;
+};
+
+
 /**
  * Return the values of a HashTable in the form of an Array
  * Analogous to Python hash.values() 
  * 
  * @scope    public class method
- * @param    inHashTable   hashTable to be worked on
- * @return   values of a HashTable in the form of an Array
+ * @param    inHashTable   A hashTable containing values.
+ * @return   An array containing the values that are in inHashTable.
  */
 Util.hashTableValues = function(inHashTable) {
   Util.assert(Util.isHashTable(inHashTable));
   var returnArray = [];
-  for (var key in inHashTable) {returnArray.push(inHashTable[key]);}
+  for (var key in inHashTable) {
+    returnArray.push(inHashTable[key]);
+  }
   return returnArray;
 };
+
+
 // -------------------------------------------------------------------
 // Methods for doing encryption
 // -------------------------------------------------------------------
