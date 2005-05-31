@@ -145,6 +145,22 @@ function RootView(inWorld) {
 
 
 // -------------------------------------------------------------------
+// Public class methods
+// -------------------------------------------------------------------
+
+/**
+ * Returns the singleton RootView instance.
+ *
+ * @deprecated INSTEAD USE THE INSTANCE METHOD getRootView() AVAILABLE ON ALL View INSTANCES.
+ * @scope    public class method
+ * @return   The singleton instance of RootView. 
+ */
+RootView.getRootView = function (inText) {
+  return RootView.ourSingleInstance;
+};
+
+
+// -------------------------------------------------------------------
 // Public instance methods
 // -------------------------------------------------------------------
 
@@ -160,6 +176,28 @@ RootView.prototype.getWorld = function () {
 
 
 /**
+ * Returns the page item to be used as the home page.
+ *
+ * @scope    public instance method
+ * @return   A page item.
+ */
+RootView.prototype.getHomePage = function () {
+  return this.getWorld().getItemFromUuid(RootView.UUID_FOR_HOME_PAGE);
+};
+
+
+/**
+ * Overrides the View method and returns this view.
+ *
+ * @scope    public instance method
+ * @return   This view.
+ */
+RootView.prototype.getRootView = function () {
+  return this;
+};
+
+
+/**
  * Returns true if we are in Edit Mode.
  *
  * @scope    public instance method
@@ -169,15 +207,51 @@ RootView.prototype.isInEditMode = function () {
   return this.myEditMode;
 };
 
-  
+    
 /**
- * Returns the page item to be used as the home page.
+ * Switches the UI into and out of edit mode.
  *
  * @scope    public instance method
- * @return   A page item.
+ * @param    inEditModeFlag    A boolean. True to switch into edit mode, false to switch out.
  */
-RootView.prototype.getHomePage = function () {
-  return this.getWorld().getItemFromUuid(RootView.UUID_FOR_HOME_PAGE);
+RootView.prototype.setEditMode = function (inEditModeFlag) {
+  if (inEditModeFlag != this.myEditMode) {
+    var world = this.getWorld();
+    if (this.myEditMode) {
+      // world.endTransaction();
+      // window.document.body.style.cursor = "auto";
+    } else {
+      // world.beginTransaction();
+      // window.document.body.style.cursor = "crosshair";
+    }
+    this.myEditMode = !this.myEditMode;
+    this.display();
+    // this.displayTextInDebugTextarea(this.myEditMode);
+    // if (!this.myEditMode && window.location && (window.location.protocol == "file:")) {
+    //  RootView.displayTextInDebugTextarea(world._getJsonStringRepresentingAllItems());
+    // }
+  }
+};
+
+
+/**
+ * Given an item, returns a relative URL that can be used to redirect the 
+ * browser to a page that displays that time.
+ *
+ * @scope    public instance method
+ * @param    item    Any item.
+ */
+RootView.prototype.getUrlForItem = function (item) {
+  Util.assert(item instanceof Item);
+  var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
+  var prefix;
+  if (item.isInCategory(categoryCalledPage)) {
+    prefix = RootView.URL_HASH_PAGE_PREFIX;
+  } else {
+    prefix = RootView.URL_HASH_ITEM_PREFIX;
+  }
+  var url = prefix + item._getUuid();
+  return url;
 };
 
 
@@ -260,29 +334,24 @@ RootView.prototype.display = function () {
   document.title = this._myCurrentContentView.getPageTitle() + " - openagenda.org";
   this._myRootDiv.className = (this.isInEditMode()) ? RootView.ELEMENT_CLASS_EDIT_MODE : RootView.ELEMENT_CLASS_VIEW_MODE;
   this._displayLoginSpan();
-  this.displayNavbar();
-  this.displayDebugArea();
+  this._displayNavbar();
+  this._displayDebugArea();
   this._myCurrentContentView.includeOnScreen(true);
   window.focus();
 };
 
 
-RootView.prototype._displayLoginSpan = function() {
-  if (!this.loginView) {
-    this.loginView = new LoginView(this,this.myMainControlSpanElement);
-    this.loginView.refresh();
-  }
-};
-
-
 /**
- * Called when the user clicks on the "Create New Page" button.
+ * Creates a new page.  Creates an new item representing a page, gives the
+ * item an initial name and short name, puts one section in the page, and
+ * sets up an initial query for the section.
  *
- * @scope    private instance method
+ * @scope    public instance method
+ * @return   The newly created page item.
  */
-RootView.prototype._clickOnNewPageButton = function(inEventObject, button) {
+RootView.prototype.newPage = function () {
   this.getWorld().beginTransaction();
-  var newPage = this.getWorld().newItem("new page");
+  var newPage = this.getWorld().newItem("New Page");
   var shortName = this.getWorld().getAttributeCalledShortName();
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var attributeCalledQuery = this.getWorld().getAttributeCalledQuery();
@@ -292,36 +361,44 @@ RootView.prototype._clickOnNewPageButton = function(inEventObject, button) {
   var attributeCalledSection = this.getWorld().getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTION);
   var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
   var categoryCalledSection = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_SECTION);
-  newPage.addEntryForAttribute(shortName, "new page");
+  newPage.addEntryForAttribute(shortName, "New Page");
   newPage.addEntryForAttribute(attributeCalledCategory, categoryCalledPage);
-  newPage.addEntryForAttribute(attributeCalledSummary, "this is a new page");
-  var newSection = this.getWorld().newItem("new section");
+  newPage.addEntryForAttribute(attributeCalledSummary, "This is a new page.");
+  var newSection = this.getWorld().newItem("New Section");
   newSection.addEntryForAttribute(attributeCalledCategory, categoryCalledSection);
   newPage.addEntryForAttribute(attributeCalledSection, newSection);
   newSection.addEntryForAttribute(attributeCalledPluginName, SectionView.PLUGIN_TABLE);
-  var newQuery = this.getWorld().newItem("new query");
+  var newQuery = this.getWorld().newItem("New Query");
   newQuery.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
   newSection.addEntryForAttribute(attributeCalledQuery, newQuery);
   this.getWorld().endTransaction();
   
   this.myHashTableOfPagesKeyedByUuid[newPage._getUuid()] = newPage;
-  window.location = this.getUrl(newPage);
-  RootView.ourSingleInstance.setCurrentContentViewFromUrl();
+  
+  return newPage;
 };
 
 
-RootView.prototype.getUrl = function (item) {
-  Util.assert(item instanceof Item);
-  var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
-  var prefix;
-  if (item.isInCategory(categoryCalledPage)) {
-    prefix = RootView.URL_HASH_PAGE_PREFIX;
+/**
+ * Returns a list of the page items in the repository.
+ *
+ * @scope    public instance method
+ * @return   A list of items that represent pages.
+ */
+RootView.prototype.getPages = function () {
+  return this.myHashTableOfPagesKeyedByUuid;
+};
+
+    
+
+// -------------------------------------------------------------------
+// Private instance methods
+// -------------------------------------------------------------------
+RootView.prototype._displayLoginSpan = function() {
+  if (!this.loginView) {
+    this.loginView = new LoginView(this,this.myMainControlSpanElement);
+    this.loginView.refresh();
   }
-  else {
-    prefix = RootView.URL_HASH_ITEM_PREFIX;
-  }
-  var url = prefix + item._getUuid();
-  return url;
 };
 
 
@@ -331,32 +408,11 @@ RootView.prototype.getUrl = function (item) {
  *
  * @scope    public instance method
  */
-RootView.prototype.displayNavbar = function () {
-  Util.assert(this.myNavbarDivElement instanceof HTMLDivElement);
-
-  var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
-  var listOfStrings = [];
-
-  listOfStrings.push("<ul class=\"menu\">");
-  
-  for (var uuid in this.myHashTableOfPagesKeyedByUuid) {
-    var page = this.myHashTableOfPagesKeyedByUuid[uuid];
-    var menuText = page.getSingleStringValueFromAttribute(attributeCalledShortName);
-    var menuUrl = RootView.URL_HASH_PAGE_PREFIX + page._getUuid();
-    listOfStrings.push("<li class=\"menu_item\"><a href=\"" + menuUrl + "\" onclick=\"RootView.clickOnLocalLink(event)\">" + menuText + "</a></li>");
+RootView.prototype._displayNavbar = function () {
+  if (!this.navbarView) {
+    this.navbarView = new NavbarView(this, this.myNavbarDivElement);
+    this.navbarView.refresh();
   }
-
-  listOfStrings.push("</ul>");
-  // listOfStrings.push("<p><a href=\"http://www.opensource.org/\"><img src=\"osi-certified-60x50.png\" width=\"60\" height=\"50\" alt=\"OSI logo\"></img></a></p>");
-  
-  // write out the new control span content 
-  var finalString = listOfStrings.join("");
-  this.myNavbarDivElement.innerHTML = finalString;
-  
-  var newPageButton = View.createAndAppendElement(this.myNavbarDivElement, "input", RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL);
-  newPageButton.type = "button";
-  newPageButton.value = "Create New Page";
-  newPageButton.onclick = this._clickOnNewPageButton.bindAsEventListener(this, newPageButton);
 };
 
 
@@ -366,7 +422,7 @@ RootView.prototype.displayNavbar = function () {
  *
  * @scope    public instance method
  */
-RootView.prototype.displayDebugArea = function () {
+RootView.prototype._displayDebugArea = function () {
   Util.assert(this.myDebugDivElement instanceof HTMLDivElement);
 
   var listOfStrings = [];
@@ -454,7 +510,7 @@ RootView.prototype.displayObjectInDebugTextarea = function (inObject) {
 
 /**
  * Called when the user clicks on a menu item in the navbar, or on any other 
- * auto-generated link that points to other Blue-sky content.
+ * auto-generated link that points to other OpenRecord content.
  * 
  * Called from an HTML "li" element or an HTML "a" element on a generated page.
  * There is no need to call this method directly.
@@ -467,6 +523,7 @@ RootView.clickOnLocalLink = function (inEventObject) {
   
   var startTiming = new Date();
   
+  // Cursor styles available:
   // "wait", "auto", "default", "crosshair", "help"
   // "n-resize", "s-resize", "e-resize", "w-resize"
   // "ne-resize", "se-resize", "nw-resize", "sw-resize"
@@ -482,57 +539,6 @@ RootView.clickOnLocalLink = function (inEventObject) {
   var stopTiming = new Date();
   var delayInMilliseconds = stopTiming.getTime() - startTiming.getTime();
   RootView.ourSingleInstance.displayStatusBlurb("Page load: " + delayInMilliseconds + " milliseconds");
-};
-
-  
-/**
- * Called when the user clicks on the big "Edit" button.
- * 
- * Called from an HTML "input type='button'" element on the generated page.  
- * There is no need to call this method directly.
- *
- * @scope    public instance method
- * @param    inEventObject    An event object. 
- */
-// RootView.prototype.clickOnEditButton = function (inEventObject) {
-//  this.setEditMode(!this.myEditMode);
-// };
-
-
-/**
- * Switches the UI into and out of edit mode.
- *
- * @scope    public instance method
- * @param    inEditModeFlag    A boolean. True to switch into edit mode, false to switch out.
- */
-RootView.prototype.setEditMode = function (inEditModeFlag) {
-  if (inEditModeFlag != this.myEditMode) {
-    var world = this.getWorld();
-    if (this.myEditMode) {
-      // world.endTransaction();
-      // window.document.body.style.cursor = "auto";
-    } else {
-      // world.beginTransaction();
-      // window.document.body.style.cursor = "crosshair";
-    }
-    this.myEditMode = !this.myEditMode;
-    this.display();
-    // this.displayTextInDebugTextarea(this.myEditMode);
-    // if (!this.myEditMode && window.location && (window.location.protocol == "file:")) {
-    //  RootView.displayTextInDebugTextarea(world._getJsonStringRepresentingAllItems());
-    // }
-  }
-};
-
-
-/**
- * Overrides the View method and returns this view.
- *
- * @scope    public instance method
- * @return   This view.
- */
-RootView.prototype.getRootView = function () {
-  return this;
 };
 
 // -------------------------------------------------------------------

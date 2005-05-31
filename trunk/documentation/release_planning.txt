@@ -71,9 +71,13 @@ Tasks we need to do for the release 0.1 user stories
 
 ied == an "ideal engineering day", with just coding, and no distractions
 
+---------------------------------------------------------------------------
+   Tasks we originally identified for release 0.1, back on May 2, 2005
+-------+----------+---------+----------------------------------------------
 Who    | Priority | Estimate| Task
 -------+----------+---------+----------------------------------------------
-Mignon |  High    | 1   ied | UI for adding an attribute to an item, and setting the expected data type of an attribute
+Mignon |  High    | 1   ied | UI for adding an attribute to an item
+       |          |         | UI for setting the expected data type of an attribute
 Mignon |  High    | 1   ied | UI for creating a new category
 Mignon |  High    | 1   ied | UI for deleting a row from a table 
  Chao  |   done   | 1.5 ied | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
@@ -93,10 +97,27 @@ Brian  |   done   | 1   ied | Replace the BigLumpVirtualServer with an DeltaVirt
        |   Low    |         | UI for creating a new page
  Chao  |   done   |         | UI for creating a new user
 -------+----------+---------+----------------------------------------------
- Chao  |  done    | 0   ied | UI for entering a new row in a table (1.5 ied actual)
+ 
+
+---------------------------------------------------------------------------
+   Additional "hidden" tasks that we uncovered during May
+-------+----------+---------+----------------------------------------------
+Who    | Priority | Estimate| Task
+-------+----------+---------+----------------------------------------------
+ Chao  |   done   | 0   ied | Re-implement UI for entering a new row in a table (1.5 ied actual)
 Brian  |   done   | 1   ied | Ensure that UUIDs are unique in multi-user use case
+-------+----------+---------+----------------------------------------------
+
+
+---------------------------------------------------------------------------
+   New tasks that we decided to take on for release 0.1
+-------+----------+---------+----------------------------------------------
+Who    | Priority | Estimate| Task
+-------+----------+---------+----------------------------------------------
+Mignon |   Low    |         | Generate time-based UUIDs ("version 1" UUIDs)
 Chao   | High     | 1   ied | Allow users to view multiple entries in a table plugin cell
 Chao   | High     | 2   ied | Allow users to enter/edit multiple entries in a table plugin cell
+-------+----------+---------+----------------------------------------------
  
 
        

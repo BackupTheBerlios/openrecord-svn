@@ -47,19 +47,16 @@ LoginView.COOKIE_NAME = "useruuid";
 
 
 /**
- * The LoginView uses an instance of a LoginView to display an Item in the
- * browser window.
+ * The RootView uses an instance of a LoginView to display a login prompt,
+ * as well as controls for creating a new user account.
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    inLoginView    The LoginView that this LoginView is nested in. 
+ * @param    inSuperView    The view that this LoginView is nested in. 
  * @param    inHTMLElement    The HTMLElement to display the HTML in. 
- * @param    inItem    The item to be displayed by this view. 
  */
 LoginView.prototype = new View();  // makes LoginView be a subclass of View
 function LoginView(inSuperView, inHTMLElement) {
-  Util.assert(inHTMLElement instanceof HTMLElement);
-
   // instance properties
   this.setSuperview(inSuperView);
   this.setHTMLElement(inHTMLElement);
@@ -69,6 +66,10 @@ function LoginView(inSuperView, inHTMLElement) {
   this.myCookie.load();
 }
 
+
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
 
 /**
  * Re-creates all the HTML for the LoginView, and hands the HTML to the 
@@ -83,11 +84,15 @@ LoginView.prototype.refresh = function () {
 };
 
 
+// -------------------------------------------------------------------
+// Private instance methods
+// -------------------------------------------------------------------
+
 /**
  * Re-creates the HTML for the chrome area containing the controls,
  * and hands the HTML to the browser to be re-drawn.
  *
- * @scope    public instance method
+ * @scope    private instance method
  */
 LoginView.prototype._rebuildView = function () {
   var mySpan = this.getHTMLElement();
@@ -204,6 +209,10 @@ LoginView.prototype._rebuildView = function () {
   }
 };
 
+
+// -------------------------------------------------------------------
+// Event handler methods
+// -------------------------------------------------------------------
 
 /**
  * Called when sign out button is clicked.
@@ -329,6 +338,10 @@ LoginView.prototype._clickOnEditButton = function (inEventObject) {
   this._rebuildView();
 };
 
+
+// -------------------------------------------------------------------
+// Private helper methods
+// -------------------------------------------------------------------
 
 LoginView.prototype._loginUser = function (user, password) {
   var loginSuccess = this.getWorld().login(user, password); 

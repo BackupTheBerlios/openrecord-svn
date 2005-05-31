@@ -42,11 +42,9 @@
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
 function View() {
-  // alert("View constructor");
   this._mySuperview = null;
   this._myHTMLElement = null;
   this._myHasEverBeenDisplayedFlag = false;
-  
 }
 
 
@@ -84,7 +82,6 @@ View.prototype.setHTMLElement = function (inHTMLElement) {
   Util.assert(inHTMLElement instanceof HTMLElement);
 
   this._myHTMLElement = inHTMLElement;
-  // this.display();
 };
 
 
@@ -111,6 +108,21 @@ View.prototype.getWorld = function () {
 
 
 /**
+ * Returns the root view of the view hierarchy.
+ *
+ * @scope    public instance method
+ * @return   An instance of RootView.
+ */
+View.prototype.getRootView = function() {
+  if (!this.getSuperview()) {
+    return null;
+  } else {
+    return this.getSuperview().getRootView();
+  }
+};
+
+
+/**
  * Returns true if we are in Edit Mode.
  *
  * @scope    public instance method
@@ -118,6 +130,33 @@ View.prototype.getWorld = function () {
  */
 View.prototype.isInEditMode = function () {
   return this._mySuperview.isInEditMode();
+};
+
+
+/**
+ * Returns true if this view has ever been displayed
+ *
+ * @scope    public instance method
+ * @return   A boolean value. True if the view has ever been displayed.
+ */
+View.prototype.hasEverBeenDisplayed = function () {
+  return this._myHasEverBeenDisplayedFlag;
+};
+
+
+/**
+ * Re-creates all the HTML for the View, and hands the HTML to the 
+ * browser to be re-drawn.
+ *
+ * @scope    public instance method
+ */
+View.prototype.refresh = function () {
+  if (!this.hasEverBeenDisplayed()) {
+    // generate HTML elements for the view
+    this._myHasEverBeenDisplayedFlag = true;
+  } else {
+    // update existing HTML elements for the view
+  }
 };
 
 
@@ -193,13 +232,7 @@ View.createAndAppendTextNode = function (inElement, inText) {
   return newTextNode;
 };
 
-View.prototype.getRootView = function() {
-  if (!this.getSuperview()) {return null;}
-  else {
-    return this.getSuperview().getRootView();
-  }
-};
+
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------
-
