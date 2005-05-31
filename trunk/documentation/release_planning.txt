@@ -95,6 +95,8 @@ Brian  |   done   | 1   ied | Replace the BigLumpVirtualServer with an DeltaVirt
 -------+----------+---------+----------------------------------------------
  Chao  |  done    | 0   ied | UI for entering a new row in a table (1.5 ied actual)
 Brian  |   done   | 1   ied | Ensure that UUIDs are unique in multi-user use case
+Chao   | High     | 1   ied | Allow users to view multiple entries in a table plugin cell
+Chao   | High     | 2   ied | Allow users to enter/edit multiple entries in a table plugin cell
  
 
        
