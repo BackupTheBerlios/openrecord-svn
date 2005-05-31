@@ -145,8 +145,8 @@ function World(inVirtualServer) {
  * Marks the beginning of a transaction.
  *
  * Each time you call beginTransaction() you open a new transaction, 
- * which you need to close later using endTransation().  Transactions
- * may be nested, but the beginTransaction and endTransation calls
+ * which you need to close later using endTransaction().  Transactions
+ * may be nested, but the beginTransaction and endTransaction calls
  * always need to come in pairs. 
  *
  * @scope    public instance method
@@ -411,16 +411,25 @@ World.prototype.logout = function () {
  */
 World.prototype.getUsers = function () {
   var listOfUsers = this.__myVirtualServer.getUsers();
-  var filteredListOfUsers = [];
-  var user;
+  return this._getFilteredList(listOfUsers);
+};
+
+World.prototype.getCategories = function () {
+  var listOfCategories = this.__myVirtualServer.getCategories();
+  return this._getFilteredList(listOfCategories);
+};
+
+World.prototype._getFilteredList = function(unfilteredList) {
+  var filteredList = [];
+  var item;
   
   var filter = this.getRetrievalFilter();
   switch (filter) {
     case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
-      for (var key in listOfUsers) {
-        user = listOfUsers[key];
-        if (!user.hasBeenDeleted()) {
-          filteredListOfUsers.push(user);
+      for (var key in unfilteredList) {
+        item = unfilteredList[key];
+        if (!item.hasBeenDeleted()) {
+          filteredList.push(item);
         }
       }
       break;
@@ -433,7 +442,7 @@ World.prototype.getUsers = function () {
       Util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_UNABRIDGED:
-      filteredListOfUsers = listOfUsers;
+      filteredList = unfilteredList;
       break;
     default:
       // We should never get here.  If we get here, it's an error.
@@ -441,8 +450,8 @@ World.prototype.getUsers = function () {
       break;
   }
 
-  filteredListOfUsers.sort(IdentifiedRecord.compareOrdinals);
-  return filteredListOfUsers;
+  filteredList.sort(IdentifiedRecord.compareOrdinals);
+  return filteredList;
 };
 
 

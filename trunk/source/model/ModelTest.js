@@ -501,6 +501,34 @@ function testQueries() {
   world.logout();
 }
 
+
+/*
+Tests World._getFilteredList, via World.getUsers and World.getCategories.
+*/
+function testFilteredLists() {
+  var world = new World();
+  var listOfUsers = world.getUsers();
+  assertTrue("Initially, there's only an axiomatic user", listOfUsers.length == 1);
+  var janesPassword = "jane's password";
+  var userJane = world.newUser("Jane Doe", janesPassword);  
+  listOfUsers = world.getUsers();
+  assertTrue("Now there are two users", listOfUsers.length == 2);
+
+  var listOfCategories = world.getCategories();
+  var origNumberOfCategories = listOfCategories.length;
+  assertTrue("Should be at least 3 categories", origNumberOfCategories >= 3);
+  
+  // Need to login before adding a category.
+  loginSuccess = world.login(userJane, janesPassword);
+  assertTrue('login succeeded', loginSuccess);
+  assertTrue('Jane is logged in', world.getCurrentUser() == userJane);  
+
+  var categoryCalledBlueThings = world.newCategory("BlueThings");
+  listOfCategories = world.getCategories();
+  assertTrue("Should be exactly one more category than before.", listOfCategories.length == origNumberOfCategories + 1);
+}
+
+
 /*
 function testBigLumpVirtualServerStringOutput() {
   var fileName = "test_data_2005_april_chronological_lump.json";

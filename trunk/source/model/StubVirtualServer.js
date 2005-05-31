@@ -283,6 +283,17 @@ StubVirtualServer.prototype.getUsers = function () {
   return this.__myListOfUsers;
 };
 
+StubVirtualServer.prototype.getCategories = function () {
+  var listOfCategories = [];
+  for (var key in this.__myHashTableOfItemsKeyedByUuid) {
+    var item = this.__myHashTableOfItemsKeyedByUuid[key];
+    var categoryCalledCategory = this.getItemFromUuid(World.UUID_FOR_CATEGORY_CATEGORY);
+    if (item.isInCategory(categoryCalledCategory)) {
+      listOfCategories.push(item);
+    }
+  }
+  return listOfCategories;
+};
 
 /**
  * Returns an item representing the user who is currently logged in.
