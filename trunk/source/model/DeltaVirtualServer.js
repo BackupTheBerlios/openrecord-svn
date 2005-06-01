@@ -91,6 +91,7 @@ DeltaVirtualServer.prototype = new StubVirtualServer();  // makes DeltaVirtualSe
 function DeltaVirtualServer(inJsonRepositoryString, inJsonUserList) {
   this._myDehydratedWorld = inJsonRepositoryString;
   this._myDehydratedUserList = inJsonUserList;
+  this._myHasEverFailedToSaveFlag = false;
 }
 
 
@@ -640,7 +641,10 @@ DeltaVirtualServer.prototype.saveChangesToServer = function (inForceSave) {
       saveChanges = true;
     }
     if (window.location.protocol == "file:") {
-      window.alert("I can't save changes to server, because this page was loaded from a \"file:///\" location, not a real \"http://\" location.  Sorry."); 
+      if (!this._myHasEverFailedToSaveFlag) {
+        window.alert("I can't save changes to server, because this page was loaded from a \"file:///\" location, not a real \"http://\" location.  Sorry."); 
+        this._myHasEverFailedToSaveFlag = true;
+      }
     }
   }
   
