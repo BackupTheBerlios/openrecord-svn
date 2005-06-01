@@ -319,6 +319,49 @@ World.prototype.setRetrievalFilter = function (inFilter) {
 };
 
 
+/**
+ * Given a list of items, returns a filtered list based on the
+ * retrieval filter currently set for this world.
+ *
+ * @scope    public instance method
+ * @return   A list of items that made it through the filter.
+ */
+World.prototype._getFilteredList = function(unfilteredList) {
+  var filteredList = [];
+  var item;
+  
+  var filter = this.getRetrievalFilter();
+  switch (filter) {
+    case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
+      for (var key in unfilteredList) {
+        item = unfilteredList[key];
+        if (!item.hasBeenDeleted()) {
+          filteredList.push(item);
+        }
+      }
+      break;
+    case World.RETRIEVAL_FILTER_SINGLE_USER:
+      // PENDING: This still needs to be implemented.
+      Util.assert(false);
+      break;
+    case World.RETRIEVAL_FILTER_DEMOCRATIC:
+      // PENDING: This still needs to be implemented.
+      Util.assert(false);
+      break;
+    case World.RETRIEVAL_FILTER_UNABRIDGED:
+      filteredList = unfilteredList;
+      break;
+    default:
+      // We should never get here.  If we get here, it's an error.
+      Util.assert(false);
+      break;
+  }
+
+  filteredList.sort(IdentifiedRecord.compareOrdinals);
+  return filteredList;
+};
+
+
 // -------------------------------------------------------------------
 // Accessor methods for axiomatic attributes
 // -------------------------------------------------------------------
@@ -407,51 +450,11 @@ World.prototype.logout = function () {
  * Returns an list of all the items that represent users of this datastore.
  *
  * @scope    public instance method
- * @return   A list of items.
+ * @return   A list of items that represent users.
  */
 World.prototype.getUsers = function () {
   var listOfUsers = this.__myVirtualServer.getUsers();
   return this._getFilteredList(listOfUsers);
-};
-
-World.prototype.getCategories = function () {
-  var listOfCategories = this.__myVirtualServer.getCategories();
-  return this._getFilteredList(listOfCategories);
-};
-
-World.prototype._getFilteredList = function(unfilteredList) {
-  var filteredList = [];
-  var item;
-  
-  var filter = this.getRetrievalFilter();
-  switch (filter) {
-    case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
-      for (var key in unfilteredList) {
-        item = unfilteredList[key];
-        if (!item.hasBeenDeleted()) {
-          filteredList.push(item);
-        }
-      }
-      break;
-    case World.RETRIEVAL_FILTER_SINGLE_USER:
-      // PENDING: This still needs to be implemented.
-      Util.assert(false);
-      break;
-    case World.RETRIEVAL_FILTER_DEMOCRATIC:
-      // PENDING: This still needs to be implemented.
-      Util.assert(false);
-      break;
-    case World.RETRIEVAL_FILTER_UNABRIDGED:
-      filteredList = unfilteredList;
-      break;
-    default:
-      // We should never get here.  If we get here, it's an error.
-      Util.assert(false);
-      break;
-  }
-
-  filteredList.sort(IdentifiedRecord.compareOrdinals);
-  return filteredList;
 };
 
 
@@ -753,6 +756,22 @@ World.prototype.getItemsInCategory = function (inCategory, inObserver) {
 
 
 /**
+ * Returns an list of all the items that represent categories.
+ *
+ * @scope    public instance method
+ * @return   A list of items that represent categories.
+ */
+World.prototype.getCategories = function () {
+  var listOfCategories = this.__myVirtualServer.getCategories();
+  return this._getFilteredList(listOfCategories);
+};
+
+
+// -------------------------------------------------------------------
+// Observer methods
+// -------------------------------------------------------------------
+
+/**
  * Registers an object or method as an observer of a list, so that
  * the observer will be notified when items in the list change.
  *
@@ -848,6 +867,7 @@ World.prototype.removeItemObserver = function (inItem, inObserver) {
   } 
   return observerWasRemoved;
 };
+
 
 // -------------------------------------------------------------------
 // End of file
