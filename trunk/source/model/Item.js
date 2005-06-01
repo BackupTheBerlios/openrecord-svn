@@ -222,7 +222,7 @@ Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribut
  * @return   A list of entry objects.
  */
 Item.prototype.getEntriesForAttribute = function (inAttribute) {
-  Util.assert(inAttribute instanceof IdentifiedRecord);
+  Util.assert(inAttribute instanceof Item);
   var listOfEntriesForAttribute = this.__myHashTableOfEntryListsKeyedByAttributeUuid[inAttribute._getUuid()];
   if (!listOfEntriesForAttribute) {
     listOfEntriesForAttribute = [];
@@ -314,6 +314,7 @@ Item.prototype.getAttributes = function () {
 Item.prototype.isProvisional = function() {
   return this.__myProvisionalFlag;
 };
+
 
 /**
  * Returns a display name for the item.
