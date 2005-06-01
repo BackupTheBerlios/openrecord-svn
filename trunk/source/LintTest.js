@@ -28,70 +28,13 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
-var Lint = {};
-
-
-/**
- * Given a string containing JavaScript code, returns true if the code passes 
- * the lint tests.
- *
- * @scope    public class method
- * @param    inString    A string containing JavaScript code. 
- * @return   A boolean value. True if the code is good (according to jslint).
- */
-Lint.isCodeCleanInString = function(inString) {
-  jslint.laxLineEnd = false;
-  jslint.plusplus = true;
-  jslint.cap = false;
-  jslint.jscript = false;
-  jslint(inString);
-  var report = jslint.report();
-  var jslingIsOkay = (report.substr(0, 2) == 'ok');
-  var noTabs = (inString.indexOf("\t") == -1);
-  var noBackspaces = (inString.indexOf("\b") == -1);
-  var noCarriageReturns = (inString.indexOf("\r") == -1);
-  var noFormFeeds = (inString.indexOf("\f") == -1);
-  var allClean = jslingIsOkay && noTabs && noBackspaces && noCarriageReturns && noFormFeeds;
-  return (allClean);
-}; 
-
-
-/**
- * Given the URL of a file containing JavaScript code, returns true if the code 
- * passes the lint tests.
- *
- * @scope    public class method
- * @param    inUrl    A string with the URL of a file containing JavaScript code. 
- * @return   A boolean value. True if the code is good (according to jslint).
- */
-Lint.isCodeCleanAtUrl = function(inUrl) {
-  var anXMLHttpRequestObject = new XMLHttpRequest();
-  anXMLHttpRequestObject.open("GET", inUrl, false);
-  anXMLHttpRequestObject.send(null);
-  var fileContents = anXMLHttpRequestObject.responseText;
-  return Lint.isCodeCleanInString(fileContents);
-};
-
-
-/**
- * Given the name of a file containing JavaScript code, returns true if the 
- * code passes the lint tests.
- *
- * @scope    public class method
- * @param    inFileName    A string with the name of a file containing JavaScript code. 
- * @return   A boolean value. True if the code is good (according to jslint).
- */
-Lint.isCodeCleanInFile = function(inFileName) {
-  var url  = "../../../source/" + inFileName;
-  return Lint.isCodeCleanAtUrl(url);
-};
 
 function setUp() {
 }
 
 function testJsLintOnGoodCodeFragment() {
   var textToRunLintOn = "function iggy() { var pop = 'no fun'; }";
-  assertTrue("jslint says clean code is clean", Lint.isCodeCleanInString(textToRunLintOn));
+  assertTrue("jslint says clean code is clean", !LintTool.getErrorReportForCodeInString(textToRunLintOn));
 }
 
 function testJsLintOnBadCodeFragment() {
@@ -106,14 +49,15 @@ function testJsLintOnBadCodeFragment() {
   // isCodeCleanInString() method should catch
   var badFragmentThree = "function iggy() \r { var pop = 'no fun'; } ";
   
-  assertFalse("jslint says dirty code is dirty", Lint.isCodeCleanInString(badFragmentOne));
-  assertFalse("jslint says dirty code is dirty", Lint.isCodeCleanInString(badFragmentTwo));
-  assertFalse("jslint says dirty code is dirty", Lint.isCodeCleanInString(badFragmentThree));
+  assertFalse("jslint says dirty code is dirty", !LintTool.getErrorReportForCodeInString(badFragmentOne));
+  assertFalse("jslint says dirty code is dirty", !LintTool.getErrorReportForCodeInString(badFragmentTwo));
+  assertFalse("jslint says dirty code is dirty", !LintTool.getErrorReportForCodeInString(badFragmentThree));
 }
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
     "Util.js",
+    "LintTool.js",
     "View.js",
     "RootView.js",
     "ItemView.js",
@@ -128,10 +72,10 @@ function testJsLintOnOpenRecordCode() {
     "BarChartPlugin.js",
     "demo_page.js",
     "UtilTest.js"];
-  for (var key in listOfSourceCodeFiles) {
-    var fileName = listOfSourceCodeFiles[key];
-    assertTrue("jslint says " + fileName + " is clean", Lint.isCodeCleanInFile(fileName));
-  }
+  var prefix = "../../../source/";
+  var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
+  var message = "Lint check \n" + errorReport;
+  assertTrue(message, !errorReport);
 }
 
 function tearDown() {
