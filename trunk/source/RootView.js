@@ -352,7 +352,7 @@ RootView.prototype.display = function () {
 RootView.prototype.newPage = function () {
   this.getWorld().beginTransaction();
   var newPage = this.getWorld().newItem("New Page");
-  var shortName = this.getWorld().getAttributeCalledShortName();
+  // var shortName = this.getWorld().getAttributeCalledShortName();
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var attributeCalledQuery = this.getWorld().getAttributeCalledQuery();
   var categoryCalledQuery = this.getWorld().getCategoryCalledQuery();
@@ -361,7 +361,7 @@ RootView.prototype.newPage = function () {
   var attributeCalledSection = this.getWorld().getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTION);
   var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
   var categoryCalledSection = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_SECTION);
-  newPage.addEntryForAttribute(shortName, "New Page");
+  // newPage.addEntryForAttribute(shortName, "New Page");
   newPage.addEntryForAttribute(attributeCalledCategory, categoryCalledPage);
   newPage.addEntryForAttribute(attributeCalledSummary, "This is a new page.");
   var newSection = this.getWorld().newItem("New Section");

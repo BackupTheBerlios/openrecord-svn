@@ -89,6 +89,9 @@ NavbarView.prototype._rebuildView = function () {
   for (var key in listOfPages) {
     var page = listOfPages[key];
     var menuText = page.getSingleStringValueFromAttribute(attributeCalledShortName);
+    if (!menuText) {
+      menuText = page.getDisplayName();
+    }
     var menuUrl = rootView.getUrlForItem(page);
     listOfStrings.push("<li class=\"menu_item\"><a href=\"" + menuUrl + "\" onclick=\"RootView.clickOnLocalLink(event)\">" + menuText + "</a></li>");
   }
