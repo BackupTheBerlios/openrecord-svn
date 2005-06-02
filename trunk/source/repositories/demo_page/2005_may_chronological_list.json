@@ -516,11 +516,6 @@
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
-
-  
-  
-  
-  
   // -----------------------------------------------------------------------
   { "Entry": {                             // Text
            "uuid": "88801200",
@@ -771,7 +766,7 @@
       "timestamp": "1114819457765" }
   },
   // -----------------------------------------------------------------------
-  { "Item": {                             // Book
+  { "Item": {                             // Old Book
            "uuid": "3104",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819457781" }
@@ -933,72 +928,6 @@
       "timestamp": "1114819458062" }
   },
   // -----------------------------------------------------------------------
-  { "Item": {                             // Make it possible to assign ...
-           "uuid": "4304",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458062" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Allow for entering number-v...
-           "uuid": "4305",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458078" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Have table mode show multi-...
-           "uuid": "4306",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458093" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // When you assign a value to ...
-           "uuid": "4307",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458093" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Clean up all the code that ...
-           "uuid": "4308",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458109" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Be able to create new pages
-           "uuid": "4309",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458125" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Be able to add a new sectio...
-           "uuid": "4310",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458125" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Observable queries: all ite...
-           "uuid": "4311",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458140" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Observable queries: limit r...
-           "uuid": "4312",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458156" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Be able to edit the query o...
-           "uuid": "4313",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458156" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Make it possible to add new...
-           "uuid": "4314",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458171" }
-  },
-  // -----------------------------------------------------------------------
   { "Item": {                             // Figure out how to declare d...
            "uuid": "4315",
       "userstamp": "1502",                // by (Guest)
@@ -1141,24 +1070,6 @@
            "uuid": "5209",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458437" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // All Items
-           "uuid": "6000",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458437" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // All Items
-           "uuid": "6010",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458453" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Query for all items
-           "uuid": "6011",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458468" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // JavaScript: The Definitive ...
@@ -1371,7 +1282,7 @@
       "timestamp": "1114819459093" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6040",
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "3011",                // Query for all books
@@ -1402,7 +1313,7 @@
            "uuid": "6043",
       "attribute": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
            "item": "3021",                // Query for one book
-          "value": { "type": "RelatedUuid", "value": "3205" },
+          "value": { "type": "RelatedUuid", "value": "bc9d5cce-99f7-42ad-85dc-36491cac46ba" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459171" }
   },
@@ -1410,22 +1321,22 @@
   { "Entry": {                             // Category
            "uuid": "6044",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "3104",                // Book
+           "item": "3104",                // Old Book
           "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459203" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6045",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "3104",                // Book
-          "value": { "type": "StringValue", "value": "Book" },
+           "item": "3104",                // Old Book
+          "value": { "type": "StringValue", "value": "Old Book" },
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459218" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6046",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3205",                // HTTP: The Definitive Guide
@@ -1524,7 +1435,7 @@
       "timestamp": "1114819459453" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6057",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3201",                // The Transparent Society
@@ -1569,7 +1480,7 @@
       "timestamp": "1114819459546" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6062",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3202",                // The Hobbit
@@ -1623,7 +1534,7 @@
       "timestamp": "1114819459656" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6068",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3203",                // The Wisdom of Crowds
@@ -1668,7 +1579,7 @@
       "timestamp": "1114819459765" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6073",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3204",                // Shrinking Violets and Caspa...
@@ -2236,204 +2147,6 @@
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
-           "uuid": "6136",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4304",                // Make it possible to assign ...
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461125" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Make it possible to assign ...
-           "uuid": "6137",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4304",                // Make it possible to assign ...
-          "value": { "type": "StringValue", "value": "Make it possible to assign items to categories -- allow for entering reference-values, not just string-values" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461140" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
-           "uuid": "6138",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4305",                // Allow for entering number-v...
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461171" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Allow for entering number-v...
-           "uuid": "6139",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4305",                // Allow for entering number-v...
-          "value": { "type": "StringValue", "value": "Allow for entering number-values, not just string-values" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461187" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
-           "uuid": "6140",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4306",                // Have table mode show multi-...
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461218" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Have table mode show multi-...
-           "uuid": "6141",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4306",                // Have table mode show multi-...
-          "value": { "type": "StringValue", "value": "Have table mode show multi-valued attributes" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461234" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
-           "uuid": "6142",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4307",                // When you assign a value to ...
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461250" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // When you assign a value to ...
-           "uuid": "6143",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4307",                // When you assign a value to ...
-          "value": { "type": "StringValue", "value": "When you assign a value to an item, mark it with a timestamp" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461265" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
-           "uuid": "6144",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4308",                // Clean up all the code that ...
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461296" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Clean up all the code that ...
-           "uuid": "6145",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4308",                // Clean up all the code that ...
-          "value": { "type": "StringValue", "value": "Clean up all the code that assumes single-valued attributes -- search for '[0]'" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461312" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
-           "uuid": "6146",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4309",                // Be able to create new pages
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461343" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Be able to create new pages
-           "uuid": "6147",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4309",                // Be able to create new pages
-          "value": { "type": "StringValue", "value": "Be able to create new pages" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461359" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
-           "uuid": "6148",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4310",                // Be able to add a new sectio...
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461390" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Be able to add a new sectio...
-           "uuid": "6149",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4310",                // Be able to add a new sectio...
-          "value": { "type": "StringValue", "value": "Be able to add a new section to a page" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461406" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
-           "uuid": "6150",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4311",                // Observable queries: all ite...
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461437" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Observable queries: all ite...
-           "uuid": "6151",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4311",                // Observable queries: all ite...
-          "value": { "type": "StringValue", "value": "Observable queries: all items, limited to a requested subset based on kind and category (e.g. 'All fiction books')" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461453" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
-           "uuid": "6152",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4312",                // Observable queries: limit r...
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461484" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Observable queries: limit r...
-           "uuid": "6153",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4312",                // Observable queries: limit r...
-          "value": { "type": "StringValue", "value": "Observable queries: limit results to just a requested subset of the attributes (e.g. just the names of the books)" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461484" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
-           "uuid": "6154",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4313",                // Be able to edit the query o...
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461515" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Be able to edit the query o...
-           "uuid": "6155",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4313",                // Be able to edit the query o...
-          "value": { "type": "StringValue", "value": "Be able to edit the query of a section" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461531" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
-           "uuid": "6156",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "4314",                // Make it possible to add new...
-          "value": { "type": "RelatedUuid", "value": "4102" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461562" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Make it possible to add new...
-           "uuid": "6157",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "4314",                // Make it possible to add new...
-          "value": { "type": "StringValue", "value": "Make it possible to add new attributes to a table view" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819461578" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Feature
            "uuid": "6158",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4315",                // Figure out how to declare d...
@@ -2847,7 +2560,7 @@
       "timestamp": "1114819462640" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6204",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5204",                // The Gumption Memo
@@ -2883,7 +2596,7 @@
       "timestamp": "1114819462734" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6208",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5205",                // Deceit and Denial
@@ -2982,97 +2695,7 @@
       "timestamp": "1114819462968" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Page
-           "uuid": "6219",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "6000",                // All Items
-          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819463000" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // 5. All Items
-           "uuid": "6220",
-      "attribute": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
-           "item": "6000",                // All Items
-          "value": { "type": "StringValue", "value": "5. All Items" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819463015" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // All Items
-           "uuid": "6221",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "6000",                // All Items
-          "value": { "type": "StringValue", "value": "All Items" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819463031" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // All Items
-           "uuid": "6222",
-      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
-           "item": "6000",                // All Items
-          "value": { "type": "RelatedUuid", "value": "6010" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819463046" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Section
-           "uuid": "6223",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "6010",                // All Items
-          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819463078" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // All Items
-           "uuid": "6224",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "6010",                // All Items
-          "value": { "type": "StringValue", "value": "All Items" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819463156" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Table
-           "uuid": "6225",
-      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
-           "item": "6010",                // All Items
-          "value": { "type": "StringValue", "value": "Table" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819463171" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Query for all items
-           "uuid": "6226",
-      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
-           "item": "6010",                // All Items
-          "value": { "type": "RelatedUuid", "value": "6011" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819463203" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Query
-           "uuid": "6227",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "6011",                // Query for all items
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819463234" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Query for all items
-           "uuid": "6228",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "6011",                // Query for all items
-          "value": { "type": "StringValue", "value": "Query for all items" },
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819463234" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6229",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "6012",                // JavaScript: The Definitive ...
@@ -3117,7 +2740,7 @@
       "timestamp": "1114819463343" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Book
+  { "Entry": {                             // Old Book
            "uuid": "6234",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "6013",                // The Two Towers
@@ -3234,4 +2857,1271 @@
           "value": { "type": "StringValue", "value": "Brian Totty" },
       "userstamp": "6241",                // by (Chih-Chao Lam)
       "timestamp": "1117671612418" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // New Page
+           "uuid": "8cbddbd1-368e-45d6-88ec-39690e9331a0",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // New Page
+           "uuid": "54f4bd36-a6d7-4c00-8e3a-891183a307e9",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // New Page
+          "value": { "type": "StringValue", "value": "New Page" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Page
+           "uuid": "462800a1-83d5-4fb3-853b-1bc9d5c83150",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // New Page
+          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // This is a new page.
+           "uuid": "7ffbc5c1-e179-4f49-808c-8562c502529b",
+      "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
+           "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // New Page
+          "value": { "type": "StringValue", "value": "This is a new page." },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // New Section
+           "uuid": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // New Section
+           "uuid": "a642b640-8897-4711-8bf1-60ce3627649d",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // New Section
+          "value": { "type": "StringValue", "value": "New Section" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Section
+           "uuid": "bdb9dacf-66c8-4575-8cc5-5b84423c9dc0",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // New Section
+          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225265" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // New Section
+           "uuid": "fba77cc2-0ee8-4d27-8970-d80a100120c2",
+      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
+           "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // New Page
+          "value": { "type": "RelatedUuid", "value": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225265" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Table
+           "uuid": "41399161-e055-4881-82ca-96a985b4d3c1",
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
+           "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // New Section
+          "value": { "type": "StringValue", "value": "Table" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225265" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // New Query
+           "uuid": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225265" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // New Query
+           "uuid": "2a11573b-2c42-448b-8a52-1c5e80497f98",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
+          "value": { "type": "StringValue", "value": "New Query" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225265" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Query
+           "uuid": "ef65a730-3850-4d41-854e-c4b01fa87914",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
+          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225265" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // New Query
+           "uuid": "c9ea5105-e1c3-4a9c-83a7-aa66e9d40599",
+      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
+           "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // New Section
+          "value": { "type": "RelatedUuid", "value": "d634981c-c10d-4526-8b8f-fcc8bd3077d3" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735225265" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Category
+           "uuid": "5e551cd6-7cae-4e7b-8a15-ba71f803805e",
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735265703" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Book
+           "uuid": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735265765" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "56985ffa-10d4-45b3-8e0d-130b1436d04e",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",                // Book
+          "value": { "type": "StringValue", "value": "Book" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735275890" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Category
+           "uuid": "075574a1-6e33-4df1-86b8-b4a63a2427ed",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",                // Book
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735275890" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Publisher
+           "uuid": "ea435816-c5c0-482b-8850-5651fbfaad12",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735275906" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publisher
+           "uuid": "8600bd8f-ca00-4126-841a-2484c069f6fb",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "ea435816-c5c0-482b-8850-5651fbfaad12",                // Publisher
+          "value": { "type": "StringValue", "value": "Publisher" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735285140" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Category
+           "uuid": "b9846b93-fbd8-402f-8f23-933a3d2bb3a2",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "ea435816-c5c0-482b-8850-5651fbfaad12",                // Publisher
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735285140" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Category
+           "uuid": "4eed673e-c224-44db-8a2b-9e72998c6d00",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "4952a8fd-5bb8-44f9-8c11-12801a41b189",                // Person
+          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735288437" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Person
+           "uuid": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735285140" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "7043b8ad-3bdf-4a0a-867f-d4523ebc77a1",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "4952a8fd-5bb8-44f9-8c11-12801a41b189",                // Person
+          "value": { "type": "StringValue", "value": "Person" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735288437" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Attribute
+           "uuid": "f9afff15-663e-4b45-8d62-bf2297ec0fe7",
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
+   "previousEntry": "5e551cd6-7cae-4e7b-8a15-ba71f803805e",
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735336265" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Published by
+           "uuid": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735412984" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Published by
+           "uuid": "9c5d6ea2-80fa-4e7a-81e5-342332c1c15a",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
+          "value": { "type": "StringValue", "value": "Published by" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735433734" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Attribute
+           "uuid": "8dc501b8-0150-4fe8-8a86-b275955bc868",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735433734" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publisher
+           "uuid": "ba275354-35bd-4b33-876f-00d738cad5ea",
+      "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
+           "item": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
+          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735436750" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Attribute
+           "uuid": "f1301a57-c78c-4f51-88ae-76d0d927d932",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735443890" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Written by
+           "uuid": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735433750" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Written by
+           "uuid": "4ad6a276-6dda-4bc6-8be0-ee9cf7524852",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+          "value": { "type": "StringValue", "value": "Written by" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735443890" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "723176f0-9a10-4a69-8b06-4150f8cf575f",
+      "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
+           "item": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735449609" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "a11a8ac9-08d4-460b-8cfe-23ea90b04f7e",
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
+   "previousEntry": "f9afff15-663e-4b45-8d62-bf2297ec0fe7",
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735470703" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // J.R.R. Tolkien
+           "uuid": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735470750" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // J.R.R. Tolkien
+           "uuid": "48905153-87af-4aa7-860e-19c6aae90286",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d",                // J.R.R. Tolkien
+          "value": { "type": "StringValue", "value": "J.R.R. Tolkien" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735489703" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "12b8ea06-5c10-4b72-807c-55bedb008a1d",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d",                // J.R.R. Tolkien
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735489703" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "a88ec17e-1371-4c51-8d9f-ec2498c517da",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "de981d0d-16fd-430a-82d1-4d60d87e64e3",                // David Brin
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735503187" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // David Brin
+           "uuid": "de981d0d-16fd-430a-82d1-4d60d87e64e3",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735489703" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Brin
+           "uuid": "63416b27-606d-49b7-8dac-761b10022911",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "de981d0d-16fd-430a-82d1-4d60d87e64e3",                // David Brin
+          "value": { "type": "StringValue", "value": "David Brin" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735503171" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "aee1b28e-103e-4693-89a4-294ad2807b04",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "75987591-ed47-4f4f-8ddb-b96c6d8637e6",                // David Gourley
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735662250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // David Gourley
+           "uuid": "75987591-ed47-4f4f-8ddb-b96c6d8637e6",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735503187" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Gourley
+           "uuid": "128051d3-a821-4cea-864d-280a70b0fb46",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "75987591-ed47-4f4f-8ddb-b96c6d8637e6",                // David Gourley
+          "value": { "type": "StringValue", "value": "David Gourley" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735662250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Brian Totty
+           "uuid": "d678b21e-1434-459e-83f0-c7c8c6213d36",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735662250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Brian Totty
+           "uuid": "3dd26484-4b9c-4b28-8eca-ace451138e0c",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "d678b21e-1434-459e-83f0-c7c8c6213d36",                // Brian Totty
+          "value": { "type": "StringValue", "value": "Brian Totty" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735665218" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "d91825da-f16d-4162-8c34-b59766506957",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "d678b21e-1434-459e-83f0-c7c8c6213d36",                // Brian Totty
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735665218" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "b5a28733-cab5-47c0-81bd-34c8f6691e98",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "9f47f559-d9b7-4b68-8dae-96a26cf2f232",                // James Surowiecki
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735676015" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // James Surowiecki
+           "uuid": "9f47f559-d9b7-4b68-8dae-96a26cf2f232",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735665218" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // James Surowiecki
+           "uuid": "946be1e1-7ca0-45d7-8926-9071c8687abf",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "9f47f559-d9b7-4b68-8dae-96a26cf2f232",                // James Surowiecki
+          "value": { "type": "StringValue", "value": "James Surowiecki" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735676015" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Patricia McDaniel
+           "uuid": "2a0a9a32-210a-429f-868d-3b015d3ae9ac",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735676015" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Patricia McDaniel
+           "uuid": "abe384b4-5db4-4317-8de9-637cf301917a",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "2a0a9a32-210a-429f-868d-3b015d3ae9ac",                // Patricia McDaniel
+          "value": { "type": "StringValue", "value": "Patricia McDaniel" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735684140" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "75751349-c78c-41bc-8fc2-6d1c7d1cbd38",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "2a0a9a32-210a-429f-868d-3b015d3ae9ac",                // Patricia McDaniel
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735684140" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Gerald Markowitz
+           "uuid": "1d9030cd-3659-42a1-8627-196644d6deb1",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735684156" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Gerald Markowitz
+           "uuid": "b7bab2ca-aac7-46d2-8710-419ac4e69a6e",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "1d9030cd-3659-42a1-8627-196644d6deb1",                // Gerald Markowitz
+          "value": { "type": "StringValue", "value": "Gerald Markowitz" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735693234" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "3c5836d5-4fc1-4ccf-8eea-faaf0184c084",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "1d9030cd-3659-42a1-8627-196644d6deb1",                // Gerald Markowitz
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735693234" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // David Rosner
+           "uuid": "b5620dda-b123-409c-8f92-c8fcf318d4e5",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735693250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Rosner
+           "uuid": "ec8039f7-cdd3-4c23-8bad-e6ada9be27f7",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "b5620dda-b123-409c-8f92-c8fcf318d4e5",                // David Rosner
+          "value": { "type": "StringValue", "value": "David Rosner" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735700140" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "5f957996-8db3-47ff-829d-96df96237e65",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "b5620dda-b123-409c-8f92-c8fcf318d4e5",                // David Rosner
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735700156" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // David Flanagan
+           "uuid": "11106568-0dfe-4bb8-8574-8a30b2874b25",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735700156" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Flanagan
+           "uuid": "61939bd6-2903-4f01-89a5-538a1cd2769f",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "11106568-0dfe-4bb8-8574-8a30b2874b25",                // David Flanagan
+          "value": { "type": "StringValue", "value": "David Flanagan" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735705218" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "80c6fdb1-9852-49e6-825a-ed151113b7ac",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "11106568-0dfe-4bb8-8574-8a30b2874b25",                // David Flanagan
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735705218" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publisher
+           "uuid": "5cceee12-d202-46ac-8724-0474ba4860ae",
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
+   "previousEntry": "a11a8ac9-08d4-460b-8cfe-23ea90b04f7e",
+          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735713015" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publisher
+           "uuid": "639d46b7-8479-4cb1-89c1-b5b338de5d86",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c",                // O'Reilly
+          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735718921" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // O'Reilly
+           "uuid": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735713062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // O'Reilly
+           "uuid": "c23a5be3-924c-446f-8bcd-40eb46e1af83",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c",                // O'Reilly
+          "value": { "type": "StringValue", "value": "O'Reilly" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735718906" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publisher
+           "uuid": "3543b8aa-33e1-4974-8d6b-ba1041c99548",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "0f4132ec-fabd-4857-8c26-1f842d3d94b3",                // Perseus Publishing
+          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735728843" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Perseus Publishing
+           "uuid": "0f4132ec-fabd-4857-8c26-1f842d3d94b3",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735718921" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Perseus Publishing
+           "uuid": "7812b147-bf2f-4e4a-8db0-05d173e79df0",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "0f4132ec-fabd-4857-8c26-1f842d3d94b3",                // Perseus Publishing
+          "value": { "type": "StringValue", "value": "Perseus Publishing" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735728843" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // HarperCollins
+           "uuid": "32b872e6-5f78-484e-8bd9-6e12d48fd266",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735728859" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // HarperCollins
+           "uuid": "d0911998-ef56-405e-81e8-56176f14deaa",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "32b872e6-5f78-484e-8bd9-6e12d48fd266",                // HarperCollins
+          "value": { "type": "StringValue", "value": "HarperCollins" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735733328" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publisher
+           "uuid": "f262e255-5f33-4b02-8981-e0293a870042",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "32b872e6-5f78-484e-8bd9-6e12d48fd266",                // HarperCollins
+          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735733343" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Doubleday
+           "uuid": "fef1fb5a-d03d-490b-8396-f599d68652aa",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735733343" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Doubleday
+           "uuid": "597e97a5-7c35-4135-83e1-51fba8bd6c03",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "fef1fb5a-d03d-490b-8396-f599d68652aa",                // Doubleday
+          "value": { "type": "StringValue", "value": "Doubleday" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735736468" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publisher
+           "uuid": "2df70b86-1b15-4178-8eca-e65ccab69a13",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "fef1fb5a-d03d-490b-8396-f599d68652aa",                // Doubleday
+          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735736468" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // NYU Press
+           "uuid": "81a0fa22-0432-4f6e-822d-4e11caefa730",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735736484" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // NYU Press
+           "uuid": "5a0b9077-4df7-4909-85db-5328546e3456",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "81a0fa22-0432-4f6e-822d-4e11caefa730",                // NYU Press
+          "value": { "type": "StringValue", "value": "NYU Press" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735740015" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publisher
+           "uuid": "745cd21b-b190-4521-8d26-82eb3656a1ae",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "81a0fa22-0432-4f6e-822d-4e11caefa730",                // NYU Press
+          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735740015" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // University of California
+           "uuid": "774bf718-823a-4284-86d2-d24a334786af",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735740015" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // University of California
+           "uuid": "c25ad76b-9a12-4b7b-852a-531b767bba76",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "774bf718-823a-4284-86d2-d24a334786af",                // University of California
+          "value": { "type": "StringValue", "value": "University of California" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735752015" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publisher
+           "uuid": "fd2066e5-b876-4241-8c22-f7208af4ec85",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "774bf718-823a-4284-86d2-d24a334786af",                // University of California
+          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735752031" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "cd9b4dfb-6fec-4f0f-815b-e0a2ae2ac7c3",
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
+   "previousEntry": "5cceee12-d202-46ac-8724-0474ba4860ae",
+          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735771046" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // HTTP: The Definitive Guide
+           "uuid": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735771093" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // HTTP: The Definitive Guide
+           "uuid": "f19bf2d2-2a53-41ba-84e7-c9d5b82d908e",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
+          "value": { "type": "StringValue", "value": "HTTP: The Definitive Guide" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735778156" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "d9360e8b-d892-49d4-8b2a-a4651ac92eb5",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
+          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735778156" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "5bd72c4e-90b9-487e-8c65-77dae04c9a2b",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",                // The Hobbit
+          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735780703" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // The Hobbit
+           "uuid": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735778156" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // The Hobbit
+           "uuid": "43c67130-8b68-4d84-8883-83655c6b3c9f",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",                // The Hobbit
+          "value": { "type": "StringValue", "value": "The Hobbit" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735780703" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // The Wisdom of Crowds
+           "uuid": "04215e09-c5d1-4af1-8167-2bb10c06e6e4",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735780718" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // The Wisdom of Crowds
+           "uuid": "e9bf97a2-302a-498c-853e-505b66b8ca37",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "04215e09-c5d1-4af1-8167-2bb10c06e6e4",                // The Wisdom of Crowds
+          "value": { "type": "StringValue", "value": "The Wisdom of Crowds" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735788562" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "a756ff74-be71-4870-8e30-09658e4d70f6",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "04215e09-c5d1-4af1-8167-2bb10c06e6e4",                // The Wisdom of Crowds
+          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735788578" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // The Transparent Society
+           "uuid": "b42a8eed-c7c9-4b21-84cb-70c20e29e64a",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735788578" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // The Transparent Society
+           "uuid": "66a95e67-5721-4711-83c0-2cfffffcfcd9",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "b42a8eed-c7c9-4b21-84cb-70c20e29e64a",                // The Transparent Society
+          "value": { "type": "StringValue", "value": "The Transparent Society" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735798062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "38ca0209-7651-41ba-8f43-12b20273c614",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "b42a8eed-c7c9-4b21-84cb-70c20e29e64a",                // The Transparent Society
+          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735798062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Brin
+           "uuid": "38ca0210-7651-41ba-8f43-12b20273c614",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "b42a8eed-c7c9-4b21-84cb-70c20e29e64a",                // The Transparent Society
+          "value": { "type": "RelatedUuid", "value": "de981d0d-16fd-430a-82d1-4d60d87e64e3" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735798062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Perseus Publishing
+           "uuid": "38ca0211-7651-41ba-8f43-12b20273c614",
+      "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
+           "item": "b42a8eed-c7c9-4b21-84cb-70c20e29e64a",                // The Transparent Society
+          "value": { "type": "RelatedUuid", "value": "0f4132ec-fabd-4857-8c26-1f842d3d94b3" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117735798062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // J.R.R. Tolkien
+           "uuid": "ca3d4029-6e05-4079-8012-1dbe4dac5b94",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",                // The Hobbit
+          "value": { "type": "RelatedUuid", "value": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736236500" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // HarperCollins
+           "uuid": "1b5dc73a-34fb-4909-8f83-b7cadfa58d07",
+      "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
+           "item": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",                // The Hobbit
+          "value": { "type": "RelatedUuid", "value": "32b872e6-5f78-484e-8bd9-6e12d48fd266" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736261015" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Gourley
+           "uuid": "0a4d47fa-ffe2-409a-8590-50d527b159cd",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
+          "value": { "type": "RelatedUuid", "value": "75987591-ed47-4f4f-8ddb-b96c6d8637e6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736305546" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Gourley
+           "uuid": "21e55207-dc7d-4dd5-86fc-da5ca9bbb20e",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
+   "previousEntry": "0a4d47fa-ffe2-409a-8590-50d527b159cd",
+          "value": { "type": "StringValue", "value": "David Gourley" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736311578" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // J.R.R. Tolkien
+           "uuid": "58dc3820-a73a-4d1d-8f45-b6954ec5d16d",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",                // The Hobbit
+   "previousEntry": "ca3d4029-6e05-4079-8012-1dbe4dac5b94",
+          "value": { "type": "StringValue", "value": "J.R.R. Tolkien" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736313546" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Brian Totty
+           "uuid": "5610ec06-b4e9-4eeb-867b-dad8b0073636",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
+          "value": { "type": "StringValue", "value": "Brian Totty" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736335578" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // O'Reilly
+           "uuid": "bac5ec21-422a-4a5f-82f2-0518ab052b9e",
+      "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
+           "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
+          "value": { "type": "RelatedUuid", "value": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736353671" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Gourley
+           "uuid": "fb9d3ea1-fa9f-4bf4-8aab-ff7a50e2e062",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
+   "previousEntry": "21e55207-dc7d-4dd5-86fc-da5ca9bbb20e",
+          "value": { "type": "RelatedUuid", "value": "75987591-ed47-4f4f-8ddb-b96c6d8637e6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736369546" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // James Surowiecki
+           "uuid": "d9677f00-4c56-46f9-84c1-f5df896c1058",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "04215e09-c5d1-4af1-8167-2bb10c06e6e4",                // The Wisdom of Crowds
+          "value": { "type": "RelatedUuid", "value": "9f47f559-d9b7-4b68-8dae-96a26cf2f232" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736379671" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Doubleday
+           "uuid": "db17fade-a60b-463d-8f29-d9de909c3d35",
+      "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
+           "item": "04215e09-c5d1-4af1-8167-2bb10c06e6e4",                // The Wisdom of Crowds
+          "value": { "type": "RelatedUuid", "value": "fef1fb5a-d03d-490b-8396-f599d68652aa" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736389781" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "d5326b0b-1228-4232-8a6e-d8be50b1af97",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "f1001a06-8ffa-4366-8f6e-e9c5fcc2b70c",                // Shrinking Violets and Caspa...
+          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736411390" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Shrinking Violets and Caspa...
+           "uuid": "f1001a06-8ffa-4366-8f6e-e9c5fcc2b70c",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736231890" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Shrinking Violets and Caspa...
+           "uuid": "426fdd09-3112-4be6-8998-d77fcba475b9",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "f1001a06-8ffa-4366-8f6e-e9c5fcc2b70c",                // Shrinking Violets and Caspa...
+          "value": { "type": "StringValue", "value": "Shrinking Violets and Caspar Milquetoasts" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736411375" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Patricia McDaniel
+           "uuid": "2fd80172-7c5c-45ba-8bc0-d6d212b4816c",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "f1001a06-8ffa-4366-8f6e-e9c5fcc2b70c",                // Shrinking Violets and Caspa...
+          "value": { "type": "RelatedUuid", "value": "2a0a9a32-210a-429f-868d-3b015d3ae9ac" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736413562" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // NYU Press
+           "uuid": "ccc919f4-ba3a-4524-80ce-eaeda75880b2",
+      "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
+           "item": "f1001a06-8ffa-4366-8f6e-e9c5fcc2b70c",                // Shrinking Violets and Caspa...
+          "value": { "type": "RelatedUuid", "value": "81a0fa22-0432-4f6e-822d-4e11caefa730" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736417593" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "bd1df12b-d9bf-4e57-8853-ae955baf296e",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
+          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736429578" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // Deceit and Denial
+           "uuid": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736411390" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Deceit and Denial
+           "uuid": "9608e7de-7ec0-49ae-8425-aac277cef1ac",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
+          "value": { "type": "StringValue", "value": "Deceit and Denial" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736429578" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Gerald Markowitz
+           "uuid": "cb5ea4e5-9d95-4a19-8959-a6fa702178e5",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
+          "value": { "type": "RelatedUuid", "value": "1d9030cd-3659-42a1-8627-196644d6deb1" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736431937" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Gerald Markowitz
+           "uuid": "14f04804-8252-4ff7-81d0-7de53b90db8d",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
+   "previousEntry": "cb5ea4e5-9d95-4a19-8959-a6fa702178e5",
+          "value": { "type": "StringValue", "value": "Gerald Markowitz" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736438968" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // D
+           "uuid": "cb57a1ef-d238-4400-8ab0-7714d39cdc62",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
+          "value": { "type": "StringValue", "value": "D" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736444109" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Rosner
+           "uuid": "7675c038-d911-4e6e-80aa-280bdb3833d1",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
+   "previousEntry": "cb57a1ef-d238-4400-8ab0-7714d39cdc62",
+          "value": { "type": "StringValue", "value": "David Rosner" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736451250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // University of California
+           "uuid": "dd9e8536-b688-433f-806b-b6e5e5786f2f",
+      "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
+           "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
+          "value": { "type": "RelatedUuid", "value": "774bf718-823a-4284-86d2-d24a334786af" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736460250" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "113eaca6-0936-476b-81c8-8275583d0ad6",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "0378913e-e5c9-48c0-835a-b839edee467f",                // JavaScript: The Definitive ...
+          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736474109" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // JavaScript: The Definitive ...
+           "uuid": "0378913e-e5c9-48c0-835a-b839edee467f",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736429578" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // JavaScript: The Definitive ...
+           "uuid": "6835a402-d069-4565-88c1-1e6f577f0744",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "0378913e-e5c9-48c0-835a-b839edee467f",                // JavaScript: The Definitive ...
+          "value": { "type": "StringValue", "value": "JavaScript: The Definitive Guide" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736474109" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Flanagan
+           "uuid": "09a9c592-7e0b-4bc1-8397-0a1596915793",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "0378913e-e5c9-48c0-835a-b839edee467f",                // JavaScript: The Definitive ...
+          "value": { "type": "RelatedUuid", "value": "11106568-0dfe-4bb8-8574-8a30b2874b25" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736475484" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // O'Reilly
+           "uuid": "a6b5975a-7298-4fab-89cd-1c7455d47272",
+      "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
+           "item": "0378913e-e5c9-48c0-835a-b839edee467f",                // JavaScript: The Definitive ...
+          "value": { "type": "RelatedUuid", "value": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736479968" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // The Two Towers
+           "uuid": "933227ee-bda7-4924-81ac-94c018d35503",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736474109" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // The Two Towers
+           "uuid": "41ec5e1b-5c19-45c2-8028-22037b49dbbb",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "933227ee-bda7-4924-81ac-94c018d35503",                // The Two Towers
+          "value": { "type": "StringValue", "value": "The Two Towers" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736492531" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "7788e6bc-2c93-40cc-885c-312a17551a11",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "933227ee-bda7-4924-81ac-94c018d35503",                // The Two Towers
+          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736492531" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // J.R.R. Tolkien
+           "uuid": "99ee41ff-85d7-4744-827f-cc0e81017df6",
+      "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
+           "item": "933227ee-bda7-4924-81ac-94c018d35503",                // The Two Towers
+          "value": { "type": "RelatedUuid", "value": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736496203" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "0515ceef-33b9-477b-8ebf-66a3d0baf174",
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "3011",                // Query for all books
+   "previousEntry": "6040",
+          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736561171" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // People
+           "uuid": "42c6eae2-97f7-4a40-869d-f3a1b994b8ce",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // People
+   "previousEntry": "54f4bd36-a6d7-4c00-8e3a-891183a307e9",
+          "value": { "type": "StringValue", "value": "People" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736688156" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Person
+           "uuid": "ff73a3d6-7155-44cb-89e9-33a89404f203",
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
+   "previousEntry": "cd9b4dfb-6fec-4f0f-815b-e0a2ae2ac7c3",
+          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736701343" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // All People
+           "uuid": "a7e79a1c-c971-4e25-8479-e0394ea63dd3",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // All People
+   "previousEntry": "a642b640-8897-4711-8bf1-60ce3627649d",
+          "value": { "type": "StringValue", "value": "All People" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736711968" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Outline
+           "uuid": "03af3557-c06e-4c43-86e5-a5b69d370cf7",
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
+           "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // All People
+   "previousEntry": "41399161-e055-4881-82ca-96a985b4d3c1",
+          "value": { "type": "StringValue", "value": "Outline" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736715750" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // This is a page for keeping ...
+           "uuid": "af0ade8e-5ece-404e-84de-7a004ddf1d35",
+      "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
+           "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // People
+   "previousEntry": "7ffbc5c1-e179-4f49-808c-8562c502529b",
+          "value": { "type": "StringValue", "value": "This is a page for keeping track of people." },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736738984" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // New Page
+           "uuid": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // New Page
+           "uuid": "ac20c09b-027c-4cf7-8d1d-c571b577d026",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // New Page
+          "value": { "type": "StringValue", "value": "New Page" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Page
+           "uuid": "bb94fce5-d490-45c8-8ae0-49ebe7aab3fc",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // New Page
+          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // This is a new page.
+           "uuid": "a831f70d-fd95-468a-8a0a-31a5937cbcd3",
+      "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
+           "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // New Page
+          "value": { "type": "StringValue", "value": "This is a new page." },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // New Section
+           "uuid": "38e3da07-957f-40a2-894d-f3636aed7c23",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // New Section
+           "uuid": "5737311c-2d52-4354-8a85-6a404e947fd9",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // New Section
+          "value": { "type": "StringValue", "value": "New Section" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Section
+           "uuid": "ee6af493-b200-4d26-8b88-2b641cd6fa80",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // New Section
+          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // New Section
+           "uuid": "3107a69d-8e86-4afe-8ec7-e82c95f9fcae",
+      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
+           "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // New Page
+          "value": { "type": "RelatedUuid", "value": "38e3da07-957f-40a2-894d-f3636aed7c23" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Table
+           "uuid": "0a8d7e91-ca14-49a4-8064-e5eabe133b78",
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
+           "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // New Section
+          "value": { "type": "StringValue", "value": "Table" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Item": {                             // New Query
+           "uuid": "e30ba726-d976-46fb-88ac-7f5e841a6b43",
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // New Query
+           "uuid": "02b28988-dd13-4ffb-8933-bb6c5b9d2822",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "e30ba726-d976-46fb-88ac-7f5e841a6b43",                // New Query
+          "value": { "type": "StringValue", "value": "New Query" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Query
+           "uuid": "d3b32b1d-0f22-439e-85ff-f069e4d76bff",
+      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
+           "item": "e30ba726-d976-46fb-88ac-7f5e841a6b43",                // New Query
+          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // New Query
+           "uuid": "f8fd9872-3806-42c8-886f-78cdb53299ad",
+      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
+           "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // New Section
+          "value": { "type": "RelatedUuid", "value": "e30ba726-d976-46fb-88ac-7f5e841a6b43" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736745062" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publisher
+           "uuid": "414b2c92-ded7-4071-8ff3-af2468ec665b",
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "e30ba726-d976-46fb-88ac-7f5e841a6b43",                // New Query
+          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736753953" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Outline
+           "uuid": "5e715995-f16d-4021-87b6-43f674fa7380",
+      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
+           "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // New Section
+   "previousEntry": "0a8d7e91-ca14-49a4-8064-e5eabe133b78",
+          "value": { "type": "StringValue", "value": "Outline" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736756890" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Publishers
+           "uuid": "f37b2702-5e6a-4bc7-84b6-8d89e0b75e9a",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // Publishers
+   "previousEntry": "ac20c09b-027c-4cf7-8d1d-c571b577d026",
+          "value": { "type": "StringValue", "value": "Publishers" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736763359" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // This is a page for keeping ...
+           "uuid": "10c45258-cdb0-44ac-8605-002ce083c43e",
+      "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
+           "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // Publishers
+   "previousEntry": "a831f70d-fd95-468a-8a0a-31a5937cbcd3",
+          "value": { "type": "StringValue", "value": "This is a page for keeping track of publishers." },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736780078" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // All Publishers
+           "uuid": "e3bf3e14-e8f4-43e2-866c-121c5ab70c0b",
+      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
+           "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // All Publishers
+   "previousEntry": "5737311c-2d52-4354-8a85-6a404e947fd9",
+          "value": { "type": "StringValue", "value": "All Publishers" },
+      "userstamp": "1502",                // by (Guest)
+      "timestamp": "1117736787093" }
   }

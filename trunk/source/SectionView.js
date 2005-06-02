@@ -106,6 +106,7 @@ function SectionView(inPageView, inHTMLElement, inSection, inSectionNumber) {
   this._myPluginDiv = null;
   this._mySectionSummaryView = null;
   this._myHeaderView = null;
+  this._queryEditSpan = null;
 }
 
 
@@ -178,6 +179,7 @@ SectionView.prototype.getListOfContentItems = function () {
   return this.myListOfContentItems;
 };
 
+
 /**
  * Returns query associated to this section.
  *
@@ -190,6 +192,7 @@ SectionView.prototype.getQuery = function () {
   return (listOfEntries && listOfEntries[0]) ? listOfEntries[0].getValue() : null;
 };
 
+
 /**
  * Updates the HTML elements in this view to reflect any changes in 
  * the data, and tells the sub-views to refresh themselves too.
@@ -201,6 +204,7 @@ SectionView.prototype.refresh = function () {
     this.doInitialDisplay();
   } else {
     // refresh the <h2> element with the value: this.mySection.getDisplayName();  
+    this._refreshQueryEditSpan();
     this._mySectionSummaryView.refresh();
     this._myPlugin.refresh();
     this._myHeaderView.refresh();
@@ -220,17 +224,7 @@ SectionView.prototype.doInitialDisplay = function () {
   }
   var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
   var selectedPluginName = this.mySection.getSingleStringValueFromAttribute(attributeCalledPluginName);
-  var attributeCalledQueryMatchingCategory = this.getWorld().getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
-  var listOfMatchingCategories = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingCategory);
-  var isCategoryMatchingQuery = (listOfMatchingCategories && (listOfMatchingCategories.length > 0));
-  var selectedCategoryName = isCategoryMatchingQuery? listOfMatchingCategories[0].getValue().getDisplayName() : "no category selected";
-  var isEmptyQuery = false;
-  if (!isCategoryMatchingQuery) {
-    var attributeCalledQueryMatchingItem = this.getWorld().getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
-    var listOfMatchingItems = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingItem);
-    var isItemMatchingQuery = (listOfMatchingItems && (listOfMatchingItems.length > 0));
-    isEmptyQuery = !isItemMatchingQuery;
-  }
+
   this.myListOfContentItems = this.getListOfContentItems();
   if (!this.myListOfContentItems) {
     return;
@@ -274,22 +268,8 @@ SectionView.prototype.doInitialDisplay = function () {
   var textOf = document.createTextNode(" of ");
   controlArea.appendChild(textOf);
 
-  if (isCategoryMatchingQuery || isEmptyQuery) {
-    var querySelectElement = View.createAndAppendElement(controlArea, "select");
-    var listOfCategories = this.getWorld().getCategories();
-    for (var key in listOfCategories) {
-      var category = listOfCategories[key];
-      optionElement = View.createAndAppendElement(querySelectElement, "option");
-      optionElement.selected = (selectedCategoryName == category.getDisplayName());
-      optionElement.setAttribute("value", category._getUuid());
-      listener = this; 
-      Util.addEventListener(optionElement, "click", function(event) {listener.clickOnQueryCategorySelectionMenu(event);});
-      optionElement.innerHTML = category.getDisplayName();
-    }
-  } else {
-    var textTheGiven = document.createTextNode(" the given");
-    controlArea.appendChild(textTheGiven);
-  }
+  this._queryEditSpan = View.createAndAppendElement(controlArea, "span");
+  // this._refreshQueryEditSpan();
 
   var textItems = document.createTextNode(" items.");
   controlArea.appendChild(textItems);
@@ -300,7 +280,51 @@ SectionView.prototype.doInitialDisplay = function () {
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
 };
+
+
+/**
+ * Re-creates all the HTML for the SectionView, and hands the HTML to the 
+ * browser to be re-drawn.
+ *
+ */
+SectionView.prototype._refreshQueryEditSpan = function () {
+  this._queryEditSpan.innerHTML = '';
   
+  var attributeCalledQueryMatchingCategory = this.getWorld().getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
+  var listOfMatchingCategories = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingCategory);
+  var isCategoryMatchingQuery = (listOfMatchingCategories && (listOfMatchingCategories.length > 0));
+  var selectedCategoryName = isCategoryMatchingQuery ? listOfMatchingCategories[0].getValue().getDisplayName() : "no category selected";
+
+  var isEmptyQuery = false;
+  if (!isCategoryMatchingQuery) {
+    var attributeCalledQueryMatchingItem = this.getWorld().getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
+    var listOfMatchingItems = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingItem);
+    var isItemMatchingQuery = (listOfMatchingItems && (listOfMatchingItems.length > 0));
+    isEmptyQuery = !isItemMatchingQuery;
+  }
+  
+  if (isCategoryMatchingQuery || isEmptyQuery) {
+    var listener = this; 
+    var querySelectElement = View.createAndAppendElement(this._queryEditSpan, "select");
+    var listOfCategories = this.getWorld().getCategories();
+    var optionElement = View.createAndAppendElement(querySelectElement, "option");
+    optionElement.setAttribute("value", null);
+    Util.addEventListener(optionElement, "click", function(event) {listener.clickOnQueryCategorySelectionMenu(event);});
+    optionElement.innerHTML = "(none)";
+    for (var key in listOfCategories) {
+      var category = listOfCategories[key];
+      optionElement = View.createAndAppendElement(querySelectElement, "option");
+      optionElement.selected = (selectedCategoryName == category.getDisplayName());
+      optionElement.setAttribute("value", category._getUuid());
+      Util.addEventListener(optionElement, "click", function(event) {listener.clickOnQueryCategorySelectionMenu(event);});
+      optionElement.innerHTML = category.getDisplayName();
+    }
+  } else {
+    var textTheGiven = document.createTextNode(" the given");
+    this._queryEditSpan.appendChild(textTheGiven);
+  }
+};
+
 
 // -------------------------------------------------------------------
 // Event handler methods

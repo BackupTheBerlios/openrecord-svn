@@ -78,11 +78,15 @@ function TextView(theSuperview, inElement, inItem, inAttribute, inEntry, inClass
   this._proxyOnKeyFunction = null;
   
   this._isProvisional = inItem.isProvisional();
-  if (this._isProvisional) {this._provisionalText = inAttribute.getDisplayName();}
-  
+  if (this._isProvisional) {
+    this._provisionalText = inAttribute.getDisplayName();
+  }
 }
 
 
+/**
+ *
+ */
 TextView.prototype._setupSuggestionBox = function() {
   if (this._suggestions) {
     var suggestionBox = new AttributeSuggestionBox(this._editField, this._suggestions);
@@ -90,9 +94,14 @@ TextView.prototype._setupSuggestionBox = function() {
   }
 };
 
+
+/**
+ *
+ */
 TextView.prototype.setSuggestions = function(suggestionList) {
   this._suggestions = suggestionList;
 };
+
 
 /**
  * Updates the HTML elements in this view to reflect any changes in 
@@ -106,7 +115,7 @@ TextView.prototype.refresh = function() {
   } else {
   // if (weHaveBeenNotifiedOfChangesTo(this._item)) {
   //   var newText = getNewValueFrom(this._item);
-  //   this.textNode.data = newText;
+  //   this._textNode.data = newText;
   // }
   }
 };
@@ -128,8 +137,8 @@ TextView.prototype._buildView = function() {
     this._oldColor = htmlElement.style.color;
     htmlElement.style.color = TextView.PROVISIONAL_COLOR;
   }
-  this.textNode = document.createTextNode(textString);
-  htmlElement.appendChild(this.textNode);
+  this._textNode = document.createTextNode(textString);
+  htmlElement.appendChild(this._textNode);
 
   htmlElement.onclick =  this.onClick.bindAsEventListener(this);
     
@@ -160,13 +169,13 @@ TextView.prototype.startEditing = function() {
       editField.onkeypress = this.onKeyPress.bindAsEventListener(this);
       editField.onkeyup = this.onKeyUp.bindAsEventListener(this);
       editField.onfocus = this.onFocus.bindAsEventListener(this);
-      editField.defaultValue = this._isProvisional ? '' : this.textNode.data;
+      editField.defaultValue = this._isProvisional ? '' : this._textNode.data;
     }
     //editField.style.width = this.getHTMLElement().offsetWidth + "px";    
     //editField.style.height = (this.getHTMLElement().offsetHeight) + "px";
     
     this._setupSuggestionBox();
-    this.getHTMLElement().replaceChild(editField, this.textNode);
+    this.getHTMLElement().replaceChild(editField, this._textNode);
     editField.select();
     //editField.focus();
     this._isEditing = true;
@@ -181,43 +190,59 @@ TextView.prototype.startEditing = function() {
  */
 TextView.prototype.stopEditing = function() {
   if (this._isEditing) {
+    var newValue;
+    if (this._suggestionBox) {
+      newValue = this._suggestionBox.getSelectedItem();
+    }
+    if (!newValue) {
+      newValue = this._editField.value;
+    }
     var newText = this._editField.value;
-    var stillProvisional = this._isProvisional && newText === '';
+    var stillProvisional = this._isProvisional && !newValue;
     var htmlElement = this.getHTMLElement();
 
     this._isEditing = false;
 
-    if (this._suggestionBox) {this._suggestionBox._blurOnInputField();}
-    if (stillProvisional) {
-      newText = this._provisionalText;
+    if (this._suggestionBox) {
+      this._suggestionBox._blurOnInputField();
     }
-    this.textNode.data = newText;
+    if (stillProvisional) {
+      newValue = this._provisionalText;
+    }
+    var newValueDisplayString = "";
+    if (Util.isString(newValue)) {
+      newValueDisplayString = newValue;
+    }
+    if (newValue instanceof Item) {
+      newValueDisplayString = newValue.getDisplayName();
+    }
+    this._textNode.data = newValueDisplayString;
     this._suggestionBox = null;
-    this.getHTMLElement().replaceChild(this.textNode, this._editField);
+    this.getHTMLElement().replaceChild(this._textNode, this._editField);
 
-    // we need this _writeText() to be after all display related code, because this may trigger an observer call
-    if (!stillProvisional) { this._writeText(newText); }
+    // we need this _writeValue() to be after all display related code, because this may trigger an observer call
+    if (!stillProvisional) { this._writeValue(newValue); }
   }
 };
 
 
 /**
- * Writes edited text back into item entry of repository
+ * Writes edited value back into item entry of repository.
  *
  * @scope    private instance method
- * @param    inText    text to be written. 
+ * @param    value    The new value to be saved. 
  */
-TextView.prototype._writeText = function(inText) {
+TextView.prototype._writeValue = function(value) {
   if (this._entry) {
-    var oldText = this._entry.getDisplayString();
-    if (oldText != inText) {
-      this._entry = this._item.replaceEntry(this._entry,inText);
+    var oldValue = this._entry.getValue();
+    if (oldValue != value) {
+      this._entry = this._item.replaceEntry(this._entry, value);
     }
-  }
-  else if (inText !== '') {
-    this._entry = this._item.addEntryForAttribute(this._attribute, inText);
+  } else if (value) {
+    this._entry = this._item.addEntryForAttribute(this._attribute, value);
   }
 };
+
 
 /**
  * Returns text string for TextView to be displaying and editing
@@ -230,6 +255,7 @@ TextView.prototype._getText = function() {
   return '';
 };
 
+
 /**
  * Restores the original text before this editing session
  *
@@ -241,6 +267,7 @@ TextView.prototype._restoreText = function() {
   this._editField.value = oldText;
   this._editField.select();
 };
+
 
 // -------------------------------------------------------------------
 // Event handler methods
@@ -256,6 +283,7 @@ TextView.prototype.setClickFunction = function(inClickFunction) {
   Util.assert(inClickFunction instanceof Function);
   this._clickFunction = inClickFunction;
 };
+
 
 /**
  * Called when the user clicks on the text.
@@ -274,9 +302,16 @@ TextView.prototype.onClick = function(inEventObject) {
   }
 };
 
+
+/**
+ *
+ */
 TextView.prototype.onFocus = function(inEventObject) {
-  if (this._suggestionBox) {this._suggestionBox._focusOnInputField(inEventObject);}
+  if (this._suggestionBox) {
+    this._suggestionBox._focusOnInputField(inEventObject);
+  }
 };
+
 
 /**
  * Called when focus leaves the text view.
@@ -296,15 +331,22 @@ TextView.prototype.onBlur = function(inEventObject) {
  * Sets a function to be used when onkeypress is called to the TextView
  *
  * @scope    public instance method
- * @param    inEventObject    An event object. 
+ * @param    keyPressFunction    A function. 
  */
 TextView.prototype.setKeyPressFunction = function(keyPressFunction) {
   this._keyPressFunction = keyPressFunction;
 };
 
+
+/**
+ *
+ */
 TextView.prototype.onKeyUp = function(inEventObject) {
-  if (this._suggestionBox) {this._suggestionBox._keyPressOnInputField(inEventObject);}
+  if (this._suggestionBox) {
+    this._suggestionBox._keyPressOnInputField(inEventObject);
+  }
 };
+
 
 /**
  * Called when the user types in editField
@@ -363,11 +405,15 @@ TextView.prototype.onKeyPress = function(inEventObject) {
   */
 };
 
+
+/**
+ *
+ */
 TextView.prototype.noLongerProvisional = function() {
   if (this._isProvisional) {
     this._isProvisional = false;
     this.getHTMLElement().style.color = this._oldColor;
-    // need to set line below because _writeText() hasn't returned an entry yet
+    // need to set line below because _writeValue() hasn't returned an entry yet
     this._entry = this._item.getSingleEntryFromAttribute(this._attribute); 
     this._buildView();
   }
@@ -376,10 +422,15 @@ TextView.prototype.noLongerProvisional = function() {
 // -------------------------------------------------------------------
 // Suggestion box methods
 // -------------------------------------------------------------------
-function AttributeSuggestionBox(inHTMLInputField, inListOfEntries) {
-  this._myInputField = inHTMLInputField;
-  this._myListOfEntries = inListOfEntries.sort(AttributeSuggestionBox.compareEntryDisplayNames);
 
+/**
+ *
+ */
+function AttributeSuggestionBox(inHTMLInputField, listOfItems) {
+  this._myInputField = inHTMLInputField;
+  this._listOfSuggestedItems = listOfItems.sort(AttributeSuggestionBox._compareItemDisplayNames);
+  this._selectedItem = null;
+  
   this._myAttributeSuggestionBoxDivElement = document.createElement('div');
   // this._myAttributeSuggestionBoxDivElement.style.visibility = "hidden";
   this._myAttributeSuggestionBoxDivElement.style.zIndex = 11;
@@ -392,9 +443,21 @@ function AttributeSuggestionBox(inHTMLInputField, inListOfEntries) {
   //this._keyPressOnInputField();
 }
 
-AttributeSuggestionBox.compareEntryDisplayNames = function (inEntryOne, inEntryTwo) {
-  var displayNameOne = inEntryOne.getDisplayString();
-  var displayNameTwo = inEntryTwo.getDisplayString();
+
+/**
+ *
+ */
+AttributeSuggestionBox.prototype.getSelectedItem = function () {
+  return this._selectedItem;
+};
+
+
+/**
+ *
+ */
+AttributeSuggestionBox._compareItemDisplayNames = function (itemOne, itemTwo) {
+  var displayNameOne = itemOne.getDisplayName();
+  var displayNameTwo = itemTwo.getDisplayName();
   if (displayNameOne == displayNameTwo) {
     return 0;
   } else {
@@ -402,46 +465,64 @@ AttributeSuggestionBox.compareEntryDisplayNames = function (inEntryOne, inEntryT
   }
 };
 
+
+/**
+ *
+ */
 AttributeSuggestionBox.prototype._focusOnInputField = function (inEventObject) {
   //this._myInputField.value = "";
   this._redisplayAttributeSuggestionBox();
 };
 
 
+/**
+ *
+ */
 AttributeSuggestionBox.prototype._keyPressOnInputField = function (inEventObject) {
   this._redisplayAttributeSuggestionBox();
 };
 
 
+/**
+ *
+ */
 AttributeSuggestionBox.prototype._blurOnInputField = function () {
   // make the suggestion box disappear
   this._myAttributeSuggestionBoxDivElement.style.display = "none";
 };
 
 
-AttributeSuggestionBox.prototype._clickOnSelection = function (inEventObject, inString) {
-  this._myInputField.value = inString;
+/**
+ *
+ */
+AttributeSuggestionBox.prototype._clickOnSelection = function (inEventObject, item) {
+  this._selectedItem = item;
+  this._myInputField.value = item.getDisplayName();  // PENDING: need to pass back the item, not a string
 };
 
 
+/**
+ *
+ */
 AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () {
   var partialInputString = this._myInputField.value;
-  var listOfMatchingStrings = [];
+  var listOfMatchingItems = [];
   var key;
+  var item;
 
-  for (key in this._myListOfEntries) {
-    var entry = this._myListOfEntries[key];
-    var lowerCaseEntryString = entry.getDisplayString().toLowerCase();
+  for (key in this._listOfSuggestedItems) {
+    item = this._listOfSuggestedItems[key];
+    var lowerCaseEntryString = item.getDisplayName().toLowerCase();
     var lowerCaseInputString = partialInputString.toLowerCase();
     var numberOfCharactersToCompare = lowerCaseInputString.length;
     var shortEntryString = lowerCaseEntryString.substring(0, numberOfCharactersToCompare);
     if (shortEntryString == lowerCaseInputString) {
       // we have a match!
-      listOfMatchingStrings.push(entry.getDisplayString());
+      listOfMatchingItems.push(item);
     }
   }
 
-  if (listOfMatchingStrings.length === 0) {
+  if (listOfMatchingItems.length === 0) {
     // make the suggestion box disappear
     this._myAttributeSuggestionBoxDivElement.style.display = "none";
   } else {
@@ -449,13 +530,13 @@ AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () 
     var table = document.createElement('table');
     var rowNumber = 0;
     var columnNumber = 0;
-    for (key in listOfMatchingStrings) {
-      var string = listOfMatchingStrings[key];
-      var textNode = document.createTextNode(string);
+    for (key in listOfMatchingItems) {
+      item = listOfMatchingItems[key];
+      var textNode = document.createTextNode(item.getDisplayName());
       var row = table.insertRow(rowNumber);
       var cell = row.insertCell(columnNumber);
       cell.appendChild(textNode);
-      cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, string);
+      cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, item);
       rowNumber += 1;
     }
     this._myAttributeSuggestionBoxDivElement.appendChild(table);

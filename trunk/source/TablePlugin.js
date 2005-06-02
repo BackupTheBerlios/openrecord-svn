@@ -124,6 +124,7 @@ TablePlugin.prototype.fetchItems = function() {
  * @scope    private instance method
  */
 TablePlugin.prototype._buildAttributeHash = function() {
+  var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var hashTableOfAttributes = {};
   var hashTableOfEntries = {};
@@ -138,20 +139,27 @@ TablePlugin.prototype._buildAttributeHash = function() {
         
         // build entries representing this attribute in this table 
         // PENDING we may only want to do this for certain attributes
-        if (!hashTableOfEntries[attributeKeyString]) {
-          hashTableOfEntries[attributeKeyString] = {};
-        }
         var itemEntries = contentItem.getEntriesForAttribute(attribute);
-        for (var entryKey in itemEntries) {
-          var entry = itemEntries[entryKey];
-          hashTableOfEntries[attributeKeyString][entry.getUniqueKeyString()] = entry;
+        if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
+          hashTableOfEntries[attributeKeyString] = this._getSuggestedItemsForAttribute(attribute);
+        } else {
+          if (!hashTableOfEntries[attributeKeyString]) {
+            hashTableOfEntries[attributeKeyString] = {};
+          }
+          for (var entryKey in itemEntries) {
+            var entry = itemEntries[entryKey];
+            hashTableOfEntries[attributeKeyString][entry.getUniqueKeyString()] = entry;
+          }
         }
       }
     }
   }
   
-  for (attributeKey in hashTableOfEntries) {
-    hashTableOfEntries[attributeKey] = Util.hashTableValues(hashTableOfEntries[attributeKey]);
+  if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
+  } else {
+    for (attributeKey in hashTableOfEntries) {
+      hashTableOfEntries[attributeKey] = Util.hashTableValues(hashTableOfEntries[attributeKey]);
+    }
   }
   this._hashTableOfEntries = hashTableOfEntries;
   this._hashTableOfAttributes = hashTableOfAttributes;
@@ -160,6 +168,50 @@ TablePlugin.prototype._buildAttributeHash = function() {
     var key = attributeCalledName.getUniqueKeyString();
     this._hashTableOfAttributes[key] = attributeCalledName;
   }
+};
+
+
+/**
+ *
+ */
+TablePlugin.prototype._getSuggestedItemsForAttribute = function(attribute) {
+  var listOfSuggestedItems = [];
+  var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
+  if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
+    var key;
+    var categoryCalledCategory = this.getWorld().getCategoryCalledCategory();
+    var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
+    var attributeCalledExpectedType = this.getWorld().getAttributeCalledExpectedType();
+    var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
+    var listOfCategories = [];
+    for (key in listOfExpectedTypeEntries) {
+      var expectedTypeEntry = listOfExpectedTypeEntries[key];
+      var expectedType = expectedTypeEntry.getValue();
+      if (expectedType.isInCategory(categoryCalledCategory)) {
+        listOfCategories.push(expectedType);
+      }
+      /* WRONG -- DELETE ME
+      var listOfCategoryEntriesForExpectedType = expectedType.getEntriesForAttribute(attributeCalledCategory);
+      var categoryEntryForExpectedType = listOfCategoryEntriesForExpectedType[0]; // PENDING: should look at whole list, not just element 0
+      var categoryForExpectedType = categoryEntryForExpectedType.getValue();
+      if (categoryForExpectedType.isInCategory(categoryCalledCategory)) {
+        listOfCategories.push(categoryForExpectedType);
+      }
+      */
+    }
+    for (key in listOfCategories) {
+      var category = listOfCategories[key];
+      var listOfItems = this.getWorld().getItemsInCategory(category);
+      for (keyToo in listOfItems) {
+        var item = listOfItems[keyToo];
+        Util.addObjectToSet(item, listOfSuggestedItems);
+      }
+    }
+  }
+  if (listOfSuggestedItems.length === 0) {
+    listOfSuggestedItems = null;
+  }
+  return listOfSuggestedItems;
 };
 
 
@@ -177,6 +229,7 @@ TablePlugin.prototype._insertRow = function(contentItem, rowNum) {
   }
   return aRow;
 };
+
 
 /**
  * Constructs the table body 
@@ -198,6 +251,10 @@ TablePlugin.prototype._buildTableBody = function() {
   }
 };
 
+
+/**
+ *
+ */
 TablePlugin.prototype.observedItemHasChanged = function(item) {
   // called when a provisional item becomes a real item
   item.removeObserver(this); //now that provisional item is real, we stop observing it
@@ -216,6 +273,7 @@ TablePlugin.prototype.observedItemHasChanged = function(item) {
   var aRow = this._insertRow(newItem, this._listOfItems.length+1, true);
 };
 
+
 /**
  * Constructs the table header 
  *
@@ -232,7 +290,8 @@ TablePlugin.prototype._buildHeader = function() {
     var headerStr = attribute.getDisplayName();
     aCell.appendChild(document.createTextNode(headerStr));
     if (this._sortAttribute == attribute) {
-      aCell.appendChild(this.getSortIcon());}
+      aCell.appendChild(this.getSortIcon());
+    }
     aCell.onclick = this.clickOnHeader.bindAsEventListener(this, attribute);
     
     headerRow.appendChild(aCell);
@@ -314,7 +373,7 @@ TablePlugin.prototype.getSortIcon = function () {
 TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   var aCell = row.insertCell(col);
   aCell.className = this.myCellClass;
-  var multiEntriesView = new MultiEntriesView(this, aCell, item,attribute, this.myCellClass);
+  var multiEntriesView = new MultiEntriesView(this, aCell, item, attribute, this.myCellClass);
   aCell.or_entriesView = multiEntriesView;
   multiEntriesView.refresh();
   if (this.isInEditMode()) {

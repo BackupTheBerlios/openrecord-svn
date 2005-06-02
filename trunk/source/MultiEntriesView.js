@@ -45,6 +45,7 @@
 MultiEntriesView.SEPARATOR = " • ";
 MultiEntriesView.SEPARATOR_COLOR = '#999999';
 
+
 /**
  * An instance of MultiEntriesView can be placed in any parent container View
  * to display and (if in edit mode) edit multi-lines of text
@@ -89,6 +90,9 @@ MultiEntriesView.prototype.refresh = function() {
 };
 
 
+/**
+ *
+ */
 MultiEntriesView.prototype.noLongerProvisional = function() {
   Util.assert(this._entryViews.length == 1); // provisional item should only have one entry
   for (var i=0; i < this._entryViews.length; ++i) {
@@ -96,21 +100,34 @@ MultiEntriesView.prototype.noLongerProvisional = function() {
   }
 };
 
+
+/**
+ *
+ */
 MultiEntriesView.prototype.select = function(inSelectFirst) {
   var index = inSelectFirst ? 0 : this._entryViews.length - 1;
   this._entryViews[index].startEditing();
 };
 
+
+/**
+ *
+ */
 MultiEntriesView.prototype.setSuggestions = function(suggestionList) {
   for (var i=0; i < this._entryViews.length; ++i) {
     this._entryViews[i].setSuggestions(suggestionList);
   }
 };
 
+
+/**
+ *
+ */
 MultiEntriesView.prototype.setKeyPressFunction = function(keyPressFunction) {
   Util.assert(keyPressFunction instanceof Function);
   this._keyPressFunction = keyPressFunction;
 };
+
 
 /**
  * Sets a function to be used when onclick is called to the TextView
@@ -123,6 +140,10 @@ MultiEntriesView.prototype.setClickFunction = function(inClickFunction) {
   this._clickFunction = inClickFunction;
 };
 
+
+/**
+ *
+ */
 MultiEntriesView.prototype._handleClick = function(inEvent, inTextView) {
   if (this._clickFunction && this._clickFunction(inEvent, inTextView)) {
     return true;
@@ -130,6 +151,10 @@ MultiEntriesView.prototype._handleClick = function(inEvent, inTextView) {
   return false;
 };
 
+
+/**
+ *
+ */
 MultiEntriesView.prototype._handleOwnClick = function(inEvent) {
   var lastEntry = this._entryViews[this._entryViews.length-1];
   if (this._handleClick(inEvent, lastEntry)) {return true;}
@@ -137,6 +162,9 @@ MultiEntriesView.prototype._handleOwnClick = function(inEvent) {
 };
 
 
+/**
+ *
+ */
 MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inTextView) {
   Util.assert(inTextView instanceof TextView);
   var asciiValueOfKey = inEvent.keyCode;
@@ -170,6 +198,9 @@ MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inTextView) 
 };
 
 
+/**
+ *
+ */
 MultiEntriesView.prototype._addEntryView = function(inEntry) {
   var spanElt = document.createElement("span");
   var aTextView = new TextView(this, spanElt, this._item, this._attribute, inEntry, this._className);
@@ -184,6 +215,10 @@ MultiEntriesView.prototype._addEntryView = function(inEntry) {
   return aTextView;
 };
 
+
+/**
+ *
+ */
 MultiEntriesView.prototype._addSeparator = function() {
   var spanElt = document.createElement("span");
   spanElt.appendChild(document.createTextNode(MultiEntriesView.SEPARATOR));
@@ -191,6 +226,7 @@ MultiEntriesView.prototype._addSeparator = function() {
   this.getHTMLElement().appendChild(spanElt);
   return spanElt;
 };
+
 
 /**
  * Re-creates all the HTML for the MultiEntriesView, and hands the HTML to the 

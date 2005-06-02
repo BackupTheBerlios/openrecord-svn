@@ -396,8 +396,9 @@ Item.prototype.toString = function () {
   var listOfCategories = this.getEntriesForAttribute(attributeCategory);
   for (var key in listOfCategories) {
     var category = listOfCategories[key];
-    Util.assert(category instanceof Item);
-    returnString += "(" + category.getDisplayName() + ")";
+    if (category instanceof Item) {
+      returnString += "(" + category.getDisplayName() + ")";
+    }
   }
   returnString += " \"" + this.getDisplayName() + "\"" + "]";
   return returnString; 

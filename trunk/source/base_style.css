@@ -232,8 +232,11 @@ div.viewmode .header {
   float: right;
 }
 
-div.editmode .edit_mode_only_control {
+div.editmode p.edit_mode_only_control {
   background-color: rgb(100%, 100%, 40%);
+}
+
+div.editmode .edit_mode_only_control {
   display: block;
 }
 
