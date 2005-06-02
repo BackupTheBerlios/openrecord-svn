@@ -331,7 +331,7 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
 RootView.prototype.display = function () {
   Util.assert(this._myCurrentContentView instanceof Object);
 
-  document.title = this._myCurrentContentView.getPageTitle() + " - openagenda.org";
+  document.title = this._myCurrentContentView.getPageTitle() + " - openrecord.org";
   this._myRootDiv.className = (this.isInEditMode()) ? RootView.ELEMENT_CLASS_EDIT_MODE : RootView.ELEMENT_CLASS_VIEW_MODE;
   this._displayLoginSpan();
   this._displayNavbar();

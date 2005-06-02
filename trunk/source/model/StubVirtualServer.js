@@ -633,6 +633,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   var name;
   var item;
   var entry;
+  var key;
   
   this.__myWorld.beginTransaction();
   var axiomaticUser = this.__getItemFromUuidOrCreateNewItem(World.UUID_FOR_USER_AMY);
@@ -643,17 +644,16 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   
   // associate display names with the UUIDs of all the attributes
   var hashTableOfAttributeNamesKeyedByUuid = {};
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_NAME] = "Name";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SHORT_NAME] = "Short Name";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SUMMARY] = "Summary";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_BODY] = "Body";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_CATEGORY] = "Category";
-  // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SECTION] = "Section";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY] = "Query";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_NAME]          = "Name";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SHORT_NAME]    = "Short Name";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SUMMARY]       = "Summary";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_BODY]          = "Body";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_CATEGORY]      = "Category";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY]         = "Query";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY] = "Matching Category";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM] = "Matching Item";
-  // hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_PLUGIN_NAME] = "Plugin Name";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED] = "Unfiled Entry";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED]       = "Unfiled Entry";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE] = "Expected Type";
 
   // create all the Item objects for the attributes
   for (uuid in hashTableOfAttributeNamesKeyedByUuid) {
@@ -663,28 +663,65 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   // associate display names with the UUIDs of all the categories
   var hashTableOfCategoryNamesKeyedByUuid = {};
   hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_ATTRIBUTE] = "Attribute";
-  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_CATEGORY] = "Category";
-  // hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_PAGE] = "Page";
-  // hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_SECTION] = "Section";
-  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_QUERY] = "Query";
+  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_CATEGORY]  = "Category";
+  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_QUERY]     = "Query";
+  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_TYPE]      = "Type";
 
   // create all the Item objects for the categories
   for (uuid in hashTableOfCategoryNamesKeyedByUuid) {
     this.__getItemFromUuidOrCreateNewItem(uuid);
   }
  
-  // set the name of the axiomaticUser
+  // associate display names with the UUIDs of all the types
+  var hashTableOfTypeNamesKeyedByUuid = {};
+  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_TEXT]       = "Text";
+  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_NUMBER]     = "Number";
+  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_DATE]       = "Date";
+  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_CHECK_MARK] = "Check Mark";
+  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_URL]        = "Url";
+  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_ITEM]       = "Item";
+  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_ANYTHING]   = "Anything";
+  
+  // create all the Item objects for the types
+  for (uuid in hashTableOfTypeNamesKeyedByUuid) {
+    this.__getItemFromUuidOrCreateNewItem(uuid);
+  }
+  
+  // associate expected data types with the UUIDs of some of the attributes
+  var hashTableOfExpectedTypesKeyedByUuid = {};
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_NAME]          = [World.UUID_FOR_TYPE_TEXT];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SHORT_NAME]    = [World.UUID_FOR_TYPE_TEXT];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SUMMARY]       = [World.UUID_FOR_TYPE_TEXT];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_BODY]          = [World.UUID_FOR_TYPE_TEXT];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_CATEGORY]      = [World.UUID_FOR_CATEGORY_CATEGORY];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY]         = [World.UUID_FOR_CATEGORY_QUERY];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY] = [World.UUID_FOR_CATEGORY_CATEGORY];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM] = [World.UUID_FOR_TYPE_ITEM];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED]       = [World.UUID_FOR_TYPE_ANYTHING];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE] = [World.UUID_FOR_CATEGORY_TYPE, World.UUID_FOR_CATEGORY_CATEGORY];
+
   var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
+
+  // set the name of the axiomaticUser
   axiomaticUser.addEntryForAttribute(attributeCalledName, "Amy ex machina");
   
-  // set the names of all the attributes, and put them in the category called "Attribute"
+  // set the names of all the attributes, 
+  // and put them in the category called "Attribute"
+  // and set their expected data types
   var categoryCalledAttribute = this.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
   var attributeCalledCategory = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_CATEGORY);
+  var attributeCalledExpectedType = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE);
   for (uuid in hashTableOfAttributeNamesKeyedByUuid) {
     item = this.getItemFromUuid(uuid);
     name = hashTableOfAttributeNamesKeyedByUuid[uuid];
     item.addEntryForAttribute(attributeCalledName, name);
     item.addEntryForAttribute(attributeCalledCategory, categoryCalledAttribute);
+    var listOfExpectedTypes = hashTableOfExpectedTypesKeyedByUuid[uuid];
+    for (key in listOfExpectedTypes) {
+      var uuidOfExpectedType = listOfExpectedTypes[key];
+      expectedType = this.getItemFromUuid(uuidOfExpectedType);
+      item.addEntryForAttribute(attributeCalledExpectedType, expectedType);
+    }
   }
   
   // set the names of all the categories, and put them in the category called "Category"
@@ -695,10 +732,19 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
     item.addEntryForAttribute(attributeCalledName, name);
     item.addEntryForAttribute(attributeCalledCategory, categoryCalledCategory);
   }
-  
+
+  // set the names of all the types, and put them in the category called "Type"
+  var categoryCalledType = this.__getItemFromUuidOrCreateNewItem(World.UUID_FOR_CATEGORY_TYPE);
+  for (uuid in hashTableOfTypeNamesKeyedByUuid) {
+    item = this.getItemFromUuid(uuid);
+    name = hashTableOfTypeNamesKeyedByUuid[uuid];
+    item.addEntryForAttribute(attributeCalledName, name);
+    item.addEntryForAttribute(attributeCalledCategory, categoryCalledType);
+  }
+
   this.__myCurrentUser = null;
 
-  for (var key in this.__myChronologicalListOfNewlyCreatedRecords) {
+  for (key in this.__myChronologicalListOfNewlyCreatedRecords) {
     var newRecord = this.__myChronologicalListOfNewlyCreatedRecords[key];
     this.__myChronologicalListOfRecords.push(newRecord);
   }

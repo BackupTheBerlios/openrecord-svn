@@ -84,7 +84,11 @@ function PageView(inRootView, inHTMLElement, inPage) {
  */
 PageView.prototype.getPageTitle = function () {
   var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
-  return this.myPage.getSingleStringValueFromAttribute(attributeCalledShortName);
+  var pageTitle = this.myPage.getSingleStringValueFromAttribute(attributeCalledShortName);
+  if (!pageTitle) {
+    pageTitle = this.myPage.getDisplayName();
+  }
+  return pageTitle;
 };
 
   
