@@ -208,7 +208,7 @@ TablePlugin.prototype.observedItemHasChanged = function(item) {
   var oldProvisionalRow = this.myTable.rows[this._listOfItems.length];
   for (var i=0; i < oldProvisionalRow.cells.length; ++i) {
     var aCell = oldProvisionalRow.cells[i];
-    aCell.or_textView.noLongerProvisional();
+    aCell.or_entriesView.noLongerProvisional();
   }
 
   // create new provisional item now that old one has become real
@@ -314,14 +314,14 @@ TablePlugin.prototype.getSortIcon = function () {
 TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   var aCell = row.insertCell(col);
   aCell.className = this.myCellClass;
-  var aTextView = new TextView(this, aCell, item, attribute, this.myCellClass);
-  aCell.or_textView = aTextView;
-  aTextView.refresh();
+  var multiEntriesView = new MultiEntriesView(this, aCell, item,attribute, this.myCellClass);
+  aCell.or_entriesView = multiEntriesView;
+  multiEntriesView.refresh();
   if (this.isInEditMode()) {
-    //aCell.onkeypress = this.keyPressOnEditField.bindAsEventListener(this, aTextView);
+    multiEntriesView.setSuggestions(this._hashTableOfEntries[attribute.getUniqueKeyString()]);
     var listener = this;
-    aTextView.setSuggestions(this._hashTableOfEntries[attribute.getUniqueKeyString()]);
-    aTextView.setKeyPressFunction(function (evt, aTxtView) {listener.keyPressOnEditField(evt, aTxtView);});
+    multiEntriesView.setKeyPressFunction(function (evt, aTxtView) {return listener.keyPressOnEditField(evt, aTxtView);});
+    multiEntriesView.setClickFunction(function (evt, aTxtView) {return listener._handleClick(evt, aTxtView);});
   }
 };
 
@@ -351,7 +351,17 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
   this._buildTable();
 };
   
-
+TablePlugin.prototype._handleClick = function (inEventObject, aTextView) {
+  var rowElement = aTextView.getSuperview().getHTMLElement().parentNode; // textView -> multiEntriesView -> cellElment -> rowElement
+  Util.assert(rowElement instanceof HTMLTableRowElement);
+  if (rowElement != this._lastSelectedRow) {
+    if (this._lastSelectedRow) {this._lastSelectedRow.style.background = "rgb(100%,100%,100%)";}
+    this._lastSelectedRow = rowElement;
+    rowElement.style.background = "rgb(100%,100%,0%)";
+    return true;
+  }
+  return false;
+};
 /**
  * Called when the user types a character when editing a table cell. 
  *
@@ -402,10 +412,10 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
     Util.isArray(this._listOfItems);
     
     // line below needs to be called here i.e. early because stopping an edit may change a provisional item
-    // to become a "real" one thereby  creating new row for the next provisional item
+    // to become a "real" one thereby  creating new row for the next provisional item, e.g. this._listOfItems changes
     aTextView.stopEditing();
 
-    var cellElement = aTextView.getHTMLElement();
+    var cellElement = aTextView.getSuperview().getHTMLElement(); // textView's multiEntriesView's
     var userHitReturnInLastRow = false;
     var shiftBy;
     var numCols = this._numberOfColumns;
@@ -442,17 +452,8 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
       nextCell = nextRow.cells[cellElement.cellIndex];
     }
     
-    var nextTextView = nextCell.or_textView;
-    nextTextView.startEditing();
-/*    if (userHitReturnInLastRow && tablePlugin.myNewItemCreatedFlag) {
-      tablePlugin.myNewItemCreatedFlag = false;
-      tablePlugin.refresh();
-      tablePlugin.startEditingInCellForNewItemAtColumn(cellDelegate.myColumnNumber);
-    } else {
-      if (nextCell) {
-        TablePlugin.startEditingInCell(nextCell);
-      }
-    } */
+    var nextMultiEntryView = nextCell.or_entriesView;
+    nextMultiEntryView.select(move != MOVE_LEFT);
   }
   return !move;
 };

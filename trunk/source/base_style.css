@@ -466,9 +466,9 @@ input.plain:hover {
   background: rgb(100%, 100%, 40%);
 }
 
-.editmode .simple_table td:hover {
+/*.editmode .simple_table td:hover {
   background: rgb(100%, 100%, 70%);
-}
+}*/
 
 td.newitem {
   /* background: rgb(100%,100%,50%); */

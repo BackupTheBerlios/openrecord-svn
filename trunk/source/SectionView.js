@@ -241,11 +241,12 @@ SectionView.prototype.doInitialDisplay = function () {
   var headerH2 = View.createAndAppendElement(outerDiv, "h2");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
-  this._myHeaderView = new TextView(this, headerH2, this.mySection,
-    attributeCalledName, SectionView.ELEMENT_CLASS_TEXT_VIEW);
+  this._myHeaderView = new TextView(this, headerH2, this.mySection, attributeCalledName,
+    this.mySection.getSingleEntryFromAttribute(attributeCalledName),
+    SectionView.ELEMENT_CLASS_TEXT_VIEW);
   var summaryDiv = View.createAndAppendElement(outerDiv, "div");
-  this._mySectionSummaryView = new TextView(this, summaryDiv, this.mySection,
-    attributeCalledSummary, SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
+  this._mySectionSummaryView = new TextView(this, summaryDiv, this.mySection, attributeCalledSummary,
+    this.mySection.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
   View.createAndAppendElement(outerDiv, "p");
 
   // create the plugin editing controls, if we're in edit mode

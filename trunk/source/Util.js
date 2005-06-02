@@ -324,6 +324,17 @@ Util.isHashTable = function (inValue) {
 
 
 // -------------------------------------------------------------------
+// Methods that operate on Arrays
+// -------------------------------------------------------------------
+
+Util.getArrayIndex = function(inArray, inElt) {
+  for (i=0; i<inArray.length; ++i) {
+    if (inArray[i] == inElt) {return i;}
+  }
+  return -1;
+};
+
+// -------------------------------------------------------------------
 // Methods that operate on Sets
 // -------------------------------------------------------------------
 

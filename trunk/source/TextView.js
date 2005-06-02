@@ -59,22 +59,26 @@ TextView.PROVISIONAL_COLOR = '#999999';
  * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
 TextView.prototype = new View();  // makes TextView be a subclass of View
-function TextView(theSuperview, theElement, theItem, theAttribute, theClassType, isMultiLine) {
-  Util.assert(theItem instanceof Item);
+function TextView(theSuperview, inElement, inItem, inAttribute, inEntry, inClassName, isMultiLine) {
+  Util.assert((!inEntry) || inEntry instanceof Entry);
+  Util.assert(inItem instanceof Item);
+  Util.assert(inAttribute instanceof Item);
   //Util.assert(theAttribute instanceof Attribute); PENDING need to check that attribute is an attribute
   
   this.setSuperview(theSuperview);
-  this.setHTMLElement(theElement);
-  this._item = theItem;
-  this._attribute = theAttribute;
+  this.setHTMLElement(inElement);
+  inElement.style.width = inElement.style.height = "100%"; // make this element expand to fill parent element where possible
+  this._item = inItem;
+  this._attribute = inAttribute;
+  this._entry = inEntry;
   this._editField = null;
-  this._classType = theClassType;
+  this._className = inClassName;
   this._isMultiLine = isMultiLine;
   this._isEditing = false;
   this._proxyOnKeyFunction = null;
   
-  this._isProvisional = this._item.isProvisional();
-  if (this._isProvisional) {this._provisionalText = this._attribute.getDisplayName();}
+  this._isProvisional = inItem.isProvisional();
+  if (this._isProvisional) {this._provisionalText = inAttribute.getDisplayName();}
   
 }
 
@@ -112,18 +116,13 @@ TextView.prototype.refresh = function() {
  * Re-creates all the HTML for the TextView, and hands the HTML to the 
  * browser to be re-drawn.
  *
- * @scope    public instance method
+ * @scope    private instance method
  */
 TextView.prototype._buildView = function() {
   var htmlElement = this.getHTMLElement();
   htmlElement.innerHTML = '';
   
-  var textString = this._isProvisional ? this._provisionalText :
-    this._item.getSingleStringValueFromAttribute(this._attribute);
-  // PENDING: need to deal with multi valued attrs
-  // for (var i in textList) {
-  //   textString = textList[i] + "\n" + textString;
-  // };
+  var textString = this._getText();
   
   if (this._isProvisional) {
     this._oldColor = htmlElement.style.color;
@@ -155,7 +154,7 @@ TextView.prototype.startEditing = function() {
         editField.type = 'text';
       }
       this._editField = editField;
-      editField.className = this._classType;
+      editField.className = this._className;
       var listener = this; 
       editField.onblur = this.onBlur.bindAsEventListener(this);
       editField.onkeypress = this.onKeyPress.bindAsEventListener(this);
@@ -163,8 +162,8 @@ TextView.prototype.startEditing = function() {
       editField.onfocus = this.onFocus.bindAsEventListener(this);
       editField.defaultValue = this._isProvisional ? '' : this.textNode.data;
     }
-    editField.style.width = this.getHTMLElement().offsetWidth + "px";    
-    editField.style.height = (this.getHTMLElement().offsetHeight) + "px";
+    //editField.style.width = this.getHTMLElement().offsetWidth + "px";    
+    //editField.style.height = (this.getHTMLElement().offsetHeight) + "px";
     
     this._setupSuggestionBox();
     this.getHTMLElement().replaceChild(editField, this.textNode);
@@ -175,9 +174,88 @@ TextView.prototype.startEditing = function() {
 };
 
 
+/**
+ * Called when it's time to stop editing and save the changes.
+ *
+ * @scope    public instance method
+ */
+TextView.prototype.stopEditing = function() {
+  if (this._isEditing) {
+    var newText = this._editField.value;
+    var stillProvisional = this._isProvisional && newText === '';
+    var htmlElement = this.getHTMLElement();
+
+    this._isEditing = false;
+
+    if (this._suggestionBox) {this._suggestionBox._blurOnInputField();}
+    if (stillProvisional) {
+      newText = this._provisionalText;
+    }
+    this.textNode.data = newText;
+    this._suggestionBox = null;
+    this.getHTMLElement().replaceChild(this.textNode, this._editField);
+
+    // we need this _writeText() to be after all display related code, because this may trigger an observer call
+    if (!stillProvisional) { this._writeText(newText); }
+  }
+};
+
+
+/**
+ * Writes edited text back into item entry of repository
+ *
+ * @scope    private instance method
+ * @param    inText    text to be written. 
+ */
+TextView.prototype._writeText = function(inText) {
+  if (this._entry) {
+    var oldText = this._entry.getDisplayString();
+    if (oldText != inText) {
+      this._entry = this._item.replaceEntry(this._entry,inText);
+    }
+  }
+  else if (inText !== '') {
+    this._entry = this._item.addEntryForAttribute(this._attribute, inText);
+  }
+};
+
+/**
+ * Returns text string for TextView to be displaying and editing
+ *
+ * @scope    private instance method
+ */
+TextView.prototype._getText = function() {
+  if (this._isProvisional) {return this._provisionalText;}
+  if (this._entry) {return this._entry.getDisplayString();}
+  return '';
+};
+
+/**
+ * Restores the original text before this editing session
+ *
+ * @scope    private instance method
+ */
+TextView.prototype._restoreText = function() {
+  Util.assert(this._isEditing);
+  var oldText = (this._entry) ?  this._entry.getDisplayString() : '';
+  this._editField.value = oldText;
+  this._editField.select();
+};
+
 // -------------------------------------------------------------------
 // Event handler methods
 // -------------------------------------------------------------------
+
+/**
+ * Sets a function to be used when onclick is called to the TextView
+ *
+ * @scope    public instance method
+ * @param    inEventObject    An event object. 
+ */
+TextView.prototype.setClickFunction = function(inClickFunction) {
+  Util.assert(inClickFunction instanceof Function);
+  this._clickFunction = inClickFunction;
+};
 
 /**
  * Called when the user clicks on the text.
@@ -188,6 +266,9 @@ TextView.prototype.startEditing = function() {
  * @param    inEventObject    An event object. 
  */
 TextView.prototype.onClick = function(inEventObject) {
+  if (this._clickFunction && this._clickFunction(inEventObject, this)) {
+    return true;
+  }
   if (this.isInEditMode()) {
     this.startEditing();
   }
@@ -212,45 +293,6 @@ TextView.prototype.onBlur = function(inEventObject) {
 
 
 /**
- * Called when it's time to stop editing and save the changes.
- *
- * @scope    public instance method
- */
-TextView.prototype.stopEditing = function() {
-  if (this._isEditing) {
-    var newText = this._editField.value;
-    var stillProvisional = this._isProvisional && newText === '';
-    var htmlElement = this.getHTMLElement();
-    
-    this._isEditing = false;
-  
-    if (this._suggestionBox) {this._suggestionBox._blurOnInputField();}
-    if (stillProvisional) {
-      newText = this._provisionalText;
-    }
-    this.textNode.data = newText;
-    this._suggestionBox = null;
-    this.getHTMLElement().replaceChild(this.textNode, this._editField);
-    
-    // we need this block to be after all display related code, because this may trigger an observer call
-    if (!stillProvisional) {
-      // write out new entry for attribute
-      // PENDING: need to properly handle multi-valued attributes
-      var listOfEntries = this._item.getEntriesForAttribute(this._attribute);
-      if (listOfEntries && listOfEntries[0]) {
-        var oldEntry = listOfEntries[0];
-        this._item.replaceEntry(oldEntry, newText);
-      } else {
-        if (newText) {
-          this._item.addEntryForAttribute(this._attribute, newText);
-        }
-      }
-    }
-  }
-};
-
-
-/**
  * Sets a function to be used when onkeypress is called to the TextView
  *
  * @scope    public instance method
@@ -271,6 +313,10 @@ TextView.prototype.onKeyUp = function(inEventObject) {
  * @param    inEventObject    An event object. 
  */
 TextView.prototype.onKeyPress = function(inEventObject) {
+  if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_ESCAPE) {
+    this._restoreText();
+    return true;
+  }
   if (this._keyPressFunction && this._keyPressFunction(inEventObject, this)) {
     return true;
   }
@@ -321,6 +367,8 @@ TextView.prototype.noLongerProvisional = function() {
   if (this._isProvisional) {
     this._isProvisional = false;
     this.getHTMLElement().style.color = this._oldColor;
+    // need to set line below because _writeText() hasn't returned an entry yet
+    this._entry = this._item.getSingleEntryFromAttribute(this._attribute); 
     this._buildView();
   }
 };

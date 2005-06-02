@@ -123,12 +123,12 @@ PageView.prototype.doInitialDisplay = function () {
   var pageDivElement = this.getHTMLElement();
   
   var headerElement = View.createAndAppendElement(pageDivElement, "h1");
-  this._myHeaderText = new TextView(this, headerElement, this.myPage,
-    attributeCalledName, SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
+  this._myHeaderText = new TextView(this, headerElement, this.myPage, attributeCalledName,
+    this.myPage.getSingleEntryFromAttribute(attributeCalledName), SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
 
   var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
-  this._myPageSummaryView = new TextView(this, summaryViewDiv, this.myPage,
-    attributeCalledSummary, SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
+  this._myPageSummaryView = new TextView(this, summaryViewDiv, this.myPage, attributeCalledSummary,
+    this.myPage.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
 
   // add <div> elements for each of the sections on the page
   // and create a new SectionView for each section

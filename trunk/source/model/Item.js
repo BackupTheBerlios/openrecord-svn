@@ -358,23 +358,31 @@ Item.prototype.getShortNameEntries = function () {
 
 
 /**
- * Returns just the first value of an item's attribute.
+ * Returns just the first entry of an item's attribute.
+ *
+ * @scope    public instance method
+ * @return   A string with a description of the item.
+ */
+Item.prototype.getSingleEntryFromAttribute = function (inAttribute) {
+  var listOfEntries = this.getEntriesForAttribute(inAttribute);
+  if (listOfEntries) {
+    return listOfEntries[0];
+  }
+  return null;
+};
+
+
+/**
+ * Returns just the first entry's display string of an item's attribute.
  *
  * @scope    public instance method
  * @return   A string with a description of the item.
  */
 Item.prototype.getSingleStringValueFromAttribute = function (inAttribute) {
-  var listOfEntries = this.getEntriesForAttribute(inAttribute);
-  var singleStringValue = "";
-  if (listOfEntries) {
-    firstEntry = listOfEntries[0];
-    if (firstEntry) {
-      singleStringValue = firstEntry.getDisplayString();
-    }
-  }
-  return singleStringValue;
+  var singleEntry = this.getSingleEntryFromAttribute(inAttribute);
+  if (singleEntry) {return singleEntry.getDisplayString();}
+  return "";
 };
-
 
 /**
  * Returns a string describing the item.
