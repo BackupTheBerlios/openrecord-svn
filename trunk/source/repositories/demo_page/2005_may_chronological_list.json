@@ -3136,4 +3136,14 @@
           "value": { "type": "StringValue", "value": "Triage Status" },
       "userstamp": "6241",                // by (Chih-Chao Lam)
       "timestamp": "1117672195124" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Book
+           "uuid": "4b88732c-df0b-4391-82a3-14b76f74657b",
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "3011",                // Query for all books
+   "previousEntry": "86dc0f87-0bb1-4c9d-8a41-9a35ff7fe320",
+          "value": { "type": "RelatedUuid", "value": "3104" },
+      "userstamp": "6241",                // by (Chih-Chao Lam)
+      "timestamp": "1117675180521" }
   }
