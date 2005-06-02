@@ -133,7 +133,7 @@ MultiEntriesView.prototype._handleClick = function(inEvent, inTextView) {
 MultiEntriesView.prototype._handleOwnClick = function(inEvent) {
   var lastEntry = this._entryViews[this._entryViews.length-1];
   if (this._handleClick(inEvent, lastEntry)) {return true;}
-  lastEntry.startEditing();
+  if (inEvent.target == this.getHTMLElement()) {lastEntry.startEditing();}
 };
 
 
