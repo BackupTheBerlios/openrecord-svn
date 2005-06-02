@@ -249,10 +249,14 @@ SectionView.prototype.doInitialDisplay = function () {
     this.mySection.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
   View.createAndAppendElement(outerDiv, "p");
 
-  // create the plugin editing controls, if we're in edit mode
+  // create the editing controls, if we're in edit mode
+  var controlArea = View.createAndAppendElement(outerDiv, "p", RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL);
+  var textShowMeA = document.createTextNode("Show me a ");
+  controlArea.appendChild(textShowMeA);
+
   // PENDING: We shouldn't call the private method _getUuid()
   var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this.mySection._getUuid();
-  var selectElement = View.createAndAppendElement(outerDiv, "select", RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL, selectMenuId);
+  var selectElement = View.createAndAppendElement(controlArea, "select", null, selectMenuId);
   var optionElement;
   var listener;
   selectElement.setAttribute("name", selectMenuId);
@@ -266,9 +270,12 @@ SectionView.prototype.doInitialDisplay = function () {
     Util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
     optionElement.innerHTML = pluginName;
   }
+  
+  var textOf = document.createTextNode(" of ");
+  controlArea.appendChild(textOf);
 
   if (isCategoryMatchingQuery || isEmptyQuery) {
-    var querySelectElement = View.createAndAppendElement(outerDiv, "select", RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL);
+    var querySelectElement = View.createAndAppendElement(controlArea, "select");
     var listOfCategories = this.getWorld().getCategories();
     for (var key in listOfCategories) {
       var category = listOfCategories[key];
@@ -279,7 +286,13 @@ SectionView.prototype.doInitialDisplay = function () {
       Util.addEventListener(optionElement, "click", function(event) {listener.clickOnQueryCategorySelectionMenu(event);});
       optionElement.innerHTML = category.getDisplayName();
     }
+  } else {
+    var textTheGiven = document.createTextNode(" the given");
+    controlArea.appendChild(textTheGiven);
   }
+
+  var textItems = document.createTextNode(" items.");
+  controlArea.appendChild(textItems);
 
   // create a div element for the plugin class to use
   this._myPluginDiv = View.createAndAppendElement(outerDiv, "div");
