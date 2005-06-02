@@ -86,8 +86,7 @@ Brian  |   done   | 1   ied | Data model: change "Value" to "Entry"; refactor en
 Brian  |   done   | 2   ied | Convert UI code to use new data model
        |  High    |         | UI for entering a number literal (instead of a string literal) in a table
        |  High    |         | UI for entering references to categories or to other items
-       | Medium   |         | UI for adding a new section to a page
-       | Medium   |         | UI for editing the query that a section uses
+Chao   | Medium   |0.5 ied  | UI for adding a new section to a page
        | Medium   |         | UI for editing the query that a section uses
        | Medium   |         | Verify/fix the bug that happens when you call the PHP server code with no POST data
 Brian  |   done   | 0   ied | Replace the Edit/Save button with a Lock/Unlock UI; automatically save changes as they happen
