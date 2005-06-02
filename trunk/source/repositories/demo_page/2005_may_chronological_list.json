@@ -2876,4 +2876,42 @@
           "value": { "type": "StringValue", "value": "Mignon Belongie" },
       "userstamp": "6243",                // by (Mignon Belongie)
       "timestamp": "1117056699906" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Gerald Markowitz
+           "uuid": "f8c087f9-5138-4e10-8485-9b2126e57609",
+      "attribute": "3101",                // Author
+           "item": "5205",                // Deceit and Denial
+   "previousEntry": "6210",
+          "value": { "type": "StringValue", "value": "Gerald Markowitz" },
+      "userstamp": "6241",                // by (Chih-Chao Lam)
+      "timestamp": "1117671538895" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Rosner
+           "uuid": "f084c367-6557-4c43-8f8d-1e07cfde6622",
+      "attribute": "3101",                // Author
+           "item": "5205",                // Deceit and Denial
+          "value": { "type": "StringValue", "value": "David Rosner" },
+      "userstamp": "6241",                // by (Chih-Chao Lam)
+      "timestamp": "1117671585098" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // David Gourley
+           "uuid": "f16a265e-9414-4be3-8bf9-520a55804c78",
+      "attribute": "3101",                // Author
+           "item": "3205",                // HTTP: The Definitive Guide
+   "previousEntry": "6048",
+          "value": { "type": "StringValue", "value": "David Gourley" },
+      "userstamp": "6241",                // by (Chih-Chao Lam)
+      "timestamp": "1117671604544" }
+  },
+  // -----------------------------------------------------------------------
+  { "Entry": {                             // Brian Totty
+           "uuid": "0745be22-94c8-4983-8993-7b0023fdf5a3",
+      "attribute": "3101",                // Author
+           "item": "3205",                // HTTP: The Definitive Guide
+          "value": { "type": "StringValue", "value": "Brian Totty" },
+      "userstamp": "6241",                // by (Chih-Chao Lam)
+      "timestamp": "1117671612418" }
   }
