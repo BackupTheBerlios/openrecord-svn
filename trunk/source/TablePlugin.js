@@ -62,16 +62,14 @@ TablePlugin.DESCENDING_GIF = "descending.gif";
  * @param    inSectionView    The SectionView that this TablePlugin will appears in. 
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  */
-TablePlugin.prototype = new View();  // makes TablePlugin be a subclass of View
-function TablePlugin(inSectionView, inHTMLElement, inQuery, inCellPrefix, inClassType, inCellClass) {
-  this.setSuperview(inSectionView);
-  this.setHTMLElement(inHTMLElement);  
+TablePlugin.prototype = new ORPlugin();  // makes TablePlugin be a subclass of View
+function TablePlugin(inSectionView, inHTMLElement, inQuery) {
+  ORPlugin.call(this,inSectionView,inHTMLElement,inQuery);
 
   // PENDING should probably make this independent of sectionview
-  this.myClass = inClassType || SectionView.ELEMENT_CLASS_SIMPLE_TABLE;
-  this.myCellClass = inCellClass || SectionView.ELEMENT_CLASS_PLAIN;
+  this.myClass = SectionView.ELEMENT_CLASS_SIMPLE_TABLE;
+  this.myCellClass = SectionView.ELEMENT_CLASS_PLAIN;
   this.myTable = null;
-  this._query = inQuery;
   this._sortAttribute = null;
   this._ascendingOrder = true;
 }
@@ -105,17 +103,6 @@ TablePlugin.prototype.compareItemByAttribute = function (itemA, itemB) {
   if (strA == strB) {return 0;}
   return -ascendingInt;
 };
-
-
-/**
- * Gets the list of content items to display.
- *
- * @scope    PENDING
- */
-TablePlugin.prototype.fetchItems = function() {
-  this._listOfItems = this._query ? this.getWorld().getResultItemsForQuery(this._query) : [];
-};
-
 
 /**
  * Creates a hashtable containing all the attributes of the content items 
@@ -379,16 +366,6 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
     multiEntriesView.setKeyPressFunction(function (evt, aTxtView) {return listener.keyPressOnEditField(evt, aTxtView);});
     multiEntriesView.setClickFunction(function (evt, aTxtView) {return listener._handleClick(evt, aTxtView);});
   }
-};
-
-
-/**
- * Does final clean-up.
- *
- * @scope    public instance method
- */
-TablePlugin.prototype.endOfLife = function () {
-  this.getHTMLElement().innerHTML = "";
 };
 
 

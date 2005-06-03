@@ -100,7 +100,6 @@ function SectionView(inPageView, inHTMLElement, inSection, inSectionNumber) {
   this.setHTMLElement(inHTMLElement);
   this.mySection = inSection;
   this.mySectionNumber = inSectionNumber;
-  this.myListOfContentItems = this.getListOfContentItems();
 
   this._myPlugin = null;
   this._myPluginDiv = null;
@@ -159,27 +158,6 @@ SectionView.prototype.getPluginFromPluginName = function (inPluginName, inPlugin
   return newPlugin;
 };
 
-
-/**
- * Returns a list of content items to be displayed in this SectionView.
- *
- * @deprecated WILL BE REMOVED ONCE ALL PLUGINS ARE CONVERTED TO RECEIVE A QUERY
- * @scope    public instance method
- * @return   A list of content items.
- */
-SectionView.prototype.getListOfContentItems = function () {
-  var attributeCalledQuery = this.getWorld().getAttributeCalledQuery();
-  var listOfEntries = this.mySection.getEntriesForAttribute(attributeCalledQuery);
-  if (listOfEntries && listOfEntries[0]) {
-    var query = listOfEntries[0].getValue();
-    this.myListOfContentItems = this.getWorld().getResultItemsForQuery(query); 
-  } else {
-    this.myListOfContentItems = [];
-  }
-  return this.myListOfContentItems;
-};
-
-
 /**
  * Returns query associated to this section.
  *
@@ -224,11 +202,6 @@ SectionView.prototype.doInitialDisplay = function () {
   }
   var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
   var selectedPluginName = this.mySection.getSingleStringValueFromAttribute(attributeCalledPluginName);
-
-  this.myListOfContentItems = this.getListOfContentItems();
-  if (!this.myListOfContentItems) {
-    return;
-  }
 
   var sectionDiv = this.getHTMLElement();
   var outerDiv = View.createAndAppendElement(sectionDiv, "div", SectionView.ELEMENT_CLASS_SECTION);

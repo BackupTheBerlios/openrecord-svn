@@ -52,10 +52,9 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_DETA
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  * @syntax   var detailPlugin = new DetailPlugin()
  */
-DetailPlugin.prototype = new View();  // makes DetailPlugin be a subclass of View
-function DetailPlugin(inSuperView, inHTMLElement) {
-  this.setSuperview(inSuperView);
-  this.setHTMLElement(inHTMLElement);  
+DetailPlugin.prototype = new ORPlugin();  // makes DetailPlugin be a subclass of View
+function DetailPlugin(inSuperView, inHTMLElement,inQuery) {
+  ORPlugin.call(this,inSuperView,inHTMLElement,inQuery);
 }
 
 
@@ -80,8 +79,7 @@ DetailPlugin.prototype.refresh = function () {
   var listOfStrings = [];
 
   // for each content item, add its HTML representation to the output
-  // PENDING: how do we know our superview responds to getListOfContentItems()? 
-  var listOfContentItems = this.getSuperview().getListOfContentItems();
+  var listOfContentItems = this.fetchItems();
   for (var contentItemKey in listOfContentItems) {
     var contentItem = listOfContentItems[contentItemKey];
     listOfStrings.push(this.getXhtmlTableForItem(contentItem));
@@ -91,16 +89,6 @@ DetailPlugin.prototype.refresh = function () {
   // take all the HTML and put it together
   var finalString = listOfStrings.join("");
   this.getHTMLElement().innerHTML = finalString;
-};
-
-
-/**
- * Does final clean-up.
- *
- * @scope    public instance method
- */
-DetailPlugin.prototype.endOfLife = function () {
-  this.getHTMLElement().innerHTML = "";
 };
 
 

@@ -53,10 +53,9 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_BAR_
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  * @syntax   var barChart = new BarChartPlugin()
  */
-BarChartPlugin.prototype = new View();  // makes BarChartPlugin be a subclass of View
-function BarChartPlugin(inSectionView, inHTMLElement) {
-  this.setSuperview(inSectionView);
-  this.setHTMLElement(inHTMLElement);
+BarChartPlugin.prototype = new ORPlugin();  // makes BarChartPlugin be a subclass of View
+function BarChartPlugin(inSuperview, inHTMLElement,inQuery) {
+  ORPlugin.call(this,inSuperview,inHTMLElement,inQuery);
 }
 
 
@@ -89,8 +88,7 @@ BarChartPlugin.prototype.refresh = function () {
   var hashTableOfAttributesKeyedByAttributeKey = {};
   
   // for each attribute, count the number of items where that attribute has a numeric value
-  // PENDING: how do we know our superview responds to getListOfContentItems()? 
-  var listOfContentItems = this.getSuperview().getListOfContentItems();
+  var listOfContentItems = this.fetchItems();
   for (var iKey in listOfContentItems) {
     contentItem = listOfContentItems[iKey];
     var listOfAttributesForItem = contentItem.getAttributes();
@@ -183,16 +181,6 @@ BarChartPlugin.prototype.refresh = function () {
   // return all the new content   
   var finalString = listOfStrings.join("");
   this.getHTMLElement().innerHTML = finalString;
-};
-
-
-/**
- * Does final clean-up.
- *
- * @scope    public instance method
- */
-BarChartPlugin.prototype.endOfLife = function () {
-  this.getHTMLElement().innerHTML = "";
 };
 
 

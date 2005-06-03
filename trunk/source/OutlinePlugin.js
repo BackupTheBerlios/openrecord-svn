@@ -51,10 +51,9 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_OUTL
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  * @syntax   var outline = new OutlinePlugin()
  */
-OutlinePlugin.prototype = new View();  // makes OutlinePlugin be a subclass of View
-function OutlinePlugin(inSectionView, inHTMLElement) {
-  this.setSuperview(inSectionView);
-  this.setHTMLElement(inHTMLElement);
+OutlinePlugin.prototype = new ORPlugin();  // makes OutlinePlugin be a subclass of View
+function OutlinePlugin(inSectionView, inHTMLElement,inQuery) {
+  ORPlugin.call(this,inSectionView,inHTMLElement,inQuery);
 }
 
 
@@ -76,7 +75,7 @@ OutlinePlugin.prototype.getPluginName = function () {
  * @scope    public instance method
  */
 OutlinePlugin.prototype.refresh = function () {
-  var listOfContentItems = this.getSuperview().getListOfContentItems();
+  var listOfContentItems = this.fetchItems();
   var outlineDiv = this.getHTMLElement();
   outlineDiv.innerHTML = "";
   var ulElement = View.createAndAppendElement(outlineDiv, "ul");
@@ -95,16 +94,6 @@ OutlinePlugin.prototype.refresh = function () {
     anchorElement.innerHTML = "(more &#8658;)";
     Util.addEventListener(anchorElement, "click", RootView.clickOnLocalLink);
   }
-};
-
-
-/**
- * Does final clean-up.
- *
- * @scope    public instance method
- */
-OutlinePlugin.prototype.endOfLife = function () {
-  this.getHTMLElement().innerHTML = "";
 };
 
 

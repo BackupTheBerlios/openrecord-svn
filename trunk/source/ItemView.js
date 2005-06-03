@@ -69,20 +69,6 @@ function ItemView(inRootView, inHTMLElement, inItem) {
   this.myPlugin = null;
 }
 
-
-/**
- * Returns a list with a single content item in it.
- *
- * @scope    public instance method
- * @return   A list with one item in it.
- */
-ItemView.prototype.getListOfContentItems = function () {
-  var listOfContentItems = [];
-  listOfContentItems.push(this.myItem);
-  return listOfContentItems;
-};
-
-
 /**
  * Returns a string that gives the name of the page.
  *
@@ -120,7 +106,7 @@ ItemView.prototype.refresh = function () {
 
   // let the detailPlugin add its own content
   var detailPluginElement = document.getElementById(detailDivId);
-  this.myPlugin = new DetailPlugin(this, detailPluginElement);
+  this.myPlugin = new DetailPlugin(this, detailPluginElement,[this.myItem]);
   this.myPlugin.refresh();
 };
 
