@@ -195,7 +195,7 @@ PageView.prototype._buildNewSection = function(inSection, inBeforeElt) {
   }
   this.myListOfSectionViews.push(sectionView);
   return sectionView;
-}
+};
 
 /**
  * Called when the user clicks on the "New Section" button.
