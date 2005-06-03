@@ -350,28 +350,18 @@ RootView.prototype.display = function () {
  * @return   The newly created page item.
  */
 RootView.prototype.newPage = function () {
-  this.getWorld().beginTransaction();
-  var newPage = this.getWorld().newItem("New Page");
-  // var shortName = this.getWorld().getAttributeCalledShortName();
-  var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
-  var attributeCalledQuery = this.getWorld().getAttributeCalledQuery();
-  var categoryCalledQuery = this.getWorld().getCategoryCalledQuery();
-  var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
-  var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
-  var attributeCalledSection = this.getWorld().getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTION);
-  var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
-  var categoryCalledSection = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_SECTION);
+  var repository = this.getWorld();
+  repository.beginTransaction();
+  var newPage = repository.newItem("New Page");
+  // var shortName = repository.getAttributeCalledShortName();
+  var attributeCalledCategory = repository.getAttributeCalledCategory();
+  var attributeCalledSummary = repository.getAttributeCalledSummary();
+  var categoryCalledPage = repository.getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
   // newPage.addEntryForAttribute(shortName, "New Page");
   newPage.addEntryForAttribute(attributeCalledCategory, categoryCalledPage);
   newPage.addEntryForAttribute(attributeCalledSummary, "This is a new page.");
-  var newSection = this.getWorld().newItem("New Section");
-  newSection.addEntryForAttribute(attributeCalledCategory, categoryCalledSection);
-  newPage.addEntryForAttribute(attributeCalledSection, newSection);
-  newSection.addEntryForAttribute(attributeCalledPluginName, SectionView.PLUGIN_TABLE);
-  var newQuery = this.getWorld().newItem("New Query");
-  newQuery.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
-  newSection.addEntryForAttribute(attributeCalledQuery, newQuery);
-  this.getWorld().endTransaction();
+  PageView.newSection(repository,newPage,false);
+  repository.endTransaction();
   
   this.myHashTableOfPagesKeyedByUuid[newPage._getUuid()] = newPage;
   

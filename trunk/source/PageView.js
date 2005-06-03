@@ -48,6 +48,31 @@ PageView.ELEMENT_ID_SUMMARY_VIEW_DIV_PREFIX = "_summary_view_for_page_";
 //PageView.UUID_FOR_ATTRIBUTE_SECTION = 108;
 PageView.UUID_FOR_ATTRIBUTE_SECTION = "00000300-ce7f-11d9-8cd5-0011113ae5d6";
 
+/**
+ * Creates a new section in the repository
+ * @scope public function
+ * @param inPage  Page Item to insert new section
+ * @param isNewTransaction  should new section be wrapped in a transaction?
+ */
+PageView.newSection = function (repository, inPage, isNewTransaction) {
+  var attributeCalledCategory = repository.getAttributeCalledCategory();
+  var attributeCalledQuery = repository.getAttributeCalledQuery();
+  var categoryCalledQuery = repository.getCategoryCalledQuery();
+  var attributeCalledPluginName = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
+  var attributeCalledSection = repository.getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTION);
+  var categoryCalledSection = repository.getItemFromUuid(RootView.UUID_FOR_CATEGORY_SECTION);
+  
+  if (isNewTransaction) {repository.beginTransaction();}
+  var newSection = repository.newItem("New Section");
+  newSection.addEntryForAttribute(attributeCalledCategory, categoryCalledSection);
+  inPage.addEntryForAttribute(attributeCalledSection, newSection);
+  newSection.addEntryForAttribute(attributeCalledPluginName, SectionView.PLUGIN_TABLE);
+  var newQuery = repository.newItem("New Query");
+  newQuery.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
+  newSection.addEntryForAttribute(attributeCalledQuery, newQuery);
+  if (isNewTransaction) {repository.endTransaction();}
+  return newSection;
+};
 
 /**
  * The RootView uses an instance of a PageView to display a Page in the
@@ -108,6 +133,7 @@ PageView.prototype.refresh = function () {
       var sectionView = this.myListOfSectionViews[key];      
       sectionView.refresh();
     }
+    this._refreshEditModeControls();
   }
 };
 
@@ -142,16 +168,84 @@ PageView.prototype.doInitialDisplay = function () {
   for (var key in listOfEntriesForSections) {
     var entryForSection = listOfEntriesForSections[key];
     var section = entryForSection.getValue();
-    var sectionViewDiv = View.createAndAppendElement(pageDivElement, "div");
-    var sectionView = new SectionView(this, sectionViewDiv, section, sectionNumber);
-    sectionNumber += 1;
-    this.myListOfSectionViews.push(sectionView);
+    this._buildNewSection(section);
   }
+  this._wasInEditMode = this.isInEditMode();
+  if (this._wasInEditMode) {this._buildEditControls();}
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
 };
 
+/**
+ * Creates a new section in this page.
+ *
+ * @param  inSection newSection item
+ * @param  inBeforeElt (optional) if specified, section view to be inserted before this elt
+ * @scope    private instance method
+ */
+PageView.prototype._buildNewSection = function(inSection, inBeforeElt) {
+  var pageDivElement = this.getHTMLElement();
+  var sectionViewDiv = document.createElement("div");
+  var sectionView = new SectionView(this, sectionViewDiv, inSection, this.myListOfSectionViews.length);
+  if (inBeforeElt) {
+    pageDivElement.insertBefore(sectionViewDiv, inBeforeElt);
+  }
+  else {
+    pageDivElement.appendChild(sectionViewDiv);
+  }
+  this.myListOfSectionViews.push(sectionView);
+  return sectionView;
+}
 
+/**
+ * Called when the user clicks on the "New Section" button.
+ *
+ * @scope    private instance method
+ */
+PageView.prototype._addNewSection = function() {
+  var newSection = PageView.newSection(this.getWorld(), this.myPage ,true);
+  this._buildNewSection(newSection, this._editModeDiv).refresh();
+};
+
+/**
+ * Create the "new section" button in EditMode.
+ *
+ * @scope    private instance method
+ */
+PageView.prototype._buildEditControls = function() {
+  if (!this._editModeDiv) {
+    var pageDivElement = this.getHTMLElement();
+    this._editModeDiv = View.createAndAppendElement(pageDivElement, "div", SectionView.ELEMENT_CLASS_SECTION);
+    View.createAndAppendElement(this._editModeDiv,"br");
+    var editButton = View.createAndAppendElement(this._editModeDiv, "input", 
+      RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL);
+    editButton.type = "Button";
+    editButton.value = "New Section";
+    editButton.onclick = this._addNewSection.bindAsEventListener(this);
+  }
+  else {
+    this._editModeDiv.display = "Block";
+  }
+};
+
+/**
+ * Called when edit controls need to be refreshed
+ *
+ * @scope    private instance method
+ */
+PageView.prototype._refreshEditModeControls = function() {
+  if (this._wasInEditMode != this.isInEditMode()) {
+    this._wasInEditMode = this.isInEditMode();
+    if (this.isInEditMode()) {
+      this._buildEditControls();
+    }
+    else {
+      this.getHTMLElement().removeChild(this._editModeDiv);
+      //Pending: why does hiding _editModeDiv still leave a blue line, gotta ask Brian about CSS
+      this._editModeDiv = null;
+    }
+  }
+};
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------

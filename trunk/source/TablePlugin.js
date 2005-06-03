@@ -339,12 +339,9 @@ TablePlugin.prototype._buildTable = function() {
  * @scope    public instance method
  */
 TablePlugin.prototype.refresh = function () {
-  if (!this._myHasEverBeenDisplayedFlag) {
-    this._buildTable();
-  } else {
-    var a = 1;
+  // PENDING new table is constantly rebuilt currently
   // PENDING new content model with observable queries
-  }
+  this._buildTable();
 };
 
 
