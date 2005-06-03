@@ -76,24 +76,24 @@ ied == an "ideal engineering day", with just coding, and no distractions
 -------+----------+---------+----------------------------------------------
 Who    | Priority | Estimate| Task
 -------+----------+---------+----------------------------------------------
-Mignon |  High    | 1   ied | UI for adding an attribute to an item
-       |          |         | UI for setting the expected data type of an attribute
-Mignon |  High    | 1   ied | UI for creating a new category
-Mignon |  High    | 1   ied | UI for deleting a row from a table 
+Mignon | High     | 1   ied | UI for adding an attribute to an item
+Brian  |    done? |         | UI for setting the expected data type of an attribute
+Mignon |    done  | 1   ied | UI for creating a new category
+Mignon | High     | 1   ied | UI for deleting a row from a table 
  Chao  |   done   | 1.5 ied | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
  Chao  |   done   | 0.5 ied | UI to sort a table when you click on a column header (2 ied, needed to refactor TablePlugin to DOM level 2)
 Brian  |   done   | 1   ied | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
 Brian  |   done   | 2   ied | Convert UI code to use new data model
-       |  High    |         | UI for entering a number literal (instead of a string literal) in a table
-       |  High    |         | UI for entering references to categories or to other items
-Chao   | Medium   |0.5 ied  | UI for adding a new section to a page
-       | Medium   |         | UI for editing the query that a section uses
+       | High     |         | UI for entering a number literal (instead of a string literal) in a table
+Brian  |    done? |         | UI for entering references to categories or to other items
+ Chao  |    done  |0.5 ied  | UI for adding a new section to a page
+Mignon |    done? |         | UI for editing the query that a section uses
        | Medium   |         | Verify/fix the bug that happens when you call the PHP server code with no POST data
 Brian  |   done   | 0   ied | Replace the Edit/Save button with a Lock/Unlock UI; automatically save changes as they happen
 Brian  |   done   | 1   ied | Replace the BigLumpVirtualServer with an DeltaVirtualServer; Change PHP code to append to the data file
-       |   Low    |         | Convert UI code from DOM level 0 to DOM level 2
-       |   Low    |         | Write a plugin view that calculates and displays the measured project velocity
-       |   Low    |         | UI for creating a new page
+       | Low      |         | Convert UI code from DOM level 0 to DOM level 2
+       | Low      |         | Write a plugin view that calculates and displays the measured project velocity
+Mignon |   done   |         | UI for creating a new page
  Chao  |   done   |         | UI for creating a new user
 -------+----------+---------+----------------------------------------------
  
@@ -106,7 +106,7 @@ Who    | Priority | Estimate| Task
  Chao  |   done   | 0   ied | Re-implement UI for entering a new row in a table (1.5 ied actual)
  Chao  |   done   |         | Refactor TablePlugin to DOM Level 2 (1.5 ied actual)
 Brian  |   done   | 1   ied | Ensure that UUIDs are unique in multi-user use case
-Chao   |   Medium | 1   ied | Refactor plugin class, pass a query to plugin, create Plugin base class
+ Chao  |   done   | 1   ied | Refactor plugin class, pass a query to plugin, create Plugin base class
 -------+----------+---------+----------------------------------------------
 
 
@@ -115,9 +115,9 @@ Chao   |   Medium | 1   ied | Refactor plugin class, pass a query to plugin, cre
 -------+----------+---------+----------------------------------------------
 Who    | Priority | Estimate| Task
 -------+----------+---------+----------------------------------------------
-Mignon |   Low    |         | Generate time-based UUIDs ("version 1" UUIDs)
-Chao   | Done     | 1   ied | Allow users to view multiple entries in a table plugin cell (0.5 ied actual)
-Chao   | Done     | 2   ied | Allow users to enter/edit multiple entries in a table plugin cell (1 ied actual)
+Mignon | Low      |         | Generate time-based UUIDs ("version 1" UUIDs)
+Chao   |   done   | 1   ied | Allow users to view multiple entries in a table plugin cell (0.5 ied actual)
+Chao   |   done   | 2   ied | Allow users to enter/edit multiple entries in a table plugin cell (1 ied actual)
 -------+----------+---------+----------------------------------------------
  
 
