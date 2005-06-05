@@ -69,28 +69,28 @@ Release 0.1 at the start of August?
 Tasks we need to do for the release 0.1 user stories
 =======================================================
 
-ied == an "ideal engineering day", with just coding, and no distractions
+IED == an "ideal engineering day", with just coding, and no distractions
 
 ---------------------------------------------------------------------------
    Tasks we originally identified for release 0.1, back on May 2, 2005
 -------+----------+---------+----------------------------------------------
 Who    | Priority | Estimate| Task
 -------+----------+---------+----------------------------------------------
-Mignon | High     | 1   ied | UI for adding an attribute to an item
+ Chao  |    done? | 1   IED | UI for adding an attribute to an item
 Brian  |    done? |         | UI for setting the expected data type of an attribute
-Mignon |    done  | 1   ied | UI for creating a new category
-Mignon | High     | 1   ied | UI for deleting a row from a table 
- Chao  |   done   | 1.5 ied | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
- Chao  |   done   | 0.5 ied | UI to sort a table when you click on a column header (2 ied, needed to refactor TablePlugin to DOM level 2)
-Brian  |   done   | 1   ied | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
-Brian  |   done   | 2   ied | Convert UI code to use new data model
+Mignon |    done  | 1   IED | UI for creating a new category
+Mignon | High     | 1   IED | UI for deleting a row from a table 
+ Chao  |   done   | 1.5 IED | UI for logging in and logging out; cookies and auto-login; display of who you're logged in as
+ Chao  |   done   | 0.5 IED | UI to sort a table when you click on a column header (2 ied, needed to refactor TablePlugin to DOM level 2)
+Brian  |   done   | 1   IED | Data model: change "Value" to "Entry"; refactor entries to be per-attribute
+Brian  |   done   | 2   IED | Convert UI code to use new data model
        | High     |         | UI for entering a number literal (instead of a string literal) in a table
 Brian  |    done? |         | UI for entering references to categories or to other items
- Chao  |    done  |0.5 ied  | UI for adding a new section to a page
+ Chao  |    done  | 0.5 IED | UI for adding a new section to a page
 Mignon |    done? |         | UI for editing the query that a section uses
        | Medium   |         | Verify/fix the bug that happens when you call the PHP server code with no POST data
-Brian  |   done   | 0   ied | Replace the Edit/Save button with a Lock/Unlock UI; automatically save changes as they happen
-Brian  |   done   | 1   ied | Replace the BigLumpVirtualServer with an DeltaVirtualServer; Change PHP code to append to the data file
+Brian  |   done   | 0   IED | Replace the Edit/Save button with a Lock/Unlock UI; automatically save changes as they happen
+Brian  |   done   | 1   IED | Replace the BigLumpVirtualServer with an DeltaVirtualServer; Change PHP code to append to the data file
        | Low      |         | Convert UI code from DOM level 0 to DOM level 2
        | Low      |         | Write a plugin view that calculates and displays the measured project velocity
 Mignon |   done   |         | UI for creating a new page
@@ -103,10 +103,10 @@ Mignon |   done   |         | UI for creating a new page
 -------+----------+---------+----------------------------------------------
 Who    | Priority | Estimate| Task
 -------+----------+---------+----------------------------------------------
- Chao  |   done   | 0   ied | Re-implement UI for entering a new row in a table (1.5 ied actual)
- Chao  |   done   |         | Refactor TablePlugin to DOM Level 2 (1.5 ied actual)
-Brian  |   done   | 1   ied | Ensure that UUIDs are unique in multi-user use case
- Chao  |   done   | 1   ied | Refactor plugin class, pass a query to plugin, create Plugin base class
+ Chao  |   done   | 0   IED | Re-implement UI for entering a new row in a table (1.5 IED actual)
+ Chao  |   done   |         | Refactor TablePlugin to DOM Level 2 (1.5 IED actual)
+Brian  |   done   | 1   IED | Ensure that UUIDs are unique in multi-user use case
+ Chao  |   done   | 1   IED | Refactor plugin class, pass a query to plugin, create Plugin base class
 -------+----------+---------+----------------------------------------------
 
 
@@ -116,10 +116,78 @@ Brian  |   done   | 1   ied | Ensure that UUIDs are unique in multi-user use cas
 Who    | Priority | Estimate| Task
 -------+----------+---------+----------------------------------------------
 Mignon | Low      |         | Generate time-based UUIDs ("version 1" UUIDs)
-Chao   |   done   | 1   ied | Allow users to view multiple entries in a table plugin cell (0.5 ied actual)
-Chao   |   done   | 2   ied | Allow users to enter/edit multiple entries in a table plugin cell (1 ied actual)
+Chao   |   done   | 1   IED | Allow users to view multiple entries in a table plugin cell (0.5 IED actual)
+Chao   |   done   | 2   IED | Allow users to enter/edit multiple entries in a table plugin cell (1 IED actual)
+Chao   |   done   |         | Have Escape key undo current editing in active field
+Chao   |   done   |         | In table columns where the expected type is a Category, when the user enters text, create a new item with that name and category
 -------+----------+---------+----------------------------------------------
- 
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Summary of Iteration #1, May 2005
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  15    = number of PLANNED tasks that were finished 
+   4    = number of HIDDEN tasks that were finished 
+  15?   = total estimated IEDs for PLANNED tasks that were finished
+   5    = number of weeks in May
+   3.0? = Velocity (in estimated IEDs per week)
+
+   
+   
+---------------------------------------------------------------------------
+   Tasks that we might want to do during Iteration #2, in June 2005
+-------+----------+---------+----------------------------------------------
+Who    | Priority | Estimate| Task
+-------+----------+---------+----------------------------------------------
+       |          |         |  1. Switch data model to use time-based UUIDs for timestamps & userstamps
+       |          |         |  2. Get data model to pass the ordinal unit tests again
+       |          |         |  3. Create provisional item/entry pair in correct order
+       |          |         |  4. Make sure view code uses transactions (e.g. PageView.newSection)
+       |          |         |  5. Store transaction info in repository
+       |          |         |  6. Ensure that PHP scripts and file I/O works for concurrent multi-user access
+       |          |         |  7. Don't allow \n in page name or summary fields
+       |          |         |  8. BUG: problems with newlines and HTML characters in text strings
+       |          |         |  9. Move to better persistent representation for queries
+       |          |         | 10. Add data model support for bi-directional references
+-------+----------+---------+----------------------------------------------
+       |          |         | 11. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
+       |          |         | 12. Display Navbar pages in the right order
+       |          |         | 13. Arrow keys in SuggestionBox
+       |          |         | 14. Arrow keys in Table View
+       |          |         | 15. Have text-entries and reference-entries look different
+       |          |         | 16. Change UI so that non-literal entries are immutable
+       |          |         | 17. Implement a good URL-to-content mapping, such that URLs won't go bad in future releases
+       |          |         | 18. Provide GUI feedback about what's editable
+       |          |         | 19. Reach consensus on (colors, padding, and borders) and then implement
+-------+----------+---------+----------------------------------------------
+       |          |         | 20. Wire up observers & keep views in sync
+       |          |         | 21. Rationalize our CSS style sheets
+       |          |         | 22. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
+       |          |         | 23. Rationalize the View api and document public api
+       |          |         | 24. Document the Data model public api
+       |          |         | 25. Check for incorrect dependencies (e.g. a Util dependency on model code)
+       |          |         | 26. Create directories "util", "view", "plugin"
+       |          |         | 27. Add support for saving content when used from a file:// URL
+       |          |         | 28. Add support for repository merging
+       |          |         | 29. Add a Query.js class, and/or an Attribute.js class
+-------+----------+---------+----------------------------------------------
+       |          |         | 30. Drag and drop to re-order pages in the Navbar
+       |          |         | 31. Drag and drop to re-order columns in table view
+       |          |         | 32. Drag and drop to re-order rows in table view
+       |          |         | 33. Have explicit save instead of (or in addition to) autosave
+       |          |         | 34. Be able to cancel out of creating a new account
+       |          |         | 35. Save view layout choice and user preferences
+       |          |         | 36. BUG: back button is broken
+       |          |         | 37. BUG: "Waiting for localhost..."
+       |          |         | 38. BUG: "Node was not found" exception in TextView/LoginView?
+       |          |         | 39. Do some testing to find other existing bugs
+-------+----------+---------+----------------------------------------------
+       |          |         | 40. Do code reviews
+       |          |         | 41. Write some unit tests for GUI code
+       |          |         | 42. Write performance tests 
+       |          |         | 43. Write concurrency tests 
+       |          |         | 44. Write scalability tests 
 
        
        
@@ -213,15 +281,7 @@ Tasks we want to defer until after release 0.1
     able to add new columns on the fly, where each new
     column is for some new ad-hoc attribute.
 ---------------------------------------------------
- + Multi-valued attributes in table plugin
-    In the table plugin, right now if an attribute has
-    multiple values, the table plugin only shows the first
-    value, and only lets the user edit the first value. We
-    need to have the table plugin support multi-valued
-    attributes.
----------------------------------------------------
  + NavBar view
-    We should have a separate class for the NavBar view.
     The NavBar should automatically update when the name of
     a page changes, or when a new page gets added. The user
     should be able to edit the NavBar itself to change the
@@ -229,24 +289,6 @@ Tasks we want to defer until after release 0.1
     be able to drag the menu items up and down to re-order
     the list.  For a drag-and-drop list example, see:
     http://tool-man.org/examples/sorting.html
----------------------------------------------------
- + Be able to create new pages
-    The user should be able to create a new page in some
-    intuitive way.  Maybe by clicking on a "Add page"
-    button at the bottom of the NavBar, or something like that.
----------------------------------------------------
- + Be able to edit the query of a section
-    The user should be able to see the query that's being
-    used to populate a section. In edit mode, the user
-    should be able to change the query criteria.
----------------------------------------------------
- + Support item references in table plugin
-    When editing an item in the table plugin, currently
-    everything you enter is treated as a string literal. If
-    you enter 'Book' in the column for 'Category', that
-    just creates a new string-value "Book", whereas it
-    should create an item reference to the category item
-    named "Book".
 ---------------------------------------------------
  + Be able to edit in outline mode
     In the outline plugin, add code to handle editing. The
@@ -269,9 +311,9 @@ Tasks we want to defer until after release 0.1
     within the current list item, rather than whisking you
     away to a completely separate item detail page.
 ---------------------------------------------------
- + Table Plugin sorting, column changing
-   Add 'Table' plugin controls for row sorting, column
-   re-arranging, column hiding, etc.
+ + Table Plugin column order
+   Add 'Table' plugin controls for column re-arranging, 
+   column hiding, etc.
 ---------------------------------------------------
  + Draft a Contributor Agreement
      We need to draft some sort of Contributor Agreement, like the Apache Contributor Agreement or the Python Contributor Agreement.
@@ -314,10 +356,6 @@ Tasks we want to defer until after release 0.1
     Need to figure out a consistent "style" for using style sheets applicable
     to the way we architect our view widgets
 ---------------------------------------------------
- + Bug: Extra cell padding when editing table cells
-    Figure out why swapping between editField and textNode is causing 
-    slight visual padding
----------------------------------------------------
  + Need to rationalize View api and document public api
     - wire up superview/subview after creation of subview
     - get rid of display()
@@ -329,12 +367,6 @@ Tasks we want to defer until after release 0.1
      Parent objects can know about children objects, but not vice versa.
 ---------------------------------------------------
  + Q: How exactly should entering new items UI work? Not clear when an item is saved
----------------------------------------------------
- + Escape key
-    When the user is typing in a field, if they press the Escape key we  
-    should undo anything they've done, and revert the field to its orginal 
-    state.  To see what this should feel like, try hitting Escape in the 
-    Firefox URL field after you've made done some typing.
 ---------------------------------------------------
  + UI design/improvement for:
     - toggle for "edit"/"view" or "editable"/"locked"
