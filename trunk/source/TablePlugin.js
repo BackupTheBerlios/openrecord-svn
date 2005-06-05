@@ -203,6 +203,30 @@ TablePlugin.prototype._getSuggestedItemsForAttribute = function(attribute) {
 
 
 /**
+ * Builds editor to add/remove attribute columns of table
+ *
+ * @scope    private instance method
+ */
+TablePlugin.prototype._buildAttributeEditor = function() {
+  var htmlElt = this.getHTMLElement();
+  View.createAndAppendElement(htmlElt,"br");
+  var selectElt = View.createAndAppendElement(htmlElt,"select");
+  var categoryCalledAttribute = this.getWorld().getCategoryCalledAttribute();
+  var listOfAttributes = this.getWorld().getItemsInCategory(categoryCalledAttribute);
+  var optionElt = View.createAndAppendElement(selectElt,"option");
+  optionElt.text = "Add new attribute:";
+  for (var i = 0; i < listOfAttributes.length; ++i) {
+    var optionElt = View.createAndAppendElement(selectElt,"option");
+    var attributeUuid = listOfAttributes[i].getUniqueKeyString();
+    if (this._hashTableOfAttributes[attributeUuid]) {optionElt.text = '*';}
+    optionElt.text += listOfAttributes[i].getDisplayName();
+    optionElt.value = attributeUuid;
+    optionElt.onclick = this._attributeEditorChanged.bindAsEventListener(this);
+  }
+  this._selectElement = selectElt;
+};
+
+/**
  * Inserts a table row at rowNum given contentItem
  *
  * @scope    private instance method
@@ -291,18 +315,18 @@ TablePlugin.prototype._buildHeader = function() {
 /**
  * Re-creates all the HTML for the TablePlugin, and hands the HTML to the 
  * browser to be re-drawn.
- *
+ * @param inDontRebuildHas, if true does not refetch query and rebuild attribute hash table
  * @scope    public instance method
  */
-TablePlugin.prototype._buildTable = function() {
+TablePlugin.prototype._buildTable = function(inDontRebuildHash) {
   // get list of items and attributes
-  this.fetchItems();
-  this._buildAttributeHash();
+  if (!inDontRebuildHash) {
+    this.fetchItems();
+    this._buildAttributeHash();
+  }
   
   //create new table, remove old table if already exists
-  if (this.myTable) {
-    this._myHTMLElement.removeChild(this.myTable); 
-  }
+  this._myHTMLElement.innerHTML = '';
   this.myTable = document.createElement("table");
   this.myTable.className = this.myClass;
   
@@ -316,6 +340,8 @@ TablePlugin.prototype._buildTable = function() {
   this._buildTableBody();
   
   this._myHTMLElement.appendChild(this.myTable);
+  
+  if (this.isInEditMode()) {this._buildAttributeEditor();}
 };
 
 
@@ -384,6 +410,27 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
   this._buildTable();
 };
   
+/**
+ * Called when the user clicks on attribute editor item, either to add or remove attribute column
+ * 
+ * @scope    private class method
+ */
+TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
+  var attributeUuid = inEventObject.target.value;
+  if (attributeUuid) {
+    var toRemove = this._hashTableOfAttributes[attributeUuid] != null;
+    if (toRemove) {
+      delete this._hashTableOfAttributes[attributeUuid];
+      this._hashTableOfEntries[attributeUuid] = [];
+    }
+    else {
+      this._hashTableOfAttributes[attributeUuid] = this.getWorld().getItemFromUuid(attributeUuid);
+      this._hashTableOfEntries[attributeUuid] = []; //PENDING need to set this to right attribute
+    }
+    this._buildTable(true)
+  }
+};
+
 TablePlugin.prototype._handleClick = function (inEventObject, aTextView) {
   var rowElement = aTextView.getSuperview().getHTMLElement().parentNode; // textView -> multiEntriesView -> cellElment -> rowElement
   Util.assert(rowElement instanceof HTMLTableRowElement);
@@ -395,6 +442,8 @@ TablePlugin.prototype._handleClick = function (inEventObject, aTextView) {
   }
   return false;
 };
+
+
 /**
  * Called when the user types a character when editing a table cell. 
  *

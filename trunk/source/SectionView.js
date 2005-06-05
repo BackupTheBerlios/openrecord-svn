@@ -361,9 +361,7 @@ SectionView.prototype.clickOnQueryCategorySelectionMenu = function (inEventObjec
   var currentQueryMatchingCategory = listOfMatchingCategories.length > 0? listOfMatchingCategories[0].getValue() : null;
   var currentCategoryName = currentQueryMatchingCategory? currentQueryMatchingCategory.getDisplayName() : "none";
  
-  if (currentCategoryName == newChoiceName) {
-    return;
-  } else {
+  if (currentCategoryName != newChoiceName) {
     if (currentQueryMatchingCategory) {
       this.getQuery().replaceEntry(currentQueryMatchingCategoryEntry, newQueryMatchingCategory);
     } else {

@@ -99,6 +99,7 @@ TextView.prototype._setupSuggestionBox = function() {
  *
  */
 TextView.prototype.setSuggestions = function(suggestionList) {
+  if (suggestionList) {Util.assert(Util.isArray(suggestionList));}
   this._suggestions = suggestionList;
 };
 
@@ -213,7 +214,7 @@ TextView.prototype.stopEditing = function() {
     if (Util.isString(newValue)) {
       newValueDisplayString = newValue;
     }
-    if (newValue instanceof Item) {
+    else if (newValue instanceof Item) {
       newValueDisplayString = newValue.getDisplayName();
     }
     this._textNode.data = newValueDisplayString;
@@ -225,7 +226,40 @@ TextView.prototype.stopEditing = function() {
   }
 };
 
-
+/**
+ * Given a value, this function uses hints form this item's attribute to transform
+ * the value to one more suitable for the model. 
+ * 
+ * For now, all this function does is check to see if expected type of attribute is a 
+ * type of category, and if it does not expect a plain text value then transform plain
+ * text to a new item belonging to expected category.
+ *
+ * @scope    private instance method
+ * @param    value    The new value to be saved. 
+ */
+TextView.prototype._transformToExpectedType = function(value) {
+if (value && Util.isString(value)) {
+    var repository = this.getWorld();
+    var attributeCalledExpectedType = repository.getAttributeCalledExpectedType();
+    var listOfExpectedTypeEntries = this._attribute.getEntriesForAttribute(attributeCalledExpectedType);
+    var categoryCalledCategory = repository.getCategoryCalledCategory();
+    var typeCalledText = repository.getTypeCalledText();
+    if (listOfExpectedTypeEntries) {
+      var expectsText = false;
+      var expectedCategory = null;
+      for (i=0; i<listOfExpectedTypeEntries.length; ++i) {
+        var aType = listOfExpectedTypeEntries[i].getValue();
+        if (aType.isInCategory(categoryCalledCategory)) {expectedCategory = aType;}
+        if (aType == typeCalledText) {expectsText = true;}
+      }
+      if ((expectedCategory) && !expectsText) {
+        var value = repository.newItem(value);
+        value.addEntryForAttribute(repository.getAttributeCalledCategory(),expectedCategory);
+      }
+    }
+  }
+  return value;
+};
 /**
  * Writes edited value back into item entry of repository.
  *
@@ -233,6 +267,7 @@ TextView.prototype.stopEditing = function() {
  * @param    value    The new value to be saved. 
  */
 TextView.prototype._writeValue = function(value) {
+  value = this._transformToExpectedType(value);
   if (this._entry) {
     var oldValue = this._entry.getValue();
     if (oldValue != value) {
@@ -448,6 +483,14 @@ function AttributeSuggestionBox(inHTMLInputField, listOfItems) {
  *
  */
 AttributeSuggestionBox.prototype.getSelectedItem = function () {
+  if (!this._selectedItem) {
+    // check if typed item is identical to suggested item
+    var editValue = this._myInputField.value;
+    for (var i = 0; i < this._listOfSuggestedItems.length; ++i) {
+      var item = this._listOfSuggestedItems[i];
+      if (editValue == item.getDisplayName()) {return item;}
+    }
+  }
   return this._selectedItem;
 };
 
