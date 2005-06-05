@@ -216,7 +216,7 @@ TablePlugin.prototype._buildAttributeEditor = function() {
   var optionElt = View.createAndAppendElement(selectElt,"option");
   optionElt.text = "Add new attribute:";
   for (var i = 0; i < listOfAttributes.length; ++i) {
-    var optionElt = View.createAndAppendElement(selectElt,"option");
+    optionElt = View.createAndAppendElement(selectElt,"option");
     var attributeUuid = listOfAttributes[i].getUniqueKeyString();
     if (this._hashTableOfAttributes[attributeUuid]) {optionElt.text = '*';}
     optionElt.text += listOfAttributes[i].getDisplayName();
@@ -418,8 +418,7 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
 TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
   var attributeUuid = inEventObject.target.value;
   if (attributeUuid) {
-    var toRemove = this._hashTableOfAttributes[attributeUuid] != null;
-    if (toRemove) {
+    if (this._hashTableOfAttributes[attributeUuid]) {
       delete this._hashTableOfAttributes[attributeUuid];
       this._hashTableOfEntries[attributeUuid] = [];
     }
@@ -427,7 +426,7 @@ TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
       this._hashTableOfAttributes[attributeUuid] = this.getWorld().getItemFromUuid(attributeUuid);
       this._hashTableOfEntries[attributeUuid] = []; //PENDING need to set this to right attribute
     }
-    this._buildTable(true)
+    this._buildTable(true);
   }
 };
 

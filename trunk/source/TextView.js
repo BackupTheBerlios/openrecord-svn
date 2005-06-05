@@ -253,7 +253,7 @@ if (value && Util.isString(value)) {
         if (aType == typeCalledText) {expectsText = true;}
       }
       if ((expectedCategory) && !expectsText) {
-        var value = repository.newItem(value);
+        value = repository.newItem(value);
         value.addEntryForAttribute(repository.getAttributeCalledCategory(),expectedCategory);
       }
     }
