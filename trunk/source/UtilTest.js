@@ -74,38 +74,146 @@ function testEncryptionMethods() {
   assertTrue('md5 of longString is correct', (Util.hex_md5(longString) == "4d694e03af399831c6f0c1f1bcc2fc93"));
 }
 
-function testMethodsForWorkingWithUuids() {
+function testGet64bitArrayFromFloat() {
+  var x = Math.pow(2, 63) + Math.pow(2, 15);
+  var result = Util.get64bitArrayFromFloat(x);
+  assertTrue("result[0] == 0x8000", result[0] === 0x8000);
+  assertTrue("result[1] == 0x0000", result[1] === 0x0000);
+  assertTrue("result[2] == 0x0000", result[2] === 0x0000);
+  assertTrue("result[3] == 0x8000", result[3] === 0x8000);
   
-  var uuidString = Util.generateRandomUuid();
-  assertTrue('UUIDs have 36 characters', (uuidString.length == 36));
+  var date = new Date();
+  x = date.valueOf();
+  result = Util.get64bitArrayFromFloat(x);
+  var reconstructedFloat = result[0];
+  reconstructedFloat *= 0x10000;
+  reconstructedFloat += result[1];
+  reconstructedFloat *= 0x10000;
+  reconstructedFloat += result[2];
+  reconstructedFloat *= 0x10000;
+  reconstructedFloat += result[3];
+  
+  assertTrue("reconstructedFloat === x", reconstructedFloat === x);
+}
+
+function testAddTwo64bitArrays() {
+  var a = [0x0000, 0x0000, 0x0000, 0x0001];
+  var b = [0x0FFF, 0xFFFF, 0xFFFF, 0xFFFF];
+  var result = Util.addTwo64bitArrays(a, b);
+  assert(result[0] === 0x1000);
+  assert(result[1] === 0x0000);
+  assert(result[2] === 0x0000);
+  assert(result[3] === 0x0000);
+  
+  a = [0x4000, 0x8000, 0x8000, 0x8000];
+  b = [0x8000, 0x8000, 0x8000, 0x8000];
+  result = Util.addTwo64bitArrays(a, b);
+  assert(result[0] === 0xC001);
+  assert(result[1] === 0x0001);
+  assert(result[2] === 0x0001);
+  assert(result[3] === 0x0000);
+  
+  a = [7, 6, 2, 5];
+  b = [1, 0, 3, 4];
+  result = Util.addTwo64bitArrays(a, b);
+  assert(result[0] === 8);
+  assert(result[1] === 6);
+  assert(result[2] === 5);
+  assert(result[3] === 9);  
+}  
+
+function testMultiplyTwo64bitArrays() {
+  var a = [     0, 0x0000, 0x0000, 0x0003];
+  var b = [0x1111, 0x1234, 0x0000, 0xFFFF];
+  var result = Util.multiplyTwo64bitArrays(a, b);
+  assert(result[0] === 0x3333);
+  assert(result[1] === 0x369C);
+  assert(result[2] === 0x0002);
+  assert(result[3] === 0xFFFD);
+  
+  a = [0, 0, 0, 5];
+  b = [0, 0, 0, 4];
+  result = Util.multiplyTwo64bitArrays(a, b);
+  assert(result[0] === 0);
+  assert(result[1] === 0);
+  assert(result[2] === 0);
+  assert(result[3] === 20);  
+  
+  a = [0, 0, 2, 5];
+  b = [0, 0, 3, 4];
+  result = Util.multiplyTwo64bitArrays(a, b);
+  assert(result[0] === 0);
+  assert(result[1] === 6);
+  assert(result[2] === 23);
+  assert(result[3] === 20);  
+}  
+
+function subtestOnUuid(uuid) {
+  assertTrue('UUIDs have 36 characters', (uuid.length == 36));
 
   var validCharacters = "0123456789abcedfABCDEF-";
   var character;
   var position;
   for (var i = 0; i < 36; ++i) {
-    character = uuidString.charAt(i);
+    character = uuid.charAt(i);
     position = validCharacters.indexOf(character);
     assertTrue('UUIDs have only valid characters', (position != -1));
   }
   
-  var arrayOfParts = uuidString.split("-");
-  assertTrue('UUIDs have 5 sections separated by 4 hypens', (arrayOfParts.length == 5));
+  var arrayOfParts = uuid.split("-");
+  assertTrue('UUIDs have 5 sections separated by 4 hyphens', (arrayOfParts.length == 5));
   assertTrue('Section 0 has 8 characters', (arrayOfParts[0].length == 8));
   assertTrue('Section 1 has 4 characters', (arrayOfParts[1].length == 4));
   assertTrue('Section 2 has 4 characters', (arrayOfParts[2].length == 4));
   assertTrue('Section 3 has 4 characters', (arrayOfParts[3].length == 4));
   assertTrue('Section 4 has 8 characters', (arrayOfParts[4].length == 12));
   
+  var section3 = arrayOfParts[3];
+  var hex3 = parseInt(section3, Util.HEX_RADIX);
+  var binaryString = hex3.toString(2);
+  assertTrue("first bit of section 3 is 1", binaryString.charAt(0) == '1');
+  assertTrue("second bit of section 3 is 0", binaryString.charAt(1) == '0');
+  
+  var section4 = arrayOfParts[4];
+  var firstChar = section4.charAt(0);
+  var hexFirstChar = parseInt(firstChar, Util.HEX_RADIX);
+  binaryString = hexFirstChar.toString(2);
+  assertTrue("first bit of section 4 is 1", binaryString.charAt(0) == '1');
+}
+
+function testMethodsForWorkingWithRandomUuids() {
+  var uuid1 = Util.generateRandomUuid();
+  subtestOnUuid(uuid1);
+  var uuid2 = Util.generateRandomUuid();
+  subtestOnUuid(uuid2);
+  
+  var arrayOfParts = uuid1.split("-");
   var section2 = arrayOfParts[2];
   assertTrue('Section 2 starts with a 4', (section2.charAt(0) == "4"));
   
-  var section3 = arrayOfParts[3];
-  var validCharactersForStartOfSection3 = "89abAB";
-  character = section3.charAt(0);
-  position = validCharactersForStartOfSection3.indexOf(character);
-  assertTrue('Section 3 starts with 8, 9, A, or B', (position != -1));
+  assertTrue("uuid1 != uuid2", uuid1 != uuid2);
+}
+
+function testMethodsForWorkingWithTimeBasedUuids() {
+  var uuid1 = Util.generateTimeBasedUuid();
+  subtestOnUuid(uuid1);
+  var uuid2 = Util.generateTimeBasedUuid();
+  subtestOnUuid(uuid2);
+  var uuid3 = Util.generateTimeBasedUuid();
+  subtestOnUuid(uuid3);
+
+  assertTrue("uuid1 != uuid2", uuid1 != uuid2);
+  assertTrue("uuid2 != uuid3", uuid1 != uuid2);
   
-  // var uuidString = Util.generateTimeBasedUuid();
+  var arrayOfParts = uuid1.split("-");
+  var section2 = arrayOfParts[2];
+  assertTrue('Section 2 starts with a 1', (section2.charAt(0) == "1"));  
+
+  var uuid4 = Util.generateTimeBasedUuid("123456789ABC");
+  subtestOnUuid(uuid4);
+  arrayOfParts = uuid4.split("-");
+  var section4 = arrayOfParts[4];
+  assertTrue('Section 4 = pseudoNode input', section4 == "123456789ABC");
 }
 
 function tearDown() {

@@ -69,12 +69,15 @@ Util.ASCII_VALUE_FOR_DOWN_ARROW = 40;  // 125
 // Util.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800;
 Util.GREGORIAN_CHANGE_OFFSET_IN_HOURS = 3394248;
 
+Util.HEX_RADIX = 16;
 
 // -------------------------------------------------------------------
 // Util global class variables
 // -------------------------------------------------------------------
-Util._ourUuidPsuedoNodeString = null;
+Util._ourUuidPseudoNodeString = null;
 Util._ourUuidClockSeqString = null;
+Util._ourDateValueOfPreviousUuid = null;
+Util._ourNextIntraMillisecondIncrement = 0;
 
 // -------------------------------------------------------------------
 // String manipulation methods
@@ -307,7 +310,10 @@ Util.isObject = function (inValue) {
  * @return   A boolean value. True if inValue is an array.
  */
 Util.isArray = function (inValue) {
-  return (inValue && ((typeof inValue) == "object") && (inValue.constructor == Array));
+  if (!inValue) {
+    return false;
+  }
+  return (((typeof inValue) == "object") && (inValue.constructor == Array));
 };
 
 
@@ -486,8 +492,7 @@ Util.getRandomEightCharacterHexString = function () {
   // PENDING: 
   // This isn't really random.  We should find some source of real 
   // randomness, and feed it to an MD5 hash algorithm.     
-  var hexRadix = 16;
-  var eightCharacterString = Util.getRandom32bitNumber().toString(hexRadix);
+  var eightCharacterString = Util.getRandom32bitNumber().toString(Util.HEX_RADIX);
   while (eightCharacterString.length < 8) {
     eightCharacterString = "0" + eightCharacterString;
   }
@@ -519,6 +524,89 @@ Util.generateRandomUuid = function () {
   return result;
 };
 
+Util.carry = function(a) {
+  a[2] += a[3] >>> 16;
+  a[3] &= 0xFFFF;
+  a[1] += a[2] >>> 16;
+  a[2] &= 0xFFFF;
+  a[0] += a[1] >>> 16;
+  a[1] &= 0xFFFF;
+  Util.assert((a[0] >>> 16) === 0);
+};
+
+Util.get64bitArrayFromFloat = function(x) {
+  var result = new Array(0, 0, 0, 0);
+  result[3] = x % 0x10000;
+  x -= result[3];
+  x /= 0x10000;
+  result[2] = x % 0x10000;
+  x -= result[2];
+  x /= 0x10000;
+  result[1] = x % 0x10000;
+  x -= result[1];
+  x /= 0x10000;
+  result[0] = x;
+  return result;
+};
+
+Util.addTwo64bitArrays = function(a, b) {
+  Util.assert(Util.isArray(a));
+  Util.assert(a.length == 4);
+  Util.assert(Util.isArray(b));
+  Util.assert(b.length == 4);
+  var result = new Array(0, 0, 0, 0);
+  result[3] = a[3] + b[3];
+  result[2] = a[2] + b[2];
+  result[1] = a[1] + b[1];
+  result[0] = a[0] + b[0];
+  Util.carry(result);
+  return result;
+};
+
+Util.multiplyTwo64bitArrays = function(a, b) {
+  Util.assert(Util.isArray(a));
+  Util.assert(a.length == 4);
+  Util.assert(Util.isArray(b));
+  Util.assert(b.length == 4);
+  var overflow = false;
+  if (a[0] * b[0] !== 0) { overflow = true; }
+  if (a[0] * b[1] !== 0) { overflow = true; }
+  if (a[0] * b[2] !== 0) { overflow = true; }
+  if (a[1] * b[0] !== 0) { overflow = true; }
+  if (a[1] * b[1] !== 0) { overflow = true; }
+  if (a[2] * b[0] !== 0) { overflow = true; }
+  Util.assert(!overflow);
+  
+  var result = new Array(0, 0, 0, 0);
+  result[0] += a[0] * b[3];
+  Util.carry(result);
+  result[0] += a[1] * b[2];
+  Util.carry(result);
+  result[0] += a[2] * b[1];
+  Util.carry(result);
+  result[0] += a[3] * b[0];
+  Util.carry(result);
+  result[1] += a[1] * b[3];
+  Util.carry(result);
+  result[1] += a[2] * b[2];
+  Util.carry(result);
+  result[1] += a[3] * b[1];
+  Util.carry(result);
+  result[2] += a[2] * b[3];
+  Util.carry(result);
+  result[2] += a[3] * b[2];
+  Util.carry(result);
+  result[3] += a[3] * b[3];
+  Util.carry(result);
+  return result;
+};
+
+Util.padWithLeadingZeros = function(string, desiredLength) {
+  while (string.length < desiredLength) {
+    string = "0" + string;
+  }
+  return string;
+};
 
 /**
  * Generates a time-based UUID, meaning a "version 1" UUID.  JavaScript
@@ -537,72 +625,69 @@ Util.generateRandomUuid = function () {
  * @scope    public class method
  * @return   Returns a 36 character string, which will look something like "3B12F1DF-5232-1804-897E-917BF397618A".
  */
-Util.generateTimeBasedUuid = function () {
-  if (!Util._ourUuidPsuedoNodeString) {
-    var partOne = Util.getRandomEightCharacterHexString();
-    var partTwo = Util.getRandomEightCharacterHexString();
-    var sixteenCharacterHexString = partOne + partTwo;
-    var pseudonodeIndicatorBit = "8"; // 8 == binary2hex("1000")
-    Util._ourUuidPsuedoNodeString = pseudonodeIndicatorBit + sixteenCharacterHexString.substring(0, 11);
+Util.generateTimeBasedUuid = function(pseudoNode) {
+  Util.assert(!pseudoNode || Util.isString(pseudoNode));  
+  if (pseudoNode) {
+    Util.assert(pseudoNode.length == 12);  
   }
-  
+  else {
+    if (!Util._ourUuidPseudoNodeString) {
+      var pseudoNodeIndicatorBit = 0x8000;
+      var random15bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 15) );
+      var leftmost4HexCharacters = (pseudoNodeIndicatorBit | random15bitNumber).toString(Util.HEX_RADIX);
+      Util._ourUuidPseudoNodeString = leftmost4HexCharacters + Util.getRandomEightCharacterHexString();
+    }
+    pseudoNode = Util._ourUuidPseudoNodeString;
+  }
   if (!Util._ourUuidClockSeqString) {
-    var variantCodeForDCEUuids = "8"; // 8 == binary2hex("1000")
-    var eightCharacterHexString = Util.getRandomEightCharacterHexString();
-    Util._ourUuidClockSeqString = variantCodeForDCEUuids + eightCharacterHexString.substring(0, 3);
+    var variantCodeForDCEUuids = 0x8000; // 10--------------, i.e. uses only first two of 16 bits.
+    var random14bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 14) );
+    Util._ourUuidClockSeqString = (variantCodeForDCEUuids | random14bitNumber).toString(Util.HEX_RADIX);
+  }
+
+  var now = new Date();
+  var nowArray = Util.get64bitArrayFromFloat(now.valueOf());
+  var arraySecondsPerHour = Util.get64bitArrayFromFloat(60 * 60);
+  var arrayHoursBetween1582and1970 = Util.get64bitArrayFromFloat(Util.GREGORIAN_CHANGE_OFFSET_IN_HOURS);
+  var arraySecondsBetween1582and1970 = Util.multiplyTwo64bitArrays(arrayHoursBetween1582and1970, arraySecondsPerHour);
+  var arrayMillisecondsPerSecond = Util.get64bitArrayFromFloat(1000);
+  var arrayMillisecondsBetween1582and1970 = Util.multiplyTwo64bitArrays(arraySecondsBetween1582and1970, arrayMillisecondsPerSecond);
+  var arrayMillisecondsSince1970 = nowArray;
+  var arrayMillisecondsSince1582 = Util.addTwo64bitArrays(arrayMillisecondsBetween1582and1970, arrayMillisecondsSince1970);
+  var arrayMicrosecondsPerMillisecond = Util.get64bitArrayFromFloat(1000);
+  var arrayMicrosecondsSince1582 = Util.multiplyTwo64bitArrays(arrayMillisecondsSince1582, arrayMicrosecondsPerMillisecond);
+  var arrayHundredNanosecondIntervalsPerMicrosecond = Util.get64bitArrayFromFloat(10);
+  var arrayHundredNanosecondIntervalsSince1582 = Util.multiplyTwo64bitArrays(arrayMicrosecondsSince1582, arrayHundredNanosecondIntervalsPerMicrosecond);
+  
+  if (now.valueOf() == Util._ourDateValueOfPreviousUuid) {
+    arrayHundredNanosecondIntervalsSince1582[3] += Util._ourNextIntraMillisecondIncrement;
+    Util.carry(arrayHundredNanosecondIntervalsSince1582);
+    Util._ourNextIntraMillisecondIncrement += 1;
+    if (Util._ourNextIntraMillisecondIncrement == 10000) {
+      while (now.valueOf() == Util._ourDateValueOfPreviousUuid) {
+        now = new Date();
+      }
+    }
+  }
+  else {
+    Util._ourDateValueOfPreviousUuid = now.valueOf();
+    Util._ourNextIntraMillisecondIncrement = 1;
   }
   
-  // Ideally, what we would like to do is just say:
-  //   var now = new Date();
-  //   var millisecondsPerSecond = 1000;
-  //
-  //   var millisecondsSince1970 = now.valueOf();
-  //   var secondsBetween1852and1970 = Util.GREGORIAN_CHANGE_OFFSET_IN_SECONDS;
-  //   var millisecondsBetween1852and1970 = secondsBetween1852and1970 * millisecondsPerSecond;
-  //   var millisecondsSince1852 = millisecondsBetween1852and1970 + millisecondsSince1970;
-  // 
-  //   var microsecondsPerMilliseconds = 1000;
-  //   var microsecondsSince1852 = millisecondsSince1852 * microsecondsPerMilliseconds;
-  //   var hundredNanosecondIntervalsPerMicroseconds = 10;
-  //   var hundredNanosecondIntervalsSince1852 = microsecondsSince1852 * hundredNanosecondIntervalsPerMicroseconds;
-  // 
-  //   var hexRadix = 16;
-  //   var hexTimeString = hundredNanosecondIntervalsSince1852.toString(hexRadix);
-  //   Util.assert(hexTimeString.length == 15);
-  //   var hexTimeHigh = hexTimeString.substring(0, 3);
-  //   var hexTimeMid = hexTimeString.substring(3, 7);
-  //   var hexTimeLow = hexTimeString.substring(7, 15);
-  // 
-  // However, that won't work, because JavaScript only has 32-bit ints and
-  // 64-bit floats, so it's only good at doing math with numbers that are
-  // roughly on the order of 10^10, or 10^15.  The number that we're trying
-  // to arrive at, hundredNanosecondIntervalsSince1852, will be about 10^17.
-  // So, to do the math, we'll have to break big numbers down into parts,
-  // and do the operations piecemeal.  For a good example of this, see
-  // the safe_add() method on line 182 of .../trunk/third_party/md5/md5.js
-  var hexTimeHigh = "NOT";
-  var hexTimeMid = "OKAY";
-  var hexTimeLow = "PENDING:";
-  
+  var hexTimeLowLeftHalf  = arrayHundredNanosecondIntervalsSince1582[2].toString(Util.HEX_RADIX);
+  var hexTimeLowRightHalf = arrayHundredNanosecondIntervalsSince1582[3].toString(Util.HEX_RADIX);
+  var hexTimeLow = Util.padWithLeadingZeros(hexTimeLowLeftHalf, 4) + Util.padWithLeadingZeros(hexTimeLowRightHalf, 4);
+  var hexTimeMid = arrayHundredNanosecondIntervalsSince1582[1].toString(Util.HEX_RADIX);
+  hexTimeMid = Util.padWithLeadingZeros(hexTimeMid, 4);
+  var hexTimeHigh = arrayHundredNanosecondIntervalsSince1582[0].toString(Util.HEX_RADIX);
+  hexTimeHigh = Util.padWithLeadingZeros(hexTimeHigh, 3);
   var hyphen = "-";
-  var versionCodeForTimeBasedUuids = "1"; // 8 == binary2hex("0001")
+  var versionCodeForTimeBasedUuids = "1"; // binary2hex("0001")
   var resultUuid = hexTimeLow + hyphen + hexTimeMid + hyphen +
         versionCodeForTimeBasedUuids + hexTimeHigh + hyphen +
-        Util._ourUuidClockSeqString + hyphen + Util._ourUuidPsuedoNodeString;
-        
-  /*
-  var now = new Date();
-  var millisecondsSince1970 = now.valueOf();
-  var millisecondsPerHour = 3600000; 
-  var hoursSince1970 = millisecondsSince1970 / millisecondsPerHour;
-  var wholeHoursSince1970 = Math.floor(hoursSince1970);
-  var partialHoursSince1970inMS = millisecondsSince1970 - (wholeHoursSince1970 * millisecondsPerHour);
-  var foo = partialHoursSince1970inMS / millisecondsPerHour;
-  alert(hoursSince1970 + "\n" + wholeHoursSince1970 + "\n" + foo);
-  var hoursSince1582 = Util.GREGORIAN_CHANGE_OFFSET_IN_HOURS + wholeHoursSince1970;
-  */
-  
-  return null;
+        Util._ourUuidClockSeqString + hyphen + pseudoNode;
+//alert(resultUuid);
+  return resultUuid;
 };
 
 
