@@ -5,6 +5,7 @@
  Written in 2005 by 
     Brian Douglas Skinner <brian.skinner@gumption.org>
     Chih-Chao Lam <chao@cs.stanford.edu>
+    Mignon Belongie
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -664,8 +665,19 @@ Util.generateTimeBasedUuid = function(pseudoNode) {
     Util.carry(arrayHundredNanosecondIntervalsSince1582);
     Util._ourNextIntraMillisecondIncrement += 1;
     if (Util._ourNextIntraMillisecondIncrement == 10000) {
+      // If we've gotten to here, it means we've already generated 10,000
+      // UUIDs in this single milliseconds, which is the most that the UUID
+      // timestamp field allows for.  The only thing to do now is just sit
+      // and wait for a fraction of a millisecond, so that we're working
+      // with a different millisecond value in the timestamp field.
       while (now.valueOf() == Util._ourDateValueOfPreviousUuid) {
         now = new Date();
+        // PENDING:
+        // There's a bug here, isn't there?  Now that have a fresh new 
+        // "now" value, we can get a generate a valid timestamp, but we
+        // don't actually do that.  Don't we now need to go back up 30
+        // lines, and start over with all the work to calculate
+        // arrayHundredNanosecondIntervalsSince1582 ?
       }
     }
   }

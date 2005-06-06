@@ -2,7 +2,10 @@
  SectionView.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
+    Chih-Chao Lam <chao@cs.stanford.edu>
+    Mignon Belongie
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -367,9 +370,19 @@ SectionView.prototype.clickOnQueryCategorySelectionMenu = function (inEventObjec
     } else {
       this.getQuery().addEntryForAttribute(attributeCalledQueryMatchingCategory, newQueryMatchingCategory);
     }
+    // I think we need these next 3 lines in to make sure the view gets updated  
+    // to reflect the new query.  When we get a chance we should probably do 
+    // some refactoring so that the plugin can register as an observer of the
+    // query item, and then the plugin itself can know what to do when the
+    // query item changes.  
     var pluginName = this._myPlugin.getPluginName();
     this._myPlugin.endOfLife();
     this._myPlugin = this.getPluginFromPluginName(pluginName, this._myPluginDiv);
+
+    // PENDING:
+    // These next 8 lines look like a mistake.  Maybe they're a result of a 
+    // copy & paste error.  I think we can just delete them, but I'm not brave
+    // enough right now!
     var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
     var pluginNameEntries = this.mySection.getEntriesForAttribute(attributeCalledPluginName);
     if (pluginNameEntries && pluginNameEntries[0]) {
@@ -378,6 +391,7 @@ SectionView.prototype.clickOnQueryCategorySelectionMenu = function (inEventObjec
     } else {
       this.mySection.addEntryForAttribute(attributeCalledPluginName, pluginName);
     }
+
     this.refresh();
   }
 };

@@ -115,7 +115,7 @@ Brian  |   done   | 1   IED | Ensure that UUIDs are unique in multi-user use cas
 -------+----------+---------+----------------------------------------------
 Who    | Priority | Estimate| Task
 -------+----------+---------+----------------------------------------------
-Mignon | Low      |         | Generate time-based UUIDs ("version 1" UUIDs)
+Mignon |   done   |         | Generate time-based UUIDs ("version 1" UUIDs)
 Chao   |   done   | 1   IED | Allow users to view multiple entries in a table plugin cell (0.5 IED actual)
 Chao   |   done   | 2   IED | Allow users to enter/edit multiple entries in a table plugin cell (1 IED actual)
 Chao   |   done   |         | Have Escape key undo current editing in active field
@@ -140,6 +140,8 @@ Summary of Iteration #1, May 2005
 -------+----------+---------+----------------------------------------------
 Who    | Priority | Estimate| Task
 -------+----------+---------+----------------------------------------------
+       |          |         |     Have identifiedRecord.getTimestamp() get the time from the UUID 
+       |          |         |     Have identifiedRecord.getUserstamp() get the user from the UUID
        |          |         |  1. Switch data model to use time-based UUIDs for timestamps & userstamps
        |          |         |  2. Get data model to pass the ordinal unit tests again
        |          |         |  3. Create provisional item/entry pair in correct order

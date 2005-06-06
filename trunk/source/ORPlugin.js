@@ -2,7 +2,8 @@
  ORPlugin.js
 
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Chih-Chao Lam <chao@cs.stanford.edu>
 
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:

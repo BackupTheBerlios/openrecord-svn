@@ -2,7 +2,9 @@
  UtilTest.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
+    Mignon Belongie
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
