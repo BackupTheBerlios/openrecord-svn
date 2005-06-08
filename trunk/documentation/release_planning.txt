@@ -125,71 +125,102 @@ Chao   |   done   |         | In table columns where the expected type is a Cate
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Summary of Iteration #1, May 2005
+     Summary of Iteration #1
+            May 2005
+      May 2 to June 6, 2005
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  15    = number of PLANNED tasks that were finished 
+  14    = number of PLANNED tasks that were finished 
    4    = number of HIDDEN tasks that were finished 
-  15?   = total estimated IEDs for PLANNED tasks that were finished
-   5    = number of weeks in May
-   3.0? = Velocity (in estimated IEDs per week)
+   5    = number of ADDITIONAL tasks that were finished 
+ ~19   = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
+   5    = number of weeks in May iteration
+ ~ 3.8 = Velocity (in estimated IEDs per week)
+
+ 
+ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Summary of Iteration #2
+            June 2005
+     June 6 to June 27, 2005
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        = number of PLANNED tasks that were finished 
+        = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
+   3    = number of weeks in June iteration
+        = Velocity (in estimated IEDs per week)
 
    
-   
+        
 ---------------------------------------------------------------------------
    Tasks that we might want to do during Iteration #2, in June 2005
 -------+----------+---------+----------------------------------------------
-Who    | Priority | Estimate| Task
+Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         |     Have identifiedRecord.getTimestamp() get the time from the UUID 
-       |          |         |     Have identifiedRecord.getUserstamp() get the user from the UUID
-       |          |         |  1. Switch data model to use time-based UUIDs for timestamps & userstamps
-       |          |         |  2. Get data model to pass the ordinal unit tests again
-       |          |         |  3. Create provisional item/entry pair in correct order
-       |          |         |  4. Make sure view code uses transactions (e.g. PageView.newSection)
-       |          |         |  5. Store transaction info in repository
-       |          |         |  6. Ensure that PHP scripts and file I/O works for concurrent multi-user access
-       |          |         |  7. Don't allow \n in page name or summary fields
-       |          |         |  8. BUG: problems with newlines and HTML characters in text strings
-       |          |         |  9. Move to better persistent representation for queries
+       |          |         |  1. Set up a prototype of the OpenRecord.org "dogfood" site
+       |          |         |  2. Have identifiedRecord.getUserstamp() get the user from the UUID
+       |          |         |  3. Switch data model to use time-based UUIDs for timestamps & userstamps
+       |          |         |  4. Store transaction info in repository
+       |          |         |  5. UI for deleting a row from a table
+       |          |         |  6. Create provisional item/entry pair in correct order
+       |          |         |  7. Fix the bug that happens when you call the PHP server code with no POST data
+       |          |         |  8. UI for entering a number literal (instead of a string literal) in a table
+       |          |         |  9. UI for entering a date literal in a table (and data model support)
        |          |         | 10. Add data model support for bi-directional references
+       |          |         | 11. Move to better persistent representation for queries
+       |          |         | 12. Make sure view code uses transactions
+       |          |         | 13. Deal with \n in page name or summary fields
+       |          |         | 14. BUG: problems with newlines and HTML characters in text strings
+       |          |         | 15. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
 -------+----------+---------+----------------------------------------------
-       |          |         | 11. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
-       |          |         | 12. Display Navbar pages in the right order
-       |          |         | 13. Arrow keys in SuggestionBox
-       |          |         | 14. Arrow keys in Table View
-       |          |         | 15. Have text-entries and reference-entries look different
-       |          |         | 16. Change UI so that non-literal entries are immutable
-       |          |         | 17. Implement a good URL-to-content mapping, such that URLs won't go bad in future releases
-       |          |         | 18. Provide GUI feedback about what's editable
-       |          |         | 19. Reach consensus on (colors, padding, and borders) and then implement
+       |          |         | 16. Have text-entries and reference-entries look different
+       |          |         | 17. Write one unit test that tests GUI code
+       |          |         | 18. Write one performance test that measures the time some code takes
+       |          |         | 19. Pick one file, and do a group code review on it
+       |          |         | 20. Rationalize our CSS style sheets
+       |          |         | 21. Provide GUI feedback about what's editable
+       |          |         | 22. Reach consensus on (colors, padding, and borders) and then implement
+       |          |         | 23. Get data model to pass the ordinal unit tests again
+       |          |         | 24. Display Navbar pages in the right order
+       |          |         | 25. Arrow keys in SuggestionBox
+       |          |         | 26. Arrow keys in Table View
+       |          |         | 27. Change UI so that non-literal entries are immutable
+       |          |         | 28. Implement a good URL-to-content mapping, such that URLs won't go bad in future releases
+       |          |         | 29. Convert UI code from DOM level 0 to DOM level 2
+       |          |         | 30. Have identifiedRecord.getTimestamp() get the time from the UUID 
 -------+----------+---------+----------------------------------------------
-       |          |         | 20. Wire up observers & keep views in sync
-       |          |         | 21. Rationalize our CSS style sheets
-       |          |         | 22. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
-       |          |         | 23. Rationalize the View api and document public api
-       |          |         | 24. Document the Data model public api
-       |          |         | 25. Check for incorrect dependencies (e.g. a Util dependency on model code)
-       |          |         | 26. Create directories "util", "view", "plugin"
-       |          |         | 27. Add support for saving content when used from a file:// URL
-       |          |         | 28. Add support for repository merging
-       |          |         | 29. Add a Query.js class, and/or an Attribute.js class
+       |          |         | 31. Wire up observers & keep views in sync
+       |          |         | 32. improve UI for adding an attribute to an item
+       |          |         | 33. improve UI for setting the expected data type of an attribute
+       |          |         | 34. improve UI for creating a new category
+       |          |         | 35. improve UI for entering references to categories or to other items
+       |          |         | 36. improve UI for creating a new page
+       |          |         | 37. improve UI for adding a new section to a page
+       |          |         | 38. improve UI for creating a new user
+       |          |         | 39. improve UI for editing the query that a section uses
+       |          |         | 40. Have edit mode look like view mode, and remove the "Edit" button
+       |          |         | 41. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
+       |          |         | 42. Rationalize the View api and document public api
+       |          |         | 43. Document the Data model public api
+       |          |         | 44. Check for incorrect dependencies (e.g. a Util dependency on model code)
+       |          |         | 45. Create directories "util", "view", "plugin"
 -------+----------+---------+----------------------------------------------
-       |          |         | 30. Drag and drop to re-order pages in the Navbar
-       |          |         | 31. Drag and drop to re-order columns in table view
-       |          |         | 32. Drag and drop to re-order rows in table view
-       |          |         | 33. Have explicit save instead of (or in addition to) autosave
-       |          |         | 34. Be able to cancel out of creating a new account
-       |          |         | 35. Save view layout choice and user preferences
-       |          |         | 36. BUG: back button is broken
-       |          |         | 37. BUG: "Waiting for localhost..."
-       |          |         | 38. BUG: "Node was not found" exception in TextView/LoginView?
-       |          |         | 39. Do some testing to find other existing bugs
+       |          |         | 46. Add support for saving content when used from a file:// URL
+       |          |         | 47. Add support for repository merging
+       |          |         | 48. Add a Query.js class, and/or an Attribute.js class
+       |          |         | 49. BUG: back button is broken
+       |          |         | 50. BUG: "Waiting for localhost..."
+       |          |         | 51. BUG: "Node was not found" exception in TextView/LoginView?
+       |          |         | 52. Do some testing to find other existing bugs
+       |          |         | 53. Drag and drop to re-order pages in the Navbar
+       |          |         | 54. Drag and drop to re-order columns in table view
+       |          |         | 55. Drag and drop to re-order rows in table view
+       |          |         | 56. Have explicit save instead of (or in addition to) autosave
+       |          |         | 57. Be able to cancel out of creating a new account
+       |          |         | 58. Save view layout choice and user preferences
+       |          |         | 59. Do code reviews
+       |          |         | 60. Write concurrency tests 
+       |          |         | 61. Write scalability tests 
+       |          |         | 62. Ensure that PHP scripts and file I/O works for concurrent multi-user access
 -------+----------+---------+----------------------------------------------
-       |          |         | 40. Do code reviews
-       |          |         | 41. Write some unit tests for GUI code
-       |          |         | 42. Write performance tests 
-       |          |         | 43. Write concurrency tests 
-       |          |         | 44. Write scalability tests 
 
        
        
