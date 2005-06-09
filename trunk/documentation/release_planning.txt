@@ -162,8 +162,8 @@ Who    | Estimate | Actual  | Task
        |          |         |  5. UI for deleting a row from a table
        |          |         |  6. Create provisional item/entry pair in correct order
        |          |         |  7. Fix the bug that happens when you call the PHP server code with no POST data
-       |          |         |  8. UI for entering a number literal (instead of a string literal) in a table
-       |          |         |  9. UI for entering a date literal in a table (and data model support)
+chao   |0.5       |         |  8. UI for entering a number literal (instead of a string literal) in a table
+chao   |1         |         |  9. UI for entering a date literal in a table (and data model support)
        |          |         | 10. Add data model support for bi-directional references
        |          |         | 11. Move to better persistent representation for queries
        |          |         | 12. Make sure view code uses transactions
