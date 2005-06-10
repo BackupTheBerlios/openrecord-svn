@@ -173,20 +173,18 @@ function subtestOnUuid(uuid) {
   var section3 = arrayOfParts[3];
   var hex3 = parseInt(section3, Util.HEX_RADIX);
   var binaryString = hex3.toString(2);
+  // alert("section3 = " + section3 + "\n binaryString = " + binaryString);
+  assertTrue('section 3 has 16 bits', binaryString.length == 16);
   assertTrue("first bit of section 3 is 1", binaryString.charAt(0) == '1');
   assertTrue("second bit of section 3 is 0", binaryString.charAt(1) == '0');
   
-  var section4 = arrayOfParts[4];
-  var firstChar = section4.charAt(0);
-  var hexFirstChar = parseInt(firstChar, Util.HEX_RADIX);
-  binaryString = hexFirstChar.toString(2);
-  assertTrue("first bit of section 4 is 1", binaryString.charAt(0) == '1');
 }
 
 function testMethodsForWorkingWithRandomUuids() {
   var uuid1 = Util.generateRandomUuid();
-  subtestOnUuid(uuid1);
   var uuid2 = Util.generateRandomUuid();
+  // alert(uuid1 + "\n" + uuid2);
+  subtestOnUuid(uuid1);
   subtestOnUuid(uuid2);
   
   var arrayOfParts = uuid1.split("-");
@@ -197,11 +195,62 @@ function testMethodsForWorkingWithRandomUuids() {
 }
 
 function testMethodsForWorkingWithTimeBasedUuids() {
+  var array = [];
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  /* alert(array[0] + "\n" + 
+        array[1] + "\n" + 
+        array[2] + "\n" + 
+        array[3] + "\n" + 
+        array[4] + "\n" + 
+        array[5] + "\n" + 
+        array[6] + "\n" + 
+        array[7] + "\n" + 
+        array[8] + "\n" + 
+        array[9] + "\n" + 
+        array[10] + "\n" + 
+        array[11] + "\n" + 
+        array[12] + "\n" + 
+        array[13] + "\n" + 
+        array[14] + "\n" + 
+        array[15] + "\n" + 
+        array[16] + "\n" + 
+        array[17] + "\n" + 
+        array[18] + "\n" + 
+        array[19] + "\n");
+  */
+  
+  // var now = new Date();
   var uuid1 = Util.generateTimeBasedUuid();
-  subtestOnUuid(uuid1);
   var uuid2 = Util.generateTimeBasedUuid();
-  subtestOnUuid(uuid2);
   var uuid3 = Util.generateTimeBasedUuid();
+  // var then = new Date();
+  // alert(now.valueOf() + "\n" +  then.valueOf());
+  
+  subtestOnUuid(uuid1);
+  subtestOnUuid(uuid2);
   subtestOnUuid(uuid3);
 
   assertTrue("uuid1 != uuid2", uuid1 != uuid2);
@@ -211,10 +260,24 @@ function testMethodsForWorkingWithTimeBasedUuids() {
   var section2 = arrayOfParts[2];
   assertTrue('Section 2 starts with a 1', (section2.charAt(0) == "1"));  
 
+  var section4 = arrayOfParts[4];
+  var firstChar = section4.charAt(0);
+  var hexFirstChar = parseInt(firstChar, Util.HEX_RADIX);
+  binaryString = hexFirstChar.toString(2);
+  var firstBit;
+  if (binaryString.length == 4) {
+    firstBit = binaryString.charAt(0);
+  } else {
+    firstBit = '0';
+  }
+  // alert("firstChar = " + firstChar + "\n as number = " + hexFirstChar + 
+  //      "\n in binary = " + binaryString + "\n first bit = " + firstBit);
+  assertTrue("first bit of section 4 is 1", firstBit == '1');
+
   var uuid4 = Util.generateTimeBasedUuid("123456789ABC");
   subtestOnUuid(uuid4);
   arrayOfParts = uuid4.split("-");
-  var section4 = arrayOfParts[4];
+  section4 = arrayOfParts[4];
   assertTrue('Section 4 = pseudoNode input', section4 == "123456789ABC");
 }
 
