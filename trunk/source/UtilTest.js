@@ -195,59 +195,9 @@ function testMethodsForWorkingWithRandomUuids() {
 }
 
 function testMethodsForWorkingWithTimeBasedUuids() {
-  var array = [];
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  array.push(Util.generateTimeBasedUuid());
-  /* alert(array[0] + "\n" + 
-        array[1] + "\n" + 
-        array[2] + "\n" + 
-        array[3] + "\n" + 
-        array[4] + "\n" + 
-        array[5] + "\n" + 
-        array[6] + "\n" + 
-        array[7] + "\n" + 
-        array[8] + "\n" + 
-        array[9] + "\n" + 
-        array[10] + "\n" + 
-        array[11] + "\n" + 
-        array[12] + "\n" + 
-        array[13] + "\n" + 
-        array[14] + "\n" + 
-        array[15] + "\n" + 
-        array[16] + "\n" + 
-        array[17] + "\n" + 
-        array[18] + "\n" + 
-        array[19] + "\n");
-  */
-  
-  // var now = new Date();
   var uuid1 = Util.generateTimeBasedUuid();
   var uuid2 = Util.generateTimeBasedUuid();
   var uuid3 = Util.generateTimeBasedUuid();
-  // var then = new Date();
-  // alert(now.valueOf() + "\n" +  then.valueOf());
   
   subtestOnUuid(uuid1);
   subtestOnUuid(uuid2);
@@ -279,6 +229,61 @@ function testMethodsForWorkingWithTimeBasedUuids() {
   arrayOfParts = uuid4.split("-");
   section4 = arrayOfParts[4];
   assertTrue('Section 4 = pseudoNode input', section4 == "123456789ABC");
+
+  /* 
+  // Old code that Brian wrote to try to get a sense of how
+  // many UUIDs we can create in a single millisecond 
+  var array = [];
+  var now = new Date();
+  var then = new Date();
+  while (now.valueOf() == then.valueOf()) {
+    then = new Date();
+  }
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  array.push(Util.generateTimeBasedUuid());
+  alert(array[0] + "\n" + 
+        array[1] + "\n" + 
+        array[2] + "\n" + 
+        array[3] + "\n" + 
+        array[4] + "\n" + 
+        array[5] + "\n" + 
+        array[6] + "\n" + 
+        array[7] + "\n" + 
+        array[8] + "\n" + 
+        array[9] + "\n" + 
+        array[10] + "\n" + 
+        array[11] + "\n" + 
+        array[12] + "\n" + 
+        array[13] + "\n" + 
+        array[14] + "\n" + 
+        array[15] + "\n" + 
+        array[16] + "\n" + 
+        array[17] + "\n" + 
+        array[18] + "\n" + 
+        array[19] + "\n");
+  */
 }
 
 function tearDown() {

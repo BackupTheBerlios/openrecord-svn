@@ -646,6 +646,11 @@ Util.generateTimeBasedUuid = function(pseudoNode) {
     Util._ourUuidClockSeqString = (variantCodeForDCEUuids | random14bitNumber).toString(Util.HEX_RADIX);
   }
 
+  // Maybe someday think about trying to make the code more readable to
+  // newcomers by creating a class called "WholeNumber" that encapsulates
+  // the methods and data structures for working with these arrays that 
+  // hold 4 16-bit numbers?  And then these variables below have names  
+  // like "wholeSecondsPerHour" rather than "arraySecondsPerHour"?
   var now = new Date();
   var nowArray = Util.get64bitArrayFromFloat(now.valueOf());
   var arraySecondsPerHour = Util.get64bitArrayFromFloat(60 * 60);
