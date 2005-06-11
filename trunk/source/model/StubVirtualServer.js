@@ -58,9 +58,12 @@ function StubVirtualServer() {
  * @scope    private instance method
  * @param    inWorld    The world that we provide data for. 
  */
-StubVirtualServer.prototype.__initialize = function (inWorld) {
+StubVirtualServer.prototype._initialize = function (inWorld) {
   this.__myWorld = inWorld;
   
+  this._countOfNestedTransactions = 0;
+  this._currentTransaction = null;
+
   // this.__myNextAvailableUuid = 1;
   this.__myHashTableOfItemsKeyedByUuid = {};
   this.__myHashTableOfEntriesKeyedByUuid = {};
@@ -81,28 +84,57 @@ StubVirtualServer.prototype.__initialize = function (inWorld) {
  * @param    inWorld    The world that we provide data for. 
  */
 StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
-  this.__initialize(inWorld);
-  this.__loadAxiomaticItems();
+  this._initialize(inWorld);
+  this._loadAxiomaticItems();
+};
+
+
+// -------------------------------------------------------------------
+// Transaction Methods
+// -------------------------------------------------------------------
+
+/**
+ * Marks the beginning of a transaction.
+ *
+ * Each time you call beginTransaction() you open a new transaction, 
+ * which you need to close later using endTransaction().  Transactions
+ * may be nested, but the beginTransaction and endTransaction calls
+ * always need to come in pairs. 
+ *
+ * @scope    public instance method
+ */
+StubVirtualServer.prototype.beginTransaction = function() {
+  if (this._countOfNestedTransactions === 0) {
+    // PENDING: create a new transaction object
+    // this._currentTransaction = new Transaction();
+  }
+  this._countOfNestedTransactions += 1;
+};
+ 
+
+/**
+ * Marks the end of a transaction.
+ *
+ * @scope    public instance method
+ */
+StubVirtualServer.prototype.endTransaction = function() {
+  this._countOfNestedTransactions -= 1;
+  Util.assert(this._countOfNestedTransactions >= 0);
+
+  if (this._countOfNestedTransactions === 0) {
+    var listOfChangesMade = this.saveChangesToServer();
+    if (listOfChangesMade.length > 0) {
+      // alert(listOfChangesMade.length + " changes made");
+      // Util.displayStatusBlurb(listOfChangesMade.length + " changes made");
+      this.__myWorld._notifyObserversOfChanges(listOfChangesMade);
+    }
+  }
 };
 
 
 // -------------------------------------------------------------------
 // Methods for creating and changing items
 // -------------------------------------------------------------------
-
-/**
- * Throws an Error if there is no user currently logged in.
- *
- * @scope    private instance method
- * @throws   Throws an Error if no user is logged in.
- */
-StubVirtualServer.prototype._throwErrorIfNoUserIsLoggedIn = function () {
-  if (!this.__myCurrentUser) {
-    var error = new Error("No user is logged in.  You can't write to the repository when nobody is logged in.");
-    throw error;
-  }
-};
-
 
 /**
  * Returns a newly created item.
@@ -152,7 +184,7 @@ StubVirtualServer.prototype.newProvisionalItem = function (inObserver) {
  * @return   A newly created item.
  */
 StubVirtualServer.prototype._createNewItem = function (inObserver, inProvisionalFlag) {
-  var uuid = this.__getNewUuid();
+  var uuid = this._getNewUuid();
   var item = new Item(this.__myWorld, uuid);
   item._initialize(inObserver, inProvisionalFlag);
   this.__myHashTableOfItemsKeyedByUuid[uuid] = item;
@@ -186,7 +218,7 @@ StubVirtualServer.prototype._provisionalItemJustBecameReal = function (inItem) {
  */
 StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inValue) {
   this._throwErrorIfNoUserIsLoggedIn();
-  var uuid = this.__getNewUuid();
+  var uuid = this._getNewUuid();
   var entry = new Entry(this.__myWorld, uuid);
   entry._initialize(inItemOrEntry, inAttribute, inValue);
   var item = inItemOrEntry instanceof Item ? inItemOrEntry : inItemOrEntry.getItem();
@@ -283,6 +315,10 @@ StubVirtualServer.prototype.getUsers = function () {
   return this.__myListOfUsers;
 };
 
+
+/**
+ *
+ */
 StubVirtualServer.prototype.getCategories = function () {
   var listOfCategories = [];
   for (var key in this.__myHashTableOfItemsKeyedByUuid) {
@@ -294,6 +330,7 @@ StubVirtualServer.prototype.getCategories = function () {
   }
   return listOfCategories;
 };
+
 
 /**
  * Returns an item representing the user who is currently logged in.
@@ -340,7 +377,7 @@ StubVirtualServer.prototype.login = function (inUser, inPassword) {
   if (inPassword) {
     md5hashOfPassword = Util.hex_md5(inPassword);
   }
-  var realAuthentication = this.__getAuthenticationInfoForUser(inUser);
+  var realAuthentication = this._getAuthenticationInfoForUser(inUser);
   var successfulAuthentication = ((realAuthentication == md5hashOfPassword) || !realAuthentication);
   
   // PENDING: temporary hack
@@ -544,13 +581,27 @@ StubVirtualServer.prototype.getItemsInCategory = function (inCategory) {
 // -------------------------------------------------------------------
 
 /**
+ * Throws an Error if there is no user currently logged in.
+ *
+ * @scope    private instance method
+ * @throws   Throws an Error if no user is logged in.
+ */
+StubVirtualServer.prototype._throwErrorIfNoUserIsLoggedIn = function () {
+  if (!this.__myCurrentUser) {
+    var error = new Error("No user is logged in.  You can't write to the repository when nobody is logged in.");
+    throw error;
+  }
+};
+
+
+/**
  * Given a UUID, returns the item or entry identified by that UUID.
  *
  * @scope    private instance method
  * @param    inUuid    The UUID of the item or entry to be returned. 
  * @return   The item or entry identified by the given UUID.
  */
-StubVirtualServer.prototype.__getIdentifiedRecordFromUuid = function (inUuid) {
+StubVirtualServer.prototype._getIdentifiedRecordFromUuid = function (inUuid) {
   var item = this.getItemFromUuid(inUuid);
   if (item) {
     return item;
@@ -566,7 +617,7 @@ StubVirtualServer.prototype.__getIdentifiedRecordFromUuid = function (inUuid) {
  * @scope    private instance method
  * @return   A newly created UUID.
  */
-StubVirtualServer.prototype.__getNewUuid = function () {
+StubVirtualServer.prototype._getNewUuid = function () {
   // var newUuid = this.__myNextAvailableUuid;
   // this.__myNextAvailableUuid += 1;
   var newUuid = Util.generateRandomUuid();
@@ -582,7 +633,7 @@ StubVirtualServer.prototype.__getNewUuid = function () {
  * @param    inUser    An item representing a user. 
  * @return   The authentication info for the user.
  */
-StubVirtualServer.prototype.__getAuthenticationInfoForUser = function (inUser) {
+StubVirtualServer.prototype._getAuthenticationInfoForUser = function (inUser) {
   return this.__myHashTableOfUserAuthenticationInfo[inUser.getUniqueKeyString()];
 };
 
@@ -595,7 +646,7 @@ StubVirtualServer.prototype.__getAuthenticationInfoForUser = function (inUser) {
  * @param    inUuid    The UUID of the item to be returned. 
  * @return   The item identified by the given UUID.
  */
-StubVirtualServer.prototype.__getItemFromUuidOrCreateNewItem = function (inUuid) {
+StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function (inUuid) {
   var item = this.getItemFromUuid(inUuid);
   if (!item) {
     /*
@@ -628,7 +679,7 @@ StubVirtualServer.prototype.__getItemFromUuidOrCreateNewItem = function (inUuid)
  *
  * @scope    private instance method
  */
-StubVirtualServer.prototype.__loadAxiomaticItems = function () {
+StubVirtualServer.prototype._loadAxiomaticItems = function () {
   var uuid;
   var name;
   var item;
@@ -636,7 +687,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   var key;
   
   this.__myWorld.beginTransaction();
-  var axiomaticUser = this.__getItemFromUuidOrCreateNewItem(World.UUID_FOR_USER_AMY);
+  var axiomaticUser = this._getItemFromUuidOrCreateNewItem(World.UUID_FOR_USER_AMY);
   axiomaticUser.__myCreationUserstamp = axiomaticUser;
   this.__myListOfUsers.push(axiomaticUser);
   this.__myHashTableOfUserAuthenticationInfo[axiomaticUser.getUniqueKeyString()] = null;
@@ -657,7 +708,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
 
   // create all the Item objects for the attributes
   for (uuid in hashTableOfAttributeNamesKeyedByUuid) {
-    this.__getItemFromUuidOrCreateNewItem(uuid);
+    this._getItemFromUuidOrCreateNewItem(uuid);
   }
   
   // associate display names with the UUIDs of all the categories
@@ -669,7 +720,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
 
   // create all the Item objects for the categories
   for (uuid in hashTableOfCategoryNamesKeyedByUuid) {
-    this.__getItemFromUuidOrCreateNewItem(uuid);
+    this._getItemFromUuidOrCreateNewItem(uuid);
   }
  
   // associate display names with the UUIDs of all the types
@@ -684,7 +735,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   
   // create all the Item objects for the types
   for (uuid in hashTableOfTypeNamesKeyedByUuid) {
-    this.__getItemFromUuidOrCreateNewItem(uuid);
+    this._getItemFromUuidOrCreateNewItem(uuid);
   }
   
   // associate expected data types with the UUIDs of some of the attributes
@@ -725,7 +776,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   }
   
   // set the names of all the categories, and put them in the category called "Category"
-  var categoryCalledCategory = this.__getItemFromUuidOrCreateNewItem(World.UUID_FOR_CATEGORY_CATEGORY);
+  var categoryCalledCategory = this._getItemFromUuidOrCreateNewItem(World.UUID_FOR_CATEGORY_CATEGORY);
   for (uuid in hashTableOfCategoryNamesKeyedByUuid) {
     item = this.getItemFromUuid(uuid);
     name = hashTableOfCategoryNamesKeyedByUuid[uuid];
@@ -734,7 +785,7 @@ StubVirtualServer.prototype.__loadAxiomaticItems = function () {
   }
 
   // set the names of all the types, and put them in the category called "Type"
-  var categoryCalledType = this.__getItemFromUuidOrCreateNewItem(World.UUID_FOR_CATEGORY_TYPE);
+  var categoryCalledType = this._getItemFromUuidOrCreateNewItem(World.UUID_FOR_CATEGORY_TYPE);
   for (uuid in hashTableOfTypeNamesKeyedByUuid) {
     item = this.getItemFromUuid(uuid);
     name = hashTableOfTypeNamesKeyedByUuid[uuid];

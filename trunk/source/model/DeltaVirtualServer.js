@@ -103,7 +103,7 @@ function DeltaVirtualServer(inJsonRepositoryString, inJsonUserList) {
  * @param    inWorld    The world that we provide data for. 
  */
 DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
-  this.__initialize(inWorld);
+  this._initialize(inWorld);
   this._loadWorldFromJsonStrings(this._myDehydratedWorld, this._myDehydratedUserList);
 };
 
@@ -145,127 +145,8 @@ DeltaVirtualServer.prototype._loadWorldFromJsonStrings = function (inJsonReposit
   Util.assert(Util.isArray(listOfUsers));
 
   this.__loadWorldFromListOfRecordsAndUsers(listOfRecords, listOfUsers);
-  
-  /* DELETE_ME:
-  var fileFormat = dehydratedWorld[DeltaVirtualServer.JSON_MEMBER_FORMAT];
-  if (fileFormat == DeltaVirtualServer.JSON_FORMAT_2005_MARCH) {
-    // this is an old file format, circa 2005-March-16
-    var listOfItems = dehydratedWorld[DeltaVirtualServer.JSON_MEMBER_DATA];
-    Util.assert(Util.isArray(listOfItems));
-    this.__loadWorldFromOld2005MarchFormatList(listOfItems);
-  } else {
-    // this is newer file format, circa 2005-April-21
-    Util.assert(fileFormat == DeltaVirtualServer.JSON_FORMAT_2005_APRIL);
-    var listOfRecords = dehydratedWorld[DeltaVirtualServer.JSON_MEMBER_DATA];
-    var listOfUsers = dehydratedWorld[DeltaVirtualServer.JSON_MEMBER_USERS];
-    Util.assert(Util.isArray(listOfRecords));
-    this.__loadWorldFromListOfRecordsAndUsers(listOfRecords, listOfUsers);
-  }
-  */
 };
   
-
-/**
- * Loads a world of items from a dehydrated list of items.
- *
- * @scope    private instance method
- * @param    inListOfItems    A JSON list of dehydrated items. 
- */
-/*
-DeltaVirtualServer.prototype.__loadWorldFromOld2005MarchFormatList = function (inListOfItems) {
-
-  var listOfDehydratedItems = inListOfItems;
-
-  var axiomaticItem;
-  var dehydratedItem;
-  var dehydratedUuid;
-  var item;
-  var uuid;
-  var key;
-  
-  // Have the StubBackingStore load the axiomatic items, because it will
-  // correctly set the creator of those items to be the axiomatic user.
-  var listOfAxiomaticRecords = this.__loadAxiomaticItems();
-  
-  var hashTableOfAxiomaticItemsKeyedByUuid = {};
-  for (key in listOfAxiomaticRecords) {
-    var record = listOfAxiomaticRecords[key];
-    if (record instanceof Item) {
-      hashTableOfAxiomaticItemsKeyedByUuid[record._getUuid()] = record;
-    }
-  }
-  
-  this.__myWorld.beginTransaction();
-  var guestUser = this.newUser("Guest", null);
-  this.__myCurrentUser = guestUser;
-  
-  // First, go through the whole list of dehydrated items.  Find all 
-  // the UUIDs for all the items, and make Item objects for all of them.
-  // After we've done this step, we'll know the next available UUID,
-  // so we can start assigning new UUIDs to the attribute entries.
-  for (key in listOfDehydratedItems) {
-    dehydratedItem = listOfDehydratedItems[key];
-    dehydratedUuid = dehydratedItem[World.UUID_FOR_ATTRIBUTE_UUID];
-    uuid = dehydratedUuid[DeltaVirtualServer.JSON_MEMBER_VALUE];
-    axiomaticItem = hashTableOfAxiomaticItemsKeyedByUuid[uuid];
-    if (!axiomaticItem) {
-      // We only need to rehydrate the non-axiomatic items.
-      // We rely on the StubBackingStore to have loaded the axiomatic items.
-      item = this.__getItemFromUuidOrCreateNewItem(uuid);
-      Util.assert(item instanceof Item);
-    }
-  }
-  
-  // We already have Item objects for all the items we're going to
-  // rehydrate.  Now we can add attributes to them.
-  for (key in listOfDehydratedItems) {
-    dehydratedItem = listOfDehydratedItems[key];
-    dehydratedUuid = dehydratedItem[World.UUID_FOR_ATTRIBUTE_UUID];
-    uuid = dehydratedUuid[DeltaVirtualServer.JSON_MEMBER_VALUE];
-    axiomaticItem = hashTableOfAxiomaticItemsKeyedByUuid[uuid];
-    if (!axiomaticItem) {
-      // We only need to rehydrate the non-axiomatic items.
-      // We rely on the StubBackingStore to have loaded the axiomatic items.
-      item = this.__getItemFromUuidOrCreateNewItem(uuid);
-      Util.assert(item instanceof Item);
-      for (var propertyKey in dehydratedItem) {
-        if (propertyKey != World.UUID_FOR_ATTRIBUTE_UUID) { 
-          var propertyValue = dehydratedItem[propertyKey];
-          var attributeUuid = parseInt(propertyKey);
-          Util.assert(Util.isArray(propertyValue));
-          for (var entryKey in propertyValue) {
-            var entryObject = propertyValue[entryKey];
-            var valueType = entryObject[DeltaVirtualServer.JSON_MEMBER_TYPE];
-            var valueValue = entryObject[DeltaVirtualServer.JSON_MEMBER_VALUE];
-            var finalValue = null;
-            switch (valueType) {
-              case DeltaVirtualServer.JSON_TYPE_FOREIGN_UUID:
-                finalValue = this.__getItemFromUuidOrCreateNewItem(valueValue);
-                break;
-              case DeltaVirtualServer.JSON_TYPE_STRING_VALUE:
-                finalValue = valueValue;
-                break;
-              case DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE:
-                finalValue = valueValue;
-                break;
-            }
-            var attribute = this.getItemFromUuid(attributeUuid);
-            item.addEntryForAttribute(attribute, finalValue);
-          }
-        }
-      }
-    }
-  }
-
-  for (key in this.__myChronologicalListOfNewlyCreatedRecords) {
-    var newRecord = this.__myChronologicalListOfNewlyCreatedRecords[key];
-    this.__myChronologicalListOfRecords.push(newRecord);
-  }
-  this.__myChronologicalListOfNewlyCreatedRecords = [];
-  this.__myWorld.endTransaction();
-  this.__myCurrentUser = null;
-};
-*/
 
 /**
  * Given a UUID, either (a) returns the existing item identified by that UUID, 
@@ -369,14 +250,14 @@ DeltaVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (in
     if (dehydratedVote) {
       var retainFlag = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG];
       identifiedRecordUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RECORD];
-      identifiedRecord = this.__getIdentifiedRecordFromUuid(identifiedRecordUuid);
+      identifiedRecord = this._getIdentifiedRecordFromUuid(identifiedRecordUuid);
       var vote = new Vote(identifiedRecord, userstamp, retainFlag, timestamp);
       this.__myChronologicalListOfRecords.push(vote);
     }
     if (dehydratedOrdinal) {
       var ordinalNumber = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER];
       identifiedRecordUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RECORD];
-      identifiedRecord = this.__getIdentifiedRecordFromUuid(identifiedRecordUuid);
+      identifiedRecord = this._getIdentifiedRecordFromUuid(identifiedRecordUuid);
       var ordinal = new Ordinal(identifiedRecord, userstamp, ordinalNumber, timestamp);
       this.__myChronologicalListOfRecords.push(ordinal);
     }
@@ -508,7 +389,7 @@ DeltaVirtualServer.prototype.__getJsonStringRepresentingRecords = function (inLi
       listOfStrings.push('                // ' + itemDisplayNameSubstring + '\n');
       var previousEntry = entry.getPreviousEntry();
       if (previousEntry) {
-        listOfStrings.push('   "' + DeltaVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": "' + previousEntry._getUuid() + '",\n');
+        listOfStrings.push('  "' + DeltaVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": "' + previousEntry._getUuid() + '",\n');
       }
       var contentData = entry.getValue();
       var pickleString = "";
@@ -625,12 +506,12 @@ DeltaVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function (
  * changes.
  *
  * @scope    public instance method
- * @param    inForceSave    Optional. Forces a save if set to true. 
+ * @param    forceSave    Optional. Forces a save if set to true. 
  * @return   The list of changes made. 
  */
-DeltaVirtualServer.prototype.saveChangesToServer = function (inForceSave) {
+DeltaVirtualServer.prototype.saveChangesToServer = function (forceSave) {
   var listOfChangesMade;
-  if (!inForceSave && this.__myChronologicalListOfNewlyCreatedRecords.length === 0) {
+  if (!forceSave && this.__myChronologicalListOfNewlyCreatedRecords.length === 0) {
     listOfChangesMade = [];
     return listOfChangesMade;
   }

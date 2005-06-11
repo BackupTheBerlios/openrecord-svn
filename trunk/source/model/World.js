@@ -95,7 +95,6 @@ World.__TUPLE_KEY_OBSERVERS = "observers";
  * @param    virtualServer    Optional. The datastore that this world gets its data from. 
  */
 function World(virtualServer) {
-  this._countOfNestedTransactions = 0;
   this._hashTableOfObserverListsKeyedByItemUuid = {};
   this._listOfListObserverTuples = [];
 
@@ -154,10 +153,7 @@ function World(virtualServer) {
  * @scope    public instance method
  */
 World.prototype.beginTransaction = function() {
-  this._countOfNestedTransactions += 1;
-  // PENDING:
-  //   This is just a stub method for now.  Once we start implementing
-  //   support for transactions we'll have to put some real code here.
+  this._virtualServer.beginTransaction();
 };
  
 
@@ -167,23 +163,10 @@ World.prototype.beginTransaction = function() {
  * @scope    public instance method
  */
 World.prototype.endTransaction = function() {
-  this._countOfNestedTransactions -= 1;
-  Util.assert(this._countOfNestedTransactions >= 0);
-  // PENDING:
-  //   This is just a stub method for now.  Once we start implementing
-  //   support for transactions we'll have to put some real code here.
-  if (this._countOfNestedTransactions === 0) {
-    var listOfChangesMade = this._virtualServer.saveChangesToServer();
-    if (listOfChangesMade.length > 0) {
-      Util.displayStatusBlurb(listOfChangesMade.length + " changes made");
-      this._notifyObserversOfChanges(listOfChangesMade);
-    }
-  }
+  this._virtualServer.endTransaction();
 };
 
 
-// ===================================================================
-// PENDING: Line of Completion. Beyond there be dragons...
 /**
  * Sends notification messages to registered observers to let them know 
  * about any new changes to items or lists that they're observers of.
