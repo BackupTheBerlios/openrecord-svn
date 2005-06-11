@@ -158,12 +158,12 @@ Who    | Estimate | Actual  | Task
        |          |         |  1. Set up a prototype of the OpenRecord.org "dogfood" site
        |          |         |  2. Have identifiedRecord.getUserstamp() get the user from the UUID
        |          |         |  3. Switch data model to use time-based UUIDs for timestamps & userstamps
-       |          |         |  4. Store transaction info in repository
+brian  | 0.5  IED |         |  4. Store transaction info in repository
        |          |         |  5. UI for deleting a row from a table
-       |          |         |  6. Create provisional item/entry pair in correct order
+brian  | 0    IED | 0       |  6. Create provisional item/entry pair in correct order
        |          |         |  7. Fix the bug that happens when you call the PHP server code with no POST data
-chao   |0.5       |         |  8. UI for entering a number literal (instead of a string literal) in a table
-chao   |1         |         |  9. UI for entering a date literal in a table (and data model support)
+chao   | 0.5  IED |         |  8. UI for entering a number literal (instead of a string literal) in a table
+chao   | 1    IED |         |  9. UI for entering a date literal in a table (and data model support)
        |          |         | 10. Add data model support for bi-directional references
        |          |         | 11. Move to better persistent representation for queries
        |          |         | 12. Make sure view code uses transactions
