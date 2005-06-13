@@ -156,7 +156,7 @@ Chao   |   done   |         | In table columns where the expected type is a Cate
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
        |          |         |  1. Set up a prototype of the OpenRecord.org "dogfood" site
-       |          |         |  2. Have identifiedRecord.getUserstamp() get the user from the UUID
+mignon | 0.25 IED |         |  2. Have identifiedRecord.getUserstamp() get the user from the UUID
        |          |         |  3. Switch data model to use time-based UUIDs for timestamps & userstamps
 brian  | 0.5  IED |         |  4. Store transaction info in repository
        |          |         |  5. UI for deleting a row from a table
