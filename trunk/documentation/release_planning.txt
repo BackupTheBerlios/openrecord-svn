@@ -157,7 +157,7 @@ Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
        |          |         |  1. Set up a prototype of the OpenRecord.org "dogfood" site
 mignon | 0.25 IED |         |  2. Have identifiedRecord.getUserstamp() get the user from the UUID
-       |          |         |  3. Switch data model to use time-based UUIDs for timestamps & userstamps
+mignon | 0.5  IED |         |  3. Switch data model to use time-based UUIDs for timestamps & userstamps
 brian  | 0.5  IED |         |  4. Store transaction info in repository
        |          |         |  5. UI for deleting a row from a table
 brian  | 0.5  IED |         |  6. Save provisional item and then set the category, in that order, and in on transaction
