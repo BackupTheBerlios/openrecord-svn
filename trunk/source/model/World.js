@@ -679,9 +679,9 @@ World.prototype.newQueryForSpecificItems = function(itemOrListOfItems) {
  * @param    value    The value to initialize the entry with. 
  * @return   A newly created entry.
  */
-World.prototype._newEntry = function(itemOrEntry, attribute, value) {
+World.prototype._newEntry = function(itemOrEntry, attribute, value, type) {
   this.beginTransaction();
-  var entry = this._virtualServer.newEntry(itemOrEntry, attribute, value);
+  var entry = this._virtualServer.newEntry(itemOrEntry, attribute, value, type);
   this.endTransaction();
   return entry;
 };

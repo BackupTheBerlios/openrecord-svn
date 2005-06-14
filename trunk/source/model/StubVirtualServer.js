@@ -88,6 +88,12 @@ StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
   this._loadAxiomaticItems();
 };
 
+/**
+ *
+ */
+StubVirtualServer.prototype.getWorld = function () {
+  return this.__myWorld;
+};
 
 // -------------------------------------------------------------------
 // Transaction Methods
@@ -216,11 +222,11 @@ StubVirtualServer.prototype._provisionalItemJustBecameReal = function (inItem) {
  * @return   A newly created entry.
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inValue) {
+StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inValue, inType) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
   var entry = new Entry(this.__myWorld, uuid);
-  entry._initialize(inItemOrEntry, inAttribute, inValue);
+  entry._initialize(inItemOrEntry, inAttribute, inValue, inType);
   var item = inItemOrEntry instanceof Item ? inItemOrEntry : inItemOrEntry.getItem();
   item.__addEntryToListOfEntriesForAttribute(entry); // PENDING eeks calling a protected method!
   

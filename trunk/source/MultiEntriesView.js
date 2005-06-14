@@ -140,6 +140,16 @@ MultiEntriesView.prototype.setClickFunction = function(inClickFunction) {
   this._clickFunction = inClickFunction;
 };
 
+/**
+ * Returns width for TextView edit field to set
+ * HACK: See http://lists.berlios.de/pipermail/openrecord-dev/2005-June/000120.html
+ *
+ * @scope    public instance method
+ */
+
+MultiEntriesView.prototype.getTextViewWidth = function() {
+  return this._myHTMLElement.offsetWidth;
+};
 
 /**
  *
@@ -172,7 +182,13 @@ MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inTextView) 
   switch (asciiValueOfKey) {
     case Util.ASCII_VALUE_FOR_LEFT_ARROW: move = -1; break;
     case Util.ASCII_VALUE_FOR_RIGHT_ARROW: move = 1; break;
-    case Util.ASCII_VALUE_FOR_RETURN: doCreateNewEntry = inEvent.altKey; break;
+    case Util.ASCII_VALUE_FOR_RETURN:
+      if (inEvent.altKey) {
+        doCreateNewEntry = true;
+        break;
+      }
+      if (inTextView != this._entryViews[this._entryViews.length-1]) {move=1;}
+      break;
     default: move = 0; break;
   }
   if (doCreateNewEntry) {
@@ -203,10 +219,11 @@ MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inTextView) 
  */
 MultiEntriesView.prototype._addEntryView = function(inEntry) {
   var spanElt = document.createElement("span");
+  spanElt.style.width = '100%';
   var aTextView = new TextView(this, spanElt, this._item, this._attribute, inEntry, this._className);
   this._entryViews.push(aTextView);
-  aTextView.refresh();
   this.getHTMLElement().appendChild(spanElt);
+  aTextView.refresh();
   if (this.isInEditMode()) {
     var listener = this;
     aTextView.setKeyPressFunction(function (evt, aTxtView) {return listener._keyPressOnEditField(evt, aTxtView);});

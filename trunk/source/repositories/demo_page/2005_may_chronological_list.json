@@ -161,7 +161,8 @@
            "uuid": "1471",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // Amy ex machina
-          "value": { "type": "StringValue", "value": "Amy ex machina" },
+           "type": "StringValue",
+          "value": "Amy ex machina",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457281" }
   },
@@ -170,7 +171,8 @@
            "uuid": "1472",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-          "value": { "type": "StringValue", "value": "Name" },
+           "type": "StringValue",
+          "value": "Name",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -179,7 +181,8 @@
            "uuid": "1473",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -188,7 +191,8 @@
            "uuid": "1473888",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-          "value": { "type": "RelatedUuid", "value": "00000120-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000120-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -197,7 +201,8 @@
            "uuid": "1474",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
-          "value": { "type": "StringValue", "value": "Short Name" },
+           "type": "StringValue",
+          "value": "Short Name",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457328" }
   },
@@ -206,7 +211,8 @@
            "uuid": "1475",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457343" }
   },
@@ -215,7 +221,8 @@
            "uuid": "1475888",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
-          "value": { "type": "RelatedUuid", "value": "00000120-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000120-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -224,7 +231,8 @@
            "uuid": "1476",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
-          "value": { "type": "StringValue", "value": "Summary" },
+           "type": "StringValue",
+          "value": "Summary",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457359" }
   },
@@ -233,7 +241,8 @@
            "uuid": "1477",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457359" }
   },
@@ -242,7 +251,8 @@
            "uuid": "1477888",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
-          "value": { "type": "RelatedUuid", "value": "00000120-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000120-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -251,7 +261,8 @@
            "uuid": "1478",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000104-ce7f-11d9-8cd5-0011113ae5d6",                // Body
-          "value": { "type": "StringValue", "value": "Body" },
+           "type": "StringValue",
+          "value": "Body",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457375" }
   },
@@ -260,7 +271,8 @@
            "uuid": "1479",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000104-ce7f-11d9-8cd5-0011113ae5d6",                // Body
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457390" }
   },
@@ -269,7 +281,8 @@
            "uuid": "1479888",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "00000104-ce7f-11d9-8cd5-0011113ae5d6",                // Body
-          "value": { "type": "RelatedUuid", "value": "00000120-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000120-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -278,7 +291,8 @@
            "uuid": "1480",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-          "value": { "type": "StringValue", "value": "Category" },
+           "type": "StringValue",
+          "value": "Category",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457406" }
   },
@@ -287,7 +301,8 @@
            "uuid": "1481",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457406" }
   },
@@ -296,7 +311,8 @@
            "uuid": "1481888",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -305,7 +321,8 @@
            "uuid": "1484",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
-          "value": { "type": "StringValue", "value": "Query" },
+           "type": "StringValue",
+          "value": "Query",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457453" }
   },
@@ -314,7 +331,8 @@
            "uuid": "1485",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457453" }
   },
@@ -323,7 +341,8 @@
            "uuid": "1485888",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -332,7 +351,8 @@
            "uuid": "1486",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
-          "value": { "type": "StringValue", "value": "Matching Category" },
+           "type": "StringValue",
+          "value": "Matching Category",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457468" }
   },
@@ -341,7 +361,8 @@
            "uuid": "1487",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457484" }
   },
@@ -350,7 +371,8 @@
            "uuid": "1487888",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -359,7 +381,8 @@
            "uuid": "1488",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
-          "value": { "type": "StringValue", "value": "Matching Item" },
+           "type": "StringValue",
+          "value": "Matching Item",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457500" }
   },
@@ -368,7 +391,8 @@
            "uuid": "1489",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457500" }
   },
@@ -377,7 +401,8 @@
            "uuid": "1489888",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
-          "value": { "type": "RelatedUuid", "value": "00000130-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000130-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -386,7 +411,8 @@
            "uuid": "1490",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000109-ce7f-11d9-8cd5-0011113ae5d6",                // Unfiled Entry
-          "value": { "type": "StringValue", "value": "Unfiled Entry" },
+           "type": "StringValue",
+          "value": "Unfiled Entry",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457515" }
   },
@@ -395,7 +421,8 @@
            "uuid": "1491",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000109-ce7f-11d9-8cd5-0011113ae5d6",                // Unfiled Entry
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457531" }
   },
@@ -404,7 +431,8 @@
            "uuid": "14891888",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "00000109-ce7f-11d9-8cd5-0011113ae5d6",                // Unfiled Entry
-          "value": { "type": "RelatedUuid", "value": "00000140-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000140-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -413,7 +441,8 @@
            "uuid": "88803",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
-          "value": { "type": "StringValue", "value": "Expected Type" },
+           "type": "StringValue",
+          "value": "Expected Type",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457515" }
   },
@@ -422,7 +451,8 @@
            "uuid": "88804",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457531" }
   },
@@ -431,7 +461,8 @@
            "uuid": "88804007",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
-          "value": { "type": "RelatedUuid", "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -440,7 +471,8 @@
            "uuid": "88804008",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -449,7 +481,8 @@
            "uuid": "1492",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000110-ce7f-11d9-8cd5-0011113ae5d6",                // Attribute
-          "value": { "type": "StringValue", "value": "Attribute" },
+           "type": "StringValue",
+          "value": "Attribute",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457546" }
   },
@@ -458,7 +491,8 @@
            "uuid": "1493",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000110-ce7f-11d9-8cd5-0011113ae5d6",                // Attribute
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457562" }
   },
@@ -467,7 +501,8 @@
            "uuid": "1494",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000111-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-          "value": { "type": "StringValue", "value": "Category" },
+           "type": "StringValue",
+          "value": "Category",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457562" }
   },
@@ -476,7 +511,8 @@
            "uuid": "1495",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000111-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457578" }
   },
@@ -485,7 +521,8 @@
            "uuid": "1500",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000112-ce7f-11d9-8cd5-0011113ae5d6",                // Query
-          "value": { "type": "StringValue", "value": "Query" },
+           "type": "StringValue",
+          "value": "Query",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457640" }
   },
@@ -494,7 +531,8 @@
            "uuid": "1501",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000112-ce7f-11d9-8cd5-0011113ae5d6",                // Query
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
@@ -503,7 +541,8 @@
            "uuid": "88801",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000113-ce7f-11d9-8cd5-0011113ae5d6",                // Type
-          "value": { "type": "StringValue", "value": "Type" },
+           "type": "StringValue",
+          "value": "Type",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457640" }
   },
@@ -512,7 +551,8 @@
            "uuid": "88802",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000113-ce7f-11d9-8cd5-0011113ae5d6",                // Type
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
@@ -521,7 +561,8 @@
            "uuid": "88801200",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000120-ce7f-11d9-8cd5-0011113ae5d6",                // Text
-          "value": { "type": "StringValue", "value": "Text" },
+           "type": "StringValue",
+          "value": "Text",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457640" }
   },
@@ -530,7 +571,8 @@
            "uuid": "88801201",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000120-ce7f-11d9-8cd5-0011113ae5d6",                // Text
-          "value": { "type": "RelatedUuid", "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
@@ -539,7 +581,8 @@
            "uuid": "88801210",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000121-ce7f-11d9-8cd5-0011113ae5d6",                // Number
-          "value": { "type": "StringValue", "value": "Number" },
+           "type": "StringValue",
+          "value": "Number",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457640" }
   },
@@ -548,7 +591,8 @@
            "uuid": "88801211",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000121-ce7f-11d9-8cd5-0011113ae5d6",                // Number
-          "value": { "type": "RelatedUuid", "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
@@ -557,7 +601,8 @@
            "uuid": "88801220",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000122-ce7f-11d9-8cd5-0011113ae5d6",                // Date
-          "value": { "type": "StringValue", "value": "Date" },
+           "type": "StringValue",
+          "value": "Date",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457640" }
   },
@@ -566,7 +611,8 @@
            "uuid": "88801221",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000122-ce7f-11d9-8cd5-0011113ae5d6",                // Date
-          "value": { "type": "RelatedUuid", "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
@@ -575,7 +621,8 @@
            "uuid": "88801230",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000123-ce7f-11d9-8cd5-0011113ae5d6",                // Check Mark
-          "value": { "type": "StringValue", "value": "Check Mark" },
+           "type": "StringValue",
+          "value": "Check Mark",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457640" }
   },
@@ -584,7 +631,8 @@
            "uuid": "88801231",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000123-ce7f-11d9-8cd5-0011113ae5d6",                // Check Mark
-          "value": { "type": "RelatedUuid", "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
@@ -593,7 +641,8 @@
            "uuid": "88801240",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000124-ce7f-11d9-8cd5-0011113ae5d6",                // URL
-          "value": { "type": "StringValue", "value": "URL" },
+           "type": "StringValue",
+          "value": "URL",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457640" }
   },
@@ -602,7 +651,8 @@
            "uuid": "88801241",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000124-ce7f-11d9-8cd5-0011113ae5d6",                // URL
-          "value": { "type": "RelatedUuid", "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
@@ -611,7 +661,8 @@
            "uuid": "88801300",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000130-ce7f-11d9-8cd5-0011113ae5d6",                // Item
-          "value": { "type": "StringValue", "value": "Item" },
+           "type": "StringValue",
+          "value": "Item",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457640" }
   },
@@ -620,7 +671,8 @@
            "uuid": "88801301",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000130-ce7f-11d9-8cd5-0011113ae5d6",                // Item
-          "value": { "type": "RelatedUuid", "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
@@ -629,7 +681,8 @@
            "uuid": "88801400",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000140-ce7f-11d9-8cd5-0011113ae5d6",                // Anything
-          "value": { "type": "StringValue", "value": "Anything" },
+           "type": "StringValue",
+          "value": "Anything",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457640" }
   },
@@ -638,7 +691,8 @@
            "uuid": "88801401",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000140-ce7f-11d9-8cd5-0011113ae5d6",                // Anything
-          "value": { "type": "RelatedUuid", "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000113-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457656" }
   },
@@ -647,7 +701,8 @@
            "uuid": "1496",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000200-ce7f-11d9-8cd5-0011113ae5d6",                // Page
-          "value": { "type": "StringValue", "value": "Page" },
+           "type": "StringValue",
+          "value": "Page",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457593" }
   },
@@ -656,7 +711,8 @@
            "uuid": "1497",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000200-ce7f-11d9-8cd5-0011113ae5d6",                // Page
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457609" }
   },
@@ -665,7 +721,8 @@
            "uuid": "1482",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
-          "value": { "type": "StringValue", "value": "Section" },
+           "type": "StringValue",
+          "value": "Section",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457421" }
   },
@@ -674,7 +731,8 @@
            "uuid": "1483",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457437" }
   },
@@ -683,7 +741,8 @@
            "uuid": "1469",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
-          "value": { "type": "StringValue", "value": "Plugin Name" },
+           "type": "StringValue",
+          "value": "Plugin Name",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457537" }
   },
@@ -692,7 +751,8 @@
            "uuid": "1470",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457543" }
   },
@@ -701,7 +761,8 @@
            "uuid": "1498",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000201-ce7f-11d9-8cd5-0011113ae5d6",                // Section
-          "value": { "type": "StringValue", "value": "Section" },
+           "type": "StringValue",
+          "value": "Section",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457625" }
   },
@@ -710,7 +771,8 @@
            "uuid": "1499",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000201-ce7f-11d9-8cd5-0011113ae5d6",                // Section
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457625" }
   },
@@ -725,7 +787,8 @@
            "uuid": "1503",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "1502",                // Guest
-          "value": { "type": "StringValue", "value": "Guest" },
+           "type": "StringValue",
+          "value": "Guest",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819457671" }
   },
@@ -1010,7 +1073,8 @@
            "uuid": "6018",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "00000210-ce7f-11d9-8cd5-0011113ae5d6",                // Welcome to the OpenRecord d...
-          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458609" }
   },
@@ -1019,7 +1083,8 @@
            "uuid": "6019",
       "attribute": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
            "item": "00000210-ce7f-11d9-8cd5-0011113ae5d6",                // Welcome to the OpenRecord d...
-          "value": { "type": "StringValue", "value": "1. Welcome!" },
+           "type": "StringValue",
+          "value": "1. Welcome!",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458625" }
   },
@@ -1028,7 +1093,8 @@
            "uuid": "6020",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "00000210-ce7f-11d9-8cd5-0011113ae5d6",                // Welcome to the OpenRecord d...
-          "value": { "type": "StringValue", "value": "Welcome to the OpenRecord demo!" },
+           "type": "StringValue",
+          "value": "Welcome to the OpenRecord demo!",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458640" }
   },
@@ -1037,7 +1103,8 @@
            "uuid": "6021",
       "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "00000210-ce7f-11d9-8cd5-0011113ae5d6",                // Welcome to the OpenRecord d...
-          "value": { "type": "StringValue", "value": "This web site is a demo of the OpenRecord prototype. OpenRecord is a collaborative content management system. OpenRecord is a lot like a wiki, but with twist. Most wikis are designed to let you view and edit pages of text, like a web-based word processor. OpenRecord is designed to let you view and edit items in a database, rather than pages of text. So if a wiki is a web-based collaborative word-processor, then OpenRecord is a web-based collaborative database, like Lotus Agenda. To see more of this demo site, go to the menu bar at the left side of the window and click on the menu item for page 2, 'Books'." },
+           "type": "StringValue",
+          "value": "This web site is a demo of the OpenRecord prototype. OpenRecord is a collaborative content management system. OpenRecord is a lot like a wiki, but with twist. Most wikis are designed to let you view and edit pages of text, like a web-based word processor. OpenRecord is designed to let you view and edit items in a database, rather than pages of text. So if a wiki is a web-based collaborative word-processor, then OpenRecord is a web-based collaborative database, like Lotus Agenda. To see more of this demo site, go to the menu bar at the left side of the window and click on the menu item for page 2, 'Books'.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458656" }
   },
@@ -1046,7 +1113,8 @@
            "uuid": "6022",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3000",                // Book Lists
-          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458765" }
   },
@@ -1055,7 +1123,8 @@
            "uuid": "6023",
       "attribute": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
            "item": "3000",                // Book Lists
-          "value": { "type": "StringValue", "value": "2. Books" },
+           "type": "StringValue",
+          "value": "2. Books",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458781" }
   },
@@ -1064,7 +1133,8 @@
            "uuid": "6024",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3000",                // Book Lists
-          "value": { "type": "StringValue", "value": "Book Lists" },
+           "type": "StringValue",
+          "value": "Book Lists",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458796" }
   },
@@ -1073,7 +1143,8 @@
            "uuid": "6025",
       "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "3000",                // Book Lists
-          "value": { "type": "StringValue", "value": "In the lists on this page, each book is an item in the OpenRecord repository. If you edit the page, you can change how each list of books is displayed." },
+           "type": "StringValue",
+          "value": "In the lists on this page, each book is an item in the OpenRecord repository. If you edit the page, you can change how each list of books is displayed.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458812" }
   },
@@ -1082,7 +1153,8 @@
            "uuid": "6026",
       "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "3000",                // Book Lists
-          "value": { "type": "RelatedUuid", "value": "3010" },
+           "type": "RelatedUuid",
+          "value": "3010",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458828" }
   },
@@ -1091,7 +1163,8 @@
            "uuid": "6027",
       "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "3000",                // Book Lists
-          "value": { "type": "RelatedUuid", "value": "3020" },
+           "type": "RelatedUuid",
+          "value": "3020",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458843" }
   },
@@ -1100,7 +1173,8 @@
            "uuid": "6028",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3010",                // All Books
-          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458875" }
   },
@@ -1109,7 +1183,8 @@
            "uuid": "6029",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3010",                // All Books
-          "value": { "type": "StringValue", "value": "All Books" },
+           "type": "StringValue",
+          "value": "All Books",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458890" }
   },
@@ -1118,7 +1193,8 @@
            "uuid": "6030",
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "3010",                // All Books
-          "value": { "type": "StringValue", "value": "Table" },
+           "type": "StringValue",
+          "value": "Table",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458906" }
   },
@@ -1127,7 +1203,8 @@
            "uuid": "6031",
       "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "3010",                // All Books
-          "value": { "type": "RelatedUuid", "value": "3011" },
+           "type": "RelatedUuid",
+          "value": "3011",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458921" }
   },
@@ -1136,7 +1213,8 @@
            "uuid": "6032",
       "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "3010",                // All Books
-          "value": { "type": "StringValue", "value": "This section shows a list of all the books in the repository." },
+           "type": "StringValue",
+          "value": "This section shows a list of all the books in the repository.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458937" }
   },
@@ -1145,7 +1223,8 @@
            "uuid": "6033",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3020",                // One Book
-          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458968" }
   },
@@ -1154,7 +1233,8 @@
            "uuid": "6034",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3020",                // One Book
-          "value": { "type": "StringValue", "value": "One Book" },
+           "type": "StringValue",
+          "value": "One Book",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819458984" }
   },
@@ -1163,7 +1243,8 @@
            "uuid": "6035",
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "3020",                // One Book
-          "value": { "type": "StringValue", "value": "Detail" },
+           "type": "StringValue",
+          "value": "Detail",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459000" }
   },
@@ -1172,7 +1253,8 @@
            "uuid": "6036",
       "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "3020",                // One Book
-          "value": { "type": "RelatedUuid", "value": "3021" },
+           "type": "RelatedUuid",
+          "value": "3021",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459031" }
   },
@@ -1181,7 +1263,8 @@
            "uuid": "6037",
       "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "3020",                // One Book
-          "value": { "type": "StringValue", "value": "This section shows a just a single selected book. The section is populated using a query that asks for just a single book item." },
+           "type": "StringValue",
+          "value": "This section shows a just a single selected book. The section is populated using a query that asks for just a single book item.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459046" }
   },
@@ -1190,7 +1273,8 @@
            "uuid": "6038",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3011",                // Query for all books
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459078" }
   },
@@ -1199,7 +1283,8 @@
            "uuid": "6039",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3011",                // Query for all books
-          "value": { "type": "StringValue", "value": "Query for all books" },
+           "type": "StringValue",
+          "value": "Query for all books",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459093" }
   },
@@ -1208,7 +1293,8 @@
            "uuid": "6041",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "3021",                // Query for one book
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459140" }
   },
@@ -1217,7 +1303,8 @@
            "uuid": "6042",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "3021",                // Query for one book
-          "value": { "type": "StringValue", "value": "Query for one book" },
+           "type": "StringValue",
+          "value": "Query for one book",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459156" }
   },
@@ -1226,7 +1313,8 @@
            "uuid": "6043",
       "attribute": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
            "item": "3021",                // Query for one book
-          "value": { "type": "RelatedUuid", "value": "bc9d5cce-99f7-42ad-85dc-36491cac46ba" },
+           "type": "RelatedUuid",
+          "value": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459171" }
   },
@@ -1235,7 +1323,8 @@
            "uuid": "6078",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4000",                // Bugs and Features to Implement
-          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459890" }
   },
@@ -1244,7 +1333,8 @@
            "uuid": "6079",
       "attribute": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
            "item": "4000",                // Bugs and Features to Implement
-          "value": { "type": "StringValue", "value": "3. Bug List" },
+           "type": "StringValue",
+          "value": "3. Bug List",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459906" }
   },
@@ -1253,7 +1343,8 @@
            "uuid": "6080",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4000",                // Bugs and Features to Implement
-          "value": { "type": "StringValue", "value": "Bugs and Features to Implement" },
+           "type": "StringValue",
+          "value": "Bugs and Features to Implement",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459921" }
   },
@@ -1262,7 +1353,8 @@
            "uuid": "6081",
       "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "4000",                // Bugs and Features to Implement
-          "value": { "type": "StringValue", "value": "This page is where I keep track of the programming work I need to do on the OpenRecord software project. I'm keeping track of bugs that need to be fixed, as well as some of the new features that I want to implement before too long." },
+           "type": "StringValue",
+          "value": "This page is where I keep track of the programming work I need to do on the OpenRecord software project. I'm keeping track of bugs that need to be fixed, as well as some of the new features that I want to implement before too long.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459953" }
   },
@@ -1271,7 +1363,8 @@
            "uuid": "6082",
       "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "4000",                // Bugs and Features to Implement
-          "value": { "type": "RelatedUuid", "value": "4010" },
+           "type": "RelatedUuid",
+          "value": "4010",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459968" }
   },
@@ -1280,7 +1373,8 @@
            "uuid": "6083",
       "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "4000",                // Bugs and Features to Implement
-          "value": { "type": "RelatedUuid", "value": "4020" },
+           "type": "RelatedUuid",
+          "value": "4020",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459984" }
   },
@@ -1289,7 +1383,8 @@
            "uuid": "6084",
       "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "4000",                // Bugs and Features to Implement
-          "value": { "type": "RelatedUuid", "value": "4030" },
+           "type": "RelatedUuid",
+          "value": "4030",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460000" }
   },
@@ -1298,7 +1393,8 @@
            "uuid": "6085",
       "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "4000",                // Bugs and Features to Implement
-          "value": { "type": "RelatedUuid", "value": "4040" },
+           "type": "RelatedUuid",
+          "value": "4040",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460015" }
   },
@@ -1307,7 +1403,8 @@
            "uuid": "6086",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4010",                // All Features
-          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460031" }
   },
@@ -1316,7 +1413,8 @@
            "uuid": "6087",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4010",                // All Features
-          "value": { "type": "StringValue", "value": "All Features" },
+           "type": "StringValue",
+          "value": "All Features",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460046" }
   },
@@ -1325,7 +1423,8 @@
            "uuid": "6088",
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "4010",                // All Features
-          "value": { "type": "StringValue", "value": "Outline" },
+           "type": "StringValue",
+          "value": "Outline",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460062" }
   },
@@ -1334,7 +1433,8 @@
            "uuid": "6089",
       "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "4010",                // All Features
-          "value": { "type": "RelatedUuid", "value": "4011" },
+           "type": "RelatedUuid",
+          "value": "4011",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460156" }
   },
@@ -1343,7 +1443,8 @@
            "uuid": "6090",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4020",                // All Bugs
-          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460187" }
   },
@@ -1352,7 +1453,8 @@
            "uuid": "6091",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4020",                // All Bugs
-          "value": { "type": "StringValue", "value": "All Bugs" },
+           "type": "StringValue",
+          "value": "All Bugs",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460203" }
   },
@@ -1361,7 +1463,8 @@
            "uuid": "6092",
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "4020",                // All Bugs
-          "value": { "type": "StringValue", "value": "Outline" },
+           "type": "StringValue",
+          "value": "Outline",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460218" }
   },
@@ -1370,7 +1473,8 @@
            "uuid": "6093",
       "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "4020",                // All Bugs
-          "value": { "type": "RelatedUuid", "value": "4021" },
+           "type": "RelatedUuid",
+          "value": "4021",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460250" }
   },
@@ -1379,7 +1483,8 @@
            "uuid": "6094",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4030",                // All 'Closed' Bugs and Features
-          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460265" }
   },
@@ -1388,7 +1493,8 @@
            "uuid": "6095",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4030",                // All 'Closed' Bugs and Features
-          "value": { "type": "StringValue", "value": "All 'Closed' Bugs and Features" },
+           "type": "StringValue",
+          "value": "All 'Closed' Bugs and Features",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460281" }
   },
@@ -1397,7 +1503,8 @@
            "uuid": "6096",
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "4030",                // All 'Closed' Bugs and Features
-          "value": { "type": "StringValue", "value": "Outline" },
+           "type": "StringValue",
+          "value": "Outline",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460312" }
   },
@@ -1406,7 +1513,8 @@
            "uuid": "6097",
       "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "4030",                // All 'Closed' Bugs and Features
-          "value": { "type": "RelatedUuid", "value": "4031" },
+           "type": "RelatedUuid",
+          "value": "4031",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460328" }
   },
@@ -1415,7 +1523,8 @@
            "uuid": "6098",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4040",                // All 'Closed' Bugs
-          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460359" }
   },
@@ -1424,7 +1533,8 @@
            "uuid": "6099",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4040",                // All 'Closed' Bugs
-          "value": { "type": "StringValue", "value": "All 'Closed' Bugs" },
+           "type": "StringValue",
+          "value": "All 'Closed' Bugs",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460359" }
   },
@@ -1433,7 +1543,8 @@
            "uuid": "6100",
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "4040",                // All 'Closed' Bugs
-          "value": { "type": "StringValue", "value": "Outline" },
+           "type": "StringValue",
+          "value": "Outline",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460390" }
   },
@@ -1442,7 +1553,8 @@
            "uuid": "6101",
       "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "4040",                // All 'Closed' Bugs
-          "value": { "type": "RelatedUuid", "value": "4041" },
+           "type": "RelatedUuid",
+          "value": "4041",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460406" }
   },
@@ -1451,7 +1563,8 @@
            "uuid": "6102",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4011",                // Query for all features
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460421" }
   },
@@ -1460,7 +1573,8 @@
            "uuid": "6103",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4011",                // Query for all features
-          "value": { "type": "StringValue", "value": "Query for all features" },
+           "type": "StringValue",
+          "value": "Query for all features",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460437" }
   },
@@ -1469,7 +1583,8 @@
            "uuid": "6104",
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "4011",                // Query for all features
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460468" }
   },
@@ -1478,7 +1593,8 @@
            "uuid": "6105",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4021",                // Query for all bugs
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460484" }
   },
@@ -1487,7 +1603,8 @@
            "uuid": "6106",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4021",                // Query for all bugs
-          "value": { "type": "StringValue", "value": "Query for all bugs" },
+           "type": "StringValue",
+          "value": "Query for all bugs",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460500" }
   },
@@ -1496,7 +1613,8 @@
            "uuid": "6107",
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "4021",                // Query for all bugs
-          "value": { "type": "RelatedUuid", "value": "4101" },
+           "type": "RelatedUuid",
+          "value": "4101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460531" }
   },
@@ -1505,7 +1623,8 @@
            "uuid": "6108",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4031",                // Query for all closed items
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460546" }
   },
@@ -1514,7 +1633,8 @@
            "uuid": "6109",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4031",                // Query for all closed items
-          "value": { "type": "StringValue", "value": "Query for all closed items" },
+           "type": "StringValue",
+          "value": "Query for all closed items",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460562" }
   },
@@ -1523,7 +1643,8 @@
            "uuid": "6110",
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "4031",                // Query for all closed items
-          "value": { "type": "RelatedUuid", "value": "4103" },
+           "type": "RelatedUuid",
+          "value": "4103",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460578" }
   },
@@ -1532,7 +1653,8 @@
            "uuid": "6111",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4041",                // Query for all closed bugs
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460609" }
   },
@@ -1541,7 +1663,8 @@
            "uuid": "6112",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4041",                // Query for all closed bugs
-          "value": { "type": "StringValue", "value": "Query for all closed bugs" },
+           "type": "StringValue",
+          "value": "Query for all closed bugs",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460625" }
   },
@@ -1550,7 +1673,8 @@
            "uuid": "6113",
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "4041",                // Query for all closed bugs
-          "value": { "type": "RelatedUuid", "value": "4101" },
+           "type": "RelatedUuid",
+          "value": "4101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460640" }
   },
@@ -1559,7 +1683,8 @@
            "uuid": "6114",
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "4041",                // Query for all closed bugs
-          "value": { "type": "RelatedUuid", "value": "4103" },
+           "type": "RelatedUuid",
+          "value": "4103",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460656" }
   },
@@ -1568,7 +1693,8 @@
            "uuid": "6115",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4102",                // Feature
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460687" }
   },
@@ -1577,7 +1703,8 @@
            "uuid": "6116",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4102",                // Feature
-          "value": { "type": "StringValue", "value": "Feature" },
+           "type": "StringValue",
+          "value": "Feature",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460703" }
   },
@@ -1586,7 +1713,8 @@
            "uuid": "6117",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4101",                // Bug
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460718" }
   },
@@ -1595,7 +1723,8 @@
            "uuid": "6118",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4101",                // Bug
-          "value": { "type": "StringValue", "value": "Bug" },
+           "type": "StringValue",
+          "value": "Bug",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460734" }
   },
@@ -1604,7 +1733,8 @@
            "uuid": "6119",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4103",                // Closed Tasks
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460765" }
   },
@@ -1613,7 +1743,8 @@
            "uuid": "6120",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4103",                // Closed Tasks
-          "value": { "type": "StringValue", "value": "Closed Tasks" },
+           "type": "StringValue",
+          "value": "Closed Tasks",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460781" }
   },
@@ -1622,7 +1753,8 @@
            "uuid": "6121",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4201",                // The browser's back button d...
-          "value": { "type": "RelatedUuid", "value": "4101" },
+           "type": "RelatedUuid",
+          "value": "4101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460812" }
   },
@@ -1631,7 +1763,8 @@
            "uuid": "6122",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4201",                // The browser's back button d...
-          "value": { "type": "StringValue", "value": "The browser's back button doesn't work after you click from page to page in the navbar." },
+           "type": "StringValue",
+          "value": "The browser's back button doesn't work after you click from page to page in the navbar.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460828" }
   },
@@ -1640,7 +1773,8 @@
            "uuid": "6123",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4202",                // When editing an item in a t...
-          "value": { "type": "RelatedUuid", "value": "4101" },
+           "type": "RelatedUuid",
+          "value": "4101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460859" }
   },
@@ -1649,7 +1783,8 @@
            "uuid": "6124",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4202",                // When editing an item in a t...
-          "value": { "type": "StringValue", "value": "When editing an item in a table view, everything you enter is treated as a string literal. If you enter 'Book' in the column for 'Category', that does not make your item into a Book." },
+           "type": "StringValue",
+          "value": "When editing an item in a table view, everything you enter is treated as a string literal. If you enter 'Book' in the column for 'Category', that does not make your item into a Book.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460875" }
   },
@@ -1658,7 +1793,8 @@
            "uuid": "6125",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4203",                // After editing an item in a ...
-          "value": { "type": "RelatedUuid", "value": "4101" },
+           "type": "RelatedUuid",
+          "value": "4101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460906" }
   },
@@ -1667,7 +1803,8 @@
            "uuid": "6126",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4203",                // After editing an item in a ...
-          "value": { "type": "StringValue", "value": "After editing an item in a table view, the section queries should be re-evalutated to see if membership has changed." },
+           "type": "StringValue",
+          "value": "After editing an item in a table view, the section queries should be re-evalutated to see if membership has changed.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460921" }
   },
@@ -1676,7 +1813,8 @@
            "uuid": "6127",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4204",                // If an item has an attribute...
-          "value": { "type": "RelatedUuid", "value": "4101" },
+           "type": "RelatedUuid",
+          "value": "4101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460937" }
   },
@@ -1685,7 +1823,8 @@
            "uuid": "6128",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4204",                // If an item has an attribute...
-          "value": { "type": "RelatedUuid", "value": "4103" },
+           "type": "RelatedUuid",
+          "value": "4103",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460953" }
   },
@@ -1694,7 +1833,8 @@
            "uuid": "6129",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4204",                // If an item has an attribute...
-          "value": { "type": "StringValue", "value": "If an item has an attribute value with some HTML in it, like '&amp;lt;cite&amp;gt;', we incorrectly render it like '&amp; lt;cite&amp; gt;' instead of '&amp;lt;cite&amp;gt;'" },
+           "type": "StringValue",
+          "value": "If an item has an attribute value with some HTML in it, like '&amp;lt;cite&amp;gt;', we incorrectly render it like '&amp; lt;cite&amp; gt;' instead of '&amp;lt;cite&amp;gt;'",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819460968" }
   },
@@ -1703,7 +1843,8 @@
            "uuid": "6130",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4205",                // Store only 'clean' text in ...
-          "value": { "type": "RelatedUuid", "value": "4101" },
+           "type": "RelatedUuid",
+          "value": "4101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461000" }
   },
@@ -1712,7 +1853,8 @@
            "uuid": "6131",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4205",                // Store only 'clean' text in ...
-          "value": { "type": "RelatedUuid", "value": "4103" },
+           "type": "RelatedUuid",
+          "value": "4103",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461015" }
   },
@@ -1721,7 +1863,8 @@
            "uuid": "6132",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4205",                // Store only 'clean' text in ...
-          "value": { "type": "StringValue", "value": "Store only 'clean' text in the repository. Do cleaning on data entry, not on data display. Clean means no stuff like &amp;lt; and &amp;gt; and double-quotes" },
+           "type": "StringValue",
+          "value": "Store only 'clean' text in the repository. Do cleaning on data entry, not on data display. Clean means no stuff like &amp;lt; and &amp;gt; and double-quotes",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461031" }
   },
@@ -1730,7 +1873,8 @@
            "uuid": "6133",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4302",                // Make it possible for a text...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461062" }
   },
@@ -1739,7 +1883,8 @@
            "uuid": "6134",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4302",                // Make it possible for a text...
-          "value": { "type": "RelatedUuid", "value": "4103" },
+           "type": "RelatedUuid",
+          "value": "4103",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461078" }
   },
@@ -1748,7 +1893,8 @@
            "uuid": "6135",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4302",                // Make it possible for a text...
-          "value": { "type": "StringValue", "value": "Make it possible for a text string to contain a reference to an item" },
+           "type": "StringValue",
+          "value": "Make it possible for a text string to contain a reference to an item",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461093" }
   },
@@ -1757,7 +1903,8 @@
            "uuid": "6158",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4315",                // Figure out how to declare d...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461687" }
   },
@@ -1766,7 +1913,8 @@
            "uuid": "6159",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4315",                // Figure out how to declare d...
-          "value": { "type": "StringValue", "value": "Figure out how to declare dependencies more rigorously, and then have automatic unit tests that verify the dependencies." },
+           "type": "StringValue",
+          "value": "Figure out how to declare dependencies more rigorously, and then have automatic unit tests that verify the dependencies.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461703" }
   },
@@ -1775,7 +1923,8 @@
            "uuid": "6160",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4316",                // URLs with anchor-dot-notati...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461718" }
   },
@@ -1784,7 +1933,8 @@
            "uuid": "6161",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4316",                // URLs with anchor-dot-notati...
-          "value": { "type": "StringValue", "value": "URLs with anchor-dot-notation: http://www.foo.org/item.html#573.654.765" },
+           "type": "StringValue",
+          "value": "URLs with anchor-dot-notation: http://www.foo.org/item.html#573.654.765",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461734" }
   },
@@ -1793,7 +1943,8 @@
            "uuid": "6162",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4317",                // Support for reference-value...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461765" }
   },
@@ -1802,7 +1953,8 @@
            "uuid": "6163",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4317",                // Support for reference-value...
-          "value": { "type": "StringValue", "value": "Support for reference-values as well as string-values" },
+           "type": "StringValue",
+          "value": "Support for reference-values as well as string-values",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461781" }
   },
@@ -1811,7 +1963,8 @@
            "uuid": "6164",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4318",                // Write unit tests using jsunit
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461812" }
   },
@@ -1820,7 +1973,8 @@
            "uuid": "6165",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4318",                // Write unit tests using jsunit
-          "value": { "type": "StringValue", "value": "Write unit tests using jsunit" },
+           "type": "StringValue",
+          "value": "Write unit tests using jsunit",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461828" }
   },
@@ -1829,7 +1983,8 @@
            "uuid": "6166",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4319",                // Try to write a unit test th...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461859" }
   },
@@ -1838,7 +1993,8 @@
            "uuid": "6167",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4319",                // Try to write a unit test th...
-          "value": { "type": "StringValue", "value": "Try to write a unit test that calls jslint" },
+           "type": "StringValue",
+          "value": "Try to write a unit test that calls jslint",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461875" }
   },
@@ -1847,7 +2003,8 @@
            "uuid": "6168",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4320",                // In 'Outline' plugin, have c...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461906" }
   },
@@ -1856,7 +2013,8 @@
            "uuid": "6169",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4320",                // In 'Outline' plugin, have c...
-          "value": { "type": "StringValue", "value": "In 'Outline' plugin, have controls to optionally show more detail" },
+           "type": "StringValue",
+          "value": "In 'Outline' plugin, have controls to optionally show more detail",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461921" }
   },
@@ -1865,7 +2023,8 @@
            "uuid": "6170",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4321",                // Add 'Table' plugin controls...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461953" }
   },
@@ -1874,7 +2033,8 @@
            "uuid": "6171",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4321",                // Add 'Table' plugin controls...
-          "value": { "type": "StringValue", "value": "Add 'Table' plugin controls for row sorting, column re-arranging, column hiding, etc." },
+           "type": "StringValue",
+          "value": "Add 'Table' plugin controls for row sorting, column re-arranging, column hiding, etc.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819461968" }
   },
@@ -1883,7 +2043,8 @@
            "uuid": "6172",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4322",                // In 'Outline' plugin, be abl...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462000" }
   },
@@ -1892,7 +2053,8 @@
            "uuid": "6173",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4322",                // In 'Outline' plugin, be abl...
-          "value": { "type": "StringValue", "value": "In 'Outline' plugin, be able to group by category" },
+           "type": "StringValue",
+          "value": "In 'Outline' plugin, be able to group by category",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462000" }
   },
@@ -1901,7 +2063,8 @@
            "uuid": "6174",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4323",                // In 'Table' plugin, be able ...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462031" }
   },
@@ -1910,7 +2073,8 @@
            "uuid": "6175",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4323",                // In 'Table' plugin, be able ...
-          "value": { "type": "StringValue", "value": "In 'Table' plugin, be able to group by category" },
+           "type": "StringValue",
+          "value": "In 'Table' plugin, be able to group by category",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462046" }
   },
@@ -1919,7 +2083,8 @@
            "uuid": "6176",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4324",                // Be able to edit in outline ...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462078" }
   },
@@ -1928,7 +2093,8 @@
            "uuid": "6177",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4324",                // Be able to edit in outline ...
-          "value": { "type": "StringValue", "value": "Be able to edit in outline mode" },
+           "type": "StringValue",
+          "value": "Be able to edit in outline mode",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462093" }
   },
@@ -1937,7 +2103,8 @@
            "uuid": "6178",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4325",                // Set up a subversion server ...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462125" }
   },
@@ -1946,7 +2113,8 @@
            "uuid": "6179",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4325",                // Set up a subversion server ...
-          "value": { "type": "StringValue", "value": "Set up a subversion server and have the OpenRecord code publicly available" },
+           "type": "StringValue",
+          "value": "Set up a subversion server and have the OpenRecord code publicly available",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462140" }
   },
@@ -1955,7 +2123,8 @@
            "uuid": "6180",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5000",                // Charities
-          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462171" }
   },
@@ -1964,7 +2133,8 @@
            "uuid": "6181",
       "attribute": "00000102-ce7f-11d9-8cd5-0011113ae5d6",                // Short Name
            "item": "5000",                // Charities
-          "value": { "type": "StringValue", "value": "4. Charities" },
+           "type": "StringValue",
+          "value": "4. Charities",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462187" }
   },
@@ -1973,7 +2143,8 @@
            "uuid": "6182",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5000",                // Charities
-          "value": { "type": "StringValue", "value": "Charities" },
+           "type": "StringValue",
+          "value": "Charities",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462203" }
   },
@@ -1982,7 +2153,8 @@
            "uuid": "6183",
       "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "5000",                // Charities
-          "value": { "type": "RelatedUuid", "value": "5010" },
+           "type": "RelatedUuid",
+          "value": "5010",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462234" }
   },
@@ -1991,7 +2163,8 @@
            "uuid": "6184",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5010",                // All Charities
-          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462250" }
   },
@@ -2000,7 +2173,8 @@
            "uuid": "6185",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5010",                // All Charities
-          "value": { "type": "StringValue", "value": "All Charities" },
+           "type": "StringValue",
+          "value": "All Charities",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462265" }
   },
@@ -2009,7 +2183,8 @@
            "uuid": "6186",
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "5010",                // All Charities
-          "value": { "type": "StringValue", "value": "Bar Chart" },
+           "type": "StringValue",
+          "value": "Bar Chart",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462281" }
   },
@@ -2018,7 +2193,8 @@
            "uuid": "6187",
       "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "5010",                // All Charities
-          "value": { "type": "RelatedUuid", "value": "5011" },
+           "type": "RelatedUuid",
+          "value": "5011",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462312" }
   },
@@ -2027,7 +2203,8 @@
            "uuid": "6188",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5011",                // Query for all charities
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462343" }
   },
@@ -2036,7 +2213,8 @@
            "uuid": "6189",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5011",                // Query for all charities
-          "value": { "type": "StringValue", "value": "Query for all charities" },
+           "type": "StringValue",
+          "value": "Query for all charities",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462359" }
   },
@@ -2045,7 +2223,8 @@
            "uuid": "6190",
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "5011",                // Query for all charities
-          "value": { "type": "RelatedUuid", "value": "5101" },
+           "type": "RelatedUuid",
+          "value": "5101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462375" }
   },
@@ -2054,7 +2233,8 @@
            "uuid": "6191",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5101",                // Charity
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462406" }
   },
@@ -2063,7 +2243,8 @@
            "uuid": "6192",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5101",                // Charity
-          "value": { "type": "StringValue", "value": "Charity" },
+           "type": "StringValue",
+          "value": "Charity",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462421" }
   },
@@ -2072,7 +2253,8 @@
            "uuid": "6193",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5102",                // 2003 Expenses (in $US million)
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462437" }
   },
@@ -2081,7 +2263,8 @@
            "uuid": "6194",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5102",                // 2003 Expenses (in $US million)
-          "value": { "type": "StringValue", "value": "2003 Expenses (in $US million)" },
+           "type": "StringValue",
+          "value": "2003 Expenses (in $US million)",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462453" }
   },
@@ -2090,7 +2273,8 @@
            "uuid": "6195",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5201",                // The Global Fund for Women
-          "value": { "type": "RelatedUuid", "value": "5101" },
+           "type": "RelatedUuid",
+          "value": "5101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462484" }
   },
@@ -2099,7 +2283,8 @@
            "uuid": "6196",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5201",                // The Global Fund for Women
-          "value": { "type": "StringValue", "value": "The Global Fund for Women" },
+           "type": "StringValue",
+          "value": "The Global Fund for Women",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462500" }
   },
@@ -2108,7 +2293,8 @@
            "uuid": "6197",
       "attribute": "5102",                // 2003 Expenses (in $US million)
            "item": "5201",                // The Global Fund for Women
-          "value": { "type": "NumberValue", "value": 8.2 },
+           "type": "NumberValue",
+          "value": 8.2 ,
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462531" }
   },
@@ -2117,7 +2303,8 @@
            "uuid": "6198",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5202",                // Pathfinder International
-          "value": { "type": "RelatedUuid", "value": "5101" },
+           "type": "RelatedUuid",
+          "value": "5101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462546" }
   },
@@ -2126,7 +2313,8 @@
            "uuid": "6199",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5202",                // Pathfinder International
-          "value": { "type": "StringValue", "value": "Pathfinder International" },
+           "type": "StringValue",
+          "value": "Pathfinder International",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462562" }
   },
@@ -2135,7 +2323,8 @@
            "uuid": "6200",
       "attribute": "5102",                // 2003 Expenses (in $US million)
            "item": "5202",                // Pathfinder International
-          "value": { "type": "NumberValue", "value": 44.9 },
+           "type": "NumberValue",
+          "value": 44.9 ,
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462578" }
   },
@@ -2144,7 +2333,8 @@
            "uuid": "6201",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5203",                // The Global Fund to Fight AI...
-          "value": { "type": "RelatedUuid", "value": "5101" },
+           "type": "RelatedUuid",
+          "value": "5101",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462609" }
   },
@@ -2153,7 +2343,8 @@
            "uuid": "6202",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5203",                // The Global Fund to Fight AI...
-          "value": { "type": "StringValue", "value": "The Global Fund to Fight AIDS, TB, and Malaria" },
+           "type": "StringValue",
+          "value": "The Global Fund to Fight AIDS, TB, and Malaria",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462625" }
   },
@@ -2162,7 +2353,8 @@
            "uuid": "6203",
       "attribute": "5102",                // 2003 Expenses (in $US million)
            "item": "5203",                // The Global Fund to Fight AI...
-          "value": { "type": "NumberValue", "value": 64.7 },
+           "type": "NumberValue",
+          "value": 64.7 ,
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462640" }
   },
@@ -2171,7 +2363,8 @@
            "uuid": "6213",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5207",                // Have a 'Find' UI that does ...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462859" }
   },
@@ -2180,7 +2373,8 @@
            "uuid": "6214",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5207",                // Have a 'Find' UI that does ...
-          "value": { "type": "StringValue", "value": "Have a 'Find' UI that does keystroke-by-keystroke filtering" },
+           "type": "StringValue",
+          "value": "Have a 'Find' UI that does keystroke-by-keystroke filtering",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462875" }
   },
@@ -2189,7 +2383,8 @@
            "uuid": "6215",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5208",                // Be able to 'delete' items (...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462906" }
   },
@@ -2198,7 +2393,8 @@
            "uuid": "6216",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5208",                // Be able to 'delete' items (...
-          "value": { "type": "StringValue", "value": "Be able to 'delete' items (or mark them as 'dead' or 'defunct' or something)" },
+           "type": "StringValue",
+          "value": "Be able to 'delete' items (or mark them as 'dead' or 'defunct' or something)",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462921" }
   },
@@ -2207,7 +2403,8 @@
            "uuid": "6217",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "5209",                // Make view.display() *not* r...
-          "value": { "type": "RelatedUuid", "value": "4102" },
+           "type": "RelatedUuid",
+          "value": "4102",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462953" }
   },
@@ -2216,7 +2413,8 @@
            "uuid": "6218",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "5209",                // Make view.display() *not* r...
-          "value": { "type": "StringValue", "value": "Make view.display() *not* re-create all the HTML every time" },
+           "type": "StringValue",
+          "value": "Make view.display() *not* re-create all the HTML every time",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819462968" }
   },
@@ -2232,7 +2430,8 @@
            "uuid": "6240",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6239",                // Brian Douglas Skinner
-          "value": { "type": "StringValue", "value": "Brian Douglas Skinner" },
+           "type": "StringValue",
+          "value": "Brian Douglas Skinner",
       "userstamp": "6239",                // by (Brian Douglas Skinner)
       "timestamp": "1117056132500" }
   },
@@ -2247,7 +2446,8 @@
            "uuid": "6242",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6241",                // Chih-Chao Lam
-          "value": { "type": "StringValue", "value": "Chih-Chao Lam" },
+           "type": "StringValue",
+          "value": "Chih-Chao Lam",
       "userstamp": "6241",                // by (Chih-Chao Lam)
       "timestamp": "1117056685390" }
   },
@@ -2262,7 +2462,8 @@
            "uuid": "6244",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "6243",                // Mignon Belongie
-          "value": { "type": "StringValue", "value": "Mignon Belongie" },
+           "type": "StringValue",
+          "value": "Mignon Belongie",
       "userstamp": "6243",                // by (Mignon Belongie)
       "timestamp": "1117056699906" }
   },
@@ -2277,7 +2478,8 @@
            "uuid": "54f4bd36-a6d7-4c00-8e3a-891183a307e9",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // New Page
-          "value": { "type": "StringValue", "value": "New Page" },
+           "type": "StringValue",
+          "value": "New Page",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735225250" }
   },
@@ -2286,7 +2488,8 @@
            "uuid": "462800a1-83d5-4fb3-853b-1bc9d5c83150",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // New Page
-          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735225250" }
   },
@@ -2295,7 +2498,8 @@
            "uuid": "7ffbc5c1-e179-4f49-808c-8562c502529b",
       "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // New Page
-          "value": { "type": "StringValue", "value": "This is a new page." },
+           "type": "StringValue",
+          "value": "This is a new page.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735225250" }
   },
@@ -2310,7 +2514,8 @@
            "uuid": "a642b640-8897-4711-8bf1-60ce3627649d",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // New Section
-          "value": { "type": "StringValue", "value": "New Section" },
+           "type": "StringValue",
+          "value": "New Section",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735225250" }
   },
@@ -2319,7 +2524,8 @@
            "uuid": "bdb9dacf-66c8-4575-8cc5-5b84423c9dc0",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // New Section
-          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735225265" }
   },
@@ -2328,7 +2534,8 @@
            "uuid": "fba77cc2-0ee8-4d27-8970-d80a100120c2",
       "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // New Page
-          "value": { "type": "RelatedUuid", "value": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda" },
+           "type": "RelatedUuid",
+          "value": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735225265" }
   },
@@ -2337,7 +2544,8 @@
            "uuid": "41399161-e055-4881-82ca-96a985b4d3c1",
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // New Section
-          "value": { "type": "StringValue", "value": "Table" },
+           "type": "StringValue",
+          "value": "Table",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735225265" }
   },
@@ -2352,7 +2560,8 @@
            "uuid": "2a11573b-2c42-448b-8a52-1c5e80497f98",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
-          "value": { "type": "StringValue", "value": "New Query" },
+           "type": "StringValue",
+          "value": "New Query",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735225265" }
   },
@@ -2361,7 +2570,8 @@
            "uuid": "ef65a730-3850-4d41-854e-c4b01fa87914",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735225265" }
   },
@@ -2370,7 +2580,8 @@
            "uuid": "c9ea5105-e1c3-4a9c-83a7-aa66e9d40599",
       "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // New Section
-          "value": { "type": "RelatedUuid", "value": "d634981c-c10d-4526-8b8f-fcc8bd3077d3" },
+           "type": "RelatedUuid",
+          "value": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735225265" }
   },
@@ -2379,7 +2590,8 @@
            "uuid": "5e551cd6-7cae-4e7b-8a15-ba71f803805e",
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735265703" }
   },
@@ -2394,7 +2606,8 @@
            "uuid": "56985ffa-10d4-45b3-8e0d-130b1436d04e",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",                // Book
-          "value": { "type": "StringValue", "value": "Book" },
+           "type": "StringValue",
+          "value": "Book",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735275890" }
   },
@@ -2403,7 +2616,8 @@
            "uuid": "075574a1-6e33-4df1-86b8-b4a63a2427ed",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",                // Book
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735275890" }
   },
@@ -2418,7 +2632,8 @@
            "uuid": "8600bd8f-ca00-4126-841a-2484c069f6fb",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "ea435816-c5c0-482b-8850-5651fbfaad12",                // Publisher
-          "value": { "type": "StringValue", "value": "Publisher" },
+           "type": "StringValue",
+          "value": "Publisher",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735285140" }
   },
@@ -2427,7 +2642,8 @@
            "uuid": "b9846b93-fbd8-402f-8f23-933a3d2bb3a2",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "ea435816-c5c0-482b-8850-5651fbfaad12",                // Publisher
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735285140" }
   },
@@ -2436,7 +2652,8 @@
            "uuid": "4eed673e-c224-44db-8a2b-9e72998c6d00",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "4952a8fd-5bb8-44f9-8c11-12801a41b189",                // Person
-          "value": { "type": "RelatedUuid", "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735288437" }
   },
@@ -2451,7 +2668,8 @@
            "uuid": "7043b8ad-3bdf-4a0a-867f-d4523ebc77a1",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "4952a8fd-5bb8-44f9-8c11-12801a41b189",                // Person
-          "value": { "type": "StringValue", "value": "Person" },
+           "type": "StringValue",
+          "value": "Person",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735288437" }
   },
@@ -2461,7 +2679,8 @@
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
    "previousEntry": "5e551cd6-7cae-4e7b-8a15-ba71f803805e",
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735336265" }
   },
@@ -2476,7 +2695,8 @@
            "uuid": "9c5d6ea2-80fa-4e7a-81e5-342332c1c15a",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
-          "value": { "type": "StringValue", "value": "Published by" },
+           "type": "StringValue",
+          "value": "Published by",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735433734" }
   },
@@ -2485,7 +2705,8 @@
            "uuid": "8dc501b8-0150-4fe8-8a86-b275955bc868",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735433734" }
   },
@@ -2494,7 +2715,8 @@
            "uuid": "ba275354-35bd-4b33-876f-00d738cad5ea",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
-          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+           "type": "RelatedUuid",
+          "value": "ea435816-c5c0-482b-8850-5651fbfaad12",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735436750" }
   },
@@ -2503,7 +2725,8 @@
            "uuid": "f1301a57-c78c-4f51-88ae-76d0d927d932",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
-          "value": { "type": "RelatedUuid", "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735443890" }
   },
@@ -2518,7 +2741,8 @@
            "uuid": "4ad6a276-6dda-4bc6-8be0-ee9cf7524852",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
-          "value": { "type": "StringValue", "value": "Written by" },
+           "type": "StringValue",
+          "value": "Written by",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735443890" }
   },
@@ -2527,7 +2751,8 @@
            "uuid": "723176f0-9a10-4a69-8b06-4150f8cf575f",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
            "item": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735449609" }
   },
@@ -2537,7 +2762,8 @@
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
    "previousEntry": "f9afff15-663e-4b45-8d62-bf2297ec0fe7",
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735470703" }
   },
@@ -2552,7 +2778,8 @@
            "uuid": "48905153-87af-4aa7-860e-19c6aae90286",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d",                // J.R.R. Tolkien
-          "value": { "type": "StringValue", "value": "J.R.R. Tolkien" },
+           "type": "StringValue",
+          "value": "J.R.R. Tolkien",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735489703" }
   },
@@ -2561,7 +2788,8 @@
            "uuid": "12b8ea06-5c10-4b72-807c-55bedb008a1d",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d",                // J.R.R. Tolkien
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735489703" }
   },
@@ -2570,7 +2798,8 @@
            "uuid": "a88ec17e-1371-4c51-8d9f-ec2498c517da",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "de981d0d-16fd-430a-82d1-4d60d87e64e3",                // David Brin
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735503187" }
   },
@@ -2585,7 +2814,8 @@
            "uuid": "63416b27-606d-49b7-8dac-761b10022911",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "de981d0d-16fd-430a-82d1-4d60d87e64e3",                // David Brin
-          "value": { "type": "StringValue", "value": "David Brin" },
+           "type": "StringValue",
+          "value": "David Brin",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735503171" }
   },
@@ -2594,7 +2824,8 @@
            "uuid": "aee1b28e-103e-4693-89a4-294ad2807b04",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "75987591-ed47-4f4f-8ddb-b96c6d8637e6",                // David Gourley
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735662250" }
   },
@@ -2609,7 +2840,8 @@
            "uuid": "128051d3-a821-4cea-864d-280a70b0fb46",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "75987591-ed47-4f4f-8ddb-b96c6d8637e6",                // David Gourley
-          "value": { "type": "StringValue", "value": "David Gourley" },
+           "type": "StringValue",
+          "value": "David Gourley",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735662250" }
   },
@@ -2624,7 +2856,8 @@
            "uuid": "3dd26484-4b9c-4b28-8eca-ace451138e0c",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "d678b21e-1434-459e-83f0-c7c8c6213d36",                // Brian Totty
-          "value": { "type": "StringValue", "value": "Brian Totty" },
+           "type": "StringValue",
+          "value": "Brian Totty",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735665218" }
   },
@@ -2633,7 +2866,8 @@
            "uuid": "d91825da-f16d-4162-8c34-b59766506957",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "d678b21e-1434-459e-83f0-c7c8c6213d36",                // Brian Totty
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735665218" }
   },
@@ -2642,7 +2876,8 @@
            "uuid": "b5a28733-cab5-47c0-81bd-34c8f6691e98",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "9f47f559-d9b7-4b68-8dae-96a26cf2f232",                // James Surowiecki
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735676015" }
   },
@@ -2657,7 +2892,8 @@
            "uuid": "946be1e1-7ca0-45d7-8926-9071c8687abf",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "9f47f559-d9b7-4b68-8dae-96a26cf2f232",                // James Surowiecki
-          "value": { "type": "StringValue", "value": "James Surowiecki" },
+           "type": "StringValue",
+          "value": "James Surowiecki",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735676015" }
   },
@@ -2672,7 +2908,8 @@
            "uuid": "abe384b4-5db4-4317-8de9-637cf301917a",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "2a0a9a32-210a-429f-868d-3b015d3ae9ac",                // Patricia McDaniel
-          "value": { "type": "StringValue", "value": "Patricia McDaniel" },
+           "type": "StringValue",
+          "value": "Patricia McDaniel",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735684140" }
   },
@@ -2681,7 +2918,8 @@
            "uuid": "75751349-c78c-41bc-8fc2-6d1c7d1cbd38",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "2a0a9a32-210a-429f-868d-3b015d3ae9ac",                // Patricia McDaniel
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735684140" }
   },
@@ -2696,7 +2934,8 @@
            "uuid": "b7bab2ca-aac7-46d2-8710-419ac4e69a6e",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "1d9030cd-3659-42a1-8627-196644d6deb1",                // Gerald Markowitz
-          "value": { "type": "StringValue", "value": "Gerald Markowitz" },
+           "type": "StringValue",
+          "value": "Gerald Markowitz",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735693234" }
   },
@@ -2705,7 +2944,8 @@
            "uuid": "3c5836d5-4fc1-4ccf-8eea-faaf0184c084",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "1d9030cd-3659-42a1-8627-196644d6deb1",                // Gerald Markowitz
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735693234" }
   },
@@ -2720,7 +2960,8 @@
            "uuid": "ec8039f7-cdd3-4c23-8bad-e6ada9be27f7",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "b5620dda-b123-409c-8f92-c8fcf318d4e5",                // David Rosner
-          "value": { "type": "StringValue", "value": "David Rosner" },
+           "type": "StringValue",
+          "value": "David Rosner",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735700140" }
   },
@@ -2729,7 +2970,8 @@
            "uuid": "5f957996-8db3-47ff-829d-96df96237e65",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "b5620dda-b123-409c-8f92-c8fcf318d4e5",                // David Rosner
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735700156" }
   },
@@ -2744,7 +2986,8 @@
            "uuid": "61939bd6-2903-4f01-89a5-538a1cd2769f",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "11106568-0dfe-4bb8-8574-8a30b2874b25",                // David Flanagan
-          "value": { "type": "StringValue", "value": "David Flanagan" },
+           "type": "StringValue",
+          "value": "David Flanagan",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735705218" }
   },
@@ -2753,7 +2996,8 @@
            "uuid": "80c6fdb1-9852-49e6-825a-ed151113b7ac",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "11106568-0dfe-4bb8-8574-8a30b2874b25",                // David Flanagan
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735705218" }
   },
@@ -2763,7 +3007,8 @@
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
    "previousEntry": "a11a8ac9-08d4-460b-8cfe-23ea90b04f7e",
-          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+           "type": "RelatedUuid",
+          "value": "ea435816-c5c0-482b-8850-5651fbfaad12",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735713015" }
   },
@@ -2772,7 +3017,8 @@
            "uuid": "639d46b7-8479-4cb1-89c1-b5b338de5d86",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c",                // O'Reilly
-          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+           "type": "RelatedUuid",
+          "value": "ea435816-c5c0-482b-8850-5651fbfaad12",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735718921" }
   },
@@ -2787,7 +3033,8 @@
            "uuid": "c23a5be3-924c-446f-8bcd-40eb46e1af83",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c",                // O'Reilly
-          "value": { "type": "StringValue", "value": "O'Reilly" },
+           "type": "StringValue",
+          "value": "O'Reilly",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735718906" }
   },
@@ -2796,7 +3043,8 @@
            "uuid": "3543b8aa-33e1-4974-8d6b-ba1041c99548",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "0f4132ec-fabd-4857-8c26-1f842d3d94b3",                // Perseus Publishing
-          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+           "type": "RelatedUuid",
+          "value": "ea435816-c5c0-482b-8850-5651fbfaad12",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735728843" }
   },
@@ -2811,7 +3059,8 @@
            "uuid": "7812b147-bf2f-4e4a-8db0-05d173e79df0",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "0f4132ec-fabd-4857-8c26-1f842d3d94b3",                // Perseus Publishing
-          "value": { "type": "StringValue", "value": "Perseus Publishing" },
+           "type": "StringValue",
+          "value": "Perseus Publishing",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735728843" }
   },
@@ -2826,7 +3075,8 @@
            "uuid": "d0911998-ef56-405e-81e8-56176f14deaa",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "32b872e6-5f78-484e-8bd9-6e12d48fd266",                // HarperCollins
-          "value": { "type": "StringValue", "value": "HarperCollins" },
+           "type": "StringValue",
+          "value": "HarperCollins",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735733328" }
   },
@@ -2835,7 +3085,8 @@
            "uuid": "f262e255-5f33-4b02-8981-e0293a870042",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "32b872e6-5f78-484e-8bd9-6e12d48fd266",                // HarperCollins
-          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+           "type": "RelatedUuid",
+          "value": "ea435816-c5c0-482b-8850-5651fbfaad12",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735733343" }
   },
@@ -2850,7 +3101,8 @@
            "uuid": "597e97a5-7c35-4135-83e1-51fba8bd6c03",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "fef1fb5a-d03d-490b-8396-f599d68652aa",                // Doubleday
-          "value": { "type": "StringValue", "value": "Doubleday" },
+           "type": "StringValue",
+          "value": "Doubleday",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735736468" }
   },
@@ -2859,7 +3111,8 @@
            "uuid": "2df70b86-1b15-4178-8eca-e65ccab69a13",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "fef1fb5a-d03d-490b-8396-f599d68652aa",                // Doubleday
-          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+           "type": "RelatedUuid",
+          "value": "ea435816-c5c0-482b-8850-5651fbfaad12",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735736468" }
   },
@@ -2874,7 +3127,8 @@
            "uuid": "5a0b9077-4df7-4909-85db-5328546e3456",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "81a0fa22-0432-4f6e-822d-4e11caefa730",                // NYU Press
-          "value": { "type": "StringValue", "value": "NYU Press" },
+           "type": "StringValue",
+          "value": "NYU Press",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735740015" }
   },
@@ -2883,7 +3137,8 @@
            "uuid": "745cd21b-b190-4521-8d26-82eb3656a1ae",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "81a0fa22-0432-4f6e-822d-4e11caefa730",                // NYU Press
-          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+           "type": "RelatedUuid",
+          "value": "ea435816-c5c0-482b-8850-5651fbfaad12",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735740015" }
   },
@@ -2898,7 +3153,8 @@
            "uuid": "c25ad76b-9a12-4b7b-852a-531b767bba76",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "774bf718-823a-4284-86d2-d24a334786af",                // University of California
-          "value": { "type": "StringValue", "value": "University of California" },
+           "type": "StringValue",
+          "value": "University of California",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735752015" }
   },
@@ -2907,7 +3163,8 @@
            "uuid": "fd2066e5-b876-4241-8c22-f7208af4ec85",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "774bf718-823a-4284-86d2-d24a334786af",                // University of California
-          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+           "type": "RelatedUuid",
+          "value": "ea435816-c5c0-482b-8850-5651fbfaad12",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735752031" }
   },
@@ -2917,7 +3174,8 @@
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
    "previousEntry": "5cceee12-d202-46ac-8724-0474ba4860ae",
-          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+           "type": "RelatedUuid",
+          "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735771046" }
   },
@@ -2932,7 +3190,8 @@
            "uuid": "f19bf2d2-2a53-41ba-84e7-c9d5b82d908e",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
-          "value": { "type": "StringValue", "value": "HTTP: The Definitive Guide" },
+           "type": "StringValue",
+          "value": "HTTP: The Definitive Guide",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735778156" }
   },
@@ -2941,7 +3200,8 @@
            "uuid": "d9360e8b-d892-49d4-8b2a-a4651ac92eb5",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
-          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+           "type": "RelatedUuid",
+          "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735778156" }
   },
@@ -2950,7 +3210,8 @@
            "uuid": "5bd72c4e-90b9-487e-8c65-77dae04c9a2b",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",                // The Hobbit
-          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+           "type": "RelatedUuid",
+          "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735780703" }
   },
@@ -2965,7 +3226,8 @@
            "uuid": "43c67130-8b68-4d84-8883-83655c6b3c9f",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",                // The Hobbit
-          "value": { "type": "StringValue", "value": "The Hobbit" },
+           "type": "StringValue",
+          "value": "The Hobbit",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735780703" }
   },
@@ -2980,7 +3242,8 @@
            "uuid": "e9bf97a2-302a-498c-853e-505b66b8ca37",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "04215e09-c5d1-4af1-8167-2bb10c06e6e4",                // The Wisdom of Crowds
-          "value": { "type": "StringValue", "value": "The Wisdom of Crowds" },
+           "type": "StringValue",
+          "value": "The Wisdom of Crowds",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735788562" }
   },
@@ -2989,7 +3252,8 @@
            "uuid": "a756ff74-be71-4870-8e30-09658e4d70f6",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "04215e09-c5d1-4af1-8167-2bb10c06e6e4",                // The Wisdom of Crowds
-          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+           "type": "RelatedUuid",
+          "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735788578" }
   },
@@ -3004,7 +3268,8 @@
            "uuid": "66a95e67-5721-4711-83c0-2cfffffcfcd9",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "b42a8eed-c7c9-4b21-84cb-70c20e29e64a",                // The Transparent Society
-          "value": { "type": "StringValue", "value": "The Transparent Society" },
+           "type": "StringValue",
+          "value": "The Transparent Society",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735798062" }
   },
@@ -3013,7 +3278,8 @@
            "uuid": "38ca0209-7651-41ba-8f43-12b20273c614",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "b42a8eed-c7c9-4b21-84cb-70c20e29e64a",                // The Transparent Society
-          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+           "type": "RelatedUuid",
+          "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735798062" }
   },
@@ -3022,7 +3288,8 @@
            "uuid": "38ca0210-7651-41ba-8f43-12b20273c614",
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "b42a8eed-c7c9-4b21-84cb-70c20e29e64a",                // The Transparent Society
-          "value": { "type": "RelatedUuid", "value": "de981d0d-16fd-430a-82d1-4d60d87e64e3" },
+           "type": "RelatedUuid",
+          "value": "de981d0d-16fd-430a-82d1-4d60d87e64e3",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735798062" }
   },
@@ -3031,7 +3298,8 @@
            "uuid": "38ca0211-7651-41ba-8f43-12b20273c614",
       "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
            "item": "b42a8eed-c7c9-4b21-84cb-70c20e29e64a",                // The Transparent Society
-          "value": { "type": "RelatedUuid", "value": "0f4132ec-fabd-4857-8c26-1f842d3d94b3" },
+           "type": "RelatedUuid",
+          "value": "0f4132ec-fabd-4857-8c26-1f842d3d94b3",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117735798062" }
   },
@@ -3040,7 +3308,8 @@
            "uuid": "ca3d4029-6e05-4079-8012-1dbe4dac5b94",
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",                // The Hobbit
-          "value": { "type": "RelatedUuid", "value": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d" },
+           "type": "RelatedUuid",
+          "value": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736236500" }
   },
@@ -3049,7 +3318,8 @@
            "uuid": "1b5dc73a-34fb-4909-8f83-b7cadfa58d07",
       "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
            "item": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",                // The Hobbit
-          "value": { "type": "RelatedUuid", "value": "32b872e6-5f78-484e-8bd9-6e12d48fd266" },
+           "type": "RelatedUuid",
+          "value": "32b872e6-5f78-484e-8bd9-6e12d48fd266",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736261015" }
   },
@@ -3058,7 +3328,8 @@
            "uuid": "0a4d47fa-ffe2-409a-8590-50d527b159cd",
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
-          "value": { "type": "RelatedUuid", "value": "75987591-ed47-4f4f-8ddb-b96c6d8637e6" },
+           "type": "RelatedUuid",
+          "value": "75987591-ed47-4f4f-8ddb-b96c6d8637e6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736305546" }
   },
@@ -3068,7 +3339,8 @@
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
    "previousEntry": "0a4d47fa-ffe2-409a-8590-50d527b159cd",
-          "value": { "type": "StringValue", "value": "David Gourley" },
+           "type": "StringValue",
+          "value": "David Gourley",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736311578" }
   },
@@ -3078,7 +3350,8 @@
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "e2b50553-bd0e-45a6-8fca-9b35e603e52c",                // The Hobbit
    "previousEntry": "ca3d4029-6e05-4079-8012-1dbe4dac5b94",
-          "value": { "type": "StringValue", "value": "J.R.R. Tolkien" },
+           "type": "StringValue",
+          "value": "J.R.R. Tolkien",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736313546" }
   },
@@ -3087,7 +3360,8 @@
            "uuid": "5610ec06-b4e9-4eeb-867b-dad8b0073636",
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
-          "value": { "type": "StringValue", "value": "Brian Totty" },
+           "type": "StringValue",
+          "value": "Brian Totty",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736335578" }
   },
@@ -3096,7 +3370,8 @@
            "uuid": "bac5ec21-422a-4a5f-82f2-0518ab052b9e",
       "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
            "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
-          "value": { "type": "RelatedUuid", "value": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c" },
+           "type": "RelatedUuid",
+          "value": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736353671" }
   },
@@ -3106,7 +3381,8 @@
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",                // HTTP: The Definitive Guide
    "previousEntry": "21e55207-dc7d-4dd5-86fc-da5ca9bbb20e",
-          "value": { "type": "RelatedUuid", "value": "75987591-ed47-4f4f-8ddb-b96c6d8637e6" },
+           "type": "RelatedUuid",
+          "value": "75987591-ed47-4f4f-8ddb-b96c6d8637e6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736369546" }
   },
@@ -3115,7 +3391,8 @@
            "uuid": "d9677f00-4c56-46f9-84c1-f5df896c1058",
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "04215e09-c5d1-4af1-8167-2bb10c06e6e4",                // The Wisdom of Crowds
-          "value": { "type": "RelatedUuid", "value": "9f47f559-d9b7-4b68-8dae-96a26cf2f232" },
+           "type": "RelatedUuid",
+          "value": "9f47f559-d9b7-4b68-8dae-96a26cf2f232",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736379671" }
   },
@@ -3124,7 +3401,8 @@
            "uuid": "db17fade-a60b-463d-8f29-d9de909c3d35",
       "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
            "item": "04215e09-c5d1-4af1-8167-2bb10c06e6e4",                // The Wisdom of Crowds
-          "value": { "type": "RelatedUuid", "value": "fef1fb5a-d03d-490b-8396-f599d68652aa" },
+           "type": "RelatedUuid",
+          "value": "fef1fb5a-d03d-490b-8396-f599d68652aa",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736389781" }
   },
@@ -3133,7 +3411,8 @@
            "uuid": "d5326b0b-1228-4232-8a6e-d8be50b1af97",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "f1001a06-8ffa-4366-8f6e-e9c5fcc2b70c",                // Shrinking Violets and Caspa...
-          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+           "type": "RelatedUuid",
+          "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736411390" }
   },
@@ -3148,7 +3427,8 @@
            "uuid": "426fdd09-3112-4be6-8998-d77fcba475b9",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "f1001a06-8ffa-4366-8f6e-e9c5fcc2b70c",                // Shrinking Violets and Caspa...
-          "value": { "type": "StringValue", "value": "Shrinking Violets and Caspar Milquetoasts" },
+           "type": "StringValue",
+          "value": "Shrinking Violets and Caspar Milquetoasts",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736411375" }
   },
@@ -3157,7 +3437,8 @@
            "uuid": "2fd80172-7c5c-45ba-8bc0-d6d212b4816c",
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "f1001a06-8ffa-4366-8f6e-e9c5fcc2b70c",                // Shrinking Violets and Caspa...
-          "value": { "type": "RelatedUuid", "value": "2a0a9a32-210a-429f-868d-3b015d3ae9ac" },
+           "type": "RelatedUuid",
+          "value": "2a0a9a32-210a-429f-868d-3b015d3ae9ac",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736413562" }
   },
@@ -3166,7 +3447,8 @@
            "uuid": "ccc919f4-ba3a-4524-80ce-eaeda75880b2",
       "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
            "item": "f1001a06-8ffa-4366-8f6e-e9c5fcc2b70c",                // Shrinking Violets and Caspa...
-          "value": { "type": "RelatedUuid", "value": "81a0fa22-0432-4f6e-822d-4e11caefa730" },
+           "type": "RelatedUuid",
+          "value": "81a0fa22-0432-4f6e-822d-4e11caefa730",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736417593" }
   },
@@ -3175,7 +3457,8 @@
            "uuid": "bd1df12b-d9bf-4e57-8853-ae955baf296e",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
-          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+           "type": "RelatedUuid",
+          "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736429578" }
   },
@@ -3190,7 +3473,8 @@
            "uuid": "9608e7de-7ec0-49ae-8425-aac277cef1ac",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
-          "value": { "type": "StringValue", "value": "Deceit and Denial" },
+           "type": "StringValue",
+          "value": "Deceit and Denial",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736429578" }
   },
@@ -3199,7 +3483,8 @@
            "uuid": "cb5ea4e5-9d95-4a19-8959-a6fa702178e5",
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
-          "value": { "type": "RelatedUuid", "value": "1d9030cd-3659-42a1-8627-196644d6deb1" },
+           "type": "RelatedUuid",
+          "value": "1d9030cd-3659-42a1-8627-196644d6deb1",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736431937" }
   },
@@ -3209,7 +3494,8 @@
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
    "previousEntry": "cb5ea4e5-9d95-4a19-8959-a6fa702178e5",
-          "value": { "type": "StringValue", "value": "Gerald Markowitz" },
+           "type": "StringValue",
+          "value": "Gerald Markowitz",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736438968" }
   },
@@ -3218,7 +3504,8 @@
            "uuid": "cb57a1ef-d238-4400-8ab0-7714d39cdc62",
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
-          "value": { "type": "StringValue", "value": "D" },
+           "type": "StringValue",
+          "value": "D",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736444109" }
   },
@@ -3228,7 +3515,8 @@
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
    "previousEntry": "cb57a1ef-d238-4400-8ab0-7714d39cdc62",
-          "value": { "type": "StringValue", "value": "David Rosner" },
+           "type": "StringValue",
+          "value": "David Rosner",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736451250" }
   },
@@ -3237,7 +3525,8 @@
            "uuid": "dd9e8536-b688-433f-806b-b6e5e5786f2f",
       "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
            "item": "7cf451e5-be71-4c0c-8ede-1c03e2f5af9e",                // Deceit and Denial
-          "value": { "type": "RelatedUuid", "value": "774bf718-823a-4284-86d2-d24a334786af" },
+           "type": "RelatedUuid",
+          "value": "774bf718-823a-4284-86d2-d24a334786af",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736460250" }
   },
@@ -3246,7 +3535,8 @@
            "uuid": "113eaca6-0936-476b-81c8-8275583d0ad6",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "0378913e-e5c9-48c0-835a-b839edee467f",                // JavaScript: The Definitive ...
-          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+           "type": "RelatedUuid",
+          "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736474109" }
   },
@@ -3261,7 +3551,8 @@
            "uuid": "6835a402-d069-4565-88c1-1e6f577f0744",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "0378913e-e5c9-48c0-835a-b839edee467f",                // JavaScript: The Definitive ...
-          "value": { "type": "StringValue", "value": "JavaScript: The Definitive Guide" },
+           "type": "StringValue",
+          "value": "JavaScript: The Definitive Guide",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736474109" }
   },
@@ -3270,7 +3561,8 @@
            "uuid": "09a9c592-7e0b-4bc1-8397-0a1596915793",
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "0378913e-e5c9-48c0-835a-b839edee467f",                // JavaScript: The Definitive ...
-          "value": { "type": "RelatedUuid", "value": "11106568-0dfe-4bb8-8574-8a30b2874b25" },
+           "type": "RelatedUuid",
+          "value": "11106568-0dfe-4bb8-8574-8a30b2874b25",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736475484" }
   },
@@ -3279,7 +3571,8 @@
            "uuid": "a6b5975a-7298-4fab-89cd-1c7455d47272",
       "attribute": "ecd53ca6-5989-40e2-8915-db04cad4a0a2",                // Published by
            "item": "0378913e-e5c9-48c0-835a-b839edee467f",                // JavaScript: The Definitive ...
-          "value": { "type": "RelatedUuid", "value": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c" },
+           "type": "RelatedUuid",
+          "value": "52cf8bc2-fd62-4d07-8d39-0008cb9c3a9c",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736479968" }
   },
@@ -3294,7 +3587,8 @@
            "uuid": "41ec5e1b-5c19-45c2-8028-22037b49dbbb",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "933227ee-bda7-4924-81ac-94c018d35503",                // The Two Towers
-          "value": { "type": "StringValue", "value": "The Two Towers" },
+           "type": "StringValue",
+          "value": "The Two Towers",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736492531" }
   },
@@ -3303,7 +3597,8 @@
            "uuid": "7788e6bc-2c93-40cc-885c-312a17551a11",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "933227ee-bda7-4924-81ac-94c018d35503",                // The Two Towers
-          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+           "type": "RelatedUuid",
+          "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736492531" }
   },
@@ -3312,7 +3607,8 @@
            "uuid": "99ee41ff-85d7-4744-827f-cc0e81017df6",
       "attribute": "269e0b2a-e5bc-405c-83ac-58e8a7eb58c8",                // Written by
            "item": "933227ee-bda7-4924-81ac-94c018d35503",                // The Two Towers
-          "value": { "type": "RelatedUuid", "value": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d" },
+           "type": "RelatedUuid",
+          "value": "fd9a510b-bd3b-4dbb-8770-99d04ffe5c0d",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736496203" }
   },
@@ -3321,7 +3617,8 @@
            "uuid": "0515ceef-33b9-477b-8ebf-66a3d0baf174",
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "3011",                // Query for all books
-          "value": { "type": "RelatedUuid", "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e" },
+           "type": "RelatedUuid",
+          "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736561171" }
   },
@@ -3331,7 +3628,8 @@
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // People
    "previousEntry": "54f4bd36-a6d7-4c00-8e3a-891183a307e9",
-          "value": { "type": "StringValue", "value": "People" },
+           "type": "StringValue",
+          "value": "People",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736688156" }
   },
@@ -3341,7 +3639,8 @@
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
    "previousEntry": "cd9b4dfb-6fec-4f0f-815b-e0a2ae2ac7c3",
-          "value": { "type": "RelatedUuid", "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189" },
+           "type": "RelatedUuid",
+          "value": "4952a8fd-5bb8-44f9-8c11-12801a41b189",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736701343" }
   },
@@ -3351,7 +3650,8 @@
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // All People
    "previousEntry": "a642b640-8897-4711-8bf1-60ce3627649d",
-          "value": { "type": "StringValue", "value": "All People" },
+           "type": "StringValue",
+          "value": "All People",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736711968" }
   },
@@ -3361,7 +3661,8 @@
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "cbc5f6c8-8115-4bfa-88d1-d9947fa71fda",                // All People
    "previousEntry": "41399161-e055-4881-82ca-96a985b4d3c1",
-          "value": { "type": "StringValue", "value": "Outline" },
+           "type": "StringValue",
+          "value": "Outline",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736715750" }
   },
@@ -3371,7 +3672,8 @@
       "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "8cbddbd1-368e-45d6-88ec-39690e9331a0",                // People
    "previousEntry": "7ffbc5c1-e179-4f49-808c-8562c502529b",
-          "value": { "type": "StringValue", "value": "This is a page for keeping track of people." },
+           "type": "StringValue",
+          "value": "This is a page for keeping track of people.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736738984" }
   },
@@ -3386,7 +3688,8 @@
            "uuid": "ac20c09b-027c-4cf7-8d1d-c571b577d026",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // New Page
-          "value": { "type": "StringValue", "value": "New Page" },
+           "type": "StringValue",
+          "value": "New Page",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736745062" }
   },
@@ -3395,7 +3698,8 @@
            "uuid": "bb94fce5-d490-45c8-8ae0-49ebe7aab3fc",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // New Page
-          "value": { "type": "RelatedUuid", "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000200-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736745062" }
   },
@@ -3404,7 +3708,8 @@
            "uuid": "a831f70d-fd95-468a-8a0a-31a5937cbcd3",
       "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // New Page
-          "value": { "type": "StringValue", "value": "This is a new page." },
+           "type": "StringValue",
+          "value": "This is a new page.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736745062" }
   },
@@ -3419,7 +3724,8 @@
            "uuid": "5737311c-2d52-4354-8a85-6a404e947fd9",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // New Section
-          "value": { "type": "StringValue", "value": "New Section" },
+           "type": "StringValue",
+          "value": "New Section",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736745062" }
   },
@@ -3428,7 +3734,8 @@
            "uuid": "ee6af493-b200-4d26-8b88-2b641cd6fa80",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // New Section
-          "value": { "type": "RelatedUuid", "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736745062" }
   },
@@ -3437,7 +3744,8 @@
            "uuid": "3107a69d-8e86-4afe-8ec7-e82c95f9fcae",
       "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
            "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // New Page
-          "value": { "type": "RelatedUuid", "value": "38e3da07-957f-40a2-894d-f3636aed7c23" },
+           "type": "RelatedUuid",
+          "value": "38e3da07-957f-40a2-894d-f3636aed7c23",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736745062" }
   },
@@ -3446,7 +3754,8 @@
            "uuid": "0a8d7e91-ca14-49a4-8064-e5eabe133b78",
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // New Section
-          "value": { "type": "StringValue", "value": "Table" },
+           "type": "StringValue",
+          "value": "Table",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736745062" }
   },
@@ -3461,7 +3770,8 @@
            "uuid": "02b28988-dd13-4ffb-8933-bb6c5b9d2822",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "e30ba726-d976-46fb-88ac-7f5e841a6b43",                // New Query
-          "value": { "type": "StringValue", "value": "New Query" },
+           "type": "StringValue",
+          "value": "New Query",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736745062" }
   },
@@ -3470,7 +3780,8 @@
            "uuid": "d3b32b1d-0f22-439e-85ff-f069e4d76bff",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
            "item": "e30ba726-d976-46fb-88ac-7f5e841a6b43",                // New Query
-          "value": { "type": "RelatedUuid", "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6" },
+           "type": "RelatedUuid",
+          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736745062" }
   },
@@ -3479,7 +3790,8 @@
            "uuid": "f8fd9872-3806-42c8-886f-78cdb53299ad",
       "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
            "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // New Section
-          "value": { "type": "RelatedUuid", "value": "e30ba726-d976-46fb-88ac-7f5e841a6b43" },
+           "type": "RelatedUuid",
+          "value": "e30ba726-d976-46fb-88ac-7f5e841a6b43",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736745062" }
   },
@@ -3488,7 +3800,8 @@
            "uuid": "414b2c92-ded7-4071-8ff3-af2468ec665b",
       "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
            "item": "e30ba726-d976-46fb-88ac-7f5e841a6b43",                // New Query
-          "value": { "type": "RelatedUuid", "value": "ea435816-c5c0-482b-8850-5651fbfaad12" },
+           "type": "RelatedUuid",
+          "value": "ea435816-c5c0-482b-8850-5651fbfaad12",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736753953" }
   },
@@ -3498,7 +3811,8 @@
       "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
            "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // New Section
    "previousEntry": "0a8d7e91-ca14-49a4-8064-e5eabe133b78",
-          "value": { "type": "StringValue", "value": "Outline" },
+           "type": "StringValue",
+          "value": "Outline",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736756890" }
   },
@@ -3508,7 +3822,8 @@
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // Publishers
    "previousEntry": "ac20c09b-027c-4cf7-8d1d-c571b577d026",
-          "value": { "type": "StringValue", "value": "Publishers" },
+           "type": "StringValue",
+          "value": "Publishers",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736763359" }
   },
@@ -3518,7 +3833,8 @@
       "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
            "item": "2faa7b9a-7a1d-47fb-8bb5-4e702c6163db",                // Publishers
    "previousEntry": "a831f70d-fd95-468a-8a0a-31a5937cbcd3",
-          "value": { "type": "StringValue", "value": "This is a page for keeping track of publishers." },
+           "type": "StringValue",
+          "value": "This is a page for keeping track of publishers.",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736780078" }
   },
@@ -3528,7 +3844,8 @@
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
            "item": "38e3da07-957f-40a2-894d-f3636aed7c23",                // All Publishers
    "previousEntry": "5737311c-2d52-4354-8a85-6a404e947fd9",
-          "value": { "type": "StringValue", "value": "All Publishers" },
+           "type": "StringValue",
+          "value": "All Publishers",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1117736787093" }
   }

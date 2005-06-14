@@ -61,6 +61,9 @@ DeltaVirtualServer.JSON_TYPE_UUID = "Uuid";
 DeltaVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
 DeltaVirtualServer.JSON_TYPE_RELATED_UUID = "RelatedUuid";
 DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE = "NumberValue";
+DeltaVirtualServer.JSON_TYPE_DATE_VALUE = "DateValue";
+DeltaVirtualServer.JSON_TYPE_CHECKMARK_VALUE = "CheckMarkValue";
+DeltaVirtualServer.JSON_TYPE_URL_VALUE = "UrlValue";
 
 DeltaVirtualServer.JSON_MEMBER_WUID = "uuid";
 DeltaVirtualServer.JSON_MEMBER_PASSWORD = "password";
@@ -104,9 +107,35 @@ function DeltaVirtualServer(inJsonRepositoryString, inJsonUserList) {
  */
 DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
   this._initialize(inWorld);
+  this._buildTypeHashTable();
   this._loadWorldFromJsonStrings(this._myDehydratedWorld, this._myDehydratedUserList);
 };
 
+DeltaVirtualServer.prototype._buildTypeHashTable = function () {
+  var text      = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_TEXT);
+  var number    = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_NUMBER);
+  var dateType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_DATE);
+  var checkMark = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_CHECK_MARK);
+  var url       = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_URL);
+  var itemType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_ITEM);
+  
+  /*
+  var text = this.getWorld().getTypeCalledText();
+  var number = this.getWorld().getTypeCalledNumber();
+  var dateType = this.getWorld().getTypeCalledDate();
+  var checkMark = this.getWorld().getTypeCalledCheckMark();
+  var url = this.getWorld().getTypeCalledUrl();
+  var itemType = this.getWorld().getTypeCalledItem();
+  */
+
+  this._myHashTableOfTypesKeyedByToken = {};
+  this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_STRING_VALUE] = text;
+  this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE] = number;
+  this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_DATE_VALUE] = dateType;
+  this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_CHECKMARK_VALUE] = checkMark;
+  this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_URL_VALUE] = url;
+  this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_RELATED_UUID] = itemType;
+};
 
 // -------------------------------------------------------------------
 // Private Methods
@@ -275,11 +304,11 @@ DeltaVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (in
       if (previousEntryUuid) {
         previousEntry = this.__getEntryFromUuidOrBootstrapEntry(previousEntryUuid);
       }
-      var pickledData = dehydratedEntry[DeltaVirtualServer.JSON_MEMBER_VALUE];
-      var dataType = pickledData[DeltaVirtualServer.JSON_MEMBER_TYPE];
-      var rawData = pickledData[DeltaVirtualServer.JSON_MEMBER_VALUE];
+      var rawData = dehydratedEntry[DeltaVirtualServer.JSON_MEMBER_VALUE];
+      var dataTypeToken = dehydratedEntry[DeltaVirtualServer.JSON_MEMBER_TYPE];
+      var dataType = this._getTypeFromTypeToken(dataTypeToken);
       var finalData = null;
-      switch (dataType) {
+      switch (dataTypeToken) {
         case DeltaVirtualServer.JSON_TYPE_RELATED_UUID:
           finalData = this.__getItemFromUuidOrBootstrapItem(rawData);
           break;
@@ -289,10 +318,13 @@ DeltaVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (in
         case DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE:
           finalData = rawData;
           break;
+        case DeltaVirtualServer.JSON_TYPE_Date_VALUE:
+          finalData = new Date(rawData);
+          break;
       }
       var entry = this.__getEntryFromUuidOrBootstrapEntry(entryUuid);
       var itemOrEntry = previousEntry || item;
-      entry._rehydrate(itemOrEntry, attribute, finalData, timestamp, userstamp);
+      entry._rehydrate(itemOrEntry, attribute, finalData, timestamp, userstamp, dataType);
       this.__myChronologicalListOfRecords.push(entry);
     }
   }
@@ -328,6 +360,20 @@ DeltaVirtualServer.prototype.truncateString = function (inString) {
   }
 };
 
+DeltaVirtualServer.prototype._getTypeTokenFromType = function (inType) {
+
+  for (var token in this._myHashTableOfTypesKeyedByToken) {
+    typeItem = this._myHashTableOfTypesKeyedByToken[token];
+    if (inType == typeItem) {
+      return token;
+    }
+  }
+  Util.assert(false, "no such type: " + inType.getDisplayName());
+};
+
+DeltaVirtualServer.prototype._getTypeFromTypeToken = function (inToken) {
+  return this._myHashTableOfTypesKeyedByToken[inToken];
+};
 
 /**
  * Returns a big string, containing JavaScript "object literal"
@@ -392,23 +438,28 @@ DeltaVirtualServer.prototype.__getJsonStringRepresentingRecords = function (inLi
         listOfStrings.push('  "' + DeltaVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": "' + previousEntry._getUuid() + '",\n');
       }
       var contentData = entry.getValue();
-      var pickleString = "";
-      var typeString = null;
+      var entryType = entry.getType();
+      var typeToken = this._getTypeTokenFromType(entryType);
+      listOfStrings.push('           "' + DeltaVirtualServer.JSON_MEMBER_TYPE + '": "' + typeToken + '",\n');
+      
       var valueString = null;
-      if (Util.isNumber(contentData)) {
-        typeString = DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE;
-        valueString = contentData;
+      switch (typeToken) {
+        case DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE: 
+          valueString = contentData;
+          break;
+        case DeltaVirtualServer.JSON_TYPE_STRING_VALUE: 
+          valueString = '"' + contentData + '"';
+          break;
+        case DeltaVirtualServer.JSON_TYPE_DATE_VALUE: 
+          valueString = '"' + contentData.toString() + '"';
+          break;
+        case DeltaVirtualServer.JSON_TYPE_RELATED_UUID: 
+          valueString = '"' + contentData._getUuid() + '"';
+          break;
+        default:
+          Util.assert(false, "no such type: " + typeToken);
       }
-      if (Util.isString(contentData)) {
-        typeString = DeltaVirtualServer.JSON_TYPE_STRING_VALUE;
-        valueString = '"' + contentData + '"';
-      }
-      if (contentData instanceof Item) {
-        typeString = DeltaVirtualServer.JSON_TYPE_RELATED_UUID;
-        valueString = '"' + contentData._getUuid() + '"';
-      }
-      pickleString = '{ "' + DeltaVirtualServer.JSON_MEMBER_TYPE + '": "' + typeString + '", "' + DeltaVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString + ' }';
-      listOfStrings.push('          "' + DeltaVirtualServer.JSON_MEMBER_VALUE + '": ' + pickleString + ',\n');
+      listOfStrings.push('          "' + DeltaVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString + ',\n');
     }
     Util.assert(record.getUserstamp() !== null);
     listOfStrings.push('      "' + DeltaVirtualServer.JSON_MEMBER_USERSTAMP + '": "' + record.getUserstamp()._getUuid() + '",');

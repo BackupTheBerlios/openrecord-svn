@@ -360,7 +360,7 @@ RootView.prototype.newPage = function () {
   // newPage.addEntryForAttribute(shortName, "New Page");
   newPage.addEntryForAttribute(attributeCalledCategory, categoryCalledPage);
   newPage.addEntryForAttribute(attributeCalledSummary, "This is a new page.");
-  PageView.newSection(repository,newPage,false);
+  PageView.newSection(repository,newPage);
   repository.endTransaction();
   
   this.myHashTableOfPagesKeyedByUuid[newPage._getUuid()] = newPage;

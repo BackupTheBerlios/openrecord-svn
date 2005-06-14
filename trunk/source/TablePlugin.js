@@ -189,7 +189,7 @@ TablePlugin.prototype._getSuggestedItemsForAttribute = function(attribute) {
     for (key in listOfCategories) {
       var category = listOfCategories[key];
       var listOfItems = this.getWorld().getItemsInCategory(category);
-      for (keyToo in listOfItems) {
+      for (var keyToo in listOfItems) {
         var item = listOfItems[keyToo];
         Util.addObjectToSet(item, listOfSuggestedItems);
       }
@@ -409,7 +409,23 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
   }
   this._buildTable();
 };
-  
+
+/**
+ * Called when the user clicks on table header. Resorts table accordingly.
+ * 
+ * @scope    public class method
+ */
+TablePlugin.prototype.selectRow = function (rowElement) {
+  Util.assert(rowElement instanceof HTMLTableRowElement);
+  if (rowElement != this._lastSelectedRow) {
+    if (this._lastSelectedRow) {this._lastSelectedRow.style.background = "rgb(100%,100%,100%)";}
+    this._lastSelectedRow = rowElement;
+    rowElement.style.background = "rgb(100%,100%,0%)";
+    return true;
+  }
+  return false;
+};
+ 
 /**
  * Called when the user clicks on attribute editor item, either to add or remove attribute column
  * 
@@ -432,14 +448,7 @@ TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
 
 TablePlugin.prototype._handleClick = function (inEventObject, aTextView) {
   var rowElement = aTextView.getSuperview().getHTMLElement().parentNode; // textView -> multiEntriesView -> cellElment -> rowElement
-  Util.assert(rowElement instanceof HTMLTableRowElement);
-  if (rowElement != this._lastSelectedRow) {
-    if (this._lastSelectedRow) {this._lastSelectedRow.style.background = "rgb(100%,100%,100%)";}
-    this._lastSelectedRow = rowElement;
-    rowElement.style.background = "rgb(100%,100%,0%)";
-    return true;
-  }
-  return false;
+  return this.selectRow(rowElement);
 };
 
 
@@ -530,6 +539,7 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
         userHitReturnInLastRow = true;
       }
       var nextRow = this.myTable.rows[nextRowNumber];
+      this.selectRow(nextRow);
       nextCell = nextRow.cells[cellElement.cellIndex];
     }
     

@@ -67,7 +67,8 @@ function TextView(theSuperview, inElement, inItem, inAttribute, inEntry, inClass
   
   this.setSuperview(theSuperview);
   this.setHTMLElement(inElement);
-  inElement.style.width = inElement.style.height = "100%"; // make this element expand to fill parent element where possible
+  //inElement.style.width =
+  inElement.style.height = "100%"; // make this element expand to fill parent element where possible
   this._item = inItem;
   this._attribute = inAttribute;
   this._entry = inEntry;
@@ -109,7 +110,7 @@ TextView.prototype.setSuggestions = function(suggestionList) {
  * the item's attribute values.
  *
  * @scope    public instance method
- */
+*/
 TextView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this._buildView();
@@ -171,6 +172,11 @@ TextView.prototype.startEditing = function() {
       editField.onkeyup = this.onKeyUp.bindAsEventListener(this);
       editField.onfocus = this.onFocus.bindAsEventListener(this);
       editField.defaultValue = this._isProvisional ? '' : this._textNode.data;
+    }
+    
+    if (this._mySuperview.getTextViewWidth) {
+      //editField.style.width = this._mySuperview.getTextViewWidth() + "px";
+      editField.size = 1;
     }
     //editField.style.width = this.getHTMLElement().offsetWidth + "px";    
     //editField.style.height = (this.getHTMLElement().offsetHeight) + "px";
@@ -244,17 +250,35 @@ if (value && Util.isString(value)) {
     var listOfExpectedTypeEntries = this._attribute.getEntriesForAttribute(attributeCalledExpectedType);
     var categoryCalledCategory = repository.getCategoryCalledCategory();
     var typeCalledText = repository.getTypeCalledText();
+    var typeCalledDate = repository.getTypeCalledDate();
+    var typeCalledNumber = repository.getTypeCalledNumber();
     if (listOfExpectedTypeEntries) {
-      var expectsText = false;
-      var expectedCategory = null;
       for (i=0; i<listOfExpectedTypeEntries.length; ++i) {
         var aType = listOfExpectedTypeEntries[i].getValue();
-        if (aType.isInCategory(categoryCalledCategory)) {expectedCategory = aType;}
-        if (aType == typeCalledText) {expectsText = true;}
-      }
-      if ((expectedCategory) && !expectsText) {
-        value = repository.newItem(value);
-        value.addEntryForAttribute(repository.getAttributeCalledCategory(),expectedCategory);
+        switch (aType) {
+          case typeCalledText:
+            return value;
+          case typeCalledNumber:
+            var floatVal = parseFloat(value);
+            if (floatVal != NaN) {return floatVal;}
+            break;
+          case typeCalledDate:
+            var dateVal = Date.parse(value);
+            if (dateVal != NaN) {return new Date(value);}
+            break;
+          default:
+            if (aType.isInCategory(categoryCalledCategory)) {
+              value = repository.newItem(value);
+              value.addEntryForAttribute(repository.getAttributeCalledCategory(),aType);
+              if (this._suggestions) {
+                // add to new item to suggestion list if list is present
+                // PENDING: should this be using an observer instead?
+                Util.addObjectToSet(value, this._suggestions);
+              }
+              return value;
+            }
+            break;
+        }
       }
     }
   }

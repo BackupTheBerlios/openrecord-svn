@@ -56,7 +56,7 @@ PageView.UUID_FOR_ATTRIBUTE_SECTION = "00000300-ce7f-11d9-8cd5-0011113ae5d6";
  * @param inPage  Page Item to insert new section
  * @param isNewTransaction  should new section be wrapped in a transaction?
  */
-PageView.newSection = function (repository, inPage, isNewTransaction) {
+PageView.newSection = function (repository, inPage) {
   var attributeCalledCategory = repository.getAttributeCalledCategory();
   var attributeCalledQuery = repository.getAttributeCalledQuery();
   var categoryCalledQuery = repository.getCategoryCalledQuery();
@@ -64,7 +64,7 @@ PageView.newSection = function (repository, inPage, isNewTransaction) {
   var attributeCalledSection = repository.getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTION);
   var categoryCalledSection = repository.getItemFromUuid(RootView.UUID_FOR_CATEGORY_SECTION);
   
-  if (isNewTransaction) {repository.beginTransaction();}
+  repository.beginTransaction();
   var newSection = repository.newItem("New Section");
   newSection.addEntryForAttribute(attributeCalledCategory, categoryCalledSection);
   inPage.addEntryForAttribute(attributeCalledSection, newSection);
@@ -72,7 +72,7 @@ PageView.newSection = function (repository, inPage, isNewTransaction) {
   var newQuery = repository.newItem("New Query");
   newQuery.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
   newSection.addEntryForAttribute(attributeCalledQuery, newQuery);
-  if (isNewTransaction) {repository.endTransaction();}
+  repository.endTransaction();
   return newSection;
 };
 
@@ -205,7 +205,7 @@ PageView.prototype._buildNewSection = function(inSection, inBeforeElt) {
  * @scope    private instance method
  */
 PageView.prototype._addNewSection = function() {
-  var newSection = PageView.newSection(this.getWorld(), this.myPage ,true);
+  var newSection = PageView.newSection(this.getWorld(), this.myPage);
   this._buildNewSection(newSection, this._editModeDiv).refresh();
 };
 

@@ -61,6 +61,7 @@ function Entry(inWorld, inUuid) {
 
   this.__myAttribute = null;
   this.__myValue = null;
+  this._myType = null;
 }
 
 
@@ -78,8 +79,9 @@ function Entry(inWorld, inUuid) {
  * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry replaces. 
  * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
  * @param    inValue    The value to initialize the entry with. 
+* @param    inType    Optional.  The data type to interpret the value as. 
  */
-Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue) {
+Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue, inType) {
   this._initializeIdentifiedRecord();
 
   if (inItemOrEntry instanceof Entry) {
@@ -92,7 +94,25 @@ Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue) {
   }
   
   this.__myAttribute = inAttribute;
-
+  if (inType) {
+    this._myType = inType;
+  }
+  else {
+    var contentData = inValue;
+    if (Util.isNumber(contentData)) {
+      this._myType = this.getWorld().getTypeCalledNumber();
+    }
+    else if (Util.isString(contentData)) {
+      this._myType = this.getWorld().getTypeCalledText();
+    }
+    else if (Util.isDate(contentData)) {
+      this._myType = this.getWorld().getTypeCalledDate();
+    }
+    else if (contentData instanceof Item) {
+      this._myType = this.getWorld().getTypeCalledItem();
+    }
+    else {Util.assert(false, "unknown data type");}
+  }
   if (Util.isString(inValue)) {
     this.__myValue = Util.getCleanString(inValue);
   } else {
@@ -117,7 +137,7 @@ Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue) {
  * @param    inTimestamp    A Date object with the creation timestamp for this entry. 
  * @param    inUserstamp    The user who created this entry. 
  */
-Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inTimestamp, inUserstamp) {
+Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inTimestamp, inUserstamp, inType) {
   this._rehydrateIdentifiedRecord(inTimestamp, inUserstamp);
 
   if (inItemOrEntry instanceof Entry) {
@@ -131,6 +151,8 @@ Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inTi
 
   this.__myAttribute = inAttribute;
   this.__myValue = inValue;
+  
+  this._myType = inType;
 
   this.__myItem._addRehydratedEntry(this);
 };
@@ -150,6 +172,16 @@ Entry.prototype.getItem = function () {
   return this.__myItem;
 };
 
+
+/**
+ * Returns the type of this entry
+ *
+ * @scope    public instance method
+ * @return   the type of this entry
+ */
+Entry.prototype.getType = function () {
+  return this._myType;
+};
 
 /**
  * If this entry was established as the replacement for a previous

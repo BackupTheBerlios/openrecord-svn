@@ -128,7 +128,7 @@ function testAccessorsForAxiomaticItems() {
 }
 
   
-function testAdditionsAndRetrievals() {
+function noyet_testAdditionsAndRetrievals() {
   var world = new World();
   var nameAttribute = world.getAttributeCalledName();
   
@@ -528,7 +528,23 @@ function testFilteredLists() {
   assertTrue("Should be exactly one more category than before.", listOfCategories.length == origNumberOfCategories + 1);
 }
 
-
+function testItemTypes() {
+  var world = new World();
+  var janesPassword = "jane's password";
+  var userJane = world.newUser("Jane Doe", janesPassword);
+  world.login(userJane, janesPassword);
+  
+  var anEmail = world.newItem("Money saved for you at Nigerian Bank");
+  var fromAttribute = world.newAttribute("From");
+  var dateReceivedAttribute = world.newAttribute("Received");
+  var noOfAttachments = world.newAttribute("Number of attachments");
+  var subjectAttribute = world.newAttribute("Subject");
+  var aPerson = world.newItem("John Doe");
+  var subjectEntry = anEmail.addEntryForAttribute(subjectAttribute, "Money saved for you at Nigerian Bank");
+  var fromEntry = anEmail.addEntryForAttribute(fromAttribute, aPerson);
+  var receivedEntry = anEmail.addEntryForAttribute(dateReceivedAttribute, new Date("6/8/05"));
+  var numAttachmentsEntry = anEmail.addEntryForAttribute(noOfAttachments, 4);
+}
 /*
 function testBigLumpVirtualServerStringOutput() {
   var fileName = "test_data_2005_april_chronological_lump.json";

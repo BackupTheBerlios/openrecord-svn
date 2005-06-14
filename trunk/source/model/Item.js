@@ -147,8 +147,8 @@ Item.prototype.addEntry = function (inValue) {
  * @return   An entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.addEntryForAttribute = function (inAttribute, inValue) {
-  return this.replaceEntryWithEntryForAttribute(null, inAttribute, inValue);
+Item.prototype.addEntryForAttribute = function (inAttribute, inValue, inType) {
+  return this.replaceEntryWithEntryForAttribute(null, inAttribute, inValue, inType);
 };
 
 
@@ -161,9 +161,9 @@ Item.prototype.addEntryForAttribute = function (inAttribute, inValue) {
  * @return   The new replacement entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.replaceEntry = function (inEntry, inValue) {
+Item.prototype.replaceEntry = function (inEntry, inValue, inType) {
   var attribute = inEntry.getAttribute();
-  return this.replaceEntryWithEntryForAttribute(inEntry, attribute, inValue);
+  return this.replaceEntryWithEntryForAttribute(inEntry, attribute, inValue, inType);
 };
 
 
@@ -178,7 +178,7 @@ Item.prototype.replaceEntry = function (inEntry, inValue) {
  * @return   The new replacement entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribute, inValue) {
+Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribute, inValue, inType) {
 
   // If we've just been asked to replace the string "Foo" with the string "Foo",
   // then don't even bother creating a new entry. 
@@ -196,7 +196,7 @@ Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribut
   }
   
   var itemOrEntry = inEntry || this;
-  var entry = this.getWorld()._newEntry(itemOrEntry, inAttribute, inValue);
+  var entry = this.getWorld()._newEntry(itemOrEntry, inAttribute, inValue, inType);
   return entry;
 };
 

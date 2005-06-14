@@ -223,7 +223,6 @@ chao   | 1    IED |         |  9. UI for entering a date literal in a table (and
 -------+----------+---------+----------------------------------------------
 
        
-       
 =======================================================
 Categories and Attributes we might use for release 0.1
 =======================================================
@@ -444,4 +443,13 @@ Tasks we want to defer until after release 0.1
       location: "file:///K:/www/htdocs/openrecord/demo/current/trunk/source/TextView.js Line: 221"]
       line: 0
     
+===========================       
+Issues for post iteration#2
+===========================       
++ How should we rename "VirtualServer"?
++ How should we interoperate with other repositories(openrecord + other sources of data)?
++ Should we rename "World"?
++ Should we adopt "Globals" convention for JSLint?
++ Should we get rid of semi-colon checking in JSLint?
+
 
