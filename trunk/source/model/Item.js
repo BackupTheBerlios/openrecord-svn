@@ -190,6 +190,7 @@ Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribut
     }
   }
   
+  this.getWorld().beginTransaction();
   if (this.__myProvisionalFlag) {
     this.__myProvisionalFlag = false;
     this.getWorld()._provisionalItemJustBecameReal(this);
@@ -197,6 +198,7 @@ Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribut
   
   var itemOrEntry = inEntry || this;
   var entry = this.getWorld()._newEntry(itemOrEntry, inAttribute, inValue, inType);
+  this.getWorld().endTransaction();
   return entry;
 };
 

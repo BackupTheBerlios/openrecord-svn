@@ -1,5 +1,5 @@
 /*****************************************************************************
- LintTest.js
+ Transaction.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -27,32 +27,41 @@
  liability, or tort (including negligence), arising in any way out of or in 
  connection with the use or distribution of the work.
 *****************************************************************************/
- 
 
-function setUp() {
-}
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "Ordinal.js",
-    "Vote.js",
-    "IdentifiedRecord.js",
-    "Item.js",
-    "Entry.js",
-    "Transaction.js",
-    "World.js",
-    "StubVirtualServer.js",
-    "DeltaVirtualServer.js"];
-  var prefix = "../../../source/model/";
-  var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
-}
-
-function tearDown() {
+/**
+ * A Transaction object represents a database transaction.  Each Transaction
+ * contains a list of the records that were created during the transaction.
+ *
+ * @scope    public instance constructor
+ */
+function Transaction() {
+  this._listOfRecords = [];
 }
 
 
+/**
+ * Records the fact that a record was created during the transaction.
+ *
+ * @scope    public instance method
+ * @param    newRecord    A record created during the transaction. 
+ */
+Transaction.prototype.addRecord = function(newRecord) {
+  this._listOfRecords.push(newRecord);
+};
+
+
+/**
+ * Returns a list of all the records created during the transaction.
+ *
+ * @scope    public instance method
+ * @return   A list of records. 
+ */
+Transaction.prototype.getRecords = function() {
+  return this._listOfRecords;
+};
+
+    
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------

@@ -64,11 +64,10 @@ StubVirtualServer.prototype._initialize = function (inWorld) {
   this._countOfNestedTransactions = 0;
   this._currentTransaction = null;
 
-  // this.__myNextAvailableUuid = 1;
   this.__myHashTableOfItemsKeyedByUuid = {};
   this.__myHashTableOfEntriesKeyedByUuid = {};
   this.__myChronologicalListOfRecords = [];
-  this.__myChronologicalListOfNewlyCreatedRecords = [];
+  // this.__myChronologicalListOfNewlyCreatedRecords = [];
   
   this.__myListOfUsers = [];
   this.__myHashTableOfUserAuthenticationInfo = {};
@@ -88,12 +87,17 @@ StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
   this._loadAxiomaticItems();
 };
 
+
 /**
+ * Returns the World instance that this virtual server is using.
  *
+ * @scope    public instance method
+ * @return   A World object. 
  */
 StubVirtualServer.prototype.getWorld = function () {
   return this.__myWorld;
 };
+
 
 // -------------------------------------------------------------------
 // Transaction Methods
@@ -111,8 +115,7 @@ StubVirtualServer.prototype.getWorld = function () {
  */
 StubVirtualServer.prototype.beginTransaction = function() {
   if (this._countOfNestedTransactions === 0) {
-    // PENDING: create a new transaction object
-    // this._currentTransaction = new Transaction();
+    this._currentTransaction = new Transaction();
   }
   this._countOfNestedTransactions += 1;
 };
@@ -129,12 +132,24 @@ StubVirtualServer.prototype.endTransaction = function() {
 
   if (this._countOfNestedTransactions === 0) {
     var listOfChangesMade = this.saveChangesToServer();
+    this._currentTransaction = null;
     if (listOfChangesMade.length > 0) {
       // alert(listOfChangesMade.length + " changes made");
       // Util.displayStatusBlurb(listOfChangesMade.length + " changes made");
       this.__myWorld._notifyObserversOfChanges(listOfChangesMade);
     }
   }
+};
+
+
+/**
+ * Returns the Transaction object for the current transaction.
+ *
+ * @scope    public instance method
+ * @return   A Transaction object, or null if there is no transaction in progress. 
+ */
+StubVirtualServer.prototype.getCurrentTransaction = function () {
+  return this._currentTransaction;
 };
 
 
@@ -195,7 +210,8 @@ StubVirtualServer.prototype._createNewItem = function (inObserver, inProvisional
   item._initialize(inObserver, inProvisionalFlag);
   this.__myHashTableOfItemsKeyedByUuid[uuid] = item;
   if (!inProvisionalFlag) {
-    this.__myChronologicalListOfNewlyCreatedRecords.push(item);
+    this._currentTransaction.addRecord(item);
+    // this.__myChronologicalListOfNewlyCreatedRecords.push(item);
   }
   return item;
 };
@@ -208,7 +224,8 @@ StubVirtualServer.prototype._createNewItem = function (inObserver, inProvisional
  * @param    inItem    The item that was provisional and just became real. 
  */
 StubVirtualServer.prototype._provisionalItemJustBecameReal = function (inItem) {
-  this.__myChronologicalListOfNewlyCreatedRecords.push(inItem);
+  this._currentTransaction.addRecord(inItem);
+  // this.__myChronologicalListOfNewlyCreatedRecords.push(inItem);
 };
 
 
@@ -231,7 +248,8 @@ StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inV
   item.__addEntryToListOfEntriesForAttribute(entry); // PENDING eeks calling a protected method!
   
   this.__myHashTableOfEntriesKeyedByUuid[uuid] = entry;
-  this.__myChronologicalListOfNewlyCreatedRecords.push(entry);
+  this._currentTransaction.addRecord(entry);
+  // this.__myChronologicalListOfNewlyCreatedRecords.push(entry);
   return entry;
 };
  
@@ -248,7 +266,8 @@ StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inV
 StubVirtualServer.prototype.newOrdinal = function (inIdentifiedRecord, inOrdinalNumber) {
   this._throwErrorIfNoUserIsLoggedIn();
   var ordinal = new Ordinal(inIdentifiedRecord, this.__myWorld.getCurrentUser(), inOrdinalNumber);
-  this.__myChronologicalListOfNewlyCreatedRecords.push(ordinal);
+  this._currentTransaction.addRecord(ordinal);
+  // this.__myChronologicalListOfNewlyCreatedRecords.push(ordinal);
   return ordinal;
 };
 
@@ -265,7 +284,8 @@ StubVirtualServer.prototype.newOrdinal = function (inIdentifiedRecord, inOrdinal
 StubVirtualServer.prototype.newVote = function (inIdentifiedRecord, inRetainFlag) {
   this._throwErrorIfNoUserIsLoggedIn();
   var vote = new Vote(inIdentifiedRecord, this.__myWorld.getCurrentUser(), inRetainFlag);
-  this.__myChronologicalListOfNewlyCreatedRecords.push(vote);
+  this._currentTransaction.addRecord(vote);
+  // this.__myChronologicalListOfNewlyCreatedRecords.push(vote);
   return vote;
 };
 
@@ -304,7 +324,6 @@ StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObse
     this.__myCurrentUser = newUser;
     var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
     var entry = newUser.addEntryForAttribute(attributeCalledName, inName);
-    // entry.__myCreationUserstamp = newUser;
     this.__myCurrentUser = null;
   }
   return newUser;
@@ -429,7 +448,7 @@ StubVirtualServer.prototype.logout = function () {
  * @return   The item identified by the given UUID.
  */
 StubVirtualServer.prototype.getItemFromUuid = function (inUuid, inObserver) {
-  // Util.assert(Util.isNumeric(inUuid));
+  // Util.assert(Util.isUuid(inUuid));
   
   var item = this.__myHashTableOfItemsKeyedByUuid[inUuid];
   if (item && inObserver) {
@@ -449,8 +468,10 @@ StubVirtualServer.prototype.saveChangesToServer = function () {
   // The StubVirtualServer doesn't ever actually talk to a server.
   // Other VirtualServer implementations would be expected to actually
   // implement this method such that it saves changes to the server
-  var listOfChangesMade = this.__myChronologicalListOfNewlyCreatedRecords;
-  this.__myChronologicalListOfNewlyCreatedRecords = [];
+  var listOfChangesMade = this._currentTransaction.getRecords();
+  this._currentTransaction = null;
+  // var listOfChangesMade = this.__myChronologicalListOfNewlyCreatedRecords;
+  // this.__myChronologicalListOfNewlyCreatedRecords = [];
   return listOfChangesMade;
 };
   
@@ -655,25 +676,11 @@ StubVirtualServer.prototype._getAuthenticationInfoForUser = function (inUser) {
 StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function (inUuid) {
   var item = this.getItemFromUuid(inUuid);
   if (!item) {
-    /*
-    var uuidAsInt = null;
-    if (Util.isNumber(inUuid)) {
-      uuidAsInt = inUuid;
-    } else {
-      if (Util.isString(inUuid) && Util.isNumeric(inUuid)) {
-        uuidAsInt = parseInt(inUuid);
-      }
-    }
-    if (uuidAsInt) {
-      Util.assert(Util.isNumber(uuidAsInt));
-      this.__myNextAvailableUuid = Math.max(this.__myNextAvailableUuid, (uuidAsInt + 1));   
-    }
-    */
-
     item = new Item(this.__myWorld, inUuid);
     item._initialize();
     this.__myHashTableOfItemsKeyedByUuid[inUuid] = item;
-    this.__myChronologicalListOfNewlyCreatedRecords.push(item);
+    this._currentTransaction.addRecord(item);
+    // this.__myChronologicalListOfNewlyCreatedRecords.push(item);
   }
   return item;
 };
@@ -801,12 +808,12 @@ StubVirtualServer.prototype._loadAxiomaticItems = function () {
 
   this.__myCurrentUser = null;
 
-  for (key in this.__myChronologicalListOfNewlyCreatedRecords) {
-    var newRecord = this.__myChronologicalListOfNewlyCreatedRecords[key];
+  var listOfNewlyCreatedRecords = this._currentTransaction.getRecords();
+  for (key in listOfNewlyCreatedRecords) {
+    var newRecord = listOfNewlyCreatedRecords[key];
     this.__myChronologicalListOfRecords.push(newRecord);
   }
-  var listOfNewlyCreatedRecords = this.__myChronologicalListOfNewlyCreatedRecords;
-  this.__myChronologicalListOfNewlyCreatedRecords = [];
+  this._currentTransaction._listOfRecords = [];
   this.__myWorld.endTransaction();
   return listOfNewlyCreatedRecords;
 };
