@@ -499,7 +499,7 @@ StubVirtualServer.prototype.getResultItemsForQuery = function (inQuery, inObserv
   var listOfQueryResultItems = [];
   var listOfMatchingEntries = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
   var listOfMatchingAttrs = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
-  if (!listOfMatchingEntries || listOfMatchingEntries.length == 0) {
+  if (!listOfMatchingEntries || listOfMatchingEntries.length === 0) {
     return [];
   }
   var matchingAttribute;
