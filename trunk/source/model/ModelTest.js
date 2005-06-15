@@ -35,6 +35,63 @@ function setUp() {
   ModelTestVars = {};
 }
 
+function testGetUserstamp() {
+  var world = new World();
+  var listOfUsers = world.getUsers();  
+  var axiomaticUser = listOfUsers[0];
+  assertTrue('The axiomaticUser created the axiomaticUser', (axiomaticUser.getUserstamp() == axiomaticUser));
+
+  var janesPassword = "jane's password";
+  var userJane = world.newUser("Jane Doe", janesPassword);
+  var passwordForChris = "Kringlishous!";
+  var userChris = world.newUser("Chris Kringle", passwordForChris);
+
+  world.login(userJane, janesPassword);
+
+  assertTrue('The user Jane created the user Jane', (userJane.getUserstamp() == userJane));
+  
+  var starWars = world.newItem("Star Wars");
+  var recoveredUser = starWars.getUserstamp();
+  assertTrue("The user that created 'starWars' should be Jane", recoveredUser == userJane);
+  
+  world.logout();
+  world.login(userChris, passwordForChris);
+  var elephant = world.newItem("Elephant");
+  recoveredUser = elephant.getUserstamp();
+  assertTrue("The user that created 'elephant' should be Chris", recoveredUser == userChris);
+  recoveredUser = starWars.getUserstamp();
+  assertTrue("The user that created 'starWars' should be Jane", recoveredUser == userJane);  
+}
+
+function waitForNextMillisecond() {
+  var now = new Date();
+  var then = now;
+  while (now.valueOf() == then.valueOf()) {
+    now = new Date();
+  };
+}
+
+function testGetTimestamp() {
+  var world = new World();
+  var tZero = new Date();
+  var janesPassword = "jane's password";
+  waitForNextMillisecond();
+  var userJane = world.newUser("Jane Doe", janesPassword);
+  world.login(userJane, janesPassword);
+  waitForNextMillisecond();
+  var starWars = world.newItem("Star Wars");
+  var starWarsTimestamp = starWars.getTimestamp();
+  waitForNextMillisecond();
+  var now = new Date();
+  assertTrue('"Star Wars" has a timestamp in the past', now.valueOf() > starWarsTimestamp);
+  assertTrue('"Star Wars" was created after tZero', starWarsTimestamp > tZero.valueOf());
+  waitForNextMillisecond();
+  var starTrek = world.newItem("Star Trek");
+  var starTrekTimestamp = starTrek.getTimestamp();
+  assertTrue('"Star Wars" was created before "Star Trek"', starWarsTimestamp < starTrekTimestamp);
+  var janesTimestamp = userJane.getTimestamp();
+  assertTrue('"Star Wars" was created after user Jane', starWarsTimestamp > janesTimestamp);
+}
 
 function testLoginLogout() {
   var world = new World();

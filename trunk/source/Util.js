@@ -75,7 +75,6 @@ Util.HEX_RADIX = 16;
 // -------------------------------------------------------------------
 // Util global class variables
 // -------------------------------------------------------------------
-Util._ourUuidPseudoNodeString = null;
 Util._ourUuidClockSeqString = null;
 Util._ourDateValueOfPreviousUuid = null;
 Util._ourNextIntraMillisecondIncrement = 0;
@@ -663,13 +662,10 @@ Util.generateTimeBasedUuid = function(pseudoNode) {
     Util.assert(pseudoNode.length == 12);  
   }
   else {
-    if (!Util._ourUuidPseudoNodeString) {
-      var pseudoNodeIndicatorBit = 0x8000;
-      var random15bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 15) );
-      var leftmost4HexCharacters = (pseudoNodeIndicatorBit | random15bitNumber).toString(Util.HEX_RADIX);
-      Util._ourUuidPseudoNodeString = leftmost4HexCharacters + Util.getRandomEightCharacterHexString();
-    }
-    pseudoNode = Util._ourUuidPseudoNodeString;
+    var pseudoNodeIndicatorBit = 0x8000;
+    var random15bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 15) );
+    var leftmost4HexCharacters = (pseudoNodeIndicatorBit | random15bitNumber).toString(Util.HEX_RADIX);
+    pseudoNode = leftmost4HexCharacters + Util.getRandomEightCharacterHexString();
   }
   if (!Util._ourUuidClockSeqString) {
     var variantCodeForDCEUuids = 0x8000; // 10--------------, i.e. uses only first two of 16 bits.

@@ -311,7 +311,6 @@ StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObse
   }
 
   var newUser = this._createNewItem(inObserver, false);
-  newUser.__myCreationUserstamp = newUser;
   this.__myListOfUsers.push(newUser);
   
   var md5Authentication = null;
@@ -644,10 +643,17 @@ StubVirtualServer.prototype._getIdentifiedRecordFromUuid = function (inUuid) {
  * @scope    private instance method
  * @return   A newly created UUID.
  */
-StubVirtualServer.prototype._getNewUuid = function () {
-  // var newUuid = this.__myNextAvailableUuid;
-  // this.__myNextAvailableUuid += 1;
-  var newUuid = Util.generateRandomUuid();
+StubVirtualServer.prototype._getNewUuid = function() {
+  var newUuid;
+  if (this.__myCurrentUser) {
+    var uuidOfCurrentUser = this.__myCurrentUser._getUuid();
+    var arrayOfParts = uuidOfCurrentUser.split("-");
+    var pseudoNodeOfCurrentUser = arrayOfParts[4];//"0123456789AB";
+    newUuid = Util.generateTimeBasedUuid(pseudoNodeOfCurrentUser);
+  }
+  else {
+    newUuid = Util.generateTimeBasedUuid();
+  }
   return newUuid;
 };
 
@@ -701,7 +707,6 @@ StubVirtualServer.prototype._loadAxiomaticItems = function () {
   
   this.__myWorld.beginTransaction();
   var axiomaticUser = this._getItemFromUuidOrCreateNewItem(World.UUID_FOR_USER_AMY);
-  axiomaticUser.__myCreationUserstamp = axiomaticUser;
   this.__myListOfUsers.push(axiomaticUser);
   this.__myHashTableOfUserAuthenticationInfo[axiomaticUser.getUniqueKeyString()] = null;
   this.__myCurrentUser = axiomaticUser;

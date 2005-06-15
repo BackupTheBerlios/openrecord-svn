@@ -82,8 +82,6 @@ IdentifiedRecord.prototype._IdentifiedRecord = function (inWorld, inUuid) {
  * @scope    protected instance method
  */
 IdentifiedRecord.prototype._initializeIdentifiedRecord = function () {
-  this.__myCreationTimestamp = new Date();
-  this.__myCreationUserstamp = this.getWorld().getCurrentUser();
 };
 
 
@@ -168,8 +166,35 @@ IdentifiedRecord.prototype.getWorld = function () {
  * @scope    public instance method
  * @return   A Date object.
  */
-IdentifiedRecord.prototype.getTimestamp = function () {
-  return this.__myCreationTimestamp;
+IdentifiedRecord.prototype.getTimestamp = function() {
+  if (this.__myCreationTimestamp) {
+    // This case is now here only for the (temporary) benefit of _rehydrateIdentifiedRecord.
+    return this.__myCreationTimestamp;
+  }
+  var hexTimeLow = this.__myUuid.split('-')[0];
+  var hexTimeMid = this.__myUuid.split('-')[1];
+  var hexTimeHigh = this.__myUuid.split('-')[2];
+  var timeLow = parseInt(hexTimeLow, Util.HEX_RADIX);
+  var timeMid = parseInt(hexTimeMid, Util.HEX_RADIX);
+  var timeHigh = parseInt(hexTimeHigh, Util.HEX_RADIX);
+  var hundredNanosecondIntervalsSince1582 = timeHigh & 0x0FFF;
+  hundredNanosecondIntervalsSince1582 <<= 16;
+  hundredNanosecondIntervalsSince1582 += timeMid;
+  // What we really want to do next is shift left 32 bits, but the result will be too big
+  // to fit in an int, so we'll multiply by 2^32, and the result will be a floating point approximation.
+  hundredNanosecondIntervalsSince1582 *= 0x100000000;
+  hundredNanosecondIntervalsSince1582 += timeLow;
+  var millisecondsSince1582 = hundredNanosecondIntervalsSince1582 / 10000;
+
+  // Again, this will be a floating point approximation.
+  // We can make things exact later if we need to.
+  var secondsPerHour = 60 * 60;
+  var hoursBetween1582and1970 = Util.GREGORIAN_CHANGE_OFFSET_IN_HOURS;
+  var secondsBetween1582and1970 = hoursBetween1582and1970 * secondsPerHour;
+  var millisecondsBetween1582and1970 = secondsBetween1582and1970 * 1000;
+
+  var millisecondsSince1970 = millisecondsSince1582 - millisecondsBetween1582and1970;
+  return millisecondsSince1970;
 };
 
 
@@ -179,8 +204,20 @@ IdentifiedRecord.prototype.getTimestamp = function () {
  * @scope    public instance method
  * @return   A user item.
  */
-IdentifiedRecord.prototype.getUserstamp = function () {
-  return this.__myCreationUserstamp;
+IdentifiedRecord.prototype.getUserstamp = function() {
+  if (this.__myCreationUserstamp) {
+    // This case is now here only for the (temporary) benefit of _rehydrateIdentifiedRecord.
+    return this.__myCreationUserstamp;
+  }
+  var allUsers = this.__myWorld.getUsers();
+  var myPseudonode = this.__myUuid.split('-')[4];
+  for (key in allUsers) {
+    var usersPseudonode = allUsers[key]._getUuid().split('-')[4];
+    if (usersPseudonode == myPseudonode) {
+      return allUsers[key];
+    }
+  }
+  throw new Error("User not found.  Database may be corrupted.");
 };
 
 
