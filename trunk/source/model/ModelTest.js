@@ -535,17 +535,18 @@ function testQueries() {
 
   var hasAll;
   var queryForFoods = world.newQueryForItemsByCategory(categoryCalledFood);
-  var queryForCities = world.newQueryForSpecificItems([tokyo, seattle]);
   
   var listOfFoods = world.getResultItemsForQuery(queryForFoods);
   hasAll = Util.areObjectsInSet([apple, brownie, cupcake], listOfFoods);
   assertTrue('Food query returns 3 foods', listOfFoods.length == 3);
   assertTrue('Food query returns all 3 foods', hasAll);
 
+/*  NO LONGER SUPPORT QUERY FOR SPECIFIC ITEMS 6/14/05
+  var queryForCities = world.newQueryForSpecificItems([tokyo, seattle]);
   var listOfCities = world.getResultItemsForQuery(queryForCities);
   hasAll = Util.areObjectsInSet([tokyo, seattle], listOfCities);
   assertTrue('City query returns 2 cities', listOfCities.length == 2);
-  assertTrue('City query returns all cities', hasAll);
+  assertTrue('City query returns all cities', hasAll);*/
 
   world.setItemToBeIncludedInQueryResultList(tokyo, queryForFoods);
   assertTrue('Tokyo is now a food', tokyo.isInCategory(categoryCalledFood));
@@ -555,6 +556,29 @@ function testQueries() {
   assertTrue('Food query returns 4 foods', listOfFoods.length == 4);
   assertTrue('Food query returns all 4 foods', hasAll);
 
+  // test for queries using non-category attribute e.g. continent
+  var attributeCalledContinent = world.newItem("Continent");
+  tokyo.addEntryForAttribute(attributeCalledContinent, "Asia");
+  var beijing = world.newItem("Beijing");
+  beijing.addEntryForAttribute(attributeCalledContinent, "Asia");
+  var seattleEntry = seattle.addEntryForAttribute(attributeCalledContinent, "North America");
+  var asiaQuery = world.newQuery(attributeCalledContinent, "Asia")
+  var listOfCountries = world.getResultItemsForQuery(asiaQuery);
+  assertTrue('Asia query returns 2 countries', listOfCountries.length == 2);
+  hasAll = Util.areObjectsInSet([tokyo,beijing], listOfCountries);
+  assertTrue('Asia query returns all 2 countries', hasAll);
+  
+  var northAmericaQuery = world.newQuery(attributeCalledContinent, "North America");
+  listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
+  assertTrue('North America query returned only Seattle',
+    listOfCountries.length == 1 && Util.isObjectInSet(seattle, listOfCountries));
+    
+  seattle.replaceEntry(seattleEntry, "Asia");
+  var listOfCountries = world.getResultItemsForQuery(asiaQuery);
+  assertTrue('Asia query returns 3 countries', listOfCountries.length == 3);
+  hasAll = Util.areObjectsInSet([tokyo,beijing,seattle], listOfCountries);
+  assertTrue('Asia query returns all 3 countries', hasAll);
+  
   world.logout();
 }
 

@@ -43,13 +43,13 @@
       "timestamp": "1114819457218" }
   },
   // -----------------------------------------------------------------------
-  { "Item": {                             // Matching Category
+  { "Item": {                             // Matching Value
            "uuid": "00000107-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457218" }
   },
   // -----------------------------------------------------------------------
-  { "Item": {                             // Matching Item
+  { "Item": {                             // Matching Attribute
            "uuid": "00000108-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457234" }
@@ -347,12 +347,12 @@
       "timestamp": "1114819457312" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Matching Category
+  { "Entry": {                             // Matching Value
            "uuid": "1486",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "type": "StringValue",
-          "value": "Matching Category",
+          "value": "Matching Value",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457468" }
   },
@@ -360,29 +360,19 @@
   { "Entry": {                             // Attribute
            "uuid": "1487",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+           "item": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "type": "RelatedUuid",
           "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457484" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Category
-           "uuid": "1487888",
-      "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
-           "item": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
-           "type": "RelatedUuid",
-          "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
-      "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
-      "timestamp": "1114819457312" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Matching Item
+  { "Entry": {                             // Matching Attribute
            "uuid": "1488",
       "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
+           "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Attribute
            "type": "StringValue",
-          "value": "Matching Item",
+          "value": "Matching Attribute",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457500" }
   },
@@ -390,19 +380,19 @@
   { "Entry": {                             // Attribute
            "uuid": "1489",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
+           "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Attribute
            "type": "RelatedUuid",
           "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457500" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Item
+  { "Entry": {                             // Attribute
            "uuid": "1489888",
       "attribute": "0000010a-ce7f-11d9-8cd5-0011113ae5d6",                // Expected Type
-           "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
+           "item": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Attribute
            "type": "RelatedUuid",
-          "value": "00000130-ce7f-11d9-8cd5-0011113ae5d6",
+          "value": "00000110-ce7f-11d9-8cd5-0011113ae5d6",
       "userstamp": "00000100-ce7f-11d9-8cd5-0011113ae5d6",                // by (Amy ex machina)
       "timestamp": "1114819457312" }
   },
@@ -811,22 +801,10 @@
       "timestamp": "1114819457734" }
   },
   // -----------------------------------------------------------------------
-  { "Item": {                             // One Book
-           "uuid": "3020",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819457750" }
-  },
-  // -----------------------------------------------------------------------
   { "Item": {                             // Query for all books
            "uuid": "3011",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819457750" }
-  },
-  // -----------------------------------------------------------------------
-  { "Item": {                             // Query for one book
-           "uuid": "3021",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819457765" }
   },
   // -----------------------------------------------------------------------
   { "Item": {                             // Bugs and Features to Implement
@@ -1159,16 +1137,6 @@
       "timestamp": "1114819458828" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // One Book
-           "uuid": "6027",
-      "attribute": "00000300-ce7f-11d9-8cd5-0011113ae5d6",                // Section
-           "item": "3000",                // Book Lists
-           "type": "RelatedUuid",
-          "value": "3020",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458843" }
-  },
-  // -----------------------------------------------------------------------
   { "Entry": {                             // Section
            "uuid": "6028",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
@@ -1219,56 +1187,6 @@
       "timestamp": "1114819458937" }
   },
   // -----------------------------------------------------------------------
-  { "Entry": {                             // Section
-           "uuid": "6033",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "3020",                // One Book
-           "type": "RelatedUuid",
-          "value": "00000201-ce7f-11d9-8cd5-0011113ae5d6",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458968" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // One Book
-           "uuid": "6034",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "3020",                // One Book
-           "type": "StringValue",
-          "value": "One Book",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819458984" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Detail
-           "uuid": "6035",
-      "attribute": "00000400-ce7f-11d9-8cd5-0011113ae5d6",                // Plugin Name
-           "item": "3020",                // One Book
-           "type": "StringValue",
-          "value": "Detail",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819459000" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Query for one book
-           "uuid": "6036",
-      "attribute": "00000106-ce7f-11d9-8cd5-0011113ae5d6",                // Query
-           "item": "3020",                // One Book
-           "type": "RelatedUuid",
-          "value": "3021",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819459031" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // This section shows a just a...
-           "uuid": "6037",
-      "attribute": "00000103-ce7f-11d9-8cd5-0011113ae5d6",                // Summary
-           "item": "3020",                // One Book
-           "type": "StringValue",
-          "value": "This section shows a just a single selected book. The section is populated using a query that asks for just a single book item.",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819459046" }
-  },
-  // -----------------------------------------------------------------------
   { "Entry": {                             // Query
            "uuid": "6038",
       "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
@@ -1287,36 +1205,6 @@
           "value": "Query for all books",
       "userstamp": "1502",                // by (Guest)
       "timestamp": "1114819459093" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Query
-           "uuid": "6041",
-      "attribute": "00000105-ce7f-11d9-8cd5-0011113ae5d6",                // Category
-           "item": "3021",                // Query for one book
-           "type": "RelatedUuid",
-          "value": "00000112-ce7f-11d9-8cd5-0011113ae5d6",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819459140" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // Query for one book
-           "uuid": "6042",
-      "attribute": "00000101-ce7f-11d9-8cd5-0011113ae5d6",                // Name
-           "item": "3021",                // Query for one book
-           "type": "StringValue",
-          "value": "Query for one book",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819459156" }
-  },
-  // -----------------------------------------------------------------------
-  { "Entry": {                             // HTTP: The Definitive Guide
-           "uuid": "6043",
-      "attribute": "00000108-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Item
-           "item": "3021",                // Query for one book
-           "type": "RelatedUuid",
-          "value": "bc9d5cce-99f7-42ad-85dc-36491cac46ba",
-      "userstamp": "1502",                // by (Guest)
-      "timestamp": "1114819459171" }
   },
   // -----------------------------------------------------------------------
   { "Entry": {                             // Page
@@ -1581,7 +1469,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Feature
            "uuid": "6104",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "4011",                // Query for all features
            "type": "RelatedUuid",
           "value": "4102",
@@ -1611,7 +1499,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bug
            "uuid": "6107",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "4021",                // Query for all bugs
            "type": "RelatedUuid",
           "value": "4101",
@@ -1641,7 +1529,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Closed Tasks
            "uuid": "6110",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "4031",                // Query for all closed items
            "type": "RelatedUuid",
           "value": "4103",
@@ -1671,7 +1559,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Bug
            "uuid": "6113",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "4041",                // Query for all closed bugs
            "type": "RelatedUuid",
           "value": "4101",
@@ -1681,7 +1569,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Closed Tasks
            "uuid": "6114",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "4041",                // Query for all closed bugs
            "type": "RelatedUuid",
           "value": "4103",
@@ -2221,7 +2109,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Charity
            "uuid": "6190",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "5011",                // Query for all charities
            "type": "RelatedUuid",
           "value": "5101",
@@ -2588,7 +2476,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Category
            "uuid": "5e551cd6-7cae-4e7b-8a15-ba71f803805e",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
            "type": "RelatedUuid",
           "value": "00000111-ce7f-11d9-8cd5-0011113ae5d6",
@@ -2676,7 +2564,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Attribute
            "uuid": "f9afff15-663e-4b45-8d62-bf2297ec0fe7",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
    "previousEntry": "5e551cd6-7cae-4e7b-8a15-ba71f803805e",
            "type": "RelatedUuid",
@@ -2759,7 +2647,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Person
            "uuid": "a11a8ac9-08d4-460b-8cfe-23ea90b04f7e",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
    "previousEntry": "f9afff15-663e-4b45-8d62-bf2297ec0fe7",
            "type": "RelatedUuid",
@@ -3004,7 +2892,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Publisher
            "uuid": "5cceee12-d202-46ac-8724-0474ba4860ae",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
    "previousEntry": "a11a8ac9-08d4-460b-8cfe-23ea90b04f7e",
            "type": "RelatedUuid",
@@ -3171,7 +3059,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "cd9b4dfb-6fec-4f0f-815b-e0a2ae2ac7c3",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
    "previousEntry": "5cceee12-d202-46ac-8724-0474ba4860ae",
            "type": "RelatedUuid",
@@ -3615,7 +3503,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Book
            "uuid": "0515ceef-33b9-477b-8ebf-66a3d0baf174",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "3011",                // Query for all books
            "type": "RelatedUuid",
           "value": "0d4f1de8-4d5c-49db-8a9e-e8462c95ae6e",
@@ -3636,7 +3524,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Person
            "uuid": "ff73a3d6-7155-44cb-89e9-33a89404f203",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "d634981c-c10d-4526-8b8f-fcc8bd3077d3",                // New Query
    "previousEntry": "cd9b4dfb-6fec-4f0f-815b-e0a2ae2ac7c3",
            "type": "RelatedUuid",
@@ -3798,7 +3686,7 @@
   // -----------------------------------------------------------------------
   { "Entry": {                             // Publisher
            "uuid": "414b2c92-ded7-4071-8ff3-af2468ec665b",
-      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Category
+      "attribute": "00000107-ce7f-11d9-8cd5-0011113ae5d6",                // Matching Value
            "item": "e30ba726-d976-46fb-88ac-7f5e841a6b43",                // New Query
            "type": "RelatedUuid",
           "value": "ea435816-c5c0-482b-8850-5651fbfaad12",

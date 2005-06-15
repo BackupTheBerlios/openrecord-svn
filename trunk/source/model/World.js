@@ -57,8 +57,8 @@ World.UUID_FOR_ATTRIBUTE_SUMMARY       = "00000103-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_BODY          = "00000104-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_CATEGORY      = "00000105-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_QUERY         = "00000106-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY = "00000107-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM = "00000108-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE = "00000107-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE = "00000108-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_UNFILED       = "00000109-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE = "0000010a-ce7f-11d9-8cd5-0011113ae5d6";
 
@@ -116,8 +116,8 @@ function World(virtualServer) {
   this._attributeCalledSummary               = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SUMMARY);
   this._attributeCalledCategory              = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_CATEGORY);
   this._attributeCalledQuery                 = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY);
-  this._attributeCalledQueryMatchingCategory = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
-  this._attributeCalledQueryMatchingItem     = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
+  this._attributeCalledQueryMatchingValue = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE);
+  this._attributeCalledQueryMatchingAttribute     = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE);
   this._attributeCalledUnfiled               = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_UNFILED);
   this._attributeCalledExpectedType          = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE);
 
@@ -370,12 +370,12 @@ World.prototype.getAttributeCalledQuery = function() {
   return this._attributeCalledQuery;
 };
 
-World.prototype.getAttributeCalledQueryMatchingCategory = function() {
-  return this._attributeCalledQueryMatchingCategory;
+World.prototype.getAttributeCalledQueryMatchingValue = function() {
+  return this._attributeCalledQueryMatchingValue;
 };
 
-World.prototype.getAttributeCalledQueryMatchingItem = function() {
-  return this._attributeCalledQueryMatchingItem;
+World.prototype.getAttributeCalledQueryMatchingAttribute = function() {
+  return this._attributeCalledQueryMatchingAttribute;
 };
 
 World.prototype.getAttributeCalledUnfiled = function() {
@@ -606,29 +606,32 @@ World.prototype.newCategory = function(name, observer) {
  * Returns a newly created item representing a query.
  *
  * @scope    public instance method
- * @param    category    Optional. A category item, or an array of category items. 
+ * @param    matchingAttribute Attribute to query against
+ * @param    matchingEntriesOrList an Entry or array of entries to be matched against,  
  * @return   A newly created item representing a query.
  */
-World.prototype.newQueryForItemsByCategory = function(categoryOrListOfCategories) {
+World.prototype.newQuery = function(matchingAttribute, matchingEntriesOrList) {
+  Util.assert(matchingAttribute instanceof Item);
   this.beginTransaction();
   var item = this._virtualServer.newItem("A query");
   var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledQuery = this.getCategoryCalledQuery();
   item.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
 
-  var attributeCalledQueryMatchingCategory = this.getAttributeCalledQueryMatchingCategory();
-  var category;
-  if (categoryOrListOfCategories) {
-    if (categoryOrListOfCategories instanceof Item) {
-      category = categoryOrListOfCategories;
-      item.addEntryForAttribute(attributeCalledQueryMatchingCategory, category);
-    }
-    if (Util.isArray(categoryOrListOfCategories)) {
-      var listOfCategories = categoryOrListOfCategories;
-      for (var key in listOfCategories) {
-        category = listOfCategories[key];
-        item.addEntryForAttribute(attributeCalledQueryMatchingCategory, category);
+  var attributeCalledQueryMatchingAttribute = this.getAttributeCalledQueryMatchingAttribute();
+  var attributeCalledQueryMatchingValue = this.getAttributeCalledQueryMatchingValue();
+  var matchingEntry;
+  item.addEntryForAttribute(attributeCalledQueryMatchingAttribute, matchingAttribute);
+  if (matchingEntriesOrList) {
+    if (Util.isArray(matchingEntriesOrList)) {
+      for (var key in matchingEntriesOrList) {
+        matchingEntry = listOfCategories[key];
+        item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
       }
+    }
+    else {
+      matchingEntry = matchingEntriesOrList;
+      item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
     }
   }
 
@@ -641,9 +644,21 @@ World.prototype.newQueryForItemsByCategory = function(categoryOrListOfCategories
  * Returns a newly created item representing a query.
  *
  * @scope    public instance method
- * @param    itemOrListOfItems    Optional. An item, or an array of items. 
+ * @param    category    Optional. A category item, or an array of category items. 
  * @return   A newly created item representing a query.
  */
+World.prototype.newQueryForItemsByCategory = function(categoryOrListOfCategories) {
+  var attributeCalledCategory = this.getAttributeCalledCategory();
+  return this.newQuery(attributeCalledCategory, categoryOrListOfCategories);
+};
+
+
+/** OBSOLETE - no more support for queries for specific items 
+ * Returns a newly created item representing a query.
+ *
+ * @scope    public instance method
+ * @param    itemOrListOfItems    Optional. An item, or an array of items. 
+ * @return   A newly created item representing a query.
 World.prototype.newQueryForSpecificItems = function(itemOrListOfItems) {
   this.beginTransaction();
   var item = this._virtualServer.newItem("A query");
@@ -668,6 +683,7 @@ World.prototype.newQueryForSpecificItems = function(itemOrListOfItems) {
   this.endTransaction();
   return item;
 };
+*/
 
 
 /**

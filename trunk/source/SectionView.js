@@ -266,38 +266,26 @@ SectionView.prototype.doInitialDisplay = function () {
 SectionView.prototype._refreshQueryEditSpan = function () {
   this._queryEditSpan.innerHTML = '';
   
-  var attributeCalledQueryMatchingCategory = this.getWorld().getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
-  var listOfMatchingCategories = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingCategory);
-  var isCategoryMatchingQuery = (listOfMatchingCategories && (listOfMatchingCategories.length > 0));
-  var selectedCategoryName = isCategoryMatchingQuery ? listOfMatchingCategories[0].getValue().getDisplayName() : "no category selected";
+  var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
+  var listOfMatchingEntries = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingValue);
+  var isCategoryMatchingQuery = (listOfMatchingEntries && (listOfMatchingEntries.length > 0));
+  var selectedCategoryName = isCategoryMatchingQuery ? listOfMatchingEntries[0].getValue().getDisplayName() : "no category selected";
 
   var isEmptyQuery = false;
-  if (!isCategoryMatchingQuery) {
-    var attributeCalledQueryMatchingItem = this.getWorld().getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
-    var listOfMatchingItems = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingItem);
-    var isItemMatchingQuery = (listOfMatchingItems && (listOfMatchingItems.length > 0));
-    isEmptyQuery = !isItemMatchingQuery;
-  }
-  
-  if (isCategoryMatchingQuery || isEmptyQuery) {
-    var listener = this; 
-    var querySelectElement = View.createAndAppendElement(this._queryEditSpan, "select");
-    var listOfCategories = this.getWorld().getCategories();
-    var optionElement = View.createAndAppendElement(querySelectElement, "option");
-    optionElement.setAttribute("value", null);
+  var listener = this; 
+  var querySelectElement = View.createAndAppendElement(this._queryEditSpan, "select");
+  var listOfCategories = this.getWorld().getCategories();
+  var optionElement = View.createAndAppendElement(querySelectElement, "option");
+  optionElement.setAttribute("value", null);
+  Util.addEventListener(optionElement, "click", function(event) {listener.clickOnQueryCategorySelectionMenu(event);});
+  optionElement.innerHTML = "(none)";
+  for (var key in listOfCategories) {
+    var category = listOfCategories[key];
+    optionElement = View.createAndAppendElement(querySelectElement, "option");
+    optionElement.selected = (selectedCategoryName == category.getDisplayName());
+    optionElement.setAttribute("value", category._getUuid());
     Util.addEventListener(optionElement, "click", function(event) {listener.clickOnQueryCategorySelectionMenu(event);});
-    optionElement.innerHTML = "(none)";
-    for (var key in listOfCategories) {
-      var category = listOfCategories[key];
-      optionElement = View.createAndAppendElement(querySelectElement, "option");
-      optionElement.selected = (selectedCategoryName == category.getDisplayName());
-      optionElement.setAttribute("value", category._getUuid());
-      Util.addEventListener(optionElement, "click", function(event) {listener.clickOnQueryCategorySelectionMenu(event);});
-      optionElement.innerHTML = category.getDisplayName();
-    }
-  } else {
-    var textTheGiven = document.createTextNode(" the given");
-    this._queryEditSpan.appendChild(textTheGiven);
+    optionElement.innerHTML = category.getDisplayName();
   }
 };
 
@@ -358,17 +346,17 @@ SectionView.prototype.clickOnQueryCategorySelectionMenu = function (inEventObjec
   var newQueryMatchingCategory = this.getWorld().getItemFromUuid(newChoiceUuid);
   var newChoiceName = newQueryMatchingCategory.getDisplayName();
   
-  var attributeCalledQueryMatchingCategory = this.getWorld().getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
-  var listOfMatchingCategories = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingCategory);
-  var currentQueryMatchingCategoryEntry = listOfMatchingCategories.length > 0? listOfMatchingCategories[0] : null;
-  var currentQueryMatchingCategory = listOfMatchingCategories.length > 0? listOfMatchingCategories[0].getValue() : null;
+  var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
+  var listOfMatchingEntries = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingValue);
+  var currentQueryMatchingCategoryEntry = listOfMatchingEntries.length > 0? listOfMatchingEntries[0] : null;
+  var currentQueryMatchingCategory = listOfMatchingEntries.length > 0? listOfMatchingEntries[0].getValue() : null;
   var currentCategoryName = currentQueryMatchingCategory? currentQueryMatchingCategory.getDisplayName() : "none";
  
   if (currentCategoryName != newChoiceName) {
     if (currentQueryMatchingCategory) {
       this.getQuery().replaceEntry(currentQueryMatchingCategoryEntry, newQueryMatchingCategory);
     } else {
-      this.getQuery().addEntryForAttribute(attributeCalledQueryMatchingCategory, newQueryMatchingCategory);
+      this.getQuery().addEntryForAttribute(attributeCalledQueryMatchingValue, newQueryMatchingCategory);
     }
     // I think we need these next 3 lines in to make sure the view gets updated  
     // to reflect the new query.  When we get a chance we should probably do 

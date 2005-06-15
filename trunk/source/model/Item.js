@@ -253,7 +253,8 @@ Item.prototype.getEntriesForAttribute = function (inAttribute) {
       Util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_UNABRIDGED:
-      filteredListOfEntries = listOfEntries;
+      Util.assert(false);
+      filteredListOfEntries = listOfEntries; //PENDING No such variable as listOfEntries ?!!
       break;
     default:
       // We should never get here.  If we get here, it's an error.
@@ -412,6 +413,29 @@ Item.prototype.toString = function () {
 // -------------------------------------------------------------------
 
 /**
+ * Does this item have an attribute with a particular entry?
+ * Used in getting query results
+ *
+ * @scope public instance method
+ * @return Boolean. True if this item has an attribute with the entry
+ */
+Item.prototype.hasAttributeValue = function (inAttribute, inValue) {
+  Util.assert(inAttribute instanceof Item, inAttribute + ' is not an item');
+  //Util.assert(inValue);
+  var entryList = this.getEntriesForAttribute(inAttribute);
+
+  // look at all the entries this item's attribute is assigned to, 
+  // and see if one of them is "inEntry"
+  for (var key in entryList) {
+    var entry = entryList[key];
+    if (entry.getValue() == inValue) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/**
  * Given a category, returns "true" if the item has been assigned to 
  * that category.
  *
@@ -422,16 +446,7 @@ Item.prototype.isInCategory = function (inCategory) {
   Util.assert(inCategory instanceof Item);
 
   var categoryAttribute = this.getWorld().getAttributeCalledCategory();
-  var entryList = this.getEntriesForAttribute(categoryAttribute);
-  
-  // look at all the categories this item is assigned to, 
-  // and see if one of them is "inCategory"
-  for (var key in entryList) {
-    var entry = entryList[key];
-    if (entry.getValue() == inCategory) {
-      return true;
-    }
-  }
+  return this.hasAttributeValue(categoryAttribute, inCategory);
   
   /*
    * Also returns true if the item has been assigned to some category which is in
@@ -454,8 +469,8 @@ Item.prototype.isInCategory = function (inCategory) {
       return true;
     }
   }
-  */
   return false;
+  */
 };
  
 

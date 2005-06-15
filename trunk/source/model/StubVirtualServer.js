@@ -490,45 +490,43 @@ StubVirtualServer.prototype.saveChangesToServer = function () {
 StubVirtualServer.prototype.getResultItemsForQuery = function (inQuery, inObserver) {
   Util.assert(inQuery instanceof Item);
   
-  var attributeCalledQueryMatchingCategory = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
-  var attributeCalledQueryMatchingItem = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
+  var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
+  var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
 
   var uuid = null;
   var item = null;
   var key;
   var listOfQueryResultItems = [];
-  var listOfMatchingCategories = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingCategory);
-  var listOfMatchingItems = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingItem);
-  var isCategoryMatchingQuery = (listOfMatchingCategories && (listOfMatchingCategories.length > 0));
-  var isItemMatchingQuery = (listOfMatchingItems && (listOfMatchingItems.length > 0));
-
-  Util.assert(!(isCategoryMatchingQuery && isItemMatchingQuery));
-
-  if (isItemMatchingQuery) {
-    for (key in listOfMatchingItems) {
-      var itemEntry = listOfMatchingItems[key];
-      item = itemEntry.getValue();
-      listOfQueryResultItems.push(item);
-    }
+  var listOfMatchingEntries = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
+  var listOfMatchingAttrs = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
+  if (!listOfMatchingEntries || listOfMatchingEntries.length == 0) {
+    return [];
   }
-  
-  if (isCategoryMatchingQuery) {
-    // This is a wildly inefficient search.  But maybe it doesn't matter,
-    // because this code should all be replaced someday by server code.
-    for (uuid in this.__myHashTableOfItemsKeyedByUuid) {
-      item = this.__myHashTableOfItemsKeyedByUuid[uuid];
-      if (!item.hasBeenDeleted()) {
-        var includeItem = true;
-        for (key in listOfMatchingCategories) {
-          var categoryEntry = listOfMatchingCategories[key];
-          var category = categoryEntry.getValue();
-          if (includeItem && !(item.isInCategory(category))) {
-            includeItem = false;
-          }
+  var matchingAttribute;
+  if (listOfMatchingAttrs.length === 0) {
+    // by default matching attribute is category
+    matchingAttribute = this.getWorld().getAttributeCalledCategory();
+  }
+  else {
+    Util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
+    matchingAttribute = listOfMatchingAttrs[0].getValue();
+  }
+
+  // This is a wildly inefficient search.  But maybe it doesn't matter,
+  // because this code should all be replaced someday by server code.
+  for (uuid in this.__myHashTableOfItemsKeyedByUuid) {
+    item = this.__myHashTableOfItemsKeyedByUuid[uuid];
+    if (!item.hasBeenDeleted()) {
+      var includeItem = true;
+      for (key in listOfMatchingEntries) {
+        var matchingEntry = listOfMatchingEntries[key];
+        var match = matchingEntry.getValue();
+        if (includeItem && !(item.hasAttributeValue(matchingAttribute, match))) {
+          includeItem = false;
         }
-        if (includeItem) {
-          listOfQueryResultItems.push(item);
-        }
+      }
+      if (includeItem) {
+        listOfQueryResultItems.push(item);
       }
     }
   }
@@ -551,29 +549,27 @@ StubVirtualServer.prototype.getResultItemsForQuery = function (inQuery, inObserv
 StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inItem, inQuery) {
   Util.assert(inItem instanceof Item);
   Util.assert(inQuery instanceof Item);
+  var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
+  var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
 
-  var attributeCalledQueryMatchingCategory = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY);
-  var attributeCalledQueryMatchingItem = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM);
-
-  var listOfMatchingCategories = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingCategory);
-  var listOfMatchingItems = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingItem);
-  var isCategoryMatchingQuery = (listOfMatchingCategories && (listOfMatchingCategories.length > 0));
-  var isItemMatchingQuery = (listOfMatchingItems && (listOfMatchingItems.length > 0));
-
-  Util.assert(!(isCategoryMatchingQuery && isItemMatchingQuery));
-
-  if (isItemMatchingQuery) {
-    inQuery.addEntryForAttribute(attributeCalledQueryMatchingItem, inItem);
+  var listOfMatchingEntries = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
+  var listOfMatchingAttrs = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
+  Util.assert(listOfMatchingEntries && (listOfMatchingEntries.length > 0));
+  var matchingAttribute;
+  if (listOfMatchingAttrs.length === 0) {
+    // by default matching attribute is category
+    matchingAttribute = this.getWorld().getAttributeCalledCategory();
   }
-  
-  var attributeCalledCategory = this.__myWorld.getAttributeCalledCategory();
-  if (isCategoryMatchingQuery) {
-    for (var key in listOfMatchingCategories) {
-      var categoryEntry = listOfMatchingCategories[key];
-      var category = categoryEntry.getValue();
-      if (!(inItem.isInCategory(category))) {
-        inItem.addEntryForAttribute(attributeCalledCategory, category);
-      }
+  else {
+    Util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
+    matchingAttribute = listOfMatchingAttrs[0].getValue();
+  }
+
+  for (var key in listOfMatchingEntries) {
+    var matchingEntry = listOfMatchingEntries[key];
+    var match = matchingEntry.getValue();
+    if (!(inItem.isInCategory(match))) {
+      inItem.addEntryForAttribute(matchingAttribute, match);
     }
   }
 };
@@ -719,8 +715,8 @@ StubVirtualServer.prototype._loadAxiomaticItems = function () {
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_BODY]          = "Body";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_CATEGORY]      = "Category";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY]         = "Query";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY] = "Matching Category";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM] = "Matching Item";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE] = "Matching Value";
+  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE] = "Matching Attribute";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED]       = "Unfiled Entry";
   hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE] = "Expected Type";
 
@@ -764,8 +760,8 @@ StubVirtualServer.prototype._loadAxiomaticItems = function () {
   hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_BODY]          = [World.UUID_FOR_TYPE_TEXT];
   hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_CATEGORY]      = [World.UUID_FOR_CATEGORY_CATEGORY];
   hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY]         = [World.UUID_FOR_CATEGORY_QUERY];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_CATEGORY] = [World.UUID_FOR_CATEGORY_CATEGORY];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ITEM] = [World.UUID_FOR_TYPE_ITEM];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE] = [World.UUID_FOR_CATEGORY_CATEGORY];
+  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE] = [World.UUID_FOR_TYPE_ITEM];
   hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED]       = [World.UUID_FOR_TYPE_ANYTHING];
   hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE] = [World.UUID_FOR_CATEGORY_TYPE, World.UUID_FOR_CATEGORY_CATEGORY];
 

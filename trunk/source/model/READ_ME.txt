@@ -91,7 +91,6 @@ World methods -------------------
   world.newAttribute()
   world.newCategory()
   world.newQueryForItemsByCategory()
-  world.newQueryForSpecificItems()
   
   world.getItemsInCategory()
   world.getResultItemsForQuery() 
