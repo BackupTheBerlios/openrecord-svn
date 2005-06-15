@@ -178,7 +178,7 @@ Util.assert = function (inBoolean, inMessage) {
       }
       stackString = stackList.join("\n");
 
-      Util.ourErrorReporter("An assert statement failed with mesg: \n" + inMessage + " \nThe method Util.assert() was called with a 'false' value.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
+      Util.ourErrorReporter("An assert statement failed with message: \n" + inMessage + " \nThe method Util.assert() was called with a 'false' value.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
     }
   } else {
     Util.ourErrorReporter("An assert statement went sour.\nThe method Util.assert() was passed a non-boolean argument.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));

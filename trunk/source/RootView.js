@@ -57,13 +57,10 @@ RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL = "edit_mode_only_control";
 
 RootView.CONTROL_SPAN_CLASS = "control_span";
 
-// RootView.UUID_FOR_CATEGORY_PAGE = 145;
-// RootView.UUID_FOR_CATEGORY_SECTION = 146;  // PENDING: not used?
-// RootView.UUID_FOR_HOME_PAGE = 2000;
-RootView.UUID_FOR_CATEGORY_PAGE    = "00000200-ce7f-11d9-8cd5-0011113ae5d6";
-RootView.UUID_FOR_CATEGORY_SECTION = "00000201-ce7f-11d9-8cd5-0011113ae5d6";
+RootView.UUID_FOR_CATEGORY_PAGE    = "00020000-ce7f-11d9-8cd5-0011113ae5d6";
+RootView.UUID_FOR_CATEGORY_SECTION = "00020100-ce7f-11d9-8cd5-0011113ae5d6";
 
-RootView.UUID_FOR_HOME_PAGE        = "00000210-ce7f-11d9-8cd5-0011113ae5d6";
+RootView.UUID_FOR_HOME_PAGE        = "00050000-ce7f-11d9-8cd5-0011113ae5d6";
 
 
 // -------------------------------------------------------------------

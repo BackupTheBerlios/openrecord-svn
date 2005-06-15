@@ -45,7 +45,7 @@ window.doOnloadActions = function() {
   
   var pathToDemoRepository = "repositories/demo_page/";
   
-  var repositoryFileName = "2005_may_chronological_list.json";
+  var repositoryFileName = "2005_june_chronological_list.json";
   var repositoryUrl = pathToDemoRepository + repositoryFileName;
   var repositoryContentString = Util.getStringContentsOfFileAtURL(repositoryUrl);
   repositoryContentString += " ] }";

@@ -1,8 +1,9 @@
 // User list, in JSON format
 { "format": "2005_MAY_USER_LIST", 
   "users": [
-    { "uuid": "1502", "password": "084e0343a0486ff05530df6c705c8bb4" },
-    { "uuid": "6239", "password": "92eb5ffee6ae2fec3ad71c777531578f" },
-    { "uuid": "6241", "password": null },
-    { "uuid": "6243", "password": null } ]
+    { "uuid": "2c4fa780-dde4-11d9-9c71-8022ab6bc8ae", "password": "92eb5ffee6ae2fec3ad71c777531578f" },
+    { "uuid": "90e02170-dde4-11d9-9c71-e24829d2f59b", "password": null },
+    { "uuid": "97d040f0-dde4-11d9-9c71-c103016080e1", "password": null },
+    { "uuid": "9c3596e0-dde4-11d9-9c71-b6ac85cc6d5f", "password": null },
+    { "uuid": "a00bf340-dde4-11d9-9c71-dae11c269bc7", "password": null } ]
 }

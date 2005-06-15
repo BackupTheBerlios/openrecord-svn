@@ -27,7 +27,7 @@
  liability, or tort (including negligence), arising in any way out of or in 
  connection with the use or distribution of the work.
 *****************************************************************************/
- 
+
 
 // -------------------------------------------------------------------
 // Dependencies:
@@ -53,10 +53,11 @@ DeltaVirtualServer.JSON_FORMAT_2005_MARCH = "2005_MARCH_ITEM_CENTRIC_LIST";
 DeltaVirtualServer.JSON_FORMAT_2005_APRIL = "2005_APRIL_CHRONOLOGICAL_LIST";
 DeltaVirtualServer.JSON_FORMAT_2005_MAY_RECORDS = "2005_MAY_CHRONOLOGICAL_LIST";
 DeltaVirtualServer.JSON_FORMAT_2005_MAY_USERS = "2005_MAY_USER_LIST";
+DeltaVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS = "2005_JUNE_CHRONOLOGICAL_LIST";
 
 DeltaVirtualServer.JSON_MEMBER_TYPE = "type";
 DeltaVirtualServer.JSON_MEMBER_VALUE = "value";
-DeltaVirtualServer.JSON_TYPE_STRING_VALUE = "StringValue";
+DeltaVirtualServer.JSON_TYPE_TEXT_VALUE = "TextValue";
 DeltaVirtualServer.JSON_TYPE_UUID = "Uuid";
 DeltaVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
 DeltaVirtualServer.JSON_TYPE_RELATED_UUID = "RelatedUuid";
@@ -130,7 +131,7 @@ DeltaVirtualServer.prototype._buildTypeHashTable = function () {
   */
 
   this._myHashTableOfTypesKeyedByToken = {};
-  this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_STRING_VALUE] = text;
+  this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_TEXT_VALUE] = text;
   this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE] = number;
   this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_DATE_VALUE] = dateType;
   this._myHashTableOfTypesKeyedByToken[DeltaVirtualServer.JSON_TYPE_CHECKMARK_VALUE] = checkMark;
@@ -160,7 +161,7 @@ DeltaVirtualServer.prototype._loadWorldFromJsonStrings = function (inJsonReposit
   eval("dehydratedRecords = " + inJsonRepositoryString + ";");
   Util.assert(Util.isObject(dehydratedRecords));
   var recordFormat = dehydratedRecords[DeltaVirtualServer.JSON_MEMBER_FORMAT];
-  Util.assert(recordFormat == DeltaVirtualServer.JSON_FORMAT_2005_MAY_RECORDS);
+  Util.assert(recordFormat == DeltaVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS);
   var listOfRecords = dehydratedRecords[DeltaVirtualServer.JSON_MEMBER_RECORDS];
   Util.assert(Util.isArray(listOfRecords));
   
@@ -242,11 +243,13 @@ DeltaVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
   
       var contents = dehydratedItem || dehydratedVote || dehydratedOrdinal || dehydratedEntry;
   
-      var timestampString = contents[DeltaVirtualServer.JSON_MEMBER_TIMESTAMP];
-      var userstampUuid = contents[DeltaVirtualServer.JSON_MEMBER_USERSTAMP];
-      var timestamp = new Date(new Number(timestampString));
-      var userstamp = this.__getItemFromUuidOrBootstrapItem(userstampUuid);
-  
+      // var timestampString = contents[DeltaVirtualServer.JSON_MEMBER_TIMESTAMP];
+      // var userstampUuid = contents[DeltaVirtualServer.JSON_MEMBER_USERSTAMP];
+      // var timestamp = new Date(new Number(timestampString));
+      // var userstamp = this.__getItemFromUuidOrBootstrapItem(userstampUuid);
+      var timestamp = null;
+      var userstamp = null;
+      
       if (dehydratedItem) {
         itemUuid = dehydratedItem[DeltaVirtualServer.JSON_MEMBER_UUID];
         item = this.__getItemFromUuidOrBootstrapItem(itemUuid);
@@ -289,7 +292,7 @@ DeltaVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
           case DeltaVirtualServer.JSON_TYPE_RELATED_UUID:
             finalData = this.__getItemFromUuidOrBootstrapItem(rawData);
             break;
-          case DeltaVirtualServer.JSON_TYPE_STRING_VALUE:
+          case DeltaVirtualServer.JSON_TYPE_TEXT_VALUE:
             finalData = rawData;
             break;
           case DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE:
@@ -447,19 +450,19 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
       listOfStrings.push(indent + '{ "' + DeltaVirtualServer.JSON_MEMBER_ITEM_CLASS + '": ' + '{');
       itemDisplayNameSubstring = this.truncateString(item.getDisplayName());
       listOfStrings.push('                                               // ' + itemDisplayNameSubstring + '\n');
-      listOfStrings.push(indent + '         "' + DeltaVirtualServer.JSON_MEMBER_UUID + '": "' + item._getUuid() + '",\n');
+      listOfStrings.push(indent + '         "' + DeltaVirtualServer.JSON_MEMBER_UUID + '": "' + item._getUuid() + '"');
     }
     if (record instanceof Vote) {
       var vote = record;
       listOfStrings.push(indent + '{ "' + DeltaVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{' + '\n');
       listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getIdentifiedRecord()._getUuid() + '",\n');
-      listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '",\n');
+      listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '"');
     }
     if (record instanceof Ordinal) {
       var ordinal = record;
       listOfStrings.push(indent + '{ "' + DeltaVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
       listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getIdentifiedRecord()._getUuid() + '",\n');
-      listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '",\n');
+      listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '"');
     }
     if (record instanceof Entry) {
       var entry = record;
@@ -491,7 +494,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
         case DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE: 
           valueString = contentData;
           break;
-        case DeltaVirtualServer.JSON_TYPE_STRING_VALUE: 
+        case DeltaVirtualServer.JSON_TYPE_TEXT_VALUE: 
           valueString = '"' + contentData + '"';
           break;
         case DeltaVirtualServer.JSON_TYPE_DATE_VALUE: 
@@ -503,14 +506,15 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
         default:
           Util.assert(false, "no such type: " + typeToken);
       }
-      listOfStrings.push(indent + '        "' + DeltaVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString + ',\n');
+      listOfStrings.push(indent + '        "' + DeltaVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString + '');
     }
-    Util.assert(record.getUserstamp() !== null);
-    listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_USERSTAMP + '": "' + record.getUserstamp()._getUuid() + '",');
-    var userDisplayName = record.getUserstamp().getDisplayName();
-    var userDisplayNameSubstring = this.truncateString(userDisplayName);
-    listOfStrings.push('  // by (' + userDisplayNameSubstring + ')\n');
-    listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + record.getTimestamp().valueOf() + '" }\n');
+    listOfStrings.push('  }');
+    // Util.assert(record.getUserstamp() !== null);
+    // listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_USERSTAMP + '": "' + record.getUserstamp()._getUuid() + '",');
+    // var userDisplayName = record.getUserstamp().getDisplayName();
+    // var userDisplayNameSubstring = this.truncateString(userDisplayName);
+    // listOfStrings.push('  // by (' + userDisplayNameSubstring + ')\n');
+    // listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + record.getTimestamp().valueOf() + '" }\n');
     listOfStrings.push(indent + '}');
   }
   

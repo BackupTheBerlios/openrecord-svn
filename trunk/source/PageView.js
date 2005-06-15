@@ -47,8 +47,7 @@ PageView.ELEMENT_ID_SECTION_DIV_PREFIX = "section_view_";
 PageView.ELEMENT_ID_SECTION_DIV_MIDFIX = "_in_page_";
 PageView.ELEMENT_ID_SUMMARY_VIEW_DIV_PREFIX = "_summary_view_for_page_";
 
-//PageView.UUID_FOR_ATTRIBUTE_SECTION = 108;
-PageView.UUID_FOR_ATTRIBUTE_SECTION = "00000300-ce7f-11d9-8cd5-0011113ae5d6";
+PageView.UUID_FOR_ATTRIBUTE_SECTION = "00030000-ce7f-11d9-8cd5-0011113ae5d6";
 
 /**
  * Creates a new section in the repository

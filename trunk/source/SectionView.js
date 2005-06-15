@@ -71,8 +71,7 @@ SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX = "_summary_div";
 SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER = "section_number";
 SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER = "cell_number";
 
-// SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME = 113;
-SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME = "00000400-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME = "00040000-ce7f-11d9-8cd5-0011113ae5d6";
 
 // -------------------------------------------------------------------
 // SectionView class properties
