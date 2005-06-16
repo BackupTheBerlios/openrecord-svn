@@ -568,7 +568,7 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
 
   var listOfMatchingEntries = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
   var listOfMatchingAttrs = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
-  Util.assert(listOfMatchingEntries && (listOfMatchingEntries.length > 0));
+  if (!(listOfMatchingEntries && (listOfMatchingEntries.length > 0))) {return;} // query not fully formed, so nothing to add
   var matchingAttribute;
   if (listOfMatchingAttrs.length === 0) {
     // by default matching attribute is category
