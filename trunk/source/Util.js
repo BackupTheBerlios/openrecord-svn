@@ -61,7 +61,7 @@ function Util() {
 Util.ASCII_VALUE_FOR_RETURN = 13;
 Util.ASCII_VALUE_FOR_TAB = 9;
 Util.ASCII_VALUE_FOR_ESCAPE = 27;
-
+Util.ABBREV_MONTHS_ARRAY = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 // &#37; = %
 // &#38; = &
 // &#39; = '

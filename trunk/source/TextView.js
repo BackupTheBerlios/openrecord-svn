@@ -306,7 +306,7 @@ if (value && Util.isString(value)) {
             break;
           case typeCalledDate:
             var dateVal = Date.parse(value);
-            if (dateVal != NaN) {return new Date(value);}
+            if (!isNaN(dateVal)) {return new Date(value);}
             break;
           default:
             if (aType.isInCategory(categoryCalledCategory)) {
@@ -338,9 +338,11 @@ TextView.prototype._writeValue = function(value) {
     var oldValue = this._entry.getValue();
     if (oldValue != value) {
       this._entry = this._item.replaceEntry(this._entry, value);
+      this._restoreText(true);
     }
   } else if (value) {
     this._entry = this._item.addEntryForAttribute(this._attribute, value);
+    this._restoreText(true);
   }
 };
 
@@ -362,11 +364,15 @@ TextView.prototype._getText = function() {
  *
  * @scope    private instance method
  */
-TextView.prototype._restoreText = function() {
-  Util.assert(this._isEditing);
+TextView.prototype._restoreText = function(dontSelect) {
   var oldText = (this._entry) ?  this._entry.getDisplayString() : '';
-  this._editField.value = oldText;
-  this._editField.select();
+  if (this._isEditing) {
+    this._editField.value = oldText;
+  }
+  else {
+    this._textNode.data = oldText;
+  }
+  if (!dontSelect) {this._editField.select();}
 };
 
 

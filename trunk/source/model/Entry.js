@@ -224,13 +224,15 @@ Entry.prototype.getValue = function () {
  * @return   A string representing the literal data in this entry.
  */
 Entry.prototype.getDisplayString = function () {
-  var returnString = "";
   if (this.__myValue instanceof Item) {
-    returnString += this.__myValue.getDisplayName();
-  } else {
-    returnString += "" + this.__myValue;
+    return this.__myValue.getDisplayName();
+  } else if (this.__myValue instanceof Date) {
+    var aDate = this.__myValue;
+    return Util.ABBREV_MONTHS_ARRAY[aDate.getMonth()] + ' ' + aDate.getDate() + ', '+ (aDate.getYear()+1900);
   }
-  return returnString;
+  else {
+    return "" + this.__myValue;
+  }
 };
 
 

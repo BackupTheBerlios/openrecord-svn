@@ -571,13 +571,21 @@ function testQueries() {
   var northAmericaQuery = world.newQuery(attributeCalledContinent, "North America");
   listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
   assertTrue('North America query returned only Seattle',
-    listOfCountries.length == 1 && Util.isObjectInSet(seattle, listOfCountries));
+  listOfCountries.length == 1 && Util.isObjectInSet(seattle, listOfCountries));
     
-  seattle.replaceEntry(seattleEntry, "Asia");
-  var listOfCountries = world.getResultItemsForQuery(asiaQuery);
+  seattle.addEntryForAttribute(attributeCalledContinent, "Asia");
+  listOfCountries = world.getResultItemsForQuery(asiaQuery);
   assertTrue('Asia query returns 3 countries', listOfCountries.length == 3);
   hasAll = Util.areObjectsInSet([tokyo,beijing,seattle], listOfCountries);
   assertTrue('Asia query returns all 3 countries', hasAll);
+  
+  world.setItemToBeIncludedInQueryResultList(beijing, northAmericaQuery);
+  listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
+  assertTrue('Beijing is now in North America',Util.isObjectInSet(beijing,listOfCountries));
+  assertTrue('North America query returns 2 countries',listOfCountries.length == 2);
+  world.setItemToBeIncludedInQueryResultList(seattle, northAmericaQuery);
+  listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
+  assertTrue('North America still returns only 2 countries',listOfCountries.length == 2);
   
   world.logout();
 }

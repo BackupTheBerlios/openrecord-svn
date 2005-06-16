@@ -582,7 +582,7 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
   for (var key in listOfMatchingEntries) {
     var matchingEntry = listOfMatchingEntries[key];
     var match = matchingEntry.getValue();
-    if (!(inItem.isInCategory(match))) {
+    if (!inItem.hasAttributeValue(matchingAttribute, match)) {
       inItem.addEntryForAttribute(matchingAttribute, match);
     }
   }

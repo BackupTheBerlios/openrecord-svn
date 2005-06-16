@@ -298,9 +298,11 @@ DeltaVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
           case DeltaVirtualServer.JSON_TYPE_NUMBER_VALUE:
             finalData = rawData;
             break;
-          case DeltaVirtualServer.JSON_TYPE_Date_VALUE:
+          case DeltaVirtualServer.JSON_TYPE_DATE_VALUE:
             finalData = new Date(rawData);
             break;
+          default:
+            Util.assert(false,'Unknown data type while _rehydrating()');
         }
         var entry = this.__getEntryFromUuidOrBootstrapEntry(entryUuid);
         var itemOrEntry = previousEntry || item;
