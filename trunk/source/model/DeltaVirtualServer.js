@@ -225,8 +225,8 @@ DeltaVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
   var key;
   var itemUuid;
   var item;
-  var identifiedRecordUuid;
-  var identifiedRecord;
+  var contentRecordUuid;
+  var contentRecord;
   
   for (key in inListOfRecords) {
     var dehydratedRecord = inListOfRecords[key];
@@ -258,16 +258,16 @@ DeltaVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
       }
       if (dehydratedVote) {
         var retainFlag = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG];
-        identifiedRecordUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RECORD];
-        identifiedRecord = this._getIdentifiedRecordFromUuid(identifiedRecordUuid);
-        var vote = new Vote(identifiedRecord, userstamp, retainFlag, timestamp);
+        contentRecordUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RECORD];
+        contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
+        var vote = new Vote(contentRecord, userstamp, retainFlag, timestamp);
         this.__myChronologicalListOfRecords.push(vote);
       }
       if (dehydratedOrdinal) {
         var ordinalNumber = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER];
-        identifiedRecordUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RECORD];
-        identifiedRecord = this._getIdentifiedRecordFromUuid(identifiedRecordUuid);
-        var ordinal = new Ordinal(identifiedRecord, userstamp, ordinalNumber, timestamp);
+        contentRecordUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RECORD];
+        contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
+        var ordinal = new Ordinal(contentRecord, userstamp, ordinalNumber, timestamp);
         this.__myChronologicalListOfRecords.push(ordinal);
       }
       if (dehydratedEntry) {
@@ -434,13 +434,13 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
   var indent = inIndent || "";
   var key;
   var listOfStrings = [];
-  var firstIdentifiedRecord = true;
+  var firstContentRecord = true;
   var itemDisplayNameSubstring;
 
   for (key in inListOfRecords) {
     var record = inListOfRecords[key];
-    if (firstIdentifiedRecord) {
-      firstIdentifiedRecord = false;
+    if (firstContentRecord) {
+      firstContentRecord = false;
     } else {
       listOfStrings.push(',\n');
     }
@@ -455,13 +455,13 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
     if (record instanceof Vote) {
       var vote = record;
       listOfStrings.push(indent + '{ "' + DeltaVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{' + '\n');
-      listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getIdentifiedRecord()._getUuid() + '",\n');
+      listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getContentRecord()._getUuid() + '",\n');
       listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '"');
     }
     if (record instanceof Ordinal) {
       var ordinal = record;
       listOfStrings.push(indent + '{ "' + DeltaVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
-      listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getIdentifiedRecord()._getUuid() + '",\n');
+      listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getContentRecord()._getUuid() + '",\n');
       listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '"');
     }
     if (record instanceof Entry) {
@@ -542,11 +542,11 @@ DeltaVirtualServer.prototype.__getJsonStringRepresentingUserList = function (inC
   }
   
   listOfStrings.push('  "' + DeltaVirtualServer.JSON_MEMBER_USERS + '": ' + '[\n');
-  var firstIdentifiedRecord = true;
+  var firstContentRecord = true;
   for (key in this.__myListOfUsers) {
     var user = this.__myListOfUsers[key];
-    if (firstIdentifiedRecord) {
-      firstIdentifiedRecord = false;
+    if (firstContentRecord) {
+      firstContentRecord = false;
     } else {
       listOfStrings.push(',\n');
     }

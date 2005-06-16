@@ -34,7 +34,7 @@
 //   Util.js
 //   World.js
 //   Item.js
-//   IdentifiedRecord.js
+//   ContentRecord.js
 //   Ordinal.js
 //   Entry.js
 //   Vote.js
@@ -258,14 +258,14 @@ StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inV
  * Returns a newly created ordinal.
  *
  * @scope    public instance method
- * @param    inIdentifiedRecord    The identifiedRecord that this is an ordinal for. 
+ * @param    inContentRecord    The contentRecord that this is an ordinal for. 
  * @param    inOrdinalNumber    The ordinal number itself. 
  * @return   A newly created ordinal.
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype.newOrdinal = function (inIdentifiedRecord, inOrdinalNumber) {
+StubVirtualServer.prototype.newOrdinal = function (inContentRecord, inOrdinalNumber) {
   this._throwErrorIfNoUserIsLoggedIn();
-  var ordinal = new Ordinal(inIdentifiedRecord, this.__myWorld.getCurrentUser(), inOrdinalNumber);
+  var ordinal = new Ordinal(inContentRecord, this.__myWorld.getCurrentUser(), inOrdinalNumber);
   this._currentTransaction.addRecord(ordinal);
   // this.__myChronologicalListOfNewlyCreatedRecords.push(ordinal);
   return ordinal;
@@ -276,14 +276,14 @@ StubVirtualServer.prototype.newOrdinal = function (inIdentifiedRecord, inOrdinal
  * Returns a newly created vote.
  *
  * @scope    public instance method
- * @param    inIdentifiedRecord    The identifiedRecord to attach this vote to. 
+ * @param    inContentRecord    The contentRecord to attach this vote to. 
  * @param    inRetainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  * @return   A newly created vote.
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype.newVote = function (inIdentifiedRecord, inRetainFlag) {
+StubVirtualServer.prototype.newVote = function (inContentRecord, inRetainFlag) {
   this._throwErrorIfNoUserIsLoggedIn();
-  var vote = new Vote(inIdentifiedRecord, this.__myWorld.getCurrentUser(), inRetainFlag);
+  var vote = new Vote(inContentRecord, this.__myWorld.getCurrentUser(), inRetainFlag);
   this._currentTransaction.addRecord(vote);
   // this.__myChronologicalListOfNewlyCreatedRecords.push(vote);
   return vote;
@@ -545,7 +545,7 @@ StubVirtualServer.prototype.getResultItemsForQuery = function (inQuery, inObserv
     }
   }
   
-  listOfQueryResultItems.sort(IdentifiedRecord.compareOrdinals);
+  listOfQueryResultItems.sort(ContentRecord.compareOrdinals);
   return listOfQueryResultItems; 
 };
 
@@ -607,7 +607,7 @@ StubVirtualServer.prototype.getItemsInCategory = function (inCategory) {
       listOfItems.push(item);
     }
   }
-  listOfItems.sort(IdentifiedRecord.compareOrdinals);
+  listOfItems.sort(ContentRecord.compareOrdinals);
   return listOfItems; 
 };
 
@@ -637,7 +637,7 @@ StubVirtualServer.prototype._throwErrorIfNoUserIsLoggedIn = function () {
  * @param    inUuid    The UUID of the item or entry to be returned. 
  * @return   The item or entry identified by the given UUID.
  */
-StubVirtualServer.prototype._getIdentifiedRecordFromUuid = function (inUuid) {
+StubVirtualServer.prototype._getContentRecordFromUuid = function (inUuid) {
   var item = this.getItemFromUuid(inUuid);
   if (item) {
     return item;

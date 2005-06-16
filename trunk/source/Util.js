@@ -32,6 +32,11 @@
 *****************************************************************************/
  
 
+// -------------------------------------------------------------------
+// Dependencies, expressed in the syntax that JSLint understands:
+/*global window, document, hex_md5 */
+// -------------------------------------------------------------------
+
 /**
  * The Util class offers general utility methods that might
  * be useful in a wide variety of applications.
@@ -329,7 +334,7 @@ Util.isUuid = function (inValue) {
   if ((typeof inValue) != "string") {
     return false;
   }
-  return (uuid.length == 36);  
+  return (inValue.length == 36);  
 };
 
 
@@ -365,7 +370,7 @@ Util.isHashTable = function (inValue) {
 // -------------------------------------------------------------------
 
 Util.getArrayIndex = function(inArray, inElt) {
-  for (i=0; i<inArray.length; ++i) {
+  for (var i=0; i<inArray.length; ++i) {
     if (inArray[i] == inElt) {return i;}
   }
   return -1;
@@ -818,7 +823,7 @@ Function.prototype.bindAsEventListener = function (object) {
  * @return   A string containing the contents of the file.
  */
 Util.getStringContentsOfFileAtURL = function (inUrl) {
-  var anXMLHttpRequestObject = new XMLHttpRequest();
+  var anXMLHttpRequestObject = new window.XMLHttpRequest();
   anXMLHttpRequestObject.open("GET", inUrl, false);
   anXMLHttpRequestObject.send(null);
   var fileContents = anXMLHttpRequestObject.responseText;

@@ -194,7 +194,7 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
       item = record;
     }
     if ((record instanceof Vote) || (record instanceof Ordinal)) {
-      itemOrEntry = record.getIdentifiedRecord();
+      itemOrEntry = record.getContentRecord();
       if (itemOrEntry instanceof Item) {
         item = itemOrEntry;
       }
@@ -342,7 +342,7 @@ World.prototype._getFilteredList = function(unfilteredList) {
       break;
   }
 
-  filteredList.sort(IdentifiedRecord.compareOrdinals);
+  filteredList.sort(ContentRecord.compareOrdinals);
   return filteredList;
 };
 
@@ -707,13 +707,13 @@ World.prototype._newEntry = function(itemOrEntry, attribute, value, type) {
  * Returns a newly created ordinal.
  *
  * @scope    protected instance method
- * @param    identifiedRecord    The identifiedRecord that this is an ordinal for. 
+ * @param    contentRecord    The contentRecord that this is an ordinal for. 
  * @param    ordinalNumber    The ordinal number itself. 
  * @return   A newly created ordinal.
  */
-World.prototype._newOrdinal = function(identifiedRecord, ordinalNumber) {
+World.prototype._newOrdinal = function(contentRecord, ordinalNumber) {
   this.beginTransaction();
-  var ordinal = this._virtualServer.newOrdinal(identifiedRecord, ordinalNumber);
+  var ordinal = this._virtualServer.newOrdinal(contentRecord, ordinalNumber);
   this.endTransaction();
   return ordinal;
 };
@@ -723,13 +723,13 @@ World.prototype._newOrdinal = function(identifiedRecord, ordinalNumber) {
  * Returns a newly created vote.
  *
  * @scope    protected instance method
- * @param    identifiedRecord    The identifiedRecord to attach this vote to. 
+ * @param    contentRecord    The contentRecord to attach this vote to. 
  * @param    retainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  * @return   A newly created vote.
  */
-World.prototype._newVote = function(identifiedRecord, retainFlag) {
+World.prototype._newVote = function(contentRecord, retainFlag) {
   this.beginTransaction();
-  var vote = this._virtualServer.newVote(identifiedRecord, retainFlag);
+  var vote = this._virtualServer.newVote(contentRecord, retainFlag);
   this.endTransaction();
   return vote;
 };

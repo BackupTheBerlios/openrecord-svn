@@ -34,7 +34,7 @@
 //   Util.js
 //   Item.js
 //   World.js
-//   IdentifiedRecord.js
+//   ContentRecord.js
 // -------------------------------------------------------------------
 
 /**
@@ -51,9 +51,9 @@
  * @param    inWorld    The world that this entry is a part of. 
  * @param    inUuid    The UUID for this entry. 
  */
-Entry.prototype = new IdentifiedRecord();  // makes Entry be a subclass of IdentifiedRecord
+Entry.prototype = new ContentRecord();  // makes Entry be a subclass of ContentRecord
 function Entry(inWorld, inUuid) {
-  this._IdentifiedRecord(inWorld, inUuid);
+  this._ContentRecord(inWorld, inUuid);
  
   this.__myPreviousEntry = null;
   this.__myListOfSubsequentEntries = [];
@@ -82,7 +82,7 @@ function Entry(inWorld, inUuid) {
 * @param    inType    Optional.  The data type to interpret the value as. 
  */
 Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue, inType) {
-  this._initializeIdentifiedRecord();
+  this._initializeContentRecord();
 
   if (inItemOrEntry instanceof Entry) {
     this.__myPreviousEntry = inItemOrEntry;
@@ -138,7 +138,7 @@ Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue, inT
  * @param    inUserstamp    The user who created this entry. 
  */
 Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inTimestamp, inUserstamp, inType) {
-  this._rehydrateIdentifiedRecord(inTimestamp, inUserstamp);
+  this._rehydrateContentRecord(inTimestamp, inUserstamp);
 
   if (inItemOrEntry instanceof Entry) {
     this.__myPreviousEntry = inItemOrEntry;

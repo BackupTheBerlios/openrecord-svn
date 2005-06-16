@@ -29,6 +29,11 @@
 *****************************************************************************/
  
 
+// -------------------------------------------------------------------
+// Dependencies, expressed in the syntax that JSLint understands:
+/*global Util, jslint */
+// -------------------------------------------------------------------
+
 /**
  * The LintTool class is just a thin wrapper around Douglas Crockford's
  * JSLint utility.

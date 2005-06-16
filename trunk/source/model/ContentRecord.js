@@ -1,5 +1,5 @@
 /*****************************************************************************
- IdentifiedRecord.js
+ ContentRecord.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -38,13 +38,13 @@
 // -------------------------------------------------------------------
 
 /**
- * The IdentifiedRecord class serves as an abstract superclass for the class Item
+ * The ContentRecord class serves as an abstract superclass for the class Item
  * and the class Entry.
  *
  * @scope    public instance constructor
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
-function IdentifiedRecord() {
+function ContentRecord() {
 }
 
 
@@ -53,13 +53,13 @@ function IdentifiedRecord() {
 // -------------------------------------------------------------------
 
 /**
- * Called from the constructor function of each subclass of IdentifiedRecord.
+ * Called from the constructor function of each subclass of ContentRecord.
  *
  * @scope    protected instance method
- * @param    inWorld    The world that this IdentifiedRecord is a part of. 
- * @param    inUuid    The UUID for this IdentifiedRecord. 
+ * @param    inWorld    The world that this ContentRecord is a part of. 
+ * @param    inUuid    The UUID for this ContentRecord. 
  */
-IdentifiedRecord.prototype._IdentifiedRecord = function (inWorld, inUuid) {
+ContentRecord.prototype._ContentRecord = function (inWorld, inUuid) {
   // Util.assert(!inUuid || Util.isNumeric(inUuid));
   
   this.__myWorld = inWorld;
@@ -75,18 +75,18 @@ IdentifiedRecord.prototype._IdentifiedRecord = function (inWorld, inUuid) {
 
 
 /**
- * Initializes a new identifiedRecord that has just been created by a user action.
+ * Initializes a new contentRecord that has just been created by a user action.
  *
  * WARNING: This method should be called ONLY from subclasses.
  *
  * @scope    protected instance method
  */
-IdentifiedRecord.prototype._initializeIdentifiedRecord = function () {
+ContentRecord.prototype._initializeContentRecord = function () {
 };
 
 
 /**
- * Sets the properties of a newly rehydrated identifiedRecord object.
+ * Sets the properties of a newly rehydrated contentRecord object.
  *
  * WARNING: This method should be called ONLY from subclasses.
  *
@@ -94,7 +94,7 @@ IdentifiedRecord.prototype._initializeIdentifiedRecord = function () {
  * @param    inTimestamp    A Date object with the creation timestamp for this item. 
  * @param    inUserstamp    The user who created this item. 
  */
-IdentifiedRecord.prototype._rehydrateIdentifiedRecord = function (inTimestamp, inUserstamp) {
+ContentRecord.prototype._rehydrateContentRecord = function (inTimestamp, inUserstamp) {
   this.__myCreationTimestamp = inTimestamp;
   this.__myCreationUserstamp = inUserstamp;
 };
@@ -112,18 +112,18 @@ IdentifiedRecord.prototype._rehydrateIdentifiedRecord = function (inTimestamp, i
  * @scope    protected instance method
  * @return   The UUID of the item.
  */
-IdentifiedRecord.prototype._getUuid = function () {
+ContentRecord.prototype._getUuid = function () {
   return this.__myUuid;
 };
 
 
 /**
- * Records a user's vote to retain or delete this IdentifiedRecord.
+ * Records a user's vote to retain or delete this ContentRecord.
  *
  * @scope    protected instance method
- * @param    inVote    A vote to retain or delete this IdentifiedRecord. 
+ * @param    inVote    A vote to retain or delete this ContentRecord. 
  */
-IdentifiedRecord.prototype._addVote = function (inVote) {
+ContentRecord.prototype._addVote = function (inVote) {
   if (!this.__mySetOfVotes) {
     this.__mySetOfVotes = [];
   }
@@ -132,12 +132,12 @@ IdentifiedRecord.prototype._addVote = function (inVote) {
 
 
 /**
- * Records the ordinal number that a user sets for this IdentifiedRecord.
+ * Records the ordinal number that a user sets for this ContentRecord.
  *
  * @scope    protected instance method
- * @param    inOrdinal    A vote to retain or delete this IdentifiedRecord. 
+ * @param    inOrdinal    A vote to retain or delete this ContentRecord. 
  */
-IdentifiedRecord.prototype._addOrdinal = function (inOrdinal) {
+ContentRecord.prototype._addOrdinal = function (inOrdinal) {
   if (!this.__mySetOfOrdinals) {
     this.__mySetOfOrdinals = [];
   }
@@ -155,7 +155,7 @@ IdentifiedRecord.prototype._addOrdinal = function (inOrdinal) {
  * @scope    public instance method
  * @return   A world object.
  */
-IdentifiedRecord.prototype.getWorld = function () {
+ContentRecord.prototype.getWorld = function () {
   return this.__myWorld;
 };
 
@@ -166,9 +166,9 @@ IdentifiedRecord.prototype.getWorld = function () {
  * @scope    public instance method
  * @return   A Date object.
  */
-IdentifiedRecord.prototype.getTimestamp = function() {
+ContentRecord.prototype.getTimestamp = function() {
   if (this.__myCreationTimestamp) {
-    // This case is now here only for the (temporary) benefit of _rehydrateIdentifiedRecord.
+    // This case is now here only for the (temporary) benefit of _rehydrateContentRecord.
     return this.__myCreationTimestamp;
   }
   var hexTimeLow = this.__myUuid.split('-')[0];
@@ -204,9 +204,9 @@ IdentifiedRecord.prototype.getTimestamp = function() {
  * @scope    public instance method
  * @return   A user item.
  */
-IdentifiedRecord.prototype.getUserstamp = function() {
+ContentRecord.prototype.getUserstamp = function() {
   if (this.__myCreationUserstamp) {
-    // This case is now here only for the (temporary) benefit of _rehydrateIdentifiedRecord.
+    // This case is now here only for the (temporary) benefit of _rehydrateContentRecord.
     return this.__myCreationUserstamp;
   }
   var allUsers = this.__myWorld.getUsers();
@@ -227,18 +227,18 @@ IdentifiedRecord.prototype.getUserstamp = function() {
  * @scope    public instance method
  * @return   A string which can serve as a unique key.
  */
-IdentifiedRecord.prototype.getUniqueKeyString = function () {
+ContentRecord.prototype.getUniqueKeyString = function () {
   return this.__myUuid;
 };
 
 
 /**
- * Returns the ordinal number that this identifiedRecord was given at creation. 
+ * Returns the ordinal number that this contentRecord was given at creation. 
  *
  * @scope    public instance method
  * @return   A number.
  */
-IdentifiedRecord.prototype.getOrdinalNumberAtCreation = function () {
+ContentRecord.prototype.getOrdinalNumberAtCreation = function () {
   // return (0 - this.__myCreationTimestamp.valueOf());
   return (0 - this.__myUuid);
 };
@@ -249,12 +249,12 @@ IdentifiedRecord.prototype.getOrdinalNumberAtCreation = function () {
 // -------------------------------------------------------------------
 
 /**
- * Returns the ordinal number for this identifiedRecord. 
+ * Returns the ordinal number for this contentRecord. 
  *
  * @scope    public instance method
  * @return   A number.
  */
-IdentifiedRecord.prototype.getOrdinalNumber = function () {
+ContentRecord.prototype.getOrdinalNumber = function () {
   if (!this.__mySetOfOrdinals || this.__mySetOfOrdinals.length === 0) {
     return this.getOrdinalNumberAtCreation();
   }
@@ -312,12 +312,12 @@ IdentifiedRecord.prototype.getOrdinalNumber = function () {
 
 
 /**
- * Returns true if this identifiedRecord has been deleted. 
+ * Returns true if this contentRecord has been deleted. 
  *
  * @scope    public instance method
  * @return   A boolean.
  */
-IdentifiedRecord.prototype.hasBeenDeleted = function () {
+ContentRecord.prototype.hasBeenDeleted = function () {
   if (!this.__mySetOfVotes || this.__mySetOfVotes.length === 0) {
     return false;
   }
@@ -374,25 +374,25 @@ IdentifiedRecord.prototype.hasBeenDeleted = function () {
 
 
 /**
- * Moves this identifiedRecord to a new position in a list, by creating a new
- * ordinal for this identifiedRecord with an ordinal number that is set such
- * that this identifiedRecord appears between two other entries.
+ * Moves this contentRecord to a new position in a list, by creating a new
+ * ordinal for this contentRecord with an ordinal number that is set such
+ * that this contentRecord appears between two other entries.
  *
  * @scope    public instance method
- * @param    inIdentifiedRecordFirst    The identifiedRecord that should come before this one. 
- * @param    inIdentifiedRecordThird    The identifiedRecord that should come after this one. 
+ * @param    inContentRecordFirst    The contentRecord that should come before this one. 
+ * @param    inContentRecordThird    The contentRecord that should come after this one. 
  */
-IdentifiedRecord.prototype.reorderBetween = function (inIdentifiedRecordFirst, inIdentifiedRecordThird) {
+ContentRecord.prototype.reorderBetween = function (inContentRecordFirst, inContentRecordThird) {
   var firstOrdinalNumber = null;
   var secondOrdinalNumber = null;
   var thirdOrdinalNumber = null;
   var arbitraryNumberToMoveUsUpOrDownSlightly = 0.01;
   
-  if (inIdentifiedRecordFirst) {
-    firstOrdinalNumber = inIdentifiedRecordFirst.getOrdinalNumber();
+  if (inContentRecordFirst) {
+    firstOrdinalNumber = inContentRecordFirst.getOrdinalNumber();
   }
-  if (inIdentifiedRecordThird) {
-    thirdOrdinalNumber = inIdentifiedRecordThird.getOrdinalNumber();
+  if (inContentRecordThird) {
+    thirdOrdinalNumber = inContentRecordThird.getOrdinalNumber();
   }
   
   if (firstOrdinalNumber && thirdOrdinalNumber) {
@@ -410,21 +410,21 @@ IdentifiedRecord.prototype.reorderBetween = function (inIdentifiedRecordFirst, i
 
 
 /**
- * Registers a vote to delete this identifiedRecord. 
+ * Registers a vote to delete this contentRecord. 
  *
  * @scope    public instance method
  */
-IdentifiedRecord.prototype.voteToDelete = function () {
+ContentRecord.prototype.voteToDelete = function () {
   this.getWorld()._newVote(this, false);
 };
 
 
 /**
- * Registers a vote to retain this identifiedRecord. 
+ * Registers a vote to retain this contentRecord. 
  *
  * @scope    public instance method
  */
-IdentifiedRecord.prototype.voteToRetain = function () {
+ContentRecord.prototype.voteToRetain = function () {
   this.getWorld()._newVote(this, true);
 };
 
@@ -434,13 +434,13 @@ IdentifiedRecord.prototype.voteToRetain = function () {
 // -------------------------------------------------------------------
 
 /**
- * Registers a vote to retain this identifiedRecord. 
+ * Registers a vote to retain this contentRecord. 
  *
  * @scope    public class method
  */
-IdentifiedRecord.compareOrdinals = function (inIdentifiedRecordOne, inIdentifiedRecordTwo) {
-  var ordinalNumberOne = inIdentifiedRecordOne.getOrdinalNumber();
-  var ordinalNumberTwo = inIdentifiedRecordTwo.getOrdinalNumber();
+ContentRecord.compareOrdinals = function (inContentRecordOne, inContentRecordTwo) {
+  var ordinalNumberOne = inContentRecordOne.getOrdinalNumber();
+  var ordinalNumberTwo = inContentRecordTwo.getOrdinalNumber();
   return (ordinalNumberTwo - ordinalNumberOne);
 };
 

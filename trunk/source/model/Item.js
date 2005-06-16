@@ -34,7 +34,7 @@
 //   Util.js
 //   World.js
 //   Entry.js
-//   IdentifiedRecord.js
+//   ContentRecord.js
 // -------------------------------------------------------------------
 
 
@@ -52,9 +52,9 @@
  * @param    inWorld    The world that this item is a part of. 
  * @param    inUuid    The UUID for this item. 
  */
-Item.prototype = new IdentifiedRecord();  // makes Item be a subclass of IdentifiedRecord
+Item.prototype = new ContentRecord();  // makes Item be a subclass of ContentRecord
 function Item(inWorld, inUuid) {
-  this._IdentifiedRecord(inWorld, inUuid);
+  this._ContentRecord(inWorld, inUuid);
   
   this.__myHashTableOfEntryListsKeyedByAttributeUuid = {};
   this.__myProvisionalFlag = false;
@@ -76,7 +76,7 @@ function Item(inWorld, inUuid) {
  * @param    inProvisionalFlag    True if the item is provisional; false if the item is normal. 
  */
 Item.prototype._initialize = function (inObserver, inProvisionalFlag) {
-  this._initializeIdentifiedRecord();
+  this._initializeContentRecord();
 
   if (inProvisionalFlag) {
     this.__myProvisionalFlag = true;
@@ -102,7 +102,7 @@ Item.prototype._initialize = function (inObserver, inProvisionalFlag) {
  */
 Item.prototype._rehydrate = function (inTimestamp, inUserstamp) {
   this.__myProvisionalFlag = false;
-  this._rehydrateIdentifiedRecord(inTimestamp, inUserstamp);
+  this._rehydrateContentRecord(inTimestamp, inUserstamp);
 };
 
 
@@ -261,7 +261,7 @@ Item.prototype.getEntriesForAttribute = function (inAttribute) {
       Util.assert(false);
       break;
   }
-  filteredListOfEntries.sort(IdentifiedRecord.compareOrdinals);
+  filteredListOfEntries.sort(ContentRecord.compareOrdinals);
   return filteredListOfEntries;
 };
 
