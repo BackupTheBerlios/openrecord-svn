@@ -391,21 +391,22 @@ SectionView.prototype.clickOnAttributeMenu = function (inEventObject) {
     matchingAttribute = listOfMatchingAttrs[0].getValue();
   }
   if (matchingAttribute.getDisplayName() != newChoiceName) {
-    if (listOfMatchingAttrs.length == 0) {
+    if (listOfMatchingAttrs.length === 0) {
       myQuery.addEntryForAttribute(attributeCalledQueryMatchingAttribute, newQueryMatchingAttribute);
     } else {
       myQuery.replaceEntry(listOfMatchingAttrs[0], newQueryMatchingAttribute);
     }
 
-    /* PENDING, PROBLEM: Can't delete entries already created by previous matching attribute
+    /* PENDING, PROBLEM to check Can't delete entries already created by previous matching attribute */
     var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
     var listOfMatchingEntries = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
     for (var i in listOfMatchingEntries) {
       var anEntry = listOfMatchingEntries[i];
-      myQuery.replaceEntry(anEntry,null);
+      anEntry.voteToDelete();
+      Util.assert(anEntry.hasBeenDeleted());
     }
-    listOfMatchingEntries = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);;
-    Util.assert(listOfMatchingEntries.length === 0);*/
+    listOfMatchingEntries = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
+    Util.assert(listOfMatchingEntries.length === 0);
     
     // I think we need these next 3 lines in to make sure the view gets updated  
     // to reflect the new query.  When we get a chance we should probably do 
