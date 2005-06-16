@@ -40,38 +40,43 @@
  * an item or a entry of an item.
  *
  * @scope    public instance constructor
- * @param    inContentRecord    The item or entry that this vote is attached to. 
- * @param    inUser    The user who voted. 
- * @param    inRetainFlag    True if this is a vote to retain. False if this is a vote to delete. 
- * @param    inTimestamp    Optional. The time the vote was made. 
+ * @param    world    The world that this Vote is a part of. 
+ * @param    uuid    The UUID for this Vote. 
+ * @param    contentRecord    The item or entry that this vote is attached to. 
+ * @param    retainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  */
-function Vote(inContentRecord, inUser, inRetainFlag, inTimestamp) {
-  this.__myContentRecord = inContentRecord;
-  this.__myUserstamp = inUser;
-  this.__myRetainFlag = inRetainFlag;
-  if (inTimestamp) {
-    this.__myTimestamp = inTimestamp;
-  } else {
-    this.__myTimestamp = new Date();
-  }
-  this.__myContentRecord._addVote(this);
+Vote.prototype = new Record();  // makes Vote be a subclass of Record
+function Vote(world, uuid, contentRecord, retainFlag) {
+  this._Record(world, uuid);
+
+  this._contentRecord = contentRecord;
+  this._retainFlag = retainFlag;
+  this._contentRecord._addVote(this);
 }
 
+
+/**
+ * Returns the item or entry that this vote applies to.
+ *
+ * @scope    public instance method
+ * @return   An item or entry.
+ */
 Vote.prototype.getContentRecord = function () {
-  return this.__myContentRecord;
+  return this._contentRecord;
 };
 
-Vote.prototype.getTimestamp = function () {
-  return this.__myTimestamp;
-};
 
-Vote.prototype.getUserstamp = function () {
-  return this.__myUserstamp;
-};
-
+/**
+ * Returns a boolean value that tells whether this is a vote to retain or a 
+ * vote to delete.
+ *
+ * @scope    public instance method
+ * @return   A boolean. True if this is a vote to retain, or false if this is a vote to delete.
+ */
 Vote.prototype.getRetainFlag = function () {
-  return this.__myRetainFlag;
+  return this._retainFlag;
 };
+
 
 // -------------------------------------------------------------------
 // End of file

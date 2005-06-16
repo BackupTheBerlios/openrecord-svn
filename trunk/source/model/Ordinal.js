@@ -40,37 +40,38 @@
  * a user set an ordinal number for an item or a entry of an item.
  *
  * @scope    public instance constructor
- * @param    inContentRecord    The item or entry that this vote is attached to. 
- * @param    inUser    The user who voted. 
+ * @param    world    The world that this Ordinal is a part of. 
+ * @param    uuid    The UUID for this Ordinal. 
+ * @param    contentRecord    The item or entry that this ordinal is attached to. 
  * @param    inOrdinalNumber    The ordinal number itself. 
- * @param    inTimestamp    Optional. The time the vote was made. 
  */
-function Ordinal(inContentRecord, inUser, inOrdinalNumber, inTimestamp) {
-  this.__myContentRecord = inContentRecord;
-  this.__myUserstamp = inUser;
-  this.__myOrdinalNumber = inOrdinalNumber;
-  if (inTimestamp) {
-    this.__myTimestamp = inTimestamp;
-  } else {
-    this.__myTimestamp = new Date();
-  }
-  this.__myContentRecord._addOrdinal(this);
+Ordinal.prototype = new Record();  // makes Ordinal be a subclass of Record
+function Ordinal(world, uuid, contentRecord, ordinalNumber) {
+  this._contentRecord = contentRecord;
+  this._ordinalNumber = ordinalNumber;
+  this._contentRecord._addOrdinal(this);
 }
 
+
+/**
+ * Returns the item or entry that this ordinal applies to.
+ *
+ * @scope    public instance method
+ * @return   An item or entry.
+ */
 Ordinal.prototype.getContentRecord = function () {
-  return this.__myContentRecord;
+  return this._contentRecord;
 };
 
-Ordinal.prototype.getTimestamp = function () {
-  return this.__myTimestamp;
-};
 
-Ordinal.prototype.getUserstamp = function () {
-  return this.__myUserstamp;
-};
-
+/**
+ * Returns an ordinal number.
+ *
+ * @scope    public instance method
+ * @return   An ordinal number.
+ */
 Ordinal.prototype.getOrdinalNumber = function () {
-  return this.__myOrdinalNumber;
+  return this._ordinalNumber;
 };
 
 

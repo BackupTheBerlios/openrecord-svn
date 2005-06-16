@@ -38,7 +38,6 @@
 //   Ordinal.js
 //   Entry.js
 //   Vote.js
-//   Vote.js
 // -------------------------------------------------------------------
 
 
@@ -225,7 +224,6 @@ StubVirtualServer.prototype._createNewItem = function (inObserver, inProvisional
  */
 StubVirtualServer.prototype._provisionalItemJustBecameReal = function (inItem) {
   this._currentTransaction.addRecord(inItem);
-  // this.__myChronologicalListOfNewlyCreatedRecords.push(inItem);
 };
 
 
@@ -245,11 +243,10 @@ StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inV
   var entry = new Entry(this.__myWorld, uuid);
   entry._initialize(inItemOrEntry, inAttribute, inValue, inType);
   var item = inItemOrEntry instanceof Item ? inItemOrEntry : inItemOrEntry.getItem();
-  item.__addEntryToListOfEntriesForAttribute(entry); // PENDING eeks calling a protected method!
+  item.__addEntryToListOfEntriesForAttribute(entry);
   
   this.__myHashTableOfEntriesKeyedByUuid[uuid] = entry;
   this._currentTransaction.addRecord(entry);
-  // this.__myChronologicalListOfNewlyCreatedRecords.push(entry);
   return entry;
 };
  
@@ -265,9 +262,9 @@ StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inV
  */
 StubVirtualServer.prototype.newOrdinal = function (inContentRecord, inOrdinalNumber) {
   this._throwErrorIfNoUserIsLoggedIn();
-  var ordinal = new Ordinal(inContentRecord, this.__myWorld.getCurrentUser(), inOrdinalNumber);
+  var uuid = this._getNewUuid();
+  var ordinal = new Ordinal(this.__myWorld, uuid, inContentRecord, inOrdinalNumber);
   this._currentTransaction.addRecord(ordinal);
-  // this.__myChronologicalListOfNewlyCreatedRecords.push(ordinal);
   return ordinal;
 };
 
@@ -283,9 +280,10 @@ StubVirtualServer.prototype.newOrdinal = function (inContentRecord, inOrdinalNum
  */
 StubVirtualServer.prototype.newVote = function (inContentRecord, inRetainFlag) {
   this._throwErrorIfNoUserIsLoggedIn();
-  var vote = new Vote(inContentRecord, this.__myWorld.getCurrentUser(), inRetainFlag);
+  var uuid = this._getNewUuid();
+  // var vote = new Vote(inContentRecord, this.__myWorld.getCurrentUser(), inRetainFlag);
+  var vote = new Vote(this.__myWorld, uuid, inContentRecord, inRetainFlag);
   this._currentTransaction.addRecord(vote);
-  // this.__myChronologicalListOfNewlyCreatedRecords.push(vote);
   return vote;
 };
 
@@ -461,7 +459,7 @@ StubVirtualServer.prototype.logout = function () {
  * @return   The item identified by the given UUID.
  */
 StubVirtualServer.prototype.getItemFromUuid = function (inUuid, inObserver) {
-  // Util.assert(Util.isUuid(inUuid));
+  Util.assert(Util.isUuid(inUuid));
   
   var item = this.__myHashTableOfItemsKeyedByUuid[inUuid];
   if (item && inObserver) {

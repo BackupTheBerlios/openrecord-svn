@@ -37,6 +37,7 @@ function testJsLintOnOpenRecordCode() {
     "Ordinal.js",
     "Vote.js",
     "ContentRecord.js",
+    "Record.js",
     "Item.js",
     "Entry.js",
     "Transaction.js",

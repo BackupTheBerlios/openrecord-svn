@@ -2,7 +2,9 @@
  ContentRecord.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
+    Mignon Belongie
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -44,33 +46,27 @@
  * @scope    public instance constructor
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
+ContentRecord.prototype = new Record();  // makes ContentRecord be a subclass of Record
 function ContentRecord() {
+  // Don't create these properties until we know we need them.
+  // this._setOfVotes = null;
+  // this._setOfOrdinals = null;
 }
 
 
 // -------------------------------------------------------------------
-// Protected methods
+// Package/module methods           
 // -------------------------------------------------------------------
 
 /**
  * Called from the constructor function of each subclass of ContentRecord.
  *
  * @scope    protected instance method
- * @param    inWorld    The world that this ContentRecord is a part of. 
- * @param    inUuid    The UUID for this ContentRecord. 
+ * @param    world    The world that this ContentRecord is a part of. 
+ * @param    uuid    The UUID for this ContentRecord. 
  */
-ContentRecord.prototype._ContentRecord = function (inWorld, inUuid) {
-  // Util.assert(!inUuid || Util.isNumeric(inUuid));
-  
-  this.__myWorld = inWorld;
-  this.__myUuid = inUuid;
-  
-  this.__myCreationTimestamp = null;
-  this.__myCreationUserstamp = null;
-
-  // Don't create these properties until we know we need them.
-  // this.__mySetOfVotes = null;
-  // this.__mySetOfOrdinals = null;
+ContentRecord.prototype._ContentRecord = function(world, uuid) {
+  this._Record(world, uuid);
 };
 
 
@@ -81,39 +77,7 @@ ContentRecord.prototype._ContentRecord = function (inWorld, inUuid) {
  *
  * @scope    protected instance method
  */
-ContentRecord.prototype._initializeContentRecord = function () {
-};
-
-
-/**
- * Sets the properties of a newly rehydrated contentRecord object.
- *
- * WARNING: This method should be called ONLY from subclasses.
- *
- * @scope    protected instance method
- * @param    inTimestamp    A Date object with the creation timestamp for this item. 
- * @param    inUserstamp    The user who created this item. 
- */
-ContentRecord.prototype._rehydrateContentRecord = function (inTimestamp, inUserstamp) {
-  this.__myCreationTimestamp = inTimestamp;
-  this.__myCreationUserstamp = inUserstamp;
-};
-
-
-/**
- * Returns the UUID of the item. 
- *
- * WARNING: This method should be called ONLY from a 
- * VirtualServer implementation.
- *
- * If you're writing code in the view layer, call
- * item.getUniqueKeyString() instead of item._getUuid();
- *
- * @scope    protected instance method
- * @return   The UUID of the item.
- */
-ContentRecord.prototype._getUuid = function () {
-  return this.__myUuid;
+ContentRecord.prototype._initializeContentRecord = function() {
 };
 
 
@@ -121,13 +85,13 @@ ContentRecord.prototype._getUuid = function () {
  * Records a user's vote to retain or delete this ContentRecord.
  *
  * @scope    protected instance method
- * @param    inVote    A vote to retain or delete this ContentRecord. 
+ * @param    vote    A vote to retain or delete this ContentRecord. 
  */
-ContentRecord.prototype._addVote = function (inVote) {
-  if (!this.__mySetOfVotes) {
-    this.__mySetOfVotes = [];
+ContentRecord.prototype._addVote = function(vote) {
+  if (!this._setOfVotes) {
+    this._setOfVotes = [];
   }
-  this.__mySetOfVotes.push(inVote);
+  this._setOfVotes.push(vote);
 };
 
 
@@ -135,13 +99,13 @@ ContentRecord.prototype._addVote = function (inVote) {
  * Records the ordinal number that a user sets for this ContentRecord.
  *
  * @scope    protected instance method
- * @param    inOrdinal    A vote to retain or delete this ContentRecord. 
+ * @param    ordinal    A vote to retain or delete this ContentRecord. 
  */
-ContentRecord.prototype._addOrdinal = function (inOrdinal) {
-  if (!this.__mySetOfOrdinals) {
-    this.__mySetOfOrdinals = [];
+ContentRecord.prototype._addOrdinal = function(ordinal) {
+  if (!this._setOfOrdinals) {
+    this._setOfOrdinals = [];
   }
-  this.__mySetOfOrdinals.push(inOrdinal);
+  this._setOfOrdinals.push(ordinal);
 };
 
 
@@ -150,97 +114,14 @@ ContentRecord.prototype._addOrdinal = function (inOrdinal) {
 // -------------------------------------------------------------------
 
 /**
- * Returns the world that this item was created in.
- *
- * @scope    public instance method
- * @return   A world object.
- */
-ContentRecord.prototype.getWorld = function () {
-  return this.__myWorld;
-};
-
-
-/**
- * Returns a Date object with the creation timestamp for this item.
- *
- * @scope    public instance method
- * @return   A Date object.
- */
-ContentRecord.prototype.getTimestamp = function() {
-  if (this.__myCreationTimestamp) {
-    // This case is now here only for the (temporary) benefit of _rehydrateContentRecord.
-    return this.__myCreationTimestamp;
-  }
-  var hexTimeLow = this.__myUuid.split('-')[0];
-  var hexTimeMid = this.__myUuid.split('-')[1];
-  var hexTimeHigh = this.__myUuid.split('-')[2];
-  var timeLow = parseInt(hexTimeLow, Util.HEX_RADIX);
-  var timeMid = parseInt(hexTimeMid, Util.HEX_RADIX);
-  var timeHigh = parseInt(hexTimeHigh, Util.HEX_RADIX);
-  var hundredNanosecondIntervalsSince1582 = timeHigh & 0x0FFF;
-  hundredNanosecondIntervalsSince1582 <<= 16;
-  hundredNanosecondIntervalsSince1582 += timeMid;
-  // What we really want to do next is shift left 32 bits, but the result will be too big
-  // to fit in an int, so we'll multiply by 2^32, and the result will be a floating point approximation.
-  hundredNanosecondIntervalsSince1582 *= 0x100000000;
-  hundredNanosecondIntervalsSince1582 += timeLow;
-  var millisecondsSince1582 = hundredNanosecondIntervalsSince1582 / 10000;
-
-  // Again, this will be a floating point approximation.
-  // We can make things exact later if we need to.
-  var secondsPerHour = 60 * 60;
-  var hoursBetween1582and1970 = Util.GREGORIAN_CHANGE_OFFSET_IN_HOURS;
-  var secondsBetween1582and1970 = hoursBetween1582and1970 * secondsPerHour;
-  var millisecondsBetween1582and1970 = secondsBetween1582and1970 * 1000;
-
-  var millisecondsSince1970 = millisecondsSince1582 - millisecondsBetween1582and1970;
-  return millisecondsSince1970;
-};
-
-
-/**
- * Returns the item representing the user who created this item.
- *
- * @scope    public instance method
- * @return   A user item.
- */
-ContentRecord.prototype.getUserstamp = function() {
-  if (this.__myCreationUserstamp) {
-    // This case is now here only for the (temporary) benefit of _rehydrateContentRecord.
-    return this.__myCreationUserstamp;
-  }
-  var allUsers = this.__myWorld.getUsers();
-  var myPseudonode = this.__myUuid.split('-')[4];
-  for (key in allUsers) {
-    var usersPseudonode = allUsers[key]._getUuid().split('-')[4];
-    if (usersPseudonode == myPseudonode) {
-      return allUsers[key];
-    }
-  }
-  throw new Error("User not found.  Database may be corrupted.");
-};
-
-
-/**
- * Returns a string which can be used as a unique key in a hash table. 
- *
- * @scope    public instance method
- * @return   A string which can serve as a unique key.
- */
-ContentRecord.prototype.getUniqueKeyString = function () {
-  return this.__myUuid;
-};
-
-
-/**
  * Returns the ordinal number that this contentRecord was given at creation. 
  *
  * @scope    public instance method
  * @return   A number.
  */
-ContentRecord.prototype.getOrdinalNumberAtCreation = function () {
-  // return (0 - this.__myCreationTimestamp.valueOf());
-  return (0 - this.__myUuid);
+ContentRecord.prototype.getOrdinalNumberAtCreation = function() {
+  // return (0 - this._creationTimestamp.valueOf());
+  return (0 - this._uuid);
 };
 
 
@@ -254,15 +135,15 @@ ContentRecord.prototype.getOrdinalNumberAtCreation = function () {
  * @scope    public instance method
  * @return   A number.
  */
-ContentRecord.prototype.getOrdinalNumber = function () {
-  if (!this.__mySetOfOrdinals || this.__mySetOfOrdinals.length === 0) {
+ContentRecord.prototype.getOrdinalNumber = function() {
+  if (!this._setOfOrdinals || this._setOfOrdinals.length === 0) {
     return this.getOrdinalNumberAtCreation();
   }
 
   var ordinalNumber = this.getOrdinalNumberAtCreation();
   var key;
   var ordinal;
-  var filter = this.__myWorld.getRetrievalFilter();
+  var filter = this._world.getRetrievalFilter();
   
   switch (filter) {
     case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
@@ -274,9 +155,9 @@ ContentRecord.prototype.getOrdinalNumber = function () {
       //   resolution.  For example, see scrap_yard/Timestamp.js.  However,
       //   for now the simplest thing to do is just move on to APPROACH B:
       /*
-      var mostRecentOrdinal = this.__mySetOfOrdinals[0];
-      for (key in this.__mySetOfOrdinals) {
-        ordinal = this.__mySetOfOrdinals[key];
+      var mostRecentOrdinal = this._setOfOrdinals[0];
+      for (key in this._setOfOrdinals) {
+        ordinal = this._setOfOrdinals[key];
         if (ordinal.getTimestamp() > mostRecentOrdinal.getTimestamp()) {
           mostRecentOrdinal = ordinal;
         }
@@ -286,7 +167,7 @@ ContentRecord.prototype.getOrdinalNumber = function () {
       // APPROACH B: 
       //   This works, provided __mySetOfOrdinals is always initialized in
       //   chronological order.
-      var mostRecentOrdinal = this.__mySetOfOrdinals[this.__mySetOfOrdinals.length - 1];
+      var mostRecentOrdinal = this._setOfOrdinals[this._setOfOrdinals.length - 1];
 
       ordinalNumber = mostRecentOrdinal.getOrdinalNumber();
       break;
@@ -317,15 +198,15 @@ ContentRecord.prototype.getOrdinalNumber = function () {
  * @scope    public instance method
  * @return   A boolean.
  */
-ContentRecord.prototype.hasBeenDeleted = function () {
-  if (!this.__mySetOfVotes || this.__mySetOfVotes.length === 0) {
+ContentRecord.prototype.hasBeenDeleted = function() {
+  if (!this._setOfVotes || this._setOfVotes.length === 0) {
     return false;
   }
   
   var hasBeenDeleted = false;
   var key;
   var vote;
-  var filter = this.__myWorld.getRetrievalFilter();
+  var filter = this._world.getRetrievalFilter();
   
   switch (filter) {
     case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
@@ -337,9 +218,9 @@ ContentRecord.prototype.hasBeenDeleted = function () {
       //   resolution.  For example, see scrap_yard/Timestamp.js.  However,
       //   for now the simplest thing to do is just move on to APPROACH B:
       /*
-      var mostRecentVote = this.__mySetOfVotes[0];
-      for (key in this.__mySetOfVotes) {
-        vote = this.__mySetOfVotes[key];
+      var mostRecentVote = this._setOfVotes[0];
+      for (key in this._setOfVotes) {
+        vote = this._setOfVotes[key];
         if (vote.getTimestamp() > mostRecentVote.getTimestamp()) {
           mostRecentVote = vote;
         }
@@ -349,7 +230,7 @@ ContentRecord.prototype.hasBeenDeleted = function () {
       // APPROACH B: 
       //   This works, provided __mySetOfVotes is always initialized in
       //   chronological order.
-      var mostRecentVote = this.__mySetOfVotes[this.__mySetOfVotes.length - 1];
+      var mostRecentVote = this._setOfVotes[this._setOfVotes.length - 1];
       
       hasBeenDeleted = !mostRecentVote.getRetainFlag();
       break;
@@ -379,20 +260,20 @@ ContentRecord.prototype.hasBeenDeleted = function () {
  * that this contentRecord appears between two other entries.
  *
  * @scope    public instance method
- * @param    inContentRecordFirst    The contentRecord that should come before this one. 
- * @param    inContentRecordThird    The contentRecord that should come after this one. 
+ * @param    contentRecordFirst    The contentRecord that should come before this one. 
+ * @param    contentRecordThird    The contentRecord that should come after this one. 
  */
-ContentRecord.prototype.reorderBetween = function (inContentRecordFirst, inContentRecordThird) {
+ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRecordThird) {
   var firstOrdinalNumber = null;
   var secondOrdinalNumber = null;
   var thirdOrdinalNumber = null;
   var arbitraryNumberToMoveUsUpOrDownSlightly = 0.01;
   
-  if (inContentRecordFirst) {
-    firstOrdinalNumber = inContentRecordFirst.getOrdinalNumber();
+  if (contentRecordFirst) {
+    firstOrdinalNumber = contentRecordFirst.getOrdinalNumber();
   }
-  if (inContentRecordThird) {
-    thirdOrdinalNumber = inContentRecordThird.getOrdinalNumber();
+  if (contentRecordThird) {
+    thirdOrdinalNumber = contentRecordThird.getOrdinalNumber();
   }
   
   if (firstOrdinalNumber && thirdOrdinalNumber) {
@@ -414,7 +295,7 @@ ContentRecord.prototype.reorderBetween = function (inContentRecordFirst, inConte
  *
  * @scope    public instance method
  */
-ContentRecord.prototype.voteToDelete = function () {
+ContentRecord.prototype.voteToDelete = function() {
   this.getWorld()._newVote(this, false);
 };
 
@@ -424,7 +305,7 @@ ContentRecord.prototype.voteToDelete = function () {
  *
  * @scope    public instance method
  */
-ContentRecord.prototype.voteToRetain = function () {
+ContentRecord.prototype.voteToRetain = function() {
   this.getWorld()._newVote(this, true);
 };
 
@@ -438,9 +319,9 @@ ContentRecord.prototype.voteToRetain = function () {
  *
  * @scope    public class method
  */
-ContentRecord.compareOrdinals = function (inContentRecordOne, inContentRecordTwo) {
-  var ordinalNumberOne = inContentRecordOne.getOrdinalNumber();
-  var ordinalNumberTwo = inContentRecordTwo.getOrdinalNumber();
+ContentRecord.compareOrdinals = function(contentRecordOne, contentRecordTwo) {
+  var ordinalNumberOne = contentRecordOne.getOrdinalNumber();
+  var ordinalNumberTwo = contentRecordTwo.getOrdinalNumber();
   return (ordinalNumberTwo - ordinalNumberOne);
 };
 

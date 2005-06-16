@@ -247,27 +247,36 @@ DeltaVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
       // var userstampUuid = contents[DeltaVirtualServer.JSON_MEMBER_USERSTAMP];
       // var timestamp = new Date(new Number(timestampString));
       // var userstamp = this.__getItemFromUuidOrBootstrapItem(userstampUuid);
-      var timestamp = null;
-      var userstamp = null;
+      // var timestamp = null;
+      // var userstamp = null;
       
       if (dehydratedItem) {
         itemUuid = dehydratedItem[DeltaVirtualServer.JSON_MEMBER_UUID];
         item = this.__getItemFromUuidOrBootstrapItem(itemUuid);
-        item._rehydrate(timestamp, userstamp);
         this.__myChronologicalListOfRecords.push(item);
       }
       if (dehydratedVote) {
-        var retainFlag = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG];
+        var voteUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_UUID];
+        var retainFlagString = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG];
+        var retainFlag = null;
+        if (retainFlagString == "true") {
+          retainFlag = true;
+        }
+        if (retainFlagString == "false") {
+          retainFlag = false;
+        }
+        Util.assert(retainFlag !== null);
         contentRecordUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RECORD];
         contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
-        var vote = new Vote(contentRecord, userstamp, retainFlag, timestamp);
+        var vote = new Vote(this.getWorld(), voteUuid, contentRecord, retainFlag);
         this.__myChronologicalListOfRecords.push(vote);
       }
       if (dehydratedOrdinal) {
-        var ordinalNumber = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER];
-        contentRecordUuid = dehydratedVote[DeltaVirtualServer.JSON_MEMBER_RECORD];
+        var ordinalUuid = dehydratedOrdinal[DeltaVirtualServer.JSON_MEMBER_UUID];
+        var ordinalNumber = dehydratedOrdinal[DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER];
+        contentRecordUuid = dehydratedOrdinal[DeltaVirtualServer.JSON_MEMBER_RECORD];
         contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
-        var ordinal = new Ordinal(contentRecord, userstamp, ordinalNumber, timestamp);
+        var ordinal = new Ordinal(this.getWorld(), ordinalUuid, contentRecord, ordinalNumber);
         this.__myChronologicalListOfRecords.push(ordinal);
       }
       if (dehydratedEntry) {
@@ -306,7 +315,7 @@ DeltaVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
         }
         var entry = this.__getEntryFromUuidOrBootstrapEntry(entryUuid);
         var itemOrEntry = previousEntry || item;
-        entry._rehydrate(itemOrEntry, attribute, finalData, timestamp, userstamp, dataType);
+        entry._rehydrate(itemOrEntry, attribute, finalData, dataType);
         this.__myChronologicalListOfRecords.push(entry);
       }
     }
@@ -438,6 +447,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
   var listOfStrings = [];
   var firstContentRecord = true;
   var itemDisplayNameSubstring;
+  var entryDisplayNameSubstring;
 
   for (key in inListOfRecords) {
     var record = inListOfRecords[key];
@@ -456,20 +466,25 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
     }
     if (record instanceof Vote) {
       var vote = record;
-      listOfStrings.push(indent + '{ "' + DeltaVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{' + '\n');
-      listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getContentRecord()._getUuid() + '",\n');
-      listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '"');
+      listOfStrings.push(indent + '{ "' + DeltaVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{');
+      entryDisplayNameSubstring = this.truncateString(vote.getContentRecord().getDisplayString());
+      var deleteVsRetainString = vote.getRetainFlag() ? "RETAIN" : "DELETE";
+      listOfStrings.push('                                              // vote to ' + deleteVsRetainString + " " + entryDisplayNameSubstring + '\n');
+      listOfStrings.push(indent + '         "' + DeltaVirtualServer.JSON_MEMBER_UUID + '": "' + vote._getUuid() + '",\n');
+      listOfStrings.push(indent + '       "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getContentRecord()._getUuid() + '",\n');
+      listOfStrings.push(indent + '   "' + DeltaVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '"');
     }
     if (record instanceof Ordinal) {
       var ordinal = record;
       listOfStrings.push(indent + '{ "' + DeltaVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
+      listOfStrings.push(indent + '         "' + DeltaVirtualServer.JSON_MEMBER_UUID + '": "' + ordinal._getUuid() + '",\n');
       listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getContentRecord()._getUuid() + '",\n');
       listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '"');
     }
     if (record instanceof Entry) {
       var entry = record;
       listOfStrings.push(indent + '{ "' + DeltaVirtualServer.JSON_MEMBER_ENTRY_CLASS + '": ' + '{');
-      var entryDisplayNameSubstring = this.truncateString(entry.getDisplayString());
+      entryDisplayNameSubstring = this.truncateString(entry.getDisplayString());
       listOfStrings.push('                                              // ' + entryDisplayNameSubstring + '\n');
       listOfStrings.push(indent + '         "' + DeltaVirtualServer.JSON_MEMBER_UUID + '": "' + entry._getUuid() + '",\n');
       var attribute = entry.getAttribute();

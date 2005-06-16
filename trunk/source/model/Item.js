@@ -55,6 +55,7 @@
 Item.prototype = new ContentRecord();  // makes Item be a subclass of ContentRecord
 function Item(inWorld, inUuid) {
   this._ContentRecord(inWorld, inUuid);
+  // this._Record(inWorld, inUuid);
   
   this.__myHashTableOfEntryListsKeyedByAttributeUuid = {};
   this.__myProvisionalFlag = false;
@@ -84,25 +85,6 @@ Item.prototype._initialize = function (inObserver, inProvisionalFlag) {
   if (inObserver) {
     this.addObserver(inObserver);
   }
-};
-
-
-/**
- * Sets the properties of a newly rehydrated item object.
- *
- * WARNING: This method should be called ONLY from a 
- * VirtualServer implementation.
- *
- * This method should only be called from VirtualServer code that is
- * rehydrating dehydrated item objects. 
- *
- * @scope    protected instance method
- * @param    inTimestamp    A Date object with the creation timestamp for this item. 
- * @param    inUserstamp    The user who created this item. 
- */
-Item.prototype._rehydrate = function (inTimestamp, inUserstamp) {
-  this.__myProvisionalFlag = false;
-  this._rehydrateContentRecord(inTimestamp, inUserstamp);
 };
 
 

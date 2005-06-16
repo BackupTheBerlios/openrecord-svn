@@ -54,6 +54,7 @@
 Entry.prototype = new ContentRecord();  // makes Entry be a subclass of ContentRecord
 function Entry(inWorld, inUuid) {
   this._ContentRecord(inWorld, inUuid);
+  // this._Record(inWorld, inUuid);
  
   this.__myPreviousEntry = null;
   this.__myListOfSubsequentEntries = [];
@@ -137,8 +138,9 @@ Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue, inT
  * @param    inTimestamp    A Date object with the creation timestamp for this entry. 
  * @param    inUserstamp    The user who created this entry. 
  */
-Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inTimestamp, inUserstamp, inType) {
-  this._rehydrateContentRecord(inTimestamp, inUserstamp);
+// Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inTimestamp, inUserstamp, inType) {
+Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inType) {
+  // this._rehydrateContentRecord(inTimestamp, inUserstamp);
 
   if (inItemOrEntry instanceof Entry) {
     this.__myPreviousEntry = inItemOrEntry;
