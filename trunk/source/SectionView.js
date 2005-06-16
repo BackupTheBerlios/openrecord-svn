@@ -280,7 +280,7 @@ SectionView.prototype._refreshQueryEditSpan = function () {
   var hasMatchingEntries = (listOfMatchingEntries && (listOfMatchingEntries.length > 0));
   var matchingEntry = hasMatchingEntries ? listOfMatchingEntries[0] : null;
   
-  var listOfAttributes = this.getWorld().getCategories();
+  var listOfAttributes = this.getWorld().getAttributes();
   var selectElement = View.createAndAppendElement(this._queryEditSpan, "select");
   for (var key in listOfAttributes) {
     var anAttribute = listOfAttributes[key];
