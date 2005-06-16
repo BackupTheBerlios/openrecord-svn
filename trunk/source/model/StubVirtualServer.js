@@ -339,20 +339,34 @@ StubVirtualServer.prototype.getUsers = function () {
   return this.__myListOfUsers;
 };
 
+/**
+ *
+ */
+StubVirtualServer.prototype.getItemsOfCategory = function (inCategory) {
+  var listOfItems = [];
+  for (var key in this.__myHashTableOfItemsKeyedByUuid) {
+    var item = this.__myHashTableOfItemsKeyedByUuid[key];
+    if (item.isInCategory(inCategory)) {
+      listOfItems.push(item);
+    }
+  }
+  return listOfItems;
+};
 
 /**
  *
  */
 StubVirtualServer.prototype.getCategories = function () {
-  var listOfCategories = [];
-  for (var key in this.__myHashTableOfItemsKeyedByUuid) {
-    var item = this.__myHashTableOfItemsKeyedByUuid[key];
-    var categoryCalledCategory = this.getItemFromUuid(World.UUID_FOR_CATEGORY_CATEGORY);
-    if (item.isInCategory(categoryCalledCategory)) {
-      listOfCategories.push(item);
-    }
-  }
-  return listOfCategories;
+  var categoryCalledCategory = this.getWorld().getCategoryCalledCategory();
+  return this.getItemsOfCategory(categoryCalledCategory);
+};
+
+/**
+ *
+ */
+StubVirtualServer.prototype.getAttributes = function () {
+  var categoryCalledAttribute = this.getWorld().getCategoryCalledAttribute();
+  return this.getItemsOfCategory(categoryCalledAttribute);
 };
 
 

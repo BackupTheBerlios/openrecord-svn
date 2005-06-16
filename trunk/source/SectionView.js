@@ -240,14 +240,12 @@ SectionView.prototype.doInitialDisplay = function () {
     optionElement.innerHTML = pluginName;
   }
   
-  var textOf = document.createTextNode(" of ");
-  controlArea.appendChild(textOf);
+  View.createAndAppendTextNode(controlArea," of items whose ");
 
   this._queryEditSpan = View.createAndAppendElement(controlArea, "span");
   // this._refreshQueryEditSpan();
 
-  var textItems = document.createTextNode(" items.");
-  controlArea.appendChild(textItems);
+  View.createAndAppendTextNode(controlArea,".");
 
   // create a div element for the plugin class to use
   this._myPluginDiv = View.createAndAppendElement(outerDiv, "div");
@@ -265,33 +263,68 @@ SectionView.prototype.doInitialDisplay = function () {
 SectionView.prototype._refreshQueryEditSpan = function () {
   this._queryEditSpan.innerHTML = '';
   
-  var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
-  var listOfMatchingEntries = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingValue);
-  var isCategoryMatchingQuery = (listOfMatchingEntries && (listOfMatchingEntries.length > 0));
-  var selectedCategoryName = isCategoryMatchingQuery ? listOfMatchingEntries[0].getValue().getDisplayName() : "no category selected";
-
-  var isEmptyQuery = false;
-  var listener = this; 
-  var querySelectElement = View.createAndAppendElement(this._queryEditSpan, "select");
-  var listOfCategories = this.getWorld().getCategories();
-  var optionElement = View.createAndAppendElement(querySelectElement, "option");
-  optionElement.setAttribute("value", null);
-  Util.addEventListener(optionElement, "click", function(event) {listener.clickOnQueryCategorySelectionMenu(event);});
-  optionElement.innerHTML = "(none)";
-  for (var key in listOfCategories) {
-    var category = listOfCategories[key];
-    optionElement = View.createAndAppendElement(querySelectElement, "option");
-    optionElement.selected = (selectedCategoryName == category.getDisplayName());
-    optionElement.setAttribute("value", category._getUuid());
-    Util.addEventListener(optionElement, "click", function(event) {listener.clickOnQueryCategorySelectionMenu(event);});
-    optionElement.innerHTML = category.getDisplayName();
+  var myQuery = this.getQuery();
+  var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
+  var listOfMatchingAttrs = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
+  var matchingAttribute;
+  if (listOfMatchingAttrs.length === 0) {
+    // by default matching attribute is category
+    matchingAttribute = this.getWorld().getAttributeCalledCategory();
   }
+  else {
+    Util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
+    matchingAttribute = listOfMatchingAttrs[0].getValue();
+  }
+  var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
+  var listOfMatchingEntries = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
+  var hasMatchingEntries = (listOfMatchingEntries && (listOfMatchingEntries.length > 0));
+  var matchingEntry = hasMatchingEntries ? listOfMatchingEntries[0] : null;
+  
+  var listOfAttributes = this.getWorld().getCategories();
+  var selectElement = View.createAndAppendElement(this._queryEditSpan, "select");
+  for (var key in listOfAttributes) {
+    var anAttribute = listOfAttributes[key];
+    optionElement = View.createAndAppendElement(selectElement, "option");
+    optionElement.selected = (matchingAttribute.getDisplayName() == anAttribute.getDisplayName());
+    optionElement.value = anAttribute._getUuid();
+    optionElement.onclick = this.clickOnAttributeMenu.bindAsEventListener(this);
+    optionElement.text = anAttribute.getDisplayName();
+  }
+  
+  View.createAndAppendTextNode(this._queryEditSpan, " is ");
+  
+  var listOfPossibleEntries = this.getWorld().getSuggestedItemsForAttribute(matchingAttribute);
+  var entrySpan = View.createAndAppendElement(this._queryEditSpan, "span");
+  
+  var entryTextView =  new TextView(this, entrySpan, myQuery, attributeCalledQueryMatchingValue, matchingEntry,
+    RootView.ELEMENT_CLASS_EDIT_MODE);
+  entryTextView.setSuggestions(listOfPossibleEntries);
+  entryTextView.alwaysUseEditField();
+  entryTextView.setAutoWiden(true);
+  var attributeCalledExpectedType = this.getWorld().getAttributeCalledExpectedType();
+  var listOfExpectedTypeEntries = matchingAttribute.getEntriesForAttribute(attributeCalledExpectedType);
+  entryTextView.setExpectedTypeEntries(listOfExpectedTypeEntries);
+  entryTextView.refresh();
+  myQuery.addObserver(this);
 };
 
 
 // -------------------------------------------------------------------
 // Event handler methods
 // -------------------------------------------------------------------
+
+/**
+ * Called when the query belong to this section has changed
+ * @scope public instance method
+ */
+SectionView.prototype.observedItemHasChanged = function(item) {
+  var myQuery = this.getQuery();
+  Util.assert(item == myQuery);
+  var pluginName = this._myPlugin.getPluginName();
+  this._myPlugin.endOfLife();
+  this._myPlugin = this.getPluginFromPluginName(pluginName, this._myPluginDiv);
+  this.refresh();
+};
 
 /**
  * Called when the user clicks on any of the plugin option-select controls.
@@ -334,7 +367,7 @@ SectionView.prototype.clickOnPluginSelectionMenu = function (inEventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-SectionView.prototype.clickOnQueryCategorySelectionMenu = function (inEventObject) {
+SectionView.prototype.clickOnAttributeMenu = function (inEventObject) {
   var eventObject = inEventObject || window.event;
   var optionElement = Util.getTargetFromEvent(eventObject);
   // PENDING: We could replace the lines above with "var optionElement = this;"
@@ -342,21 +375,38 @@ SectionView.prototype.clickOnQueryCategorySelectionMenu = function (inEventObjec
   
   var selectElement = optionElement.parentNode;
   var newChoiceUuid = optionElement.value;
-  var newQueryMatchingCategory = this.getWorld().getItemFromUuid(newChoiceUuid);
-  var newChoiceName = newQueryMatchingCategory.getDisplayName();
+  var newQueryMatchingAttribute = this.getWorld().getItemFromUuid(newChoiceUuid);
+  var newChoiceName = newQueryMatchingAttribute.getDisplayName();
   
-  var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
-  var listOfMatchingEntries = this.getQuery().getEntriesForAttribute(attributeCalledQueryMatchingValue);
-  var currentQueryMatchingCategoryEntry = listOfMatchingEntries.length > 0? listOfMatchingEntries[0] : null;
-  var currentQueryMatchingCategory = listOfMatchingEntries.length > 0? listOfMatchingEntries[0].getValue() : null;
-  var currentCategoryName = currentQueryMatchingCategory? currentQueryMatchingCategory.getDisplayName() : "none";
- 
-  if (currentCategoryName != newChoiceName) {
-    if (currentQueryMatchingCategory) {
-      this.getQuery().replaceEntry(currentQueryMatchingCategoryEntry, newQueryMatchingCategory);
+  var myQuery = this.getQuery();
+  var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
+  var listOfMatchingAttrs = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
+  var matchingAttribute;
+  if (listOfMatchingAttrs.length === 0) {
+    // by default matching attribute is category
+    matchingAttribute = this.getWorld().getAttributeCalledCategory();
+  }
+  else {
+    Util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
+    matchingAttribute = listOfMatchingAttrs[0].getValue();
+  }
+  if (matchingAttribute.getDisplayName() != newChoiceName) {
+    if (listOfMatchingAttrs.length == 0) {
+      myQuery.addEntryForAttribute(attributeCalledQueryMatchingAttribute, newQueryMatchingAttribute);
     } else {
-      this.getQuery().addEntryForAttribute(attributeCalledQueryMatchingValue, newQueryMatchingCategory);
+      myQuery.replaceEntry(listOfMatchingAttrs[0], newQueryMatchingAttribute);
     }
+
+    /* PENDING, PROBLEM: Can't delete entries already created by previous matching attribute
+    var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
+    var listOfMatchingEntries = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
+    for (var i in listOfMatchingEntries) {
+      var anEntry = listOfMatchingEntries[i];
+      myQuery.replaceEntry(anEntry,null);
+    }
+    listOfMatchingEntries = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);;
+    Util.assert(listOfMatchingEntries.length === 0);*/
+    
     // I think we need these next 3 lines in to make sure the view gets updated  
     // to reflect the new query.  When we get a chance we should probably do 
     // some refactoring so that the plugin can register as an observer of the
@@ -366,7 +416,7 @@ SectionView.prototype.clickOnQueryCategorySelectionMenu = function (inEventObjec
     this._myPlugin.endOfLife();
     this._myPlugin = this.getPluginFromPluginName(pluginName, this._myPluginDiv);
 
-    // PENDING:
+    /*// PENDING:
     // These next 8 lines look like a mistake.  Maybe they're a result of a 
     // copy & paste error.  I think we can just delete them, but I'm not brave
     // enough right now!
@@ -377,7 +427,7 @@ SectionView.prototype.clickOnQueryCategorySelectionMenu = function (inEventObjec
       this.mySection.replaceEntry(oldEntry, pluginName);
     } else {
       this.mySection.addEntryForAttribute(attributeCalledPluginName, pluginName);
-    }
+    }*/
 
     this.refresh();
   }

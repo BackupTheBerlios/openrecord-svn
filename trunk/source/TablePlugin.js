@@ -128,7 +128,7 @@ TablePlugin.prototype._buildAttributeHash = function() {
         // PENDING we may only want to do this for certain attributes
         var itemEntries = contentItem.getEntriesForAttribute(attribute);
         if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
-          hashTableOfEntries[attributeKeyString] = this._getSuggestedItemsForAttribute(attribute);
+          hashTableOfEntries[attributeKeyString] = this.getWorld().getSuggestedItemsForAttribute(attribute);
         } else {
           if (!hashTableOfEntries[attributeKeyString]) {
             hashTableOfEntries[attributeKeyString] = {};
@@ -155,50 +155,6 @@ TablePlugin.prototype._buildAttributeHash = function() {
     var key = attributeCalledName.getUniqueKeyString();
     this._hashTableOfAttributes[key] = attributeCalledName;
   }
-};
-
-
-/**
- *
- */
-TablePlugin.prototype._getSuggestedItemsForAttribute = function(attribute) {
-  var listOfSuggestedItems = [];
-  var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
-  if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
-    var key;
-    var categoryCalledCategory = this.getWorld().getCategoryCalledCategory();
-    var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
-    var attributeCalledExpectedType = this.getWorld().getAttributeCalledExpectedType();
-    var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
-    var listOfCategories = [];
-    for (key in listOfExpectedTypeEntries) {
-      var expectedTypeEntry = listOfExpectedTypeEntries[key];
-      var expectedType = expectedTypeEntry.getValue();
-      if (expectedType.isInCategory(categoryCalledCategory)) {
-        listOfCategories.push(expectedType);
-      }
-      /* WRONG -- DELETE ME
-      var listOfCategoryEntriesForExpectedType = expectedType.getEntriesForAttribute(attributeCalledCategory);
-      var categoryEntryForExpectedType = listOfCategoryEntriesForExpectedType[0]; // PENDING: should look at whole list, not just element 0
-      var categoryForExpectedType = categoryEntryForExpectedType.getValue();
-      if (categoryForExpectedType.isInCategory(categoryCalledCategory)) {
-        listOfCategories.push(categoryForExpectedType);
-      }
-      */
-    }
-    for (key in listOfCategories) {
-      var category = listOfCategories[key];
-      var listOfItems = this.getWorld().getItemsInCategory(category);
-      for (var keyToo in listOfItems) {
-        var item = listOfItems[keyToo];
-        Util.addObjectToSet(item, listOfSuggestedItems);
-      }
-    }
-  }
-  if (listOfSuggestedItems.length === 0) {
-    listOfSuggestedItems = null;
-  }
-  return listOfSuggestedItems;
 };
 
 
@@ -439,8 +395,12 @@ TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
       this._hashTableOfEntries[attributeUuid] = [];
     }
     else {
-      this._hashTableOfAttributes[attributeUuid] = this.getWorld().getItemFromUuid(attributeUuid);
-      this._hashTableOfEntries[attributeUuid] = []; //PENDING need to set this to right attribute
+      var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
+      var attribute = this.getWorld().getItemFromUuid(attributeUuid);
+      this._hashTableOfAttributes[attributeUuid] = attribute;
+      if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
+        this._hashTableOfEntries[attributeUuid] = this.getWorld().getSuggestedItemsForAttribute(attribute);
+      }
     }
     this._buildTable(true);
   }

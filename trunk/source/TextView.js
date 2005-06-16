@@ -67,7 +67,7 @@ function TextView(theSuperview, inElement, inItem, inAttribute, inEntry, inClass
   
   this.setSuperview(theSuperview);
   this.setHTMLElement(inElement);
-  //inElement.style.width =
+  inElement.style.width =
   inElement.style.height = "100%"; // make this element expand to fill parent element where possible
   this._item = inItem;
   this._attribute = inAttribute;
@@ -77,6 +77,7 @@ function TextView(theSuperview, inElement, inItem, inAttribute, inEntry, inClass
   this._isMultiLine = isMultiLine;
   this._isEditing = false;
   this._proxyOnKeyFunction = null;
+  this._alwaysUseEditField = null;
   
   this._isProvisional = inItem.isProvisional();
   if (this._isProvisional) {
@@ -92,7 +93,43 @@ TextView.prototype._setupSuggestionBox = function() {
   if (this._suggestions) {
     var suggestionBox = new AttributeSuggestionBox(this._editField, this._suggestions);
     this._suggestionBox = suggestionBox;
+    if (this._editField && this._autoWiden) {
+      var maxLength = 4;
+      for (var i=0; i < this._suggestions.length;++i) {
+        var aSuggestion = this._suggestions[i];
+        if (aSuggestion.getDisplayName().length > maxLength) {maxLength = aSuggestion.getDisplayName().length;}
+      }
+      this._editField.size = maxLength;
+    }
   }
+};
+
+/**
+ *
+ */
+TextView.prototype.alwaysUseEditField = function() {
+  this._alwaysUseEditField = true;
+  if (this._myHasEverBeenDisplayedFlag) {
+    this.startEditing(true);
+  }
+};
+
+/**
+ *
+ */
+TextView.prototype.setAutoWiden = function(inAutoWiden) {
+  this._autoWiden = inAutoWiden;
+};
+
+/**
+ *
+ */
+TextView.prototype.setExpectedTypeEntries = function(expectedTypeEntries) {
+  Util.assert(Util.isArray(expectedTypeEntries));
+  for(var i=0;i < expectedTypeEntries.length; ++i) {
+    Util.assert(expectedTypeEntries[i] instanceof Entry);
+  }
+  this._expectedTypeEntries = expectedTypeEntries;
 };
 
 
@@ -141,8 +178,10 @@ TextView.prototype._buildView = function() {
   }
   this._textNode = document.createTextNode(textString);
   htmlElement.appendChild(this._textNode);
-
   htmlElement.onclick =  this.onClick.bindAsEventListener(this);
+  if (this._alwaysUseEditField) {
+    this.startEditing(true);
+  }
     
   this._myHasEverBeenDisplayedFlag = true;
 };
@@ -153,7 +192,7 @@ TextView.prototype._buildView = function() {
  *
  * @scope    public instance method
  */
-TextView.prototype.startEditing = function() {
+TextView.prototype.startEditing = function(dontSelect) {
   if (!this._isEditing) {
     var editField = this._editField;
     if (!editField) {
@@ -161,10 +200,9 @@ TextView.prototype.startEditing = function() {
         editField = this._editField = document.createElement("textarea");
       }
       else {
-        editField = document.createElement("input");
+        editField = this._editField= document.createElement("input");
         editField.type = 'text';
       }
-      this._editField = editField;
       editField.className = this._className;
       var listener = this; 
       editField.onblur = this.onBlur.bindAsEventListener(this);
@@ -172,18 +210,15 @@ TextView.prototype.startEditing = function() {
       editField.onkeyup = this.onKeyUp.bindAsEventListener(this);
       editField.onfocus = this.onFocus.bindAsEventListener(this);
       editField.defaultValue = this._isProvisional ? '' : this._textNode.data;
+      editField.size = 5; //editField.defaultValue.length+1;
     }
     
-    if (this._mySuperview.getTextViewWidth) {
-      //editField.style.width = this._mySuperview.getTextViewWidth() + "px";
-      editField.size = 1;
-    }
     //editField.style.width = this.getHTMLElement().offsetWidth + "px";    
     //editField.style.height = (this.getHTMLElement().offsetHeight) + "px";
     
     this._setupSuggestionBox();
     this.getHTMLElement().replaceChild(editField, this._textNode);
-    editField.select();
+    if (!dontSelect) {editField.select();}
     //editField.focus();
     this._isEditing = true;
   }
@@ -204,28 +239,29 @@ TextView.prototype.stopEditing = function() {
     if (!newValue) {
       newValue = this._editField.value;
     }
-    var newText = this._editField.value;
     var stillProvisional = this._isProvisional && !newValue;
     var htmlElement = this.getHTMLElement();
 
-    this._isEditing = false;
 
     if (this._suggestionBox) {
       this._suggestionBox._blurOnInputField();
     }
-    if (stillProvisional) {
-      newValue = this._provisionalText;
+    if (!this._alwaysUseEditField) {
+      this._isEditing = false;
+      if (stillProvisional) {
+        newValue = this._provisionalText;
+      }
+      var newValueDisplayString = "";
+      if (Util.isString(newValue)) {
+        newValueDisplayString = newValue;
+      }
+      else if (newValue instanceof Item) {
+        newValueDisplayString = newValue.getDisplayName();
+      }
+      this._textNode.data = newValueDisplayString;
+      this._suggestionBox = null;
+      this.getHTMLElement().replaceChild(this._textNode, this._editField);
     }
-    var newValueDisplayString = "";
-    if (Util.isString(newValue)) {
-      newValueDisplayString = newValue;
-    }
-    else if (newValue instanceof Item) {
-      newValueDisplayString = newValue.getDisplayName();
-    }
-    this._textNode.data = newValueDisplayString;
-    this._suggestionBox = null;
-    this.getHTMLElement().replaceChild(this._textNode, this._editField);
 
     // we need this _writeValue() to be after all display related code, because this may trigger an observer call
     if (!stillProvisional) { this._writeValue(newValue); }
@@ -246,8 +282,14 @@ TextView.prototype.stopEditing = function() {
 TextView.prototype._transformToExpectedType = function(value) {
 if (value && Util.isString(value)) {
     var repository = this.getWorld();
-    var attributeCalledExpectedType = repository.getAttributeCalledExpectedType();
-    var listOfExpectedTypeEntries = this._attribute.getEntriesForAttribute(attributeCalledExpectedType);
+    var listOfExpectedTypeEntries;
+    if (this._expectedTypeEntries) {
+      listOfExpectedTypeEntries = this._expectedTypeEntries;
+    }
+    else {
+      var attributeCalledExpectedType = repository.getAttributeCalledExpectedType();
+      listOfExpectedTypeEntries = this._attribute.getEntriesForAttribute(attributeCalledExpectedType);
+    }
     var categoryCalledCategory = repository.getCategoryCalledCategory();
     var typeCalledText = repository.getTypeCalledText();
     var typeCalledDate = repository.getTypeCalledDate();
@@ -452,7 +494,7 @@ TextView.prototype.onKeyPress = function(inEventObject) {
 
   // ATTEMPT #2: 
   // slightly clunky, but better than nothing!
-  if (editField.scrollHeight > editField.clientHeight) {
+  if (this._isMultiLine && (editField.scrollHeight > editField.clientHeight)) {
     editField.style.height = editField.scrollHeight + "px";
   }
 

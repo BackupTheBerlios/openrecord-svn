@@ -141,17 +141,6 @@ MultiEntriesView.prototype.setClickFunction = function(inClickFunction) {
 };
 
 /**
- * Returns width for TextView edit field to set
- * HACK: See http://lists.berlios.de/pipermail/openrecord-dev/2005-June/000120.html
- *
- * @scope    public instance method
- */
-
-MultiEntriesView.prototype.getTextViewWidth = function() {
-  return this._myHTMLElement.offsetWidth;
-};
-
-/**
  *
  */
 MultiEntriesView.prototype._handleClick = function(inEvent, inTextView) {
