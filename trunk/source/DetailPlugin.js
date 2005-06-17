@@ -52,9 +52,9 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_DETA
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  * @syntax   var detailPlugin = new DetailPlugin()
  */
-DetailPlugin.prototype = new ORPlugin();  // makes DetailPlugin be a subclass of View
-function DetailPlugin(inSuperView, inHTMLElement,inQuery) {
-  ORPlugin.call(this,inSuperView,inHTMLElement,inQuery);
+DetailPlugin.prototype = new PluginView();  // makes DetailPlugin be a subclass of View
+function DetailPlugin(inSuperView, inHTMLElement,inQuery,inLayout) {
+  PluginView.call(this,inSuperView,inHTMLElement,inQuery,inLayout);
 }
 
 

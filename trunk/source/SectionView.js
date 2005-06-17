@@ -167,7 +167,8 @@ SectionView.prototype.getPluginFromPluginName = function (inPluginName, inPlugin
   var newPlugin = null;
   var pluginClass = SectionView.ourHashTableOfPluginClassesKeyedByPluginName[inPluginName];
   if (pluginClass) {
-    newPlugin = new pluginClass(this, inPluginDiv, this.getQuery());
+    var layoutData = this._getLayoutDataForPlugin(inPluginName);
+    newPlugin = new pluginClass(this, inPluginDiv, this.getQuery(), layoutData);
   }
   return newPlugin;
 };
@@ -266,6 +267,36 @@ SectionView.prototype.doInitialDisplay = function () {
   this.refresh();
 };
 
+/**
+ * Returns layout data of this section for a particular plugin
+ * Creates a the layout data item if doesn't exist
+ *
+ * @param inPluginName name of plugin
+ * @return layout data of this section for a particular plugin
+ */
+SectionView.prototype._getLayoutDataForPlugin = function (inPluginName) {
+  var repository = this.getWorld();
+  var attrLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA);
+  var entriesLayoutData = this.mySection.getEntriesForAttribute(attrLayoutData);
+  var attrAppliesToPlugin = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN);
+  if (entriesLayoutData) {
+    for (var i=0; i < entriesLayoutData.length; ++i) {
+      var layoutItem = entriesLayoutData[i].getValue();
+      var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attrAppliesToPlugin);
+      Util.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
+      if (entriesAppliesToPlugin[0].getValue() == inPluginName) {
+        return layoutItem;
+      }
+    }
+  }
+  // layoutData not found, so create the item
+  repository.beginTransaction();
+  layoutItem = repository.newItem("Layout data for " + inPluginName + " of " + this.mySection.getDisplayName());
+  layoutItem.addEntryForAttribute(attrAppliesToPlugin, inPluginName);
+  this.mySection.addEntryForAttribute(attrLayoutData,layoutItem,repository.getTypeCalledItem());
+  repository.endTransaction();
+  return layoutItem;
+};
 
 /**
  * Re-creates all the HTML for the SectionView, and hands the HTML to the 

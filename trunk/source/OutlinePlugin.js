@@ -51,9 +51,9 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_OUTL
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  * @syntax   var outline = new OutlinePlugin()
  */
-OutlinePlugin.prototype = new ORPlugin();  // makes OutlinePlugin be a subclass of View
-function OutlinePlugin(inSectionView, inHTMLElement,inQuery) {
-  ORPlugin.call(this,inSectionView,inHTMLElement,inQuery);
+OutlinePlugin.prototype = new PluginView();  // makes OutlinePlugin be a subclass of View
+function OutlinePlugin(inSectionView, inHTMLElement,inQuery,inLayout) {
+  PluginView.call(this,inSectionView,inHTMLElement,inQuery,inLayout);
 }
 
 

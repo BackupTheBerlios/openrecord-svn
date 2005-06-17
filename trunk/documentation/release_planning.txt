@@ -452,4 +452,5 @@ Issues for post iteration#2
 + Should we get rid of semi-colon checking in JSLint?
 + Should we work on making OpenRecord work within MediaWiki?
 + BUG: need to convert HTML entity codes back at client-server layer
++ Task: Rename ORlugin to PluginView
 

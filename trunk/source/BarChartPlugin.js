@@ -53,9 +53,9 @@ SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_BAR_
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  * @syntax   var barChart = new BarChartPlugin()
  */
-BarChartPlugin.prototype = new ORPlugin();  // makes BarChartPlugin be a subclass of View
-function BarChartPlugin(inSuperview, inHTMLElement,inQuery) {
-  ORPlugin.call(this,inSuperview,inHTMLElement,inQuery);
+BarChartPlugin.prototype = new PluginView();  // makes BarChartPlugin be a subclass of View
+function BarChartPlugin(inSuperview, inHTMLElement,inQuery,inLayout) {
+  PluginView.call(this,inSuperview,inHTMLElement,inQuery,inLayout);
 }
 
 

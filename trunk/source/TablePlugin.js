@@ -62,9 +62,9 @@ TablePlugin.DESCENDING_GIF = "descending.gif";
  * @param    inSectionView    The SectionView that this TablePlugin will appears in. 
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  */
-TablePlugin.prototype = new ORPlugin();  // makes TablePlugin be a subclass of View
-function TablePlugin(inSectionView, inHTMLElement, inQuery) {
-  ORPlugin.call(this,inSectionView,inHTMLElement,inQuery);
+TablePlugin.prototype = new PluginView();  // makes TablePlugin be a subclass of View
+function TablePlugin(inSectionView, inHTMLElement, inQuery,inLayout) {
+  PluginView.call(this,inSectionView,inHTMLElement,inQuery,inLayout);
 
   // PENDING should probably make this independent of sectionview
   this.myClass = SectionView.ELEMENT_CLASS_SIMPLE_TABLE;

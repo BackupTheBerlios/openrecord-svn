@@ -622,7 +622,7 @@ AttributeSuggestionBox.prototype._keyPressOnInputField = function (inEventObject
       break;
       case Util.ASCII_VALUE_FOR_TAB:
       if (!this._selectedItem) {
-        this._selectedItem = this._listOfMatchingItems[0]
+        this._selectedItem = this._listOfMatchingItems[0];
         doSelectItem = true;
       }
       break;
