@@ -826,38 +826,28 @@ World.prototype.getAttributes = function() {
  */
 World.prototype.getSuggestedItemsForAttribute = function(attribute) {
   var listOfSuggestedItems = [];
-  var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
-  if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
-    var key;
-    var categoryCalledCategory = this.getCategoryCalledCategory();
-    var attributeCalledCategory = this.getAttributeCalledCategory();
-    var attributeCalledExpectedType = this.getAttributeCalledExpectedType();
-    var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
-    var listOfCategories = [];
-    for (key in listOfExpectedTypeEntries) {
-      var expectedTypeEntry = listOfExpectedTypeEntries[key];
-      var expectedType = expectedTypeEntry.getValue();
-      if (expectedType.isInCategory(categoryCalledCategory)) {
-        listOfCategories.push(expectedType);
-      }
-      /* WRONG -- DELETE ME
-      var listOfCategoryEntriesForExpectedType = expectedType.getEntriesForAttribute(attributeCalledCategory);
-      var categoryEntryForExpectedType = listOfCategoryEntriesForExpectedType[0]; // PENDING: should look at whole list, not just element 0
-      var categoryForExpectedType = categoryEntryForExpectedType.getValue();
-      if (categoryForExpectedType.isInCategory(categoryCalledCategory)) {
-        listOfCategories.push(categoryForExpectedType);
-      }
-      */
-    }
-    for (key in listOfCategories) {
-      var category = listOfCategories[key];
-      var listOfItems = this.getItemsInCategory(category);
-      for (var keyToo in listOfItems) {
-        var item = listOfItems[keyToo];
-        Util.addObjectToSet(item, listOfSuggestedItems);
-      }
+  var key;
+  var categoryCalledCategory = this.getCategoryCalledCategory();
+  var attributeCalledCategory = this.getAttributeCalledCategory();
+  var attributeCalledExpectedType = this.getAttributeCalledExpectedType();
+  var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
+  var listOfCategories = [];
+  for (key in listOfExpectedTypeEntries) {
+    var expectedTypeEntry = listOfExpectedTypeEntries[key];
+    var expectedType = expectedTypeEntry.getValue();
+    if (expectedType.isInCategory(categoryCalledCategory)) {
+      listOfCategories.push(expectedType);
     }
   }
+  for (key in listOfCategories) {
+    var category = listOfCategories[key];
+    var listOfItems = this.getItemsInCategory(category);
+    for (var keyToo in listOfItems) {
+      var item = listOfItems[keyToo];
+      Util.addObjectToSet(item, listOfSuggestedItems);
+    }
+  }
+
   if (listOfSuggestedItems.length === 0) {
     listOfSuggestedItems = null;
   }
