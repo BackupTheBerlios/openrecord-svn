@@ -317,6 +317,8 @@ SectionView.prototype._refreshQueryEditSpan = function () {
   var listOfExpectedTypeEntries = matchingAttribute.getEntriesForAttribute(attributeCalledExpectedType);
   entryTextView.setExpectedTypeEntries(listOfExpectedTypeEntries);
   entryTextView.refresh();
+  var listener = this;
+  entryTextView.setKeyPressFunction(function (evt, aTxtView) {return listener.keyPressOnMatchingValueField(evt, aTxtView);});
   myQuery.addObserver(this);
 };
 
@@ -324,6 +326,19 @@ SectionView.prototype._refreshQueryEditSpan = function () {
 // -------------------------------------------------------------------
 // Event handler methods
 // -------------------------------------------------------------------
+
+/**
+ * Called when user is editing the matching value edit field
+ * We want to trap a "return" key 
+ * @scope public instance method
+ */
+SectionView.prototype.keyPressOnMatchingValueField = function(evt,aTxtView) {
+  if (evt.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
+    aTxtView.stopEditing();
+    return true;
+  }
+  return false;
+};
 
 /**
  * Called when the query belong to this section has changed

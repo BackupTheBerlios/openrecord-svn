@@ -374,9 +374,9 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
 TablePlugin.prototype.selectRow = function (rowElement) {
   Util.assert(rowElement instanceof HTMLTableRowElement);
   if (rowElement != this._lastSelectedRow) {
-    if (this._lastSelectedRow) {this._lastSelectedRow.style.background = "rgb(100%,100%,100%)";}
+    if (this._lastSelectedRow) {this._lastSelectedRow.style.background = "";}
     this._lastSelectedRow = rowElement;
-    rowElement.style.background = "rgb(100%,100%,0%)";
+    rowElement.style.background = "rgb(0%,70%,100%)"; // PENDING: need to css-ify this selection
     return true;
   }
   return false;

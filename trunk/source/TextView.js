@@ -219,7 +219,6 @@ TextView.prototype.startEditing = function(dontSelect) {
     this._setupSuggestionBox();
     this.getHTMLElement().replaceChild(editField, this._textNode);
     if (!dontSelect) {editField.select();}
-    //editField.focus();
     this._isEditing = true;
   }
 };
@@ -338,11 +337,11 @@ TextView.prototype._writeValue = function(value) {
     var oldValue = this._entry.getValue();
     if (oldValue != value) {
       this._entry = this._item.replaceEntry(this._entry, value);
-      this._restoreText(true);
+      this._restoreText(true); // call restore text in case item is transformed (e.g. Dates will be normalized)
     }
   } else if (value) {
     this._entry = this._item.addEntryForAttribute(this._attribute, value);
-    this._restoreText(true);
+    this._restoreText(true); // call restore text in case item is transformed (e.g. Dates will be normalized
   }
 };
 
@@ -450,7 +449,7 @@ TextView.prototype.setKeyPressFunction = function(keyPressFunction) {
  */
 TextView.prototype.onKeyUp = function(inEventObject) {
   if (this._suggestionBox) {
-    this._suggestionBox._keyPressOnInputField(inEventObject);
+    this._suggestionBox._keyUpOnInputField(inEventObject);
   }
 };
 
@@ -464,6 +463,9 @@ TextView.prototype.onKeyUp = function(inEventObject) {
 TextView.prototype.onKeyPress = function(inEventObject) {
   if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_ESCAPE) {
     this._restoreText();
+    return true;
+  }
+  if (this._suggestionBox && this._suggestionBox._keyPressOnInputField(inEventObject)) {
     return true;
   }
   if (this._keyPressFunction && this._keyPressFunction(inEventObject, this)) {
@@ -560,7 +562,7 @@ AttributeSuggestionBox.prototype.getSelectedItem = function () {
     var editValue = this._myInputField.value;
     for (var i = 0; i < this._listOfSuggestedItems.length; ++i) {
       var item = this._listOfSuggestedItems[i];
-      if (editValue == item.getDisplayName()) {return item;}
+      if (editValue.toLowerCase() == item.getDisplayName().toLowerCase()) {return item;}
     }
   }
   return this._selectedItem;
@@ -594,6 +596,66 @@ AttributeSuggestionBox.prototype._focusOnInputField = function (inEventObject) {
  *
  */
 AttributeSuggestionBox.prototype._keyPressOnInputField = function (inEventObject) {
+  var numberOfMatchingItems = this._listOfMatchingItems.length;
+  if (numberOfMatchingItems === 0) {return false;}
+
+  var asciiValueOfKey = inEventObject.keyCode;
+  var index = -1;
+  var doSelectItem = false;
+  switch (asciiValueOfKey) {
+    case Util.ASCII_VALUE_FOR_DOWN_ARROW:
+      if (this._selectedItem) {
+        index = (Util.getArrayIndex(this._listOfMatchingItems, this._selectedItem)+1) % numberOfMatchingItems;
+      }
+      else {
+        index = 0;
+      }
+      break;
+    case Util.ASCII_VALUE_FOR_UP_ARROW:
+      if (this._selectedItem) {
+        index = Util.getArrayIndex(this._listOfMatchingItems, this._selectedItem)-1;
+        if (index < 0) {index = numberOfMatchingItems-1;}
+      }
+      else {
+        index = numberOfMatchingItems-1;
+      }
+      break;
+      case Util.ASCII_VALUE_FOR_TAB:
+      if (!this._selectedItem) {
+        this._selectedItem = this._listOfMatchingItems[0]
+        doSelectItem = true;
+      }
+      break;
+    case Util.ASCII_VALUE_FOR_RETURN:
+      if (this._selectedItem) {doSelectItem = true;}
+      break;
+    case Util.ASCII_VALUE_FOR_LEFT_ARROW:
+    case Util.ASCII_VALUE_FOR_RIGHT_ARROW:
+      // if left or right arrow keys, then hide suggestion box
+      this._setShouldHide(true);
+      return false;
+    default:
+      // show suggestion box if not already shown, then let editField process keystroke
+      this._setShouldHide(false);
+      return false;
+  }
+  if (index != -1) {
+    this._setShouldHide(false);
+    this._selectedItem = this._listOfMatchingItems[index];
+    this._redisplayAttributeSuggestionBox();
+    return true;
+  }
+  if (doSelectItem) {
+    this._myInputField.value = this._selectedItem.getDisplayName();
+    this._setShouldHide(true);
+  }
+  return false;
+};
+
+/**
+ *
+ */
+AttributeSuggestionBox.prototype._keyUpOnInputField = function (inEventObject) {
   this._redisplayAttributeSuggestionBox();
 };
 
@@ -612,14 +674,32 @@ AttributeSuggestionBox.prototype._blurOnInputField = function () {
  */
 AttributeSuggestionBox.prototype._clickOnSelection = function (inEventObject, item) {
   this._selectedItem = item;
-  this._myInputField.value = item.getDisplayName();  // PENDING: need to pass back the item, not a string
+  //this._myInputField.value = item.getDisplayName();  // PENDING: need to pass back the item, not a string
 };
+
+/**
+ *
+ */
+AttributeSuggestionBox.prototype._setShouldHide = function (shouldHide) {
+  // make the suggestion box disappear
+  this._shouldHide = shouldHide;
+  this._selectedItem = null;
+  if (shouldHide) {
+    this._myAttributeSuggestionBoxDivElement.style.display = "none";
+  }
+  else {
+    this._redisplayAttributeSuggestionBox();
+  }
+};
+
 
 
 /**
  *
  */
 AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () {
+  if (this._shouldHide) {return;} // if SuggestionBox is in hide mode, don't show the box
+  
   var partialInputString = this._myInputField.value;
   var listOfMatchingItems = [];
   var key;
@@ -636,6 +716,7 @@ AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () 
       listOfMatchingItems.push(item);
     }
   }
+  this._listOfMatchingItems = listOfMatchingItems;
 
   if (listOfMatchingItems.length === 0) {
     // make the suggestion box disappear
@@ -650,6 +731,7 @@ AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () 
       var textNode = document.createTextNode(item.getDisplayName());
       var row = table.insertRow(rowNumber);
       var cell = row.insertCell(columnNumber);
+      cell.style.background = (this._selectedItem == item) ? "rgb(0%,70%,100%)":""; //pending need to CSS-ify this
       cell.appendChild(textNode);
       cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, item);
       rowNumber += 1;

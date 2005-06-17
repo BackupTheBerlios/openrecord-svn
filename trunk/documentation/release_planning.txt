@@ -164,10 +164,10 @@ brian  | 0.5  IED | 0.25    |  4. Store transaction info in repository
        |          |         |  5. UI for deleting a row from a table
 brian  | 0.5  IED |         |  6. Save provisional item and then set the category, in that order, and in on transaction
        |          |         |  7. Fix the bug that happens when you call the PHP server code with no POST data
-chao   | 0.5  IED |         |  8. UI for entering a number literal (instead of a string literal) in a table
-chao   | 1    IED |         |  9. UI for entering a date literal in a table (and data model support)
+chao   | 0.5  IED | 0.5 IED |  8. UI for entering a number literal (instead of a string literal) in a table [with Brian]
+chao   | 1    IED | 1   IED |  9. UI for entering a date literal in a table (and data model support) [with Brian]
        |          |         | 10. Add data model support for bi-directional references
-chao   | 2    IED |         | 11. Move to better persistent representation for queries
+chao   | 2    IED | 1.5 IED | 11. Move to better persistent representation for queries [with Brian]
        |          |         | 12. Make sure view code uses transactions
        |          |         | 13. Deal with \n in page name or summary fields
        |          |         | 14. BUG: problems with newlines and HTML characters in text strings
@@ -197,7 +197,7 @@ chao   | 2    IED |         | 11. Move to better persistent representation for q
        |          |         | 36. improve UI for creating a new page
        |          |         | 37. improve UI for adding a new section to a page
        |          |         | 38. improve UI for creating a new user
-       |          |         | 39. improve UI for editing the query that a section uses
+chao   | 1.5 IED  | 1.5 IED | 39. improve UI for editing the query that a section uses
        |          |         | 40. Have edit mode look like view mode, and remove the "Edit" button
        |          |         | 41. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
        |          |         | 42. Rationalize the View api and document public api
@@ -223,7 +223,9 @@ chao   | 2    IED |         | 11. Move to better persistent representation for q
        |          |         | 61. Write scalability tests 
        |          |         | 62. Ensure that PHP scripts and file I/O works for concurrent multi-user access
 -------+----------+---------+----------------------------------------------
-
+chao   | 0.5 IED  | 0.5 IED | Improved UI for autocomplete
+c/b    | 0.5 IED  |         | Allow plugins to store layout data
+chao   | 0.5 IED  |         | Table plugin persists column order
        
 =======================================================
 Categories and Attributes we might use for release 0.1
@@ -449,5 +451,5 @@ Issues for post iteration#2
 + Should we adopt "Globals" convention for JSLint?
 + Should we get rid of semi-colon checking in JSLint?
 + Should we work on making OpenRecord work within MediaWiki?
-
++ BUG: need to convert HTML entity codes back at client-server layer
 

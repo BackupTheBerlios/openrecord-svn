@@ -114,6 +114,7 @@ MultiEntriesView.prototype.select = function(inSelectFirst) {
  *
  */
 MultiEntriesView.prototype.setSuggestions = function(suggestionList) {
+  this._suggestions = suggestionList;
   for (var i=0; i < this._entryViews.length; ++i) {
     this._entryViews[i].setSuggestions(suggestionList);
   }
@@ -215,6 +216,7 @@ MultiEntriesView.prototype._addEntryView = function(inEntry) {
   aTextView.refresh();
   if (this.isInEditMode()) {
     var listener = this;
+    aTextView.setSuggestions(this._suggestions);
     aTextView.setKeyPressFunction(function (evt, aTxtView) {return listener._keyPressOnEditField(evt, aTxtView);});
     aTextView.setClickFunction(function (evt, aTxtView) {return listener._handleClick(evt, aTxtView);});
   }
