@@ -279,11 +279,6 @@ Tasks we want to defer until after release 0.1
 ---------------------------------------------------
  + Refactor the data model code so that categories cache their lists of items
 ---------------------------------------------------
- + We might also want to add a class called Record.js, as an abstract
-    superclass for Vote, Ordinal, and IdentifiedRecord.
----------------------------------------------------
- + Replace the current fake UUIDs with real UUIDs.
----------------------------------------------------
  + BUG: Back button is broken
     The browser's back button doesn't work after you click from 
     page to page in the navbar.
