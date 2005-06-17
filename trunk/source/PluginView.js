@@ -1,5 +1,5 @@
 /*****************************************************************************
- ORPlugin.js
+ PluginView.js
 
 ******************************************************************************
  Written in 2005 by 
@@ -40,21 +40,22 @@
 
 
 /**
- * A ORPlugin display one or more content items. 
+ * A PluginView display one or more content items. 
  *
  * @scope    public instance constructor
  * @extends  View
  * @param    inSuperView    The superview for this view. 
  * @param    inHTMLElement    The HTMLElement to display this view in. 
- * @param    inQuery  Query that produces the items for this ORPlugin to display
- * @syntax   var ORPlugin = new ORPlugin()
+ * @param    inQuery  Query that produces the items for this PluginView to display
+ * @syntax   var PluginView = new PluginView()
  */
-ORPlugin.prototype = new View();  // makes ORPlugin be a subclass of View
-function ORPlugin(inSuperView, inHTMLElement,inQuery) {
-  if (!inSuperView) {return;} // initial call that subclasses of ORPlugins make without parameters
+PluginView.prototype = new View();  // makes PluginView be a subclass of View
+function PluginView(inSuperView, inHTMLElement,inQuery, inLayout) {
+  if (!inSuperView) {return;} // initial call that subclasses of PluginViews make without parameters
   this.setSuperview(inSuperView);
   this.setHTMLElement(inHTMLElement);
   this._query = inQuery;
+  this._layout = inLayout;
 }
 
 
@@ -63,7 +64,7 @@ function ORPlugin(inSuperView, inHTMLElement,inQuery) {
  *
  * @scope    PENDING
  */
-ORPlugin.prototype.fetchItems = function() {
+PluginView.prototype.fetchItems = function() {
   if (Util.isArray(this._query)) {
     //PENDING hack to allow Plugin to support list of items or query
     this._listOfItems = this._query;
@@ -75,12 +76,12 @@ ORPlugin.prototype.fetchItems = function() {
 };
 
 /**
- * Returns the registered name of this ORPlugin.
+ * Returns the registered name of this PluginView.
  *
  * @scope    public instance method
  * @return   A string.
  */
-ORPlugin.prototype.getPluginName = function () {
+PluginView.prototype.getPluginName = function () {
   Util.assert(false);
 };
 
@@ -90,7 +91,7 @@ ORPlugin.prototype.getPluginName = function () {
  *
  * @scope    public instance method
  */
-ORPlugin.prototype.endOfLife = function () {
+PluginView.prototype.endOfLife = function () {
   this.getHTMLElement().innerHTML = "";
 };
 
