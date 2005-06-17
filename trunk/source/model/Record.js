@@ -123,7 +123,6 @@ Record.prototype.getUserstamp = function() {
  */
 Record.prototype.getTimestamp = function() {
   if (this._creationTimestamp) {
-    // This case is now here only for the (temporary) benefit of _rehydrateContentRecord.
     return this._creationTimestamp;
   }
   var hexTimeLow = this._uuid.split('-')[0];
@@ -149,6 +148,11 @@ Record.prototype.getTimestamp = function() {
   var millisecondsBetween1582and1970 = secondsBetween1582and1970 * 1000;
 
   var millisecondsSince1970 = millisecondsSince1582 - millisecondsBetween1582and1970;
+
+  // PENDING: 
+  // Do we want this to return a Date object rather than a floating point
+  // value?
+  this._creationTimestamp = millisecondsSince1970;
   return millisecondsSince1970;
 };
 

@@ -531,7 +531,6 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
     // var userDisplayName = record.getUserstamp().getDisplayName();
     // var userDisplayNameSubstring = this.truncateString(userDisplayName);
     // listOfStrings.push('  // by (' + userDisplayNameSubstring + ')\n');
-    // listOfStrings.push(indent + '    "' + DeltaVirtualServer.JSON_MEMBER_TIMESTAMP + '": "' + record.getTimestamp().valueOf() + '" }\n');
     listOfStrings.push(indent + '}');
   }
   

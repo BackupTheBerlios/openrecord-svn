@@ -77,8 +77,6 @@ function Item(inWorld, inUuid) {
  * @param    inProvisionalFlag    True if the item is provisional; false if the item is normal. 
  */
 Item.prototype._initialize = function (inObserver, inProvisionalFlag) {
-  this._initializeContentRecord();
-
   if (inProvisionalFlag) {
     this.__myProvisionalFlag = true;
   }
@@ -236,7 +234,7 @@ Item.prototype.getEntriesForAttribute = function (inAttribute) {
       break;
     case World.RETRIEVAL_FILTER_UNABRIDGED:
       Util.assert(false);
-      filteredListOfEntries = listOfEntries; //PENDING No such variable as listOfEntries ?!!
+      filteredListOfEntries = listOfEntriesForAttribute;
       break;
     default:
       // We should never get here.  If we get here, it's an error.

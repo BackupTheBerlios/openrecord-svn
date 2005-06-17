@@ -71,17 +71,6 @@ ContentRecord.prototype._ContentRecord = function(world, uuid) {
 
 
 /**
- * Initializes a new contentRecord that has just been created by a user action.
- *
- * WARNING: This method should be called ONLY from subclasses.
- *
- * @scope    protected instance method
- */
-ContentRecord.prototype._initializeContentRecord = function() {
-};
-
-
-/**
  * Records a user's vote to retain or delete this ContentRecord.
  *
  * @scope    protected instance method

@@ -83,8 +83,6 @@ function Entry(inWorld, inUuid) {
 * @param    inType    Optional.  The data type to interpret the value as. 
  */
 Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue, inType) {
-  this._initializeContentRecord();
-
   if (inItemOrEntry instanceof Entry) {
     this.__myPreviousEntry = inItemOrEntry;
     this.__myItem = this.__myPreviousEntry.getItem();

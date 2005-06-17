@@ -653,39 +653,6 @@ World.prototype.newQueryForItemsByCategory = function(categoryOrListOfCategories
 };
 
 
-/** OBSOLETE - no more support for queries for specific items 
- * Returns a newly created item representing a query.
- *
- * @scope    public instance method
- * @param    itemOrListOfItems    Optional. An item, or an array of items. 
- * @return   A newly created item representing a query.
-World.prototype.newQueryForSpecificItems = function(itemOrListOfItems) {
-  this.beginTransaction();
-  var item = this._virtualServer.newItem("A query");
-  var attributeCalledCategory = this.getAttributeCalledCategory();
-  var categoryCalledQuery = this.getCategoryCalledQuery();
-  item.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
-
-  var attributeCalledQueryMatchingItem = this.getAttributeCalledQueryMatchingItem();
-  if (itemOrListOfItems) {
-    if (itemOrListOfItems instanceof Item) {
-      item.addEntryForAttribute(attributeCalledQueryMatchingItem, itemOrListOfItems);
-    }
-    if (Util.isArray(itemOrListOfItems)) {
-      var listOfItems = itemOrListOfItems;
-      for (var key in listOfItems) {
-        var matchingItem = listOfItems[key];
-        item.addEntryForAttribute(attributeCalledQueryMatchingItem, matchingItem);
-      }
-    }
-  }
-
-  this.endTransaction();
-  return item;
-};
-*/
-
-
 /**
  * Returns a newly created entry.
  *
