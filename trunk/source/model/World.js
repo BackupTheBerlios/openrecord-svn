@@ -76,6 +76,7 @@ World.UUID_FOR_TYPE_CHECK_MARK         = "00001023-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_TYPE_URL                = "00001024-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_TYPE_ITEM               = "00001030-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_TYPE_ANYTHING           = "00001040-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_TYPE_CONNECTION         = "00001050-ce7f-11d9-8cd5-0011113ae5d6";
 
 // -------------------------------------------------------------------
 // World private class constants
@@ -135,6 +136,7 @@ function World(virtualServer) {
   this._typeCalledUrl       = server.getItemFromUuid(World.UUID_FOR_TYPE_URL);
   this._typeCalledItem      = server.getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
   this._typeCalledAnything  = server.getItemFromUuid(World.UUID_FOR_TYPE_ANYTHING);
+  this._typeCalledConnection = server.getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
 }
 
 
@@ -189,23 +191,34 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
   // a given item.
   for (key in listOfNewlyCreatedRecords) {
     var record = listOfNewlyCreatedRecords[key];
-    item = null;
+    var listOfItems = [];
+    var itemOrPairOfItems = null;
     if (record instanceof Item) {
-      item = record;
+      listOfItems.push(record);
     }
     if ((record instanceof Vote) || (record instanceof Ordinal)) {
       itemOrEntry = record.getContentRecord();
       if (itemOrEntry instanceof Item) {
-        item = itemOrEntry;
+        listOfItems.push(itemOrEntry);
       }
-       if (itemOrEntry instanceof Entry) {
-        item = itemOrEntry.getItem();
+      if (itemOrEntry instanceof Entry) {
+        itemOrPairOfItems = itemOrEntry.getItem();
       }
     }
     if (record instanceof Entry) {
-      item = record.getItem();
+      itemOrPairOfItems = record.getItem();
     }
-    if (item) {
+    if (itemOrPairOfItems) {
+      if (itemOrPairOfItems instanceof Item) {
+        listOfItems.push(itemOrPairOfItems); 
+      }
+      if (Util.isArray(itemOrPairOfItems)) {
+        listOfItems.push(itemOrPairOfItems[0]);
+        listOfItems.push(itemOrPairOfItems[1]);
+      }
+    }
+    for (var innerKey in listOfItems) {
+      item = listOfItems[innerKey];
       listOfRecordsForItem = hashTableOfNewlyCreatedRecordsKeyedByItemUuid[item._getUuid()];
       if (!listOfRecordsForItem) {
         listOfRecordsForItem = [];
@@ -438,6 +451,10 @@ World.prototype.getTypeCalledAnything = function() {
   return this._typeCalledAnything;
 };
 
+World.prototype.getTypeCalledConnection = function() {
+  return this._typeCalledConnection;
+};
+
 
 
 // -------------------------------------------------------------------
@@ -657,14 +674,34 @@ World.prototype.newQueryForItemsByCategory = function(categoryOrListOfCategories
  * Returns a newly created entry.
  *
  * @scope    public instance method
- * @param    itemOrEntry    The item that this is a entry of, or the old entry that this entry is replacing. 
+ * @param    item    The item that this is an entry of. 
+ * @param    previousEntry    Optional. The old entry that this entry is replacing. 
  * @param    attribute    The attribute that this entry is assigned to. May be null. 
  * @param    value    The value to initialize the entry with. 
+ * @param    type    Optional. An item representing the data type of the value. 
  * @return   A newly created entry.
  */
-World.prototype._newEntry = function(itemOrEntry, attribute, value, type) {
+World.prototype._newEntry = function(item, previousEntry, attribute, value, type) {
   this.beginTransaction();
-  var entry = this._virtualServer.newEntry(itemOrEntry, attribute, value, type);
+  var entry = this._virtualServer.newEntry(item, previousEntry, attribute, value, type);
+  this.endTransaction();
+  return entry;
+};
+
+
+/**
+ * Returns a newly created entry.
+ *
+ * @scope    public instance method
+ * @param    itemOne    One of the two items that this entry will connect. 
+ * @param    attributeOne    The attribute of itemOne that this entry will be assigned to. 
+ * @param    itemTwo    One of the two items that this entry will connect. 
+ * @param    attributeTwo    The attribute of itemTwo that this entry will be assigned to.  
+ * @return   A newly created entry.
+ */
+World.prototype._newConnectionEntry = function(itemOne, attributeOne, itemTwo, attributeTwo) {
+  this.beginTransaction();
+  var entry = this._virtualServer.newConnectionEntry(itemOne, attributeOne, itemTwo, attributeTwo);
   this.endTransaction();
   return entry;
 };

@@ -57,7 +57,10 @@ window.doOnloadActions = function() {
   // Create a World and a DeltaVirtualServer, and have the 
   // DeltaVirtualServer rehydrate all the dehydrated items 
   // contained in the fileContentString.  
-  var deltaVirtualServer = new DeltaVirtualServer(repositoryContentString, userListContentString);
+  var axiomaticItemsFileName = "2005_june_axiomatic_items.json";
+  var axiomaticItemsUrl = "model/" + axiomaticItemsFileName;
+  
+  var deltaVirtualServer = new DeltaVirtualServer(axiomaticItemsUrl, repositoryContentString, userListContentString);
   var world = new World(deltaVirtualServer);
   window.rootView = new RootView(world);
   

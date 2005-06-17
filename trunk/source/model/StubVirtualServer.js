@@ -41,13 +41,59 @@
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// DeltaVirtualServer public class constants
+// -------------------------------------------------------------------
+StubVirtualServer.JSON_MEMBER_FORMAT = "format";
+StubVirtualServer.JSON_MEMBER_TIMESTAMP = "timestamp";
+StubVirtualServer.JSON_MEMBER_DATA = "data";
+StubVirtualServer.JSON_MEMBER_RECORDS = "records";
+StubVirtualServer.JSON_MEMBER_USERS = "users";
+
+StubVirtualServer.JSON_FORMAT_2005_MARCH = "2005_MARCH_ITEM_CENTRIC_LIST";
+StubVirtualServer.JSON_FORMAT_2005_APRIL = "2005_APRIL_CHRONOLOGICAL_LIST";
+StubVirtualServer.JSON_FORMAT_2005_MAY_RECORDS = "2005_MAY_CHRONOLOGICAL_LIST";
+StubVirtualServer.JSON_FORMAT_2005_MAY_USERS = "2005_MAY_USER_LIST";
+StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS = "2005_JUNE_CHRONOLOGICAL_LIST";
+
+StubVirtualServer.JSON_MEMBER_TYPE = "type";
+StubVirtualServer.JSON_MEMBER_VALUE = "value";
+StubVirtualServer.JSON_TYPE_TEXT_VALUE = "TextValue";
+StubVirtualServer.JSON_TYPE_UUID = "Uuid";
+StubVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
+StubVirtualServer.JSON_TYPE_RELATED_UUID = "RelatedUuid";
+StubVirtualServer.JSON_TYPE_NUMBER_VALUE = "NumberValue";
+StubVirtualServer.JSON_TYPE_DATE_VALUE = "DateValue";
+StubVirtualServer.JSON_TYPE_CHECKMARK_VALUE = "CheckMarkValue";
+StubVirtualServer.JSON_TYPE_URL_VALUE = "UrlValue";
+StubVirtualServer.JSON_TYPE_CONNECTION = "Connection";
+
+StubVirtualServer.JSON_MEMBER_UUID = "uuid";
+StubVirtualServer.JSON_MEMBER_PASSWORD = "password";
+
+StubVirtualServer.JSON_MEMBER_ITEM_CLASS = "Item";
+StubVirtualServer.JSON_MEMBER_ENTRY_CLASS = "Entry";
+StubVirtualServer.JSON_MEMBER_VOTE_CLASS = "Vote";
+StubVirtualServer.JSON_MEMBER_ORDINAL_CLASS = "Ordinal";
+StubVirtualServer.JSON_MEMBER_TRANSACTION_CLASS = "Transaction";
+
+StubVirtualServer.JSON_MEMBER_ATTRIBUTE = "attribute";
+StubVirtualServer.JSON_MEMBER_PREVIOUS_VALUE = "previousEntry";
+StubVirtualServer.JSON_MEMBER_USERSTAMP = "userstamp";
+StubVirtualServer.JSON_MEMBER_RECORD = "record";
+StubVirtualServer.JSON_MEMBER_ITEM = "item";
+StubVirtualServer.JSON_MEMBER_RETAIN_FLAG = "retainFlag";
+StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "ordinalNumber";
+
+
 /**
  * The StubVirtualServer is a dummy place-holder datastore that does
  * a bare-minimum job of providing data to a World.
  *
  * @scope    public instance constructor
  */
-function StubVirtualServer() {
+function StubVirtualServer(inJsonAxiomsFileURL) {
+  this._myDehydratedAxiomFileURL = inJsonAxiomsFileURL;
 }
 
 
@@ -83,7 +129,8 @@ StubVirtualServer.prototype._initialize = function (inWorld) {
  */
 StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
   this._initialize(inWorld);
-  this._loadAxiomaticItems();
+  this._buildTypeHashTable();
+  this._loadAxiomaticItemsFromFileAtURL(this._myDehydratedAxiomFileURL);
 };
 
 
@@ -231,25 +278,52 @@ StubVirtualServer.prototype._provisionalItemJustBecameReal = function (inItem) {
  * Returns a newly created entry.
  *
  * @scope    public instance method
- * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry is replacing. 
- * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
- * @param    inValue    The value to initialize the entry with. 
+ * @param    item    The item that this is an entry of. 
+ * @param    previousEntry    Optional. The old entry that this entry is replacing. 
+ * @param    attribute    The attribute that this entry is assigned to. May be null. 
+ * @param    value    The value to initialize the entry with. 
+ * @param    type    Optional. An item representing the data type of the value. 
  * @return   A newly created entry.
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype.newEntry = function (inItemOrEntry, inAttribute, inValue, inType) {
+StubVirtualServer.prototype.newEntry = function (item, previousEntry, attribute, value, type) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
   var entry = new Entry(this.__myWorld, uuid);
-  entry._initialize(inItemOrEntry, inAttribute, inValue, inType);
-  var item = inItemOrEntry instanceof Item ? inItemOrEntry : inItemOrEntry.getItem();
-  item.__addEntryToListOfEntriesForAttribute(entry);
+  entry._initialize(item, previousEntry, attribute, value, type);
+  item.__addEntryToListOfEntriesForAttribute(entry, attribute);
   
   this.__myHashTableOfEntriesKeyedByUuid[uuid] = entry;
   this._currentTransaction.addRecord(entry);
   return entry;
 };
  
+
+/**
+ * Returns a newly created entry.
+ *
+ * @scope    public instance method
+ * @param    itemOne    One of the two items that this entry will connect. 
+ * @param    attributeOne    The attribute of itemOne that this entry will be assigned to. 
+ * @param    itemTwo    One of the two items that this entry will connect. 
+ * @param    attributeTwo    The attribute of itemTwo that this entry will be assigned to.  
+ * @return   A newly created entry.
+ * @throws   Throws an Error if no user is logged in.
+ */
+StubVirtualServer.prototype.newConnectionEntry = function(itemOne, attributeOne, itemTwo, attributeTwo) {
+  this._throwErrorIfNoUserIsLoggedIn();
+  var uuid = this._getNewUuid();
+  var entry = new Entry(this.__myWorld, uuid);
+  entry._initializeConnection(itemOne, attributeOne, itemTwo, attributeTwo);
+
+  itemOne.__addEntryToListOfEntriesForAttribute(entry, attributeOne);
+  itemTwo.__addEntryToListOfEntriesForAttribute(entry, attributeTwo);
+
+  this.__myHashTableOfEntriesKeyedByUuid[uuid] = entry;
+  this._currentTransaction.addRecord(entry);
+  return entry;
+};
+
 
 /**
  * Returns a newly created ordinal.
@@ -337,6 +411,7 @@ StubVirtualServer.prototype.getUsers = function () {
   return this.__myListOfUsers;
 };
 
+
 /**
  *
  */
@@ -351,6 +426,7 @@ StubVirtualServer.prototype.getItemsOfCategory = function (inCategory) {
   return listOfItems;
 };
 
+
 /**
  *
  */
@@ -358,6 +434,7 @@ StubVirtualServer.prototype.getCategories = function () {
   var categoryCalledCategory = this.getWorld().getCategoryCalledCategory();
   return this.getItemsOfCategory(categoryCalledCategory);
 };
+
 
 /**
  *
@@ -706,7 +783,23 @@ StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function (inUuid) 
  *
  * @scope    private instance method
  */
-StubVirtualServer.prototype._loadAxiomaticItems = function () {
+StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = function (url) {
+  var fileContentString = Util.getStringContentsOfFileAtURL(url);
+  Util.assert(Util.isString(fileContentString));
+  fileContentString += " ] }";
+
+  Util.assert(Util.isString(fileContentString));
+  var dehydratedRecords = null;
+  eval("dehydratedRecords = " + fileContentString + ";");
+  Util.assert(Util.isObject(dehydratedRecords));
+  var recordFormat = dehydratedRecords[StubVirtualServer.JSON_MEMBER_FORMAT];
+  Util.assert(recordFormat == StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS);
+  var listOfRecords = dehydratedRecords[StubVirtualServer.JSON_MEMBER_RECORDS];
+  Util.assert(Util.isArray(listOfRecords));
+  
+  this._rehydrateRecords(listOfRecords);
+  
+/* PENDING  
   var uuid;
   var name;
   var item;
@@ -829,6 +922,219 @@ StubVirtualServer.prototype._loadAxiomaticItems = function () {
   this._currentTransaction._listOfRecords = [];
   this.__myWorld.endTransaction();
   return listOfNewlyCreatedRecords;
+ */
+};
+
+
+/**
+ * Given a UUID, either (a) returns the existing item identified by that UUID, 
+ * or (b) creates an new item object, set its UUID, and returns that object.
+ *
+ * @scope    private instance method
+ * @param    inUuid    The UUID of the item to be returned. 
+ * @return   The item identified by the given UUID.
+ */
+StubVirtualServer.prototype.__getItemFromUuidOrBootstrapItem = function (inUuid) {
+  var item = this.getItemFromUuid(inUuid);
+  if (!item) {
+    item = new Item(this.getWorld(), inUuid);
+    this.__myHashTableOfItemsKeyedByUuid[inUuid] = item;
+  }
+  return item;
+};
+
+
+/**
+ * Given a UUID, either (a) returns the existing entry identified by that UUID, 
+ * or (b) creates an new entry object, set its UUID, and returns that object.
+ *
+ * @scope    private instance method
+ * @param    inUuid    The UUID of the entry to be returned. 
+ * @return   The entry identified by the given UUID.
+ */
+StubVirtualServer.prototype.__getEntryFromUuidOrBootstrapEntry = function (inUuid) {
+  var entry = this.__myHashTableOfEntriesKeyedByUuid[inUuid];
+  if (!entry) {
+    entry = new Entry(this.getWorld(), inUuid);
+    this.__myHashTableOfEntriesKeyedByUuid[inUuid] = entry;
+  }
+  return entry;
+};
+
+
+/**
+ * PENDING.
+ *
+ * @scope    private instance method
+ */
+StubVirtualServer.prototype._buildTypeHashTable = function () {
+  var text      = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_TEXT);
+  var number    = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_NUMBER);
+  var dateType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_DATE);
+  var checkMark = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_CHECK_MARK);
+  var url       = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_URL);
+  var itemType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_ITEM);
+  
+  this._myHashTableOfTypesKeyedByToken = {};
+  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_TEXT_VALUE] = text;
+  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_NUMBER_VALUE] = number;
+  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_DATE_VALUE] = dateType;
+  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_CHECKMARK_VALUE] = checkMark;
+  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_URL_VALUE] = url;
+  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_RELATED_UUID] = itemType;
+};
+
+
+/**
+ * Given an item that represents that represents a basic data type, this method
+ * returns the corresponding string token that represents the same data type.
+ *
+ * @scope    private instance method
+ * @param    inType    An item that represents a basic data type, like Text, Number, or URL. 
+ * @return   A string token that represents a basic data type.
+ */
+StubVirtualServer.prototype._getTypeTokenFromType = function (inType) {
+  for (var token in this._myHashTableOfTypesKeyedByToken) {
+    typeItem = this._myHashTableOfTypesKeyedByToken[token];
+    if (inType == typeItem) {
+      return token;
+    }
+  }
+  Util.assert(false, "no such type: " + inType.getDisplayName());
+};
+
+
+/**
+ * Given a string token that represents a basic data type, this method
+ * returns the corresponding item that represents the same data type.
+ *
+ * @scope    private instance method
+ * @param    inToken    A string token that represents a basic data type.
+ * @return   An item that represents a basic data type, like Text, Number, or URL. 
+ */
+StubVirtualServer.prototype._getTypeFromTypeToken = function (inToken) {
+  return this._myHashTableOfTypesKeyedByToken[inToken];
+};
+
+
+/**
+ * Given a dehydrated list of records, rehydrates each of the records.
+ *
+ * @scope    private instance method
+ * @param    inListOfRecords    A list of dehydrated records. 
+ */
+StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
+  var key;
+  var itemUuid;
+  var item;
+  var contentRecordUuid;
+  var contentRecord;
+  
+  for (key in inListOfRecords) {
+    var dehydratedRecord = inListOfRecords[key];
+
+    var dehydratedTransaction = dehydratedRecord[StubVirtualServer.JSON_MEMBER_TRANSACTION_CLASS];
+    if (dehydratedTransaction) {
+      var listOfRecordsInTransaction = dehydratedTransaction;
+      this._rehydrateRecords(listOfRecordsInTransaction);
+    } else {
+      var dehydratedItem = dehydratedRecord[StubVirtualServer.JSON_MEMBER_ITEM_CLASS];
+      var dehydratedVote = dehydratedRecord[StubVirtualServer.JSON_MEMBER_VOTE_CLASS];
+      var dehydratedOrdinal = dehydratedRecord[StubVirtualServer.JSON_MEMBER_ORDINAL_CLASS];
+      var dehydratedEntry = dehydratedRecord[StubVirtualServer.JSON_MEMBER_ENTRY_CLASS];
+  
+      var contents = dehydratedItem || dehydratedVote || dehydratedOrdinal || dehydratedEntry;
+      
+      if (dehydratedItem) {
+        itemUuid = dehydratedItem[StubVirtualServer.JSON_MEMBER_UUID];
+        item = this.__getItemFromUuidOrBootstrapItem(itemUuid);
+        this.__myChronologicalListOfRecords.push(item);
+      }
+      if (dehydratedVote) {
+        var voteUuid = dehydratedVote[StubVirtualServer.JSON_MEMBER_UUID];
+        var retainFlagString = dehydratedVote[StubVirtualServer.JSON_MEMBER_RETAIN_FLAG];
+        var retainFlag = null;
+        if (retainFlagString == "true") {
+          retainFlag = true;
+        }
+        if (retainFlagString == "false") {
+          retainFlag = false;
+        }
+        Util.assert(retainFlag !== null);
+        contentRecordUuid = dehydratedVote[StubVirtualServer.JSON_MEMBER_RECORD];
+        contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
+        var vote = new Vote(this.getWorld(), voteUuid, contentRecord, retainFlag);
+        this.__myChronologicalListOfRecords.push(vote);
+      }
+      if (dehydratedOrdinal) {
+        var ordinalUuid = dehydratedOrdinal[StubVirtualServer.JSON_MEMBER_UUID];
+        var ordinalNumber = dehydratedOrdinal[StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER];
+        contentRecordUuid = dehydratedOrdinal[StubVirtualServer.JSON_MEMBER_RECORD];
+        contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
+        var ordinal = new Ordinal(this.getWorld(), ordinalUuid, contentRecord, ordinalNumber);
+        this.__myChronologicalListOfRecords.push(ordinal);
+      }
+      if (dehydratedEntry) {
+        var entryUuid = dehydratedEntry[StubVirtualServer.JSON_MEMBER_UUID];
+        var entry = this.__getEntryFromUuidOrBootstrapEntry(entryUuid);
+        var previousEntryUuid = dehydratedEntry[StubVirtualServer.JSON_MEMBER_PREVIOUS_VALUE];
+        var previousEntry = null;
+        if (previousEntryUuid) {
+          previousEntry = this.__getEntryFromUuidOrBootstrapEntry(previousEntryUuid);
+        }
+ 
+        var dataTypeToken = dehydratedEntry[StubVirtualServer.JSON_MEMBER_TYPE];
+        var dataType = this._getTypeFromTypeToken(dataTypeToken);
+        if (dataTypeToken == StubVirtualServer.JSON_TYPE_CONNECTION) {
+          var listOfItemUuids = dehydratedEntry[StubVirtualServer.JSON_MEMBER_ITEM];
+          var firstItemUuid = listOfItemUuids[0];
+          var secondItemUuid = listOfItemUuids[1];
+          var firstItem = this.__getItemFromUuidOrBootstrapItem(firstItemUuid);
+          var secondItem = this.__getItemFromUuidOrBootstrapItem(secondItemUuid);
+
+          var listOfAttributeUuids = dehydratedEntry[StubVirtualServer.JSON_MEMBER_ATTRIBUTE];
+          var firstAttributeUuid = listOfAttributeUuids[0];
+          var secondAttributeUuid = listOfAttributeUuids[1];
+          var firstAttribute = this.__getItemFromUuidOrBootstrapItem(firstAttributeUuid);
+          var secondAttribute = this.__getItemFromUuidOrBootstrapItem(secondAttributeUuid);
+          
+          var pairOfItems = [firstItem, secondItem];
+          var pairOfAttributes = [firstAttribute, secondAttribute];
+          entry._rehydrate(pairOfItems, pairOfAttributes, null, previousEntry, dataType);
+        } else {
+          itemUuid = dehydratedEntry[StubVirtualServer.JSON_MEMBER_ITEM];
+          item = this.__getItemFromUuidOrBootstrapItem(itemUuid);
+          var attributeUuid = dehydratedEntry[StubVirtualServer.JSON_MEMBER_ATTRIBUTE];
+          var attribute = null;
+          if (attributeUuid) {
+            attribute = this.__getItemFromUuidOrBootstrapItem(attributeUuid);
+          } else {
+            Util.assert(false); // the attributeUuid should always be there
+          }
+          var rawData = dehydratedEntry[StubVirtualServer.JSON_MEMBER_VALUE];
+          var finalData = null;
+          switch (dataTypeToken) {
+            case StubVirtualServer.JSON_TYPE_RELATED_UUID:
+              finalData = this.__getItemFromUuidOrBootstrapItem(rawData);
+              break;
+            case StubVirtualServer.JSON_TYPE_TEXT_VALUE:
+              finalData = rawData;
+              break;
+            case StubVirtualServer.JSON_TYPE_NUMBER_VALUE:
+              finalData = rawData;
+              break;
+            case StubVirtualServer.JSON_TYPE_DATE_VALUE:
+              finalData = new Date(rawData);
+              break;
+            default:
+              Util.assert(false,'Unknown data type while _rehydrating()');
+          }
+          entry._rehydrate(item, attribute, finalData, previousEntry, dataType);
+        }
+        this.__myChronologicalListOfRecords.push(entry);
+      }
+    }
+  }
 };
 
 

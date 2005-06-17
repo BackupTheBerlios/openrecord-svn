@@ -54,7 +54,6 @@
 Entry.prototype = new ContentRecord();  // makes Entry be a subclass of ContentRecord
 function Entry(inWorld, inUuid) {
   this._ContentRecord(inWorld, inUuid);
-  // this._Record(inWorld, inUuid);
  
   this.__myPreviousEntry = null;
   this.__myListOfSubsequentEntries = [];
@@ -78,45 +77,69 @@ function Entry(inWorld, inUuid) {
  *
  * @scope    protected instance method
  * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry replaces. 
- * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
- * @param    inValue    The value to initialize the entry with. 
-* @param    inType    Optional.  The data type to interpret the value as. 
+
+ * @param    item    The item that this is an entry of. 
+ * @param    previousEntry    Optional. The old entry that this entry is replacing. 
+ * @param    attribute    The attribute that this entry is assigned to. May be null. 
+ * @param    value    The value to initialize the entry with. 
+ * @param    type    Optional.  The data type to interpret the value as. 
  */
-Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue, inType) {
-  if (inItemOrEntry instanceof Entry) {
-    this.__myPreviousEntry = inItemOrEntry;
-    this.__myItem = this.__myPreviousEntry.getItem();
+Entry.prototype._initialize = function (item, previousEntry, attribute, value, type) {
+  this.__myItem = item;
+  this.__myAttribute = attribute;
+
+  if (previousEntry) {
+    this.__myPreviousEntry = previousEntry;
     this.__myPreviousEntry.__addSubsequentEntry(this);
   } else {
     this.__myPreviousEntry = null;
-    this.__myItem = inItemOrEntry;
   }
   
-  this.__myAttribute = inAttribute;
-  if (inType) {
-    this._myType = inType;
-  }
-  else {
-    var contentData = inValue;
-    if (Util.isNumber(contentData)) {
+  if (type) {
+    this._myType = type;
+  } else {
+    if (Util.isNumber(value)) {
       this._myType = this.getWorld().getTypeCalledNumber();
     }
-    else if (Util.isString(contentData)) {
+    else if (Util.isString(value)) {
       this._myType = this.getWorld().getTypeCalledText();
     }
-    else if (Util.isDate(contentData)) {
+    else if (Util.isDate(value)) {
       this._myType = this.getWorld().getTypeCalledDate();
     }
-    else if (contentData instanceof Item) {
+    else if (value instanceof Item) {
       this._myType = this.getWorld().getTypeCalledItem();
     }
     else {Util.assert(false, "unknown data type");}
   }
-  if (Util.isString(inValue)) {
-    this.__myValue = Util.getCleanString(inValue);
+  if (Util.isString(value)) {
+    this.__myValue = Util.getCleanString(value);
   } else {
-    this.__myValue = inValue;
+    this.__myValue = value;
   }
+};
+
+
+/**
+ * Initializes a new entry that has just been created by a user action.
+ *
+ * WARNING: This method should be called ONLY from a 
+ * VirtualServer implementation.
+ *
+ * This method is NOT used for setting the properties of entrys that
+ * are being rehydrated from a dehydrated JSON string.  For that, you
+ * need to call entry.rehydrate();
+ *
+ * @scope    protected instance method
+ * @param    itemOne    One of the two items that this entry will connect. 
+ * @param    attributeOne    The attribute of itemOne that this entry will be assigned to. 
+ * @param    itemTwo    One of the two items that this entry will connect. 
+ * @param    attributeTwo    Optional. The attribute of itemTwo that this entry will be assigned to.  
+ */
+Entry.prototype._initializeConnection = function (itemOne, attributeOne, itemTwo, attributeTwo) {
+  this.__myItem = [itemOne, itemTwo];
+  this.__myAttribute = [attributeOne, attributeTwo];
+  this._myType = this.getWorld().getTypeCalledConnection();
 };
 
 
@@ -130,23 +153,19 @@ Entry.prototype._initialize = function (inItemOrEntry, inAttribute, inValue, inT
  * rehydrating dehydrated entry objects. 
  *
  * @scope    protected instance method
- * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry replaces. 
+ * @param    inItem    The item that this is an entry of. 
  * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
  * @param    inValue    The value to initialize the entry with. 
- * @param    inTimestamp    A Date object with the creation timestamp for this entry. 
- * @param    inUserstamp    The user who created this entry. 
+ * @param    inPreviousEntry    Optional. An old entry that this entry replaces. 
+ * @param    inType    Optional. An item representing a data type. 
  */
-// Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inTimestamp, inUserstamp, inType) {
-Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inType) {
-  // this._rehydrateContentRecord(inTimestamp, inUserstamp);
-
-  if (inItemOrEntry instanceof Entry) {
-    this.__myPreviousEntry = inItemOrEntry;
-    this.__myItem = this.__myPreviousEntry.getItem();
+Entry.prototype._rehydrate = function (inItem, inAttribute, inValue, inPreviousEntry, inType) {
+  this.__myItem = inItem;
+  if (inPreviousEntry) {
+    this.__myPreviousEntry = inPreviousEntry;
     this.__myPreviousEntry.__addSubsequentEntry(this);
   } else {
     this.__myPreviousEntry = null;
-    this.__myItem = inItemOrEntry;
   }
 
   this.__myAttribute = inAttribute;
@@ -154,7 +173,19 @@ Entry.prototype._rehydrate = function (inItemOrEntry, inAttribute, inValue, inTy
   
   this._myType = inType;
 
-  this.__myItem._addRehydratedEntry(this);
+  if (this.__myItem instanceof Item) {
+    this.__myItem._addRehydratedEntry(this, inAttribute);
+  } else {
+    Util.assert(Util.isArray(this.__myItem));
+    Util.assert(this.__myItem.length == 2);
+    Util.assert(Util.isArray(this.__myAttribute));
+    Util.assert(this.__myAttribute.length == 2);
+    
+    var firstItem = this.__myItem[0];
+    var secondItem = this.__myItem[1];
+    firstItem._addRehydratedEntry(this, this.__myAttribute[0]);
+    secondItem._addRehydratedEntry(this, this.__myAttribute[1]);
+  }
 };
 
 
@@ -207,6 +238,30 @@ Entry.prototype.getAttribute = function () {
 
 
 /**
+ * If this is a ConnectionEntry, given one of the two connected items, this
+ * method returns the attribute that this entry was assigned to in that item.
+ *
+ * @scope    public instance method
+ * @param    item    The item that this is an entry of. 
+ * @return   An attribute item.
+ */
+Entry.prototype.getAttributeForItem = function (item) {
+  if (this.__myItem == item) {
+    return this.__myAttribute;
+  }
+  if (Util.isArray(this.__myItem)) {
+    if (this.__myItem[0]) {
+      return this.__myAttribute[0];
+    }
+    if (this.__myItem[1]) {
+      return this.__myAttribute[1];
+    }
+  }
+  return null;
+};
+
+
+/**
  * Returns the value that this entry holds.
  *
  * @scope    public instance method
@@ -224,15 +279,28 @@ Entry.prototype.getValue = function () {
  * @return   A string representing the literal data in this entry.
  */
 Entry.prototype.getDisplayString = function () {
-  if (this.__myValue instanceof Item) {
-    return this.__myValue.getDisplayName();
-  } else if (this.__myValue instanceof Date) {
-    var aDate = this.__myValue;
-    return Util.ABBREV_MONTHS_ARRAY[aDate.getMonth()] + ' ' + aDate.getDate() + ', '+ (aDate.getYear()+1900);
+  var returnString = "";
+  switch (this._myType) {
+    case this.getWorld().getTypeCalledNumber():
+      returnString = "" + this.__myValue;
+      break;
+    case this.getWorld().getTypeCalledText():
+      returnString = this.__myValue;
+      break;
+    case this.getWorld().getTypeCalledDate():
+      var aDate = this.__myValue;
+      returnString = Util.ABBREV_MONTHS_ARRAY[aDate.getMonth()] + ' ' + aDate.getDate() + ', '+ (aDate.getYear()+1900);
+      break;
+    case this.getWorld().getTypeCalledItem():
+      returnString = this.__myValue.getDisplayName();
+      break;
+    case this.getWorld().getTypeCalledConnection():
+      var firstItem = this.__myItem[0];
+      var secondItem = this.__myItem[1];
+      returnString = "connection between [" + firstItem.getDisplayName() + "] and [" + secondItem.getDisplayName() + "]";
+      break;
   }
-  else {
-    return "" + this.__myValue;
-  }
+  return returnString;
 };
 
 
