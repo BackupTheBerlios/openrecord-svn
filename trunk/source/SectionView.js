@@ -71,7 +71,19 @@ SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX = "_summary_div";
 SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER = "section_number";
 SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER = "cell_number";
 
-SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME = "00040000-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME       = "00040000-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW       = "00040101-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA       = "00040102-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN = "00040103-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS     = "00040104-ce7f-11d9-8cd5-0011113ae5d6";
+
+SectionView.UUID_FOR_CATEGORY_PLUGIN_VIEW        = "00040201-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA        = "00040202-ce7f-11d9-8cd5-0011113ae5d6";
+
+SectionView.UUID_FOR_PLUGIN_VIEW_TABLE           = "00040301-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_PLUGIN_VIEW_OUTLINE         = "00040302-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_PLUGIN_VIEW_DETAIL          = "00040303-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_PLUGIN_VIEW_BAR_CHART       = "00040304-ce7f-11d9-8cd5-0011113ae5d6";
 
 // -------------------------------------------------------------------
 // SectionView class properties

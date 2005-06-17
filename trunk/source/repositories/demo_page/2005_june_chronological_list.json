@@ -530,8 +530,48 @@
              "uuid": "00030000-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Plugin Name
+    { "Item": {                                               // Plugin Name (Attribute)
              "uuid": "00040000-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Plugin View (Attribute)
+             "uuid": "00040101-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Layout Data (Attribute)
+             "uuid": "00040102-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Applies to Plugin (Attribute)
+             "uuid": "00040103-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Table Columns (Attribute)
+             "uuid": "00040104-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Plugin View (Category)
+             "uuid": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Layout Data (Category)
+             "uuid": "00040202-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Table (Plugin View)
+             "uuid": "00040301-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Outline (Plugin View)
+             "uuid": "00040302-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Detail (Plugin View)
+             "uuid": "00040303-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Bar Chart (Plugin View)
+             "uuid": "00040304-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Page
@@ -585,7 +625,7 @@
     { "Entry": {                                              // Plugin Name
              "uuid": "0040000a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00040000-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin Name
+             "item": "00040000-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin Name (Attribute)
              "type": "TextValue",
             "value": "Plugin Name" }
     },
@@ -593,9 +633,233 @@
     { "Entry": {                                              // Attribute
              "uuid": "0040000b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
-             "item": "00040000-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin Name
+             "item": "00040000-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin Name (Attribute)
              "type": "RelatedUuid",
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Plugin View
+             "uuid": "0040101a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040101-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin View (Attribute)
+             "type": "TextValue",
+            "value": "Plugin View" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "0040101b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040101-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin View (Attribute)
+             "type": "RelatedUuid",
+            "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Plugin View (Category)
+             "uuid": "0040101c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "00040101-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin View (Attribute)
+             "type": "RelatedUuid",
+            "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Layout Data
+             "uuid": "0040102a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040102-ce7f-11d9-8cd5-0011113ae5d6",  // Layout Data (Attribute)
+             "type": "TextValue",
+            "value": "Layout Data" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "0040102b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040102-ce7f-11d9-8cd5-0011113ae5d6",  // Layout Data (Attribute)
+             "type": "RelatedUuid",
+            "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Layout Data (Category)
+             "uuid": "0040102c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "00040102-ce7f-11d9-8cd5-0011113ae5d6",  // Layout Data (Attribute)
+             "type": "RelatedUuid",
+            "value": "00040202-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Applies To Plugin
+             "uuid": "0040103a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040103-ce7f-11d9-8cd5-0011113ae5d6",  // Applies To Plugin (Attribute)
+             "type": "TextValue",
+            "value": "Applies To Plugin" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "0040103b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040103-ce7f-11d9-8cd5-0011113ae5d6",  // Applies To Plugin (Attribute)
+             "type": "RelatedUuid",
+            "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Plugin View (Category)
+             "uuid": "0040103c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "00040103-ce7f-11d9-8cd5-0011113ae5d6",  // Applies To Plugin (Attribute)
+             "type": "RelatedUuid",
+            "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Table Columns 
+             "uuid": "0040104a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
+             "type": "TextValue",
+            "value": "Table Columns" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "0040104b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
+             "type": "RelatedUuid",
+            "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "0040104c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
+             "type": "RelatedUuid",
+            "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Plugin View
+             "uuid": "0040201a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040201-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin View (Category)
+             "type": "TextValue",
+            "value": "Plugin View" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Category
+             "uuid": "0040201b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040201-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin View (Category)
+             "type": "RelatedUuid",
+            "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Layout Data
+             "uuid": "0040202a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040202-ce7f-11d9-8cd5-0011113ae5d6",  // Layout Data (Category)
+             "type": "TextValue",
+            "value": "Layout Data" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Category
+             "uuid": "0040202b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040202-ce7f-11d9-8cd5-0011113ae5d6",  // Layout Data (Category)
+             "type": "RelatedUuid",
+            "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Table View
+             "uuid": "0040301a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040301-ce7f-11d9-8cd5-0011113ae5d6",  // Table View (Plugin View)
+             "type": "TextValue",
+            "value": "Table View" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Plugin View (Category)
+             "uuid": "0040301b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040301-ce7f-11d9-8cd5-0011113ae5d6",  // Table View (Plugin View)
+             "type": "RelatedUuid",
+            "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Table
+             "uuid": "0040301c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
+             "item": "00040301-ce7f-11d9-8cd5-0011113ae5d6",  // Table View (Plugin View)
+             "type": "TextValue",
+            "value": "Table" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Outline View
+             "uuid": "0040302a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040302-ce7f-11d9-8cd5-0011113ae5d6",  // Outline View (Plugin View)
+             "type": "TextValue",
+            "value": "Outline View" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Plugin View (Category)
+             "uuid": "0040302b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040302-ce7f-11d9-8cd5-0011113ae5d6",  // Outline View (Plugin View)
+             "type": "RelatedUuid",
+            "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Outline
+             "uuid": "0040302c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
+             "item": "00040302-ce7f-11d9-8cd5-0011113ae5d6",  // Outline View (Plugin View)
+             "type": "TextValue",
+            "value": "Outline" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Detail View
+             "uuid": "0040303a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040303-ce7f-11d9-8cd5-0011113ae5d6",  // Detail View (Plugin View)
+             "type": "TextValue",
+            "value": "Detail View" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Plugin View (Category)
+             "uuid": "0040303b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040303-ce7f-11d9-8cd5-0011113ae5d6",  // Detail View (Plugin View)
+             "type": "RelatedUuid",
+            "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Outline
+             "uuid": "0040303c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
+             "item": "00040303-ce7f-11d9-8cd5-0011113ae5d6",  // Detail View (Plugin View)
+             "type": "TextValue",
+            "value": "Detail" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Bar Chart View
+             "uuid": "0040304a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Bar Chart View (Plugin View)
+             "type": "TextValue",
+            "value": "Bar Chart View" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Plugin View (Category)
+             "uuid": "0040304b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Bar Chart View (Plugin View)
+             "type": "RelatedUuid",
+            "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Bar Chart
+             "uuid": "0040304c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
+             "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Bar Chart View (Plugin View)
+             "type": "TextValue",
+            "value": "Bar Chart" }
     } ]
   },
   // =======================================================================
@@ -636,8 +900,7 @@
              "type": "TextValue",
             "value": "This web site is a demo of the OpenRecord prototype. OpenRecord is a collaborative content management system. OpenRecord is a lot like a wiki, but with twist. Most wikis are designed to let you view and edit pages of text, like a web-based word processor. OpenRecord is designed to let you view and edit items in a database, rather than pages of text. So if a wiki is a web-based collaborative word-processor, then OpenRecord is a web-based collaborative database, like Lotus Agenda." }
     } ]
-  }
-,
+  },
   // =======================================================================
   { "Transaction": [
     // -----------------------------------------------------------------------
