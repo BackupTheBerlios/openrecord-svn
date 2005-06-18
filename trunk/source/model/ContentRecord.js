@@ -110,7 +110,7 @@ ContentRecord.prototype._addOrdinal = function(ordinal) {
  */
 ContentRecord.prototype.getOrdinalNumberAtCreation = function() {
   // return (0 - this._creationTimestamp.valueOf());
-  return (0 - this._uuid);
+  return (0 - this.getTimestamp());
 };
 
 
