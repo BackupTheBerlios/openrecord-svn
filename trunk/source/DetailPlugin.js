@@ -41,6 +41,7 @@
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
 SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_DETAIL] = DetailPlugin;
+DetailPlugin.UUID = SectionView.UUID_FOR_PLUGIN_VIEW_DETAIL;
 
 
 /**

@@ -42,7 +42,7 @@
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
 SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_BAR_CHART] = BarChartPlugin;
-
+BarChartPlugin.UUID = SectionView.UUID_FOR_PLUGIN_VIEW_BAR_CHART;
 
 /**
  * A BarChartPlugin displays a set of content items for a SectionView. 

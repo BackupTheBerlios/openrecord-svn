@@ -110,7 +110,7 @@ Entry.prototype._initialize = function (item, previousEntry, attribute, value, t
     else if (value instanceof Item) {
       this._myType = this.getWorld().getTypeCalledItem();
     }
-    else {Util.assert(false, "unknown data type");}
+    else {Util.assert(false, "unknown data type:" + (typeof value) + ' value: ' + value);}
   }
   if (Util.isString(value)) {
     this.__myValue = Util.getCleanString(value);

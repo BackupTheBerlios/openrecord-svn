@@ -224,8 +224,8 @@ chao   | 1.5 IED  | 1.5 IED | 39. improve UI for editing the query that a sectio
        |          |         | 62. Ensure that PHP scripts and file I/O works for concurrent multi-user access
 -------+----------+---------+----------------------------------------------
 chao   | 0.5 IED  | 0.5 IED | Improved UI for autocomplete
-c/b    | 0.5 IED  |         | Allow plugins to store layout data
-chao   | 0.5 IED  |         | Table plugin persists column order
+c/b    | 0.5 IED  | 0.5 IED | Allow plugins to store layout data
+chao   | 0.5 IED  | 0.5 IED | Table plugin persists column order
        
 =======================================================
 Categories and Attributes we might use for release 0.1
@@ -453,4 +453,4 @@ Issues for post iteration#2
 + Should we work on making OpenRecord work within MediaWiki?
 + BUG: need to convert HTML entity codes back at client-server layer
 + Task: Rename ORlugin to PluginView
-
++ BUG: Can't really create own plugins yet (e.g. UUID need to be assigned, plugin item created)

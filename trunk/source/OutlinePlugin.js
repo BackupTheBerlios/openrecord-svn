@@ -40,6 +40,7 @@
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
 SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_OUTLINE] = OutlinePlugin;
+OutlinePlugin.UUID = SectionView.UUID_FOR_PLUGIN_VIEW_OUTLINE;
 
 
 /**

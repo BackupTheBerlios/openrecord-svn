@@ -75,7 +75,6 @@ SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME       = "00040000-ce7f-11d9-8cd5-0011
 SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW       = "00040101-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA       = "00040102-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN = "00040103-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS     = "00040104-ce7f-11d9-8cd5-0011113ae5d6";
 
 SectionView.UUID_FOR_CATEGORY_PLUGIN_VIEW        = "00040201-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA        = "00040202-ce7f-11d9-8cd5-0011113ae5d6";
@@ -167,7 +166,8 @@ SectionView.prototype.getPluginFromPluginName = function (inPluginName, inPlugin
   var newPlugin = null;
   var pluginClass = SectionView.ourHashTableOfPluginClassesKeyedByPluginName[inPluginName];
   if (pluginClass) {
-    var layoutData = this._getLayoutDataForPlugin(inPluginName);
+    var pluginType = this.getWorld().getItemFromUuid(pluginClass.UUID);
+    var layoutData = this._getLayoutDataForPlugin(pluginType);
     newPlugin = new pluginClass(this, inPluginDiv, this.getQuery(), layoutData);
   }
   return newPlugin;
@@ -271,10 +271,10 @@ SectionView.prototype.doInitialDisplay = function () {
  * Returns layout data of this section for a particular plugin
  * Creates a the layout data item if doesn't exist
  *
- * @param inPluginName name of plugin
+ * @param inPluginType name of plugin
  * @return layout data of this section for a particular plugin
  */
-SectionView.prototype._getLayoutDataForPlugin = function (inPluginName) {
+SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
   var repository = this.getWorld();
   var attrLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA);
   var entriesLayoutData = this.mySection.getEntriesForAttribute(attrLayoutData);
@@ -284,15 +284,15 @@ SectionView.prototype._getLayoutDataForPlugin = function (inPluginName) {
       var layoutItem = entriesLayoutData[i].getValue();
       var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attrAppliesToPlugin);
       Util.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
-      if (entriesAppliesToPlugin[0].getValue() == inPluginName) {
+      if (entriesAppliesToPlugin[0].getValue() == inPluginType) {
         return layoutItem;
       }
     }
   }
   // layoutData not found, so create the item
   repository.beginTransaction();
-  layoutItem = repository.newItem("Layout data for " + inPluginName + " of " + this.mySection.getDisplayName());
-  layoutItem.addEntryForAttribute(attrAppliesToPlugin, inPluginName);
+  layoutItem = repository.newItem("Layout data for " + inPluginType.getDisplayName() + " of " + this.mySection.getDisplayName());
+  layoutItem.addEntryForAttribute(attrAppliesToPlugin, inPluginType);
   this.mySection.addEntryForAttribute(attrLayoutData,layoutItem,repository.getTypeCalledItem());
   repository.endTransaction();
   return layoutItem;
@@ -376,6 +376,7 @@ SectionView.prototype.keyPressOnMatchingValueField = function(evt,aTxtView) {
  * @scope public instance method
  */
 SectionView.prototype.observedItemHasChanged = function(item) {
+  item.removeObserver(this); //item no longer needs to be observed as query editor span is rebuilt
   var myQuery = this.getQuery();
   Util.assert(item == myQuery);
   var pluginName = this._myPlugin.getPluginName();

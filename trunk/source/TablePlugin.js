@@ -44,11 +44,13 @@
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
 SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_TABLE] = TablePlugin;
+TablePlugin.UUID = SectionView.UUID_FOR_PLUGIN_VIEW_TABLE;
 
 
 // -------------------------------------------------------------------
 // TablePlugin public class constants
 // -------------------------------------------------------------------
+TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS     = "00040104-ce7f-11d9-8cd5-0011113ae5d6";
 TablePlugin.ASCENDING_GIF = "ascending.gif";
 TablePlugin.DESCENDING_GIF = "descending.gif";
 
@@ -105,12 +107,42 @@ TablePlugin.prototype.compareItemByAttribute = function (itemA, itemB) {
 };
 
 /**
- * Creates a hashtable containing all the attributes of the content items 
- * in this table.  Finds the union of the attribute lists of all the content items.
+ * Creates an array containing all the attributes of the content items 
+ * in this table.  Populates list of suggested items for relevant attributes
  *
  * @scope    private instance method
  */
-TablePlugin.prototype._buildAttributeHash = function() {
+TablePlugin.prototype._buildAttributes = function() {
+  var repository = this.getWorld();
+  var attrTableColumns = repository.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
+  var entriesTableColumns = this._layout.getEntriesForAttribute(attrTableColumns);
+  var displayAttrs = [];
+  var anAttribute;
+  var useLayoutData = (entriesTableColumns) && (entriesTableColumns.length > 1 ||
+    (entriesTableColumns.length ==1 && entriesTableColumns[0].getValue() != repository.getAttributeCalledName()));
+  if (useLayoutData) {
+    this._hashTableOfEntries = {};
+    for (var i=0;i<entriesTableColumns.length;++i) {
+      anAttribute = entriesTableColumns[i].getValue();
+      Util.assert(anAttribute instanceof Item);
+      displayAttrs.push(anAttribute);
+      this._hashTableOfEntries[anAttribute.getUniqueKeyString()] =
+        this.getWorld().getSuggestedItemsForAttribute(anAttribute);
+    }
+  }
+  else {
+    if (entriesTableColumns.length == 1) {entriesTableColumns[0].voteToDelete();}
+    var hashTableOfAttributes = this._buildAttributeHashFromScratch();
+    for (var key in hashTableOfAttributes) {
+      anAttribute = hashTableOfAttributes[key];
+      displayAttrs.push(anAttribute);
+      this._layout.addEntryForAttribute(attrTableColumns,anAttribute,repository.getTypeCalledItem());
+    }
+  }
+  this._displayAttributes = displayAttrs;
+};
+
+TablePlugin.prototype._buildAttributeHashFromScratch = function() {
   var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var hashTableOfAttributes = {};
@@ -149,12 +181,12 @@ TablePlugin.prototype._buildAttributeHash = function() {
     }
   }
   this._hashTableOfEntries = hashTableOfEntries;
-  this._hashTableOfAttributes = hashTableOfAttributes;
-  if (Util.lengthOfHashTable(this._hashTableOfAttributes) < 1) {
+  if (Util.lengthOfHashTable(hashTableOfAttributes) < 1) {
     var attributeCalledName = this.getWorld().getAttributeCalledName();
     var key = attributeCalledName.getUniqueKeyString();
-    this._hashTableOfAttributes[key] = attributeCalledName;
+    hashTableOfAttributes[key] = attributeCalledName;
   }
+  return hashTableOfAttributes;
 };
 
 
@@ -167,19 +199,21 @@ TablePlugin.prototype._buildAttributeEditor = function() {
   var htmlElt = this.getHTMLElement();
   View.createAndAppendElement(htmlElt,"br");
   var selectElt = View.createAndAppendElement(htmlElt,"select");
-  var categoryCalledAttribute = this.getWorld().getCategoryCalledAttribute();
-  var listOfAttributes = this.getWorld().getItemsInCategory(categoryCalledAttribute);
+  var listOfAttributes = this.getWorld().getAttributes();
   var optionElt = View.createAndAppendElement(selectElt,"option");
   optionElt.text = "Add new attribute:";
   for (var i = 0; i < listOfAttributes.length; ++i) {
     optionElt = View.createAndAppendElement(selectElt,"option");
-    var attributeUuid = listOfAttributes[i].getUniqueKeyString();
-    if (this._hashTableOfAttributes[attributeUuid]) {optionElt.text = '*';}
+    if (Util.isObjectInSet(listOfAttributes[i],this._displayAttributes)) {optionElt.text = '*';}
     optionElt.text += listOfAttributes[i].getDisplayName();
-    optionElt.value = attributeUuid;
+    optionElt.value = listOfAttributes[i].getUniqueKeyString();
     optionElt.onclick = this._attributeEditorChanged.bindAsEventListener(this);
   }
   this._selectElement = selectElt;
+  /*View.createAndAppendTextNode(htmlElt, " Import Data:");
+  var importButton = View.createAndAppendElement(htmlElt,"input");
+  importButton.type = "file";
+  importButton.onchange = this._importData.bindAsEventListener(this, importButton);*/
 };
 
 /**
@@ -190,8 +224,8 @@ TablePlugin.prototype._buildAttributeEditor = function() {
 TablePlugin.prototype._insertRow = function(contentItem, rowNum) {
   var aRow = this.myTable.insertRow(rowNum); 
   var columnCount = -1;
-  for (var lKey in this._hashTableOfAttributes) {
-    var attribute = this._hashTableOfAttributes[lKey];
+  for (var i=0;i<this._displayAttributes.length;++i) {
+    var attribute = this._displayAttributes[i];
     this._insertCell(aRow, ++columnCount, contentItem, attribute);
   }
   return aRow;
@@ -250,8 +284,8 @@ TablePlugin.prototype._buildHeader = function() {
   // add header row
   var headerRow = this.myTable.insertRow(0);
   var numCols = 0;
-  for (var jKey in this._hashTableOfAttributes) {
-    var attribute = this._hashTableOfAttributes[jKey];
+  for (var i=0;i<this._displayAttributes.length;++i) {
+    var attribute = this._displayAttributes[i];
     if (!this._sortAttribute) {this._sortAttribute = attribute;}
     var aCell = document.createElement("th");
     var headerStr = attribute.getDisplayName();
@@ -278,7 +312,7 @@ TablePlugin.prototype._buildTable = function(inDontRebuildHash) {
   // get list of items and attributes
   if (!inDontRebuildHash) {
     this.fetchItems();
-    this._buildAttributeHash();
+    this._buildAttributes();
   }
   
   //create new table, remove old table if already exists
@@ -376,12 +410,50 @@ TablePlugin.prototype.selectRow = function (rowElement) {
   if (rowElement != this._lastSelectedRow) {
     if (this._lastSelectedRow) {this._lastSelectedRow.style.background = "";}
     this._lastSelectedRow = rowElement;
-    rowElement.style.background = "rgb(0%,70%,100%)"; // PENDING: need to css-ify this selection
+    rowElement.style.background = "rgb(100%,100%,0%)"; // PENDING: need to css-ify this selection
     return true;
   }
   return false;
 };
  
+TablePlugin.prototype._importData = function (inEventObject, fileButton) {
+  // Returns null if it can't do it, false if there's an error, or a string of the content if successful
+/*  function mozillaLoadFile(filePath)
+  {
+      if(window.Components)
+          try 
+              {
+              netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+              var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+              file.initWithPath(filePath);
+              if (!file.exists())
+                  return(null);
+              var inputStream = Components.classes["@mozilla.org/network/file-input-stream;1"].createInstance(Components.interfaces.nsIFileInputStream);
+              inputStream.init(file, 0x01, 00004, null);
+              var sInputStream = Components.classes["@mozilla.org/scriptableinputstream;1"].createInstance(Components.interfaces.nsIScriptableInputStream);
+              sInputStream.init(inputStream);
+              return(sInputStream.read(sInputStream.available()));
+              }
+          catch(e)
+              {
+              alert("Exception while attempting to load\n\n" + e);
+              return(false);
+              }
+      return(null);
+  }
+  
+  function readFile (fileName) {
+      netscape.security.PrivilegeManager.enablePrivilege('UniversalFileRead');
+      var bfr = new java.io.BufferedReader(new java.io.FileReader(fileName));
+      var line;
+      var content = '';
+      while ((line = bfr.readLine()) != null)
+        content += line + java.lang.System.getProperty('line.separator');
+      return content;
+    }*/
+  open('file://'+fileButton.value,'preview');   
+};
+
 /**
  * Called when the user clicks on attribute editor item, either to add or remove attribute column
  * 
@@ -390,16 +462,26 @@ TablePlugin.prototype.selectRow = function (rowElement) {
 TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
   var attributeUuid = inEventObject.target.value;
   if (attributeUuid) {
-    if (this._hashTableOfAttributes[attributeUuid]) {
-      delete this._hashTableOfAttributes[attributeUuid];
-      this._hashTableOfEntries[attributeUuid] = [];
+    var repository = this.getWorld();
+    var attrTableColumns = repository.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
+    var entriesTableColumns = this._layout.getEntriesForAttribute(attrTableColumns);
+    var changedAttribute = this.getWorld().getItemFromUuid(attributeUuid);
+    if (Util.removeObjectFromSet(changedAttribute,this._displayAttributes)) {
+      for (var i=0;i < entriesTableColumns.length;++i) {
+        if (changedAttribute == entriesTableColumns[i].getValue()) {
+          entriesTableColumns[i].voteToDelete();
+          break;
+        }
+      }
+      Util.assert(i < entriesTableColumns.length);
+      delete this._hashTableOfEntries[attributeUuid];
     }
     else {
       var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
-      var attribute = this.getWorld().getItemFromUuid(attributeUuid);
-      this._hashTableOfAttributes[attributeUuid] = attribute;
+      this._displayAttributes.push(changedAttribute);
+      this._layout.addEntryForAttribute(attrTableColumns,changedAttribute,repository.getTypeCalledItem());
       if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
-        this._hashTableOfEntries[attributeUuid] = this.getWorld().getSuggestedItemsForAttribute(attribute);
+        this._hashTableOfEntries[attributeUuid] = this.getWorld().getSuggestedItemsForAttribute(changedAttribute);
       }
     }
     this._buildTable(true);

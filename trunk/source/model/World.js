@@ -851,10 +851,7 @@ World.prototype.getSuggestedItemsForAttribute = function(attribute) {
       Util.addObjectToSet(item, listOfSuggestedItems);
     }
   }
-
-  if (listOfSuggestedItems.length === 0) {
-    listOfSuggestedItems = null;
-  }
+  // For no suggested items, TablePlugin expects an empty array rather than null 
   return listOfSuggestedItems;
 };
 
