@@ -331,6 +331,28 @@ div.content_area {
   padding: 0pt;
 }
 
+.page_header, .section_header {
+  color: rgb(0%, 0%, 50%);
+  background: rgb(100%, 100%, 40%);
+  font-size: 1em;
+  width: 100%;
+  font-family: Arial, Verdana, sans-serif;
+  font-weight: bold;
+  border: none; 
+  padding: 0pt;
+}
+
+.summary_text {
+  //font-size: large;
+  background: rgb(100%, 100%, 40%);
+  width: 100%;
+  font-family: Arial, Verdana, sans-serif;
+  border: none; 
+  padding: 0pt;
+  margin: 0px;
+}
+
+
 
 /****************************************/
 /* Debug area styles                    */
@@ -408,6 +430,10 @@ div.content_area {
   padding: 0.1em 0.3em; 
   font-size: 0.8em;
   border: 1pt solid rgb(70%, 70%, 70%);
+}
+
+tr.selected {
+  background: rgb(100%,100%,40%);
 }
 
 td.plain {
@@ -566,10 +592,6 @@ li.detail {
   border: 0px;
   padding: 0px;
   width: 100%;
-}
-
-.suggestion_box_selected td {
-  background: rgb(100%,100%,0%);
 }
 
 .suggestion_box td {

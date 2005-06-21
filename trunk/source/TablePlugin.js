@@ -408,9 +408,13 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
 TablePlugin.prototype.selectRow = function (rowElement) {
   Util.assert(rowElement instanceof HTMLTableRowElement);
   if (rowElement != this._lastSelectedRow) {
-    if (this._lastSelectedRow) {this._lastSelectedRow.style.background = "";}
+    if (this._lastSelectedRow) {
+      //this._lastSelectedRow.style.background = "";
+      this._lastSelectedRow.className = "";
+    }
     this._lastSelectedRow = rowElement;
-    rowElement.style.background = "rgb(100%,100%,0%)"; // PENDING: need to css-ify this selection
+    //rowElement.style.background = "rgb(100%,100%,0%)"; // PENDING: need to css-ify this selection
+    rowElement.className = "selected"; 
     return true;
   }
   return false;

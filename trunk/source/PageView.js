@@ -43,10 +43,7 @@
 // -------------------------------------------------------------------
 // PageView public class constants
 // -------------------------------------------------------------------
-PageView.ELEMENT_ID_SECTION_DIV_PREFIX = "section_view_";
-PageView.ELEMENT_ID_SECTION_DIV_MIDFIX = "_in_page_";
-PageView.ELEMENT_ID_SUMMARY_VIEW_DIV_PREFIX = "_summary_view_for_page_";
-
+PageView.CSS_CLASS_PAGE_HEADER = "page_header";
 PageView.UUID_FOR_ATTRIBUTE_SECTION = "00030000-ce7f-11d9-8cd5-0011113ae5d6";
 
 /**
@@ -155,11 +152,11 @@ PageView.prototype.doInitialDisplay = function () {
   
   var headerElement = View.createAndAppendElement(pageDivElement, "h1");
   this._myHeaderText = new TextView(this, headerElement, this.myPage, attributeCalledName,
-    this.myPage.getSingleEntryFromAttribute(attributeCalledName), SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
+    this.myPage.getSingleEntryFromAttribute(attributeCalledName), PageView.CSS_CLASS_PAGE_HEADER, false);
 
   var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
   this._myPageSummaryView = new TextView(this, summaryViewDiv, this.myPage, attributeCalledSummary,
-    this.myPage.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
+    this.myPage.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_SUMMARY_TEXT, true);
 
   // add <div> elements for each of the sections on the page
   // and create a new SectionView for each section

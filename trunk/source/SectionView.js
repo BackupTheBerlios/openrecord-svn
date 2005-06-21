@@ -60,6 +60,8 @@ SectionView.ELEMENT_CLASS_TEXT_FIELD_IN_TABLE_CELL = "text_field_in_table_cell";
 SectionView.ELEMENT_CLASS_SELECTED = "selected";
 SectionView.ELEMENT_CLASS_MORE_LINK = "more";
 SectionView.ELEMENT_CLASS_TEXT_VIEW = "text_view";
+SectionView.CSS_CLASS_SECTION_HEADER = "section_header";
+SectionView.CSS_CLASS_SUMMARY_TEXT = "summary_text";
 
 SectionView.ELEMENT_ID_SELECT_MENU_PREFIX = "select_menu_";
 SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX = "_select_menu";
@@ -225,7 +227,7 @@ SectionView.prototype.doInitialDisplay = function () {
   var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
   this._myHeaderView = new TextView(this, headerH2, this.mySection, attributeCalledName,
     this.mySection.getSingleEntryFromAttribute(attributeCalledName),
-    SectionView.ELEMENT_CLASS_TEXT_VIEW);
+    SectionView.CSS_CLASS_SECTION_HEADER);
   var summaryDiv = View.createAndAppendElement(outerDiv, "div");
   this._mySectionSummaryView = new TextView(this, summaryDiv, this.mySection, attributeCalledSummary,
     this.mySection.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.ELEMENT_CLASS_TEXT_VIEW, true);

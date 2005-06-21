@@ -213,8 +213,8 @@ TextView.prototype.startEditing = function(dontSelect) {
       editField.size = 5; //editField.defaultValue.length+1;
     }
     
-    //editField.style.width = this.getHTMLElement().offsetWidth + "px";    
-    //editField.style.height = (this.getHTMLElement().offsetHeight) + "px";
+    //editField.style.width = this.getHTMLElement().offsetWidth + "px";  
+    if (this._isMultiLine) {editField.style.height = (this.getHTMLElement().offsetHeight) + "px";}  
     
     this._setupSuggestionBox();
     this.getHTMLElement().replaceChild(editField, this._textNode);
@@ -739,7 +739,7 @@ AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () 
       var textNode = document.createTextNode(item.getDisplayName());
       var row = table.insertRow(rowNumber);
       var cell = row.insertCell(columnNumber);
-      cell.className = (this._selectedItem == item) ? "suggestion_box_selected":"";
+      row.className = (this._selectedItem == item) ? "selected":"";
       //cell.style.background = (this._selectedItem == item) ? "rgb(0%,70%,100%)":""; //pending need to CSS-ify this
       cell.appendChild(textNode);
       cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, item);
