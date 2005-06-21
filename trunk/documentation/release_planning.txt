@@ -166,7 +166,7 @@ brian  | 0.5  IED |         |  6. Save provisional item and then set the categor
        |          |         |  7. Fix the bug that happens when you call the PHP server code with no POST data
 chao   | 0.5  IED | 0.5 IED |  8. UI for entering a number literal (instead of a string literal) in a table [with Brian]
 chao   | 1    IED | 1   IED |  9. UI for entering a date literal in a table (and data model support) [with Brian]
-brian  | 1    IED |         | 10. Add data model support for bi-directional references
+brian  | 1    IED | 1   IED | 10. Add data model support for bi-directional references
 chao   | 2    IED | 1.5 IED | 11. Move to better persistent representation for queries [with Brian]
        |          |         | 12. Make sure view code uses transactions
        |          |         | 13. Deal with \n in page name or summary fields
@@ -224,7 +224,7 @@ chao   | 1.5 IED  | 1.5 IED | 39. improve UI for editing the query that a sectio
        |          |         | 62. Ensure that PHP scripts and file I/O works for concurrent multi-user access
 -------+----------+---------+----------------------------------------------
 chao   | 0.5 IED  | 0.5 IED | Improved UI for autocomplete
-c/b    | 0.5 IED  | 0.5 IED | Allow plugins to store layout data
+chao   | 0.5 IED  | 0.5 IED | Allow plugins to store layout data
 chao   | 0.5 IED  | 0.5 IED | Table plugin persists column order
        
 =======================================================
