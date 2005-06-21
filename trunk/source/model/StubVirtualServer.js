@@ -58,6 +58,7 @@ StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS = "2005_JUNE_CHRONOLOGICAL_LIST"
 
 StubVirtualServer.JSON_MEMBER_TYPE = "type";
 StubVirtualServer.JSON_MEMBER_VALUE = "value";
+
 StubVirtualServer.JSON_TYPE_TEXT_VALUE = "TextValue";
 StubVirtualServer.JSON_TYPE_UUID = "Uuid";
 StubVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
@@ -303,6 +304,7 @@ StubVirtualServer.prototype.newEntry = function (item, previousEntry, attribute,
  * Returns a newly created entry.
  *
  * @scope    public instance method
+ * @param    previousEntry    The entry that this entry will replace. Can be null.
  * @param    itemOne    One of the two items that this entry will connect. 
  * @param    attributeOne    The attribute of itemOne that this entry will be assigned to. 
  * @param    itemTwo    One of the two items that this entry will connect. 
@@ -310,11 +312,11 @@ StubVirtualServer.prototype.newEntry = function (item, previousEntry, attribute,
  * @return   A newly created entry.
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype.newConnectionEntry = function(itemOne, attributeOne, itemTwo, attributeTwo) {
+StubVirtualServer.prototype.newConnectionEntry = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
   var entry = new Entry(this.__myWorld, uuid);
-  entry._initializeConnection(itemOne, attributeOne, itemTwo, attributeTwo);
+  entry._initializeConnection(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
 
   itemOne.__addEntryToListOfEntriesForAttribute(entry, attributeOne);
   itemTwo.__addEntryToListOfEntriesForAttribute(entry, attributeTwo);
@@ -536,7 +538,7 @@ StubVirtualServer.prototype.logout = function () {
  * @return   The item identified by the given UUID.
  */
 StubVirtualServer.prototype.getItemFromUuid = function (inUuid, inObserver) {
-  Util.assert(Util.isUuid(inUuid));
+  Util.assert(Util.isUuid(inUuid), inUuid + ' is not a Uuid');
   
   var item = this.__myHashTableOfItemsKeyedByUuid[inUuid];
   if (item && inObserver) {
@@ -974,6 +976,7 @@ StubVirtualServer.prototype._buildTypeHashTable = function () {
   var checkMark = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_CHECK_MARK);
   var url       = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_URL);
   var itemType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_ITEM);
+  var connectionType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_CONNECTION);
   
   this._myHashTableOfTypesKeyedByToken = {};
   this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_TEXT_VALUE] = text;
@@ -982,6 +985,7 @@ StubVirtualServer.prototype._buildTypeHashTable = function () {
   this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_CHECKMARK_VALUE] = checkMark;
   this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_URL_VALUE] = url;
   this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_RELATED_UUID] = itemType;
+  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_CONNECTION] = connectionType;
 };
 
 

@@ -59,8 +59,9 @@ World.UUID_FOR_ATTRIBUTE_CATEGORY      = "00001005-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_QUERY         = "00001006-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE = "00001007-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE = "00001008-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_UNFILED       = "00001009-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE = "0000100a-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_UNFILED           = "00001009-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE     = "0000100a-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_INVERSE_ATTRIBUTE = "0000100b-ce7f-11d9-8cd5-0011113ae5d6";
 
 World.UUID_FOR_CATEGORY_BOOK           = "0000100e-ce7f-11d9-8cd5-0011113ae5d6";  // here as an example only
 World.UUID_FOR_CATEGORY_MOVIE          = "0000100f-ce7f-11d9-8cd5-0011113ae5d6";  // here as an example only
@@ -121,6 +122,7 @@ function World(virtualServer) {
   this._attributeCalledQueryMatchingAttribute     = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE);
   this._attributeCalledUnfiled               = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_UNFILED);
   this._attributeCalledExpectedType          = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE);
+  this._attributeCalledInverseAttribute         = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_INVERSE_ATTRIBUTE);
 
   // load the axiomatic categories
   this._categoryCalledAttribute   = server.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
@@ -397,6 +399,10 @@ World.prototype.getAttributeCalledUnfiled = function() {
 
 World.prototype.getAttributeCalledExpectedType = function() {
   return this._attributeCalledExpectedType;
+};
+
+World.prototype.getAttributeCalledInverseAttribute = function() {
+  return this._attributeCalledInverseAttribute;
 };
 
 
@@ -693,15 +699,16 @@ World.prototype._newEntry = function(item, previousEntry, attribute, value, type
  * Returns a newly created entry.
  *
  * @scope    public instance method
+ * @param    previousEntry    The entry that this entry will replace. Can be null.
  * @param    itemOne    One of the two items that this entry will connect. 
  * @param    attributeOne    The attribute of itemOne that this entry will be assigned to. 
  * @param    itemTwo    One of the two items that this entry will connect. 
  * @param    attributeTwo    The attribute of itemTwo that this entry will be assigned to.  
  * @return   A newly created entry.
  */
-World.prototype._newConnectionEntry = function(itemOne, attributeOne, itemTwo, attributeTwo) {
+World.prototype._newConnectionEntry = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
   this.beginTransaction();
-  var entry = this._virtualServer.newConnectionEntry(itemOne, attributeOne, itemTwo, attributeTwo);
+  var entry = this._virtualServer.newConnectionEntry(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
   this.endTransaction();
   return entry;
 };

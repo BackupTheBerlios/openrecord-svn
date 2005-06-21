@@ -332,17 +332,24 @@ if (value && Util.isString(value)) {
  * @param    value    The new value to be saved. 
  */
 TextView.prototype._writeValue = function(value) {
-  value = this._transformToExpectedType(value);
-  if (this._entry) {
-    var oldValue = this._entry.getValue();
+  if (value === 0 || value) {
+    value = this._transformToExpectedType(value);
+
+    var oldValue = null;
+    if (this._entry) {oldValue = this._entry.getValue();}
     if (oldValue != value) {
-      this._entry = this._item.replaceEntry(this._entry, value);
-      this._restoreText(true); // call restore text in case item is transformed (e.g. Dates will be normalized)
-    }
-  } else if (value) {
-    this._entry = this._item.addEntryForAttribute(this._attribute, value);
-    this._restoreText(true); // call restore text in case item is transformed (e.g. Dates will be normalized
+      var attributeCalledInverseAttribute = this.getWorld().getAttributeCalledInverseAttribute();
+      var listOfInverseAttributeEntries = this._attribute.getEntriesForAttribute(attributeCalledInverseAttribute);
+      if (listOfInverseAttributeEntries.length > 0) {
+        var inverseAttr = listOfInverseAttributeEntries[0].getValue();
+        this._entry = this._item.replaceEntryWithConnection(this._entry, this._attribute, value, inverseAttr);
+      }
+      else {
+        this._entry = this._item.replaceEntryWithEntryForAttribute(this._entry, this._attribute, value);
+      }
+    }    
   }
+  this._restoreText(true); // call restore text in case item is transformed (e.g. Dates will be normalized)
 };
 
 
@@ -353,7 +360,7 @@ TextView.prototype._writeValue = function(value) {
  */
 TextView.prototype._getText = function() {
   if (this._isProvisional) {return this._provisionalText;}
-  if (this._entry) {return this._entry.getDisplayString();}
+  if (this._entry) {return this._item.getDisplayStringForEntry(this._entry);}
   return '';
 };
 
@@ -364,7 +371,7 @@ TextView.prototype._getText = function() {
  * @scope    private instance method
  */
 TextView.prototype._restoreText = function(dontSelect) {
-  var oldText = (this._entry) ?  this._entry.getDisplayString() : '';
+  var oldText = (this._entry) ?  this._getText() : '';
   if (this._isEditing) {
     this._editField.value = oldText;
   }
@@ -621,6 +628,7 @@ AttributeSuggestionBox.prototype._keyPressOnInputField = function (inEventObject
       }
       break;
       case Util.ASCII_VALUE_FOR_TAB:
+      if (this._myInputField.value.length === 0) {return false;}
       if (!this._selectedItem) {
         this._selectedItem = this._listOfMatchingItems[0];
         doSelectItem = true;
@@ -731,7 +739,8 @@ AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () 
       var textNode = document.createTextNode(item.getDisplayName());
       var row = table.insertRow(rowNumber);
       var cell = row.insertCell(columnNumber);
-      cell.style.background = (this._selectedItem == item) ? "rgb(0%,70%,100%)":""; //pending need to CSS-ify this
+      cell.className = (this._selectedItem == item) ? "suggestion_box_selected":"";
+      //cell.style.background = (this._selectedItem == item) ? "rgb(0%,70%,100%)":""; //pending need to CSS-ify this
       cell.appendChild(textNode);
       cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, item);
       rowNumber += 1;

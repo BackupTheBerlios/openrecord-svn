@@ -468,10 +468,13 @@ RootView.prototype.displayTextInDebugTextarea = function (inText) {
   if (this.myNumberOfCallsToDebug > 20) {
     return;
   }
-  this.myDebugTextarea.value += inText + "\n\n============================\n\n";
-  this.myDebugTextarea.style.visibility = "visible";
-  this.myDebugTextarea.style.display = "block";
-  this.myDebugTextarea.scrollIntoView();
+  if (this.myDebugTextarea) {
+    this.myDebugTextarea.value += inText + "\n\n============================\n\n";
+    this.myDebugTextarea.style.visibility = "visible";
+    this.myDebugTextarea.style.display = "block";
+    this.myDebugTextarea.scrollIntoView();
+  }
+  else {alert(inText);}
 };
 
 

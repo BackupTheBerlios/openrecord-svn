@@ -131,12 +131,20 @@ Entry.prototype._initialize = function (item, previousEntry, attribute, value, t
  * need to call entry.rehydrate();
  *
  * @scope    protected instance method
+ * @param    previousEntry    The entry that this entry will replace. Can be null.
  * @param    itemOne    One of the two items that this entry will connect. 
  * @param    attributeOne    The attribute of itemOne that this entry will be assigned to. 
  * @param    itemTwo    One of the two items that this entry will connect. 
  * @param    attributeTwo    Optional. The attribute of itemTwo that this entry will be assigned to.  
  */
-Entry.prototype._initializeConnection = function (itemOne, attributeOne, itemTwo, attributeTwo) {
+Entry.prototype._initializeConnection = function (previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
+  if (previousEntry) {
+    this.__myPreviousEntry = previousEntry;
+    this.__myPreviousEntry.__addSubsequentEntry(this);
+  } else {
+    this.__myPreviousEntry = null;
+  }
+
   this.__myItem = [itemOne, itemTwo];
   this.__myAttribute = [attributeOne, attributeTwo];
   this._myType = this.getWorld().getTypeCalledConnection();
@@ -278,7 +286,7 @@ Entry.prototype.getValue = function () {
  * @scope    public instance method
  * @return   A string representing the literal data in this entry.
  */
-Entry.prototype.getDisplayString = function () {
+Entry.prototype.getDisplayString = function (myItem) {
   var returnString = "";
   switch (this._myType) {
     case this.getWorld().getTypeCalledNumber():
@@ -297,7 +305,14 @@ Entry.prototype.getDisplayString = function () {
     case this.getWorld().getTypeCalledConnection():
       var firstItem = this.__myItem[0];
       var secondItem = this.__myItem[1];
-      returnString = "connection between [" + firstItem.getDisplayName() + "] and [" + secondItem.getDisplayName() + "]";
+      if (myItem) {
+        if (myItem == firstItem) {returnString = secondItem.getDisplayName();}
+        else if (myItem == secondItem) {returnString = firstItem.getDisplayName();}
+        else {Util.assert(false, "myItem isn't part of this Entry");}
+      }
+      else {
+        returnString = "connection between [" + firstItem.getDisplayName() + "] and [" + secondItem.getDisplayName() + "]";
+      }
       break;
   }
   return returnString;

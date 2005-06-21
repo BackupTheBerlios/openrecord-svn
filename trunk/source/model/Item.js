@@ -220,8 +220,36 @@ Item.prototype._createNewEntry = function (previousEntry, attribute, value, type
  * @throws   Throws an Error if no user is logged in.
  */
 Item.prototype.addConnectionEntry = function (myAttribute, otherItem, otherAttribute) {
+  return this.replaceEntryWithConnection(null, myAttribute, otherItem, otherAttribute);
+};
+
+
+/**
+ *
+ */
+Item.prototype.replaceEntryWithConnection = function (previousEntry, myAttribute, otherItem, otherAttribute) {
   Util.assert(otherItem instanceof Item);
-  
+  Util.assert(myAttribute instanceof Item);
+
+  // If we've just been asked to replace the string "Foo" with the string "Foo",
+  // then don't even bother creating a new entry. 
+  if (previousEntry) {
+    var oldValue = previousEntry.getValue();
+    var oldPairOfAttributes = previousEntry.getAttribute();
+    var oldPairOfItems = previousEntry.getItem();
+    if (Util.isArray(oldPairOfAttributes)) {
+      Util.assert(Util.isArray(oldPairOfAttributes));
+      Util.assert(oldPairOfAttributes.length == 2);
+      Util.assert(oldPairOfItems.length == 2);
+      if (((oldPairOfAttributes[0] == myAttribute) &&  (oldPairOfAttributes[1] == otherAttribute) &&
+        oldPairOfItems[0] == this && oldPairOfItems[1] == otherItem) ||
+        ((oldPairOfAttributes[1] == myAttribute) &&  (oldPairOfAttributes[0] == otherAttribute) &&
+        oldPairOfItems[1] == this && oldPairOfItems[0] == otherItem)) {
+        return null;
+      }
+    }
+  }
+
   this.getWorld().beginTransaction();
   if (this.__myProvisionalFlag) {
     this.__myProvisionalFlag = false;
@@ -235,11 +263,10 @@ Item.prototype.addConnectionEntry = function (myAttribute, otherItem, otherAttri
     otherAttribute = this.getWorld().getAttributeCalledUnfiled();
   }
 
-  var entry = this.getWorld()._newConnectionEntry(this, myAttribute, otherItem, otherAttribute);
+  var entry = this.getWorld()._newConnectionEntry(previousEntry, this, myAttribute, otherItem, otherAttribute);
   this.getWorld().endTransaction();
-  return entry;
+  return entry;  
 };
-
 
 // -------------------------------------------------------------------
 // Accessor methods where the answer depends on the retrieval filter
@@ -291,7 +318,6 @@ Item.prototype.getEntriesForAttribute = function (inAttribute) {
       Util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_UNABRIDGED:
-      Util.assert(false);
       filteredListOfEntries = listOfEntriesForAttribute;
       break;
     default:
@@ -425,6 +451,10 @@ Item.prototype.getSingleStringValueFromAttribute = function (inAttribute) {
   return "";
 };
 
+Item.prototype.getDisplayStringForEntry = function (myEntry) {
+  Util.assert(myEntry instanceof Entry);
+  return myEntry.getDisplayString(this);
+};
 /**
  * Returns a string describing the item.
  *

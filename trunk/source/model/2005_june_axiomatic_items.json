@@ -47,6 +47,10 @@
              "uuid": "0000100a-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Item": {                                               // Inverse Attribute
+             "uuid": "0000100b-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
     { "Item": {                                               // Attribute
              "uuid": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
@@ -341,6 +345,30 @@
              "item": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "type": "RelatedUuid",
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Inverse Attribute
+             "uuid": "000100ba-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "0000100b-ce7f-11d9-8cd5-0011113ae5d6",  // Inverse Attribute
+             "type": "TextValue",
+            "value": "Inverse Attribute" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "000100bb-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "0000100b-ce7f-11d9-8cd5-0011113ae5d6",  // Inverse Attribute
+             "type": "RelatedUuid",
+            "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "000100bc-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "0000100b-ce7f-11d9-8cd5-0011113ae5d6",  // Inverse Attribute
+             "type": "RelatedUuid",
+            "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Attribute
