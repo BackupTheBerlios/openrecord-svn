@@ -1,4 +1,18 @@
-// Sample code from Javascript: The Definitive Guide, 4th Edition by David Flanagan
+// -------------------------------------------------------------------
+// Copyright Acknowledgement
+// -------------------------------------------------------------------
+// The code in this file is based on example code from the book:
+//       title: "Javascript: The Definitive Guide", 4th Edition
+//      author: David Flanagan
+//   publisher: O'Reilly Media, Inc.
+//        ISBN: 0-596-00048-0
+// 
+// O'Reilly Media has a written policy that covers re-use of code examples
+// from their books:
+//   http://www.oreilly.com/pub/a/oreilly/ask_tim/2001/codepolicy.html
+// -------------------------------------------------------------------
+
+
 // The constructor function: creates a Cookie object for the specified
 // document, with a specified name and optional attributes.
 // Arguments:
@@ -10,12 +24,6 @@
 //   domain:   An optional string that specifies the cookie domain attribute.
 //   secure:   An optional boolean value that, if true, requests a secure cookie.
 //
-
-// -------------------------------------------------------------------
-// Dependencies:
-//   Util.js [pending: will soon when we add error checking]
-// -------------------------------------------------------------------
-
 function Cookie(document, name, hours, path, domain, secure)
 {
     // All the predefined properties of this object begin with '$'
@@ -109,6 +117,16 @@ Cookie.prototype.remove = function(  ) {
 
     this.$document.cookie = cookie;
 }
+
+
+// -------------------------------------------------------------------
+// Code below this line was written by Chih-Chao Lam, not David Flanagan...
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+// Dependencies:
+//   Util.js [pending: will soon when we add error checking]
+// -------------------------------------------------------------------
 
 /* need to turn this into Unit tests
 var testCookieCreation = false;
