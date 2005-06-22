@@ -50,9 +50,9 @@ window.doOnloadActions = function() {
   var repositoryContentString = Util.getStringContentsOfFileAtURL(repositoryUrl);
   repositoryContentString += " ] }";
   
-  var userListFileName = "2005_may_user_list.json";
-  var userListUrl = pathToDemoRepository + userListFileName;
-  var userListContentString = Util.getStringContentsOfFileAtURL(userListUrl);
+  // var userListFileName = "2005_may_user_list.json";
+  // var userListUrl = pathToDemoRepository + userListFileName;
+  // var userListContentString = Util.getStringContentsOfFileAtURL(userListUrl);
   
   // Create a World and a DeltaVirtualServer, and have the 
   // DeltaVirtualServer rehydrate all the dehydrated items 
@@ -60,7 +60,7 @@ window.doOnloadActions = function() {
   var axiomaticItemsFileName = "2005_june_axiomatic_items.json";
   var axiomaticItemsUrl = "model/" + axiomaticItemsFileName;
   
-  var deltaVirtualServer = new DeltaVirtualServer(axiomaticItemsUrl, repositoryContentString, userListContentString);
+  var deltaVirtualServer = new DeltaVirtualServer(axiomaticItemsUrl, repositoryContentString);
   var world = new World(deltaVirtualServer);
   window.rootView = new RootView(world);
   

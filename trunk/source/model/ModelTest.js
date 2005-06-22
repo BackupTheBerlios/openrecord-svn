@@ -636,69 +636,6 @@ function testItemTypes() {
   var receivedEntry = anEmail.addEntryForAttribute(dateReceivedAttribute, new Date("6/8/05"));
   var numAttachmentsEntry = anEmail.addEntryForAttribute(noOfAttachments, 4);
 }
-/*
-function testBigLumpVirtualServerStringOutput() {
-  var fileName = "test_data_2005_april_chronological_lump.json";
-  var url = "../../../source/model/" + fileName;
-  var fileContentString = Util.getStringContentsOfFileAtURL(url);
-  var bigLumpVirtualServer = new BigLumpVirtualServer(fileContentString);
-  var world = new World(bigLumpVirtualServer);
-  var reconstructedString = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld(); 
-  // var beginMismatch = 0;
-  // for (var i = 0; i < fileContentString.length; ++i) {
-  //   if (fileContentString.charAt(i) != reconstructedString.charAt(i)) {
-  //     beginMismatch = i;
-  //     break;
-  //   }
-  // }
-  // alert("beginMismatch = " + beginMismatch);
-  // alert("testBigLumpVirtualServerStringOutput\n" + 
-  //  fileContentString.substring(beginMismatch, (beginMismatch + 500)) + "\n" +
-  //  reconstructedString.substring(beginMismatch, (beginMismatch + 500)));
-  assert("reconstructed string equals original string", fileContentString == reconstructedString);
-  
-  var guestUser = world.getItemFromUuid(1502);
-  var loginSuccess = world.login(guestUser, "abracadabra");
-  assertTrue('Can log in as Guest', loginSuccess);
-  var newItem = world.newProvisionalItem();
-  reconstructedString = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld(); 
-  assert("reconstructed string equals original string", fileContentString == reconstructedString);
-  // var attributeCalledName = world.getAttributeCalledName();
-  // newItem.addEntryForAttribute(attributeCalledName, "Jimmy Carter");
-  // reconstructedString = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld(); 
-  // assert("reconstructed string no longer equals original string", fileContentString != reconstructedString);
-  
-}
-*/
-
-/*
-function testBigLumpVirtualServer() {
-  var fileName = "test_data_2005_march_item_centric_list.json";
-  var url = "../../../source/model/" + fileName;
-  var fileContentString = Util.getStringContentsOfFileAtURL(url);
-  
-  // Create a World and a BigLumpVirtualServer, and have the 
-  // BigLumpVirtualServer rehydrate all the dehydrated items 
-  // contained in the fileContentString.  This tests whether
-  // the BigLumpVirtualServer bombs out when it tries to read
-  // the data from a 2005_MARCH_ITEM_CENTRIC_LIST
-  var bigLumpVirtualServer = new BigLumpVirtualServer(fileContentString);
-  var world = new World(bigLumpVirtualServer);
-  
-  // See if the BigLumpVirtualServer can save items to a
-  // string containing dehydrated items in the 
-  // format of a 2005_APRIL_CHRONOLOGICAL_LIST
-  var dehydratedWorld = bigLumpVirtualServer.__getJsonStringRepresentingEntireWorld();
-  
-  // See if the BigLumpVirtualServer can rehydrate all the
-  // dehydrated items from an 2005_APRIL_CHRONOLOGICAL_LIST
-  // PENDING:
-  // var secondBigLumpVirtualServer = new BigLumpVirtualServer(dehydratedWorld);
-  // var secondWorld = new World(secondBigLumpVirtualServer);
-  
-  // bigLumpVirtualServer.saveChangesToServer(true);
-}
-*/
 
 function tearDown() {
   ModelTestVars = null;

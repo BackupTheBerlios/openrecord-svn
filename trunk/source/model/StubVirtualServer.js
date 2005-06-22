@@ -45,23 +45,23 @@
 // DeltaVirtualServer public class constants
 // -------------------------------------------------------------------
 StubVirtualServer.JSON_MEMBER_FORMAT = "format";
-StubVirtualServer.JSON_MEMBER_TIMESTAMP = "timestamp";
-StubVirtualServer.JSON_MEMBER_DATA = "data";
+// StubVirtualServer.JSON_MEMBER_TIMESTAMP = "timestamp";
+// StubVirtualServer.JSON_MEMBER_DATA = "data";
 StubVirtualServer.JSON_MEMBER_RECORDS = "records";
-StubVirtualServer.JSON_MEMBER_USERS = "users";
+// StubVirtualServer.JSON_MEMBER_USERS = "users";
 
-StubVirtualServer.JSON_FORMAT_2005_MARCH = "2005_MARCH_ITEM_CENTRIC_LIST";
-StubVirtualServer.JSON_FORMAT_2005_APRIL = "2005_APRIL_CHRONOLOGICAL_LIST";
-StubVirtualServer.JSON_FORMAT_2005_MAY_RECORDS = "2005_MAY_CHRONOLOGICAL_LIST";
-StubVirtualServer.JSON_FORMAT_2005_MAY_USERS = "2005_MAY_USER_LIST";
+// StubVirtualServer.JSON_FORMAT_2005_MARCH = "2005_MARCH_ITEM_CENTRIC_LIST";
+// StubVirtualServer.JSON_FORMAT_2005_APRIL = "2005_APRIL_CHRONOLOGICAL_LIST";
+// StubVirtualServer.JSON_FORMAT_2005_MAY_RECORDS = "2005_MAY_CHRONOLOGICAL_LIST";
+// StubVirtualServer.JSON_FORMAT_2005_MAY_USERS = "2005_MAY_USER_LIST";
 StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS = "2005_JUNE_CHRONOLOGICAL_LIST";
 
 StubVirtualServer.JSON_MEMBER_TYPE = "type";
 StubVirtualServer.JSON_MEMBER_VALUE = "value";
 
 StubVirtualServer.JSON_TYPE_TEXT_VALUE = "TextValue";
-StubVirtualServer.JSON_TYPE_UUID = "Uuid";
-StubVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
+// StubVirtualServer.JSON_TYPE_UUID = "Uuid";
+// StubVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
 StubVirtualServer.JSON_TYPE_RELATED_UUID = "RelatedUuid";
 StubVirtualServer.JSON_TYPE_NUMBER_VALUE = "NumberValue";
 StubVirtualServer.JSON_TYPE_DATE_VALUE = "DateValue";
@@ -70,17 +70,19 @@ StubVirtualServer.JSON_TYPE_URL_VALUE = "UrlValue";
 StubVirtualServer.JSON_TYPE_CONNECTION = "Connection";
 
 StubVirtualServer.JSON_MEMBER_UUID = "uuid";
+StubVirtualServer.JSON_MEMBER_USER = "user";
 StubVirtualServer.JSON_MEMBER_PASSWORD = "password";
 
 StubVirtualServer.JSON_MEMBER_ITEM_CLASS = "Item";
 StubVirtualServer.JSON_MEMBER_ENTRY_CLASS = "Entry";
 StubVirtualServer.JSON_MEMBER_VOTE_CLASS = "Vote";
 StubVirtualServer.JSON_MEMBER_ORDINAL_CLASS = "Ordinal";
+StubVirtualServer.JSON_MEMBER_USER_CLASS = "User";
 StubVirtualServer.JSON_MEMBER_TRANSACTION_CLASS = "Transaction";
 
 StubVirtualServer.JSON_MEMBER_ATTRIBUTE = "attribute";
 StubVirtualServer.JSON_MEMBER_PREVIOUS_VALUE = "previousEntry";
-StubVirtualServer.JSON_MEMBER_USERSTAMP = "userstamp";
+// StubVirtualServer.JSON_MEMBER_USERSTAMP = "userstamp";
 StubVirtualServer.JSON_MEMBER_RECORD = "record";
 StubVirtualServer.JSON_MEMBER_ITEM = "item";
 StubVirtualServer.JSON_MEMBER_RETAIN_FLAG = "retainFlag";
@@ -560,8 +562,6 @@ StubVirtualServer.prototype.saveChangesToServer = function () {
   // implement this method such that it saves changes to the server
   var listOfChangesMade = this._currentTransaction.getRecords();
   this._currentTransaction = null;
-  // var listOfChangesMade = this.__myChronologicalListOfNewlyCreatedRecords;
-  // this.__myChronologicalListOfNewlyCreatedRecords = [];
   return listOfChangesMade;
 };
   
@@ -773,7 +773,6 @@ StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function (inUuid) 
     item._initialize();
     this.__myHashTableOfItemsKeyedByUuid[inUuid] = item;
     this._currentTransaction.addRecord(item);
-    // this.__myChronologicalListOfNewlyCreatedRecords.push(item);
   }
   return item;
 };
@@ -800,131 +799,6 @@ StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = function (url) {
   Util.assert(Util.isArray(listOfRecords));
   
   this._rehydrateRecords(listOfRecords);
-  
-/* PENDING  
-  var uuid;
-  var name;
-  var item;
-  var entry;
-  var key;
-  
-  this.__myWorld.beginTransaction();
-  var axiomaticUser = this._getItemFromUuidOrCreateNewItem(World.UUID_FOR_USER_AMY);
-  this.__myListOfUsers.push(axiomaticUser);
-  this.__myHashTableOfUserAuthenticationInfo[axiomaticUser.getUniqueKeyString()] = null;
-  this.__myCurrentUser = axiomaticUser;
-  
-  // associate display names with the UUIDs of all the attributes
-  var hashTableOfAttributeNamesKeyedByUuid = {};
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_NAME]          = "Name";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SHORT_NAME]    = "Short Name";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SUMMARY]       = "Summary";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_BODY]          = "Body";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_CATEGORY]      = "Category";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY]         = "Query";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE] = "Matching Value";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE] = "Matching Attribute";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED]       = "Unfiled Entry";
-  hashTableOfAttributeNamesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE] = "Expected Type";
-
-  // create all the Item objects for the attributes
-  for (uuid in hashTableOfAttributeNamesKeyedByUuid) {
-    this._getItemFromUuidOrCreateNewItem(uuid);
-  }
-  
-  // associate display names with the UUIDs of all the categories
-  var hashTableOfCategoryNamesKeyedByUuid = {};
-  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_ATTRIBUTE] = "Attribute";
-  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_CATEGORY]  = "Category";
-  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_QUERY]     = "Query";
-  hashTableOfCategoryNamesKeyedByUuid[World.UUID_FOR_CATEGORY_TYPE]      = "Type";
-
-  // create all the Item objects for the categories
-  for (uuid in hashTableOfCategoryNamesKeyedByUuid) {
-    this._getItemFromUuidOrCreateNewItem(uuid);
-  }
- 
-  // associate display names with the UUIDs of all the types
-  var hashTableOfTypeNamesKeyedByUuid = {};
-  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_TEXT]       = "Text";
-  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_NUMBER]     = "Number";
-  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_DATE]       = "Date";
-  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_CHECK_MARK] = "Check Mark";
-  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_URL]        = "Url";
-  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_ITEM]       = "Item";
-  hashTableOfTypeNamesKeyedByUuid[World.UUID_FOR_TYPE_ANYTHING]   = "Anything";
-  
-  // create all the Item objects for the types
-  for (uuid in hashTableOfTypeNamesKeyedByUuid) {
-    this._getItemFromUuidOrCreateNewItem(uuid);
-  }
-  
-  // associate expected data types with the UUIDs of some of the attributes
-  var hashTableOfExpectedTypesKeyedByUuid = {};
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_NAME]          = [World.UUID_FOR_TYPE_TEXT];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SHORT_NAME]    = [World.UUID_FOR_TYPE_TEXT];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_SUMMARY]       = [World.UUID_FOR_TYPE_TEXT];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_BODY]          = [World.UUID_FOR_TYPE_TEXT];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_CATEGORY]      = [World.UUID_FOR_CATEGORY_CATEGORY];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY]         = [World.UUID_FOR_CATEGORY_QUERY];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE] = [World.UUID_FOR_CATEGORY_CATEGORY];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE] = [World.UUID_FOR_TYPE_ITEM];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_UNFILED]       = [World.UUID_FOR_TYPE_ANYTHING];
-  hashTableOfExpectedTypesKeyedByUuid[World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE] = [World.UUID_FOR_CATEGORY_TYPE, World.UUID_FOR_CATEGORY_CATEGORY];
-
-  var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
-
-  // set the name of the axiomaticUser
-  axiomaticUser.addEntryForAttribute(attributeCalledName, "Amy ex machina");
-  
-  // set the names of all the attributes, 
-  // and put them in the category called "Attribute"
-  // and set their expected data types
-  var categoryCalledAttribute = this.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
-  var attributeCalledCategory = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_CATEGORY);
-  var attributeCalledExpectedType = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE);
-  for (uuid in hashTableOfAttributeNamesKeyedByUuid) {
-    item = this.getItemFromUuid(uuid);
-    name = hashTableOfAttributeNamesKeyedByUuid[uuid];
-    item.addEntryForAttribute(attributeCalledName, name);
-    item.addEntryForAttribute(attributeCalledCategory, categoryCalledAttribute);
-    var listOfExpectedTypes = hashTableOfExpectedTypesKeyedByUuid[uuid];
-    for (key in listOfExpectedTypes) {
-      var uuidOfExpectedType = listOfExpectedTypes[key];
-      expectedType = this.getItemFromUuid(uuidOfExpectedType);
-      item.addEntryForAttribute(attributeCalledExpectedType, expectedType);
-    }
-  }
-  
-  // set the names of all the categories, and put them in the category called "Category"
-  var categoryCalledCategory = this._getItemFromUuidOrCreateNewItem(World.UUID_FOR_CATEGORY_CATEGORY);
-  for (uuid in hashTableOfCategoryNamesKeyedByUuid) {
-    item = this.getItemFromUuid(uuid);
-    name = hashTableOfCategoryNamesKeyedByUuid[uuid];
-    item.addEntryForAttribute(attributeCalledName, name);
-    item.addEntryForAttribute(attributeCalledCategory, categoryCalledCategory);
-  }
-
-  // set the names of all the types, and put them in the category called "Type"
-  var categoryCalledType = this._getItemFromUuidOrCreateNewItem(World.UUID_FOR_CATEGORY_TYPE);
-  for (uuid in hashTableOfTypeNamesKeyedByUuid) {
-    item = this.getItemFromUuid(uuid);
-    name = hashTableOfTypeNamesKeyedByUuid[uuid];
-    item.addEntryForAttribute(attributeCalledName, name);
-    item.addEntryForAttribute(attributeCalledCategory, categoryCalledType);
-  }
-
-  this.__myCurrentUser = null;
-
-  var listOfNewlyCreatedRecords = this._currentTransaction.getRecords();
-  for (key in listOfNewlyCreatedRecords) {
-    var newRecord = listOfNewlyCreatedRecords[key];
-    this.__myChronologicalListOfRecords.push(newRecord);
-  }
-  this._currentTransaction._listOfRecords = [];
-  this.__myWorld.endTransaction();
-  return listOfNewlyCreatedRecords;
- */
 };
 
 
@@ -1033,7 +907,7 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
   var item;
   var contentRecordUuid;
   var contentRecord;
-  
+
   for (key in inListOfRecords) {
     var dehydratedRecord = inListOfRecords[key];
 
@@ -1043,17 +917,25 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
       this._rehydrateRecords(listOfRecordsInTransaction);
     } else {
       var dehydratedItem = dehydratedRecord[StubVirtualServer.JSON_MEMBER_ITEM_CLASS];
+      var dehydratedUser = dehydratedRecord[StubVirtualServer.JSON_MEMBER_USER_CLASS];
       var dehydratedVote = dehydratedRecord[StubVirtualServer.JSON_MEMBER_VOTE_CLASS];
       var dehydratedOrdinal = dehydratedRecord[StubVirtualServer.JSON_MEMBER_ORDINAL_CLASS];
       var dehydratedEntry = dehydratedRecord[StubVirtualServer.JSON_MEMBER_ENTRY_CLASS];
-  
-      var contents = dehydratedItem || dehydratedVote || dehydratedOrdinal || dehydratedEntry;
-      
+        
       if (dehydratedItem) {
         itemUuid = dehydratedItem[StubVirtualServer.JSON_MEMBER_UUID];
         item = this.__getItemFromUuidOrBootstrapItem(itemUuid);
         this.__myChronologicalListOfRecords.push(item);
       }
+      
+      if (dehydratedUser) {
+        var userUuid = dehydratedUser[StubVirtualServer.JSON_MEMBER_USER];
+        var userPasswordHash = dehydratedUser[StubVirtualServer.JSON_MEMBER_PASSWORD];
+        var user = this.__getItemFromUuidOrBootstrapItem(userUuid);
+        this.__myListOfUsers.push(user);
+        this.__myHashTableOfUserAuthenticationInfo[user.getUniqueKeyString()] = userPasswordHash;
+      }
+      
       if (dehydratedVote) {
         var voteUuid = dehydratedVote[StubVirtualServer.JSON_MEMBER_UUID];
         var retainFlagString = dehydratedVote[StubVirtualServer.JSON_MEMBER_RETAIN_FLAG];
@@ -1070,6 +952,7 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
         var vote = new Vote(this.getWorld(), voteUuid, contentRecord, retainFlag);
         this.__myChronologicalListOfRecords.push(vote);
       }
+      
       if (dehydratedOrdinal) {
         var ordinalUuid = dehydratedOrdinal[StubVirtualServer.JSON_MEMBER_UUID];
         var ordinalNumber = dehydratedOrdinal[StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER];
@@ -1078,6 +961,7 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
         var ordinal = new Ordinal(this.getWorld(), ordinalUuid, contentRecord, ordinalNumber);
         this.__myChronologicalListOfRecords.push(ordinal);
       }
+      
       if (dehydratedEntry) {
         var entryUuid = dehydratedEntry[StubVirtualServer.JSON_MEMBER_UUID];
         var entry = this.__getEntryFromUuidOrBootstrapEntry(entryUuid);
@@ -1137,6 +1021,7 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
         }
         this.__myChronologicalListOfRecords.push(entry);
       }
+      
     }
   }
 };

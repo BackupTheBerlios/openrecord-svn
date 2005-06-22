@@ -46,13 +46,11 @@
  *
  * @scope    public instance constructor
  * @param    inJsonRepositoryString    A JSON string literal representing the world of items. 
- * @param    inJsonUserList    A JSON string literal listing user UUIDs and passwords. 
  */
 DeltaVirtualServer.prototype = new StubVirtualServer();  // makes DeltaVirtualServer be a subclass of StubVirtualServer
-function DeltaVirtualServer(inJsonAxiomsFileURL, inJsonRepositoryString, inJsonUserList) {
+function DeltaVirtualServer(inJsonAxiomsFileURL, inJsonRepositoryString) {
   this._myDehydratedAxiomFileURL = inJsonAxiomsFileURL;
   this._myDehydratedWorld = inJsonRepositoryString;
-  this._myDehydratedUserList = inJsonUserList;
   this._myHasEverFailedToSaveFlag = false;
 }
 
@@ -68,7 +66,7 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) 
   this._initialize(inWorld);
   this._buildTypeHashTable();
   this._loadAxiomaticItemsFromFileAtURL(this._myDehydratedAxiomFileURL);
-  this._loadWorldFromJsonStrings(this._myDehydratedWorld, this._myDehydratedUserList);
+  this._loadWorldFromJsonString(this._myDehydratedWorld);
 };
 
 // -------------------------------------------------------------------
@@ -83,9 +81,8 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) 
  * 
  * @scope    private instance method
  * @param    inJsonRepositoryString    A JSON string literal representing the world of items. 
- * @param    inJsonUserList    A JSON string literal listing user UUIDs and passwords. 
  */
-DeltaVirtualServer.prototype._loadWorldFromJsonStrings = function (inJsonRepositoryString, inJsonUserList) {
+DeltaVirtualServer.prototype._loadWorldFromJsonString = function (inJsonRepositoryString) {
 
   // load the list of records
   Util.assert(Util.isString(inJsonRepositoryString));
@@ -97,42 +94,9 @@ DeltaVirtualServer.prototype._loadWorldFromJsonStrings = function (inJsonReposit
   var listOfRecords = dehydratedRecords[StubVirtualServer.JSON_MEMBER_RECORDS];
   Util.assert(Util.isArray(listOfRecords));
   
-  // load the list of users
-  Util.assert(Util.isString(inJsonUserList));
-  var dehydratedUserList = null;
-  eval("dehydratedUserList = " + inJsonUserList + ";");
-  Util.assert(Util.isObject(dehydratedUserList));
-  var userListFormat = dehydratedUserList[StubVirtualServer.JSON_MEMBER_FORMAT];
-  Util.assert(userListFormat == StubVirtualServer.JSON_FORMAT_2005_MAY_USERS);
-  var listOfUsers = dehydratedUserList[StubVirtualServer.JSON_MEMBER_USERS];
-  Util.assert(Util.isArray(listOfUsers));
-
-  this.__loadWorldFromListOfRecordsAndUsers(listOfRecords, listOfUsers);
-};
+  var listOfUsers = null;
   
-
-/**
- * Loads a world of items from a dehydrated list of entries, where those
- * entries may represent items, entries, votes, or ordinal settings.
- *
- * @scope    private instance method
- * @param    inListOfRecords    A list of dehydrated records. 
- * @param    inListOfUsers    A list of dehydrated users. 
- */
-DeltaVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (inListOfRecords, inListOfUsers) {
-  this._rehydrateRecords(inListOfRecords);
-  
-  for (var key in inListOfUsers) {
-    var dehydratedUserData = inListOfUsers[key];
-    var userUuid = dehydratedUserData[StubVirtualServer.JSON_MEMBER_UUID];
-    var userPassword = dehydratedUserData[StubVirtualServer.JSON_MEMBER_PASSWORD];
-    
-    var user = this.getItemFromUuid(userUuid);
-    if (user) {
-      this.__myListOfUsers.push(user);
-      this.__myHashTableOfUserAuthenticationInfo[user.getUniqueKeyString()] = userPassword;
-    }
-  }
+  this._rehydrateRecords(listOfRecords);
 };
   
 
@@ -204,6 +168,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
   var firstContentRecord = true;
   var itemDisplayNameSubstring;
   var entryDisplayNameSubstring;
+  var listOfUsers = null;
 
   for (key in inListOfRecords) {
     var record = inListOfRecords[key];
@@ -213,13 +178,36 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
       listOfStrings.push(',\n');
     }
     listOfStrings.push(indent + '// -----------------------------------------------------------------------\n');
+
     if (record instanceof Item) {
       var item = record;
       listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_ITEM_CLASS + '": ' + '{');
       itemDisplayNameSubstring = this.truncateString(item.getDisplayName());
       listOfStrings.push('                                               // ' + itemDisplayNameSubstring + '\n');
       listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": "' + item._getUuid() + '"');
+      listOfStrings.push('  }\n');
+      listOfStrings.push(indent + '}');
+     
+      if (!listOfUsers) {
+        listOfUsers = this.getUsers();
+      }
+      if (Util.isObjectInSet(item, listOfUsers)) {
+        var user = item;
+        var password = this.__myHashTableOfUserAuthenticationInfo[user.getUniqueKeyString()];
+        var passwordString = "null";
+        if (password) {
+          passwordString = '"' + password + '"';
+        }
+        listOfStrings.push(',\n');
+        listOfStrings.push(indent + '// -----------------------------------------------------------------------\n');
+        listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_USER_CLASS + '": ' + '{');
+        listOfStrings.push('                                               // ' + itemDisplayNameSubstring + '\n');
+        listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_USER + '": "' + user._getUuid() + '",\n');
+        listOfStrings.push(indent + '     "' + StubVirtualServer.JSON_MEMBER_PASSWORD + '": ' + passwordString + ' }\n');
+        listOfStrings.push(indent + '}');
+      }
     }
+
     if (record instanceof Vote) {
       var vote = record;
       listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{');
@@ -229,14 +217,20 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
       listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": "' + vote._getUuid() + '",\n');
       listOfStrings.push(indent + '       "' + StubVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getContentRecord()._getUuid() + '",\n');
       listOfStrings.push(indent + '   "' + StubVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '"');
+      listOfStrings.push('  }\n');
+      listOfStrings.push(indent + '}');
     }
+
     if (record instanceof Ordinal) {
       var ordinal = record;
       listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
       listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": "' + ordinal._getUuid() + '",\n');
       listOfStrings.push(indent + '    "' + StubVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getContentRecord()._getUuid() + '",\n');
       listOfStrings.push(indent + '    "' + StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '"');
+      listOfStrings.push('  }\n');
+      listOfStrings.push(indent + '}');
     }
+
     if (record instanceof Entry) {
       var entry = record;
       listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_ENTRY_CLASS + '": ' + '{');
@@ -291,92 +285,15 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
         }
         listOfStrings.push(indent + '        "' + StubVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString + '');
       }
+      listOfStrings.push('  }\n');
+      listOfStrings.push(indent + '}');
     }
-    listOfStrings.push('  }');
+    
     // var userDisplayName = record.getUserstamp().getDisplayName();
     // var userDisplayNameSubstring = this.truncateString(userDisplayName);
     // listOfStrings.push('  // by (' + userDisplayNameSubstring + ')\n');
-    listOfStrings.push(indent + '}');
   }
   
-  var finalString = listOfStrings.join("");
-  return finalString;
-};
-
-
-/**
- * Returns a string containing a JavaScript "object literal" with a list of
- * all the user UUIDs and passwords.
- *
- * @scope    private instance method
- * @param    inChromeFlag    True if the return string should contain "chrome".
- * @return   A JSON string literal with a list of user UUIDs and passwords. 
- */
-DeltaVirtualServer.prototype.__getJsonStringRepresentingUserList = function (inChromeFlag) {
-  var listOfStrings = [];
-  var key;
-
-  if (inChromeFlag) {
-    listOfStrings.push('// User list, in JSON format' + '\n');
-    listOfStrings.push('{ ');
-    listOfStrings.push('"' + StubVirtualServer.JSON_MEMBER_FORMAT + '": "' + StubVirtualServer.JSON_FORMAT_2005_MAY_USERS + '", ' + '\n');    
-  }
-  
-  listOfStrings.push('  "' + StubVirtualServer.JSON_MEMBER_USERS + '": ' + '[\n');
-  var firstContentRecord = true;
-  for (key in this.__myListOfUsers) {
-    var user = this.__myListOfUsers[key];
-    if (firstContentRecord) {
-      firstContentRecord = false;
-    } else {
-      listOfStrings.push(',\n');
-    }
-    var password = this.__myHashTableOfUserAuthenticationInfo[user.getUniqueKeyString()];
-    var passwordString = "null";
-    if (password) {
-      passwordString = '"' + password + '"';
-    }
-    listOfStrings.push('    { "' + StubVirtualServer.JSON_MEMBER_UUID + '": "' + user._getUuid() + '", ');
-    listOfStrings.push('"' + StubVirtualServer.JSON_MEMBER_PASSWORD + '": ' + passwordString + ' }');
-  }
-  listOfStrings.push(" ]\n");
-  
-  if (inChromeFlag) {
-    listOfStrings.push('}\n');
-  }
-  
-  var finalString = listOfStrings.join("");
-  return finalString;
-};
-
-
-/**
- * Returns a huge string, containing a JavaScript "object literal"
- * representation of the entire world.
- *
- * @scope    private instance method
- * @return   A JSON string literal, representing all the items in the world. 
- */
-DeltaVirtualServer.prototype.__getJsonStringRepresentingEntireWorld = function () {
-  var listOfStrings = [];
-  
-  listOfStrings.push('// Repository dump, in JSON format' + '\n');
-  listOfStrings.push('{ ');
-  listOfStrings.push('"' + StubVirtualServer.JSON_MEMBER_FORMAT + '": "' + StubVirtualServer.JSON_FORMAT_2005_APRIL + '", ' + '\n');
-  listOfStrings.push('  "' + StubVirtualServer.JSON_MEMBER_DATA + '": ' + '[' + '\n');
-
-  var indent = "  ";
-  var jsonStringForRecords = this._getJsonStringRepresentingRecords(this.__myChronologicalListOfRecords, indent);
-  listOfStrings.push(jsonStringForRecords);
-
-  listOfStrings.push("  ], \n");
-  
-  // write out the list of users
-  var withChrome = false;
-  var jsonStringForUserList = this.__getJsonStringRepresentingUserList(withChrome);
-  listOfStrings.push(jsonStringForUserList);
-  
-  listOfStrings.push("}\n");
   var finalString = listOfStrings.join("");
   return finalString;
 };
@@ -416,30 +333,10 @@ DeltaVirtualServer.prototype.saveChangesToServer = function (forceSave) {
     newRecord = listOfChangesMade[key];
     this.__myChronologicalListOfRecords.push(newRecord);
   }
-  
-  var saveListOfUsers = false;
-  var listOfUsers = this.getUsers();
-  for (key in listOfChangesMade) {
-    newRecord = listOfChangesMade[key];
-    if (Util.isObjectInSet(newRecord, listOfUsers)) {
-      saveListOfUsers = true;
-      break;
-    }
-  }
- 
+
   if (saveChanges) {
-    var url;
-    var textToAppend;
-    
-    // OLD: used for saving a the entire world as one lump
-    // url = "model/save_lump.php";
-    // this.__myXMLHttpRequestObject.open("POST", url, true);
-    // this.__myXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
-    // this.__myXMLHttpRequestObject.send(this.__getJsonStringRepresentingEntireWorld());
-    
-    // NEW: used for saving just the changes
-    url = "model/append_to_repository_file.php";
-    textToAppend = ",\n" + this._getJsonStringRepresentingTransaction(currentTransaction);
+    var url = "model/append_to_repository_file.php";
+    var textToAppend = ",\n" + this._getJsonStringRepresentingTransaction(currentTransaction);
     var asynchronous;
     asynchronous = true;
     
@@ -453,26 +350,6 @@ DeltaVirtualServer.prototype.saveChangesToServer = function (forceSave) {
     this.__myXMLHttpRequestObject.open("POST", url, asynchronous);
     this.__myXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
     this.__myXMLHttpRequestObject.send(textToAppend);
-    
-    // NEW: used for saving just the user list
-    if (saveListOfUsers) {
-      url = "model/replace_user_file.php";
-      var withChrome = true;
-      textToAppend = this.__getJsonStringRepresentingUserList(withChrome);
-      asynchronous = true;
-      
-      // PENDING: 
-      // It might be more efficient to re-use the XMLHttpRequestObject,
-      // rather than creating a new one for new request.  But re-using 
-      // them is complicated, because the requests are asynchronous, so
-      // we need to check to see if the last request is done before we 
-      // can start a new request.
-      this._myUserListXMLHttpRequestObject = this.__newXMLHttpRequestObject();
-      
-      this._myUserListXMLHttpRequestObject.open("POST", url, asynchronous);
-      this._myUserListXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
-      this._myUserListXMLHttpRequestObject.send(textToAppend);
-    }
   }
   
   this._currentTransaction = null;
