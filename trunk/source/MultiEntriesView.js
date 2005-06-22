@@ -91,6 +91,23 @@ MultiEntriesView.prototype.refresh = function() {
 
 
 /**
+ * This method will only ever be called by one of our EntryView subviews.
+ * The EntryView will call this method during the transaction in which
+ * the EntryView is creating the first Entry for a provisional item, 
+ * causing the provisional item to become "real".
+ * 
+ * @scope    package instance method
+ * @param    item      The Item which just became real. 
+ */
+MultiEntriesView.prototype._provisionalItemJustBecomeReal = function(item) {
+  var superview = this.getSuperview();
+  if (superview._provisionalItemJustBecomeReal) {
+    superview._provisionalItemJustBecomeReal(item);
+  }
+};
+
+
+/**
  *
  */
 MultiEntriesView.prototype.noLongerProvisional = function() {
@@ -140,6 +157,7 @@ MultiEntriesView.prototype.setClickFunction = function(inClickFunction) {
   Util.assert(inClickFunction instanceof Function);
   this._clickFunction = inClickFunction;
 };
+
 
 /**
  *

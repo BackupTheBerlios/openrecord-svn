@@ -311,7 +311,7 @@ Entry.prototype.getDisplayString = function (myItem) {
         else {Util.assert(false, "myItem isn't part of this Entry");}
       }
       else {
-        returnString = "connection between [" + firstItem.getDisplayName() + "] and [" + secondItem.getDisplayName() + "]";
+        returnString = 'connection between "' + firstItem.getDisplayName() + '" and "' + secondItem.getDisplayName() + '"';
       }
       break;
   }

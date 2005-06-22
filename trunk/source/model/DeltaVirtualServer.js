@@ -145,7 +145,7 @@ DeltaVirtualServer.prototype.__loadWorldFromListOfRecordsAndUsers = function (in
  * @return   A string that is. 
  */
 DeltaVirtualServer.prototype.truncateString = function (inString) {
-  var maxLength = 30;
+  var maxLength = 80;
   var ellipsis = "...";
   if (inString.length > maxLength) {
     return (inString.substring(0, (maxLength - ellipsis.length)) + ellipsis);

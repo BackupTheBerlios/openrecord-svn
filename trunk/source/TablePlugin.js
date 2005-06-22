@@ -253,13 +253,27 @@ TablePlugin.prototype._buildTableBody = function() {
 };
 
 
+
+/**
+ * This method will only ever be called by one of our MultiEntriesView 
+ * subviews.  The MultiEntriesView will call this method during the 
+ * transaction in which the first Entry for a provisional item is being
+ * created, causing the provisional item to become "real".
+ * 
+ * @scope    package instance method
+ * @param    item      The Item which just became real. 
+ */
+TablePlugin.prototype._provisionalItemJustBecomeReal = function(item) {
+  this.getWorld().setItemToBeIncludedInQueryResultList(item, this._query);
+};
+
+
 /**
  *
  */
 TablePlugin.prototype.observedItemHasChanged = function(item) {
   // called when a provisional item becomes a real item
   item.removeObserver(this); //now that provisional item is real, we stop observing it
-  this.getWorld().setItemToBeIncludedInQueryResultList(item,this._query);
   this._listOfItems.push(item); // moving this line affects code below
   
   // tell provisional item views they are no longer provisional

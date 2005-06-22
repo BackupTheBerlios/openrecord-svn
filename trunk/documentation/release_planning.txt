@@ -162,7 +162,7 @@ brian  | 0        | 0.5     |     Update the JSON repository file to use time-ba
 brian  | 0        | 0.25    |     Get deletion votes working again after switching to time-based UUIDs
 brian  | 0.5  IED | 0.25    |  4. Store transaction info in repository
        |          |         |  5. UI for deleting a row from a table
-brian  | 0.5  IED |         |  6. Save provisional item and then set the category, in that order, and in on transaction
+brian  | 0.5  IED | 0.25    |  6. Save provisional item and then set the category, in that order, and in one transaction
        |          |         |  7. Fix the bug that happens when you call the PHP server code with no POST data
 chao   | 0.5  IED | 0.5 IED |  8. UI for entering a number literal (instead of a string literal) in a table [with Brian]
 chao   | 1    IED | 1   IED |  9. UI for entering a date literal in a table (and data model support) [with Brian]

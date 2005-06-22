@@ -333,6 +333,7 @@ if (value && Util.isString(value)) {
  */
 TextView.prototype._writeValue = function(value) {
   if (value === 0 || value) {
+    this.getWorld().beginTransaction();
     value = this._transformToExpectedType(value);
 
     var oldValue = null;
@@ -347,7 +348,12 @@ TextView.prototype._writeValue = function(value) {
       else {
         this._entry = this._item.replaceEntryWithEntryForAttribute(this._entry, this._attribute, value);
       }
+      var superview = this.getSuperview();
+      if (superview._provisionalItemJustBecomeReal) {
+        superview._provisionalItemJustBecomeReal(this._item);
+      }
     }    
+    this.getWorld().endTransaction();
   }
   this._restoreText(true); // call restore text in case item is transformed (e.g. Dates will be normalized)
 };
