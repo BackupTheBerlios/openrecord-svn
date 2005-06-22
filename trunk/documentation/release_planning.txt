@@ -163,7 +163,7 @@ brian  | 0        | 0.25    |     Get deletion votes working again after switchi
 brian  | 0.5  IED | 0.25    |  4. Store transaction info in repository
        |          |         |  5. UI for deleting a row from a table
 brian  | 0.5  IED | 0.25    |  6. Save provisional item and then set the category, in that order, and in one transaction
-       |          |         |  7. Fix the bug that happens when you call the PHP server code with no POST data
+brian  | 0.25 IED |         |  7. Fix the bug that happens when you call the PHP server code with no POST data
 chao   | 0.5  IED | 0.5 IED |  8. UI for entering a number literal (instead of a string literal) in a table [with Brian]
 chao   | 1    IED | 1   IED |  9. UI for entering a date literal in a table (and data model support) [with Brian]
 brian  | 1    IED | 1   IED | 10. Add data model support for bi-directional references
@@ -181,8 +181,8 @@ chao   | 2    IED | 1.5 IED | 11. Move to better persistent representation for q
        |          |         | 21. Provide GUI feedback about what's editable
        |          |         | 22. Reach consensus on (colors, padding, and borders) and then implement
        |          |         | 23. Get data model to pass the ordinal unit tests again
-       |          |         | 24. Display Navbar pages in the right order
-       |          |         | 25. Arrow keys in SuggestionBox
+mignon |          | done    | 24. Display Navbar pages in the right order
+chao   |          | done?   | 25. Arrow keys in SuggestionBox
        |          |         | 26. Arrow keys in Table View
        |          |         | 27. Change UI so that non-literal entries are immutable
        |          |         | 28. Implement a good URL-to-content mapping, such that URLs won't go bad in future releases
@@ -227,6 +227,8 @@ chao   | 0.5 IED  | 0.5 IED | Improved UI for autocomplete
 chao   | 0.5 IED  | 0.5 IED | Allow plugins to store layout data
 chao   | 0.5 IED  | 0.5 IED | Table plugin persists column order
        
+
+
 =======================================================
 Categories and Attributes we might use for release 0.1
 =======================================================

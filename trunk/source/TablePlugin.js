@@ -106,6 +106,7 @@ TablePlugin.prototype.compareItemByAttribute = function (itemA, itemB) {
   return -ascendingInt;
 };
 
+
 /**
  * Creates an array containing all the attributes of the content items 
  * in this table.  Populates list of suggested items for relevant attributes
@@ -142,8 +143,12 @@ TablePlugin.prototype._buildAttributes = function() {
   this._displayAttributes = displayAttrs;
 };
 
+
+/**
+ *
+ */
 TablePlugin.prototype._buildAttributeHashFromScratch = function() {
-  var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
+  // var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var hashTableOfAttributes = {};
   var hashTableOfEntries = {};
@@ -156,6 +161,8 @@ TablePlugin.prototype._buildAttributeHashFromScratch = function() {
         var attributeKeyString = attribute.getUniqueKeyString();
         hashTableOfAttributes[attributeKeyString] = attribute;
         
+        hashTableOfEntries[attributeKeyString] = this.getWorld().getSuggestedItemsForAttribute(attribute);
+/*
         // build entries representing this attribute in this table 
         // PENDING we may only want to do this for certain attributes
         var itemEntries = contentItem.getEntriesForAttribute(attribute);
@@ -170,16 +177,18 @@ TablePlugin.prototype._buildAttributeHashFromScratch = function() {
             hashTableOfEntries[attributeKeyString][entry.getUniqueKeyString()] = entry;
           }
         }
+*/
       }
     }
   }
   
-  if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
+/*  if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
   } else {
     for (attributeKey in hashTableOfEntries) {
       hashTableOfEntries[attributeKey] = Util.hashTableValues(hashTableOfEntries[attributeKey]);
     }
   }
+*/
   this._hashTableOfEntries = hashTableOfEntries;
   if (Util.lengthOfHashTable(hashTableOfAttributes) < 1) {
     var attributeCalledName = this.getWorld().getAttributeCalledName();
@@ -216,6 +225,7 @@ TablePlugin.prototype._buildAttributeEditor = function() {
   importButton.onchange = this._importData.bindAsEventListener(this, importButton);*/
 };
 
+
 /**
  * Inserts a table row at rowNum given contentItem
  *
@@ -247,7 +257,11 @@ TablePlugin.prototype._buildTableBody = function() {
   
   if (this.isInEditMode()) {
     // add one more row to allow users to add a new item to the table
-    var newItem = this.getWorld().newProvisionalItem(this);
+    var observer = this; 
+    // PENDING: 
+    // no need to register an observer here, if we move code from
+    // observedItemHasChanged() to _provisionalItemJustBecomeReal()
+    var newItem = this.getWorld().newProvisionalItem(observer);
     this._insertRow(newItem, ++numRows, true);
   }
 };
@@ -269,7 +283,21 @@ TablePlugin.prototype._provisionalItemJustBecomeReal = function(item) {
 
 
 /**
- *
+ * PENDING: 
+ * This method observedItemHasChanged() was written back before we 
+ * wrote the method above this one, _provisionalItemJustBecomeReal().
+ * Now we've got things set up so that the TextView will call
+ * our _provisionalItemJustBecomeReal() method when the user first
+ * makes a change that causes the provisional item to become real.
+ * Now that we have _provisionalItemJustBecomeReal(), we might 
+ * want to move all the code from observedItemHasChanged() over
+ * into _provisionalItemJustBecomeReal(), and then we could get
+ * rid of this method.  HOWEVER, moving the code might cause bugs,
+ * because this observedItemHasChanged() method is probably 
+ * called slightly later than the _provisionalItemJustBecomeReal()
+ * method above.  The _provisionalItemJustBecomeReal() is called
+ * DURING the transaction, whereas observedItemHasChanged() is,
+ * in theory, called after the transaction.
  */
 TablePlugin.prototype.observedItemHasChanged = function(item) {
   // called when a provisional item becomes a real item
@@ -495,12 +523,12 @@ TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
       delete this._hashTableOfEntries[attributeUuid];
     }
     else {
-      var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
+      // var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
       this._displayAttributes.push(changedAttribute);
       this._layout.addEntryForAttribute(attrTableColumns,changedAttribute,repository.getTypeCalledItem());
-      if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
-        this._hashTableOfEntries[attributeUuid] = this.getWorld().getSuggestedItemsForAttribute(changedAttribute);
-      }
+      // if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
+      this._hashTableOfEntries[attributeUuid] = this.getWorld().getSuggestedItemsForAttribute(changedAttribute);
+      // }
     }
     this._buildTable(true);
   }
