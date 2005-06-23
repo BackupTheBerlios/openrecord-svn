@@ -42,9 +42,8 @@
  * @scope    global function
  */
 window.doOnloadActions = function() {  
-  var pathToTrunkDirectory = "../";
   var repositoryName = "demo_page";
-  var deltaVirtualServer = new DeltaVirtualServer(repositoryName, pathToTrunkDirectory);
+  var deltaVirtualServer = new DeltaVirtualServer(repositoryName);
   var world = new World(deltaVirtualServer);
   window.rootView = new RootView(world);
   
