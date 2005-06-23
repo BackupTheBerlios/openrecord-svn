@@ -184,12 +184,12 @@ chao   | 2    IED | 1.5 IED | 11. Move to better persistent representation for q
 mignon |          | done    | 24. Display Navbar pages in the right order
 chao   |          | done?   | 25. Arrow keys in SuggestionBox
        |          |         | 26. Arrow keys in Table View
-       |          |         | 27. Change UI so that non-literal entries are immutable
+chao   |1.5 IED   |         | 27. Change UI so that non-literal entries are immutable
        |          |         | 28. Implement a good URL-to-content mapping, such that URLs won't go bad in future releases
        |          |         | 29. Convert UI code from DOM level 0 to DOM level 2
        |          |         | 30. Have identifiedRecord.getTimestamp() get the time from the UUID 
 -------+----------+---------+----------------------------------------------
-       |          |         | 31. Wire up observers & keep views in sync
+chao   |0.5 IED   |         | 31. Wire up observers & keep views in sync
        |          |         | 32. improve UI for adding an attribute to an item
        |          |         | 33. improve UI for setting the expected data type of an attribute
        |          |         | 34. improve UI for creating a new category
@@ -226,6 +226,7 @@ chao   | 1.5 IED  | 1.5 IED | 39. improve UI for editing the query that a sectio
 chao   | 0.5 IED  | 0.5 IED | Improved UI for autocomplete
 chao   | 0.5 IED  | 0.5 IED | Allow plugins to store layout data
 chao   | 0.5 IED  | 0.5 IED | Table plugin persists column order
+chao   | 0.5 IED  |         | Improve UI for navigating between cells and autocomplete
        
 
 
@@ -456,3 +457,4 @@ Issues for post iteration#2
 + BUG: need to convert HTML entity codes back at client-server layer
 + Task: Rename ORlugin to PluginView
 + BUG: Can't really create own plugins yet (e.g. UUID need to be assigned, plugin item created)
++ Q: Do we (and how) need a concept of focus for Views? Currently, only Text input and Textarea gets keyboard focus. We need it for table selections and possibly selecting "lozenges" (item references stored in the TextView)

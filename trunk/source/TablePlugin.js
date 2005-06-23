@@ -119,9 +119,7 @@ TablePlugin.prototype._buildAttributes = function() {
   var entriesTableColumns = this._layout.getEntriesForAttribute(attrTableColumns);
   var displayAttrs = [];
   var anAttribute;
-  var useLayoutData = (entriesTableColumns) && (entriesTableColumns.length > 1 ||
-    (entriesTableColumns.length ==1 && entriesTableColumns[0].getValue() != repository.getAttributeCalledName()));
-  if (useLayoutData) {
+  if (entriesTableColumns.length > 0) {
     this._hashTableOfEntries = {};
     for (var i=0;i<entriesTableColumns.length;++i) {
       anAttribute = entriesTableColumns[i].getValue();
@@ -132,12 +130,10 @@ TablePlugin.prototype._buildAttributes = function() {
     }
   }
   else {
-    if (entriesTableColumns.length == 1) {entriesTableColumns[0].voteToDelete();}
     var hashTableOfAttributes = this._buildAttributeHashFromScratch();
     for (var key in hashTableOfAttributes) {
       anAttribute = hashTableOfAttributes[key];
       displayAttrs.push(anAttribute);
-      this._layout.addEntryForAttribute(attrTableColumns,anAttribute,repository.getTypeCalledItem());
     }
   }
   this._displayAttributes = displayAttrs;
@@ -562,15 +558,15 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
   
   var move = null;
   switch (asciiValueOfKey) {
-    case Util.ASCII_VALUE_FOR_LEFT_ARROW:
+/*    case Util.ASCII_VALUE_FOR_LEFT_ARROW:
       move = MOVE_LEFT;
-      break;
+      break;*/
     case Util.ASCII_VALUE_FOR_UP_ARROW:
       move = MOVE_UP;
       break;
-    case Util.ASCII_VALUE_FOR_RIGHT_ARROW:
+/*    case Util.ASCII_VALUE_FOR_RIGHT_ARROW:
       move = MOVE_RIGHT;
-      break;
+      break;*/
     case Util.ASCII_VALUE_FOR_DOWN_ARROW:
       move = MOVE_DOWN;
       break;

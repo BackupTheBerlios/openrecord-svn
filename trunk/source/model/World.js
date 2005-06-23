@@ -805,8 +805,9 @@ World.prototype.setItemToBeIncludedInQueryResultList = function(item, query) {
  */
 World.prototype.getItemsInCategory = function(category, observer) {
   var listOfItems = this._virtualServer.getItemsInCategory(category);
+  // listOfItems = this._getFilteredList(listOfItems); PENDING: not sure if I should call this?
   this.__addListObserver(listOfItems, observer);
-  return listOfItems;
+  return (listOfItems);
 };
 
 
@@ -816,9 +817,9 @@ World.prototype.getItemsInCategory = function(category, observer) {
  * @scope    public instance method
  * @return   A list of items that represent categories.
  */
-World.prototype.getCategories = function() {
-  var listOfCategories = this._virtualServer.getCategories();
-  return this._getFilteredList(listOfCategories);
+World.prototype.getCategories = function(observer) {
+  var categoryCalledCategory = this.getCategoryCalledCategory();
+  return this.getItemsInCategory(categoryCalledCategory, observer);
 };
 
 /**
@@ -827,15 +828,15 @@ World.prototype.getCategories = function() {
  * @scope    public instance method
  * @return   A list of items that represent attributes.
  */
-World.prototype.getAttributes = function() {
-  var listOfAttributes = this._virtualServer.getAttributes();
-  return this._getFilteredList(listOfAttributes);
+World.prototype.getAttributes = function(observer) {
+  var categoryCalledAttribute = this.getCategoryCalledAttribute();
+  return this.getItemsInCategory(categoryCalledAttribute, observer);
 };
 
 /**
  *
  */
-World.prototype.getSuggestedItemsForAttribute = function(attribute) {
+World.prototype.getSuggestedItemsForAttribute = function(attribute, observer) {
   var listOfSuggestedItems = [];
   var key;
   var categoryCalledCategory = this.getCategoryCalledCategory();
@@ -858,6 +859,8 @@ World.prototype.getSuggestedItemsForAttribute = function(attribute) {
       Util.addObjectToSet(item, listOfSuggestedItems);
     }
   }
+  this.__addListObserver(listOfSuggestedItems, observer);
+  
   // For no suggested items, TablePlugin expects an empty array rather than null 
   return listOfSuggestedItems;
 };

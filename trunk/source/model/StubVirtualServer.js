@@ -417,39 +417,6 @@ StubVirtualServer.prototype.getUsers = function () {
 
 
 /**
- *
- */
-StubVirtualServer.prototype.getItemsOfCategory = function (inCategory) {
-  var listOfItems = [];
-  for (var key in this.__myHashTableOfItemsKeyedByUuid) {
-    var item = this.__myHashTableOfItemsKeyedByUuid[key];
-    if (item.isInCategory(inCategory)) {
-      listOfItems.push(item);
-    }
-  }
-  return listOfItems;
-};
-
-
-/**
- *
- */
-StubVirtualServer.prototype.getCategories = function () {
-  var categoryCalledCategory = this.getWorld().getCategoryCalledCategory();
-  return this.getItemsOfCategory(categoryCalledCategory);
-};
-
-
-/**
- *
- */
-StubVirtualServer.prototype.getAttributes = function () {
-  var categoryCalledAttribute = this.getWorld().getCategoryCalledAttribute();
-  return this.getItemsOfCategory(categoryCalledAttribute);
-};
-
-
-/**
  * Returns an item representing the user who is currently logged in.
  *
  * @scope    public instance method

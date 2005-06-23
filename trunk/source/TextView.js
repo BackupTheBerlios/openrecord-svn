@@ -552,6 +552,7 @@ function AttributeSuggestionBox(inHTMLInputField, listOfItems) {
   this._myInputField = inHTMLInputField;
   this._listOfSuggestedItems = listOfItems.sort(AttributeSuggestionBox._compareItemDisplayNames);
   this._selectedItem = null;
+  this._shouldHide = inHTMLInputField.value.length === 0;
   
   this._myAttributeSuggestionBoxDivElement = document.createElement('div');
   // this._myAttributeSuggestionBoxDivElement.style.visibility = "hidden";
@@ -712,7 +713,7 @@ AttributeSuggestionBox.prototype._setShouldHide = function (shouldHide) {
  *
  */
 AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () {
-  if (this._shouldHide) {return;} // if SuggestionBox is in hide mode, don't show the box
+  //if (this._shouldHide) {return;} // if SuggestionBox is in hide mode, don't show the box
   
   var partialInputString = this._myInputField.value;
   var listOfMatchingItems = [];
@@ -732,7 +733,7 @@ AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () 
   }
   this._listOfMatchingItems = listOfMatchingItems;
 
-  if (listOfMatchingItems.length === 0) {
+  if (this._shouldHide || listOfMatchingItems.length === 0) {
     // make the suggestion box disappear
     this._myAttributeSuggestionBoxDivElement.style.display = "none";
   } else {
