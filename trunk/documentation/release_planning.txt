@@ -163,7 +163,8 @@ brian  | 0        | 0.25    |     Get deletion votes working again after switchi
 brian  | 0.5  IED | 0.25    |  4. Store transaction info in repository
        |          |         |  5. UI for deleting a row from a table
 brian  | 0.5  IED | 0.25    |  6. Save provisional item and then set the category, in that order, and in one transaction
-brian  | 0.25 IED |         |  7. Fix the bug that happens when you call the PHP server code with no POST data
+brian  | 0.25 IED | 0.25    |  7. Fix the bug that happens when you call the PHP server code with no POST data
+brian  |          | 0.25    |     Enabled one server to serve N pages running against N repository files
 chao   | 0.5  IED | 0.5 IED |  8. UI for entering a number literal (instead of a string literal) in a table [with Brian]
 chao   | 1    IED | 1   IED |  9. UI for entering a date literal in a table (and data model support) [with Brian]
 brian  | 1    IED | 1   IED | 10. Add data model support for bi-directional references
@@ -171,7 +172,7 @@ chao   | 2    IED | 1.5 IED | 11. Move to better persistent representation for q
        |          |         | 12. Make sure view code uses transactions
        |          |         | 13. Deal with \n in page name or summary fields
        |          |         | 14. BUG: problems with newlines and HTML characters in text strings
-       |          |         | 15. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
+brian  | 0.5  IED |         | 15. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
 -------+----------+---------+----------------------------------------------
        |          |         | 16. Have text-entries and reference-entries look different
        |          |         | 17. Write one unit test that tests GUI code
