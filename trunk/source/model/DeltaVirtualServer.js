@@ -48,9 +48,20 @@
  * @param    inJsonRepositoryString    A JSON string literal representing the world of items. 
  */
 DeltaVirtualServer.prototype = new StubVirtualServer();  // makes DeltaVirtualServer be a subclass of StubVirtualServer
-function DeltaVirtualServer(inJsonAxiomsFileURL, inJsonRepositoryString) {
-  this._myDehydratedAxiomFileURL = inJsonAxiomsFileURL;
-  this._myDehydratedWorld = inJsonRepositoryString;
+function DeltaVirtualServer(repositoryName, pathToTrunkDirectory) {
+
+  this._pathToTrunkDirectory = "";
+  if (pathToTrunkDirectory) {
+    this._pathToTrunkDirectory = pathToTrunkDirectory;
+  }
+  
+  var axiomaticFileName = "2005_june_axiomatic_items.json";
+  var urlForAxiomaticFile = this._pathToTrunkDirectory + "source/model/" + axiomaticFileName;
+  
+  this._myDehydratedAxiomFileURL = urlForAxiomaticFile;  
+  
+  this._repositoryName = repositoryName;
+  
   this._myHasEverFailedToSaveFlag = false;
 }
 
@@ -66,7 +77,14 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) 
   this._initialize(inWorld);
   this._buildTypeHashTable();
   this._loadAxiomaticItemsFromFileAtURL(this._myDehydratedAxiomFileURL);
-  this._loadWorldFromJsonString(this._myDehydratedWorld);
+
+  var pathToRepositoryDirectory = "source/repositories/";
+  var repositoryFileName = this._repositoryName + ".json";
+  var repositoryUrl = this._pathToTrunkDirectory + pathToRepositoryDirectory + repositoryFileName;
+  var repositoryContentString = Util.getStringContentsOfFileAtURL(repositoryUrl);
+  repositoryContentString += " ] }";
+
+  this._loadWorldFromJsonString(repositoryContentString);
 };
 
 // -------------------------------------------------------------------
@@ -335,7 +353,7 @@ DeltaVirtualServer.prototype.saveChangesToServer = function (forceSave) {
   }
 
   if (saveChanges) {
-    var url = "model/append_to_repository_file.php";
+    var url = this._pathToTrunkDirectory + "source/model/append_to_repository_file.php?file=" + this._repositoryName;
     var textToAppend = ",\n" + this._getJsonStringRepresentingTransaction(currentTransaction);
     var asynchronous;
     asynchronous = true;

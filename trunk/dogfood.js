@@ -1,5 +1,5 @@
 /*****************************************************************************
- demo_page.js
+ dogfood_page.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -42,9 +42,8 @@
  * @scope    global function
  */
 window.doOnloadActions = function() {  
-  var pathToTrunkDirectory = "../";
-  var repositoryName = "demo_page";
-  var deltaVirtualServer = new DeltaVirtualServer(repositoryName, pathToTrunkDirectory);
+  var repositoryName = "dogfood";
+  var deltaVirtualServer = new DeltaVirtualServer(repositoryName);
   var world = new World(deltaVirtualServer);
   window.rootView = new RootView(world);
   

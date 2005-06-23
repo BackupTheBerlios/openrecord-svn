@@ -95,8 +95,15 @@ StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "ordinalNumber";
  *
  * @scope    public instance constructor
  */
-function StubVirtualServer(inJsonAxiomsFileURL) {
-  this._myDehydratedAxiomFileURL = inJsonAxiomsFileURL;
+function StubVirtualServer(pathToTrunkDirectory) {
+  var fileName = "2005_june_axiomatic_items.json";
+  var urlForAxiomaticFile = "";
+  if (pathToTrunkDirectory) {
+    urlForAxiomaticFile = pathToTrunkDirectory;
+  }
+  urlForAxiomaticFile += "source/model/" + fileName;
+  
+  this._myDehydratedAxiomFileURL = urlForAxiomaticFile;
 }
 
 
@@ -115,7 +122,6 @@ StubVirtualServer.prototype._initialize = function (inWorld) {
   this.__myHashTableOfItemsKeyedByUuid = {};
   this.__myHashTableOfEntriesKeyedByUuid = {};
   this.__myChronologicalListOfRecords = [];
-  // this.__myChronologicalListOfNewlyCreatedRecords = [];
   
   this.__myListOfUsers = [];
   this.__myHashTableOfUserAuthenticationInfo = {};
@@ -359,7 +365,6 @@ StubVirtualServer.prototype.newOrdinal = function (inContentRecord, inOrdinalNum
 StubVirtualServer.prototype.newVote = function (inContentRecord, inRetainFlag) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
-  // var vote = new Vote(inContentRecord, this.__myWorld.getCurrentUser(), inRetainFlag);
   var vote = new Vote(this.__myWorld, uuid, inContentRecord, inRetainFlag);
   this._currentTransaction.addRecord(vote);
   return vote;

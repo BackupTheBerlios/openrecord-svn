@@ -34,9 +34,8 @@ var world;
 function setUp() {
   ModelTestVars = {};
 
-  var fileName = "2005_june_axiomatic_items.json";
-  var url = "../../../source/model/" + fileName;
-  var stubVirtualServer = new StubVirtualServer(url);
+  var pathToTrunkDirectory = "../../../";
+  var stubVirtualServer = new StubVirtualServer(pathToTrunkDirectory);
   world = new World(stubVirtualServer);
 }
 
@@ -76,7 +75,6 @@ function waitForNextMillisecond() {
 }
 
 function testGetTimestamp() {
-  // var world = new World();
   var tZero = new Date();
   var janesPassword = "jane's password";
   waitForNextMillisecond();
@@ -98,7 +96,6 @@ function testGetTimestamp() {
 }
 
 function testLoginLogout() {
-  // var world = new World();
   var listOfUsers;
   var loginSuccess;
   
@@ -156,7 +153,6 @@ function testLoginLogout() {
 function testAccessorsForAxiomaticItems() {
   var key;
   var item;
-  // var world = new World();
   var listOfAssignedNames;
   var nameEntry;
   
@@ -191,7 +187,6 @@ function testAccessorsForAxiomaticItems() {
 
   
 function noyet_testAdditionsAndRetrievals() {
-  // var world = new World();
   var nameAttribute = world.getAttributeCalledName();
   
   var janesPassword = "jane's password";
@@ -302,7 +297,6 @@ function noyet_testAdditionsAndRetrievals() {
 
 
 function testCategories() {
-  // var world = new World();
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);
   world.login(userJane, janesPassword);
@@ -343,7 +337,6 @@ function testCategories() {
 /*
 PENDING: the ordinal implementation was broken by the new UUID code
 function testOrdinals() {
-  // var world = new World();
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);
   world.login(userJane, janesPassword);
@@ -387,7 +380,6 @@ function testOrdinals() {
 */
   
 function testDeletion() {
-  // var world = new World();
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);
   world.login(userJane, janesPassword);
@@ -408,7 +400,6 @@ function testDeletion() {
 
 
 function testItemObservation() {
-  // var world = new World();
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);
   world.login(userJane, janesPassword);
@@ -465,7 +456,6 @@ function testItemObservation() {
 
 
 function testListObservation() {
-  // var world = new World();
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);
   world.login(userJane, janesPassword);
@@ -518,7 +508,6 @@ function testListObservation() {
 
 
 function testQueries() {
-  // var world = new World();
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);
   world.login(userJane, janesPassword);
@@ -600,7 +589,6 @@ function testQueries() {
 Tests World._getFilteredList, via World.getUsers and World.getCategories.
 */
 function testFilteredLists() {
-  // var world = new World();
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);  
   var listOfUsers = world.getUsers();
@@ -620,7 +608,6 @@ function testFilteredLists() {
 }
 
 function testItemTypes() {
-  // var world = new World();
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);
   world.login(userJane, janesPassword);
