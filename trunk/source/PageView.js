@@ -61,6 +61,7 @@ PageView.newSection = function (repository, inPage) {
   var attributeCalledPluginView = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
   var attributeCalledSectionsInPage = repository.getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTIONS_IN_PAGE);
   var attributeCalledPageThisSectionAppearsOn = repository.getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_PAGE_THIS_SECTION_APPEARS_ON);
+  var attributeCalledSectionThisQueryBelongsTo = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_QUERY_BELONGS_TO);
   var categoryCalledSection = repository.getItemFromUuid(RootView.UUID_FOR_CATEGORY_SECTION);
   var tablePluginView = repository.getItemFromUuid(TablePlugin.UUID_FOR_PLUGIN_VIEW_TABLE);
   
@@ -73,7 +74,8 @@ PageView.newSection = function (repository, inPage) {
 
   var newQuery = repository.newItem("New Query");
   newQuery.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
-  newSection.addEntryForAttribute(attributeCalledQuery, newQuery);
+  // newSection.addEntryForAttribute(attributeCalledQuery, newQuery);
+  newSection.addConnectionEntry(attributeCalledQuery, newQuery, attributeCalledSectionThisQueryBelongsTo);
   repository.endTransaction();
   return newSection;
 };

@@ -73,6 +73,10 @@ SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW       = "00040101-ce7f-11d9-8cd5-0011
 SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA       = "00040102-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN = "00040103-ce7f-11d9-8cd5-0011113ae5d6";
 
+SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO = "00040104-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_QUERY_BELONGS_TO = "00040105-ce7f-11d9-8cd5-0011113ae5d6";
+// TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS = "0004010a-ce7f-11d9-8cd5-0011113ae5d6";
+
 SectionView.UUID_FOR_CATEGORY_PLUGIN_VIEW        = "00040201-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA        = "00040202-ce7f-11d9-8cd5-0011113ae5d6";
 
@@ -180,8 +184,11 @@ SectionView.prototype.getPluginInstanceFromPluginItem = function (pluginItem, pl
  */
 SectionView.prototype.getQuery = function () {
   var attributeCalledQuery = this.getWorld().getAttributeCalledQuery();
-  var listOfEntries = this.mySection.getEntriesForAttribute(attributeCalledQuery);
-  return (listOfEntries && listOfEntries[0]) ? listOfEntries[0].getValue() : null;
+  var queryEntry = this.mySection.getSingleEntryFromAttribute(attributeCalledQuery);
+  if (queryEntry) {
+    return queryEntry.getConnectedItem(this.mySection);
+  }
+  return null;
 };
 
 
@@ -280,12 +287,13 @@ SectionView.prototype.doInitialDisplay = function () {
   this.refresh();
 };
 
+
 /**
  * Returns layout data of this section for a particular plugin
  * Creates a the layout data item if doesn't exist
  *
- * @param inPluginType name of plugin
- * @return layout data of this section for a particular plugin
+ * @param    inPluginType    The name of plugin
+ * @return    layout data of this section for a particular plugin
  */
 SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
   var repository = this.getWorld();
@@ -294,7 +302,7 @@ SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
   var attrAppliesToPlugin = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN);
   if (entriesLayoutData) {
     for (var i=0; i < entriesLayoutData.length; ++i) {
-      var layoutItem = entriesLayoutData[i].getValue();
+      var layoutItem = entriesLayoutData[i].getConnectedItem(this.mySection);
       var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attrAppliesToPlugin);
       Util.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
       if (entriesAppliesToPlugin[0].getValue() == inPluginType) {
@@ -302,14 +310,21 @@ SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
       }
     }
   }
+  
   // layoutData not found, so create the item
+  var categoryCalledLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA);
+  var attributeCalledCategory = repository.getAttributeCalledCategory();
+  var attributeCalledSectionThisLayoutDataBelongsTo = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO);
   repository.beginTransaction();
   layoutItem = repository.newItem("Layout data for " + inPluginType.getDisplayName() + " of " + this.mySection.getDisplayName());
+  layoutItem.addEntryForAttribute(attributeCalledCategory, categoryCalledLayoutData);
   layoutItem.addEntryForAttribute(attrAppliesToPlugin, inPluginType);
-  this.mySection.addEntryForAttribute(attrLayoutData,layoutItem,repository.getTypeCalledItem());
+  // this.mySection.addEntryForAttribute(attrLayoutData, layoutItem, repository.getTypeCalledItem());
+  this.mySection.addConnectionEntry(attrLayoutData, layoutItem, attributeCalledSectionThisLayoutDataBelongsTo);
   repository.endTransaction();
   return layoutItem;
 };
+
 
 /**
  * Re-creates all the HTML for the SectionView, and hands the HTML to the 
@@ -372,17 +387,20 @@ SectionView.prototype._refreshQueryEditSpan = function () {
 // -------------------------------------------------------------------
 
 /**
- * Called when user is editing the matching value edit field
+ * Called when user is editing the matching value edit field.
  * We want to trap a "return" key 
- * @scope public instance method
+ *
+ * @scope    public instance method
+ * @return   Returns true if the user pressed the return key, or false otherwise.
  */
-SectionView.prototype.keyPressOnMatchingValueField = function(evt,aTxtView) {
-  if (evt.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
-    aTxtView.stopEditing();
+SectionView.prototype.keyPressOnMatchingValueField = function(event, aTextView) {
+  if (event.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
+    aTextView.stopEditing();
     return true;
   }
   return false;
 };
+
 
 /**
  * Called when the query belong to this section has changed
@@ -397,6 +415,7 @@ SectionView.prototype.observedItemHasChanged = function(item) {
   this._myPlugin = this.getPluginInstanceFromPluginItem(pluginItem, this._myPluginDiv);
   this.refresh();
 };
+
 
 /**
  * Called when the user clicks on any of the plugin option-select controls.

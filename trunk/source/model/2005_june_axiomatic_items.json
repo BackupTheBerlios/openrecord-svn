@@ -599,7 +599,7 @@
     },
     // -----------------------------------------------------------------------
     { "Item": {                                               // Table Columns (Attribute)
-             "uuid": "00040104-ce7f-11d9-8cd5-0011113ae5d6" }
+             "uuid": "0004010a-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Item": {                                               // Plugin View (Category)
@@ -778,26 +778,74 @@
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Table Columns 
+    { "Entry": {                                              // Section this layout data belongs to 
              "uuid": "0040104a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
+             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Section this layout data belongs to (Attribute)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Table Columns" }
+            "value": "Section this layout data belongs to" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Attribute
              "uuid": "0040104b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
-             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
+             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Section this layout data belongs to (Attribute)
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
+            "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Section
+             "uuid": "0040104c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Section this layout data belongs to (Attribute)
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
+            "value": "00020100-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Section this query belongs to 
+             "uuid": "0040105a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00040105-ce7f-11d9-8cd5-0011113ae5d6",  // Section this query belongs to (Attribute)
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Section this query belongs to" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "0040105b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00040105-ce7f-11d9-8cd5-0011113ae5d6",  // Section this query belongs to (Attribute)
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
+            "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Section
+             "uuid": "0040105c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "00040105-ce7f-11d9-8cd5-0011113ae5d6",  // Section this query belongs to (Attribute)
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
+            "value": "00020100-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Table Columns 
+             "uuid": "004010aa-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Table Columns" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "004010ab-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Attribute
-             "uuid": "0040104c-ce7f-11d9-8cd5-0011113ae5d6",
+             "uuid": "004010ac-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
+             "item": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },

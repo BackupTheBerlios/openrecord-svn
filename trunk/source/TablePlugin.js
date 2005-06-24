@@ -50,7 +50,7 @@ SectionView.registerPlugin(TablePlugin);
 // -------------------------------------------------------------------
 // TablePlugin public class constants
 // -------------------------------------------------------------------
-TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS = "00040104-ce7f-11d9-8cd5-0011113ae5d6";
+TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS = "0004010a-ce7f-11d9-8cd5-0011113ae5d6";
 TablePlugin.ASCENDING_GIF = "ascending.gif";
 TablePlugin.DESCENDING_GIF = "descending.gif";
 
