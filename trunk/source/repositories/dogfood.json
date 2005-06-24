@@ -12,7 +12,7 @@
              "uuid": "0005000a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // The OpenRecord Dogfood Site
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00020000-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -20,7 +20,7 @@
              "uuid": "0005000b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
              "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // The OpenRecord Dogfood Site
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Dogfood" }
     },
     // -----------------------------------------------------------------------
@@ -28,7 +28,7 @@
              "uuid": "0005000c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // The OpenRecord Dogfood Site
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "The OpenRecord Dogfood Site" }
     },
     // -----------------------------------------------------------------------
@@ -36,7 +36,7 @@
              "uuid": "0005000d-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",  // Summary
              "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // The OpenRecord Dogfood Site
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "This web site is where people working on OpenRecord keep track of the work being done." }
     } ]
   }
