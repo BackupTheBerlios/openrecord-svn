@@ -37,26 +37,47 @@
 // -------------------------------------------------------------------
 
 
-
-
 /**
- * A PluginView display one or more content items. 
+ * A PluginView displays one or more content items. 
  *
  * @scope    public instance constructor
  * @extends  View
  * @param    inSuperView    The superview for this view. 
  * @param    inHTMLElement    The HTMLElement to display this view in. 
- * @param    inQuery  Query that produces the items for this PluginView to display
+ * @param    inQuery    The Query item that provides the items for this PluginView to display
  * @syntax   var PluginView = new PluginView()
  */
 PluginView.prototype = new View();  // makes PluginView be a subclass of View
-function PluginView(inSuperView, inHTMLElement,inQuery, inLayout) {
+function PluginView(inSuperView, inHTMLElement, inQuery, inLayout) {
   if (!inSuperView) {return;} // initial call that subclasses of PluginViews make without parameters
   this.setSuperview(inSuperView);
   this.setHTMLElement(inHTMLElement);
   this._query = inQuery;
   this._layout = inLayout;
+  this._pluginItem = null;
 }
+
+
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
+
+/**
+ * Returns the registered name of this PluginView.
+ *
+ * @scope    public instance method
+ * @return   A string.
+ */
+PluginView.prototype.getPluginItem = function () {
+  if (!this._pluginItem) {
+    // alert(this.getPluginName());
+    var pluginClass = this.getClass();
+    // alert(pluginClass);
+    var pluginItemUuid = pluginClass.getPluginItemUuid();
+    this._pluginItem = this.getWorld().getItemFromUuid(pluginItemUuid);
+  }
+  return this._pluginItem;
+};
 
 
 /**

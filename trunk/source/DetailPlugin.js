@@ -40,8 +40,8 @@
 // -------------------------------------------------------------------
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
-SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_DETAIL] = DetailPlugin;
-DetailPlugin.UUID = SectionView.UUID_FOR_PLUGIN_VIEW_DETAIL;
+DetailPlugin.UUID_FOR_PLUGIN_VIEW_DETAIL = "00040303-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.registerPlugin(DetailPlugin);
 
 
 /**
@@ -54,22 +54,41 @@ DetailPlugin.UUID = SectionView.UUID_FOR_PLUGIN_VIEW_DETAIL;
  * @syntax   var detailPlugin = new DetailPlugin()
  */
 DetailPlugin.prototype = new PluginView();  // makes DetailPlugin be a subclass of View
-function DetailPlugin(inSuperView, inHTMLElement,inQuery,inLayout) {
-  PluginView.call(this,inSuperView,inHTMLElement,inQuery,inLayout);
+function DetailPlugin(inSuperView, inHTMLElement, inQuery, inLayout) {
+  PluginView.call(this, inSuperView, inHTMLElement, inQuery, inLayout);
 }
 
 
+// -------------------------------------------------------------------
+// Public class methods
+// -------------------------------------------------------------------
+
 /**
- * Returns the registered name of this plugin.
+ * Returns the UUID of the item that represents this class of plugin.
  *
- * @scope    public instance method
- * @return   A string.
+ * @scope    public class method
+ * @return   The UUID of the item that represents this class of plugin
  */
-DetailPlugin.prototype.getPluginName = function () {
-  return SectionView.PLUGIN_DETAIL;
+DetailPlugin.getPluginItemUuid = function () {
+  return DetailPlugin.UUID_FOR_PLUGIN_VIEW_DETAIL;
 };
 
-  
+
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
+
+/**
+ * Returns the class of this instance.
+ *
+ * @scope    public instance method
+ * @return   A JavaScript class. 
+ */
+DetailPlugin.prototype.getClass = function () {
+  return DetailPlugin;
+};
+
+
 /**
  * Re-creates all the HTML for the DetailPlugin, and hands the HTML to the 
  * browser to be re-drawn.

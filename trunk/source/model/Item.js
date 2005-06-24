@@ -387,10 +387,11 @@ Item.prototype.isProvisional = function() {
  * Returns a display name for the item.
  *
  * @scope    public instance method
+ * @param    defaultString    Optional.  This string will be returned if the item has no display name. 
  * @return   A string with a display name for the item.
  */
-Item.prototype.getDisplayName = function (inDefaultString) {
-  var displayName = inDefaultString || "(no name)";
+Item.prototype.getDisplayName = function (defaultString) {
+  var displayName = defaultString || "(no name)";
   var listOfNameEntries = this.getNameEntries();
   if (listOfNameEntries.length > 0) {
     var primaryName = listOfNameEntries[0];
@@ -428,10 +429,11 @@ Item.prototype.getShortNameEntries = function () {
  * Returns just the first entry of an item's attribute.
  *
  * @scope    public instance method
+ * @param    attribute    An item representing an attribute. 
  * @return   A string with a description of the item.
  */
-Item.prototype.getSingleEntryFromAttribute = function (inAttribute) {
-  var listOfEntries = this.getEntriesForAttribute(inAttribute);
+Item.prototype.getSingleEntryFromAttribute = function (attribute) {
+  var listOfEntries = this.getEntriesForAttribute(attribute);
   if (listOfEntries) {
     return listOfEntries[0];
   }
@@ -443,18 +445,25 @@ Item.prototype.getSingleEntryFromAttribute = function (inAttribute) {
  * Returns just the first entry's display string of an item's attribute.
  *
  * @scope    public instance method
+ * @param    attribute    An item representing an attribute. 
  * @return   A string with a description of the item.
  */
-Item.prototype.getSingleStringValueFromAttribute = function (inAttribute) {
-  var singleEntry = this.getSingleEntryFromAttribute(inAttribute);
+Item.prototype.getSingleStringValueFromAttribute = function (attribute) {
+  var singleEntry = this.getSingleEntryFromAttribute(attribute);
   if (singleEntry) {return singleEntry.getDisplayString();}
   return "";
 };
 
-Item.prototype.getDisplayStringForEntry = function (myEntry) {
-  Util.assert(myEntry instanceof Entry);
-  return myEntry.getDisplayString(this);
+
+/**
+ *
+ */
+Item.prototype.getDisplayStringForEntry = function (entry) {
+  Util.assert(entry instanceof Entry);
+  return entry.getDisplayString(this);
 };
+
+
 /**
  * Returns a string describing the item.
  *

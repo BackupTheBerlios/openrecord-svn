@@ -46,31 +46,35 @@
 PageView.CSS_CLASS_PAGE_HEADER = "page_header";
 PageView.UUID_FOR_ATTRIBUTE_SECTION = "00030000-ce7f-11d9-8cd5-0011113ae5d6";
 
+
 /**
  * Creates a new section in the repository
- * @scope public function
- * @param inPage  Page Item to insert new section
- * @param isNewTransaction  should new section be wrapped in a transaction?
+ *
+ * @scope    public class method
+ * @param    inPage    The Page Item to insert the new section into
  */
 PageView.newSection = function (repository, inPage) {
   var attributeCalledCategory = repository.getAttributeCalledCategory();
   var attributeCalledQuery = repository.getAttributeCalledQuery();
   var categoryCalledQuery = repository.getCategoryCalledQuery();
-  var attributeCalledPluginName = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
+  var attributeCalledPluginView = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
   var attributeCalledSection = repository.getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTION);
   var categoryCalledSection = repository.getItemFromUuid(RootView.UUID_FOR_CATEGORY_SECTION);
+  var tablePluginView = repository.getItemFromUuid(TablePlugin.UUID_FOR_PLUGIN_VIEW_TABLE);
   
   repository.beginTransaction();
   var newSection = repository.newItem("New Section");
   newSection.addEntryForAttribute(attributeCalledCategory, categoryCalledSection);
   inPage.addEntryForAttribute(attributeCalledSection, newSection);
-  newSection.addEntryForAttribute(attributeCalledPluginName, SectionView.PLUGIN_TABLE);
+  newSection.addEntryForAttribute(attributeCalledPluginView, tablePluginView);
+
   var newQuery = repository.newItem("New Query");
   newQuery.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
   newSection.addEntryForAttribute(attributeCalledQuery, newQuery);
   repository.endTransaction();
   return newSection;
 };
+
 
 /**
  * The RootView uses an instance of a PageView to display a Page in the
@@ -174,6 +178,7 @@ PageView.prototype.doInitialDisplay = function () {
   this.refresh();
 };
 
+
 /**
  * Creates a new section in this page.
  *
@@ -195,6 +200,7 @@ PageView.prototype._buildNewSection = function(inSection, inBeforeElt) {
   return sectionView;
 };
 
+
 /**
  * Called when the user clicks on the "New Section" button.
  *
@@ -204,6 +210,7 @@ PageView.prototype._addNewSection = function() {
   var newSection = PageView.newSection(this.getWorld(), this.myPage);
   this._buildNewSection(newSection, this._editModeDiv).refresh();
 };
+
 
 /**
  * Create the "new section" button in EditMode.
@@ -226,6 +233,7 @@ PageView.prototype._buildEditControls = function() {
   }
 };
 
+
 /**
  * Called when edit controls need to be refreshed
  *
@@ -239,11 +247,12 @@ PageView.prototype._refreshEditModeControls = function() {
     }
     else {
       this.getHTMLElement().removeChild(this._editModeDiv);
-      //Pending: why does hiding _editModeDiv still leave a blue line, gotta ask Brian about CSS
+      // PENDING: why does hiding _editModeDiv still leave a blue line, gotta ask Brian about CSS
       this._editModeDiv = null;
     }
   }
 };
+
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------

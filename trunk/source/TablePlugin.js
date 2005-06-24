@@ -43,14 +43,14 @@
 // -------------------------------------------------------------------
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
-SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_TABLE] = TablePlugin;
-TablePlugin.UUID = SectionView.UUID_FOR_PLUGIN_VIEW_TABLE;
+TablePlugin.UUID_FOR_PLUGIN_VIEW_TABLE = "00040301-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.registerPlugin(TablePlugin);
 
 
 // -------------------------------------------------------------------
 // TablePlugin public class constants
 // -------------------------------------------------------------------
-TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS     = "00040104-ce7f-11d9-8cd5-0011113ae5d6";
+TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS = "00040104-ce7f-11d9-8cd5-0011113ae5d6";
 TablePlugin.ASCENDING_GIF = "ascending.gif";
 TablePlugin.DESCENDING_GIF = "descending.gif";
 
@@ -65,8 +65,8 @@ TablePlugin.DESCENDING_GIF = "descending.gif";
  * @param    inHTMLElement    The HTMLElement to display this view in. 
  */
 TablePlugin.prototype = new PluginView();  // makes TablePlugin be a subclass of View
-function TablePlugin(inSectionView, inHTMLElement, inQuery,inLayout) {
-  PluginView.call(this,inSectionView,inHTMLElement,inQuery,inLayout);
+function TablePlugin(inSectionView, inHTMLElement, inQuery, inLayout) {
+  PluginView.call(this, inSectionView, inHTMLElement, inQuery, inLayout);
 
   // PENDING should probably make this independent of sectionview
   this.myClass = SectionView.ELEMENT_CLASS_SIMPLE_TABLE;
@@ -77,14 +77,33 @@ function TablePlugin(inSectionView, inHTMLElement, inQuery,inLayout) {
 }
 
 
+// -------------------------------------------------------------------
+// Public class methods
+// -------------------------------------------------------------------
+
 /**
- * Returns a string with the display name for this plugin.
+ * Returns the UUID of the item that represents this class of plugin.
+ *
+ * @scope    public class method
+ * @return   The UUID of the item that represents this class of plugin
+ */
+TablePlugin.getPluginItemUuid = function () {
+  return TablePlugin.UUID_FOR_PLUGIN_VIEW_TABLE;
+};
+
+
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
+
+/**
+ * Returns the class of this instance.
  *
  * @scope    public instance method
- * @return   A String with a display name for this plugin. 
+ * @return   A JavaScript class. 
  */
-TablePlugin.prototype.getPluginName = function () {
-  return SectionView.PLUGIN_TABLE;
+TablePlugin.prototype.getClass = function () {
+  return TablePlugin;
 };
 
 

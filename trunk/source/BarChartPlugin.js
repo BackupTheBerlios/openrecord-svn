@@ -41,8 +41,8 @@
 // -------------------------------------------------------------------
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
-SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_BAR_CHART] = BarChartPlugin;
-BarChartPlugin.UUID = SectionView.UUID_FOR_PLUGIN_VIEW_BAR_CHART;
+BarChartPlugin.UUID_FOR_PLUGIN_VIEW_BAR_CHART = "00040304-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.registerPlugin(BarChartPlugin);
 
 /**
  * A BarChartPlugin displays a set of content items for a SectionView. 
@@ -59,14 +59,33 @@ function BarChartPlugin(inSuperview, inHTMLElement,inQuery,inLayout) {
 }
 
 
+// -------------------------------------------------------------------
+// Public class methods
+// -------------------------------------------------------------------
+
 /**
- * Returns the registered name of this plugin.
+ * Returns the UUID of the item that represents this class of plugin.
+ *
+ * @scope    public class method
+ * @return   The UUID of the item that represents this class of plugin
+ */
+BarChartPlugin.getPluginItemUuid = function () {
+  return BarChartPlugin.UUID_FOR_PLUGIN_VIEW_BAR_CHART;
+};
+
+
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
+
+/**
+ * Returns the class of this instance.
  *
  * @scope    public instance method
- * @return   A string.
+ * @return   A JavaScript class. 
  */
-BarChartPlugin.prototype.getPluginName = function () {
-  return SectionView.PLUGIN_BAR_CHART;
+BarChartPlugin.prototype.getClass = function () {
+  return BarChartPlugin;
 };
 
 

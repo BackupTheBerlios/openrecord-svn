@@ -39,8 +39,8 @@
 // -------------------------------------------------------------------
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
-SectionView.ourHashTableOfPluginClassesKeyedByPluginName[SectionView.PLUGIN_OUTLINE] = OutlinePlugin;
-OutlinePlugin.UUID = SectionView.UUID_FOR_PLUGIN_VIEW_OUTLINE;
+OutlinePlugin.UUID_FOR_PLUGIN_VIEW_OUTLINE = "00040302-ce7f-11d9-8cd5-0011113ae5d6";
+SectionView.registerPlugin(OutlinePlugin);
 
 
 /**
@@ -53,22 +53,41 @@ OutlinePlugin.UUID = SectionView.UUID_FOR_PLUGIN_VIEW_OUTLINE;
  * @syntax   var outline = new OutlinePlugin()
  */
 OutlinePlugin.prototype = new PluginView();  // makes OutlinePlugin be a subclass of View
-function OutlinePlugin(inSectionView, inHTMLElement,inQuery,inLayout) {
-  PluginView.call(this,inSectionView,inHTMLElement,inQuery,inLayout);
+function OutlinePlugin(inSectionView, inHTMLElement, inQuery, inLayout) {
+  PluginView.call(this, inSectionView, inHTMLElement, inQuery, inLayout);
 }
 
 
+// -------------------------------------------------------------------
+// Public class methods
+// -------------------------------------------------------------------
+
 /**
- * Returns the registered name of this plugin.
+ * Returns the UUID of the item that represents this class of plugin.
  *
- * @scope    public instance method
- * @return   A string.
+ * @scope    public class method
+ * @return   The UUID of the item that represents this class of plugin
  */
-OutlinePlugin.prototype.getPluginName = function () {
-  return SectionView.PLUGIN_OUTLINE;
+OutlinePlugin.getPluginItemUuid = function () {
+  return OutlinePlugin.UUID_FOR_PLUGIN_VIEW_OUTLINE;
 };
 
-  
+
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
+
+/**
+ * Returns the class of this instance.
+ *
+ * @scope    public instance method
+ * @return   A JavaScript class. 
+ */
+OutlinePlugin.prototype.getClass = function () {
+  return OutlinePlugin;
+};
+
+
 /**
  * Re-creates all the HTML for the OutlinePlugin, and hands the HTML to the 
  * browser to be re-drawn.

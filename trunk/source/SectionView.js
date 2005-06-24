@@ -45,11 +45,6 @@
 // -------------------------------------------------------------------
 // SectionView public class constants
 // -------------------------------------------------------------------
-SectionView.PLUGIN_TABLE = "Table";
-SectionView.PLUGIN_OUTLINE = "Outline";
-SectionView.PLUGIN_DETAIL = "Detail";
-SectionView.PLUGIN_BAR_CHART = "Bar Chart";
-
 SectionView.ELEMENT_CLASS_SECTION = "section";
 SectionView.ELEMENT_CLASS_SIMPLE_TABLE = "simple_table";
 SectionView.ELEMENT_CLASS_NEW_ITEM = "newitem";
@@ -64,14 +59,14 @@ SectionView.CSS_CLASS_SECTION_HEADER = "section_header";
 SectionView.CSS_CLASS_SUMMARY_TEXT = "summary_text";
 
 SectionView.ELEMENT_ID_SELECT_MENU_PREFIX = "select_menu_";
-SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX = "_select_menu";
-SectionView.ELEMENT_ID_PLUGIN_DIV_SUFFIX = "_plugin_div";
-SectionView.ELEMENT_ID_CELL_PREFIX = "section_";
-SectionView.ELEMENT_ID_CELL_MIDFIX = "_cell_";
-SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX = "_summary_div";
+// SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX = "_select_menu";
+// SectionView.ELEMENT_ID_PLUGIN_DIV_SUFFIX = "_plugin_div";
+// SectionView.ELEMENT_ID_CELL_PREFIX = "section_";
+// SectionView.ELEMENT_ID_CELL_MIDFIX = "_cell_";
+// SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX = "_summary_div";
 
 SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER = "section_number";
-SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER = "cell_number";
+// SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER = "cell_number";
 
 SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME       = "00040000-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW       = "00040101-ce7f-11d9-8cd5-0011113ae5d6";
@@ -81,15 +76,12 @@ SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN = "00040103-ce7f-11d9-8cd5-0011
 SectionView.UUID_FOR_CATEGORY_PLUGIN_VIEW        = "00040201-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA        = "00040202-ce7f-11d9-8cd5-0011113ae5d6";
 
-SectionView.UUID_FOR_PLUGIN_VIEW_TABLE           = "00040301-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.UUID_FOR_PLUGIN_VIEW_OUTLINE         = "00040302-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.UUID_FOR_PLUGIN_VIEW_DETAIL          = "00040303-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.UUID_FOR_PLUGIN_VIEW_BAR_CHART       = "00040304-ce7f-11d9-8cd5-0011113ae5d6";
 
 // -------------------------------------------------------------------
 // SectionView class properties
 // -------------------------------------------------------------------
-SectionView.ourHashTableOfPluginClassesKeyedByPluginName = {};
+SectionView._ourListOfRegisteredPluginClasses = [];
+SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = null;
 
 
 /**
@@ -121,6 +113,15 @@ function SectionView(inPageView, inHTMLElement, inSection, inSectionNumber) {
   this._mySectionSummaryView = null;
   this._myHeaderView = null;
   this._queryEditSpan = null;
+  
+  if (!SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
+    SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = {};
+    for (var key in SectionView._ourListOfRegisteredPluginClasses) {
+      var pluginClass = SectionView._ourListOfRegisteredPluginClasses[key];
+      var pluginItemUuid = pluginClass.getPluginItemUuid();
+      SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[pluginItemUuid] = pluginClass;
+    }
+  }
 }
 
 
@@ -129,51 +130,47 @@ function SectionView(inPageView, inHTMLElement, inSection, inSectionNumber) {
 // -------------------------------------------------------------------
 
 /**
- * Given a string or an item, returns a string.
+ * Given the name of a plugin ("Table", "Outline", etc.), returns a newly
+ * created plugin object of that type, initialized to be the plugin for this 
+ * SectionView.
  *
  * @scope    public class method
- * @param    inValue    A string or an Item. 
- * @return   A string.
+ * @param    pluginClass    A JavaScript class, such as TablePlugin. 
+ * @param    pluginItemUuid    The UUID of the item representing that class of plugin. 
  */
- /* DEPRECATED: instead use Entry.prototype.getDisplayString
-SectionView.getStringForValue = function (inValue) {
-  var string = "";
-  if (Util.isString(inValue)) {
-    string = inValue;
-  }
-  if (inValue instanceof Item) {
-    string = inValue.getDisplayName();
-  }
-  return string;
+SectionView.registerPlugin = function(pluginClass, pluginItemUuid) {
+  SectionView._ourListOfRegisteredPluginClasses.push(pluginClass);
 };
-*/
+
 
 // -------------------------------------------------------------------
 // Public instance methods
 // -------------------------------------------------------------------
 
 /**
- * Given the name of a plugin ("Table", "Outline", etc.), returns a newly
- * created plugin object of that type, initialized to be the plugin for this 
- * SectionView.
+ * Given an item representing a class of plugin view, this method returns a 
+ * newly created plugin view object of that class, initialized to be the plugin 
+ * for this SectionView.
  *
  * @scope    public instance method
- * @param    inPluginName    A string. One of the registered plugin names. 
- * @param    inPluginDiv    The HTMLDivElement to display the plugin in. 
+ * @param    pluginItem    An item representing a class of plugin view. 
+ * @param    pluginDiv    The HTMLDivElement to display the plugin in. 
  * @return   A newly created plugin object, initialized to be the plugin for this section.
  */
-SectionView.prototype.getPluginFromPluginName = function (inPluginName, inPluginDiv) {
-  Util.assert(Util.isString(inPluginName));
+SectionView.prototype.getPluginInstanceFromPluginItem = function (pluginItem, pluginDiv) {
+  Util.assert(pluginItem instanceof Item);
   
   var newPlugin = null;
-  var pluginClass = SectionView.ourHashTableOfPluginClassesKeyedByPluginName[inPluginName];
+  var pluginClass;
+  pluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[pluginItem._getUuid()];
   if (pluginClass) {
-    var pluginType = this.getWorld().getItemFromUuid(pluginClass.UUID);
+    var pluginType = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
     var layoutData = this._getLayoutDataForPlugin(pluginType);
-    newPlugin = new pluginClass(this, inPluginDiv, this.getQuery(), layoutData);
+    newPlugin = new pluginClass(this, pluginDiv, this.getQuery(), layoutData);
   }
   return newPlugin;
 };
+
 
 /**
  * Returns query associated to this section.
@@ -217,9 +214,20 @@ SectionView.prototype.doInitialDisplay = function () {
   if (!this.getHTMLElement()) {
     return;
   }
-  var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
-  var selectedPluginName = this.mySection.getSingleStringValueFromAttribute(attributeCalledPluginName);
-
+  var attributeCalledPluginView = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
+  var selectedPluginViewEntry = this.mySection.getSingleEntryFromAttribute(attributeCalledPluginView);
+  var selectedPluginItem;
+  var selectedPluginClass;
+  if (selectedPluginViewEntry) {
+    selectedPluginItem = selectedPluginViewEntry.getValue();
+    selectedPluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[selectedPluginItem._getUuid()];
+  } else {
+    // code to support legacy repository files
+    var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
+    selectedPluginItem = this.mySection.getSingleStringValueFromAttribute(attributeCalledPluginName);
+    selectedPluginClass = TablePlugin; // PENDING: Hack!
+  }
+  
   var sectionDiv = this.getHTMLElement();
   var outerDiv = View.createAndAppendElement(sectionDiv, "div", SectionView.ELEMENT_CLASS_SECTION);
   var headerH2 = View.createAndAppendElement(outerDiv, "h2");
@@ -245,14 +253,17 @@ SectionView.prototype.doInitialDisplay = function () {
   var listener;
   selectElement.setAttribute("name", selectMenuId);
   selectElement.setAttribute(SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER, this.mySectionNumber);
-  for (var pluginName in SectionView.ourHashTableOfPluginClassesKeyedByPluginName) {
+  for (var key in SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
+    var pluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[key];
     optionElement = View.createAndAppendElement(selectElement, "option");
-    optionElement.selected = (selectedPluginName == pluginName);
-    optionElement.setAttribute("value", pluginName);
+    optionElement.selected = (selectedPluginClass == pluginClass);
+    optionElement.value = pluginClass.getPluginItemUuid();
+    var pluginItem = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
+    optionElement.text = pluginItem.getDisplayName();
     // Util.addEventListener(optionElement, "click", SectionView.clickOnPluginSelectionMenu);
     listener = this; 
     Util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
-    optionElement.innerHTML = pluginName;
+    // optionElement.innerHTML = pluginName;
   }
   
   View.createAndAppendTextNode(controlArea," of items whose ");
@@ -264,7 +275,7 @@ SectionView.prototype.doInitialDisplay = function () {
 
   // create a div element for the plugin class to use
   this._myPluginDiv = View.createAndAppendElement(outerDiv, "div");
-  this._myPlugin = this.getPluginFromPluginName(selectedPluginName, this._myPluginDiv);
+  this._myPlugin = this.getPluginInstanceFromPluginItem(selectedPluginItem, this._myPluginDiv);
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
 };
@@ -381,9 +392,9 @@ SectionView.prototype.observedItemHasChanged = function(item) {
   item.removeObserver(this); //item no longer needs to be observed as query editor span is rebuilt
   var myQuery = this.getQuery();
   Util.assert(item == myQuery);
-  var pluginName = this._myPlugin.getPluginName();
+  var pluginItem = this._myPlugin.getPluginItem();
   this._myPlugin.endOfLife();
-  this._myPlugin = this.getPluginFromPluginName(pluginName, this._myPluginDiv);
+  this._myPlugin = this.getPluginInstanceFromPluginItem(pluginItem, this._myPluginDiv);
   this.refresh();
 };
 
@@ -401,14 +412,25 @@ SectionView.prototype.clickOnPluginSelectionMenu = function (inEventObject) {
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
   
   var selectElement = optionElement.parentNode;
-  var newChoiceName = optionElement.value;
-  var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
+  // var newChoiceName = optionElement.value;
+  // var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
+  var newChoiceUuid = optionElement.value;
+  var attributeCalledPluginView = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
+  var newPluginViewItem = this.getWorld().getItemFromUuid(newChoiceUuid);
  
-  if (this._myPlugin.getPluginName() == newChoiceName) {
+  if (this._myPlugin.getPluginItem() == newPluginViewItem) { 
     return;
   } else {
     this._myPlugin.endOfLife();
-    this._myPlugin = this.getPluginFromPluginName(newChoiceName, this._myPluginDiv);
+    this._myPlugin = this.getPluginInstanceFromPluginItem(newPluginViewItem, this._myPluginDiv);
+
+    var oldEntry = this.mySection.getSingleEntryFromAttribute(attributeCalledPluginView);
+    if (oldEntry) {
+      this.mySection.replaceEntry(oldEntry, newPluginViewItem);
+    } else {
+      this.mySection.addEntryForAttribute(attributeCalledPluginView, newPluginViewItem);
+    }
+    /*
     var pluginNameEntries = this.mySection.getEntriesForAttribute(attributeCalledPluginName);
     if (pluginNameEntries && pluginNameEntries[0]) {
       var oldEntry = pluginNameEntries[0];
@@ -416,6 +438,7 @@ SectionView.prototype.clickOnPluginSelectionMenu = function (inEventObject) {
     } else {
       this.mySection.addEntryForAttribute(attributeCalledPluginName, newChoiceName);
     }
+    */
     this.refresh();
   }
 };
@@ -474,22 +497,9 @@ SectionView.prototype.clickOnAttributeMenu = function (inEventObject) {
     // some refactoring so that the plugin can register as an observer of the
     // query item, and then the plugin itself can know what to do when the
     // query item changes.  
-    var pluginName = this._myPlugin.getPluginName();
+    var pluginItem = this._myPlugin.getPluginItem();
     this._myPlugin.endOfLife();
-    this._myPlugin = this.getPluginFromPluginName(pluginName, this._myPluginDiv);
-
-    /*// PENDING:
-    // These next 8 lines look like a mistake.  Maybe they're a result of a 
-    // copy & paste error.  I think we can just delete them, but I'm not brave
-    // enough right now!
-    var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
-    var pluginNameEntries = this.mySection.getEntriesForAttribute(attributeCalledPluginName);
-    if (pluginNameEntries && pluginNameEntries[0]) {
-      var oldEntry = pluginNameEntries[0];
-      this.mySection.replaceEntry(oldEntry, pluginName);
-    } else {
-      this.mySection.addEntryForAttribute(attributeCalledPluginName, pluginName);
-    }*/
+    this._myPlugin = this.getPluginInstanceFromPluginItem(pluginItem, this._myPluginDiv);
 
     this.refresh();
   }
