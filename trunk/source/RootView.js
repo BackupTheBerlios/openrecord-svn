@@ -357,7 +357,16 @@ RootView.prototype.newPage = function () {
   // newPage.addEntryForAttribute(shortName, "New Page");
   newPage.addEntryForAttribute(attributeCalledCategory, categoryCalledPage);
   newPage.addEntryForAttribute(attributeCalledSummary, "This is a new page.");
-  PageView.newSection(repository,newPage);
+
+  // PENDING:
+  //   This line automatically creates one new section on the new page.  
+  //   I commented it out because somehow there was a bug with using it.
+  //   I can't figure out what causes the bug, but for some reason when
+  //   we create a section this way, the new section has no Layout Data,
+  //   and for some reason that causes the section never to be displayed
+  //   in the UI, which makes it harmless but completely useless.
+  // PageView.newSection(repository, newPage);
+
   repository.endTransaction();
   
   this.myHashTableOfPagesKeyedByUuid[newPage._getUuid()] = newPage;

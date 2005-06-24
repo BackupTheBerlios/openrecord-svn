@@ -222,6 +222,7 @@ Entry.prototype.getType = function () {
   return this._myType;
 };
 
+
 /**
  * If this entry was established as the replacement for a previous
  * entry, this method returns the previous entry.
@@ -258,11 +259,37 @@ Entry.prototype.getAttributeForItem = function (item) {
     return this.__myAttribute;
   }
   if (Util.isArray(this.__myItem)) {
-    if (this.__myItem[0]) {
+    if (this.__myItem[0] == item) {
       return this.__myAttribute[0];
     }
-    if (this.__myItem[1]) {
+    if (this.__myItem[1] == item) {
       return this.__myAttribute[1];
+    }
+  }
+  return null;
+};
+
+
+/**
+ * If this is a ConnectionEntry, given one of the two connected items, this
+ * method returns the other connected item.
+ *
+ * @scope    public instance method
+ * @param    item    The item that this is an entry of. 
+ * @return   The item that is connected to the given item.
+ */
+Entry.prototype.getConnectedItem = function (item) {
+  if (this.__myItem == item) {
+    if (this._myType == this.getWorld().getTypeCalledItem()) {
+      return this.__myValue;
+    }
+  }
+  if (Util.isArray(this.__myItem)) {
+    if (this.__myItem[0] == item) {
+      return this.__myItem[1];
+    }
+    if (this.__myItem[1] == item) {
+      return this.__myItem[0];
     }
   }
   return null;

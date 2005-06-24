@@ -44,7 +44,8 @@
 // PageView public class constants
 // -------------------------------------------------------------------
 PageView.CSS_CLASS_PAGE_HEADER = "page_header";
-PageView.UUID_FOR_ATTRIBUTE_SECTION = "00030000-ce7f-11d9-8cd5-0011113ae5d6";
+PageView.UUID_FOR_ATTRIBUTE_SECTIONS_IN_PAGE = "00030000-ce7f-11d9-8cd5-0011113ae5d6";
+PageView.UUID_FOR_ATTRIBUTE_PAGE_THIS_SECTION_APPEARS_ON = "00030001-ce7f-11d9-8cd5-0011113ae5d6";
 
 
 /**
@@ -58,14 +59,16 @@ PageView.newSection = function (repository, inPage) {
   var attributeCalledQuery = repository.getAttributeCalledQuery();
   var categoryCalledQuery = repository.getCategoryCalledQuery();
   var attributeCalledPluginView = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
-  var attributeCalledSection = repository.getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTION);
+  var attributeCalledSectionsInPage = repository.getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTIONS_IN_PAGE);
+  var attributeCalledPageThisSectionAppearsOn = repository.getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_PAGE_THIS_SECTION_APPEARS_ON);
   var categoryCalledSection = repository.getItemFromUuid(RootView.UUID_FOR_CATEGORY_SECTION);
   var tablePluginView = repository.getItemFromUuid(TablePlugin.UUID_FOR_PLUGIN_VIEW_TABLE);
   
   repository.beginTransaction();
   var newSection = repository.newItem("New Section");
   newSection.addEntryForAttribute(attributeCalledCategory, categoryCalledSection);
-  inPage.addEntryForAttribute(attributeCalledSection, newSection);
+  // inPage.addEntryForAttribute(attributeCalledSectionsInPage, newSection);
+  inPage.addConnectionEntry(attributeCalledSectionsInPage, newSection, attributeCalledPageThisSectionAppearsOn);
   newSection.addEntryForAttribute(attributeCalledPluginView, tablePluginView);
 
   var newQuery = repository.newItem("New Query");
@@ -164,13 +167,15 @@ PageView.prototype.doInitialDisplay = function () {
 
   // add <div> elements for each of the sections on the page
   // and create a new SectionView for each section
-  var attributeCalledSection = this.getWorld().getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTION);
-  var listOfEntriesForSections = this.myPage.getEntriesForAttribute(attributeCalledSection);
-  var sectionNumber = 0;
+  var attributeCalledSectionsInPage = this.getWorld().getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTIONS_IN_PAGE);
+  var listOfEntriesForSections = this.myPage.getEntriesForAttribute(attributeCalledSectionsInPage);
+  
   for (var key in listOfEntriesForSections) {
     var entryForSection = listOfEntriesForSections[key];
-    var section = entryForSection.getValue();
-    this._buildNewSection(section);
+    var section = entryForSection.getConnectedItem();
+    if (section) {
+      this._buildNewSection(section);
+    }
   }
   this._wasInEditMode = this.isInEditMode();
   if (this._wasInEditMode) {this._buildEditControls();}

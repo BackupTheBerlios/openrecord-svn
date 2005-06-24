@@ -574,8 +574,12 @@
              "uuid": "00020100-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Section
+    { "Item": {                                               // Sections In Page
              "uuid": "00030000-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Page this section appears on
+             "uuid": "00030001-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Item": {                                               // Plugin Name (Attribute)
@@ -654,18 +658,34 @@
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Section
+    { "Entry": {                                              // Sections In Page
              "uuid": "0030000a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00030000-ce7f-11d9-8cd5-0011113ae5d6",  // Section
+             "item": "00030000-ce7f-11d9-8cd5-0011113ae5d6",  // Sections In Page
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Section" }
+            "value": "Sections In Page" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Attribute
              "uuid": "0030000b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
-             "item": "00030000-ce7f-11d9-8cd5-0011113ae5d6",  // Section
+             "item": "00030000-ce7f-11d9-8cd5-0011113ae5d6",  // Sections In Page
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
+            "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Page this section appears on
+             "uuid": "0030001a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00030001-ce7f-11d9-8cd5-0011113ae5d6",  // Page this section appears on
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Page this section appears on" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "0030001b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00030001-ce7f-11d9-8cd5-0011113ae5d6",  // Page this section appears on
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
