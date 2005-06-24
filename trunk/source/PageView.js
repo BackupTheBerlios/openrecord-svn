@@ -174,7 +174,7 @@ PageView.prototype.doInitialDisplay = function () {
   
   for (var key in listOfEntriesForSections) {
     var entryForSection = listOfEntriesForSections[key];
-    var section = entryForSection.getConnectedItem();
+    var section = entryForSection.getConnectedItem(this.myPage);
     if (section) {
       this._buildNewSection(section);
     }

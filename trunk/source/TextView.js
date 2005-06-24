@@ -42,6 +42,7 @@
 // TextView public class constants
 // -------------------------------------------------------------------
 TextView.ELEMENT_CLASS_TEXT_BLOCK = "text_block"; 
+TextView.CSS_CLASS_VALUE_IS_ITEM = "textViewItem";
 TextView.PROVISIONAL_COLOR = '#999999';
 
 
@@ -82,6 +83,9 @@ function TextView(theSuperview, inElement, inItem, inAttribute, inEntry, inClass
   this._isProvisional = inItem.isProvisional();
   if (this._isProvisional) {
     this._provisionalText = inAttribute.getDisplayName();
+  }
+  else if (inEntry && inEntry.getValue() instanceof Item) {
+    this._valueIsItem = true;
   }
 }
 
@@ -159,6 +163,9 @@ TextView.prototype.refresh = function() {
   }
 };
 
+TextView.prototype._isLozenge = function() {
+  return this._valueIsItem && !this._alwaysUseEditField;
+};
 
 /**
  * Re-creates all the HTML for the TextView, and hands the HTML to the 
@@ -176,6 +183,9 @@ TextView.prototype._buildView = function() {
     this._oldColor = htmlElement.style.color;
     htmlElement.style.color = TextView.PROVISIONAL_COLOR;
   }
+  else if (this._isLozenge()) {
+    htmlElement.className += " " + TextView.CSS_CLASS_VALUE_IS_ITEM;
+  }
   this._textNode = document.createTextNode(textString);
   htmlElement.appendChild(this._textNode);
   htmlElement.onclick =  this.onClick.bindAsEventListener(this);
@@ -186,6 +196,9 @@ TextView.prototype._buildView = function() {
   this._myHasEverBeenDisplayedFlag = true;
 };
 
+TextView.prototype._canStartEditing = function() {
+  return (!this._isEditing  && !(this._valueIsItem && !this._alwaysUseEditField));
+};
 
 /**
  * Switch to edit text field for editing.
@@ -193,7 +206,8 @@ TextView.prototype._buildView = function() {
  * @scope    public instance method
  */
 TextView.prototype.startEditing = function(dontSelect) {
-  if (!this._isEditing) {
+  var canStartEditing = !(this._isEditing || this._isLozenge());
+  if (canStartEditing) {
     var editField = this._editField;
     if (!editField) {
       if (this._isMultiLine) {
@@ -351,6 +365,13 @@ TextView.prototype._writeValue = function(value) {
       var superview = this.getSuperview();
       if (superview._provisionalItemJustBecomeReal) {
         superview._provisionalItemJustBecomeReal(this._item);
+      }
+      if (value instanceof Item) {
+        this._valueIsItem = true;
+        var htmlElement = this.getHTMLElement();
+        if (this._isLozenge() && !htmlElement.className.match(TextView.CSS_CLASS_VALUE_IS_ITEM)) {
+          htmlElement.className += " " + TextView.CSS_CLASS_VALUE_IS_ITEM;
+        }
       }
     }    
     this.getWorld().endTransaction();

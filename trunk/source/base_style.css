@@ -439,8 +439,8 @@ tr.selected {
 td.plain {
   font-family: Arial, Verdana, sans-serif;
   text-align: left;
-  border: none;
-  padding: 2px;
+  border: thin solid #CCC;
+  padding: 3px;
   margin: 0px;
 }
 
@@ -616,6 +616,13 @@ li.detail {
   background: rgb(100%, 100%, 40%);
   border: none; 
   /* overflow: visible; */
+}
+
+.textViewItem {
+	background-color:#DEE7F8;
+	padding: 1px;
+	border: thin solid #A4BDEC;	
+	-moz-border-radius: 6px; //WARNING: Mozilla only attribute. This just makes a rect, a rounded-rect
 }
 
 /* obsolete? 

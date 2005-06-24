@@ -279,6 +279,7 @@ Entry.prototype.getAttributeForItem = function (item) {
  * @return   The item that is connected to the given item.
  */
 Entry.prototype.getConnectedItem = function (item) {
+  Util.assert(item instanceof Item);
   if (this.__myItem == item) {
     if (this._myType == this.getWorld().getTypeCalledItem()) {
       return this.__myValue;

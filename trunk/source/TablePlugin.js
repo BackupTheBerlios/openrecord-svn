@@ -526,24 +526,31 @@ TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
     var repository = this.getWorld();
     var attrTableColumns = repository.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
     var entriesTableColumns = this._layout.getEntriesForAttribute(attrTableColumns);
+    var noStoredColumns = entriesTableColumns.length === 0;
     var changedAttribute = this.getWorld().getItemFromUuid(attributeUuid);
-    if (Util.removeObjectFromSet(changedAttribute,this._displayAttributes)) {
+    var removeAttribute = Util.removeObjectFromSet(changedAttribute,this._displayAttributes);
+    var typeCalledItem = repository.getTypeCalledItem();
+    if (removeAttribute) {
       for (var i=0;i < entriesTableColumns.length;++i) {
         if (changedAttribute == entriesTableColumns[i].getValue()) {
           entriesTableColumns[i].voteToDelete();
           break;
         }
       }
-      Util.assert(i < entriesTableColumns.length);
       delete this._hashTableOfEntries[attributeUuid];
     }
     else {
-      // var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
       this._displayAttributes.push(changedAttribute);
-      this._layout.addEntryForAttribute(attrTableColumns,changedAttribute,repository.getTypeCalledItem());
-      // if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
       this._hashTableOfEntries[attributeUuid] = this.getWorld().getSuggestedItemsForAttribute(changedAttribute);
-      // }
+    }
+    if (noStoredColumns) {
+      for (i=0;i<this._displayAttributes.length;++i) {
+        var anAttribute = this._displayAttributes[i];
+        this._layout.addEntryForAttribute(attrTableColumns,anAttribute,typeCalledItem);
+      }
+    }
+    else {
+      this._layout.addEntryForAttribute(attrTableColumns,changedAttribute,typeCalledItem);
     }
     this._buildTable(true);
   }
