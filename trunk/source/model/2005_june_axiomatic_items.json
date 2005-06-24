@@ -331,20 +331,20 @@
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Type
+    { "Entry": {                                              // Category
              "uuid": "000100ac-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
-            "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
+            "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Category
+    { "Entry": {                                              // Type
              "uuid": "000100ad-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
-            "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
+            "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Inverse Attribute
