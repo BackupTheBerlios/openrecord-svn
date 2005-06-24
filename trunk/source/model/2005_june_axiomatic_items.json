@@ -103,7 +103,7 @@
              "uuid": "0001000a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001000-ce7f-11d9-8cd5-0011113ae5d6",  // Amy ex machina
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Amy ex machina" }
     },
     // -----------------------------------------------------------------------
@@ -111,7 +111,7 @@
              "uuid": "0001001a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Name" }
     },
     // -----------------------------------------------------------------------
@@ -119,7 +119,7 @@
              "uuid": "0001001b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -127,7 +127,7 @@
              "uuid": "0001001c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001020-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -135,7 +135,7 @@
              "uuid": "0001002a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Short Name" }
     },
     // -----------------------------------------------------------------------
@@ -143,7 +143,7 @@
              "uuid": "0001002b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -151,7 +151,7 @@
              "uuid": "0001002c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001020-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -159,7 +159,7 @@
              "uuid": "0001003a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001003-ce7f-11d9-8cd5-0011113ae5d6",  // Summary
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Summary" }
     },
     // -----------------------------------------------------------------------
@@ -167,7 +167,7 @@
              "uuid": "0001003b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001003-ce7f-11d9-8cd5-0011113ae5d6",  // Summary
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -175,7 +175,7 @@
              "uuid": "0001003c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00001003-ce7f-11d9-8cd5-0011113ae5d6",  // Summary
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001020-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -183,7 +183,7 @@
              "uuid": "0001004a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001004-ce7f-11d9-8cd5-0011113ae5d6",  // Body
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Body" }
     },
     // -----------------------------------------------------------------------
@@ -191,7 +191,7 @@
              "uuid": "0001004b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001004-ce7f-11d9-8cd5-0011113ae5d6",  // Body
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -199,7 +199,7 @@
              "uuid": "0001004c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00001004-ce7f-11d9-8cd5-0011113ae5d6",  // Body
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001020-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -207,7 +207,7 @@
              "uuid": "0001005a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Category" }
     },
     // -----------------------------------------------------------------------
@@ -215,7 +215,7 @@
              "uuid": "0001005b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -223,7 +223,7 @@
              "uuid": "0001005c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -231,7 +231,7 @@
              "uuid": "0001006a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001006-ce7f-11d9-8cd5-0011113ae5d6",  // Query
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Query" }
     },
     // -----------------------------------------------------------------------
@@ -239,7 +239,7 @@
              "uuid": "0001006b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001006-ce7f-11d9-8cd5-0011113ae5d6",  // Query
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -247,7 +247,7 @@
              "uuid": "0001006c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00001006-ce7f-11d9-8cd5-0011113ae5d6",  // Query
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001012-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -255,7 +255,7 @@
              "uuid": "0001007a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001007-ce7f-11d9-8cd5-0011113ae5d6",  // Matching Value
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Matching Value" }
     },
     // -----------------------------------------------------------------------
@@ -263,7 +263,7 @@
              "uuid": "0001007b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001007-ce7f-11d9-8cd5-0011113ae5d6",  // Matching Value
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -271,7 +271,7 @@
              "uuid": "0001008a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001008-ce7f-11d9-8cd5-0011113ae5d6",  // Matching Attribute
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Matching Attribute" }
     },
     // -----------------------------------------------------------------------
@@ -279,7 +279,7 @@
              "uuid": "0001008b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001008-ce7f-11d9-8cd5-0011113ae5d6",  // Matching Attribute
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -287,7 +287,7 @@
              "uuid": "0001008c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00001008-ce7f-11d9-8cd5-0011113ae5d6",  // Matching Attribute
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -295,7 +295,7 @@
              "uuid": "0001009a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001009-ce7f-11d9-8cd5-0011113ae5d6",  // Unfiled Entry
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Unfiled Entry" }
     },
     // -----------------------------------------------------------------------
@@ -303,7 +303,7 @@
              "uuid": "0001009b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001009-ce7f-11d9-8cd5-0011113ae5d6",  // Unfiled Entry
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -311,7 +311,7 @@
              "uuid": "0001009c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00001009-ce7f-11d9-8cd5-0011113ae5d6",  // Unfiled Entry
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001040-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -319,7 +319,7 @@
              "uuid": "000100aa-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Expected Type" }
     },
     // -----------------------------------------------------------------------
@@ -327,7 +327,7 @@
              "uuid": "000100ab-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -335,7 +335,7 @@
              "uuid": "000100ac-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -343,7 +343,7 @@
              "uuid": "000100ad-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -351,7 +351,7 @@
              "uuid": "000100ba-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "0000100b-ce7f-11d9-8cd5-0011113ae5d6",  // Inverse Attribute
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Inverse Attribute" }
     },
     // -----------------------------------------------------------------------
@@ -359,7 +359,7 @@
              "uuid": "000100bb-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "0000100b-ce7f-11d9-8cd5-0011113ae5d6",  // Inverse Attribute
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -367,7 +367,7 @@
              "uuid": "000100bc-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "0000100b-ce7f-11d9-8cd5-0011113ae5d6",  // Inverse Attribute
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -375,7 +375,7 @@
              "uuid": "0001010a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001010-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Attribute" }
     },
     // -----------------------------------------------------------------------
@@ -383,7 +383,7 @@
              "uuid": "0001010b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001010-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -391,7 +391,7 @@
              "uuid": "0001011a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001011-ce7f-11d9-8cd5-0011113ae5d6",  // Category
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Category" }
     },
     // -----------------------------------------------------------------------
@@ -399,7 +399,7 @@
              "uuid": "0001011b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001011-ce7f-11d9-8cd5-0011113ae5d6",  // Category
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -407,7 +407,7 @@
              "uuid": "0001012a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001012-ce7f-11d9-8cd5-0011113ae5d6",  // Query
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Query" }
     },
     // -----------------------------------------------------------------------
@@ -415,7 +415,7 @@
              "uuid": "0001012b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001012-ce7f-11d9-8cd5-0011113ae5d6",  // Query
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -423,7 +423,7 @@
              "uuid": "0001013a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001013-ce7f-11d9-8cd5-0011113ae5d6",  // Type
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Type" }
     },
     // -----------------------------------------------------------------------
@@ -431,7 +431,7 @@
              "uuid": "0001013b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001013-ce7f-11d9-8cd5-0011113ae5d6",  // Type
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -439,7 +439,7 @@
              "uuid": "0001020a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // Text
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Text" }
     },
     // -----------------------------------------------------------------------
@@ -447,7 +447,7 @@
              "uuid": "0001020b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // Text
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -455,7 +455,7 @@
              "uuid": "0001021a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001021-ce7f-11d9-8cd5-0011113ae5d6",  // Number
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Number" }
     },
     // -----------------------------------------------------------------------
@@ -463,7 +463,7 @@
              "uuid": "0001021b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001021-ce7f-11d9-8cd5-0011113ae5d6",  // Number
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -471,7 +471,7 @@
              "uuid": "0001022a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001022-ce7f-11d9-8cd5-0011113ae5d6",  // Date
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Date" }
     },
     // -----------------------------------------------------------------------
@@ -479,7 +479,7 @@
              "uuid": "0001022b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001022-ce7f-11d9-8cd5-0011113ae5d6",  // Date
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -487,7 +487,7 @@
              "uuid": "0001023a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001023-ce7f-11d9-8cd5-0011113ae5d6",  // Check Mark
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Check Mark" }
     },
     // -----------------------------------------------------------------------
@@ -495,7 +495,7 @@
              "uuid": "0001023b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001023-ce7f-11d9-8cd5-0011113ae5d6",  // Check Mark
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -503,7 +503,7 @@
              "uuid": "0001024a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001024-ce7f-11d9-8cd5-0011113ae5d6",  // URL
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "URL" }
     },
     // -----------------------------------------------------------------------
@@ -511,7 +511,7 @@
              "uuid": "0001024b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001024-ce7f-11d9-8cd5-0011113ae5d6",  // URL
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -519,7 +519,7 @@
              "uuid": "0001030a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // Item
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Item" }
     },
     // -----------------------------------------------------------------------
@@ -527,7 +527,7 @@
              "uuid": "0001030b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // Item
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -535,7 +535,7 @@
              "uuid": "0001040a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001040-ce7f-11d9-8cd5-0011113ae5d6",  // Anything
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Anything" }
     },
     // -----------------------------------------------------------------------
@@ -543,7 +543,7 @@
              "uuid": "0001040b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001040-ce7f-11d9-8cd5-0011113ae5d6",  // Anything
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -551,7 +551,7 @@
              "uuid": "0001050a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00001050-ce7f-11d9-8cd5-0011113ae5d6",  // Connection
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Connection" }
     },
     // -----------------------------------------------------------------------
@@ -559,7 +559,7 @@
              "uuid": "0001050b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00001050-ce7f-11d9-8cd5-0011113ae5d6",  // Connection
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001013-ce7f-11d9-8cd5-0011113ae5d6" }
     } ]
   },
@@ -626,7 +626,7 @@
              "uuid": "0020000a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00020000-ce7f-11d9-8cd5-0011113ae5d6",  // Page
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Page" }
     },
     // -----------------------------------------------------------------------
@@ -634,7 +634,7 @@
              "uuid": "0020000b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00020000-ce7f-11d9-8cd5-0011113ae5d6",  // Page
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -642,7 +642,7 @@
              "uuid": "0020100a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00020100-ce7f-11d9-8cd5-0011113ae5d6",  // Section
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Section" }
     },
     // -----------------------------------------------------------------------
@@ -650,7 +650,7 @@
              "uuid": "0020100b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00020100-ce7f-11d9-8cd5-0011113ae5d6",  // Section
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -658,7 +658,7 @@
              "uuid": "0030000a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00030000-ce7f-11d9-8cd5-0011113ae5d6",  // Section
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Section" }
     },
     // -----------------------------------------------------------------------
@@ -666,7 +666,7 @@
              "uuid": "0030000b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00030000-ce7f-11d9-8cd5-0011113ae5d6",  // Section
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -674,7 +674,7 @@
              "uuid": "0040000a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040000-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin Name (Attribute)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Plugin Name" }
     },
     // -----------------------------------------------------------------------
@@ -682,7 +682,7 @@
              "uuid": "0040000b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040000-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin Name (Attribute)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -690,7 +690,7 @@
              "uuid": "0040101a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040101-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin View (Attribute)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Plugin View" }
     },
     // -----------------------------------------------------------------------
@@ -698,7 +698,7 @@
              "uuid": "0040101b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040101-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin View (Attribute)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -706,7 +706,7 @@
              "uuid": "0040101c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00040101-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin View (Attribute)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -714,7 +714,7 @@
              "uuid": "0040102a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040102-ce7f-11d9-8cd5-0011113ae5d6",  // Layout Data (Attribute)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Layout Data" }
     },
     // -----------------------------------------------------------------------
@@ -722,7 +722,7 @@
              "uuid": "0040102b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040102-ce7f-11d9-8cd5-0011113ae5d6",  // Layout Data (Attribute)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -730,7 +730,7 @@
              "uuid": "0040102c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00040102-ce7f-11d9-8cd5-0011113ae5d6",  // Layout Data (Attribute)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00040202-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -738,7 +738,7 @@
              "uuid": "0040103a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040103-ce7f-11d9-8cd5-0011113ae5d6",  // Applies To Plugin (Attribute)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Applies To Plugin" }
     },
     // -----------------------------------------------------------------------
@@ -746,7 +746,7 @@
              "uuid": "0040103b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040103-ce7f-11d9-8cd5-0011113ae5d6",  // Applies To Plugin (Attribute)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -754,7 +754,7 @@
              "uuid": "0040103c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00040103-ce7f-11d9-8cd5-0011113ae5d6",  // Applies To Plugin (Attribute)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -762,7 +762,7 @@
              "uuid": "0040104a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Table Columns" }
     },
     // -----------------------------------------------------------------------
@@ -770,7 +770,7 @@
              "uuid": "0040104b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -778,7 +778,7 @@
              "uuid": "0040104c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001010-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -786,7 +786,7 @@
              "uuid": "0040201a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040201-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin View (Category)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Plugin View" }
     },
     // -----------------------------------------------------------------------
@@ -794,7 +794,7 @@
              "uuid": "0040201b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040201-ce7f-11d9-8cd5-0011113ae5d6",  // Plugin View (Category)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -802,7 +802,7 @@
              "uuid": "0040202a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040202-ce7f-11d9-8cd5-0011113ae5d6",  // Layout Data (Category)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Layout Data" }
     },
     // -----------------------------------------------------------------------
@@ -810,7 +810,7 @@
              "uuid": "0040202b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040202-ce7f-11d9-8cd5-0011113ae5d6",  // Layout Data (Category)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001011-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -818,7 +818,7 @@
              "uuid": "0040301a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040301-ce7f-11d9-8cd5-0011113ae5d6",  // Table View (Plugin View)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Table View" }
     },
     // -----------------------------------------------------------------------
@@ -826,7 +826,7 @@
              "uuid": "0040301b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040301-ce7f-11d9-8cd5-0011113ae5d6",  // Table View (Plugin View)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -834,7 +834,7 @@
              "uuid": "0040301c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
              "item": "00040301-ce7f-11d9-8cd5-0011113ae5d6",  // Table View (Plugin View)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Table" }
     },
     // -----------------------------------------------------------------------
@@ -842,7 +842,7 @@
              "uuid": "0040302a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040302-ce7f-11d9-8cd5-0011113ae5d6",  // Outline View (Plugin View)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Outline View" }
     },
     // -----------------------------------------------------------------------
@@ -850,7 +850,7 @@
              "uuid": "0040302b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040302-ce7f-11d9-8cd5-0011113ae5d6",  // Outline View (Plugin View)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -858,7 +858,7 @@
              "uuid": "0040302c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
              "item": "00040302-ce7f-11d9-8cd5-0011113ae5d6",  // Outline View (Plugin View)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Outline" }
     },
     // -----------------------------------------------------------------------
@@ -866,7 +866,7 @@
              "uuid": "0040303a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040303-ce7f-11d9-8cd5-0011113ae5d6",  // Detail View (Plugin View)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Detail View" }
     },
     // -----------------------------------------------------------------------
@@ -874,7 +874,7 @@
              "uuid": "0040303b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040303-ce7f-11d9-8cd5-0011113ae5d6",  // Detail View (Plugin View)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -882,7 +882,7 @@
              "uuid": "0040303c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
              "item": "00040303-ce7f-11d9-8cd5-0011113ae5d6",  // Detail View (Plugin View)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Detail" }
     },
     // -----------------------------------------------------------------------
@@ -890,7 +890,7 @@
              "uuid": "0040304a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Bar Chart View (Plugin View)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Bar Chart View" }
     },
     // -----------------------------------------------------------------------
@@ -898,7 +898,7 @@
              "uuid": "0040304b-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
              "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Bar Chart View (Plugin View)
-             "type": "RelatedUuid",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -906,7 +906,7 @@
              "uuid": "0040304c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
              "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Bar Chart View (Plugin View)
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Bar Chart" }
     } ]
   },
@@ -926,7 +926,7 @@
              "uuid": "2c4fa781-dde4-11d9-9c71-8022ab6bc8ae",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "2c4fa780-dde4-11d9-9c71-8022ab6bc8ae",  // Brian Douglas Skinner
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Brian Douglas Skinner" }
     }  ]
   },
@@ -946,7 +946,7 @@
              "uuid": "90e02171-dde4-11d9-9c71-e24829d2f59b",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "90e02170-dde4-11d9-9c71-e24829d2f59b",  // Chih-Chao Lam
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Chih-Chao Lam" }
     }  ]
   },
@@ -966,7 +966,7 @@
              "uuid": "97d040f1-dde4-11d9-9c71-c103016080e1",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "97d040f0-dde4-11d9-9c71-c103016080e1",  // Mignon Belongie
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Mignon Belongie" }
     }  ]
   },
@@ -986,7 +986,7 @@
              "uuid": "9c3596e1-dde4-11d9-9c71-b6ac85cc6d5f",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "9c3596e0-dde4-11d9-9c71-b6ac85cc6d5f",  // Mimi Yin
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Mimi Yin" }
     }  ]
   },
@@ -1006,7 +1006,7 @@
              "uuid": "a00bf341-dde4-11d9-9c71-dae11c269bc7",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
              "item": "a00bf340-dde4-11d9-9c71-dae11c269bc7",  // Marty Betz
-             "type": "TextValue",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Marty Betz" }
     }  ]
   }

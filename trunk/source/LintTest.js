@@ -70,7 +70,6 @@ function testJsLintOnOpenRecordCode() {
     "OutlinePlugin.js",
     "DetailPlugin.js",
     "BarChartPlugin.js",
-    "demo_page.js",
     "UtilTest.js"];
   var prefix = "../../../source/";
   var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);

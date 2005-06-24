@@ -943,9 +943,20 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
           previousEntry = this.__getEntryFromUuidOrBootstrapEntry(previousEntryUuid);
         }
  
-        var dataTypeToken = dehydratedEntry[StubVirtualServer.JSON_MEMBER_TYPE];
-        var dataType = this._getTypeFromTypeToken(dataTypeToken);
-        if (dataTypeToken == StubVirtualServer.JSON_TYPE_CONNECTION) {
+        var dataType;
+        var dataTypeUuid = dehydratedEntry[StubVirtualServer.JSON_MEMBER_TYPE];
+        var PENDING_debug = false;
+        if (Util.isUuid(dataTypeUuid)) {
+          PENDING_debug = true;
+          dataType = this.__getItemFromUuidOrBootstrapItem(dataTypeUuid);
+        } else {
+          // code to deal with the old pre-July-2005 file format
+          var dataTypeToken = dataTypeUuid;
+          dataType = this._getTypeFromTypeToken(dataTypeToken);
+          dataTypeUuid = dataType._getUuid();
+        }
+        
+        if (dataTypeUuid == World.UUID_FOR_TYPE_CONNECTION) {
           var listOfItemUuids = dehydratedEntry[StubVirtualServer.JSON_MEMBER_ITEM];
           var firstItemUuid = listOfItemUuids[0];
           var secondItemUuid = listOfItemUuids[1];
@@ -973,17 +984,20 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
           }
           var rawData = dehydratedEntry[StubVirtualServer.JSON_MEMBER_VALUE];
           var finalData = null;
-          switch (dataTypeToken) {
-            case StubVirtualServer.JSON_TYPE_RELATED_UUID:
+          switch (dataTypeUuid) {
+            case World.UUID_FOR_TYPE_ITEM:
               finalData = this.__getItemFromUuidOrBootstrapItem(rawData);
               break;
-            case StubVirtualServer.JSON_TYPE_TEXT_VALUE:
+            case World.UUID_FOR_TYPE_TEXT:
+              // if (PENDING_debug) {
+              //   alert(rawData + "\n" + dataType);
+              // }
               finalData = rawData;
               break;
-            case StubVirtualServer.JSON_TYPE_NUMBER_VALUE:
+            case World.UUID_FOR_TYPE_NUMBER:
               finalData = rawData;
               break;
-            case StubVirtualServer.JSON_TYPE_DATE_VALUE:
+            case World.UUID_FOR_TYPE_DATE:
               finalData = new Date(rawData);
               break;
             default:

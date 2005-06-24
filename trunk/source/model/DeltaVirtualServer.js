@@ -261,8 +261,12 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
       }
       var entryType = entry.getType();
       var typeToken = this._getTypeTokenFromType(entryType);
-      listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_TYPE + '": "' + typeToken + '",\n');
-      if (typeToken == StubVirtualServer.JSON_TYPE_CONNECTION) {
+      // listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_TYPE + '": "' + typeToken + '",\n');
+      // if (typeToken == StubVirtualServer.JSON_TYPE_CONNECTION) {
+      var typeUuid = entryType._getUuid();
+      listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_TYPE + '": "' + typeUuid + '",');
+      listOfStrings.push('  // ' + typeToken + '\n');
+      if (typeUuid == World.UUID_FOR_TYPE_CONNECTION) {
         var pairOfItems = entry.getItem();
         var firstItem = pairOfItems[0];
         var secondItem = pairOfItems[1];
@@ -285,6 +289,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
         var contentData = entry.getValue();
         
         var valueString = null;
+/*
         switch (typeToken) {
           case StubVirtualServer.JSON_TYPE_NUMBER_VALUE: 
             valueString = contentData;
@@ -296,6 +301,23 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
             valueString = '"' + contentData.toString() + '"';
             break;
           case StubVirtualServer.JSON_TYPE_RELATED_UUID: 
+            valueString = '"' + contentData._getUuid() + '"';
+            break;
+          default:
+            Util.assert(false, "no such type: " + typeToken);
+        }
+*/
+        switch (typeUuid) {
+          case World.UUID_FOR_TYPE_NUMBER: 
+            valueString = contentData;
+            break;
+          case World.UUID_FOR_TYPE_TEXT: 
+            valueString = '"' + contentData + '"';
+            break;
+          case World.UUID_FOR_TYPE_DATE: 
+            valueString = '"' + contentData.toString() + '"';
+            break;
+          case World.UUID_FOR_TYPE_ITEM: 
             valueString = '"' + contentData._getUuid() + '"';
             break;
           default:
