@@ -168,13 +168,15 @@ brian  |          | 0.25    |     Enabled one server to serve N pages running ag
 chao   | 0.5  IED | 0.5 IED |  8. UI for entering a number literal (instead of a string literal) in a table [with Brian]
 chao   | 1    IED | 1   IED |  9. UI for entering a date literal in a table (and data model support) [with Brian]
 brian  | 1    IED | 1   IED | 10. Add data model support for bi-directional references
+brian  |          | done    |     Convert the code to use bi-directional references
+brian  | 0.25 IED |         |     Convert the axiomatic items to use bi-directional reference
 chao   | 2    IED | 1.5 IED | 11. Move to better persistent representation for queries [with Brian]
        |          |         | 12. Make sure view code uses transactions
        |          |         | 13. Deal with \n in page name or summary fields
        |          |         | 14. BUG: problems with newlines and HTML characters in text strings
 brian  | 0.5  IED |         | 15. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
 -------+----------+---------+----------------------------------------------
-       |          |         | 16. Have text-entries and reference-entries look different
+chao   |          | done    | 16. Have text-entries and reference-entries look different
        |          |         | 17. Write one unit test that tests GUI code
        |          |         | 18. Write one performance test that measures the time some code takes
        |          |         | 19. Pick one file, and do a group code review on it

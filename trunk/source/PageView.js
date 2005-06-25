@@ -55,7 +55,6 @@ PageView.UUID_FOR_ATTRIBUTE_PAGE_THIS_SECTION_APPEARS_ON = "00030001-ce7f-11d9-8
  * @param    inPage    The Page Item to insert the new section into
  */
 PageView.newSection = function (repository, inPage) {
-  var attributeCalledCategory = repository.getAttributeCalledCategory();
   var attributeCalledQuery = repository.getAttributeCalledQuery();
   var categoryCalledQuery = repository.getCategoryCalledQuery();
   var attributeCalledPluginView = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
@@ -67,14 +66,12 @@ PageView.newSection = function (repository, inPage) {
   
   repository.beginTransaction();
   var newSection = repository.newItem("New Section");
-  newSection.addEntryForAttribute(attributeCalledCategory, categoryCalledSection);
-  // inPage.addEntryForAttribute(attributeCalledSectionsInPage, newSection);
+  newSection.assignToCategory(categoryCalledSection);
   inPage.addConnectionEntry(attributeCalledSectionsInPage, newSection, attributeCalledPageThisSectionAppearsOn);
   newSection.addEntryForAttribute(attributeCalledPluginView, tablePluginView);
 
   var newQuery = repository.newItem("New Query");
-  newQuery.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
-  // newSection.addEntryForAttribute(attributeCalledQuery, newQuery);
+  newQuery.assignToCategory(categoryCalledQuery);
   newSection.addConnectionEntry(attributeCalledQuery, newQuery, attributeCalledSectionThisQueryBelongsTo);
   repository.endTransaction();
   return newSection;

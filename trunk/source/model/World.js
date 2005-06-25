@@ -51,17 +51,18 @@ World.IDENTITY_UUID                    = "00000001-ce7f-11d9-8cd5-0011113ae5d6";
 
 World.UUID_FOR_USER_AMY                = "00001000-ce7f-11d9-8cd5-0011113ae5d6";
 
-World.UUID_FOR_ATTRIBUTE_NAME          = "00001001-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_SHORT_NAME    = "00001002-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_SUMMARY       = "00001003-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_BODY          = "00001004-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_CATEGORY      = "00001005-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_QUERY         = "00001006-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE = "00001007-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_NAME                     = "00001001-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_SHORT_NAME               = "00001002-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_SUMMARY                  = "00001003-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_BODY                     = "00001004-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_CATEGORY                 = "00001005-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_QUERY                    = "00001006-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE     = "00001007-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE = "00001008-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_UNFILED           = "00001009-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE     = "0000100a-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_INVERSE_ATTRIBUTE = "0000100b-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_UNFILED                  = "00001009-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE            = "0000100a-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_INVERSE_ATTRIBUTE        = "0000100b-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_ITEMS_IN_CATEGORY        = "0000100c-ce7f-11d9-8cd5-0011113ae5d6";
 
 World.UUID_FOR_CATEGORY_BOOK           = "0000100e-ce7f-11d9-8cd5-0011113ae5d6";  // here as an example only
 World.UUID_FOR_CATEGORY_MOVIE          = "0000100f-ce7f-11d9-8cd5-0011113ae5d6";  // here as an example only
@@ -113,16 +114,17 @@ function World(virtualServer) {
   server.setWorldAndLoadAxiomaticItems(this);
   
   // load the axiomatic attributes
-  this._attributeCalledName                  = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
-  this._attributeCalledShortName             = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SHORT_NAME);
-  this._attributeCalledSummary               = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SUMMARY);
-  this._attributeCalledCategory              = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_CATEGORY);
-  this._attributeCalledQuery                 = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY);
-  this._attributeCalledQueryMatchingValue = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE);
-  this._attributeCalledQueryMatchingAttribute     = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE);
-  this._attributeCalledUnfiled               = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_UNFILED);
-  this._attributeCalledExpectedType          = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE);
-  this._attributeCalledInverseAttribute         = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_INVERSE_ATTRIBUTE);
+  this._attributeCalledName                   = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
+  this._attributeCalledShortName              = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SHORT_NAME);
+  this._attributeCalledSummary                = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SUMMARY);
+  this._attributeCalledCategory               = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_CATEGORY);
+  this._attributeCalledQuery                  = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY);
+  this._attributeCalledQueryMatchingValue     = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE);
+  this._attributeCalledQueryMatchingAttribute = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE);
+  this._attributeCalledUnfiled                = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_UNFILED);
+  this._attributeCalledExpectedType           = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE);
+  this._attributeCalledInverseAttribute       = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_INVERSE_ATTRIBUTE);
+  this._attributeCalledItemsInCategory        = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_ITEMS_IN_CATEGORY);
 
   // load the axiomatic categories
   this._categoryCalledAttribute   = server.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
@@ -131,13 +133,13 @@ function World(virtualServer) {
   this._categoryCalledType        = server.getItemFromUuid(World.UUID_FOR_CATEGORY_TYPE);
 
   // load the axiomatic types
-  this._typeCalledText      = server.getItemFromUuid(World.UUID_FOR_TYPE_TEXT);
-  this._typeCalledNumber    = server.getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
-  this._typeCalledDate      = server.getItemFromUuid(World.UUID_FOR_TYPE_DATE);
-  this._typeCalledCheckMark = server.getItemFromUuid(World.UUID_FOR_TYPE_CHECK_MARK);
-  this._typeCalledUrl       = server.getItemFromUuid(World.UUID_FOR_TYPE_URL);
-  this._typeCalledItem      = server.getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
-  this._typeCalledAnything  = server.getItemFromUuid(World.UUID_FOR_TYPE_ANYTHING);
+  this._typeCalledText       = server.getItemFromUuid(World.UUID_FOR_TYPE_TEXT);
+  this._typeCalledNumber     = server.getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
+  this._typeCalledDate       = server.getItemFromUuid(World.UUID_FOR_TYPE_DATE);
+  this._typeCalledCheckMark  = server.getItemFromUuid(World.UUID_FOR_TYPE_CHECK_MARK);
+  this._typeCalledUrl        = server.getItemFromUuid(World.UUID_FOR_TYPE_URL);
+  this._typeCalledItem       = server.getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
+  this._typeCalledAnything   = server.getItemFromUuid(World.UUID_FOR_TYPE_ANYTHING);
   this._typeCalledConnection = server.getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
 }
 
@@ -405,6 +407,10 @@ World.prototype.getAttributeCalledInverseAttribute = function() {
   return this._attributeCalledInverseAttribute;
 };
 
+World.prototype.getAttributeCalledItemsInCategory = function() {
+  return this._attributeCalledItemsInCategory;
+};
+
 
 // -------------------------------------------------------------------
 // Accessor methods for axiomatic categories
@@ -597,9 +603,8 @@ World.prototype._provisionalItemJustBecameReal = function(item) {
 World.prototype.newAttribute = function(name, observer) {
   this.beginTransaction();
   var item = this._virtualServer.newItem(name, observer);
-  var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledAttribute = this.getCategoryCalledAttribute();
-  item.addEntryForAttribute(attributeCalledCategory, categoryCalledAttribute);
+  item.assignToCategory(categoryCalledAttribute);
   this.endTransaction();
   return item;
 };
@@ -617,9 +622,8 @@ World.prototype.newAttribute = function(name, observer) {
 World.prototype.newCategory = function(name, observer) {
   this.beginTransaction();
   var item = this._virtualServer.newItem(name, observer);
-  var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledCategory = this.getCategoryCalledCategory();
-  item.addEntryForAttribute(attributeCalledCategory, categoryCalledCategory);
+  item.assignToCategory(categoryCalledCategory);
   this.endTransaction();
   return item;
 };
@@ -637,9 +641,8 @@ World.prototype.newQuery = function(matchingAttribute, matchingEntriesOrList) {
   Util.assert(matchingAttribute instanceof Item);
   this.beginTransaction();
   var item = this._virtualServer.newItem("A query");
-  var attributeCalledCategory = this.getAttributeCalledCategory();
   var categoryCalledQuery = this.getCategoryCalledQuery();
-  item.addEntryForAttribute(attributeCalledCategory, categoryCalledQuery);
+  item.assignToCategory(categoryCalledQuery);
 
   var attributeCalledQueryMatchingAttribute = this.getAttributeCalledQueryMatchingAttribute();
   var attributeCalledQueryMatchingValue = this.getAttributeCalledQueryMatchingValue();
@@ -833,6 +836,7 @@ World.prototype.getAttributes = function(observer) {
   return this.getItemsInCategory(categoryCalledAttribute, observer);
 };
 
+
 /**
  *
  */
@@ -840,7 +844,7 @@ World.prototype.getSuggestedItemsForAttribute = function(attribute, observer) {
   var listOfSuggestedItems = [];
   var key;
   var categoryCalledCategory = this.getCategoryCalledCategory();
-  var attributeCalledCategory = this.getAttributeCalledCategory();
+  // var attributeCalledCategory = this.getAttributeCalledCategory();
   var attributeCalledExpectedType = this.getAttributeCalledExpectedType();
   var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
   var listOfCategories = [];

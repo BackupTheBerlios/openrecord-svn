@@ -268,6 +268,20 @@ Item.prototype.replaceEntryWithConnection = function (previousEntry, myAttribute
   return entry;  
 };
 
+
+/**
+ * Given a category, this method puts the item in that category.
+ *
+ * @scope    public instance method
+ * @param    category    An item representing a category. 
+ */
+Item.prototype.assignToCategory = function (category) {
+  var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
+  var attributeCalledItemsInCategory = this.getWorld().getAttributeCalledItemsInCategory();
+  this.addConnectionEntry(attributeCalledCategory, category, attributeCalledItemsInCategory);
+};
+
+
 // -------------------------------------------------------------------
 // Accessor methods where the answer depends on the retrieval filter
 // -------------------------------------------------------------------
@@ -498,14 +512,13 @@ Item.prototype.toString = function () {
  */
 Item.prototype.hasAttributeValue = function (inAttribute, inValue) {
   Util.assert(inAttribute instanceof Item, inAttribute + ' is not an item');
-  //Util.assert(inValue);
   var entryList = this.getEntriesForAttribute(inAttribute);
 
   // look at all the entries this item's attribute is assigned to, 
   // and see if one of them is "inEntry"
   for (var key in entryList) {
     var entry = entryList[key];
-    if (entry.getValue() == inValue) {
+    if (entry.getValue(this) == inValue) {
       return true;
     }
   }

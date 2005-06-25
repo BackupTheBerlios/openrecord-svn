@@ -614,14 +614,16 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
   Util.assert(inQuery instanceof Item);
   var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
-
+  var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
+  var categoryCalledCategory = this.getWorld().getCategoryCalledCategory();
+  
   var listOfMatchingEntries = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
   var listOfMatchingAttrs = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
   if (!(listOfMatchingEntries && (listOfMatchingEntries.length > 0))) {return;} // query not fully formed, so nothing to add
   var matchingAttribute;
   if (listOfMatchingAttrs.length === 0) {
     // by default matching attribute is category
-    matchingAttribute = this.getWorld().getAttributeCalledCategory();
+    matchingAttribute = attributeCalledCategory;
   }
   else {
     Util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
@@ -632,7 +634,11 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
     var matchingEntry = listOfMatchingEntries[key];
     var match = matchingEntry.getValue();
     if (!inItem.hasAttributeValue(matchingAttribute, match)) {
-      inItem.addEntryForAttribute(matchingAttribute, match);
+      if ((matchingAttribute == attributeCalledCategory) && (match instanceof Item) && (match.isInCategory(categoryCalledCategory))) {
+        inItem.assignToCategory(match);
+      } else {
+        inItem.addEntryForAttribute(matchingAttribute, match);
+      }
     }
   }
 };

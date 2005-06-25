@@ -350,12 +350,9 @@ RootView.prototype.newPage = function () {
   var repository = this.getWorld();
   repository.beginTransaction();
   var newPage = repository.newItem("New Page");
-  // var shortName = repository.getAttributeCalledShortName();
-  var attributeCalledCategory = repository.getAttributeCalledCategory();
   var attributeCalledSummary = repository.getAttributeCalledSummary();
   var categoryCalledPage = repository.getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
-  // newPage.addEntryForAttribute(shortName, "New Page");
-  newPage.addEntryForAttribute(attributeCalledCategory, categoryCalledPage);
+  newPage.assignToCategory(categoryCalledPage);
   newPage.addEntryForAttribute(attributeCalledSummary, "This is a new page.");
 
   PageView.newSection(repository, newPage);

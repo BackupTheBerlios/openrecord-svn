@@ -84,7 +84,7 @@ function TextView(theSuperview, inElement, inItem, inAttribute, inEntry, inClass
   if (this._isProvisional) {
     this._provisionalText = inAttribute.getDisplayName();
   }
-  else if (inEntry && inEntry.getValue() instanceof Item) {
+  else if (inEntry && inEntry.getValue(this._item) instanceof Item) {
     this._valueIsItem = true;
   }
 }
@@ -324,9 +324,9 @@ if (value && Util.isString(value)) {
           default:
             if (aType.isInCategory(categoryCalledCategory)) {
               value = repository.newItem(value);
-              value.addEntryForAttribute(repository.getAttributeCalledCategory(),aType);
+              value.assignToCategory(aType);
               if (this._suggestions) {
-                // add to new item to suggestion list if list is present
+                // add new item to suggestion list if list is present
                 // PENDING: should this be using an observer instead?
                 Util.addObjectToSet(value, this._suggestions);
               }

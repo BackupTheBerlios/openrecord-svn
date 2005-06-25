@@ -301,10 +301,20 @@ Entry.prototype.getConnectedItem = function (item) {
  * Returns the value that this entry holds.
  *
  * @scope    public instance method
+ * @param    item    The item that this is an entry of. 
  * @return   The value this entry was initialized to hold.
  */
-Entry.prototype.getValue = function () {
-  return this.__myValue;
+Entry.prototype.getValue = function (item) {
+  if (Util.isArray(this.__myItem)) {
+    if (this.__myItem[0] == item) {
+      return this.__myItem[1];
+    }
+    if (this.__myItem[1] == item) {
+      return this.__myItem[0];
+    }
+    Util.assert(false, "Entry.getValue() was called on a connection entry, but was not passed an item as a parameter.");
+  }
+  return this.__myValue; 
 };
 
 

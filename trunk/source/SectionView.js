@@ -313,11 +313,10 @@ SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
   
   // layoutData not found, so create the item
   var categoryCalledLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA);
-  var attributeCalledCategory = repository.getAttributeCalledCategory();
   var attributeCalledSectionThisLayoutDataBelongsTo = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO);
   repository.beginTransaction();
   layoutItem = repository.newItem("Layout data for " + inPluginType.getDisplayName() + " of " + this.mySection.getDisplayName());
-  layoutItem.addEntryForAttribute(attributeCalledCategory, categoryCalledLayoutData);
+  layoutItem.assignToCategory(categoryCalledLayoutData);
   layoutItem.addEntryForAttribute(attrAppliesToPlugin, inPluginType);
   // this.mySection.addEntryForAttribute(attrLayoutData, layoutItem, repository.getTypeCalledItem());
   this.mySection.addConnectionEntry(attrLayoutData, layoutItem, attributeCalledSectionThisLayoutDataBelongsTo);
