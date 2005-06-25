@@ -1,0 +1,42 @@
+// Repository records, in JSON format
+{ "format": "2005_JUNE_CHRONOLOGICAL_LIST", 
+  "records": [
+  // =======================================================================
+  { "Transaction": [  // Home Page  
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // The OpenRecord Dogfood Site
+             "uuid": "00050000-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Page
+             "uuid": "0005000a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
+             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // Dashboard Demo Page
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
+            "value": "00020000-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Dashboard
+             "uuid": "0005000b-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
+             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // Dashboard Demo Page
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Dashboard" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Dashboard Demo Page
+             "uuid": "0005000c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // Dashboard Demo Page
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Dashboard Demo Page" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // This is a UI prototype of t...
+             "uuid": "0005000d-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",  // Summary
+             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // The OpenRecord Dogfood Site
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "This is a UI prototype of the dashboard view, built using OpenRecord." }
+    } ]
+  }
