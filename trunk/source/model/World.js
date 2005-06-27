@@ -107,7 +107,14 @@ function World(virtualServer) {
   if (virtualServer) {
     server = virtualServer;
   } else {
-    server = new StubVirtualServer();
+    // server = new StubVirtualServer();
+    var filepath = window.location.pathname;
+    var arrayOfSegments = filepath.split('/');
+    var lastSegment = arrayOfSegments.pop();
+    var arrayWithFilenameAndExtension = lastSegment.split('.');
+    var filename = arrayWithFilenameAndExtension[0];
+    var repositoryName = filename;
+    server = new DeltaVirtualServer(repositoryName);
   }
   this._virtualServer = server;
 

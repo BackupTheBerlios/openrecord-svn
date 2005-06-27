@@ -1010,18 +1010,18 @@
   { "Transaction": [
     // -----------------------------------------------------------------------
     { "Item": {                                               // Brian Douglas Skinner
-             "uuid": "2c4fa780-dde4-11d9-9c71-8022ab6bc8ae" }
+             "uuid": "2c4fa780-dde4-11d9-9c71-000c414ce854" }
     },
     // -----------------------------------------------------------------------
     { "User": {                                               // Brian Douglas Skinner
-             "user": "2c4fa780-dde4-11d9-9c71-8022ab6bc8ae",
+             "user": "2c4fa780-dde4-11d9-9c71-000c414ce854",
          "password": "92eb5ffee6ae2fec3ad71c777531578f" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Brian Douglas Skinner
-             "uuid": "2c4fa781-dde4-11d9-9c71-8022ab6bc8ae",
+             "uuid": "2c4fa781-dde4-11d9-9c71-000c414ce854",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "2c4fa780-dde4-11d9-9c71-8022ab6bc8ae",  // Brian Douglas Skinner
+             "item": "2c4fa780-dde4-11d9-9c71-000c414ce854",  // Brian Douglas Skinner
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Brian Douglas Skinner" }
     }  ]

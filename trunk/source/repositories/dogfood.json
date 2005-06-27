@@ -5,37 +5,37 @@
   { "Transaction": [  // Home Page  
     // -----------------------------------------------------------------------
     { "Item": {                                               // The OpenRecord Dogfood Site
-             "uuid": "00050000-ce7f-11d9-8cd5-0011113ae5d6" }
+             "uuid": "246ec320-ce7f-11d9-8cd5-000c414ce854" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Page
-             "uuid": "0005000a-ce7f-11d9-8cd5-0011113ae5d6",
+             "uuid": "246ec32a-ce7f-11d9-8cd5-000c414ce854",
         "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
-             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // The OpenRecord Dogfood Site
+             "item": "246ec320-ce7f-11d9-8cd5-000c414ce854",  // The OpenRecord Dogfood Site
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00020000-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Dogfood
-             "uuid": "0005000b-ce7f-11d9-8cd5-0011113ae5d6",
+             "uuid": "246ec32b-ce7f-11d9-8cd5-000c414ce854",
         "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
-             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // The OpenRecord Dogfood Site
+             "item": "246ec320-ce7f-11d9-8cd5-000c414ce854",  // The OpenRecord Dogfood Site
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Dogfood" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // The OpenRecord Dogfood Site
-             "uuid": "0005000c-ce7f-11d9-8cd5-0011113ae5d6",
+             "uuid": "246ec32c-ce7f-11d9-8cd5-000c414ce854",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // The OpenRecord Dogfood Site
+             "item": "246ec320-ce7f-11d9-8cd5-000c414ce854",  // The OpenRecord Dogfood Site
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "The OpenRecord Dogfood Site" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // This web site is a demo of ...
-             "uuid": "0005000d-ce7f-11d9-8cd5-0011113ae5d6",
+             "uuid": "246ec32d-ce7f-11d9-8cd5-000c414ce854",
         "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",  // Summary
-             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // The OpenRecord Dogfood Site
+             "item": "246ec320-ce7f-11d9-8cd5-000c414ce854",  // The OpenRecord Dogfood Site
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "This web site is where people working on OpenRecord keep track of the work being done." }
     } ]

@@ -43,7 +43,12 @@
     <script type="text/javascript" src="source/model/StubVirtualServer.js"></script>
     <script type="text/javascript" src="source/model/DeltaVirtualServer.js"></script>
     
-    <script type="text/javascript" src="dashboard.js"></script>
+    <script type="text/javascript">
+      window.onload = function() {  
+        var world = new World();
+        new RootView(world);
+      };    
+    </script>
   </head>
   
   <body>

@@ -60,7 +60,7 @@ RootView.CONTROL_SPAN_CLASS = "control_span";
 RootView.UUID_FOR_CATEGORY_PAGE    = "00020000-ce7f-11d9-8cd5-0011113ae5d6";
 RootView.UUID_FOR_CATEGORY_SECTION = "00020100-ce7f-11d9-8cd5-0011113ae5d6";
 
-RootView.UUID_FOR_HOME_PAGE        = "00050000-ce7f-11d9-8cd5-0011113ae5d6";
+// RootView.UUID_FOR_HOME_PAGE        = "00050000-ce7f-11d9-8cd5-0011113ae5d6";
 
 
 // -------------------------------------------------------------------
@@ -78,6 +78,13 @@ RootView.ourSingleInstance = null;
  * @syntax   var rootView = new RootView()
  */
 function RootView(inWorld) {
+  window.onerror = Util.handleError;
+  // window.onunload = window.doOnunloadActions;
+  // window.onfocus = window.doOnfocusActions;
+  // window.onblur = window.doOnblurActions;
+  // window.onresize = window.doOnresizeActions;  
+  Util.setTargetsForExternalLinks();
+  
   RootView.ourSingleInstance = this;
    
   Util.assert(inWorld instanceof World);
@@ -91,10 +98,14 @@ function RootView(inWorld) {
   this._myHashTableOfItemViewsKeyedByUuid = {};
   this._myHashTableOfPageViewsKeyedByUuid = {};
   this._myCurrentContentView = null;
+  this._homePage = null;
   
   this.myHashTableOfPagesKeyedByUuid = {};
   var categoryCalledPage = this._myWorld.getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
   var listOfPages = this._myWorld.getItemsInCategory(categoryCalledPage);
+  if (listOfPages && listOfPages.length > 0) {
+    this._homePage = listOfPages[0];
+  }
   for (var key in listOfPages) {
     var page = listOfPages[key];
     this.myHashTableOfPagesKeyedByUuid[page._getUuid()] = page; 
@@ -179,7 +190,8 @@ RootView.prototype.getWorld = function () {
  * @return   A page item.
  */
 RootView.prototype.getHomePage = function () {
-  return this.getWorld().getItemFromUuid(RootView.UUID_FOR_HOME_PAGE);
+  // return this.getWorld().getItemFromUuid(RootView.UUID_FOR_HOME_PAGE);
+  return this._homePage;
 };
 
 
