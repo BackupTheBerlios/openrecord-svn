@@ -45,23 +45,14 @@
 // DeltaVirtualServer public class constants
 // -------------------------------------------------------------------
 StubVirtualServer.JSON_MEMBER_FORMAT = "format";
-// StubVirtualServer.JSON_MEMBER_TIMESTAMP = "timestamp";
-// StubVirtualServer.JSON_MEMBER_DATA = "data";
 StubVirtualServer.JSON_MEMBER_RECORDS = "records";
-// StubVirtualServer.JSON_MEMBER_USERS = "users";
 
-// StubVirtualServer.JSON_FORMAT_2005_MARCH = "2005_MARCH_ITEM_CENTRIC_LIST";
-// StubVirtualServer.JSON_FORMAT_2005_APRIL = "2005_APRIL_CHRONOLOGICAL_LIST";
-// StubVirtualServer.JSON_FORMAT_2005_MAY_RECORDS = "2005_MAY_CHRONOLOGICAL_LIST";
-// StubVirtualServer.JSON_FORMAT_2005_MAY_USERS = "2005_MAY_USER_LIST";
 StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS = "2005_JUNE_CHRONOLOGICAL_LIST";
 
 StubVirtualServer.JSON_MEMBER_TYPE = "type";
 StubVirtualServer.JSON_MEMBER_VALUE = "value";
 
 StubVirtualServer.JSON_TYPE_TEXT_VALUE = "TextValue";
-// StubVirtualServer.JSON_TYPE_UUID = "Uuid";
-// StubVirtualServer.JSON_TYPE_FOREIGN_UUID = "ForeignUuid";
 StubVirtualServer.JSON_TYPE_RELATED_UUID = "RelatedUuid";
 StubVirtualServer.JSON_TYPE_NUMBER_VALUE = "NumberValue";
 StubVirtualServer.JSON_TYPE_DATE_VALUE = "DateValue";
@@ -82,7 +73,6 @@ StubVirtualServer.JSON_MEMBER_TRANSACTION_CLASS = "Transaction";
 
 StubVirtualServer.JSON_MEMBER_ATTRIBUTE = "attribute";
 StubVirtualServer.JSON_MEMBER_PREVIOUS_VALUE = "previousEntry";
-// StubVirtualServer.JSON_MEMBER_USERSTAMP = "userstamp";
 StubVirtualServer.JSON_MEMBER_RECORD = "record";
 StubVirtualServer.JSON_MEMBER_ITEM = "item";
 StubVirtualServer.JSON_MEMBER_RETAIN_FLAG = "retainFlag";
@@ -400,12 +390,15 @@ StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObse
   }
   this.__myHashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = md5Authentication;
 
+  this.__myCurrentUser = newUser;
+  var categoryCalledPerson = this.getWorld().getCategoryCalledPerson();
+  newUser.assignToCategory(categoryCalledPerson); 
   if (inName) { 
-    this.__myCurrentUser = newUser;
     var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
     var entry = newUser.addEntryForAttribute(attributeCalledName, inName);
-    this.__myCurrentUser = null;
   }
+  this.__myCurrentUser = null;
+  
   return newUser;
 };
 

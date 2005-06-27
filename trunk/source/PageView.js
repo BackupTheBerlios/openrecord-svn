@@ -55,7 +55,7 @@ PageView.UUID_FOR_ATTRIBUTE_PAGE_THIS_SECTION_APPEARS_ON = "00030001-ce7f-11d9-8
  * @param    inPage    The Page Item to insert the new section into
  */
 PageView.newSection = function (repository, inPage) {
-  var attributeCalledQuery = repository.getAttributeCalledQuery();
+  var attributeCalledQuerySpec = repository.getAttributeCalledQuerySpec();
   var categoryCalledQuery = repository.getCategoryCalledQuery();
   var attributeCalledPluginView = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
   var attributeCalledSectionsInPage = repository.getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTIONS_IN_PAGE);
@@ -72,7 +72,7 @@ PageView.newSection = function (repository, inPage) {
 
   var newQuery = repository.newItem("New Query");
   newQuery.assignToCategory(categoryCalledQuery);
-  newSection.addConnectionEntry(attributeCalledQuery, newQuery, attributeCalledSectionThisQueryBelongsTo);
+  newSection.addConnectionEntry(attributeCalledQuerySpec, newQuery, attributeCalledSectionThisQueryBelongsTo);
   repository.endTransaction();
   return newSection;
 };

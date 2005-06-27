@@ -56,20 +56,15 @@ World.UUID_FOR_ATTRIBUTE_SHORT_NAME               = "00001002-ce7f-11d9-8cd5-001
 World.UUID_FOR_ATTRIBUTE_SUMMARY                  = "00001003-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_BODY                     = "00001004-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_CATEGORY                 = "00001005-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_QUERY                    = "00001006-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_QUERY_SPEC               = "00001006-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE     = "00001007-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE = "00001008-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_UNFILED                  = "00001009-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE            = "0000100a-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_INVERSE_ATTRIBUTE        = "0000100b-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_ATTRIBUTE_ITEMS_IN_CATEGORY        = "0000100c-ce7f-11d9-8cd5-0011113ae5d6";
-
-World.UUID_FOR_CATEGORY_BOOK           = "0000100e-ce7f-11d9-8cd5-0011113ae5d6";  // here as an example only
-World.UUID_FOR_CATEGORY_MOVIE          = "0000100f-ce7f-11d9-8cd5-0011113ae5d6";  // here as an example only
-World.UUID_FOR_CATEGORY_ATTRIBUTE      = "00001010-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_CATEGORY_CATEGORY       = "00001011-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_CATEGORY_QUERY          = "00001012-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_CATEGORY_TYPE           = "00001013-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_TAG                      = "0000100d-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_ATTRIBUTE_TAGGED_ITEMS             = "0000100e-ce7f-11d9-8cd5-0011113ae5d6";
 
 World.UUID_FOR_TYPE_TEXT               = "00001020-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_TYPE_NUMBER             = "00001021-ce7f-11d9-8cd5-0011113ae5d6";
@@ -79,6 +74,14 @@ World.UUID_FOR_TYPE_URL                = "00001024-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_TYPE_ITEM               = "00001030-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_TYPE_ANYTHING           = "00001040-ce7f-11d9-8cd5-0011113ae5d6";
 World.UUID_FOR_TYPE_CONNECTION         = "00001050-ce7f-11d9-8cd5-0011113ae5d6";
+
+World.UUID_FOR_CATEGORY_PERSON         = "00001201-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_CATEGORY_ATTRIBUTE      = "00001210-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_CATEGORY_CATEGORY       = "00001211-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_CATEGORY_QUERY          = "00001212-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_CATEGORY_TYPE           = "00001213-ce7f-11d9-8cd5-0011113ae5d6";
+World.UUID_FOR_CATEGORY_TAG            = "00001214-ce7f-11d9-8cd5-0011113ae5d6";
+
 
 // -------------------------------------------------------------------
 // World private class constants
@@ -125,19 +128,15 @@ function World(virtualServer) {
   this._attributeCalledShortName              = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SHORT_NAME);
   this._attributeCalledSummary                = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SUMMARY);
   this._attributeCalledCategory               = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_CATEGORY);
-  this._attributeCalledQuery                  = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY);
+  this._attributeCalledQuerySpec              = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_SPEC);
   this._attributeCalledQueryMatchingValue     = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE);
   this._attributeCalledQueryMatchingAttribute = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE);
   this._attributeCalledUnfiled                = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_UNFILED);
   this._attributeCalledExpectedType           = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE);
   this._attributeCalledInverseAttribute       = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_INVERSE_ATTRIBUTE);
   this._attributeCalledItemsInCategory        = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_ITEMS_IN_CATEGORY);
-
-  // load the axiomatic categories
-  this._categoryCalledAttribute   = server.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
-  this._categoryCalledCategory    = server.getItemFromUuid(World.UUID_FOR_CATEGORY_CATEGORY);
-  this._categoryCalledQuery       = server.getItemFromUuid(World.UUID_FOR_CATEGORY_QUERY);
-  this._categoryCalledType        = server.getItemFromUuid(World.UUID_FOR_CATEGORY_TYPE);
+  this._attributeCalledTag                    = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_TAG);
+  this._attributeCalledTaggedItems            = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_TAGGED_ITEMS);
 
   // load the axiomatic types
   this._typeCalledText       = server.getItemFromUuid(World.UUID_FOR_TYPE_TEXT);
@@ -148,6 +147,14 @@ function World(virtualServer) {
   this._typeCalledItem       = server.getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
   this._typeCalledAnything   = server.getItemFromUuid(World.UUID_FOR_TYPE_ANYTHING);
   this._typeCalledConnection = server.getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
+
+  // load the axiomatic categories 
+  this._categoryCalledPerson      = server.getItemFromUuid(World.UUID_FOR_CATEGORY_PERSON);
+  this._categoryCalledAttribute   = server.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
+  this._categoryCalledCategory    = server.getItemFromUuid(World.UUID_FOR_CATEGORY_CATEGORY);
+  this._categoryCalledQuery       = server.getItemFromUuid(World.UUID_FOR_CATEGORY_QUERY);
+  this._categoryCalledType        = server.getItemFromUuid(World.UUID_FOR_CATEGORY_TYPE);
+  this._categoryCalledTag         = server.getItemFromUuid(World.UUID_FOR_CATEGORY_TAG);
 }
 
 
@@ -390,8 +397,8 @@ World.prototype.getAttributeCalledCategory = function() {
   return this._attributeCalledCategory;
 };
 
-World.prototype.getAttributeCalledQuery = function() {
-  return this._attributeCalledQuery;
+World.prototype.getAttributeCalledQuerySpec = function() {
+  return this._attributeCalledQuerySpec;
 };
 
 World.prototype.getAttributeCalledQueryMatchingValue = function() {
@@ -418,24 +425,12 @@ World.prototype.getAttributeCalledItemsInCategory = function() {
   return this._attributeCalledItemsInCategory;
 };
 
-
-// -------------------------------------------------------------------
-// Accessor methods for axiomatic categories
-// -------------------------------------------------------------------
-World.prototype.getCategoryCalledAttribute = function() {
-  return this._categoryCalledAttribute;
+World.prototype.getAttributeCalledTag = function() {
+  return this._attributeCalledTag;
 };
 
-World.prototype.getCategoryCalledCategory = function() {
-  return this._categoryCalledCategory;
-};
-
-World.prototype.getCategoryCalledQuery = function() {
-  return this._categoryCalledQuery;
-};
-
-World.prototype.getCategoryCalledType = function() {
-  return this._categoryCalledType;
+World.prototype.getAttributeCalledTaggedItems = function() {
+  return this._attributeCalledTaggedItems;
 };
 
 
@@ -474,6 +469,33 @@ World.prototype.getTypeCalledConnection = function() {
   return this._typeCalledConnection;
 };
 
+
+// -------------------------------------------------------------------
+// Accessor methods for axiomatic categories
+// -------------------------------------------------------------------
+World.prototype.getCategoryCalledPerson = function() {
+  return this._categoryCalledPerson;
+};
+
+World.prototype.getCategoryCalledAttribute = function() {
+  return this._categoryCalledAttribute;
+};
+
+World.prototype.getCategoryCalledCategory = function() {
+  return this._categoryCalledCategory;
+};
+
+World.prototype.getCategoryCalledQuery = function() {
+  return this._categoryCalledQuery;
+};
+
+World.prototype.getCategoryCalledType = function() {
+  return this._categoryCalledType;
+};
+
+World.prototype.getCategoryCalledType = function() {
+  return this._categoryCalledTag;
+};
 
 
 // -------------------------------------------------------------------

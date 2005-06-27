@@ -68,7 +68,7 @@ SectionView.ELEMENT_ID_SELECT_MENU_PREFIX = "select_menu_";
 SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER = "section_number";
 // SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER = "cell_number";
 
-SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME       = "00040000-ce7f-11d9-8cd5-0011113ae5d6";
+// SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME       = "00040000-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW       = "00040101-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA       = "00040102-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN = "00040103-ce7f-11d9-8cd5-0011113ae5d6";
@@ -183,8 +183,8 @@ SectionView.prototype.getPluginInstanceFromPluginItem = function (pluginItem, pl
  * @return   query associated to this section.
  */
 SectionView.prototype.getQuery = function () {
-  var attributeCalledQuery = this.getWorld().getAttributeCalledQuery();
-  var queryEntry = this.mySection.getSingleEntryFromAttribute(attributeCalledQuery);
+  var attributeCalledQuerySpec = this.getWorld().getAttributeCalledQuerySpec();
+  var queryEntry = this.mySection.getSingleEntryFromAttribute(attributeCalledQuerySpec);
   if (queryEntry) {
     return queryEntry.getConnectedItem(this.mySection);
   }
@@ -229,10 +229,7 @@ SectionView.prototype.doInitialDisplay = function () {
     selectedPluginItem = selectedPluginViewEntry.getValue();
     selectedPluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[selectedPluginItem._getUuid()];
   } else {
-    // code to support legacy repository files
-    var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
-    selectedPluginItem = this.mySection.getSingleStringValueFromAttribute(attributeCalledPluginName);
-    selectedPluginClass = TablePlugin; // PENDING: Hack!
+    selectedPluginClass = TablePlugin; 
   }
   
   var sectionDiv = this.getHTMLElement();
@@ -430,8 +427,6 @@ SectionView.prototype.clickOnPluginSelectionMenu = function (inEventObject) {
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
   
   var selectElement = optionElement.parentNode;
-  // var newChoiceName = optionElement.value;
-  // var attributeCalledPluginName = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME);
   var newChoiceUuid = optionElement.value;
   var attributeCalledPluginView = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
   var newPluginViewItem = this.getWorld().getItemFromUuid(newChoiceUuid);

@@ -8,34 +8,35 @@
              "uuid": "8a3c6b50-ce7f-11d9-8cd5-e24829d2f59b" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Page
+    { "Entry": {                                              
+             // in item (Page: Dashboard Demo Page) assign (Attribute: Category) = (Category: Page)
+             // in item (Category: Page) assign (Attribute: Items in Category) = (Page: Dashboard Demo Page)
              "uuid": "8a3c6b5a-ce7f-11d9-8cd5-e24829d2f59b",
-        "attribute": "00001005-ce7f-11d9-8cd5-0011113ae5d6",  // Category
-             "item": "8a3c6b50-ce7f-11d9-8cd5-e24829d2f59b",  // Dashboard Demo Page
-             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
-            "value": "00020000-ce7f-11d9-8cd5-0011113ae5d6" }
-    },
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["8a3c6b50-ce7f-11d9-8cd5-e24829d2f59b", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },  
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Dashboard
+    { "Entry": {                                              // "Dashboard"
              "uuid": "8a3c6b5b-ce7f-11d9-8cd5-e24829d2f59b",
         "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
-             "item": "8a3c6b50-ce7f-11d9-8cd5-e24829d2f59b",  // Dashboard Demo Page
+             "item": "8a3c6b50-ce7f-11d9-8cd5-e24829d2f59b",  // (Page: Dashboard Demo Page)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Dashboard" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Dashboard Demo Page
+    { "Entry": {                                              // "Dashboard Demo Page"
              "uuid": "8a3c6b5c-ce7f-11d9-8cd5-e24829d2f59b",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "8a3c6b50-ce7f-11d9-8cd5-e24829d2f59b",  // Dashboard Demo Page
+             "item": "8a3c6b50-ce7f-11d9-8cd5-e24829d2f59b",  // (Page: Dashboard Demo Page)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Dashboard Demo Page" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // This is a UI prototype of t...
+    { "Entry": {                                              // "This is a UI prototype of t..."
              "uuid": "8a3c6b5d-ce7f-11d9-8cd5-e24829d2f59b",
         "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",  // Summary
-             "item": "8a3c6b50-ce7f-11d9-8cd5-e24829d2f59b",  // The OpenRecord Dogfood Site
+             "item": "8a3c6b50-ce7f-11d9-8cd5-e24829d2f59b",  // (Page: Dashboard Demo Page)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "This is a UI prototype of the dashboard view, built using OpenRecord." }
     } ]
