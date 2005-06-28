@@ -351,12 +351,14 @@ TextView.prototype._writeValue = function(value) {
     value = this._transformToExpectedType(value);
 
     var oldValue = null;
-    if (this._entry) {oldValue = this._entry.getValue();}
+    if (this._entry) {oldValue = this._entry.getValue(this._item);}
     if (oldValue != value) {
       var attributeCalledInverseAttribute = this.getWorld().getAttributeCalledInverseAttribute();
       var listOfInverseAttributeEntries = this._attribute.getEntriesForAttribute(attributeCalledInverseAttribute);
       if (listOfInverseAttributeEntries.length > 0) {
-        var inverseAttr = listOfInverseAttributeEntries[0].getValue();
+        // alert(this._attribute.getDisplayString());
+        // alert(listOfInverseAttributeEntries[0].getDisplayString());
+        var inverseAttr = listOfInverseAttributeEntries[0].getValue(this._attribute);
         this._entry = this._item.replaceEntryWithConnection(this._entry, this._attribute, value, inverseAttr);
       }
       else {
