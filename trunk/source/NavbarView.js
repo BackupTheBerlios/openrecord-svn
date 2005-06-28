@@ -81,17 +81,13 @@ NavbarView.prototype._rebuildView = function () {
   //get rid of all child nodes 
   divElement.innerHTML = '';
 
-  var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
   var listOfStrings = [];
 
   listOfStrings.push("<ul class=\"menu\">");
   
   for (var key in listOfPages) {
     var page = listOfPages[key];
-    var menuText = page.getSingleStringValueFromAttribute(attributeCalledShortName);
-    if (!menuText) {
-      menuText = page.getDisplayName();
-    }
+    var menuText = page.getDisplayString();
     var menuUrl = rootView.getUrlForItem(page);
     listOfStrings.push("<li class=\"menu_item\"><a href=\"" + menuUrl + "\" onclick=\"RootView.clickOnLocalLink(event)\">" + menuText + "</a></li>");
   }

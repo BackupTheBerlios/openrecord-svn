@@ -382,6 +382,20 @@ Item.prototype.getAttributes = function () {
 };
 
 
+/**
+ *
+ */
+Item.prototype.getFirstCategory = function () {
+  var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
+  var listOfCategoryEntries = this.getEntriesForAttribute(attributeCalledCategory);
+  var returnEntry = null;
+  if (listOfCategoryEntries && listOfCategoryEntries.length > 0) {
+    var firstEntry = listOfCategoryEntries[0];
+    var returnCategory = firstEntry.getValue(this);
+  }
+  return returnCategory;
+};
+
 // -------------------------------------------------------------------
 // Attribute accessor methods
 // -------------------------------------------------------------------
@@ -398,7 +412,7 @@ Item.prototype.isProvisional = function() {
 
 
 /**
- * Returns a display name for the item.
+ * Returns a string with the display name of the item.
  *
  * @scope    public instance method
  * @param    defaultString    Optional.  This string will be returned if the item has no display name. 
@@ -414,6 +428,32 @@ Item.prototype.getDisplayName = function (defaultString) {
   return displayName;
 };
   
+
+/**
+ * Returns a string with either the short name of the item or the name of the item.
+ *
+ * @scope    public instance method
+ * @param    defaultString    Optional.  This string will be returned if the item has no short name or name. 
+ * @return   A string with a name for the item.
+ */
+Item.prototype.getDisplayString = function (defaultString) {
+  var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
+  var shortNameString = this.getSingleStringValueFromAttribute(attributeCalledShortName);
+  if (!shortNameString) {
+    shortNameString = this.getDisplayName(defaultString);
+  }
+  return shortNameString;
+};
+
+
+/**
+ *
+ */
+Item.prototype.getDisplayStringForEntry = function (entry) {
+  Util.assert(entry instanceof Entry);
+  return entry.getDisplayString(this);
+};
+
 
 /**
  * Returns a list of the entries assigned to the "name" attribute.
@@ -470,15 +510,6 @@ Item.prototype.getSingleStringValueFromAttribute = function (attribute) {
 
 
 /**
- *
- */
-Item.prototype.getDisplayStringForEntry = function (entry) {
-  Util.assert(entry instanceof Entry);
-  return entry.getDisplayString(this);
-};
-
-
-/**
  * Returns a string describing the item.
  *
  * @scope    public instance method
@@ -491,10 +522,10 @@ Item.prototype.toString = function () {
   for (var key in listOfCategories) {
     var category = listOfCategories[key];
     if (category instanceof Item) {
-      returnString += "(" + category.getDisplayName() + ")";
+      returnString += "(" + category.getDisplayString() + ")";
     }
   }
-  returnString += " \"" + this.getDisplayName() + "\"" + "]";
+  returnString += " \"" + this.getDisplayString() + "\"" + "]";
   return returnString; 
 };
 

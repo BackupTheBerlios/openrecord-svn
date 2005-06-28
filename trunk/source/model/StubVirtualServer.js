@@ -849,7 +849,7 @@ StubVirtualServer.prototype._getTypeTokenFromType = function (inType) {
       return token;
     }
   }
-  Util.assert(false, "no such type: " + inType.getDisplayName());
+  Util.assert(false, "no such type: " + inType.getDisplayString());
 };
 
 

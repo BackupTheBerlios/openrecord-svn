@@ -27,7 +27,7 @@
              "uuid": "00001005-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Attribute: Query Spec.
+    { "Item": {                                               // Attribute: Query Spec
              "uuid": "00001006-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -107,13 +107,13 @@
              "uuid": "00001211-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Category: Query Spec.
+    { "Item": {                                               // Category: Query Spec
              "uuid": "00001212-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Category: Type
-             "uuid": "00001213-ce7f-11d9-8cd5-0011113ae5d6" }
-    },
+    // (Category: Type)
+    // 
+    { "Item": { "uuid": "00001213-ce7f-11d9-8cd5-0011113ae5d6" } },
     // -----------------------------------------------------------------------
     { "Item": {                                               // Category: Tag
              "uuid": "00001214-ce7f-11d9-8cd5-0011113ae5d6" }
@@ -252,27 +252,27 @@
             "value": "00001211-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Query Spec.
+    { "Entry": {                                              // Query Spec
              "uuid": "0001006a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00001006-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Query Spec.
+             "item": "00001006-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Query Spec
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Query Spec." }
+            "value": "Query Spec" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Query Spec.) assign (Attribute: Category) = (Category: Attribute)
-             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Query Spec.)
+             // in item (Attribute: Query Spec) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Query Spec)
              "uuid": "0001006b-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Query Spec.
+    { "Entry": {                                              // Query Spec
              "uuid": "0001006c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "item": "00001006-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Query Spec.
+             "item": "00001006-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Query Spec
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001212-ce7f-11d9-8cd5-0011113ae5d6" }
     },
@@ -385,9 +385,9 @@
             "value": "Inverse Attribute" }
     },
     // -----------------------------------------------------------------------
+    // in item (Attribute: Inverse Attribute) assign (Attribute: Category) = (Category: Attribute)
+    // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Inverse Attribute)
     { "Entry": {                                              
-             // in item (Attribute: Inverse Attribute) assign (Attribute: Category) = (Category: Attribute)
-             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Inverse Attribute)
              "uuid": "000100bb-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["0000100b-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
@@ -690,17 +690,17 @@
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // "Query Spec."
+    { "Entry": {                                              // "Query Spec"
              "uuid": "0001212a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00001212-ce7f-11d9-8cd5-0011113ae5d6",  // Category: Query Spec.
+             "item": "00001212-ce7f-11d9-8cd5-0011113ae5d6",  // Category: Query Spec
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Query Spec." }
+            "value": "Query Spec" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Category: Query Spec.) assign (Attribute: Category) = (Category: Category)
-             // in item (Category: Category) assign (Attribute: Items in Category) = (Category: Query Spec.)
+             // in item (Category: Query Spec) assign (Attribute: Category) = (Category: Category)
+             // in item (Category: Category) assign (Attribute: Items in Category) = (Category: Query Spec)
              "uuid": "0001212b-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00001212-ce7f-11d9-8cd5-0011113ae5d6", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
@@ -1028,8 +1028,8 @@
     },  
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Query Spec.) assign (Attribute: Inverse Attribute) = (Attribute: Section this query spec belongs to)
-             // in item (Attribute: Section this query spec belongs to) assign (Attribute: Inverse Attribute) = (Attribute: Query Spec.)
+             // in item (Attribute: Query Spec) assign (Attribute: Inverse Attribute) = (Attribute: Section this query spec belongs to)
+             // in item (Attribute: Section this query spec belongs to) assign (Attribute: Inverse Attribute) = (Attribute: Query Spec)
              "uuid": "0040105c-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"],

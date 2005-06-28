@@ -263,11 +263,9 @@ SectionView.prototype.doInitialDisplay = function () {
     optionElement.selected = (selectedPluginClass == pluginClass);
     optionElement.value = pluginClass.getPluginItemUuid();
     var pluginItem = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
-    optionElement.text = pluginItem.getDisplayName();
-    // Util.addEventListener(optionElement, "click", SectionView.clickOnPluginSelectionMenu);
+    optionElement.text = pluginItem.getDisplayString();
     listener = this; 
     Util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
-    // optionElement.innerHTML = pluginName;
   }
   
   View.createAndAppendTextNode(controlArea," of items whose ");
@@ -312,7 +310,7 @@ SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
   var categoryCalledLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA);
   var attributeCalledSectionThisLayoutDataBelongsTo = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO);
   repository.beginTransaction();
-  layoutItem = repository.newItem("Layout data for " + inPluginType.getDisplayName() + " of " + this.mySection.getDisplayName());
+  layoutItem = repository.newItem("Layout data for " + inPluginType.getDisplayString() + " of " + this.mySection.getDisplayString());
   layoutItem.assignToCategory(categoryCalledLayoutData);
   layoutItem.addEntryForAttribute(attrAppliesToPlugin, inPluginType);
   // this.mySection.addEntryForAttribute(attrLayoutData, layoutItem, repository.getTypeCalledItem());
@@ -352,10 +350,10 @@ SectionView.prototype._refreshQueryEditSpan = function () {
   for (var key in listOfAttributes) {
     var anAttribute = listOfAttributes[key];
     optionElement = View.createAndAppendElement(selectElement, "option");
-    optionElement.selected = (matchingAttribute.getDisplayName() == anAttribute.getDisplayName());
+    optionElement.selected = (matchingAttribute.getDisplayString() == anAttribute.getDisplayString());
     optionElement.value = anAttribute._getUuid();
     optionElement.onclick = this.clickOnAttributeMenu.bindAsEventListener(this);
-    optionElement.text = anAttribute.getDisplayName();
+    optionElement.text = anAttribute.getDisplayString();
   }
   
   View.createAndAppendTextNode(this._queryEditSpan, " is ");
@@ -473,7 +471,7 @@ SectionView.prototype.clickOnAttributeMenu = function (inEventObject) {
   var selectElement = optionElement.parentNode;
   var newChoiceUuid = optionElement.value;
   var newQueryMatchingAttribute = this.getWorld().getItemFromUuid(newChoiceUuid);
-  var newChoiceName = newQueryMatchingAttribute.getDisplayName();
+  var newChoiceName = newQueryMatchingAttribute.getDisplayString();
   
   var myQuery = this.getQuery();
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
@@ -487,7 +485,7 @@ SectionView.prototype.clickOnAttributeMenu = function (inEventObject) {
     Util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
     matchingAttribute = listOfMatchingAttrs[0].getValue();
   }
-  if (matchingAttribute.getDisplayName() != newChoiceName) {
+  if (matchingAttribute.getDisplayString() != newChoiceName) {
     if (listOfMatchingAttrs.length === 0) {
       myQuery.addEntryForAttribute(attributeCalledQueryMatchingAttribute, newQueryMatchingAttribute);
     } else {

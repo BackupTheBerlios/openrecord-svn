@@ -40,4 +40,2124 @@
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "This web site is where people working on OpenRecord keep track of the work being done." }
     } ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Page: People)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "82ca34a0-e775-11d9-89df-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Page: People) assign (Attribute: Name) = "People"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82cca5a0-e775-11d9-89df-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "82ca34a0-e775-11d9-89df-000c414ce854",
+            "value": "People"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: People) assign (Attribute: Category) = (Category: Page)
+    // On item (Category: Page) assign (Attribute: Items in Category) = (Page: People)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82cca5a1-e775-11d9-89df-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["82ca34a0-e775-11d9-89df-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: People) assign (Attribute: Summary) = "This is the people page."
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82cca5a2-e775-11d9-89df-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "82ca34a0-e775-11d9-89df-000c414ce854",
+            "value": "This is the people page."  }
+    },
+    // -----------------------------------------------------------------------
+    // (Section: List of People)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "82cca5a3-e775-11d9-89df-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of People) assign (Attribute: Name) = "List of People"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82cca5a4-e775-11d9-89df-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "82cca5a3-e775-11d9-89df-000c414ce854",
+            "value": "List of People"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of People) assign (Attribute: Category) = (Category: Section)
+    // On item (Category: Section) assign (Attribute: Items in Category) = (Section: List of People)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82cca5a5-e775-11d9-89df-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["82cca5a3-e775-11d9-89df-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: People) assign (Attribute: Sections In Page) = (Section: List of People)
+    // On item (Section: List of People) assign (Attribute: Page this section appears on) = (Page: People)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82cca5a6-e775-11d9-89df-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["82ca34a0-e775-11d9-89df-000c414ce854", "82cca5a3-e775-11d9-89df-000c414ce854"],
+        "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of People) assign (Attribute: Plugin View) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82cca5a7-e775-11d9-89df-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "82cca5a3-e775-11d9-89df-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "82cca5a8-e775-11d9-89df-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Name) = "New Query"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82cca5a9-e775-11d9-89df-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "82cca5a8-e775-11d9-89df-000c414ce854",
+            "value": "New Query"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Category) = (Category: Query Spec)
+    // On item (Category: Query Spec) assign (Attribute: Items in Category) = (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82cca5aa-e775-11d9-89df-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["82cca5a8-e775-11d9-89df-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of People) assign (Attribute: Query Spec) = (Query Spec: New Query)
+    // On item (Query Spec: New Query) assign (Attribute: Section this query spec belongs to) = (Section: List of People)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82cca5ab-e775-11d9-89df-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["82cca5a3-e775-11d9-89df-000c414ce854", "82cca5a8-e775-11d9-89df-000c414ce854"],
+        "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of List of People)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "82d3d190-e775-11d9-89df-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of People) assign (Attribute: Name) = "Layout data for Table of List of People"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82d3d191-e775-11d9-89df-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "82d3d190-e775-11d9-89df-000c414ce854",
+            "value": "Layout data for Table of List of People"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of People) assign (Attribute: Category) = (Category: Layout Data)
+    // On item (Category: Layout Data) assign (Attribute: Items in Category) = (Layout Data: Layout data for Table of List of People)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82d61b80-e775-11d9-89df-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["82d3d190-e775-11d9-89df-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of People) assign (Attribute: Applies To Plugin) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82d61b81-e775-11d9-89df-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "82d3d190-e775-11d9-89df-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of People) assign (Attribute: Layout Data) = (Layout Data: Layout data for Table of List of People)
+    // On item (Layout Data: Layout data for Table of List of People) assign (Attribute: Section this layout data belongs to) = (Section: List of People)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "82d61b82-e775-11d9-89df-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["82cca5a3-e775-11d9-89df-000c414ce854", "82d3d190-e775-11d9-89df-000c414ce854"],
+        "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Page: Iterations)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "5555ef80-e777-11d9-8aaf-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Page: Iterations) assign (Attribute: Name) = "Iterations"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "5555ef81-e777-11d9-8aaf-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "5555ef80-e777-11d9-8aaf-000c414ce854",
+            "value": "Iterations"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Iterations) assign (Attribute: Category) = (Category: Page)
+    // On item (Category: Page) assign (Attribute: Items in Category) = (Page: Iterations)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "5555ef82-e777-11d9-8aaf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["5555ef80-e777-11d9-8aaf-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Iterations) assign (Attribute: Summary) = "This is the iterations page."
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "5555ef83-e777-11d9-8aaf-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "5555ef80-e777-11d9-8aaf-000c414ce854",
+            "value": "This is the iterations page."  }
+    },
+    // -----------------------------------------------------------------------
+    // (Section: List of Iterations)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "5555ef84-e777-11d9-8aaf-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Iterations) assign (Attribute: Name) = "List of Iterations"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "5555ef85-e777-11d9-8aaf-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "5555ef84-e777-11d9-8aaf-000c414ce854",
+            "value": "List of Iterations"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Iterations) assign (Attribute: Category) = (Category: Section)
+    // On item (Category: Section) assign (Attribute: Items in Category) = (Section: List of Iterations)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "5555ef86-e777-11d9-8aaf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["5555ef84-e777-11d9-8aaf-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Iterations) assign (Attribute: Sections In Page) = (Section: List of Iterations)
+    // On item (Section: List of Iterations) assign (Attribute: Page this section appears on) = (Page: Iterations)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "5555ef87-e777-11d9-8aaf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["5555ef80-e777-11d9-8aaf-000c414ce854", "5555ef84-e777-11d9-8aaf-000c414ce854"],
+        "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Iterations) assign (Attribute: Plugin View) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "5555ef88-e777-11d9-8aaf-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "5555ef84-e777-11d9-8aaf-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "5555ef89-e777-11d9-8aaf-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Name) = "New Query"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "5555ef8a-e777-11d9-8aaf-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "5555ef89-e777-11d9-8aaf-000c414ce854",
+            "value": "New Query"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Category) = (Category: Query Spec)
+    // On item (Category: Query Spec) assign (Attribute: Items in Category) = (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "5555ef8b-e777-11d9-8aaf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["5555ef89-e777-11d9-8aaf-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Iterations) assign (Attribute: Query Spec) = (Query Spec: New Query)
+    // On item (Query Spec: New Query) assign (Attribute: Section this query spec belongs to) = (Section: List of Iterations)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "5555ef8c-e777-11d9-8aaf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["5555ef84-e777-11d9-8aaf-000c414ce854", "5555ef89-e777-11d9-8aaf-000c414ce854"],
+        "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of List of Iterations)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "555d1b70-e777-11d9-8aaf-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Iterations) assign (Attribute: Name) = "Layout data for Table of List of Iterations"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "555d1b71-e777-11d9-8aaf-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "555d1b70-e777-11d9-8aaf-000c414ce854",
+            "value": "Layout data for Table of List of Iterations"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Iterations) assign (Attribute: Category) = (Category: Layout Data)
+    // On item (Category: Layout Data) assign (Attribute: Items in Category) = (Layout Data: Layout data for Table of List of Iterations)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "555d1b72-e777-11d9-8aaf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["555d1b70-e777-11d9-8aaf-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Iterations) assign (Attribute: Applies To Plugin) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "555d1b73-e777-11d9-8aaf-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "555d1b70-e777-11d9-8aaf-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Iterations) assign (Attribute: Layout Data) = (Layout Data: Layout data for Table of List of Iterations)
+    // On item (Layout Data: Layout data for Table of List of Iterations) assign (Attribute: Section this layout data belongs to) = (Section: List of Iterations)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "555d1b74-e777-11d9-8aaf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["5555ef84-e777-11d9-8aaf-000c414ce854", "555d1b70-e777-11d9-8aaf-000c414ce854"],
+        "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Page: Stories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "a7ef69b0-e777-11d9-80cf-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Page: Stories) assign (Attribute: Name) = "Stories"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7ef69b1-e777-11d9-80cf-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "a7ef69b0-e777-11d9-80cf-000c414ce854",
+            "value": "Stories"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Stories) assign (Attribute: Category) = (Category: Page)
+    // On item (Category: Page) assign (Attribute: Items in Category) = (Page: Stories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7ef69b2-e777-11d9-80cf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a7ef69b0-e777-11d9-80cf-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Stories) assign (Attribute: Summary) = "This is the stories page."
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7ef69b3-e777-11d9-80cf-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "a7ef69b0-e777-11d9-80cf-000c414ce854",
+            "value": "This is the stories page."  }
+    },
+    // -----------------------------------------------------------------------
+    // (Section: List of Stories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "a7ef69b4-e777-11d9-80cf-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Stories) assign (Attribute: Name) = "List of Stories"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7ef69b5-e777-11d9-80cf-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "a7ef69b4-e777-11d9-80cf-000c414ce854",
+            "value": "List of Stories"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Stories) assign (Attribute: Category) = (Category: Section)
+    // On item (Category: Section) assign (Attribute: Items in Category) = (Section: List of Stories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7ef69b6-e777-11d9-80cf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a7ef69b4-e777-11d9-80cf-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Stories) assign (Attribute: Sections In Page) = (Section: List of Stories)
+    // On item (Section: List of Stories) assign (Attribute: Page this section appears on) = (Page: Stories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7ef69b7-e777-11d9-80cf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a7ef69b0-e777-11d9-80cf-000c414ce854", "a7ef69b4-e777-11d9-80cf-000c414ce854"],
+        "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Stories) assign (Attribute: Plugin View) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7ef69b8-e777-11d9-80cf-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "a7ef69b4-e777-11d9-80cf-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "a7ef69b9-e777-11d9-80cf-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Name) = "New Query"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7ef69ba-e777-11d9-80cf-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "a7ef69b9-e777-11d9-80cf-000c414ce854",
+            "value": "New Query"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Category) = (Category: Query Spec)
+    // On item (Category: Query Spec) assign (Attribute: Items in Category) = (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7ef69bb-e777-11d9-80cf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a7ef69b9-e777-11d9-80cf-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Stories) assign (Attribute: Query Spec) = (Query Spec: New Query)
+    // On item (Query Spec: New Query) assign (Attribute: Section this query spec belongs to) = (Section: List of Stories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7ef69bc-e777-11d9-80cf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a7ef69b4-e777-11d9-80cf-000c414ce854", "a7ef69b9-e777-11d9-80cf-000c414ce854"],
+        "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of List of Stories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "a7f8df90-e777-11d9-80cf-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Stories) assign (Attribute: Name) = "Layout data for Table of List of Stories"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7f8df91-e777-11d9-80cf-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "a7f8df90-e777-11d9-80cf-000c414ce854",
+            "value": "Layout data for Table of List of Stories"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Stories) assign (Attribute: Category) = (Category: Layout Data)
+    // On item (Category: Layout Data) assign (Attribute: Items in Category) = (Layout Data: Layout data for Table of List of Stories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7f8df92-e777-11d9-80cf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a7f8df90-e777-11d9-80cf-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Stories) assign (Attribute: Applies To Plugin) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7f8df93-e777-11d9-80cf-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "a7f8df90-e777-11d9-80cf-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Stories) assign (Attribute: Layout Data) = (Layout Data: Layout data for Table of List of Stories)
+    // On item (Layout Data: Layout data for Table of List of Stories) assign (Attribute: Section this layout data belongs to) = (Section: List of Stories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "a7f8df94-e777-11d9-80cf-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a7ef69b4-e777-11d9-80cf-000c414ce854", "a7f8df90-e777-11d9-80cf-000c414ce854"],
+        "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Page: Tasks)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "d99a41b0-e777-11d9-8b8e-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Page: Tasks) assign (Attribute: Name) = "Tasks"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d99a41b1-e777-11d9-8b8e-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "d99a41b0-e777-11d9-8b8e-000c414ce854",
+            "value": "Tasks"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Tasks) assign (Attribute: Category) = (Category: Page)
+    // On item (Category: Page) assign (Attribute: Items in Category) = (Page: Tasks)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d99a41b2-e777-11d9-8b8e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["d99a41b0-e777-11d9-8b8e-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Tasks) assign (Attribute: Summary) = "This is the tasks page."
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d99a41b3-e777-11d9-8b8e-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "d99a41b0-e777-11d9-8b8e-000c414ce854",
+            "value": "This is the tasks page."  }
+    },
+    // -----------------------------------------------------------------------
+    // (Section: List of Tasks)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "d99a41b4-e777-11d9-8b8e-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Tasks) assign (Attribute: Name) = "List of Tasks"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d99a41b5-e777-11d9-8b8e-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "d99a41b4-e777-11d9-8b8e-000c414ce854",
+            "value": "List of Tasks"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Tasks) assign (Attribute: Category) = (Category: Section)
+    // On item (Category: Section) assign (Attribute: Items in Category) = (Section: List of Tasks)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d99a41b6-e777-11d9-8b8e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["d99a41b4-e777-11d9-8b8e-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Tasks) assign (Attribute: Sections In Page) = (Section: List of Tasks)
+    // On item (Section: List of Tasks) assign (Attribute: Page this section appears on) = (Page: Tasks)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d99a41b7-e777-11d9-8b8e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["d99a41b0-e777-11d9-8b8e-000c414ce854", "d99a41b4-e777-11d9-8b8e-000c414ce854"],
+        "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Tasks) assign (Attribute: Plugin View) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d99a41b8-e777-11d9-8b8e-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "d99a41b4-e777-11d9-8b8e-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "d99a41b9-e777-11d9-8b8e-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Name) = "New Query"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d99a41ba-e777-11d9-8b8e-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "d99a41b9-e777-11d9-8b8e-000c414ce854",
+            "value": "New Query"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Category) = (Category: Query Spec)
+    // On item (Category: Query Spec) assign (Attribute: Items in Category) = (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d99a41bb-e777-11d9-8b8e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["d99a41b9-e777-11d9-8b8e-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Tasks) assign (Attribute: Query Spec) = (Query Spec: New Query)
+    // On item (Query Spec: New Query) assign (Attribute: Section this query spec belongs to) = (Section: List of Tasks)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d99a41bc-e777-11d9-8b8e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["d99a41b4-e777-11d9-8b8e-000c414ce854", "d99a41b9-e777-11d9-8b8e-000c414ce854"],
+        "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of List of Tasks)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "d9a3b790-e777-11d9-8b8e-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Tasks) assign (Attribute: Name) = "Layout data for Table of List of Tasks"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d9a3b791-e777-11d9-8b8e-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "d9a3b790-e777-11d9-8b8e-000c414ce854",
+            "value": "Layout data for Table of List of Tasks"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Tasks) assign (Attribute: Category) = (Category: Layout Data)
+    // On item (Category: Layout Data) assign (Attribute: Items in Category) = (Layout Data: Layout data for Table of List of Tasks)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d9a3b792-e777-11d9-8b8e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["d9a3b790-e777-11d9-8b8e-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Tasks) assign (Attribute: Applies To Plugin) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d9a3b793-e777-11d9-8b8e-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "d9a3b790-e777-11d9-8b8e-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Tasks) assign (Attribute: Layout Data) = (Layout Data: Layout data for Table of List of Tasks)
+    // On item (Layout Data: Layout data for Table of List of Tasks) assign (Attribute: Section this layout data belongs to) = (Section: List of Tasks)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "d9a3b794-e777-11d9-8b8e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["d99a41b4-e777-11d9-8b8e-000c414ce854", "d9a3b790-e777-11d9-8b8e-000c414ce854"],
+        "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Page: Bugs)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "0def0400-e778-11d9-bab6-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Page: Bugs) assign (Attribute: Name) = "Bugs"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0def0401-e778-11d9-bab6-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "0def0400-e778-11d9-bab6-000c414ce854",
+            "value": "Bugs"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Bugs) assign (Attribute: Category) = (Category: Page)
+    // On item (Category: Page) assign (Attribute: Items in Category) = (Page: Bugs)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0def0402-e778-11d9-bab6-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0def0400-e778-11d9-bab6-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Bugs) assign (Attribute: Summary) = "This is the bugs page."
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0def0403-e778-11d9-bab6-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "0def0400-e778-11d9-bab6-000c414ce854",
+            "value": "This is the bugs page."  }
+    },
+    // -----------------------------------------------------------------------
+    // (Section: List of Bugs)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "0df14df0-e778-11d9-bab6-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Bugs) assign (Attribute: Name) = "List of Bugs"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df14df1-e778-11d9-bab6-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "0df14df0-e778-11d9-bab6-000c414ce854",
+            "value": "List of Bugs"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Bugs) assign (Attribute: Category) = (Category: Section)
+    // On item (Category: Section) assign (Attribute: Items in Category) = (Section: List of Bugs)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df14df2-e778-11d9-bab6-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0df14df0-e778-11d9-bab6-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Bugs) assign (Attribute: Sections In Page) = (Section: List of Bugs)
+    // On item (Section: List of Bugs) assign (Attribute: Page this section appears on) = (Page: Bugs)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df14df3-e778-11d9-bab6-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0def0400-e778-11d9-bab6-000c414ce854", "0df14df0-e778-11d9-bab6-000c414ce854"],
+        "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Bugs) assign (Attribute: Plugin View) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df14df4-e778-11d9-bab6-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "0df14df0-e778-11d9-bab6-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "0df14df5-e778-11d9-bab6-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Name) = "New Query"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df14df6-e778-11d9-bab6-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "0df14df5-e778-11d9-bab6-000c414ce854",
+            "value": "New Query"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Category) = (Category: Query Spec)
+    // On item (Category: Query Spec) assign (Attribute: Items in Category) = (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df14df7-e778-11d9-bab6-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0df14df5-e778-11d9-bab6-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Bugs) assign (Attribute: Query Spec) = (Query Spec: New Query)
+    // On item (Query Spec: New Query) assign (Attribute: Section this query spec belongs to) = (Section: List of Bugs)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df14df8-e778-11d9-bab6-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0df14df0-e778-11d9-bab6-000c414ce854", "0df14df5-e778-11d9-bab6-000c414ce854"],
+        "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of List of Bugs)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "0df879e0-e778-11d9-bab6-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Bugs) assign (Attribute: Name) = "Layout data for Table of List of Bugs"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df879e1-e778-11d9-bab6-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "0df879e0-e778-11d9-bab6-000c414ce854",
+            "value": "Layout data for Table of List of Bugs"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Bugs) assign (Attribute: Category) = (Category: Layout Data)
+    // On item (Category: Layout Data) assign (Attribute: Items in Category) = (Layout Data: Layout data for Table of List of Bugs)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df879e2-e778-11d9-bab6-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0df879e0-e778-11d9-bab6-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Bugs) assign (Attribute: Applies To Plugin) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df879e3-e778-11d9-bab6-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "0df879e0-e778-11d9-bab6-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Bugs) assign (Attribute: Layout Data) = (Layout Data: Layout data for Table of List of Bugs)
+    // On item (Layout Data: Layout data for Table of List of Bugs) assign (Attribute: Section this layout data belongs to) = (Section: List of Bugs)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "0df879e4-e778-11d9-bab6-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0df14df0-e778-11d9-bab6-000c414ce854", "0df879e0-e778-11d9-bab6-000c414ce854"],
+        "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Page: Introspection)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "4bfcc9d0-e778-11d9-a869-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Page: Introspection) assign (Attribute: Name) = "Introspection"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4bfcc9d1-e778-11d9-a869-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4bfcc9d0-e778-11d9-a869-000c414ce854",
+            "value": "Introspection"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Introspection) assign (Attribute: Category) = (Category: Page)
+    // On item (Category: Page) assign (Attribute: Items in Category) = (Page: Introspection)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4bfcc9d2-e778-11d9-a869-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4bfcc9d0-e778-11d9-a869-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Introspection) assign (Attribute: Summary) = "This is the introspection page."
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4bfcc9d3-e778-11d9-a869-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4bfcc9d0-e778-11d9-a869-000c414ce854",
+            "value": "This is the introspection page."  }
+    },
+    // -----------------------------------------------------------------------
+    // (Section: List of Categories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "4bfcc9d4-e778-11d9-a869-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Categories) assign (Attribute: Name) = "List of Categories"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4bfcc9d5-e778-11d9-a869-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4bfcc9d4-e778-11d9-a869-000c414ce854",
+            "value": "List of Categories"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Categories) assign (Attribute: Category) = (Category: Section)
+    // On item (Category: Section) assign (Attribute: Items in Category) = (Section: List of Categories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4bfcc9d6-e778-11d9-a869-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4bfcc9d4-e778-11d9-a869-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Introspection) assign (Attribute: Sections In Page) = (Section: List of Categories)
+    // On item (Section: List of Categories) assign (Attribute: Page this section appears on) = (Page: Introspection)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4bfcc9d7-e778-11d9-a869-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4bfcc9d0-e778-11d9-a869-000c414ce854", "4bfcc9d4-e778-11d9-a869-000c414ce854"],
+        "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Categories) assign (Attribute: Plugin View) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4bff3ad0-e778-11d9-a869-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4bfcc9d4-e778-11d9-a869-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "4bff3ad1-e778-11d9-a869-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Name) = "New Query"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4bff3ad2-e778-11d9-a869-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4bff3ad1-e778-11d9-a869-000c414ce854",
+            "value": "New Query"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Category) = (Category: Query Spec)
+    // On item (Category: Query Spec) assign (Attribute: Items in Category) = (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4bff3ad3-e778-11d9-a869-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4bff3ad1-e778-11d9-a869-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Categories) assign (Attribute: Query Spec) = (Query Spec: New Query)
+    // On item (Query Spec: New Query) assign (Attribute: Section this query spec belongs to) = (Section: List of Categories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4bff3ad4-e778-11d9-a869-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4bfcc9d4-e778-11d9-a869-000c414ce854", "4bff3ad1-e778-11d9-a869-000c414ce854"],
+        "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of List of Categories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "4c063fb0-e778-11d9-a869-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Categories) assign (Attribute: Name) = "Layout data for Table of List of Categories"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4c063fb1-e778-11d9-a869-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4c063fb0-e778-11d9-a869-000c414ce854",
+            "value": "Layout data for Table of List of Categories"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Categories) assign (Attribute: Category) = (Category: Layout Data)
+    // On item (Category: Layout Data) assign (Attribute: Items in Category) = (Layout Data: Layout data for Table of List of Categories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4c063fb2-e778-11d9-a869-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4c063fb0-e778-11d9-a869-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of List of Categories) assign (Attribute: Applies To Plugin) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4c063fb3-e778-11d9-a869-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4c063fb0-e778-11d9-a869-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: List of Categories) assign (Attribute: Layout Data) = (Layout Data: Layout data for Table of List of Categories)
+    // On item (Layout Data: Layout data for Table of List of Categories) assign (Attribute: Section this layout data belongs to) = (Section: List of Categories)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4c063fb4-e778-11d9-a869-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4bfcc9d4-e778-11d9-a869-000c414ce854", "4c063fb0-e778-11d9-a869-000c414ce854"],
+        "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Query Spec: New Query) assign (Attribute: Matching Value) = (Category: Category)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "7fb1c9b0-e778-11d9-a7da-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "4bff3ad1-e778-11d9-a869-000c414ce854",
+          "value": "00001211-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Query Spec: New Query) assign (Attribute: Matching Value) = (Category: Person)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "9c0d9d50-e778-11d9-a7da-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "82cca5a8-e775-11d9-89df-000c414ce854",
+          "value": "00001201-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Category: Iteration)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "a5dc24a0-e778-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Category: Iteration) assign (Attribute: Name) = "Iteration"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "aa24f1e0-e778-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "a5dc24a0-e778-11d9-a7da-000c414ce854",
+            "value": "Iteration"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Category: Iteration) assign (Attribute: Category) = (Category: Category)
+    // On item (Category: Category) assign (Attribute: Items in Category) = (Category: Iteration)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "aa24f1e1-e778-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a5dc24a0-e778-11d9-a7da-000c414ce854", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Category: User Story)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "aa273bd0-e778-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Category: User Story) assign (Attribute: Name) = "User Story"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "b1532bd0-e778-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "aa273bd0-e778-11d9-a7da-000c414ce854",
+            "value": "User Story"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Category: User Story) assign (Attribute: Category) = (Category: Category)
+    // On item (Category: Category) assign (Attribute: Items in Category) = (Category: User Story)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "b1532bd1-e778-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["aa273bd0-e778-11d9-a7da-000c414ce854", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Category: Task)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "b15575c0-e778-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Category: Task) assign (Attribute: Name) = "Task"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "b3f37930-e778-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "b15575c0-e778-11d9-a7da-000c414ce854",
+            "value": "Task"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Category: Task) assign (Attribute: Category) = (Category: Category)
+    // On item (Category: Category) assign (Attribute: Items in Category) = (Category: Task)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "b3f37931-e778-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["b15575c0-e778-11d9-a7da-000c414ce854", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Category: Bug)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "b3f37932-e778-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Category: Bug) assign (Attribute: Name) = "Bug"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "b6a46860-e778-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "b3f37932-e778-11d9-a7da-000c414ce854",
+            "value": "Bug"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Category: Bug) assign (Attribute: Category) = (Category: Category)
+    // On item (Category: Category) assign (Attribute: Items in Category) = (Category: Bug)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "b6a46861-e778-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["b3f37932-e778-11d9-a7da-000c414ce854", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Query Spec: New Query) assign (Attribute: Matching Value) = (Category: Iteration)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "bb8cf810-e778-11d9-a7da-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "5555ef89-e777-11d9-8aaf-000c414ce854",
+          "value": "a5dc24a0-e778-11d9-a7da-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Query Spec: New Query) assign (Attribute: Matching Value) = (Category: User Story)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "c6262260-e778-11d9-a7da-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "a7ef69b9-e777-11d9-80cf-000c414ce854",
+          "value": "aa273bd0-e778-11d9-a7da-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Query Spec: New Query) assign (Attribute: Matching Value) = (Category: Task)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "c9283ed0-e778-11d9-a7da-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "d99a41b9-e777-11d9-8b8e-000c414ce854",
+          "value": "b15575c0-e778-11d9-a7da-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Query Spec: New Query) assign (Attribute: Matching Value) = (Category: Bug)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "cd0ccc00-e778-11d9-a7da-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "0df14df5-e778-11d9-bab6-000c414ce854",
+          "value": "b3f37932-e778-11d9-a7da-000c414ce854"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Iteration: Iteration 1)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "ceb795d0-e778-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Iteration: Iteration 1) assign (Attribute: Name) = "Iteration 1"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "e0d99d30-e778-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "ceb795d0-e778-11d9-a7da-000c414ce854",
+            "value": "Iteration 1"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Iteration: Iteration 1) assign (Attribute: Category) = (Category: Iteration)
+    // On item (Category: Iteration) assign (Attribute: Items in Category) = (Iteration: Iteration 1)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "e0d99d31-e778-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["ceb795d0-e778-11d9-a7da-000c414ce854", "a5dc24a0-e778-11d9-a7da-000c414ce854"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Iteration: Iteration 2)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "e0dc0e30-e778-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Iteration: Iteration 2) assign (Attribute: Name) = "Iteration 2"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "e2a0efb0-e778-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "e0dc0e30-e778-11d9-a7da-000c414ce854",
+            "value": "Iteration 2"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Iteration: Iteration 2) assign (Attribute: Category) = (Category: Iteration)
+    // On item (Category: Iteration) assign (Attribute: Items in Category) = (Iteration: Iteration 2)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "e2a0efb1-e778-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["e0dc0e30-e778-11d9-a7da-000c414ce854", "a5dc24a0-e778-11d9-a7da-000c414ce854"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Iteration: Iteration 3)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "e2a360b0-e778-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Iteration: Iteration 3) assign (Attribute: Name) = "Iteration 3"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "e7208460-e778-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "e2a360b0-e778-11d9-a7da-000c414ce854",
+            "value": "Iteration 3"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Iteration: Iteration 3) assign (Attribute: Category) = (Category: Iteration)
+    // On item (Category: Iteration) assign (Attribute: Items in Category) = (Iteration: Iteration 3)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "e7208461-e778-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["e2a360b0-e778-11d9-a7da-000c414ce854", "a5dc24a0-e778-11d9-a7da-000c414ce854"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Iteration: Iteration 4)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "e7208462-e778-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Iteration: Iteration 4) assign (Attribute: Name) = "Iteration 4"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "ecdae300-e778-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "e7208462-e778-11d9-a7da-000c414ce854",
+            "value": "Iteration 4"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Iteration: Iteration 4) assign (Attribute: Category) = (Category: Iteration)
+    // On item (Category: Iteration) assign (Attribute: Items in Category) = (Iteration: Iteration 4)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "ecdae301-e778-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["e7208462-e778-11d9-a7da-000c414ce854", "a5dc24a0-e778-11d9-a7da-000c414ce854"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Iterations) assign (Attribute: Table Columns) = (Attribute: Short Name)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "f117a251-e778-11d9-a7da-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "555d1b70-e777-11d9-8aaf-000c414ce854",
+          "value": "00001002-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Iterations) assign (Attribute: Table Columns) = (Attribute: Name)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "f117a250-e778-11d9-a7da-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "555d1b70-e777-11d9-8aaf-000c414ce854",
+          "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 1) assign (Attribute: Short Name) = "Iteration 1"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "f53f04e0-e778-11d9-a7da-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "ceb795d0-e778-11d9-a7da-000c414ce854",
+          "value": "Iteration 1"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 2) assign (Attribute: Short Name) = "Iteration 2"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "f6f0d390-e778-11d9-a7da-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "e0dc0e30-e778-11d9-a7da-000c414ce854",
+          "value": "Iteration 2"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 3) assign (Attribute: Short Name) = "Iteration 3"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "f89b9d60-e778-11d9-a7da-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "e2a360b0-e778-11d9-a7da-000c414ce854",
+          "value": "Iteration 3"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 4) assign (Attribute: Short Name) = "Iteration 4"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "fc8c3880-e778-11d9-a7da-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "e7208462-e778-11d9-a7da-000c414ce854",
+          "value": "Iteration 4"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 1) assign (Attribute: Name) = "Iteration 1 - May 2005"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "113b7a70-e779-11d9-a7da-000c414ce854",
+  "previousEntry": "e0d99d30-e778-11d9-a7da-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "ceb795d0-e778-11d9-a7da-000c414ce854",
+          "value": "Iteration 1 - May 2005"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 1) assign (Attribute: Name) = "Iteration 1 – May 2005"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "26d20f20-e779-11d9-a7da-000c414ce854",
+  "previousEntry": "113b7a70-e779-11d9-a7da-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "ceb795d0-e778-11d9-a7da-000c414ce854",
+          "value": "Iteration 1 – May 2005"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 2) assign (Attribute: Name) = "Iteration 2 – June 2005"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "2d8db120-e779-11d9-a7da-000c414ce854",
+  "previousEntry": "e2a0efb0-e778-11d9-a7da-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "e0dc0e30-e778-11d9-a7da-000c414ce854",
+          "value": "Iteration 2 – June 2005"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 3) assign (Attribute: Name) = "Iteration 3 – July 2005"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "31b2c9c0-e779-11d9-a7da-000c414ce854",
+  "previousEntry": "e7208460-e778-11d9-a7da-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "e2a360b0-e778-11d9-a7da-000c414ce854",
+          "value": "Iteration 3 – July 2005"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Section: New Section)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "4b113be0-e779-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Section: New Section) assign (Attribute: Name) = "New Section"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b113be1-e779-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4b113be0-e779-11d9-a7da-000c414ce854",
+            "value": "New Section"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: New Section) assign (Attribute: Category) = (Category: Section)
+    // On item (Category: Section) assign (Attribute: Items in Category) = (Section: New Section)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b13ace0-e779-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4b113be0-e779-11d9-a7da-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Page: Introspection) assign (Attribute: Sections In Page) = (Section: New Section)
+    // On item (Section: New Section) assign (Attribute: Page this section appears on) = (Page: Introspection)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b13ace1-e779-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4bfcc9d0-e778-11d9-a869-000c414ce854", "4b113be0-e779-11d9-a7da-000c414ce854"],
+        "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: New Section) assign (Attribute: Plugin View) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b13ace2-e779-11d9-a7da-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4b113be0-e779-11d9-a7da-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "4b13ace3-e779-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Name) = "New Query"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b13ace4-e779-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4b13ace3-e779-11d9-a7da-000c414ce854",
+            "value": "New Query"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Query Spec: New Query) assign (Attribute: Category) = (Category: Query Spec)
+    // On item (Category: Query Spec) assign (Attribute: Items in Category) = (Query Spec: New Query)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b13ace5-e779-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4b13ace3-e779-11d9-a7da-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: New Section) assign (Attribute: Query Spec) = (Query Spec: New Query)
+    // On item (Query Spec: New Query) assign (Attribute: Section this query spec belongs to) = (Section: New Section)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b13ace6-e779-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4b113be0-e779-11d9-a7da-000c414ce854", "4b13ace3-e779-11d9-a7da-000c414ce854"],
+        "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of New Section)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "4b1867d0-e779-11d9-a7da-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of New Section) assign (Attribute: Name) = "Layout data for Table of New Section"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b1867d1-e779-11d9-a7da-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4b1867d0-e779-11d9-a7da-000c414ce854",
+            "value": "Layout data for Table of New Section"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of New Section) assign (Attribute: Category) = (Category: Layout Data)
+    // On item (Category: Layout Data) assign (Attribute: Items in Category) = (Layout Data: Layout data for Table of New Section)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b1867d2-e779-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4b1867d0-e779-11d9-a7da-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Layout Data: Layout data for Table of New Section) assign (Attribute: Applies To Plugin) = (Plugin View: Table)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b1867d3-e779-11d9-a7da-000c414ce854",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "4b1867d0-e779-11d9-a7da-000c414ce854",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Section: New Section) assign (Attribute: Layout Data) = (Layout Data: Layout data for Table of New Section)
+    // On item (Layout Data: Layout data for Table of New Section) assign (Attribute: Section this layout data belongs to) = (Section: New Section)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "4b1867d4-e779-11d9-a7da-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["4b113be0-e779-11d9-a7da-000c414ce854", "4b1867d0-e779-11d9-a7da-000c414ce854"],
+        "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Query Spec: New Query) assign (Attribute: Matching Value) = (Category: Attribute)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "556c72d0-e779-11d9-a7da-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "4b13ace3-e779-11d9-a7da-000c414ce854",
+          "value": "00001210-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Section: List of Attributes) assign (Attribute: Name) = "List of Attributes"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "5ee9f3f0-e779-11d9-a7da-000c414ce854",
+  "previousEntry": "4b113be1-e779-11d9-a7da-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "4b113be0-e779-11d9-a7da-000c414ce854",
+          "value": "List of Attributes"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (User Story: Deletion)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "add58150-e779-11d9-93ea-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (User Story: Deletion) assign (Attribute: Name) = "Deletion"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "b3f3f8f0-e779-11d9-93ea-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "add58150-e779-11d9-93ea-000c414ce854",
+            "value": "Deletion"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (User Story: Deletion) assign (Attribute: Category) = (Category: User Story)
+    // On item (Category: User Story) assign (Attribute: Items in Category) = (User Story: Deletion)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "b3f3f8f1-e779-11d9-93ea-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["add58150-e779-11d9-93ea-000c414ce854", "aa273bd0-e778-11d9-a7da-000c414ce854"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Stories) assign (Attribute: Table Columns) = (Attribute: Name)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "b8f42f50-e779-11d9-93ea-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "a7f8df90-e777-11d9-80cf-000c414ce854",
+          "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Stories) assign (Attribute: Table Columns) = (Attribute: Summary)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "b8f42f51-e779-11d9-93ea-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "a7f8df90-e777-11d9-80cf-000c414ce854",
+          "value": "00001003-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (User Story: Deletion) assign (Attribute: Summary) = "A logged-in user can delete items"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "bac78fc0-e779-11d9-93ea-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "add58150-e779-11d9-93ea-000c414ce854",
+          "value": "A logged-in user can delete items"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (User Story: Reliable data-store)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "b8f6a050-e779-11d9-93ea-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (User Story: Reliable data-store) assign (Attribute: Name) = "Reliable data-store"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "ccdb3f40-e779-11d9-93ea-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "b8f6a050-e779-11d9-93ea-000c414ce854",
+            "value": "Reliable data-store"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (User Story: Reliable data-store) assign (Attribute: Category) = (Category: User Story)
+    // On item (Category: User Story) assign (Attribute: Items in Category) = (User Story: Reliable data-store)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "ccdb3f41-e779-11d9-93ea-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["b8f6a050-e779-11d9-93ea-000c414ce854", "aa273bd0-e778-11d9-a7da-000c414ce854"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (User Story: Reliable data-store) assign (Attribute: Summary) = "Users can trust that data won't be lost."
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "dad39a20-e779-11d9-93ea-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "b8f6a050-e779-11d9-93ea-000c414ce854",
+          "value": "Users can trust that data won't be lost."  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Task: DOM level 2)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "fd8967c0-e779-11d9-93ea-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Task: DOM level 2) assign (Attribute: Name) = "DOM level 2"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "036c35f0-e77a-11d9-93ea-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "fd8967c0-e779-11d9-93ea-000c414ce854",
+            "value": "DOM level 2"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Task: DOM level 2) assign (Attribute: Category) = (Category: Task)
+    // On item (Category: Task) assign (Attribute: Items in Category) = (Task: DOM level 2)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "036c35f1-e77a-11d9-93ea-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["fd8967c0-e779-11d9-93ea-000c414ce854", "b15575c0-e778-11d9-a7da-000c414ce854"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Tasks) assign (Attribute: Table Columns) = (Attribute: Summary)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "0503ecf1-e77a-11d9-93ea-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "d9a3b790-e777-11d9-8b8e-000c414ce854",
+          "value": "00001003-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Tasks) assign (Attribute: Table Columns) = (Attribute: Name)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "0503ecf0-e77a-11d9-93ea-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "d9a3b790-e777-11d9-8b8e-000c414ce854",
+          "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Task: DOM level 2) assign (Attribute: Summary) = "Convert UI code from DOM level 0 to DOM level 2"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "08598090-e77a-11d9-93ea-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "fd8967c0-e779-11d9-93ea-000c414ce854",
+          "value": "Convert UI code from DOM level 0 to DOM level 2"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Bugs) assign (Attribute: Table Columns) = (Attribute: Name)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "15ed9b60-e77a-11d9-93ea-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "0df879e0-e778-11d9-bab6-000c414ce854",
+          "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Bugs) assign (Attribute: Table Columns) = (Attribute: Summary)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "15ed9b61-e77a-11d9-93ea-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "0df879e0-e778-11d9-bab6-000c414ce854",
+          "value": "00001003-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Bug: Back button)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "15efe550-e77a-11d9-93ea-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Bug: Back button) assign (Attribute: Name) = "Back button"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "18630830-e77a-11d9-93ea-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "15efe550-e77a-11d9-93ea-000c414ce854",
+            "value": "Back button"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Bug: Back button) assign (Attribute: Category) = (Category: Bug)
+    // On item (Category: Bug) assign (Attribute: Items in Category) = (Bug: Back button)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "18630831-e77a-11d9-93ea-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["15efe550-e77a-11d9-93ea-000c414ce854", "b3f37932-e778-11d9-a7da-000c414ce854"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Bug: Back button) assign (Attribute: Summary) = "back button is broken."
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "1b81ad50-e77a-11d9-93ea-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "15efe550-e77a-11d9-93ea-000c414ce854",
+          "value": "back button is broken."  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Bug: Back button) assign (Attribute: Summary) = "The back button is broken."
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "1f87a530-e77a-11d9-93ea-000c414ce854",
+  "previousEntry": "1b81ad50-e77a-11d9-93ea-000c414ce854",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "15efe550-e77a-11d9-93ea-000c414ce854",
+          "value": "The back button is broken."  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Attribute: Completion Date)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "3af52130-e77a-11d9-93ea-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Completion Date) assign (Attribute: Name) = "Completion Date"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "457ff3a0-e77a-11d9-93ea-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "3af52130-e77a-11d9-93ea-000c414ce854",
+            "value": "Completion Date"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Completion Date) assign (Attribute: Category) = (Category: Attribute)
+    // On item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Completion Date)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "457ff3a1-e77a-11d9-93ea-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["3af52130-e77a-11d9-93ea-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Attribute: Completion Date) assign (Attribute: Expected Type) = (Type: Date)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "4782ef90-e77a-11d9-93ea-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "3af52130-e77a-11d9-93ea-000c414ce854",
+          "value": "00001022-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Iterations) assign (Attribute: Table Columns) = (Attribute: Completion Date)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "572f8a20-e77a-11d9-8196-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "555d1b70-e777-11d9-8aaf-000c414ce854",
+          "value": "3af52130-e77a-11d9-93ea-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 1) assign (Attribute: Completion Date) = "Mon May 30 2005 00:00:00 GMT-0700 (Pacific Standard Time)"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "6892d560-e77a-11d9-8196-000c414ce854",
+           "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "3af52130-e77a-11d9-93ea-000c414ce854",
+           "item": "ceb795d0-e778-11d9-a7da-000c414ce854",
+          "value": "Mon May 30 2005 00:00:00 GMT-0700 (Pacific Standard Time)"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 1) assign (Attribute: Completion Date) = "Mon Jun 06 2005 00:00:00 GMT-0700 (Pacific Standard Time)"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "7c85cc30-e77a-11d9-8196-000c414ce854",
+  "previousEntry": "6892d560-e77a-11d9-8196-000c414ce854",
+           "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "3af52130-e77a-11d9-93ea-000c414ce854",
+           "item": "ceb795d0-e778-11d9-a7da-000c414ce854",
+          "value": "Mon Jun 06 2005 00:00:00 GMT-0700 (Pacific Standard Time)"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Iteration: Iteration 2) assign (Attribute: Completion Date) = "Tue Jul 05 2005 00:00:00 GMT-0700 (Pacific Standard Time)"
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "84c88360-e77a-11d9-8196-000c414ce854",
+           "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "3af52130-e77a-11d9-93ea-000c414ce854",
+           "item": "e0dc0e30-e778-11d9-a7da-000c414ce854",
+          "value": "Tue Jul 05 2005 00:00:00 GMT-0700 (Pacific Standard Time)"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Attribute: Tasks Scheduled)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "99cff770-e77a-11d9-8196-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Tasks Scheduled) assign (Attribute: Name) = "Tasks Scheduled"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "dbf938f0-e77a-11d9-8196-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "99cff770-e77a-11d9-8196-000c414ce854",
+            "value": "Tasks Scheduled"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Tasks Scheduled) assign (Attribute: Category) = (Category: Attribute)
+    // On item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Tasks Scheduled)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "dbf938f1-e77a-11d9-8196-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["99cff770-e77a-11d9-8196-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Attribute: Tasks Scheduled) assign (Attribute: Expected Type) = (Category: Task)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "dd877a10-e77a-11d9-8196-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "99cff770-e77a-11d9-8196-000c414ce854",
+          "value": "b15575c0-e778-11d9-a7da-000c414ce854"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Attribute: Scheduled For)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "dbfba9f0-e77a-11d9-8196-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Scheduled For) assign (Attribute: Name) = "Scheduled For"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "e26fe2b0-e77a-11d9-8196-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "dbfba9f0-e77a-11d9-8196-000c414ce854",
+            "value": "Scheduled For"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Scheduled For) assign (Attribute: Category) = (Category: Attribute)
+    // On item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Scheduled For)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "e26fe2b1-e77a-11d9-8196-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["dbfba9f0-e77a-11d9-8196-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Attribute: Scheduled For) assign (Attribute: Expected Type) = (Category: Iteration)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "e4ae8810-e77a-11d9-8196-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "dbfba9f0-e77a-11d9-8196-000c414ce854",
+          "value": "a5dc24a0-e778-11d9-a7da-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Attribute: Tasks Scheduled) assign (Attribute: Inverse Attribute) = (Attribute: Scheduled For)
+  // On item (Attribute: Scheduled For) assign (Attribute: Inverse Attribute) = (Attribute: Tasks Scheduled)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "f6aa69d0-e77a-11d9-964e-000c414ce854",
+           "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": ["99cff770-e77a-11d9-8196-000c414ce854", "dbfba9f0-e77a-11d9-8196-000c414ce854"],
+      "attribute": ["0000100b-ce7f-11d9-8cd5-0011113ae5d6", "0000100b-ce7f-11d9-8cd5-0011113ae5d6"]  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Attribute: Estimate)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "10f9a490-e77b-11d9-964e-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Estimate) assign (Attribute: Name) = "Estimate"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "1d49a6a0-e77b-11d9-964e-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "10f9a490-e77b-11d9-964e-000c414ce854",
+            "value": "Estimate"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Estimate) assign (Attribute: Category) = (Category: Attribute)
+    // On item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Estimate)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "1d49a6a1-e77b-11d9-964e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["10f9a490-e77b-11d9-964e-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Attribute: Estimate) assign (Attribute: Expected Type) = (Type: Number)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "2113f510-e77b-11d9-964e-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "10f9a490-e77b-11d9-964e-000c414ce854",
+          "value": "00001021-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Attribute: Actual)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "1d49a6a2-e77b-11d9-964e-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Actual) assign (Attribute: Name) = "Actual"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "23e64ef0-e77b-11d9-964e-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "1d49a6a2-e77b-11d9-964e-000c414ce854",
+            "value": "Actual"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Actual) assign (Attribute: Category) = (Category: Attribute)
+    // On item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Actual)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "23e64ef1-e77b-11d9-964e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["1d49a6a2-e77b-11d9-964e-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Attribute: Actual) assign (Attribute: Expected Type) = (Type: Number)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "2582c0e0-e77b-11d9-964e-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "1d49a6a2-e77b-11d9-964e-000c414ce854",
+          "value": "00001021-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Attribute: Signed-up Person)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "23e8bff0-e77b-11d9-964e-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Signed-up Person) assign (Attribute: Name) = "Signed-up Person"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "44c8e330-e77b-11d9-964e-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "23e8bff0-e77b-11d9-964e-000c414ce854",
+            "value": "Signed-up Person"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Signed-up Person) assign (Attribute: Category) = (Category: Attribute)
+    // On item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Signed-up Person)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "44cb5430-e77b-11d9-964e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["23e8bff0-e77b-11d9-964e-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Attribute: Signed-up Person) assign (Attribute: Expected Type) = (Category: Person)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "464d8760-e77b-11d9-964e-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "23e8bff0-e77b-11d9-964e-000c414ce854",
+          "value": "00001201-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Attribute: Tasks signed-up for)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Item": { "uuid": "44cb5431-e77b-11d9-964e-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Tasks signed-up for) assign (Attribute: Name) = "Tasks signed-up for"
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "516c3560-e77b-11d9-964e-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "44cb5431-e77b-11d9-964e-000c414ce854",
+            "value": "Tasks signed-up for"  }
+    },
+    // -----------------------------------------------------------------------
+    // On item (Attribute: Tasks signed-up for) assign (Attribute: Category) = (Category: Attribute)
+    // On item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Tasks signed-up for)
+    //           by (Brian) on (Jun 27, 2005)
+    { "Entry": {
+             "uuid": "516c3561-e77b-11d9-964e-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["44cb5431-e77b-11d9-964e-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // On item (Attribute: Tasks signed-up for) assign (Attribute: Expected Type) = (Category: Task)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "52f80580-e77b-11d9-964e-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "44cb5431-e77b-11d9-964e-000c414ce854",
+          "value": "b15575c0-e778-11d9-a7da-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Attribute: Tasks signed-up for) assign (Attribute: Inverse Attribute) = (Attribute: Signed-up Person)
+  // On item (Attribute: Signed-up Person) assign (Attribute: Inverse Attribute) = (Attribute: Tasks signed-up for)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "6ae02b50-e77b-11d9-95dd-000c414ce854",
+           "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": ["44cb5431-e77b-11d9-964e-000c414ce854", "23e8bff0-e77b-11d9-964e-000c414ce854"],
+      "attribute": ["0000100b-ce7f-11d9-8cd5-0011113ae5d6", "0000100b-ce7f-11d9-8cd5-0011113ae5d6"]  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of People) assign (Attribute: Table Columns) = (Attribute: Name)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "78f50ee0-e77b-11d9-95dd-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "82d3d190-e775-11d9-89df-000c414ce854",
+          "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of People) assign (Attribute: Table Columns) = (Attribute: Tasks signed-up for)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "78f50ee1-e77b-11d9-95dd-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "82d3d190-e775-11d9-89df-000c414ce854",
+          "value": "44cb5431-e77b-11d9-964e-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of People) assign (Attribute: Table Columns) = (Attribute: Short Name)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "78f2c4f0-e77b-11d9-95dd-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "82d3d190-e775-11d9-89df-000c414ce854",
+          "value": "00001002-ce7f-11d9-8cd5-0011113ae5d6"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Tasks) assign (Attribute: Table Columns) = (Attribute: Signed-up Person)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "85475ae0-e77b-11d9-95dd-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "d9a3b790-e777-11d9-8b8e-000c414ce854",
+          "value": "23e8bff0-e77b-11d9-964e-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Tasks) assign (Attribute: Table Columns) = (Attribute: Estimate)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "8bd84360-e77b-11d9-95dd-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "d9a3b790-e777-11d9-8b8e-000c414ce854",
+          "value": "10f9a490-e77b-11d9-964e-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Tasks) assign (Attribute: Table Columns) = (Attribute: Actual)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "932ca2f0-e77b-11d9-95dd-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "d9a3b790-e777-11d9-8b8e-000c414ce854",
+          "value": "1d49a6a2-e77b-11d9-964e-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Tasks) assign (Attribute: Table Columns) = (Attribute: Scheduled For)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "a9c71310-e77b-11d9-95dd-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "d9a3b790-e777-11d9-8b8e-000c414ce854",
+          "value": "dbfba9f0-e77a-11d9-8196-000c414ce854"  }
+  },
+  // -----------------------------------------------------------------------
+  // On item (Layout Data: Layout data for Table of List of Iterations) assign (Attribute: Table Columns) = (Attribute: Tasks Scheduled)
+  //           by (Brian) on (Jun 27, 2005)
+  { "Entry": {
+           "uuid": "b95242f0-e77b-11d9-95dd-000c414ce854",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "555d1b70-e777-11d9-8aaf-000c414ce854",
+          "value": "99cff770-e77a-11d9-8196-000c414ce854"  }
   }

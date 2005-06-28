@@ -82,7 +82,7 @@ function TextView(theSuperview, inElement, inItem, inAttribute, inEntry, inClass
   
   this._isProvisional = inItem.isProvisional();
   if (this._isProvisional) {
-    this._provisionalText = inAttribute.getDisplayName();
+    this._provisionalText = inAttribute.getDisplayString();
   }
   else if (inEntry && inEntry.getValue(this._item) instanceof Item) {
     this._valueIsItem = true;
@@ -101,7 +101,7 @@ TextView.prototype._setupSuggestionBox = function() {
       var maxLength = 4;
       for (var i=0; i < this._suggestions.length;++i) {
         var aSuggestion = this._suggestions[i];
-        if (aSuggestion.getDisplayName().length > maxLength) {maxLength = aSuggestion.getDisplayName().length;}
+        if (aSuggestion.getDisplayString().length > maxLength) {maxLength = aSuggestion.getDisplayString().length;}
       }
       this._editField.size = maxLength;
     }
@@ -269,7 +269,7 @@ TextView.prototype.stopEditing = function() {
         newValueDisplayString = newValue;
       }
       else if (newValue instanceof Item) {
-        newValueDisplayString = newValue.getDisplayName();
+        newValueDisplayString = newValue.getDisplayString();
       }
       this._textNode.data = newValueDisplayString;
       this._suggestionBox = null;
@@ -608,8 +608,8 @@ AttributeSuggestionBox.prototype.getSelectedItem = function () {
  *
  */
 AttributeSuggestionBox._compareItemDisplayNames = function (itemOne, itemTwo) {
-  var displayNameOne = itemOne.getDisplayName();
-  var displayNameTwo = itemTwo.getDisplayName();
+  var displayNameOne = itemOne.getDisplayString();
+  var displayNameTwo = itemTwo.getDisplayString();
   if (displayNameOne == displayNameTwo) {
     return 0;
   } else {
@@ -682,11 +682,12 @@ AttributeSuggestionBox.prototype._keyPressOnInputField = function (inEventObject
     return true;
   }
   if (doSelectItem) {
-    this._myInputField.value = this._selectedItem.getDisplayName();
+    this._myInputField.value = this._selectedItem.getDisplayString();
     this._setShouldHide(true);
   }
   return false;
 };
+
 
 /**
  *
@@ -710,8 +711,8 @@ AttributeSuggestionBox.prototype._blurOnInputField = function () {
  */
 AttributeSuggestionBox.prototype._clickOnSelection = function (inEventObject, item) {
   this._selectedItem = item;
-  //this._myInputField.value = item.getDisplayName();  // PENDING: need to pass back the item, not a string
 };
+
 
 /**
  *
@@ -743,7 +744,7 @@ AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () 
 
   for (key in this._listOfSuggestedItems) {
     item = this._listOfSuggestedItems[key];
-    var lowerCaseEntryString = item.getDisplayName().toLowerCase();
+    var lowerCaseEntryString = item.getDisplayString().toLowerCase();
     var lowerCaseInputString = partialInputString.toLowerCase();
     var numberOfCharactersToCompare = lowerCaseInputString.length;
     var shortEntryString = lowerCaseEntryString.substring(0, numberOfCharactersToCompare);
@@ -764,7 +765,7 @@ AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () 
     var columnNumber = 0;
     for (key in listOfMatchingItems) {
       item = listOfMatchingItems[key];
-      var textNode = document.createTextNode(item.getDisplayName());
+      var textNode = document.createTextNode(item.getDisplayString());
       var row = table.insertRow(rowNumber);
       var cell = row.insertCell(columnNumber);
       row.className = (this._selectedItem == item) ? "selected":"";

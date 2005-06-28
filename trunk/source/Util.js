@@ -506,6 +506,16 @@ Util.hashTableValues = function(inHashTable) {
 
 
 // -------------------------------------------------------------------
+// Methods that operate on Dates
+// -------------------------------------------------------------------
+
+Util.getStringMonthDayYear = function(date) {
+  var returnString = Util.ABBREV_MONTHS_ARRAY[date.getMonth()] + ' ' + date.getDate() + ', ' + (date.getYear()+1900);
+  return returnString;
+};
+
+
+// -------------------------------------------------------------------
 // Methods for doing encryption
 // -------------------------------------------------------------------
 

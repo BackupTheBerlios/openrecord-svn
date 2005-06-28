@@ -335,21 +335,21 @@ Entry.prototype.getDisplayString = function (myItem) {
       break;
     case this.getWorld().getTypeCalledDate():
       var aDate = this.__myValue;
-      returnString = Util.ABBREV_MONTHS_ARRAY[aDate.getMonth()] + ' ' + aDate.getDate() + ', '+ (aDate.getYear()+1900);
+      returnString = Util.getStringMonthDayYear(aDate);
       break;
     case this.getWorld().getTypeCalledItem():
-      returnString = this.__myValue.getDisplayName();
+      returnString = this.__myValue.getDisplayString();
       break;
     case this.getWorld().getTypeCalledConnection():
       var firstItem = this.__myItem[0];
       var secondItem = this.__myItem[1];
       if (myItem) {
-        if (myItem == firstItem) {returnString = secondItem.getDisplayName();}
-        else if (myItem == secondItem) {returnString = firstItem.getDisplayName();}
+        if (myItem == firstItem) {returnString = secondItem.getDisplayString();}
+        else if (myItem == secondItem) {returnString = firstItem.getDisplayString();}
         else {Util.assert(false, "myItem isn't part of this Entry");}
       }
       else {
-        returnString = 'connection between "' + firstItem.getDisplayName() + '" and "' + secondItem.getDisplayName() + '"';
+        returnString = 'connection between "' + firstItem.getDisplayString() + '" and "' + secondItem.getDisplayString() + '"';
       }
       break;
   }

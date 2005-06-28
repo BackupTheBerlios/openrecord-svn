@@ -104,7 +104,7 @@ Record.prototype.getUserstamp = function() {
   }
   var allUsers = this._world.getUsers();
   var myPseudonode = this._uuid.split('-')[4];
-  for (key in allUsers) {
+  for (var key in allUsers) {
     var usersPseudonode = allUsers[key]._getUuid().split('-')[4];
     if (usersPseudonode == myPseudonode) {
       this._creationUserstamp = allUsers[key];
@@ -116,10 +116,10 @@ Record.prototype.getUserstamp = function() {
 
 
 /**
- * Returns a Date object with the creation timestamp for this item.
+ * Returns ???.
  *
  * @scope    public instance method
- * @return   A Date object.
+ * @return   ???.
  */
 Record.prototype.getTimestamp = function() {
   if (this._creationTimestamp) {
@@ -154,6 +154,18 @@ Record.prototype.getTimestamp = function() {
   // value?
   this._creationTimestamp = millisecondsSince1970;
   return millisecondsSince1970;
+};
+
+
+/**
+ * Returns a Date object with the creation timestamp for this item.
+ *
+ * @scope    public instance method
+ * @return   A Date object.
+ */
+Record.prototype.getGetCreationDate = function() {
+  var date = new Date(this.getTimestamp());
+  return date;
 };
 
 

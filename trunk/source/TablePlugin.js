@@ -175,35 +175,11 @@ TablePlugin.prototype._buildAttributeHashFromScratch = function() {
       if (attribute != attributeCalledCategory) {
         var attributeKeyString = attribute.getUniqueKeyString();
         hashTableOfAttributes[attributeKeyString] = attribute;
-        
         hashTableOfEntries[attributeKeyString] = this.getWorld().getSuggestedItemsForAttribute(attribute);
-/*
-        // build entries representing this attribute in this table 
-        // PENDING we may only want to do this for certain attributes
-        var itemEntries = contentItem.getEntriesForAttribute(attribute);
-        if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
-          hashTableOfEntries[attributeKeyString] = this.getWorld().getSuggestedItemsForAttribute(attribute);
-        } else {
-          if (!hashTableOfEntries[attributeKeyString]) {
-            hashTableOfEntries[attributeKeyString] = {};
-          }
-          for (var entryKey in itemEntries) {
-            var entry = itemEntries[entryKey];
-            hashTableOfEntries[attributeKeyString][entry.getUniqueKeyString()] = entry;
-          }
-        }
-*/
       }
     }
   }
   
-/*  if (PENDING__JUNE_1_EXPERIMENT_BY_BRIAN) {
-  } else {
-    for (attributeKey in hashTableOfEntries) {
-      hashTableOfEntries[attributeKey] = Util.hashTableValues(hashTableOfEntries[attributeKey]);
-    }
-  }
-*/
   this._hashTableOfEntries = hashTableOfEntries;
   if (Util.lengthOfHashTable(hashTableOfAttributes) < 1) {
     var attributeCalledName = this.getWorld().getAttributeCalledName();
@@ -229,7 +205,7 @@ TablePlugin.prototype._buildAttributeEditor = function() {
   for (var i = 0; i < listOfAttributes.length; ++i) {
     optionElt = View.createAndAppendElement(selectElt,"option");
     if (Util.isObjectInSet(listOfAttributes[i],this._displayAttributes)) {optionElt.text = '*';}
-    optionElt.text += listOfAttributes[i].getDisplayName();
+    optionElt.text += listOfAttributes[i].getDisplayString();
     optionElt.value = listOfAttributes[i].getUniqueKeyString();
     optionElt.onclick = this._attributeEditorChanged.bindAsEventListener(this);
   }
@@ -341,12 +317,12 @@ TablePlugin.prototype._buildHeader = function() {
   // add header row
   var headerRow = this.myTable.insertRow(0);
   var numCols = 0;
-  for (var i=0;i<this._displayAttributes.length;++i) {
+  for (var i=0; i<this._displayAttributes.length; ++i) {
     var attribute = this._displayAttributes[i];
     if (!this._sortAttribute) {this._sortAttribute = attribute;}
     var aCell = document.createElement("th");
-    var headerStr = attribute.getDisplayName();
-    aCell.appendChild(document.createTextNode(headerStr));
+    var headerString = attribute.getDisplayString();
+    aCell.appendChild(document.createTextNode(headerString));
     if (this._sortAttribute == attribute) {
       aCell.appendChild(this.getSortIcon());
     }
