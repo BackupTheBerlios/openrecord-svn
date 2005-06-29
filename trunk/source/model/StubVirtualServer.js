@@ -645,15 +645,27 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
  * @param    inCategory    A category item. 
  * @return   A list of items.
  */
-StubVirtualServer.prototype.getItemsInCategory = function (inCategory) {
-  Util.assert(inCategory instanceof Item);
+StubVirtualServer.prototype.getItemsInCategory = function (category) {
+  Util.assert(category instanceof Item);
 
+/*  
   var listOfItems = [];
   for (var uuid in this.__myHashTableOfItemsKeyedByUuid) {
     var item = this.__myHashTableOfItemsKeyedByUuid[uuid];
-    if (!item.hasBeenDeleted() && item.isInCategory(inCategory)) {
+    if (!item.hasBeenDeleted() && item.isInCategory(category)) {
       listOfItems.push(item);
     }
+  }
+  listOfItems.sort(ContentRecord.compareOrdinals);
+  return listOfItems; 
+  */
+  var attributeCalledItemsInCategory = this.getWorld().getAttributeCalledItemsInCategory();
+  var listOfEntries = category.getEntriesForAttribute(attributeCalledItemsInCategory);
+  var listOfItems = [];
+  for (var key in listOfEntries) {
+    var entry = listOfEntries[key];
+    var item = entry.getValue(category);
+    listOfItems.push(item);
   }
   listOfItems.sort(ContentRecord.compareOrdinals);
   return listOfItems; 
