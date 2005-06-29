@@ -45,16 +45,16 @@
 // -------------------------------------------------------------------
 // SectionView public class constants
 // -------------------------------------------------------------------
-SectionView.ELEMENT_CLASS_SECTION = "section";
-SectionView.ELEMENT_CLASS_SIMPLE_TABLE = "simple_table";
-SectionView.ELEMENT_CLASS_NEW_ITEM = "newitem";
-SectionView.ELEMENT_CLASS_PLAIN = "plain";
-SectionView.ELEMENT_CLASS_LABEL = "label";
-SectionView.ELEMENT_CLASS_TITLE = "title";
-SectionView.ELEMENT_CLASS_TEXT_FIELD_IN_TABLE_CELL = "text_field_in_table_cell";
-SectionView.ELEMENT_CLASS_SELECTED = "selected";
-SectionView.ELEMENT_CLASS_MORE_LINK = "more";
-SectionView.ELEMENT_CLASS_TEXT_VIEW = "text_view";
+SectionView.CSS_CLASS_SECTION = "section";
+SectionView.CSS_CLASS_SIMPLE_TABLE = "simple_table";
+SectionView.CSS_CLASS_NEW_ITEM = "newitem";
+SectionView.CSS_CLASS_PLAIN = "plain";
+SectionView.CSS_CLASS_LABEL = "label";
+SectionView.CSS_CLASS_TITLE = "title";
+SectionView.CSS_CLASS_TEXT_FIELD_IN_TABLE_CELL = "text_field_in_table_cell";
+SectionView.CSS_CLASS_SELECTED = "selected";
+SectionView.CSS_CLASS_MORE_LINK = "more";
+SectionView.CSS_CLASS_TEXT_VIEW = "text_view";
 SectionView.CSS_CLASS_SECTION_HEADER = "section_header";
 SectionView.CSS_CLASS_SUMMARY_TEXT = "summary_text";
 
@@ -233,7 +233,7 @@ SectionView.prototype.doInitialDisplay = function () {
   }
   
   var sectionDiv = this.getHTMLElement();
-  var outerDiv = View.createAndAppendElement(sectionDiv, "div", SectionView.ELEMENT_CLASS_SECTION);
+  var outerDiv = View.createAndAppendElement(sectionDiv, "div", SectionView.CSS_CLASS_SECTION);
   var headerH2 = View.createAndAppendElement(outerDiv, "h2");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
@@ -242,11 +242,11 @@ SectionView.prototype.doInitialDisplay = function () {
     SectionView.CSS_CLASS_SECTION_HEADER);
   var summaryDiv = View.createAndAppendElement(outerDiv, "div");
   this._mySectionSummaryView = new TextView(this, summaryDiv, this.mySection, attributeCalledSummary,
-    this.mySection.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.ELEMENT_CLASS_TEXT_VIEW, true);
+    this.mySection.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_TEXT_VIEW, true);
   View.createAndAppendElement(outerDiv, "p");
 
   // create the editing controls, if we're in edit mode
-  var controlArea = View.createAndAppendElement(outerDiv, "p", RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL);
+  var controlArea = View.createAndAppendElement(outerDiv, "p", RootView.CSS_CLASS_EDIT_MODE_ONLY_CONTROL);
   var textShowMeA = document.createTextNode("Show me a ");
   controlArea.appendChild(textShowMeA);
 
@@ -362,7 +362,7 @@ SectionView.prototype._refreshQueryEditSpan = function () {
   var entrySpan = View.createAndAppendElement(this._queryEditSpan, "span");
   
   var entryTextView =  new TextView(this, entrySpan, myQuery, attributeCalledQueryMatchingValue, matchingEntry,
-    RootView.ELEMENT_CLASS_EDIT_MODE);
+    RootView.CSS_CLASS_EDIT_MODE);
   entryTextView.setSuggestions(listOfPossibleEntries);
   entryTextView.alwaysUseEditField();
   entryTextView.setAutoWiden(true);

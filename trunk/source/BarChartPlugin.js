@@ -161,7 +161,7 @@ BarChartPlugin.prototype.refresh = function () {
   }
 
   // add the table header row(s)
-  listOfStrings.push("<table class=\"" + SectionView.ELEMENT_CLASS_SIMPLE_TABLE + "\">");
+  listOfStrings.push("<table class=\"" + SectionView.CSS_CLASS_SIMPLE_TABLE + "\">");
   listOfStrings.push("<tr>");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   listOfStrings.push("<th>" + attributeCalledName.getDisplayName() + "</th>");
@@ -176,7 +176,7 @@ BarChartPlugin.prototype.refresh = function () {
   for (var kKey in listOfContentItems) {
     contentItem = listOfContentItems[kKey];
     listOfStrings.push("<tr>");
-    listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\">" + contentItem.getDisplayName("{no name}") + "</td>");
+    listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_PLAIN + "\">" + contentItem.getDisplayName("{no name}") + "</td>");
     var numericValue = 0;
     if (selectedAttribute) {
       listOfEntries = contentItem.getEntriesForAttribute(selectedAttribute);

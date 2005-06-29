@@ -42,7 +42,11 @@
 // -------------------------------------------------------------------
 // RootView public class constants
 // -------------------------------------------------------------------
-RootView.ELEMENT_CLASS_PAGE_EDIT_BUTTON = "page_edit_button";
+RootView.CSS_CLASS_PAGE_EDIT_BUTTON = "page_edit_button";
+RootView.CSS_CLASS_EDIT_MODE = "editmode";
+RootView.CSS_CLASS_VIEW_MODE = "viewmode";
+RootView.CSS_CLASS_EDIT_MODE_ONLY_CONTROL = "edit_mode_only_control";
+RootView.CSS_CLASS_CONTROL_SPAN = "control_span";
 
 RootView.ELEMENT_ID_DEBUG_TEXTAREA = "debug_textarea";
 
@@ -51,16 +55,8 @@ RootView.URL_ITEM_PREFIX = "item";
 RootView.URL_HASH_PAGE_PREFIX = "#" + RootView.URL_PAGE_PREFIX;
 RootView.URL_HASH_ITEM_PREFIX = "#" + RootView.URL_ITEM_PREFIX;
 
-RootView.ELEMENT_CLASS_EDIT_MODE = "editmode";
-RootView.ELEMENT_CLASS_VIEW_MODE = "viewmode";
-RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL = "edit_mode_only_control";
-
-RootView.CONTROL_SPAN_CLASS = "control_span";
-
 RootView.UUID_FOR_CATEGORY_PAGE    = "00020000-ce7f-11d9-8cd5-0011113ae5d6";
 RootView.UUID_FOR_CATEGORY_SECTION = "00020100-ce7f-11d9-8cd5-0011113ae5d6";
-
-// RootView.UUID_FOR_HOME_PAGE        = "00050000-ce7f-11d9-8cd5-0011113ae5d6";
 
 
 // -------------------------------------------------------------------
@@ -124,7 +120,7 @@ function RootView(inWorld) {
   var logoSpan = View.createAndAppendElement(headerP, "span", "logo");
   logoSpan.innerHTML = '<a href="http://openrecord.org"><span class="logostart">open</span><span class="logomiddle">record</span><span class="logoend">.org</span></a>';
   var mainControlSpan = View.createAndAppendElement(headerP, "span", null, "main_control_span");
-  mainControlSpan.className = RootView.CONTROL_SPAN_CLASS;
+  mainControlSpan.className = RootView.CSS_CLASS_CONTROL_SPAN;
   View.createAndAppendElement(headerP, "br");
   var navbarDiv = View.createAndAppendElement(rootDiv, "div", "navbar");
   var contentAreaDiv = View.createAndAppendElement(rootDiv, "div", "content_area");
@@ -190,7 +186,6 @@ RootView.prototype.getWorld = function () {
  * @return   A page item.
  */
 RootView.prototype.getHomePage = function () {
-  // return this.getWorld().getItemFromUuid(RootView.UUID_FOR_HOME_PAGE);
   return this._homePage;
 };
 
@@ -341,7 +336,7 @@ RootView.prototype.display = function () {
   Util.assert(this._myCurrentContentView instanceof Object);
 
   document.title = this._myCurrentContentView.getPageTitle() + " - openrecord.org";
-  this._myRootDiv.className = (this.isInEditMode()) ? RootView.ELEMENT_CLASS_EDIT_MODE : RootView.ELEMENT_CLASS_VIEW_MODE;
+  this._myRootDiv.className = (this.isInEditMode()) ? RootView.CSS_CLASS_EDIT_MODE : RootView.CSS_CLASS_VIEW_MODE;
   this._displayLoginSpan();
   this._displayNavbar();
   this._displayDebugArea();

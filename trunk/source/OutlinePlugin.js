@@ -103,7 +103,7 @@ OutlinePlugin.prototype.refresh = function () {
     var contentItem = listOfContentItems[contentItemKey];
     var liElement = View.createAndAppendElement(ulElement, "li");
     View.createAndAppendTextNode(liElement, contentItem.getDisplayName("{no name}") + " ");
-    var anchorElement = View.createAndAppendElement(liElement, "a", SectionView.ELEMENT_CLASS_MORE_LINK);
+    var anchorElement = View.createAndAppendElement(liElement, "a", SectionView.CSS_CLASS_MORE_LINK);
 
     // PENDING: 
     //  We shouldn't call the private method _getUuid()

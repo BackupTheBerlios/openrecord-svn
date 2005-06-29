@@ -69,8 +69,8 @@ function TablePlugin(inSectionView, inHTMLElement, inQuery, inLayout) {
   PluginView.call(this, inSectionView, inHTMLElement, inQuery, inLayout);
 
   // PENDING should probably make this independent of sectionview
-  this.myClass = SectionView.ELEMENT_CLASS_SIMPLE_TABLE;
-  this.myCellClass = SectionView.ELEMENT_CLASS_PLAIN;
+  this.myClass = SectionView.CSS_CLASS_SIMPLE_TABLE;
+  this.myCellClass = SectionView.CSS_CLASS_PLAIN;
   this.myTable = null;
   this._sortAttribute = null;
   this._ascendingOrder = true;

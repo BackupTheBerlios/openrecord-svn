@@ -220,10 +220,10 @@ PageView.prototype._addNewSection = function() {
 PageView.prototype._buildEditControls = function() {
   if (!this._editModeDiv) {
     var pageDivElement = this.getHTMLElement();
-    this._editModeDiv = View.createAndAppendElement(pageDivElement, "div", SectionView.ELEMENT_CLASS_SECTION);
+    this._editModeDiv = View.createAndAppendElement(pageDivElement, "div", SectionView.CSS_CLASS_SECTION);
     View.createAndAppendElement(this._editModeDiv,"br");
     var editButton = View.createAndAppendElement(this._editModeDiv, "input", 
-      RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL);
+      RootView.CSS_CLASS_EDIT_MODE_ONLY_CONTROL);
     editButton.type = "Button";
     editButton.value = "New Section";
     editButton.onclick = this._addNewSection.bindAsEventListener(this);

@@ -98,7 +98,7 @@ NavbarView.prototype._rebuildView = function () {
   var finalString = listOfStrings.join("");
   divElement.innerHTML = finalString;
   
-  var newPageButton = View.createAndAppendElement(divElement, "input", RootView.ELEMENT_CLASS_EDIT_MODE_ONLY_CONTROL);
+  var newPageButton = View.createAndAppendElement(divElement, "input", RootView.CSS_CLASS_EDIT_MODE_ONLY_CONTROL);
   newPageButton.type = "button";
   newPageButton.value = "New Page";
   newPageButton.onclick = this._clickOnNewPageButton.bindAsEventListener(this);

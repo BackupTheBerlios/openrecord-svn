@@ -126,19 +126,19 @@ DetailPlugin.prototype.getXhtmlTableForItem = function (inItem) {
   var listOfStrings = [];
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   
-  listOfStrings.push("<table class=\"" + SectionView.ELEMENT_CLASS_SIMPLE_TABLE + "\">");
+  listOfStrings.push("<table class=\"" + SectionView.CSS_CLASS_SIMPLE_TABLE + "\">");
   listOfStrings.push("<tr>");
-  listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_LABEL + " " + SectionView.ELEMENT_CLASS_TITLE + "\">" + attributeCalledName.getDisplayName() + "</td>");
-  listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_TITLE + "\">" + inItem.getDisplayName() + "</td>");
+  listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_LABEL + " " + SectionView.CSS_CLASS_TITLE + "\">" + attributeCalledName.getDisplayName() + "</td>");
+  listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_TITLE + "\">" + inItem.getDisplayName() + "</td>");
   listOfStrings.push("</tr>");
   var listOfAttributes = inItem.getAttributes();
   for (var key in listOfAttributes) { 
     var attribute = listOfAttributes[key];
     if (attribute != attributeCalledName) {
       listOfStrings.push("<tr>");
-      listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_LABEL + "\">" + attribute.getDisplayName() + "</td>");
+      listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_LABEL + "\">" + attribute.getDisplayName() + "</td>");
       var listOfEntries = inItem.getEntriesForAttribute(attribute); 
-      listOfStrings.push("<td class=\"" + SectionView.ELEMENT_CLASS_PLAIN + "\">");
+      listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_PLAIN + "\">");
       for (var j = 0; j < listOfEntries.length; ++j) {
         listOfStrings.push(listOfEntries[j].getDisplayString() + "<br/>");
       }
