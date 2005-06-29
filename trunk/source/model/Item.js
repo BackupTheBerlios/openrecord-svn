@@ -542,7 +542,6 @@ Item.prototype.toString = function () {
  * @return Boolean. True if this item has an attribute with the entry
  */
 Item.prototype.hasAttributeValue = function (inAttribute, inValue) {
-  // Util.assert(inAttribute instanceof Item, inAttribute + ' is not an item');
   Util.assert(inAttribute instanceof Item);
   var entryList = this.getEntriesForAttribute(inAttribute);
 
@@ -569,30 +568,6 @@ Item.prototype.isInCategory = function (inCategory) {
 
   var categoryAttribute = this.getWorld().getAttributeCalledCategory();
   return this.hasAttributeValue(categoryAttribute, inCategory);
-  
-  /*
-   * Also returns true if the item has been assigned to some category which is in
-   * turn assigned to the given category, and so on, up the chain of category 
-   * assignments.
-   *
-  // look at all the categories this item is assigned to, and see if one of them
-  // is in turn in the category "inCategory"
-  for (key in entryList) {
-    entry = entryList[key];
-    // PENDING: 
-    //   This will go into an infinite loop if there is ever a cycle in the category 
-    //   assignments, like: A is in category B, and B is in C, and C is in A.
-    //   We need to use a non-recursive search of the graph.
-    // PENDING:
-    //   Do we also need to register as an observer of something, so that if we later
-    //   become a member of that category in question, then we can notify whoever
-    //   is observing us?
-    if ((entry.getValue() != this) && (entry.getValue().isInCategory(inCategory))) {
-      return true;
-    }
-  }
-  return false;
-  */
 };
  
 

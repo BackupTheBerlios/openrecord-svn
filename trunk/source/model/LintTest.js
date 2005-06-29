@@ -41,6 +41,7 @@ function testJsLintOnOpenRecordCode() {
     "Item.js",
     "Entry.js",
     "Transaction.js",
+    "QueryRunner.js",
     "World.js",
     "StubVirtualServer.js",
     "DeltaVirtualServer.js"];

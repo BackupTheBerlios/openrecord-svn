@@ -103,7 +103,9 @@ World.__TUPLE_KEY_OBSERVERS = "observers";
 function World(virtualServer) {
   this._hashTableOfObserverListsKeyedByItemUuid = {};
   this._listOfListObserverTuples = [];
-
+  
+  this._registeredQueryRunners = [];
+  
   this._currentRetrievalFilter = World.RETRIEVAL_FILTER_LAST_EDIT_WINS;
 
   var server;
@@ -270,8 +272,8 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
   // Look at all the observers who have registered interest in a 
   // list of items rather than in an individual item.  For each of
   // those observers, notify them of all the changes to all the items.
-  for (var ikey in this._listOfListObserverTuples) {
-    var observerTuple = this._listOfListObserverTuples[ikey];
+  for (var iKey in this._listOfListObserverTuples) {
+    var observerTuple = this._listOfListObserverTuples[iKey];
     var listBeingObserved = observerTuple[World.__TUPLE_KEY_LIST];
     var setOfObservers = observerTuple[World.__TUPLE_KEY_OBSERVERS];
     var listOfItemChangeReports = null;
@@ -302,6 +304,31 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
       }
     }
   }
+  
+  // Look at all the QueryRunner objects that are registered, and for
+  // each of the QueryRunners, notify them of changes they care about.
+  for (key in this._registeredQueryRunners) {
+    var queryRunner = this._registeredQueryRunners[key];
+    var oldListOfResultItems = queryRunner.getResultItems();
+    var reportChange = false;
+    for (uuid in hashTableOfNewlyCreatedRecordsKeyedByItemUuid) {
+      item = this.getItemFromUuid(uuid);
+      if (Util.isObjectInSet(item, oldListOfResultItems)) {
+        reportChange = true;
+        break;
+      } else {
+        if (queryRunner.doesItemMatch(item)) {
+          reportChange = true;
+          break;
+        }
+      }
+    }
+    
+    if (reportChange) {
+      queryRunner._resultsHaveChanged();
+    }
+  }
+  
 };
 
 
@@ -709,6 +736,48 @@ World.prototype.newQueryForItemsByCategory = function(categoryOrListOfCategories
 
 
 /**
+ * Returns a newly created QueryRunner object.
+ *
+ * @scope    public instance method
+ * @param    querySpec    Optional. A query spec item, or an ad-hoc query. 
+ * @param    observer    Optional. An object or method to be registered as an observer of the query. 
+ * @return   A newly created QueryRunner object.
+ */
+World.prototype.newQueryRunner = function(querySpec, observer) {
+  var queryRunner = new QueryRunner(this, querySpec, observer);
+  return queryRunner;
+};
+
+
+/**
+ * Registers a QueryRunner object, so that the QueryRunner will be
+ * notified of changes to the repository.
+ *
+ * @scope    public instance method
+ * @param    queryRunner    A QueryRunner object. 
+ */
+World.prototype._registerQueryRunner = function(queryRunner) {
+  Util.assert(queryRunner instanceof QueryRunner);
+  var success = Util.addObjectToSet(queryRunner, this._registeredQueryRunners);
+  Util.assert(success);
+};
+
+
+/**
+ * Unregisters a QueryRunner object, so that the QueryRunner will no 
+ * longer be notified of changes to the repository.
+ *
+ * @scope    public instance method
+ * @param    queryRunner    A previously registered QueryRunner object. 
+ */
+World.prototype._unregisterQueryRunner = function(queryRunner) {
+  Util.assert(queryRunner instanceof QueryRunner);
+  var success = Util.removeObjectFromSet(queryRunner, this._registeredQueryRunners);
+  Util.assert(success);
+};
+
+
+/**
  * Returns a newly created entry.
  *
  * @scope    public instance method
@@ -799,6 +868,7 @@ World.prototype.getItemFromUuid = function(uuid, observer) {
  * Given a query item, this method returns a list of all the items that 
  * match the query criteria.
  *
+ * @deprecated    PENDING: use getResultItemsForQueryRunner() instead.
  * @scope    public instance method
  * @param    query    A query item. 
  * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
@@ -807,6 +877,20 @@ World.prototype.getItemFromUuid = function(uuid, observer) {
 World.prototype.getResultItemsForQuery = function(query, observer) {
   var listOfItems = this._virtualServer.getResultItemsForQuery(query);
   this.__addListObserver(listOfItems, observer);
+  return listOfItems;
+};
+
+
+/**
+ * Given a QueryRunner object, this method returns a list of all the items that 
+ * match the query criteria.
+ *
+ * @scope    public instance method
+ * @param    queryRunner    A QueryRunner object. 
+ * @return   A list of items.
+ */
+World.prototype.getResultItemsForQueryRunner = function(queryRunner) {
+  var listOfItems = this._virtualServer.getResultItemsForQueryRunner(queryRunner);
   return listOfItems;
 };
 

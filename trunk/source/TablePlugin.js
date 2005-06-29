@@ -269,7 +269,7 @@ TablePlugin.prototype._buildTableBody = function() {
  * @param    item      The Item which just became real. 
  */
 TablePlugin.prototype._provisionalItemJustBecomeReal = function(item) {
-  this.getWorld().setItemToBeIncludedInQueryResultList(item, this._query);
+  this.getWorld().setItemToBeIncludedInQueryResultList(item, this.getQuerySpec());
 };
 
 

@@ -539,6 +539,7 @@ StubVirtualServer.prototype.saveChangesToServer = function () {
  * Given a query item, this method returns a list of all the items that 
  * match the query criteria.
  *
+ * @deprecated    PENDING: use getResultItemsForQueryRunner() instead.
  * @scope    public instance method
  * @param    inQuery    A query item. 
  * @return   A list of items.
@@ -591,6 +592,53 @@ StubVirtualServer.prototype.getResultItemsForQuery = function (inQuery, inObserv
   return listOfQueryResultItems; 
 };
 
+
+/**
+ * Given a QueryRunner object, this method returns a list of all the items that 
+ * match the query criteria.
+ *
+ * @scope    public instance method
+ * @param    queryRunner    A QueryRunner object. 
+ * @return   A list of items.
+ */
+StubVirtualServer.prototype.getResultItemsForQueryRunner = function(queryRunner) {
+  var matchingAttribute = queryRunner.getMatchingAttribute();
+  var listOfMatchingValues = queryRunner.getMatchingValues();
+  var listOfQueryResultItems = [];
+  var key;
+  
+  if (!matchingAttribute || !listOfMatchingValues) {
+    return listOfQueryResultItems;
+  }
+    
+  var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
+  if (matchingAttribute == attributeCalledCategory) {
+    // If this is a query for all the item in a category,
+    // then handle that as a special case, because we can
+    // do that way faster than more general queries.
+    var attributeCalledItemsInCategory = this.getWorld().getAttributeCalledItemsInCategory();
+    for (key in listOfMatchingValues) {
+      var category = listOfMatchingValues[key];
+      var listOfEntriesForItemsInCategory = category.getEntriesForAttribute(attributeCalledItemsInCategory);
+      for (var innerKey in listOfEntriesForItemsInCategory) {
+        var entry = listOfEntriesForItemsInCategory[innerKey];
+        var itemInCategory = entry.getValue(category);
+        Util.addObjectToSet(itemInCategory, listOfQueryResultItems);
+      }
+    }
+  } else {
+    // General case code for any sort of query. 
+    for (var uuid in this.__myHashTableOfItemsKeyedByUuid) {
+      var item = this.__myHashTableOfItemsKeyedByUuid[uuid];
+      var includeItem = queryRunner.doesItemMatch(item);
+      if (includeItem) {
+        listOfQueryResultItems.push(item);
+      }
+    }
+  }
+  listOfQueryResultItems.sort(ContentRecord.compareOrdinals);
+  return listOfQueryResultItems; 
+};
 
 
 /**

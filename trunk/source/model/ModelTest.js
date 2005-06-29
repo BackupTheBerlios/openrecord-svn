@@ -321,9 +321,9 @@ function testCategories() {
   isInCategory = theHobbit.isInCategory(categoryCalledBook);
   assertTrue('"The Hobbit" is NOT in the category "Book"', !isInCategory);
   
-  theHobbit.addEntryForAttribute(attributeCalledCategory, categoryCalledBook);
-  theWisdomOfCrowds.addEntryForAttribute(attributeCalledCategory, categoryCalledBook);
-  theTransparentSociety.addEntryForAttribute(attributeCalledCategory, categoryCalledBook);
+  theHobbit.assignToCategory(categoryCalledBook);
+  theWisdomOfCrowds.assignToCategory(categoryCalledBook);
+  theTransparentSociety.assignToCategory(categoryCalledBook);
   isInCategory = theHobbit.isInCategory(categoryCalledBook);
   assertTrue('"The Hobbit" is in the category "Book"', isInCategory);
  
@@ -334,8 +334,6 @@ function testCategories() {
   world.logout();
 }
 
-/*
-PENDING: the ordinal implementation was broken by the new UUID code
 function testOrdinals() {
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);
@@ -348,15 +346,17 @@ function testOrdinals() {
   var brownie = world.newItem("Brownie");  
 
   var categoryCalledFood = world.newCategory("Food");
-  apple.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
-  cupcake.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
-  brownie.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
+  apple.assignToCategory(categoryCalledFood);
+  cupcake.assignToCategory(categoryCalledFood);
+  brownie.assignToCategory(categoryCalledFood);
 
   var foodItems = world.getItemsInCategory(categoryCalledFood);
   assertTrue('Apple starts out first in the list"', foodItems[0] == apple);
   assertTrue('Cupcake starts out second in the list"', foodItems[1] == cupcake);
   assertTrue('Brownie starts out second in the list"', foodItems[2] == brownie);
 
+/*
+PENDING: the ordinal implementation was broken by the new UUID code
   brownie.reorderBetween(apple, cupcake);
   foodItems = world.getItemsInCategory(categoryCalledFood);
   assertTrue('Apple is now first in the list"', foodItems[0] == apple);
@@ -374,10 +374,10 @@ function testOrdinals() {
   assertTrue('Apple is now first in the list"', foodItems[0] == apple);
   assertTrue('Brownie is now second in the list"', foodItems[1] == brownie);
   assertTrue('Cupcake is now third in the list"', foodItems[2] == cupcake);
+*/
   
   world.logout();
 }
-*/
   
 function testDeletion() {
   var janesPassword = "jane's password";
@@ -467,9 +467,9 @@ function testListObservation() {
   var cupcake = world.newItem("Cupcake");
 
   var categoryCalledFood = world.newCategory("Food");
-  apple.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
-  brownie.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
-  cupcake.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
+  apple.assignToCategory(categoryCalledFood);
+  brownie.assignToCategory(categoryCalledFood);
+  cupcake.assignToCategory(categoryCalledFood);
 
   var tokyo = world.newItem("Tokyo");
   var seattle = world.newItem("Seattle");
@@ -520,17 +520,18 @@ function testQueries() {
 
   var categoryCalledFood = world.newCategory("Food");
   assertTrue('The category "Food" is an item', (categoryCalledFood instanceof Item));
-  apple.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
-  brownie.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
-  cupcake.addEntryForAttribute(attributeCalledCategory, categoryCalledFood);
+  apple.assignToCategory(categoryCalledFood);
+  brownie.assignToCategory(categoryCalledFood);
+  cupcake.assignToCategory(categoryCalledFood);
 
   var tokyo = world.newItem("Tokyo");
   var seattle = world.newItem("Seattle");
 
   var hasAll;
   var queryForFoods = world.newQueryForItemsByCategory(categoryCalledFood);
+  var queryRunnerForFoods = world.newQueryRunner(queryForFoods);
+  var listOfFoods = queryRunnerForFoods.getResultItems();
   
-  var listOfFoods = world.getResultItemsForQuery(queryForFoods);
   hasAll = Util.areObjectsInSet([apple, brownie, cupcake], listOfFoods);
   assertTrue('Food query returns 3 foods', listOfFoods.length == 3);
   assertTrue('Food query returns all 3 foods', hasAll);
@@ -545,7 +546,7 @@ function testQueries() {
   world.setItemToBeIncludedInQueryResultList(tokyo, queryForFoods);
   assertTrue('Tokyo is now a food', tokyo.isInCategory(categoryCalledFood));
 
-  listOfFoods = world.getResultItemsForQuery(queryForFoods);
+  listOfFoods = queryRunnerForFoods.getResultItems();
   hasAll = Util.areObjectsInSet([apple, brownie, cupcake, tokyo], listOfFoods);
   assertTrue('Food query returns 4 foods', listOfFoods.length == 4);
   assertTrue('Food query returns all 4 foods', hasAll);
@@ -556,30 +557,38 @@ function testQueries() {
   var beijing = world.newItem("Beijing");
   beijing.addEntryForAttribute(attributeCalledContinent, "Asia");
   var seattleEntry = seattle.addEntryForAttribute(attributeCalledContinent, "North America");
-  var asiaQuery = world.newQuery(attributeCalledContinent, "Asia")
-  var listOfCountries = world.getResultItemsForQuery(asiaQuery);
+  // var asiaQuery = world.newQuery(attributeCalledContinent, "Asia")
+  // var listOfCountries = world.getResultItemsForQuery(asiaQuery);
+  var queryRunnerForAsia = world.newQueryRunner([attributeCalledContinent, "Asia"]);
+  var listOfCountries = queryRunnerForAsia.getResultItems();
+  
   assertTrue('Asia query returns 2 countries', listOfCountries.length == 2);
   hasAll = Util.areObjectsInSet([tokyo,beijing], listOfCountries);
   assertTrue('Asia query returns all 2 countries', hasAll);
   
   var northAmericaQuery = world.newQuery(attributeCalledContinent, "North America");
-  listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
+  // listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
+  var queryRunnerForNorthAmerica = world.newQueryRunner(northAmericaQuery);
+  var listOfCountries = queryRunnerForNorthAmerica.getResultItems();
   assertTrue('North America query returned only Seattle',
   listOfCountries.length == 1 && Util.isObjectInSet(seattle, listOfCountries));
     
   seattle.addEntryForAttribute(attributeCalledContinent, "Asia");
-  listOfCountries = world.getResultItemsForQuery(asiaQuery);
+  // listOfCountries = world.getResultItemsForQuery(asiaQuery);
+  listOfCountries = queryRunnerForAsia.getResultItems();
   assertTrue('Asia query returns 3 countries', listOfCountries.length == 3);
   hasAll = Util.areObjectsInSet([tokyo,beijing,seattle], listOfCountries);
   assertTrue('Asia query returns all 3 countries', hasAll);
   
   world.setItemToBeIncludedInQueryResultList(beijing, northAmericaQuery);
-  listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
-  assertTrue('Beijing is now in North America',Util.isObjectInSet(beijing,listOfCountries));
-  assertTrue('North America query returns 2 countries',listOfCountries.length == 2);
+  // listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
+  listOfCountries = queryRunnerForNorthAmerica.getResultItems();
+  assertTrue('Beijing is now in North America',Util.isObjectInSet(beijing, listOfCountries));
+  assertTrue('North America query returns 2 countries', listOfCountries.length == 2);
   world.setItemToBeIncludedInQueryResultList(seattle, northAmericaQuery);
-  listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
-  assertTrue('North America still returns only 2 countries',listOfCountries.length == 2);
+  // listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
+  listOfCountries = queryRunnerForNorthAmerica.getResultItems();
+  assertTrue('North America still returns only 2 countries', listOfCountries.length == 2);
   
   world.logout();
 }

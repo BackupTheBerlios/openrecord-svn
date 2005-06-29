@@ -170,7 +170,7 @@ SectionView.prototype.getPluginInstanceFromPluginItem = function (pluginItem, pl
   if (pluginClass) {
     var pluginType = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
     var layoutData = this._getLayoutDataForPlugin(pluginType);
-    newPlugin = new pluginClass(this, pluginDiv, this.getQuery(), layoutData);
+    newPlugin = new pluginClass(this, pluginDiv, this.getQuerySpec(), layoutData);
   }
   return newPlugin;
 };
@@ -182,7 +182,7 @@ SectionView.prototype.getPluginInstanceFromPluginItem = function (pluginItem, pl
  * @scope    public instance method
  * @return   query associated to this section.
  */
-SectionView.prototype.getQuery = function () {
+SectionView.prototype.getQuerySpec = function () {
   var attributeCalledQuerySpec = this.getWorld().getAttributeCalledQuerySpec();
   var queryEntry = this.mySection.getSingleEntryFromAttribute(attributeCalledQuerySpec);
   if (queryEntry) {
@@ -328,7 +328,7 @@ SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
 SectionView.prototype._refreshQueryEditSpan = function () {
   this._queryEditSpan.innerHTML = '';
   
-  var myQuery = this.getQuery();
+  var myQuery = this.getQuerySpec();
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
   var listOfMatchingAttrs = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
   var matchingAttribute;
@@ -402,7 +402,7 @@ SectionView.prototype.keyPressOnMatchingValueField = function(event, aTextView) 
  */
 SectionView.prototype.observedItemHasChanged = function(item) {
   item.removeObserver(this); //item no longer needs to be observed as query editor span is rebuilt
-  var myQuery = this.getQuery();
+  var myQuery = this.getQuerySpec();
   Util.assert(item == myQuery);
   var pluginItem = this._myPlugin.getPluginItem();
   this._myPlugin.endOfLife();
@@ -473,7 +473,7 @@ SectionView.prototype.clickOnAttributeMenu = function (inEventObject) {
   var newQueryMatchingAttribute = this.getWorld().getItemFromUuid(newChoiceUuid);
   var newChoiceName = newQueryMatchingAttribute.getDisplayString();
   
-  var myQuery = this.getQuery();
+  var myQuery = this.getQuerySpec();
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
   var listOfMatchingAttrs = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
   var matchingAttribute;

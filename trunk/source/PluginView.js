@@ -52,7 +52,8 @@ function PluginView(inSuperView, inHTMLElement, inQuery, inLayout) {
   if (!inSuperView) {return;} // initial call that subclasses of PluginViews make without parameters
   this.setSuperview(inSuperView);
   this.setHTMLElement(inHTMLElement);
-  this._query = inQuery;
+  this._querySpec = inQuery;
+  this._queryRunner = this.getWorld().newQueryRunner(this._querySpec, this);
   this._layout = inLayout;
   this._pluginItem = null;
 }
@@ -70,7 +71,6 @@ function PluginView(inSuperView, inHTMLElement, inQuery, inLayout) {
  */
 PluginView.prototype.getPluginItem = function () {
   if (!this._pluginItem) {
-    // alert(this.getPluginName());
     var pluginClass = this.getClass();
     // alert(pluginClass);
     var pluginItemUuid = pluginClass.getPluginItemUuid();
@@ -86,24 +86,28 @@ PluginView.prototype.getPluginItem = function () {
  * @scope    PENDING
  */
 PluginView.prototype.fetchItems = function() {
-  if (Util.isArray(this._query)) {
+  this._listOfItems = this._queryRunner.getResultItems();
+  /*
+  if (Util.isArray(this._querySpec)) {
     //PENDING hack to allow Plugin to support list of items or query
-    this._listOfItems = this._query;
+    this._listOfItems = this._querySpec;
   }
   else {
-    this._listOfItems = this._query ? this.getWorld().getResultItemsForQuery(this._query) : [];
+    this._listOfItems = this._querySpec ? this.getWorld().getResultItemsForQuery(this._querySpec) : [];
   }
+  */
   return this._listOfItems;
 };
 
+
 /**
- * Returns the registered name of this PluginView.
+ * Returns the query spec item used to populate this plugin view.
  *
  * @scope    public instance method
- * @return   A string.
+ * @return   A query spec item.
  */
-PluginView.prototype.getPluginName = function () {
-  Util.assert(false);
+PluginView.prototype.getQuerySpec = function () {
+  return this._querySpec;
 };
 
 
