@@ -168,8 +168,9 @@ brian  |          | 0.25    |     Enabled one server to serve N pages running ag
 chao   | 0.5  IED | 0.5 IED |  8. UI for entering a number literal (instead of a string literal) in a table [with Brian]
 chao   | 1    IED | 1   IED |  9. UI for entering a date literal in a table (and data model support) [with Brian]
 brian  | 1    IED | 1   IED | 10. Add data model support for bi-directional references
-brian  |          | done    |     Convert the code to use bi-directional references
+brian  |          | 0.5     |     Convert the code to use bi-directional references
 brian  | 0.25 IED | 0.25    |     Convert the axiomatic items to use bi-directional reference
+brian  |          | 0.75    |     Misc. other improvements to the repository JSON format
 chao   | 2    IED | 1.5 IED | 11. Move to better persistent representation for queries [with Brian]
        |          |         | 12. Make sure view code uses transactions
        |          |         | 13. Deal with \n in page name or summary fields

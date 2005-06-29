@@ -4,40 +4,44 @@
   // =======================================================================
   { "Transaction": [  // Home Page  
     // -----------------------------------------------------------------------
-    { "Item": {                                               // (Page: Welcome to the OpenRecord d...)
+    // (Page: Welcome!)
+    { "Item": {                                               
              "uuid": "00050000-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              
-             // in item (Page: Welcome to the OpenRecord d...) assign (Attribute: Category) = (Category: Page)
-             // in item (Category: Page) assign (Attribute: Items in Category) = (Page: Welcome to the OpenRecord d...)
+    // (Page: Welcome!).(Category) = (Category: Page)
+    // (Category: Page).(Items in Category) = (Page: Welcome!)
+    { "Entry": {
              "uuid": "0005000a-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00050000-ce7f-11d9-8cd5-0011113ae5d6", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // "Welcome!"
+    // (Page: Welcome!).(Short Name) = "Welcome!"
+    { "Entry": {
              "uuid": "0005000b-ce7f-11d9-8cd5-0011113ae5d6",
-        "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
-             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // (Page: Welcome to the OpenRecord d...)
-             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+        "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
             "value": "Welcome!" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // "Welcome to the OpenRecord d..."
+    // (Page: Welcome!).(Name) = "Welcome to the OpenRecord demo!"
+    { "Entry": {
              "uuid": "0005000c-ce7f-11d9-8cd5-0011113ae5d6",
-        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // (Page: Welcome to the OpenRecord d...)
-             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
             "value": "Welcome to the OpenRecord demo!" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // "This web site is a demo of ..."
+    // (Page: Welcome!).(Summary) = "This web site is a demo of ..."
+    { "Entry": {
              "uuid": "0005000d-ce7f-11d9-8cd5-0011113ae5d6",
-        "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",  // Summary
-             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",  // (Page: Welcome to the OpenRecord d...)
-             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+        "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "00050000-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
             "value": "This web site is a demo of the OpenRecord prototype. OpenRecord is a collaborative content management system. OpenRecord is a lot like a wiki, but with twist. Most wikis are designed to let you view and edit pages of text, like a web-based word processor. OpenRecord is designed to let you view and edit items in a database, rather than pages of text. So if a wiki is a web-based collaborative word-processor, then OpenRecord is a web-based collaborative database, like Lotus Agenda." }
     } ]
   }

@@ -291,11 +291,11 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
         var firstAttribute = pairOfAttributes[0];
         var secondAttribute = pairOfAttributes[1];
         entryString += indent + '    "' + StubVirtualServer.JSON_MEMBER_ATTRIBUTE + '": ["' + firstAttribute._getUuid() + '", "' + secondAttribute._getUuid() + '"]';
-        commentString += indent + '// On item ' + this._getTypedDisplayStringForItem(firstItem);
-        commentString += " assign " + this._getTypedDisplayStringForItem(firstAttribute);
+        commentString += indent + '// ' + this._getTypedDisplayStringForItem(firstItem);
+        commentString += ".(" + firstAttribute.getDisplayString("???") + ")";
         commentString += " = " + this._getTypedDisplayStringForItem(secondItem) + "\n";
-        commentString += indent + '// On item ' + this._getTypedDisplayStringForItem(secondItem);
-        commentString += " assign " + this._getTypedDisplayStringForItem(secondAttribute);
+        commentString += indent + '// ' + this._getTypedDisplayStringForItem(secondItem);
+        commentString += ".(" + secondAttribute.getDisplayString("???") + ")";
         commentString += " = " + this._getTypedDisplayStringForItem(firstItem) + "\n";
       } else {
         var attribute = entry.getAttribute();
@@ -326,8 +326,8 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
             Util.assert(false, "no such type: " + typeToken);
         }
         entryString += indent + '        "' + StubVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString;
-        commentString += indent + '// On item ' + this._getTypedDisplayStringForItem(entry.getItem());
-        commentString += " assign " + this._getTypedDisplayStringForItem(attribute);
+        commentString += indent + '// ' + this._getTypedDisplayStringForItem(entry.getItem());
+        commentString += ".(" + attribute.getDisplayString("???") + ")";
         commentString += " = " + valueComment + "\n";
       }
       commentString += indent + '//           by (' + entry.getUserstamp().getDisplayString() + ')';

@@ -542,7 +542,8 @@ Item.prototype.toString = function () {
  * @return Boolean. True if this item has an attribute with the entry
  */
 Item.prototype.hasAttributeValue = function (inAttribute, inValue) {
-  Util.assert(inAttribute instanceof Item, inAttribute + ' is not an item');
+  // Util.assert(inAttribute instanceof Item, inAttribute + ' is not an item');
+  Util.assert(inAttribute instanceof Item);
   var entryList = this.getEntriesForAttribute(inAttribute);
 
   // look at all the entries this item's attribute is assigned to, 
