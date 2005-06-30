@@ -87,15 +87,6 @@ PluginView.prototype.getPluginItem = function () {
  */
 PluginView.prototype.fetchItems = function() {
   this._listOfItems = this._queryRunner.getResultItems();
-  /*
-  if (Util.isArray(this._querySpec)) {
-    //PENDING hack to allow Plugin to support list of items or query
-    this._listOfItems = this._querySpec;
-  }
-  else {
-    this._listOfItems = this._querySpec ? this.getWorld().getResultItemsForQuery(this._querySpec) : [];
-  }
-  */
   return this._listOfItems;
 };
 

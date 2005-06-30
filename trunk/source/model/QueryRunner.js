@@ -150,10 +150,14 @@ QueryRunner.prototype.doesItemMatch = function(item) {
   
   var matchingAttribute = this.getMatchingAttribute();
   var listOfMatchingValues = this.getMatchingValues();
-  for (var key in listOfMatchingValues) {
-    var matchingValue = listOfMatchingValues[key];
-    if (item.hasAttributeValue(matchingAttribute, matchingValue)) {
-      return true;
+  if (matchingAttribute == QueryRunner.EXPLICIT_LIST_OF_ITEMS) {
+    return Util.isObjectInSet(item, listOfMatchingValues);
+  } else {
+    for (var key in listOfMatchingValues) {
+      var matchingValue = listOfMatchingValues[key];
+      if (item.hasAttributeValue(matchingAttribute, matchingValue)) {
+        return true;
+      }
     }
   }
   

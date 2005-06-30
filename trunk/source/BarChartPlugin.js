@@ -119,7 +119,7 @@ BarChartPlugin.prototype.refresh = function () {
       if (listOfEntries) {
         firstEntry = listOfEntries[0];
         if (firstEntry) {
-          var value = firstEntry.getValue();
+          var value = firstEntry.getValue(contentItem);
           if (Util.isNumber(value)) {
             var count = hashTableOfNumericValueIncidenceKeyedByAttributeKey[attributeKeyString];
             if (!count) {

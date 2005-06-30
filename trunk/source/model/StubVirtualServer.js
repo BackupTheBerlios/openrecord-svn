@@ -531,65 +531,6 @@ StubVirtualServer.prototype.saveChangesToServer = function () {
 // -------------------------------------------------------------------
 
 /**
- * Given a query item, this method returns a list of all the items that 
- * match the query criteria.
- *
- * @deprecated    PENDING: use getResultItemsForQueryRunner() instead.
- * @scope    public instance method
- * @param    query    A query item. 
- * @return   A list of items.
- */
- /*
-StubVirtualServer.prototype.getResultItemsForQuery = function(query, observer) {
-  Util.assert(query instanceof Item);
-  
-  var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
-  var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
-
-  var uuid = null;
-  var item = null;
-  var key;
-  var listOfQueryResultItems = [];
-  var listOfMatchingEntries = query.getEntriesForAttribute(attributeCalledQueryMatchingValue);
-  var listOfMatchingAttrs = query.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
-  if (!listOfMatchingEntries || listOfMatchingEntries.length === 0) {
-    return [];
-  }
-  var matchingAttribute;
-  if (listOfMatchingAttrs.length === 0) {
-    // by default matching attribute is category
-    matchingAttribute = this.getWorld().getAttributeCalledCategory();
-  }
-  else {
-    Util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
-    matchingAttribute = listOfMatchingAttrs[0].getValue();
-  }
-
-  // This is a wildly inefficient search.  But maybe it doesn't matter,
-  // because this code should all be replaced someday by server code.
-  for (uuid in this._hashTableOfItemsKeyedByUuid) {
-    item = this._hashTableOfItemsKeyedByUuid[uuid];
-    if (!item.hasBeenDeleted()) {
-      var includeItem = true;
-      for (key in listOfMatchingEntries) {
-        var matchingEntry = listOfMatchingEntries[key];
-        var match = matchingEntry.getValue();
-        if (includeItem && !(item.hasAttributeValue(matchingAttribute, match))) {
-          includeItem = false;
-        }
-      }
-      if (includeItem) {
-        listOfQueryResultItems.push(item);
-      }
-    }
-  }
-  
-  listOfQueryResultItems.sort(ContentRecord.compareOrdinals);
-  return listOfQueryResultItems; 
-};
-*/
-
-/**
  * Given a QueryRunner object, this method returns a list of all the items that 
  * match the query criteria.
  *
@@ -853,67 +794,6 @@ StubVirtualServer.prototype.__getEntryFromUuidOrBootstrapEntry = function(uuid) 
   }
   return entry;
 };
-
-
-/**
- * PENDING.
- *
- * @scope    private instance method
- */
-/*
-StubVirtualServer.prototype._buildTypeHashTable = function() {
-  var text      = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_TEXT);
-  var number    = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_NUMBER);
-  var dateType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_DATE);
-  var checkMark = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_CHECK_MARK);
-  var url       = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_URL);
-  var itemType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_ITEM);
-  var connectionType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_CONNECTION);
-  
-  this._hashTableOfTypesKeyedByToken = {};
-  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_TEXT_VALUE] = text;
-  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_NUMBER_VALUE] = number;
-  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_DATE_VALUE] = dateType;
-  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_CHECKMARK_VALUE] = checkMark;
-  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_URL_VALUE] = url;
-  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_RELATED_UUID] = itemType;
-  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_CONNECTION] = connectionType;
-};
-*/
-
-/**
- * Given an item that represents that represents a basic data type, this method
- * returns the corresponding string token that represents the same data type.
- *
- * @scope    private instance method
- * @param    type    An item that represents a basic data type, like Text, Number, or URL. 
- * @return   A string token that represents a basic data type.
- */
-/*
-StubVirtualServer.prototype._getTypeTokenFromType = function(type) {
-  for (var token in this._hashTableOfTypesKeyedByToken) {
-    typeItem = this._hashTableOfTypesKeyedByToken[token];
-    if (type == typeItem) {
-      return token;
-    }
-  }
-  Util.assert(false, "no such type: " + type.getDisplayString());
-};
-*/
-
-/**
- * Given a string token that represents a basic data type, this method
- * returns the corresponding item that represents the same data type.
- *
- * @scope    private instance method
- * @param    token    A string token that represents a basic data type.
- * @return   An item that represents a basic data type, like Text, Number, or URL. 
- */
-/*
-StubVirtualServer.prototype._getTypeFromTypeToken = function(token) {
-  return this._hashTableOfTypesKeyedByToken[token];
-};
-*/
 
 
 /**
