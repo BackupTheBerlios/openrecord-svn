@@ -32,8 +32,17 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global window */
+/*global RootView */
 // -------------------------------------------------------------------
+
+
+// -------------------------------------------------------------------
+// NavbarView public class constants
+// -------------------------------------------------------------------
+NavbarView.CSS_CLASS_MENU_ITEM = "menu_item";
 
 
 /**
@@ -42,14 +51,14 @@
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    inSuperView    The view that this LoginView is nested in. 
- * @param    inHTMLElement    The HTMLElement to display the HTML in. 
+ * @param    superView    The view that this LoginView is nested in. 
+ * @param    htmlElement    The HTMLElement to display the HTML in. 
  */
 NavbarView.prototype = new View();  // makes NavbarView be a subclass of View
-function NavbarView(inSuperView, inHTMLElement) {
-  // instance properties
-  this.setSuperview(inSuperView);
-  this.setHTMLElement(inHTMLElement);
+function NavbarView(superView, htmlElement, htmlElementForAnchors) {
+  this.setSuperview(superView);
+  this.setHTMLElement(htmlElement);
+  this._htmlElementForAnchors = htmlElementForAnchors;
 }
 
 
@@ -59,12 +68,17 @@ function NavbarView(inSuperView, inHTMLElement) {
  *
  * @scope    public instance method
  */
-NavbarView.prototype.refresh = function () {
+NavbarView.prototype.refresh = function() {
   if (!this.hasEverBeenDisplayed()) {
     this._rebuildView();
+    this._myHasEverBeenDisplayedFlag = true;
   }
 };
 
+
+// -------------------------------------------------------------------
+// Private instance methods
+// -------------------------------------------------------------------
 
 /**
  * Re-creates the HTML for the view, and hands the HTML to the 
@@ -72,26 +86,34 @@ NavbarView.prototype.refresh = function () {
  *
  * @scope    private instance method
  */
-NavbarView.prototype._rebuildView = function () {
-  var divElement = this.getHTMLElement();
-  
-  var rootView = this.getRootView();
-  var listOfPages = rootView.getPages();
+NavbarView.prototype._rebuildView = function() {
+  var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
+  categoryCalledPage.addObserver(this);
+  var listOfPages = this.getWorld().getItemsInCategory(categoryCalledPage);
+  var key;
+  var page;
 
+  for (key in listOfPages) {
+    page = listOfPages[key];
+    var anchor = View.createAndAppendElement(this._htmlElementForAnchors, "a");
+    anchor.setAttribute("name", RootView.URL_PAGE_PREFIX + page._getUuid());
+  }
+  
+  
+  var divElement = this.getHTMLElement();
   //get rid of all child nodes 
   divElement.innerHTML = '';
 
   var listOfStrings = [];
-
   listOfStrings.push("<ul class=\"menu\">");
-  
-  for (var key in listOfPages) {
-    var page = listOfPages[key];
+  var rootView = this.getRootView();
+  for (key in listOfPages) {
+    page = listOfPages[key];
+    page.addObserver(this);
     var menuText = page.getDisplayString();
     var menuUrl = rootView.getUrlForItem(page);
-    listOfStrings.push("<li class=\"menu_item\"><a href=\"" + menuUrl + "\" onclick=\"RootView.clickOnLocalLink(event)\">" + menuText + "</a></li>");
+    listOfStrings.push("<li class=\"" + NavbarView.CSS_CLASS_MENU_ITEM + "\"><a href=\"" + menuUrl + "\" onclick=\"RootView.clickOnLocalLink(event)\">" + menuText + "</a></li>");
   }
-
   listOfStrings.push("</ul>");
   
   // write out the new nav bar content 
@@ -114,13 +136,28 @@ NavbarView.prototype._rebuildView = function () {
  *
  * @scope    private instance method
  */
-NavbarView.prototype._clickOnNewPageButton = function(inEventObject) {
+NavbarView.prototype._clickOnNewPageButton = function(eventObject) {
   var rootView = this.getRootView();
   var newPage = rootView.newPage();
   window.location = rootView.getUrlForItem(newPage);
   rootView.setCurrentContentViewFromUrl();
 };
 
+
+// -------------------------------------------------------------------
+// Observer methods
+// -------------------------------------------------------------------
+
+/**
+ * Called after there's been some change to one of the pages displayed
+ * in the Navbar.
+ *
+ * @scope    public instance method
+ */
+NavbarView.prototype.observedItemHasChanged = function(item, listOfRecordsForItem) {
+  // alert("Navbar observed: " + item.getDisplayString());
+  this._rebuildView();
+};
 
 // -------------------------------------------------------------------
 // End of file

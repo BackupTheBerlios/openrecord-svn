@@ -398,7 +398,8 @@ SectionView.prototype.keyPressOnMatchingValueField = function(event, aTextView) 
 
 /**
  * Called when the query belong to this section has changed
- * @scope public instance method
+ *
+ * @scope    public instance method
  */
 SectionView.prototype.observedItemHasChanged = function(item) {
   item.removeObserver(this); //item no longer needs to be observed as query editor span is rebuilt

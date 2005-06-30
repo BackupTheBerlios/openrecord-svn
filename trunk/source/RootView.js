@@ -32,10 +32,11 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   PageView.js
-//   World.js
-//   Util.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global window, document, alert, HTMLDivElement */
+/*global Item, World, Util */
+/*global View, PageView, ItemView, NavbarView, LoginView */
 // -------------------------------------------------------------------
 
 
@@ -62,7 +63,7 @@ RootView.UUID_FOR_CATEGORY_SECTION = "00020100-ce7f-11d9-8cd5-0011113ae5d6";
 // -------------------------------------------------------------------
 // RootView class properties
 // -------------------------------------------------------------------
-RootView.ourSingleInstance = null;
+RootView._ourSingleInstance = null;
 
 
 /**
@@ -73,7 +74,7 @@ RootView.ourSingleInstance = null;
  * @scope    public instance constructor
  * @syntax   var rootView = new RootView()
  */
-function RootView(inWorld) {
+function RootView(world) {
   window.onerror = Util.handleError;
   // window.onunload = window.doOnunloadActions;
   // window.onfocus = window.doOnfocusActions;
@@ -81,46 +82,29 @@ function RootView(inWorld) {
   // window.onresize = window.doOnresizeActions;  
   Util.setTargetsForExternalLinks();
   
-  RootView.ourSingleInstance = this;
+  RootView._ourSingleInstance = this;
    
-  Util.assert(inWorld instanceof World);
+  Util.assert(world instanceof World);
 
   // instance properties
-  this._myWorld = inWorld;
-  this.myEditMode = false;
-  this.myNumberOfCallsToDebug = 0;
-  this.myDebugTextarea = null;
+  this._world = world;
+  this._editMode = false;
+  this._numberOfCallsToDebug = 0;
+  this._debugTextarea = null;
   
-  this._myHashTableOfItemViewsKeyedByUuid = {};
-  this._myHashTableOfPageViewsKeyedByUuid = {};
-  this._myCurrentContentView = null;
+  this._hashTableOfItemViewsKeyedByUuid = {};
+  this._hashTableOfPageViewsKeyedByUuid = {};
+  this._currentContentView = null;
   this._homePage = null;
   
-  this.myHashTableOfPagesKeyedByUuid = {};
-  var categoryCalledPage = this._myWorld.getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
-  var listOfPages = this._myWorld.getItemsInCategory(categoryCalledPage);
-  if (listOfPages && listOfPages.length > 0) {
-    this._homePage = listOfPages[0];
-  }
-  for (var key in listOfPages) {
-    var page = listOfPages[key];
-    this.myHashTableOfPagesKeyedByUuid[page._getUuid()] = page; 
-  }
-
   window.document.body.innerHTML = "";
   var rootDiv = View.createAndAppendElement(window.document.body, "div");
+  var anchorSpan = View.createAndAppendElement(rootDiv, "span");
  
-  for (var uuid in this.myHashTableOfPagesKeyedByUuid) {
-    var aPage = this.myHashTableOfPagesKeyedByUuid[uuid];
-    var anchor = View.createAndAppendElement(rootDiv, "a");
-    anchor.setAttribute("name", RootView.URL_PAGE_PREFIX + aPage._getUuid());
-  }
-  
   var headerP = View.createAndAppendElement(rootDiv, "p", "header");
   var logoSpan = View.createAndAppendElement(headerP, "span", "logo");
   logoSpan.innerHTML = '<a href="http://openrecord.org"><span class="logostart">open</span><span class="logomiddle">record</span><span class="logoend">.org</span></a>';
-  var mainControlSpan = View.createAndAppendElement(headerP, "span", null, "main_control_span");
-  mainControlSpan.className = RootView.CSS_CLASS_CONTROL_SPAN;
+  var mainControlSpan = View.createAndAppendElement(headerP, "span", RootView.CSS_CLASS_CONTROL_SPAN, "main_control_span");
   View.createAndAppendElement(headerP, "br");
   var navbarDiv = View.createAndAppendElement(rootDiv, "div", "navbar");
   var contentAreaDiv = View.createAndAppendElement(rootDiv, "div", "content_area");
@@ -136,12 +120,13 @@ function RootView(inWorld) {
   var statusBlurbSpan = View.createAndAppendElement(footerP, "span", "fileformat");
   View.createAndAppendElement(footerP, "br");
   
-  this.myMainControlSpanElement = mainControlSpan;
-  this.myNavbarDivElement = navbarDiv;
-  this._myContentViewDivElement = contentViewDiv;
-  this.myDebugDivElement = debugDiv;
-  this.myStatusBlurbSpanElement = statusBlurbSpan;
-  this._myRootDiv = rootDiv;
+  this._mainControlSpanElement = mainControlSpan;
+  this._anchorSpan = anchorSpan;
+  this._navbarDivElement = navbarDiv;
+  this._contentViewDivElement = contentViewDiv;
+  this._debugDivElement = debugDiv;
+  this._statusBlurbSpanElement = statusBlurbSpan;
+  this._rootDiv = rootDiv;
   
   Util.setErrorReportCallback(RootView.displayTextInDebugTextarea);
   this.setCurrentContentViewFromUrl();
@@ -159,8 +144,8 @@ function RootView(inWorld) {
  * @scope    public class method
  * @return   The singleton instance of RootView. 
  */
-RootView.getRootView = function (inText) {
-  return RootView.ourSingleInstance;
+RootView.getRootView = function() {
+  return RootView._ourSingleInstance;
 };
 
 
@@ -174,8 +159,8 @@ RootView.getRootView = function (inText) {
  * @scope    public instance method
  * @return   A World object. 
  */
-RootView.prototype.getWorld = function () {
-  return this._myWorld;
+RootView.prototype.getWorld = function() {
+  return this._world;
 };
 
 
@@ -185,7 +170,16 @@ RootView.prototype.getWorld = function () {
  * @scope    public instance method
  * @return   A page item.
  */
-RootView.prototype.getHomePage = function () {
+RootView.prototype.getHomePage = function() {
+  if (!this._homePage) {
+    var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
+    var listOfPages = this.getWorld().getItemsInCategory(categoryCalledPage);
+    if (listOfPages && listOfPages.length > 0) {
+      this._homePage = listOfPages[0];
+    } else {
+      Util.assert(false);
+    }
+  }
   return this._homePage;
 };
 
@@ -196,7 +190,7 @@ RootView.prototype.getHomePage = function () {
  * @scope    public instance method
  * @return   This view.
  */
-RootView.prototype.getRootView = function () {
+RootView.prototype.getRootView = function() {
   return this;
 };
 
@@ -207,8 +201,8 @@ RootView.prototype.getRootView = function () {
  * @scope    public instance method
  * @return   A boolean value. True if we are in Edit Mode.
  */
-RootView.prototype.isInEditMode = function () {
-  return this.myEditMode;
+RootView.prototype.isInEditMode = function() {
+  return this._editMode;
 };
 
     
@@ -216,22 +210,22 @@ RootView.prototype.isInEditMode = function () {
  * Switches the UI into and out of edit mode.
  *
  * @scope    public instance method
- * @param    inEditModeFlag    A boolean. True to switch into edit mode, false to switch out.
+ * @param    editModeFlag    A boolean. True to switch into edit mode, false to switch out.
  */
-RootView.prototype.setEditMode = function (inEditModeFlag) {
-  if (inEditModeFlag != this.myEditMode) {
+RootView.prototype.setEditMode = function(editModeFlag) {
+  if (editModeFlag != this._editMode) {
     var world = this.getWorld();
-    if (this.myEditMode) {
+    if (this._editMode) {
       // world.endTransaction();
       // window.document.body.style.cursor = "auto";
     } else {
       // world.beginTransaction();
       // window.document.body.style.cursor = "crosshair";
     }
-    this.myEditMode = !this.myEditMode;
+    this._editMode = !this._editMode;
     this.display();
-    // this.displayTextInDebugTextarea(this.myEditMode);
-    // if (!this.myEditMode && window.location && (window.location.protocol == "file:")) {
+    // this.displayTextInDebugTextarea(this._editMode);
+    // if (!this._editMode && window.location && (window.location.protocol == "file:")) {
     //  RootView.displayTextInDebugTextarea(world._getJsonStringRepresentingAllItems());
     // }
   }
@@ -245,7 +239,7 @@ RootView.prototype.setEditMode = function (inEditModeFlag) {
  * @scope    public instance method
  * @param    item    Any item.
  */
-RootView.prototype.getUrlForItem = function (item) {
+RootView.prototype.getUrlForItem = function(item) {
   Util.assert(item instanceof Item);
   var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
   var prefix;
@@ -266,7 +260,7 @@ RootView.prototype.getUrlForItem = function (item) {
  *
  * @scope    public instance method
  */
-RootView.prototype.setCurrentContentViewFromUrl = function () {
+RootView.prototype.setCurrentContentViewFromUrl = function() {
   var contentViewToSwitchTo = null;
   
   if (window.location) {
@@ -280,27 +274,27 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
       var isUrlForItem = (originalHash.indexOf(RootView.URL_HASH_ITEM_PREFIX) != -1);
       if (isUrlForItem) {
         uuidText = originalHash.replace(RootView.URL_HASH_ITEM_PREFIX, "");
-        contentViewToSwitchTo = this._myHashTableOfItemViewsKeyedByUuid[uuidText];
+        contentViewToSwitchTo = this._hashTableOfItemViewsKeyedByUuid[uuidText];
         if (!contentViewToSwitchTo) {
-          itemFromUuid = this._myWorld.getItemFromUuid(uuidText);
+          itemFromUuid = this._world.getItemFromUuid(uuidText);
           if (itemFromUuid) {
             divElement = window.document.createElement("div"); 
-            this._myContentViewDivElement.appendChild(divElement);
+            this._contentViewDivElement.appendChild(divElement);
             contentViewToSwitchTo = new ItemView(this, divElement, itemFromUuid);
-            this._myHashTableOfItemViewsKeyedByUuid[uuidText] = contentViewToSwitchTo;
+            this._hashTableOfItemViewsKeyedByUuid[uuidText] = contentViewToSwitchTo;
           }
         }
       } else {
         if (isUrlForPage) {
           uuidText = originalHash.replace(RootView.URL_HASH_PAGE_PREFIX, "");
-          contentViewToSwitchTo = this._myHashTableOfPageViewsKeyedByUuid[uuidText];
+          contentViewToSwitchTo = this._hashTableOfPageViewsKeyedByUuid[uuidText];
           if (!contentViewToSwitchTo) {
-            pageFromUuid = this.myHashTableOfPagesKeyedByUuid[uuidText];
+            pageFromUuid = this.getWorld().getItemFromUuid(uuidText);
             if (pageFromUuid) {
               divElement = window.document.createElement("div"); 
-              this._myContentViewDivElement.appendChild(divElement);
+              this._contentViewDivElement.appendChild(divElement);
               contentViewToSwitchTo = new PageView(this, divElement, pageFromUuid);
-              this._myHashTableOfPageViewsKeyedByUuid[uuidText] = contentViewToSwitchTo;
+              this._hashTableOfPageViewsKeyedByUuid[uuidText] = contentViewToSwitchTo;
             }
           }
         } 
@@ -310,18 +304,18 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
   
   if (!contentViewToSwitchTo) {
     var page = this.getHomePage();
-    contentViewToSwitchTo = this._myHashTableOfPageViewsKeyedByUuid[page._getUuid()];
+    contentViewToSwitchTo = this._hashTableOfPageViewsKeyedByUuid[page._getUuid()];
     if (!contentViewToSwitchTo) {
       divElement = window.document.createElement("div"); 
-      this._myContentViewDivElement.appendChild(divElement);
+      this._contentViewDivElement.appendChild(divElement);
       contentViewToSwitchTo = new PageView(this, divElement, page);
-      this._myHashTableOfPageViewsKeyedByUuid[page._getUuid()] = contentViewToSwitchTo;
+      this._hashTableOfPageViewsKeyedByUuid[page._getUuid()] = contentViewToSwitchTo;
     }
   }
-  if (this._myCurrentContentView) {
-    this._myCurrentContentView.includeOnScreen(false);
+  if (this._currentContentView) {
+    this._currentContentView.includeOnScreen(false);
   }
-  this._myCurrentContentView = contentViewToSwitchTo;
+  this._currentContentView = contentViewToSwitchTo;
   this.display();
 };
 
@@ -332,15 +326,15 @@ RootView.prototype.setCurrentContentViewFromUrl = function () {
  *
  * @scope    public instance method
  */
-RootView.prototype.display = function () {
-  Util.assert(this._myCurrentContentView instanceof Object);
+RootView.prototype.display = function() {
+  Util.assert(this._currentContentView instanceof Object);
 
-  document.title = this._myCurrentContentView.getPageTitle() + " - openrecord.org";
-  this._myRootDiv.className = (this.isInEditMode()) ? RootView.CSS_CLASS_EDIT_MODE : RootView.CSS_CLASS_VIEW_MODE;
+  document.title = this._currentContentView.getPageTitle() + " - openrecord.org";
+  this._rootDiv.className = (this.isInEditMode()) ? RootView.CSS_CLASS_EDIT_MODE : RootView.CSS_CLASS_VIEW_MODE;
   this._displayLoginSpan();
   this._displayNavbar();
   this._displayDebugArea();
-  this._myCurrentContentView.includeOnScreen(true);
+  this._currentContentView.includeOnScreen(true);
   window.focus();
 };
 
@@ -353,7 +347,7 @@ RootView.prototype.display = function () {
  * @scope    public instance method
  * @return   The newly created page item.
  */
-RootView.prototype.newPage = function () {
+RootView.prototype.newPage = function() {
   var repository = this.getWorld();
   repository.beginTransaction();
   var newPage = repository.newItem("New Page");
@@ -366,31 +360,24 @@ RootView.prototype.newPage = function () {
 
   repository.endTransaction();
   
-  this.myHashTableOfPagesKeyedByUuid[newPage._getUuid()] = newPage;
-  
   return newPage;
 };
 
 
-/**
- * Returns a list of the page items in the repository.
- *
- * @scope    public instance method
- * @return   A list of items that represent pages.
- */
-RootView.prototype.getPages = function () {
-  return this.myHashTableOfPagesKeyedByUuid;
-};
-
-    
-
 // -------------------------------------------------------------------
 // Private instance methods
 // -------------------------------------------------------------------
+
+/**
+ * Creates the HTML for the LoginView, and hands the HTML to the browser 
+ * to be drawn.
+ *
+ * @scope    private instance method
+ */
 RootView.prototype._displayLoginSpan = function() {
-  if (!this.loginView) {
-    this.loginView = new LoginView(this,this.myMainControlSpanElement);
-    this.loginView.refresh();
+  if (!this._loginView) {
+    this._loginView = new LoginView(this, this._mainControlSpanElement);
+    this._loginView.refresh();
   }
 };
 
@@ -399,13 +386,13 @@ RootView.prototype._displayLoginSpan = function() {
  * Re-creates the HTML for the Navbar, and hands the HTML to the browser 
  * to be re-drawn.
  *
- * @scope    public instance method
+ * @scope    private instance method
  */
-RootView.prototype._displayNavbar = function () {
-  if (!this.navbarView) {
-    this.navbarView = new NavbarView(this, this.myNavbarDivElement);
+RootView.prototype._displayNavbar = function() {
+  if (!this._navbarView) {
+    this._navbarView = new NavbarView(this, this._navbarDivElement, this._anchorSpan);
   }
-  this.navbarView.refresh();
+  this._navbarView.refresh();
 };
 
 
@@ -413,16 +400,16 @@ RootView.prototype._displayNavbar = function () {
  * Re-creates the HTML for the Debug area, and hands the HTML to the browser 
  * to be re-drawn.
  *
- * @scope    public instance method
+ * @scope    private instance method
  */
-RootView.prototype._displayDebugArea = function () {
-  Util.assert(this.myDebugDivElement instanceof HTMLDivElement);
+RootView.prototype._displayDebugArea = function() {
+  Util.assert(this._debugDivElement instanceof HTMLDivElement);
 
   var listOfStrings = [];
   listOfStrings.push("<textarea readonly id=\"" + RootView.ELEMENT_ID_DEBUG_TEXTAREA + "\" rows=\"20\" cols=\"100\" wrap=\"virtual\"></textarea>");
   var finalString = listOfStrings.join("");
-  this.myDebugDivElement.innerHTML = finalString;
-  this.myDebugTextarea = document.getElementById(RootView.ELEMENT_ID_DEBUG_TEXTAREA);
+  this._debugDivElement.innerHTML = finalString;
+  this._debugTextarea = document.getElementById(RootView.ELEMENT_ID_DEBUG_TEXTAREA);
 };
 
 
@@ -434,10 +421,10 @@ RootView.prototype._displayDebugArea = function () {
  * Displays a text string in the status blurb span.
  *
  * @scope    public class method
- * @param    inText    A text string to be displayed. 
+ * @param    text    A text string to be displayed. 
  */
-RootView.displayStatusBlurb = function (inText) {
-  RootView.ourSingleInstance.displayStatusBlurb(inText);
+RootView.displayStatusBlurb = function(text) {
+  RootView._ourSingleInstance.displayStatusBlurb(text);
 };
 
 
@@ -445,10 +432,10 @@ RootView.displayStatusBlurb = function (inText) {
  * Displays a text string in the status blurb span.
  *
  * @scope    public instance method
- * @param    inText    A text string to be displayed. 
+ * @param    text    A text string to be displayed. 
  */
-RootView.prototype.displayStatusBlurb = function (inText) {
-  this.myStatusBlurbSpanElement.innerHTML = inText;
+RootView.prototype.displayStatusBlurb = function(text) {
+  this._statusBlurbSpanElement.innerHTML = text;
 };
 
 
@@ -456,10 +443,10 @@ RootView.prototype.displayStatusBlurb = function (inText) {
  * Displays a text string in the debug textarea.
  *
  * @scope    public class method
- * @param    inText    A text string to be displayed. 
+ * @param    text    A text string to be displayed. 
  */
-RootView.displayTextInDebugTextarea = function (inText) {
-  RootView.ourSingleInstance.displayTextInDebugTextarea(inText);
+RootView.displayTextInDebugTextarea = function(text) {
+  RootView._ourSingleInstance.displayTextInDebugTextarea(text);
 };
 
 
@@ -467,20 +454,22 @@ RootView.displayTextInDebugTextarea = function (inText) {
  * Displays a text string in the debug textarea.
  *
  * @scope    public instance method
- * @param    inText    A text string to be displayed. 
+ * @param    text    A text string to be displayed. 
  */
-RootView.prototype.displayTextInDebugTextarea = function (inText) {
-  this.myNumberOfCallsToDebug += 1;
-  if (this.myNumberOfCallsToDebug > 20) {
+RootView.prototype.displayTextInDebugTextarea = function(text) {
+  this._numberOfCallsToDebug += 1;
+  if (this._numberOfCallsToDebug > 20) {
     return;
   }
-  if (this.myDebugTextarea) {
-    this.myDebugTextarea.value += inText + "\n\n============================\n\n";
-    this.myDebugTextarea.style.visibility = "visible";
-    this.myDebugTextarea.style.display = "block";
-    this.myDebugTextarea.scrollIntoView();
+  if (this._debugTextarea) {
+    this._debugTextarea.value += text + "\n\n============================\n\n";
+    this._debugTextarea.style.visibility = "visible";
+    this._debugTextarea.style.display = "block";
+    this._debugTextarea.scrollIntoView();
   }
-  else {alert(inText);}
+  else {
+    alert(text);
+  }
 };
 
 
@@ -489,12 +478,12 @@ RootView.prototype.displayTextInDebugTextarea = function (inText) {
  * and displays them in the debug textarea.
  *
  * @scope    public instance method
- * @param    inObject    Any sort of object. 
+ * @param    object    Any sort of object. 
  */
-RootView.prototype.displayObjectInDebugTextarea = function (inObject) {
+RootView.prototype.displayObjectInDebugTextarea = function(object) {
   var outputText = "";
-  for (var property in inObject) {
-    outputText += property + " == " + inObject[property] + "\n";
+  for (var property in object) {
+    outputText += property + " == " + object[property] + "\n";
   }
   this.displayTextInDebugTextarea(outputText);
 };
@@ -514,8 +503,8 @@ RootView.prototype.displayObjectInDebugTextarea = function (inObject) {
  * @scope    public class method
  * @param    inEventObject    An event object. 
  */
-RootView.clickOnLocalLink = function (inEventObject) {
-  var eventObject = inEventObject || window.event;
+RootView.clickOnLocalLink = function(eventObject) {
+  eventObject = eventObject || window.event;
   
   var startTiming = new Date();
   
@@ -528,14 +517,15 @@ RootView.clickOnLocalLink = function (inEventObject) {
   var htmlAnchorElement = Util.getTargetFromEvent(eventObject);
   
   window.location = htmlAnchorElement.href;
-  RootView.ourSingleInstance.setCurrentContentViewFromUrl();
+  RootView._ourSingleInstance.setCurrentContentViewFromUrl();
 
   // window.document.body.style.cursor = "default";
   
   var stopTiming = new Date();
   var delayInMilliseconds = stopTiming.getTime() - startTiming.getTime();
-  RootView.ourSingleInstance.displayStatusBlurb("Page load: " + delayInMilliseconds + " milliseconds");
+  RootView._ourSingleInstance.displayStatusBlurb("Page load: " + delayInMilliseconds + " milliseconds");
 };
+
 
 // -------------------------------------------------------------------
 // End of file
