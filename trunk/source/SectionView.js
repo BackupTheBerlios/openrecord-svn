@@ -326,7 +326,7 @@ SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
  *
  */
 SectionView.prototype._refreshQueryEditSpan = function () {
-  this._queryEditSpan.innerHTML = '';
+  View.removeChildrenOfElement(this._queryEditSpan);
   
   var myQuery = this.getQuerySpec();
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();

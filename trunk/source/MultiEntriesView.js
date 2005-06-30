@@ -262,7 +262,7 @@ MultiEntriesView.prototype._addSeparator = function() {
  */
 MultiEntriesView.prototype._buildView = function() {
   var htmlElement = this.getHTMLElement();
-  htmlElement.innerHTML = '';
+  View.removeChildrenOfElement(htmlElement);
   this._entryViews = [];
   
   var entries = this._item.getEntriesForAttribute(this._attribute);

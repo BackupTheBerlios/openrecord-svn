@@ -97,7 +97,7 @@ OutlinePlugin.prototype.getClass = function () {
 OutlinePlugin.prototype.refresh = function () {
   var listOfContentItems = this.fetchItems();
   var outlineDiv = this.getHTMLElement();
-  outlineDiv.innerHTML = "";
+  View.removeChildrenOfElement(outlineDiv);
   var ulElement = View.createAndAppendElement(outlineDiv, "ul");
   for (var contentItemKey in listOfContentItems) {
     var contentItem = listOfContentItems[contentItemKey];

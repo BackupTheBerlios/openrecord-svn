@@ -68,7 +68,7 @@ function TextView(theSuperview, inElement, inItem, inAttribute, inEntry, inClass
   
   this.setSuperview(theSuperview);
   this.setHTMLElement(inElement);
-  inElement.style.width =
+  inElement.style.width = "100%";
   inElement.style.height = "100%"; // make this element expand to fill parent element where possible
   this._item = inItem;
   this._attribute = inAttribute;
@@ -175,7 +175,7 @@ TextView.prototype._isLozenge = function() {
  */
 TextView.prototype._buildView = function() {
   var htmlElement = this.getHTMLElement();
-  htmlElement.innerHTML = '';
+  View.removeChildrenOfElement(htmlElement);
   
   var textString = this._getText();
   
@@ -732,7 +732,6 @@ AttributeSuggestionBox.prototype._setShouldHide = function (shouldHide) {
 };
 
 
-
 /**
  *
  */
@@ -761,7 +760,7 @@ AttributeSuggestionBox.prototype._redisplayAttributeSuggestionBox = function () 
     // make the suggestion box disappear
     this._myAttributeSuggestionBoxDivElement.style.display = "none";
   } else {
-    this._myAttributeSuggestionBoxDivElement.innerHTML = "";
+    View.removeChildrenOfElement(this._myAttributeSuggestionBoxDivElement);
     var table = document.createElement('table');
     var rowNumber = 0;
     var columnNumber = 0;

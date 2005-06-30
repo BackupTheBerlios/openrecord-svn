@@ -184,6 +184,19 @@ View.prototype.includeOnScreen = function (inBoolean) {
 // -------------------------------------------------------------------
 
 /**
+ * Given an HTML element, this method deletes all of the contents from
+ * within the element.
+ *
+ * @scope    public class method
+ * @param    element    An HTML element. 
+ */
+View.removeChildrenOfElement = function(element) {
+  Util.assert(element instanceof HTMLElement);
+  element.innerHTML = '';
+};
+
+
+/**
  * Given an HTML element, we first call document.createElement() to 
  * create a new element, and then call appendChild() to add the new 
  * element to the given element.

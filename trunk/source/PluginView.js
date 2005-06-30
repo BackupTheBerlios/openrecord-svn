@@ -117,7 +117,7 @@ PluginView.prototype.getQuerySpec = function () {
  * @scope    public instance method
  */
 PluginView.prototype.endOfLife = function () {
-  this.getHTMLElement().innerHTML = "";
+  View.removeChildrenOfElement(this.getHTMLElement());
 };
 
 

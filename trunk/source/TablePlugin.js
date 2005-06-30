@@ -349,7 +349,7 @@ TablePlugin.prototype._buildTable = function(inDontRebuildHash) {
   }
   
   //create new table, remove old table if already exists
-  this._myHTMLElement.innerHTML = '';
+  View.removeChildrenOfElement(this._myHTMLElement);
   this.myTable = document.createElement("table");
   this.myTable.className = this.myClass;
   

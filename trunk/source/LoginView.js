@@ -97,8 +97,7 @@ LoginView.prototype.refresh = function () {
 LoginView.prototype._rebuildView = function () {
   var mySpan = this.getHTMLElement();
   
-  //get rid of all child nodes 
-  mySpan.innerHTML = '';
+  View.removeChildrenOfElement(mySpan);
   
   var currentUser = this.getWorld().getCurrentUser();
   if (!currentUser) {
@@ -220,7 +219,9 @@ LoginView.prototype._rebuildView = function () {
  * @scope    private instance method
  */
 LoginView.prototype._clickOnSignoutLink = function(inEventObject) {
-  if (this.isInEditMode()) {this.getRootView().setEditMode(false);}
+  if (this.isInEditMode()) {
+    this.getRootView().setEditMode(false);
+  }
   this.myCookie.userUuid = null;
   this.myCookie.store();
   this.getWorld().logout();
@@ -457,7 +458,7 @@ SuggestionBox.prototype._redisplaySuggestionBox = function () {
     // make the suggestion box disappear
     this._mySuggestionBoxDivElement.style.display = "none";
   } else {
-    this._mySuggestionBoxDivElement.innerHTML = "";
+    View.removeChildrenOfElement(this._mySuggestionBoxDivElement);
     var table = document.createElement('table');
     var rowNumber = 0;
     var columnNumber = 0;

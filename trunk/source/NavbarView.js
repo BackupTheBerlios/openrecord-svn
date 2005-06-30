@@ -42,6 +42,7 @@
 // -------------------------------------------------------------------
 // NavbarView public class constants
 // -------------------------------------------------------------------
+NavbarView.CSS_CLASS_MENU      = "menu";
 NavbarView.CSS_CLASS_MENU_ITEM = "menu_item";
 
 
@@ -93,32 +94,28 @@ NavbarView.prototype._rebuildView = function() {
   var key;
   var page;
 
+  View.removeChildrenOfElement(this._htmlElementForAnchors);
   for (key in listOfPages) {
     page = listOfPages[key];
     var anchor = View.createAndAppendElement(this._htmlElementForAnchors, "a");
     anchor.setAttribute("name", RootView.URL_PAGE_PREFIX + page._getUuid());
   }
   
-  
   var divElement = this.getHTMLElement();
-  //get rid of all child nodes 
-  divElement.innerHTML = '';
-
-  var listOfStrings = [];
-  listOfStrings.push("<ul class=\"menu\">");
+  View.removeChildrenOfElement(divElement); 
+  var ulElement = View.createAndAppendElement(divElement, "ul", NavbarView.CSS_CLASS_MENU);
   var rootView = this.getRootView();
   for (key in listOfPages) {
     page = listOfPages[key];
     page.addObserver(this);
-    var menuText = page.getDisplayString();
+    var liElement = View.createAndAppendElement(ulElement, "li", NavbarView.CSS_CLASS_MENU_ITEM);
+    var anchorElement = View.createAndAppendElement(liElement, "a");
     var menuUrl = rootView.getUrlForItem(page);
-    listOfStrings.push("<li class=\"" + NavbarView.CSS_CLASS_MENU_ITEM + "\"><a href=\"" + menuUrl + "\" onclick=\"RootView.clickOnLocalLink(event)\">" + menuText + "</a></li>");
+    anchorElement.setAttribute("href", menuUrl);
+    var menuText = page.getDisplayString();
+    View.createAndAppendTextNode(anchorElement, menuText);
+    anchorElement.onclick = RootView.clickOnLocalLink.bindAsEventListener();
   }
-  listOfStrings.push("</ul>");
-  
-  // write out the new nav bar content 
-  var finalString = listOfStrings.join("");
-  divElement.innerHTML = finalString;
   
   var newPageButton = View.createAndAppendElement(divElement, "input", RootView.CSS_CLASS_EDIT_MODE_ONLY_CONTROL);
   newPageButton.type = "button";
