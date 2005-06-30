@@ -28,6 +28,17 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
+
+// -------------------------------------------------------------------
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global Util */
+/*global World, Item, Entry */
+/*global StubVirtualServer */
+/*global assertTrue, assertFalse, setUp, tearDown */
+// -------------------------------------------------------------------
+
+
 var ModelTestVars = null;
 var world;
 
@@ -71,7 +82,7 @@ function waitForNextMillisecond() {
   var then = now;
   while (now.valueOf() == then.valueOf()) {
     now = new Date();
-  };
+  }
 }
 
 function testGetTimestamp() {
@@ -286,7 +297,7 @@ function noyet_testAdditionsAndRetrievals() {
   listOfEntries = theHobbit.getEntriesForAttribute(attributeCalledName);
   assertTrue('"The Hobbit" has two names', listOfEntries.length == 2);
   assertTrue('getDisplayName() returns the first name', (starWars.getDisplayName() == "Star Wars"));
-  listOfNames = theHobbit.getNameEntries();
+  var listOfNames = theHobbit.getNameEntries();
   assertTrue('getContentData() returns a string', listOfNames[0].getValue() == "The Hobbit");
   hasAll = Util.areObjectsInSet(listOfNames, listOfEntries);
   hasAll = hasAll && Util.areObjectsInSet(listOfEntries, listOfNames);
@@ -569,7 +580,7 @@ function testQueries() {
   var northAmericaQuery = world.newQuery(attributeCalledContinent, "North America");
   // listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
   var queryRunnerForNorthAmerica = world.newQueryRunner(northAmericaQuery);
-  var listOfCountries = queryRunnerForNorthAmerica.getResultItems();
+  listOfCountries = queryRunnerForNorthAmerica.getResultItems();
   assertTrue('North America query returned only Seattle',
   listOfCountries.length == 1 && Util.isObjectInSet(seattle, listOfCountries));
     
@@ -607,7 +618,7 @@ function testFilteredLists() {
   assertTrue("Should be at least 3 categories", origNumberOfCategories >= 3);
   
   // Need to login before adding a category.
-  loginSuccess = world.login(userJane, janesPassword);
+  var loginSuccess = world.login(userJane, janesPassword);
   assertTrue('login succeeded', loginSuccess);
   assertTrue('Jane is logged in', world.getCurrentUser() == userJane);  
 

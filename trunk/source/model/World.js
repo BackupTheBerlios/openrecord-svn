@@ -30,10 +30,13 @@
  
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   Util.js
-//   Item.js
-//   StubVirtualServer.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global window */
+/*global Util  */
+/*global Item, Entry, Ordinal, Vote, ContentRecord  */
+/*global QueryRunner  */ 
+/*global DeltaVirtualServer  */
 // -------------------------------------------------------------------
 
 
@@ -689,11 +692,11 @@ World.prototype.newCategory = function(name, observer) {
  * Returns a newly created item representing a query.
  *
  * @scope    public instance method
- * @param    matchingAttribute Attribute to query against
- * @param    matchingEntriesOrList an Entry or array of entries to be matched against,  
+ * @param    matchingAttribute    Attribute to query against
+ * @param    matchingEntryOrListOfEntries    an Entry or array of entries to be matched against,  
  * @return   A newly created item representing a query.
  */
-World.prototype.newQuery = function(matchingAttribute, matchingEntriesOrList) {
+World.prototype.newQuery = function(matchingAttribute, matchingEntryOrListOfEntries) {
   Util.assert(matchingAttribute instanceof Item);
   this.beginTransaction();
   var item = this._virtualServer.newItem("A query");
@@ -704,15 +707,15 @@ World.prototype.newQuery = function(matchingAttribute, matchingEntriesOrList) {
   var attributeCalledQueryMatchingValue = this.getAttributeCalledQueryMatchingValue();
   var matchingEntry;
   item.addEntryForAttribute(attributeCalledQueryMatchingAttribute, matchingAttribute);
-  if (matchingEntriesOrList) {
-    if (Util.isArray(matchingEntriesOrList)) {
-      for (var key in matchingEntriesOrList) {
-        matchingEntry = listOfCategories[key];
+  if (matchingEntryOrListOfEntries) {
+    if (Util.isArray(matchingEntryOrListOfEntries)) {
+      for (var key in matchingEntryOrListOfEntries) {
+        matchingEntry = matchingEntryOrListOfEntries[key];
         item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
       }
     }
     else {
-      matchingEntry = matchingEntriesOrList;
+      matchingEntry = matchingEntryOrListOfEntries;
       item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
     }
   }

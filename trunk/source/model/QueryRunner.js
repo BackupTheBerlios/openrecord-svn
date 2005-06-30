@@ -29,6 +29,14 @@
 *****************************************************************************/
  
 
+// -------------------------------------------------------------------
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global Util  */
+/*global Item, World  */
+// -------------------------------------------------------------------
+
+
 /**
  * A QueryRunner is used to run a query.  A QueryRunner can be initialized with a
  * query spec item, so that when the QueryRunner is executed it will return the
@@ -71,7 +79,7 @@ function QueryRunner(world, querySpec, observer) {
  * @scope    public instance method
  * @return   A World object. 
  */
-QueryRunner.prototype.getWorld = function () {
+QueryRunner.prototype.getWorld = function() {
   return this._world;
 };
 
@@ -82,7 +90,7 @@ QueryRunner.prototype.getWorld = function () {
  * @scope    public instance method
  * @return   An attribute item. 
  */
-QueryRunner.prototype.getMatchingAttribute = function () {
+QueryRunner.prototype.getMatchingAttribute = function() {
   return this._matchingAttribute;
 };
 
@@ -93,7 +101,7 @@ QueryRunner.prototype.getMatchingAttribute = function () {
  * @scope    public instance method
  * @return   A list of values. 
  */
-QueryRunner.prototype.getMatchingValues = function () {
+QueryRunner.prototype.getMatchingValues = function() {
   return this._listOfMatchingValues;
 };
 
@@ -104,7 +112,7 @@ QueryRunner.prototype.getMatchingValues = function () {
  * @scope    public instance method
  * @return   The list of items in the query result set. 
  */
-QueryRunner.prototype.getResultItems = function () {
+QueryRunner.prototype.getResultItems = function() {
   return this._listOfResultItems;
 };
 

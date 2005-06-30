@@ -30,10 +30,11 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   User.js
-//   ContentRecord.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global Record */
 // -------------------------------------------------------------------
+
 
 /**
  * Each instance of the Ordinal class keeps track of the fact that
@@ -47,6 +48,8 @@
  */
 Ordinal.prototype = new Record();  // makes Ordinal be a subclass of Record
 function Ordinal(world, uuid, contentRecord, ordinalNumber) {
+  this._Record(world, uuid);
+
   this._contentRecord = contentRecord;
   this._ordinalNumber = ordinalNumber;
   this._contentRecord._addOrdinal(this);
@@ -59,7 +62,7 @@ function Ordinal(world, uuid, contentRecord, ordinalNumber) {
  * @scope    public instance method
  * @return   An item or entry.
  */
-Ordinal.prototype.getContentRecord = function () {
+Ordinal.prototype.getContentRecord = function() {
   return this._contentRecord;
 };
 
@@ -70,7 +73,7 @@ Ordinal.prototype.getContentRecord = function () {
  * @scope    public instance method
  * @return   An ordinal number.
  */
-Ordinal.prototype.getOrdinalNumber = function () {
+Ordinal.prototype.getOrdinalNumber = function() {
   return this._ordinalNumber;
 };
 

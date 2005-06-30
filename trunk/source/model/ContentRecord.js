@@ -32,12 +32,13 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   Vote.js
-//   Ordinal.js
-//   Util.js
-//   World.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global Util  */
+/*global World  */
+/*global Record  */
 // -------------------------------------------------------------------
+
 
 /**
  * The ContentRecord class serves as an abstract superclass for the class Item

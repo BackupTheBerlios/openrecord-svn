@@ -28,6 +28,11 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
+// -------------------------------------------------------------------
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global LintTool, assertTrue, setUp, tearDown */
+// -------------------------------------------------------------------
 
 function setUp() {
 }

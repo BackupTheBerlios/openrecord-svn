@@ -31,6 +31,13 @@
 *****************************************************************************/
 
 
+// -------------------------------------------------------------------
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global Util  */
+// -------------------------------------------------------------------
+
+
 /**
  * The Record class serves as an abstract superclass for the classes Vote,
  * Ordinal, and ContentRecord.  ContentRecord is the abstract superclass

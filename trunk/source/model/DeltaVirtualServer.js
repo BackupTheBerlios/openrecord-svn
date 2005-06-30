@@ -30,13 +30,12 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   Util.js
-//   World.js
-//   Item.js
-//   Vote.js
-//   Entry.js
-//   Ordinal.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global window */
+/*global XMLHttpRequest, ActiveXObject  */
+/*global Util  */
+/*global World, Item, Entry, Ordinal, Vote  */
 // -------------------------------------------------------------------
 
 
@@ -58,11 +57,9 @@ function DeltaVirtualServer(repositoryName, pathToTrunkDirectory) {
   var axiomaticFileName = "2005_june_axiomatic_items.json";
   var urlForAxiomaticFile = this._pathToTrunkDirectory + "source/model/" + axiomaticFileName;
   
-  this._myDehydratedAxiomFileURL = urlForAxiomaticFile;  
-  
+  this._dehydratedAxiomFileURL = urlForAxiomaticFile;  
   this._repositoryName = repositoryName;
-  
-  this._myHasEverFailedToSaveFlag = false;
+  this._hasEverFailedToSaveFlag = false;
 }
 
 
@@ -71,12 +68,12 @@ function DeltaVirtualServer(repositoryName, pathToTrunkDirectory) {
  * and does the initial loading of at least the axiomatic items.
  *
  * @scope    public instance method
- * @param    inWorld    The world that we provide data for. 
+ * @param    world    The world that we provide data for. 
  */
-DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
-  this._initialize(inWorld);
-  this._buildTypeHashTable();
-  this._loadAxiomaticItemsFromFileAtURL(this._myDehydratedAxiomFileURL);
+DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
+  this._initialize(world);
+  // this._buildTypeHashTable();
+  this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
 
   var pathToRepositoryDirectory = "source/repositories/";
   var repositoryFileName = this._repositoryName + ".json";
@@ -98,14 +95,14 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) 
  * instances of items corresponding to the dehydrated data.
  * 
  * @scope    private instance method
- * @param    inJsonRepositoryString    A JSON string literal representing the world of items. 
+ * @param    jsonRepositoryString    A JSON string literal representing the world of items. 
  */
-DeltaVirtualServer.prototype._loadWorldFromJsonString = function (inJsonRepositoryString) {
+DeltaVirtualServer.prototype._loadWorldFromJsonString = function(jsonRepositoryString) {
 
   // load the list of records
-  Util.assert(Util.isString(inJsonRepositoryString));
+  Util.assert(Util.isString(jsonRepositoryString));
   var dehydratedRecords = null;
-  eval("dehydratedRecords = " + inJsonRepositoryString + ";");
+  eval("dehydratedRecords = " + jsonRepositoryString + ";");
   Util.assert(Util.isObject(dehydratedRecords));
   var recordFormat = dehydratedRecords[StubVirtualServer.JSON_MEMBER_FORMAT];
   Util.assert(recordFormat == StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS);
@@ -123,16 +120,16 @@ DeltaVirtualServer.prototype._loadWorldFromJsonString = function (inJsonReposito
  * 25 characters long.
  *
  * @scope    public instance method
- * @param    inString    A string that may need truncating.
+ * @param    string    A string that may need truncating.
  * @return   A string that is. 
  */
-DeltaVirtualServer.prototype.truncateString = function (inString) {
+DeltaVirtualServer.prototype.truncateString = function(string) {
   var maxLength = 80;
   var ellipsis = "...";
-  if (inString.length > maxLength) {
-    return (inString.substring(0, (maxLength - ellipsis.length)) + ellipsis);
+  if (string.length > maxLength) {
+    return (string.substring(0, (maxLength - ellipsis.length)) + ellipsis);
   } else {
-    return inString;
+    return string;
   }
 };
 
@@ -142,12 +139,12 @@ DeltaVirtualServer.prototype.truncateString = function (inString) {
  * representations of all of the records in a Transaction.
  *
  * @scope    private instance method
- * @param    inTransaction    A transaction object.
+ * @param    transaction    A transaction object.
  * @return   A JSON string literal, representing the records in the transaction. 
  */
-DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = function (inTransaction) {
+DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = function(transaction) {
   var indent = "  ";
-  var listOfRecords = inTransaction.getRecords();
+  var listOfRecords = transaction.getRecords();
   if (!listOfRecords || listOfRecords.length === 0) {
     return "";
   }
@@ -159,7 +156,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = function (i
     var listOfStrings = [];
     listOfStrings.push("  // =======================================================================\n");
     listOfStrings.push('  { "' + StubVirtualServer.JSON_MEMBER_TRANSACTION_CLASS + '": [\n');
-    var content = this._getJsonStringRepresentingRecords(inTransaction.getRecords(), indent);
+    var content = this._getJsonStringRepresentingRecords(transaction.getRecords(), indent);
     listOfStrings.push(content);
     listOfStrings.push('  ]\n');
     listOfStrings.push('  }');
@@ -173,7 +170,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = function (i
 /**
  *
  */
-DeltaVirtualServer.prototype._getTypedDisplayStringForItem = function (item) {
+DeltaVirtualServer.prototype._getTypedDisplayStringForItem = function(item) {
   var returnString = "(";
   if (item) {
     Util.assert(item instanceof Item);
@@ -193,12 +190,12 @@ DeltaVirtualServer.prototype._getTypedDisplayStringForItem = function (item) {
  * representations of the records.
  *
  * @scope    private instance method
- * @param    inListOfRecords    A list of the records to include in the JSON string.
- * @param    inIndent    Optional. A string of spaces to prepend to each line.
+ * @param    listOfRecords    A list of the records to include in the JSON string.
+ * @param    indent    Optional. A string of spaces to prepend to each line.
  * @return   A JSON string literal, representing the records. 
  */
-DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inListOfRecords, inIndent) {
-  var indent = inIndent || "";
+DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOfRecords, indent) {
+  indent = indent || "";
   var key;
   var listOfStrings = [];
   var firstContentRecord = true;
@@ -207,8 +204,8 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
   var listOfUsers = null;
   var commentString;
 
-  for (key in inListOfRecords) {
-    var record = inListOfRecords[key];
+  for (key in listOfRecords) {
+    var record = listOfRecords[key];
     if (firstContentRecord) {
       firstContentRecord = false;
     } else {
@@ -230,7 +227,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
       }
       if (Util.isObjectInSet(item, listOfUsers)) {
         var user = item;
-        var password = this.__myHashTableOfUserAuthenticationInfo[user.getUniqueKeyString()];
+        var password = this._hashTableOfUserAuthenticationInfo[user.getUniqueKeyString()];
         var passwordString = "null";
         if (password) {
           passwordString = '"' + password + '"';
@@ -352,7 +349,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function (inLis
  * @param    forceSave    Optional. Forces a save if set to true. 
  * @return   The list of changes made. 
  */
-DeltaVirtualServer.prototype.saveChangesToServer = function (forceSave) {
+DeltaVirtualServer.prototype.saveChangesToServer = function(forceSave) {
   var currentTransaction = this.getCurrentTransaction();
   var listOfChangesMade = currentTransaction.getRecords();
   if (!forceSave && listOfChangesMade.length === 0) {
@@ -365,9 +362,9 @@ DeltaVirtualServer.prototype.saveChangesToServer = function (forceSave) {
       saveChanges = true;
     }
     if (window.location.protocol == "file:") {
-      if (!this._myHasEverFailedToSaveFlag) {
+      if (!this._hasEverFailedToSaveFlag) {
         window.alert("I can't save changes to server, because this page was loaded from a \"file:///\" location, not a real \"http://\" location.  Sorry."); 
-        this._myHasEverFailedToSaveFlag = true;
+        this._hasEverFailedToSaveFlag = true;
       }
     }
   }
@@ -376,7 +373,7 @@ DeltaVirtualServer.prototype.saveChangesToServer = function (forceSave) {
   var newRecord;
   for (key in listOfChangesMade) {
     newRecord = listOfChangesMade[key];
-    this.__myChronologicalListOfRecords.push(newRecord);
+    this._chronologicalListOfRecords.push(newRecord);
   }
 
   if (saveChanges) {
@@ -391,10 +388,10 @@ DeltaVirtualServer.prototype.saveChangesToServer = function (forceSave) {
     // them is complicated, because the requests are asynchronous, so
     // we need to check to see if the last request is done before we 
     // can start a new request.
-    this.__myXMLHttpRequestObject = this.__newXMLHttpRequestObject();
-    this.__myXMLHttpRequestObject.open("POST", url, asynchronous);
-    this.__myXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
-    this.__myXMLHttpRequestObject.send(textToAppend);
+    var newXMLHttpRequestObject = this.__newXMLHttpRequestObject();
+    newXMLHttpRequestObject.open("POST", url, asynchronous);
+    newXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
+    newXMLHttpRequestObject.send(textToAppend);
   }
   
   this._currentTransaction = null;
@@ -408,7 +405,7 @@ DeltaVirtualServer.prototype.saveChangesToServer = function (forceSave) {
  * @scope    private instance method
  * @return   A newly created XMLHttpRequest object. 
  */
-DeltaVirtualServer.prototype.__newXMLHttpRequestObject = function () {
+DeltaVirtualServer.prototype.__newXMLHttpRequestObject = function() {
   var newXMLHttpRequestObject = null;
   if (window.XMLHttpRequest) {
     newXMLHttpRequestObject = new XMLHttpRequest();
@@ -431,6 +428,7 @@ DeltaVirtualServer.prototype.__newXMLHttpRequestObject = function () {
   }
   return newXMLHttpRequestObject;
 };
+
 
 // -------------------------------------------------------------------
 // End of file

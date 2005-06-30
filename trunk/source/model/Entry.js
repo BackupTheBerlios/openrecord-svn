@@ -30,12 +30,13 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   Util.js
-//   Item.js
-//   World.js
-//   ContentRecord.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global ContentRecord */
+/*global Util */
+/*global World, Item */
 // -------------------------------------------------------------------
+
 
 /**
  * Instances of the Entry class hold literal values (like strings
@@ -48,20 +49,20 @@
  * constructor, call a method on Item, like item.addAttributeEntry()
  *
  * @scope    protected instance constructor
- * @param    inWorld    The world that this entry is a part of. 
- * @param    inUuid    The UUID for this entry. 
+ * @param    world    The world that this entry is a part of. 
+ * @param    uuid    The UUID for this entry. 
  */
 Entry.prototype = new ContentRecord();  // makes Entry be a subclass of ContentRecord
-function Entry(inWorld, inUuid) {
-  this._ContentRecord(inWorld, inUuid);
+function Entry(world, uuid) {
+  this._ContentRecord(world, uuid);
  
-  this.__myPreviousEntry = null;
-  this.__myListOfSubsequentEntries = [];
-  this.__myItem = null;
+  this._previousEntry = null;
+  this._listOfSubsequentEntries = [];
+  this._item = null;
 
-  this.__myAttribute = null;
-  this.__myValue = null;
-  this._myType = null;
+  this._attribute = null;
+  this._value = null;
+  this._type = null;
 }
 
 
@@ -84,38 +85,38 @@ function Entry(inWorld, inUuid) {
  * @param    value    The value to initialize the entry with. 
  * @param    type    Optional.  The data type to interpret the value as. 
  */
-Entry.prototype._initialize = function (item, previousEntry, attribute, value, type) {
-  this.__myItem = item;
-  this.__myAttribute = attribute;
+Entry.prototype._initialize = function(item, previousEntry, attribute, value, type) {
+  this._item = item;
+  this._attribute = attribute;
 
   if (previousEntry) {
-    this.__myPreviousEntry = previousEntry;
-    this.__myPreviousEntry.__addSubsequentEntry(this);
+    this._previousEntry = previousEntry;
+    this._previousEntry.__addSubsequentEntry(this);
   } else {
-    this.__myPreviousEntry = null;
+    this._previousEntry = null;
   }
   
   if (type) {
-    this._myType = type;
+    this._type = type;
   } else {
     if (Util.isNumber(value)) {
-      this._myType = this.getWorld().getTypeCalledNumber();
+      this._type = this.getWorld().getTypeCalledNumber();
     }
     else if (Util.isString(value)) {
-      this._myType = this.getWorld().getTypeCalledText();
+      this._type = this.getWorld().getTypeCalledText();
     }
     else if (Util.isDate(value)) {
-      this._myType = this.getWorld().getTypeCalledDate();
+      this._type = this.getWorld().getTypeCalledDate();
     }
     else if (value instanceof Item) {
-      this._myType = this.getWorld().getTypeCalledItem();
+      this._type = this.getWorld().getTypeCalledItem();
     }
     else {Util.assert(false, "unknown data type:" + (typeof value) + ' value: ' + value);}
   }
   if (Util.isString(value)) {
-    this.__myValue = Util.getCleanString(value);
+    this._value = Util.getCleanString(value);
   } else {
-    this.__myValue = value;
+    this._value = value;
   }
 };
 
@@ -137,17 +138,17 @@ Entry.prototype._initialize = function (item, previousEntry, attribute, value, t
  * @param    itemTwo    One of the two items that this entry will connect. 
  * @param    attributeTwo    Optional. The attribute of itemTwo that this entry will be assigned to.  
  */
-Entry.prototype._initializeConnection = function (previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
+Entry.prototype._initializeConnection = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
   if (previousEntry) {
-    this.__myPreviousEntry = previousEntry;
-    this.__myPreviousEntry.__addSubsequentEntry(this);
+    this._previousEntry = previousEntry;
+    this._previousEntry.__addSubsequentEntry(this);
   } else {
-    this.__myPreviousEntry = null;
+    this._previousEntry = null;
   }
 
-  this.__myItem = [itemOne, itemTwo];
-  this.__myAttribute = [attributeOne, attributeTwo];
-  this._myType = this.getWorld().getTypeCalledConnection();
+  this._item = [itemOne, itemTwo];
+  this._attribute = [attributeOne, attributeTwo];
+  this._type = this.getWorld().getTypeCalledConnection();
 };
 
 
@@ -161,38 +162,38 @@ Entry.prototype._initializeConnection = function (previousEntry, itemOne, attrib
  * rehydrating dehydrated entry objects. 
  *
  * @scope    protected instance method
- * @param    inItem    The item that this is an entry of. 
+ * @param    item    The item that this is an entry of. 
  * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
- * @param    inValue    The value to initialize the entry with. 
- * @param    inPreviousEntry    Optional. An old entry that this entry replaces. 
- * @param    inType    Optional. An item representing a data type. 
+ * @param    value    The value to initialize the entry with. 
+ * @param    previousEntry    Optional. An old entry that this entry replaces. 
+ * @param    type    Optional. An item representing a data type. 
  */
-Entry.prototype._rehydrate = function (inItem, inAttribute, inValue, inPreviousEntry, inType) {
-  this.__myItem = inItem;
-  if (inPreviousEntry) {
-    this.__myPreviousEntry = inPreviousEntry;
-    this.__myPreviousEntry.__addSubsequentEntry(this);
+Entry.prototype._rehydrate = function(item, attribute, value, previousEntry, type) {
+  this._item = item;
+  if (previousEntry) {
+    this._previousEntry = previousEntry;
+    this._previousEntry.__addSubsequentEntry(this);
   } else {
-    this.__myPreviousEntry = null;
+    this._previousEntry = null;
   }
 
-  this.__myAttribute = inAttribute;
-  this.__myValue = inValue;
+  this._attribute = attribute;
+  this._value = value;
   
-  this._myType = inType;
+  this._type = type;
 
-  if (this.__myItem instanceof Item) {
-    this.__myItem._addRehydratedEntry(this, inAttribute);
+  if (this._item instanceof Item) {
+    this._item._addRehydratedEntry(this, this._attribute);
   } else {
-    Util.assert(Util.isArray(this.__myItem));
-    Util.assert(this.__myItem.length == 2);
-    Util.assert(Util.isArray(this.__myAttribute));
-    Util.assert(this.__myAttribute.length == 2);
+    Util.assert(Util.isArray(this._item));
+    Util.assert(this._item.length == 2);
+    Util.assert(Util.isArray(this._attribute));
+    Util.assert(this._attribute.length == 2);
     
-    var firstItem = this.__myItem[0];
-    var secondItem = this.__myItem[1];
-    firstItem._addRehydratedEntry(this, this.__myAttribute[0]);
-    secondItem._addRehydratedEntry(this, this.__myAttribute[1]);
+    var firstItem = this._item[0];
+    var secondItem = this._item[1];
+    firstItem._addRehydratedEntry(this, this._attribute[0]);
+    secondItem._addRehydratedEntry(this, this._attribute[1]);
   }
 };
 
@@ -207,8 +208,8 @@ Entry.prototype._rehydrate = function (inItem, inAttribute, inValue, inPreviousE
  * @scope    public instance method
  * @return   The item that this is a entry of.
  */
-Entry.prototype.getItem = function () {
-  return this.__myItem;
+Entry.prototype.getItem = function() {
+  return this._item;
 };
 
 
@@ -218,8 +219,8 @@ Entry.prototype.getItem = function () {
  * @scope    public instance method
  * @return   the type of this entry
  */
-Entry.prototype.getType = function () {
-  return this._myType;
+Entry.prototype.getType = function() {
+  return this._type;
 };
 
 
@@ -230,8 +231,8 @@ Entry.prototype.getType = function () {
  * @scope    public instance method
  * @return   The previous entry, which this entry replaces. 
  */
-Entry.prototype.getPreviousEntry = function () {
-  return this.__myPreviousEntry;
+Entry.prototype.getPreviousEntry = function() {
+  return this._previousEntry;
 };
 
 
@@ -241,8 +242,8 @@ Entry.prototype.getPreviousEntry = function () {
  * @scope    public instance method
  * @return   An attribute item.
  */
-Entry.prototype.getAttribute = function () {
-  return this.__myAttribute;
+Entry.prototype.getAttribute = function() {
+  return this._attribute;
 };
 
 
@@ -254,16 +255,16 @@ Entry.prototype.getAttribute = function () {
  * @param    item    The item that this is an entry of. 
  * @return   An attribute item.
  */
-Entry.prototype.getAttributeForItem = function (item) {
-  if (this.__myItem == item) {
-    return this.__myAttribute;
+Entry.prototype.getAttributeForItem = function(item) {
+  if (this._item == item) {
+    return this._attribute;
   }
-  if (Util.isArray(this.__myItem)) {
-    if (this.__myItem[0] == item) {
-      return this.__myAttribute[0];
+  if (Util.isArray(this._item)) {
+    if (this._item[0] == item) {
+      return this._attribute[0];
     }
-    if (this.__myItem[1] == item) {
-      return this.__myAttribute[1];
+    if (this._item[1] == item) {
+      return this._attribute[1];
     }
   }
   return null;
@@ -278,19 +279,19 @@ Entry.prototype.getAttributeForItem = function (item) {
  * @param    item    The item that this is an entry of. 
  * @return   The item that is connected to the given item.
  */
-Entry.prototype.getConnectedItem = function (item) {
+Entry.prototype.getConnectedItem = function(item) {
   Util.assert(item instanceof Item);
-  if (this.__myItem == item) {
-    if (this._myType == this.getWorld().getTypeCalledItem()) {
-      return this.__myValue;
+  if (this._item == item) {
+    if (this._type == this.getWorld().getTypeCalledItem()) {
+      return this._value;
     }
   }
-  if (Util.isArray(this.__myItem)) {
-    if (this.__myItem[0] == item) {
-      return this.__myItem[1];
+  if (Util.isArray(this._item)) {
+    if (this._item[0] == item) {
+      return this._item[1];
     }
-    if (this.__myItem[1] == item) {
-      return this.__myItem[0];
+    if (this._item[1] == item) {
+      return this._item[0];
     }
   }
   return null;
@@ -304,17 +305,17 @@ Entry.prototype.getConnectedItem = function (item) {
  * @param    item    The item that this is an entry of. 
  * @return   The value this entry was initialized to hold.
  */
-Entry.prototype.getValue = function (item) {
-  if (Util.isArray(this.__myItem)) {
-    if (this.__myItem[0] == item) {
-      return this.__myItem[1];
+Entry.prototype.getValue = function(item) {
+  if (Util.isArray(this._item)) {
+    if (this._item[0] == item) {
+      return this._item[1];
     }
-    if (this.__myItem[1] == item) {
-      return this.__myItem[0];
+    if (this._item[1] == item) {
+      return this._item[0];
     }
     Util.assert(false, "Entry.getValue() was called on a connection entry, but was not passed an item as a parameter.");
   }
-  return this.__myValue; 
+  return this._value; 
 };
 
 
@@ -324,29 +325,29 @@ Entry.prototype.getValue = function (item) {
  * @scope    public instance method
  * @return   A string representing the literal data in this entry.
  */
-Entry.prototype.getDisplayString = function (myItem) {
+Entry.prototype.getDisplayString = function(callingItem) {
   var returnString = "";
-  switch (this._myType) {
+  switch (this._type) {
     case this.getWorld().getTypeCalledNumber():
-      returnString = "" + this.__myValue;
+      returnString = "" + this._value;
       break;
     case this.getWorld().getTypeCalledText():
-      returnString = this.__myValue;
+      returnString = this._value;
       break;
     case this.getWorld().getTypeCalledDate():
-      var aDate = this.__myValue;
+      var aDate = this._value;
       returnString = Util.getStringMonthDayYear(aDate);
       break;
     case this.getWorld().getTypeCalledItem():
-      returnString = this.__myValue.getDisplayString();
+      returnString = this._value.getDisplayString();
       break;
     case this.getWorld().getTypeCalledConnection():
-      var firstItem = this.__myItem[0];
-      var secondItem = this.__myItem[1];
-      if (myItem) {
-        if (myItem == firstItem) {returnString = secondItem.getDisplayString();}
-        else if (myItem == secondItem) {returnString = firstItem.getDisplayString();}
-        else {Util.assert(false, "myItem isn't part of this Entry");}
+      var firstItem = this._item[0];
+      var secondItem = this._item[1];
+      if (callingItem) {
+        if (callingItem == firstItem) {returnString = secondItem.getDisplayString();}
+        else if (callingItem == secondItem) {returnString = firstItem.getDisplayString();}
+        else {Util.assert(false, "callingItem isn't part of this Entry");}
       }
       else {
         returnString = 'connection between "' + firstItem.getDisplayString() + '" and "' + secondItem.getDisplayString() + '"';
@@ -363,7 +364,7 @@ Entry.prototype.getDisplayString = function (myItem) {
  * @scope    public instance method
  * @return   A string with a description of the item.
  */
-Entry.prototype.toString = function () {
+Entry.prototype.toString = function() {
   var returnString = "[Entry #" + this.getUniqueKeyString() + 
     " \"" + this.getDisplayString() + "\"" + "]";
   return returnString;
@@ -376,8 +377,8 @@ Entry.prototype.toString = function () {
  * @scope    public instance method
  * @return   True if this entry has been replaced. False if it has not.
  */
-Entry.prototype.hasBeenReplaced = function () {
-  var listOfEntries = this.__myListOfSubsequentEntries;
+Entry.prototype.hasBeenReplaced = function() {
+  var listOfEntries = this._listOfSubsequentEntries;
 
   if (!listOfEntries || listOfEntries.length === 0) {
     return false;
@@ -413,10 +414,10 @@ Entry.prototype.hasBeenReplaced = function () {
  * Called by a subsquent entry, to tell this entry that it has been replaced.
  *
  * @scope    private instance method
- * @param    inEntry    The entry that replaces this one.
+ * @param    entry    The entry that replaces this one.
  */
-Entry.prototype.__addSubsequentEntry = function (inEntry) {
-  this.__myListOfSubsequentEntries.push(inEntry);
+Entry.prototype.__addSubsequentEntry = function(entry) {
+  this._listOfSubsequentEntries.push(entry);
 };
 
 

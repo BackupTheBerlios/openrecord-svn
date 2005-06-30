@@ -30,11 +30,11 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   Util.js
-//   World.js
-//   Entry.js
-//   ContentRecord.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global ContentRecord */
+/*global Util */
+/*global World, Entry */
 // -------------------------------------------------------------------
 
 
@@ -49,15 +49,15 @@
  * constructor, call the newItem() method on World: world.newItem()
  * 
  * @scope    protected instance constructor
- * @param    inWorld    The world that this item is a part of. 
- * @param    inUuid    The UUID for this item. 
+ * @param    world    The world that this item is a part of. 
+ * @param    uuid    The UUID for this item. 
  */
 Item.prototype = new ContentRecord();  // makes Item be a subclass of ContentRecord
-function Item(inWorld, inUuid) {
-  this._ContentRecord(inWorld, inUuid);
+function Item(world, uuid) {
+  this._ContentRecord(world, uuid);
   
-  this.__myHashTableOfEntryListsKeyedByAttributeUuid = {};
-  this.__myProvisionalFlag = false;
+  this._hashTableOfEntryListsKeyedByAttributeUuid = {};
+  this._provisionalFlag = false;
 }
 
 
@@ -72,15 +72,15 @@ function Item(inWorld, inUuid) {
  * need to call item.rehydrate();
  *
  * @scope    protected instance method
- * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
- * @param    inProvisionalFlag    True if the item is provisional; false if the item is normal. 
+ * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
+ * @param    provisionalFlag    True if the item is provisional; false if the item is normal. 
  */
-Item.prototype._initialize = function (inObserver, inProvisionalFlag) {
-  if (inProvisionalFlag) {
-    this.__myProvisionalFlag = true;
+Item.prototype._initialize = function(observer, provisionalFlag) {
+  if (provisionalFlag) {
+    this._provisionalFlag = true;
   }
-  if (inObserver) {
-    this.addObserver(inObserver);
+  if (observer) {
+    this.addObserver(observer);
   }
 };
 
@@ -94,14 +94,14 @@ Item.prototype._initialize = function (inObserver, inProvisionalFlag) {
  * list of entries.
  *
  * @scope    public instance method
- * @param    inValue    The value to initialize the entry to.
- * @param    inType    Optional. An item representing a data type.
+ * @param    value    The value to initialize the entry to.
+ * @param    type    Optional. An item representing a data type.
  * @return   An entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.addEntry = function (inValue, inType) {
+Item.prototype.addEntry = function(value, type) {
   var attributeCalledUnfiled = this.getWorld().getAttributeCalledUnfiled();
-  return this._createNewEntry(null, attributeCalledUnfiled, inValue, inType);
+  return this._createNewEntry(null, attributeCalledUnfiled, value, type);
 };
 
 
@@ -122,14 +122,14 @@ Item.prototype.addEntry = function (inValue, inType) {
  * </pre>
  *
  * @scope    public instance method
- * @param    inAttribute    The attribute to assign the entry to. 
- * @param    inValue    The value to initialize the entry with.
- * @param    inType    Optional. An item representing a data type.
+ * @param    attribute    The attribute to assign the entry to. 
+ * @param    value    The value to initialize the entry with.
+ * @param    type    Optional. An item representing a data type.
  * @return   An entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.addEntryForAttribute = function (inAttribute, inValue, inType) {
-  return this._createNewEntry(null, inAttribute, inValue, inType);
+Item.prototype.addEntryForAttribute = function(attribute, value, type) {
+  return this._createNewEntry(null, attribute, value, type);
 };
 
 
@@ -137,15 +137,15 @@ Item.prototype.addEntryForAttribute = function (inAttribute, inValue, inType) {
  * Replaces an existing entry with a new entry.
  *
  * @scope    public instance method
- * @param    inEntry    The old entry to be replaced.
- * @param    inValue    The value to initialize the new entry to.
- * @param    inType    Optional. An item representing a data type.
+ * @param    previousEntry    The old entry to be replaced.
+ * @param    value    The value to initialize the new entry to.
+ * @param    type    Optional. An item representing a data type.
  * @return   The new replacement entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.replaceEntry = function (inEntry, inValue, inType) {
-  var attribute = inEntry.getAttributeForItem(this);
-  return this._createNewEntry(inEntry, attribute, inValue, inType);
+Item.prototype.replaceEntry = function(previousEntry, value, type) {
+  var attribute = previousEntry.getAttributeForItem(this);
+  return this._createNewEntry(previousEntry, attribute, value, type);
 };
 
 
@@ -154,15 +154,15 @@ Item.prototype.replaceEntry = function (inEntry, inValue, inType) {
  * to an attribute.
  *
  * @scope    public instance method
- * @param    inEntry    The old entry to be replaced.
- * @param    inAttribute    The attribute to assign the entry to. 
- * @param    inValue    The value to initialize the new entry to.
- * @param    inType    Optional. An item representing a data type.
+ * @param    previousEntry    The old entry to be replaced.
+ * @param    attribute    The attribute to assign the entry to. 
+ * @param    value    The value to initialize the new entry to.
+ * @param    type    Optional. An item representing a data type.
  * @return   The new replacement entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribute, inValue, inType) {
-  return this._createNewEntry(inEntry, inAttribute, inValue, inType);
+Item.prototype.replaceEntryWithEntryForAttribute = function(previousEntry, attribute, value, type) {
+  return this._createNewEntry(previousEntry, attribute, value, type);
 };
 
 
@@ -176,7 +176,7 @@ Item.prototype.replaceEntryWithEntryForAttribute = function (inEntry, inAttribut
  * @param    type    Optional. An item representing a data type.
  * @scope    private instance method
  */
-Item.prototype._createNewEntry = function (previousEntry, attribute, value, type) {
+Item.prototype._createNewEntry = function(previousEntry, attribute, value, type) {
 
   // If we've just been asked to replace the string "Foo" with the string "Foo",
   // then don't even bother creating a new entry. 
@@ -189,8 +189,8 @@ Item.prototype._createNewEntry = function (previousEntry, attribute, value, type
   }
   
   this.getWorld().beginTransaction();
-  if (this.__myProvisionalFlag) {
-    this.__myProvisionalFlag = false;
+  if (this._provisionalFlag) {
+    this._provisionalFlag = false;
     this.getWorld()._provisionalItemJustBecameReal(this);
   }
   
@@ -219,7 +219,7 @@ Item.prototype._createNewEntry = function (previousEntry, attribute, value, type
  * @return   The new entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.addConnectionEntry = function (myAttribute, otherItem, otherAttribute) {
+Item.prototype.addConnectionEntry = function(myAttribute, otherItem, otherAttribute) {
   return this.replaceEntryWithConnection(null, myAttribute, otherItem, otherAttribute);
 };
 
@@ -227,7 +227,7 @@ Item.prototype.addConnectionEntry = function (myAttribute, otherItem, otherAttri
 /**
  *
  */
-Item.prototype.replaceEntryWithConnection = function (previousEntry, myAttribute, otherItem, otherAttribute) {
+Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute, otherItem, otherAttribute) {
   Util.assert(otherItem instanceof Item);
   Util.assert(myAttribute instanceof Item);
 
@@ -251,12 +251,12 @@ Item.prototype.replaceEntryWithConnection = function (previousEntry, myAttribute
   }
 
   this.getWorld().beginTransaction();
-  if (this.__myProvisionalFlag) {
-    this.__myProvisionalFlag = false;
+  if (this._provisionalFlag) {
+    this._provisionalFlag = false;
     this.getWorld()._provisionalItemJustBecameReal(this);
   }
-  if (otherItem.__myProvisionalFlag) {
-    otherItem.__myProvisionalFlag = false;
+  if (otherItem._provisionalFlag) {
+    otherItem._provisionalFlag = false;
     this.getWorld()._provisionalItemJustBecameReal(otherItem);
   }
   if (!otherAttribute) {
@@ -275,7 +275,7 @@ Item.prototype.replaceEntryWithConnection = function (previousEntry, myAttribute
  * @scope    public instance method
  * @param    category    An item representing a category. 
  */
-Item.prototype.assignToCategory = function (category) {
+Item.prototype.assignToCategory = function(category) {
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var attributeCalledItemsInCategory = this.getWorld().getAttributeCalledItemsInCategory();
   this.addConnectionEntry(attributeCalledCategory, category, attributeCalledItemsInCategory);
@@ -299,12 +299,12 @@ Item.prototype.assignToCategory = function (category) {
  * </pre>
  *
  * @scope    public instance method
- * @param    inAttribute    An attribute that we want to know the entries of. 
+ * @param    attribute    An attribute that we want to know the entries of. 
  * @return   A list of entry objects.
  */
-Item.prototype.getEntriesForAttribute = function (inAttribute) {
-  Util.assert(inAttribute instanceof Item);
-  var listOfEntriesForAttribute = this.__myHashTableOfEntryListsKeyedByAttributeUuid[inAttribute._getUuid()];
+Item.prototype.getEntriesForAttribute = function(attribute) {
+  Util.assert(attribute instanceof Item);
+  var listOfEntriesForAttribute = this._hashTableOfEntryListsKeyedByAttributeUuid[attribute._getUuid()];
   if (!listOfEntriesForAttribute) {
     listOfEntriesForAttribute = [];
   }
@@ -350,11 +350,11 @@ Item.prototype.getEntriesForAttribute = function (inAttribute) {
  * @scope    public instance method
  * @return   A list of entry objects.
  */
-Item.prototype.getEntries = function () {
+Item.prototype.getEntries = function() {
   var listOfAllEntries = [];
   
-  for (var uuid in this.__myHashTableOfEntryListsKeyedByAttributeUuid) {
-    var listOfEntriesForAttribute = this.__myHashTableOfEntryListsKeyedByAttributeUuid[uuid];
+  for (var uuid in this._hashTableOfEntryListsKeyedByAttributeUuid) {
+    var listOfEntriesForAttribute = this._hashTableOfEntryListsKeyedByAttributeUuid[uuid];
     for (var key in listOfEntriesForAttribute) {
       var entry = listOfEntriesForAttribute[key];
       listOfAllEntries.push(entry);
@@ -371,10 +371,10 @@ Item.prototype.getEntries = function () {
  * @scope    public instance method
  * @return   A list of attribute items.
  */
-Item.prototype.getAttributes = function () {
+Item.prototype.getAttributes = function() {
   var listOfAttributes = [];
   
-  for (var uuid in this.__myHashTableOfEntryListsKeyedByAttributeUuid) {
+  for (var uuid in this._hashTableOfEntryListsKeyedByAttributeUuid) {
     var attribute = this.getWorld().getItemFromUuid(uuid);
     listOfAttributes.push(attribute);
   }
@@ -385,7 +385,7 @@ Item.prototype.getAttributes = function () {
 /**
  *
  */
-Item.prototype.getFirstCategory = function () {
+Item.prototype.getFirstCategory = function() {
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var listOfCategoryEntries = this.getEntriesForAttribute(attributeCalledCategory);
   var returnEntry = null;
@@ -407,7 +407,7 @@ Item.prototype.getFirstCategory = function () {
  * @return   Boolean whether item is provisional
  */
 Item.prototype.isProvisional = function() {
-  return this.__myProvisionalFlag;
+  return this._provisionalFlag;
 };
 
 
@@ -418,7 +418,7 @@ Item.prototype.isProvisional = function() {
  * @param    defaultString    Optional.  This string will be returned if the item has no display name. 
  * @return   A string with a display name for the item.
  */
-Item.prototype.getDisplayName = function (defaultString) {
+Item.prototype.getDisplayName = function(defaultString) {
   var displayName = defaultString || "(no name)";
   var listOfNameEntries = this.getNameEntries();
   if (listOfNameEntries.length > 0) {
@@ -436,7 +436,7 @@ Item.prototype.getDisplayName = function (defaultString) {
  * @param    defaultString    Optional.  This string will be returned if the item has no short name or name. 
  * @return   A string with a name for the item.
  */
-Item.prototype.getDisplayString = function (defaultString) {
+Item.prototype.getDisplayString = function(defaultString) {
   var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
   var shortNameString = this.getSingleStringValueFromAttribute(attributeCalledShortName);
   if (!shortNameString) {
@@ -449,7 +449,7 @@ Item.prototype.getDisplayString = function (defaultString) {
 /**
  *
  */
-Item.prototype.getDisplayStringForEntry = function (entry) {
+Item.prototype.getDisplayStringForEntry = function(entry) {
   Util.assert(entry instanceof Entry);
   return entry.getDisplayString(this);
 };
@@ -461,7 +461,7 @@ Item.prototype.getDisplayStringForEntry = function (entry) {
  * @scope    public instance method
  * @return   A list of the entries assigned to the "name" attribute.
  */
-Item.prototype.getNameEntries = function () {
+Item.prototype.getNameEntries = function() {
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   return this.getEntriesForAttribute(attributeCalledName);
 };
@@ -473,7 +473,7 @@ Item.prototype.getNameEntries = function () {
  * @scope    public instance method
  * @return   A list of the entries assigned to the "short name" attribute.
  */
-Item.prototype.getShortNameEntries = function () {
+Item.prototype.getShortNameEntries = function() {
   var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
   return this.getEntriesForAttribute(attributeCalledShortName);
 };
@@ -486,7 +486,7 @@ Item.prototype.getShortNameEntries = function () {
  * @param    attribute    An item representing an attribute. 
  * @return   A string with a description of the item.
  */
-Item.prototype.getSingleEntryFromAttribute = function (attribute) {
+Item.prototype.getSingleEntryFromAttribute = function(attribute) {
   var listOfEntries = this.getEntriesForAttribute(attribute);
   if (listOfEntries) {
     return listOfEntries[0];
@@ -502,7 +502,7 @@ Item.prototype.getSingleEntryFromAttribute = function (attribute) {
  * @param    attribute    An item representing an attribute. 
  * @return   A string with a description of the item.
  */
-Item.prototype.getSingleStringValueFromAttribute = function (attribute) {
+Item.prototype.getSingleStringValueFromAttribute = function(attribute) {
   var singleEntry = this.getSingleEntryFromAttribute(attribute);
   if (singleEntry) {return singleEntry.getDisplayString();}
   return "";
@@ -515,7 +515,7 @@ Item.prototype.getSingleStringValueFromAttribute = function (attribute) {
  * @scope    public instance method
  * @return   A string with a description of the item.
  */
-Item.prototype.toString = function () {
+Item.prototype.toString = function() {
   var returnString = "[Item #" + this.getUniqueKeyString() + " ";
   var attributeCategory = this.getWorld().getAttributeCalledCategory();
   var listOfCategories = this.getEntriesForAttribute(attributeCategory);
@@ -541,15 +541,15 @@ Item.prototype.toString = function () {
  * @scope public instance method
  * @return Boolean. True if this item has an attribute with the entry
  */
-Item.prototype.hasAttributeValue = function (inAttribute, inValue) {
-  Util.assert(inAttribute instanceof Item);
-  var entryList = this.getEntriesForAttribute(inAttribute);
+Item.prototype.hasAttributeValue = function(attribute, value) {
+  Util.assert(attribute instanceof Item);
+  var entryList = this.getEntriesForAttribute(attribute);
 
   // look at all the entries this item's attribute is assigned to, 
   // and see if one of them is "inEntry"
   for (var key in entryList) {
     var entry = entryList[key];
-    if (entry.getValue(this) == inValue) {
+    if (entry.getValue(this) == value) {
       return true;
     }
   }
@@ -563,11 +563,11 @@ Item.prototype.hasAttributeValue = function (inAttribute, inValue) {
  * @scope    public instance method
  * @return   A boolean.  True if the item has been assigned to the category.
  */
-Item.prototype.isInCategory = function (inCategory) {
-  Util.assert(inCategory instanceof Item);
+Item.prototype.isInCategory = function(category) {
+  Util.assert(category instanceof Item);
 
   var categoryAttribute = this.getWorld().getAttributeCalledCategory();
-  return this.hasAttributeValue(categoryAttribute, inCategory);
+  return this.hasAttributeValue(categoryAttribute, category);
 };
  
 
@@ -580,10 +580,10 @@ Item.prototype.isInCategory = function (inCategory) {
  * the observer will be notified when the item changes.
  *
  * @scope    public instance method
- * @param    inObserver    An object or method to be registered as an observer of the item. 
+ * @param    observer    An object or method to be registered as an observer of the item. 
  */
-Item.prototype.addObserver = function (inObserver) {
-  this.getWorld().addItemObserver(this, inObserver);
+Item.prototype.addObserver = function(observer) {
+  this.getWorld().addItemObserver(this, observer);
 };
 
 
@@ -592,10 +592,10 @@ Item.prototype.addObserver = function (inObserver) {
  * that the observer will no longer be notified when the item changes.
  *
  * @scope    public instance method
- * @param    inObserver    The object or method to be removed from the set of observers. 
+ * @param    observer    The object or method to be removed from the set of observers. 
  */
-Item.prototype.removeObserver = function (inObserver) {
-  this.getWorld().removeItemObserver(this, inObserver);
+Item.prototype.removeObserver = function(observer) {
+  this.getWorld().removeItemObserver(this, observer);
 };
 
 
@@ -611,11 +611,11 @@ Item.prototype.removeObserver = function (inObserver) {
  * entry._rehydrate() method.
  * 
  * @scope    protected instance method
- * @param    inEntry    The entry to be associated with this item. 
- * @param    inAttribute    The attribute that this entry is assigned to. 
+ * @param    entry    The entry to be associated with this item. 
+ * @param    attribute    The attribute that this entry is assigned to. 
  */
-Item.prototype._addRehydratedEntry = function (inEntry, inAttribute) {
-  this.__addEntryToListOfEntriesForAttribute(inEntry, inAttribute);
+Item.prototype._addRehydratedEntry = function(entry, attribute) {
+  this.__addEntryToListOfEntriesForAttribute(entry, attribute);
 };
   
 
@@ -627,17 +627,17 @@ Item.prototype._addRehydratedEntry = function (inEntry, inAttribute) {
  * Adds an entry to the list of entries that have been set for this item.
  * 
  * @scope    private instance method
- * @param    inEntry    The entry to be associated with this item. 
+ * @param    entry    The entry to be associated with this item. 
  * @param    attribute    The attribute that this entry is assigned to. 
  */
-Item.prototype.__addEntryToListOfEntriesForAttribute = function (inEntry, attribute) {
+Item.prototype.__addEntryToListOfEntriesForAttribute = function(entry, attribute) {
   var attributeUuid = attribute._getUuid();
-  var listOfEntries = this.__myHashTableOfEntryListsKeyedByAttributeUuid[attributeUuid];
+  var listOfEntries = this._hashTableOfEntryListsKeyedByAttributeUuid[attributeUuid];
   if (!listOfEntries) {
     listOfEntries = [];
-    this.__myHashTableOfEntryListsKeyedByAttributeUuid[attributeUuid] = listOfEntries;
+    this._hashTableOfEntryListsKeyedByAttributeUuid[attributeUuid] = listOfEntries;
   }
-  listOfEntries.push(inEntry);
+  listOfEntries.push(entry);
 };
 
 

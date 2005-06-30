@@ -30,14 +30,10 @@
  
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   Util.js
-//   World.js
-//   Item.js
-//   ContentRecord.js
-//   Ordinal.js
-//   Entry.js
-//   Vote.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global Util  */
+/*global World, Item, Entry, Ordinal, Vote, ContentRecord, Transaction  */
 // -------------------------------------------------------------------
 
 
@@ -93,7 +89,7 @@ function StubVirtualServer(pathToTrunkDirectory) {
   }
   urlForAxiomaticFile += "source/model/" + fileName;
   
-  this._myDehydratedAxiomFileURL = urlForAxiomaticFile;
+  this._dehydratedAxiomFileURL = urlForAxiomaticFile;
 }
 
 
@@ -101,21 +97,21 @@ function StubVirtualServer(pathToTrunkDirectory) {
  * Initializes the instance variables for a newly created StubVirtualServer.
  *
  * @scope    private instance method
- * @param    inWorld    The world that we provide data for. 
+ * @param    world    The world that we provide data for. 
  */
-StubVirtualServer.prototype._initialize = function (inWorld) {
-  this.__myWorld = inWorld;
+StubVirtualServer.prototype._initialize = function(world) {
+  this._world = world;
   
   this._countOfNestedTransactions = 0;
   this._currentTransaction = null;
 
-  this.__myHashTableOfItemsKeyedByUuid = {};
-  this.__myHashTableOfEntriesKeyedByUuid = {};
-  this.__myChronologicalListOfRecords = [];
+  this._hashTableOfItemsKeyedByUuid = {};
+  this._hashTableOfEntriesKeyedByUuid = {};
+  this._chronologicalListOfRecords = [];
   
-  this.__myListOfUsers = [];
-  this.__myHashTableOfUserAuthenticationInfo = {};
-  this.__myCurrentUser = null;
+  this._listOfUsers = [];
+  this._hashTableOfUserAuthenticationInfo = {};
+  this._currentUser = null;
 };
  
 
@@ -124,12 +120,12 @@ StubVirtualServer.prototype._initialize = function (inWorld) {
  * and does the initial loading of at least the axiomatic items.
  *
  * @scope    public instance method
- * @param    inWorld    The world that we provide data for. 
+ * @param    world    The world that we provide data for. 
  */
-StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
-  this._initialize(inWorld);
-  this._buildTypeHashTable();
-  this._loadAxiomaticItemsFromFileAtURL(this._myDehydratedAxiomFileURL);
+StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
+  this._initialize(world);
+  // this._buildTypeHashTable();
+  this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
 };
 
 
@@ -139,8 +135,8 @@ StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function (inWorld) {
  * @scope    public instance method
  * @return   A World object. 
  */
-StubVirtualServer.prototype.getWorld = function () {
-  return this.__myWorld;
+StubVirtualServer.prototype.getWorld = function() {
+  return this._world;
 };
 
 
@@ -181,7 +177,7 @@ StubVirtualServer.prototype.endTransaction = function() {
     if (listOfChangesMade.length > 0) {
       // alert(listOfChangesMade.length + " changes made");
       // Util.displayStatusBlurb(listOfChangesMade.length + " changes made");
-      this.__myWorld._notifyObserversOfChanges(listOfChangesMade);
+      this._world._notifyObserversOfChanges(listOfChangesMade);
     }
   }
 };
@@ -193,7 +189,7 @@ StubVirtualServer.prototype.endTransaction = function() {
  * @scope    public instance method
  * @return   A Transaction object, or null if there is no transaction in progress. 
  */
-StubVirtualServer.prototype.getCurrentTransaction = function () {
+StubVirtualServer.prototype.getCurrentTransaction = function() {
   return this._currentTransaction;
 };
 
@@ -206,17 +202,17 @@ StubVirtualServer.prototype.getCurrentTransaction = function () {
  * Returns a newly created item.
  *
  * @scope    public instance method
- * @param    inName    Optional. A string, which will be assigned to the name attribute of the new item. 
- * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
+ * @param    name    Optional. A string, which will be assigned to the name attribute of the new item. 
+ * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created item.
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype.newItem = function (inName, inObserver) {
+StubVirtualServer.prototype.newItem = function(name, observer) {
   this._throwErrorIfNoUserIsLoggedIn();
-  var item = this._createNewItem(inObserver, false);
-  if (inName) { 
-    var attributeCalledName = this.__myWorld.getAttributeCalledName();
-    item.addEntryForAttribute(attributeCalledName, inName);
+  var item = this._createNewItem(observer, false);
+  if (name) { 
+    var attributeCalledName = this._world.getAttributeCalledName();
+    item.addEntryForAttribute(attributeCalledName, name);
   }
   return item;
 };
@@ -230,13 +226,13 @@ StubVirtualServer.prototype.newItem = function (inName, inObserver) {
  * an entry is set for one of the item's attributes.
  *
  * @scope    public instance method
- * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
+ * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created provisional item.
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype.newProvisionalItem = function (inObserver) {
+StubVirtualServer.prototype.newProvisionalItem = function(observer) {
   this._throwErrorIfNoUserIsLoggedIn();
-  var item = this._createNewItem(inObserver, true);
+  var item = this._createNewItem(observer, true);
   return item;
 };
 
@@ -245,18 +241,17 @@ StubVirtualServer.prototype.newProvisionalItem = function (inObserver) {
  * Returns a newly created item: either a provisional item or a normal item.
  *
  * @scope    private instance method
- * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
- * @param    inProvisionalFlag    True if the item is provisional; false if the item is normal. 
+ * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
+ * @param    provisionalFlag    True if the item is provisional; false if the item is normal. 
  * @return   A newly created item.
  */
-StubVirtualServer.prototype._createNewItem = function (inObserver, inProvisionalFlag) {
+StubVirtualServer.prototype._createNewItem = function(observer, provisionalFlag) {
   var uuid = this._getNewUuid();
-  var item = new Item(this.__myWorld, uuid);
-  item._initialize(inObserver, inProvisionalFlag);
-  this.__myHashTableOfItemsKeyedByUuid[uuid] = item;
-  if (!inProvisionalFlag) {
+  var item = new Item(this._world, uuid);
+  item._initialize(observer, provisionalFlag);
+  this._hashTableOfItemsKeyedByUuid[uuid] = item;
+  if (!provisionalFlag) {
     this._currentTransaction.addRecord(item);
-    // this.__myChronologicalListOfNewlyCreatedRecords.push(item);
   }
   return item;
 };
@@ -266,10 +261,10 @@ StubVirtualServer.prototype._createNewItem = function (inObserver, inProvisional
  * Records the fact that a provisional item just became real.
  *
  * @scope    package instance method
- * @param    inItem    The item that was provisional and just became real. 
+ * @param    item    The item that was provisional and just became real. 
  */
-StubVirtualServer.prototype._provisionalItemJustBecameReal = function (inItem) {
-  this._currentTransaction.addRecord(inItem);
+StubVirtualServer.prototype._provisionalItemJustBecameReal = function(item) {
+  this._currentTransaction.addRecord(item);
 };
 
 
@@ -285,14 +280,14 @@ StubVirtualServer.prototype._provisionalItemJustBecameReal = function (inItem) {
  * @return   A newly created entry.
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype.newEntry = function (item, previousEntry, attribute, value, type) {
+StubVirtualServer.prototype.newEntry = function(item, previousEntry, attribute, value, type) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
-  var entry = new Entry(this.__myWorld, uuid);
+  var entry = new Entry(this._world, uuid);
   entry._initialize(item, previousEntry, attribute, value, type);
   item.__addEntryToListOfEntriesForAttribute(entry, attribute);
   
-  this.__myHashTableOfEntriesKeyedByUuid[uuid] = entry;
+  this._hashTableOfEntriesKeyedByUuid[uuid] = entry;
   this._currentTransaction.addRecord(entry);
   return entry;
 };
@@ -313,13 +308,13 @@ StubVirtualServer.prototype.newEntry = function (item, previousEntry, attribute,
 StubVirtualServer.prototype.newConnectionEntry = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
-  var entry = new Entry(this.__myWorld, uuid);
+  var entry = new Entry(this._world, uuid);
   entry._initializeConnection(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
 
   itemOne.__addEntryToListOfEntriesForAttribute(entry, attributeOne);
   itemTwo.__addEntryToListOfEntriesForAttribute(entry, attributeTwo);
 
-  this.__myHashTableOfEntriesKeyedByUuid[uuid] = entry;
+  this._hashTableOfEntriesKeyedByUuid[uuid] = entry;
   this._currentTransaction.addRecord(entry);
   return entry;
 };
@@ -329,15 +324,15 @@ StubVirtualServer.prototype.newConnectionEntry = function(previousEntry, itemOne
  * Returns a newly created ordinal.
  *
  * @scope    public instance method
- * @param    inContentRecord    The contentRecord that this is an ordinal for. 
- * @param    inOrdinalNumber    The ordinal number itself. 
+ * @param    contentRecord    The contentRecord that this is an ordinal for. 
+ * @param    ordinalNumber    The ordinal number itself. 
  * @return   A newly created ordinal.
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype.newOrdinal = function (inContentRecord, inOrdinalNumber) {
+StubVirtualServer.prototype.newOrdinal = function(contentRecord, ordinalNumber) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
-  var ordinal = new Ordinal(this.__myWorld, uuid, inContentRecord, inOrdinalNumber);
+  var ordinal = new Ordinal(this._world, uuid, contentRecord, ordinalNumber);
   this._currentTransaction.addRecord(ordinal);
   return ordinal;
 };
@@ -347,15 +342,15 @@ StubVirtualServer.prototype.newOrdinal = function (inContentRecord, inOrdinalNum
  * Returns a newly created vote.
  *
  * @scope    public instance method
- * @param    inContentRecord    The contentRecord to attach this vote to. 
- * @param    inRetainFlag    True if this is a vote to retain. False if this is a vote to delete. 
+ * @param    contentRecord    The contentRecord to attach this vote to. 
+ * @param    retainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  * @return   A newly created vote.
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype.newVote = function (inContentRecord, inRetainFlag) {
+StubVirtualServer.prototype.newVote = function(contentRecord, retainFlag) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
-  var vote = new Vote(this.__myWorld, uuid, inContentRecord, inRetainFlag);
+  var vote = new Vote(this._world, uuid, contentRecord, retainFlag);
   this._currentTransaction.addRecord(vote);
   return vote;
 };
@@ -369,35 +364,35 @@ StubVirtualServer.prototype.newVote = function (inContentRecord, inRetainFlag) {
  * Creates a new item, where the new item represents a user of this datastore.
  *
  * @scope    public instance method
- * @param    inName    A string, which will be assigned to the name attribute of the new item. 
- * @param    inAuthentication    A string which will be used as the login password for the user. 
- * @param    inObserver    Optional. An object or method to be registered as an observer of the returned item. 
+ * @param    name    A string, which will be assigned to the name attribute of the new item. 
+ * @param    authentication    A string which will be used as the login password for the user. 
+ * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A newly created item representing a user.
  * @throws   Throws an Error if a user is logged in.
  */
-StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObserver) {
-  if (this.__myCurrentUser) {
+StubVirtualServer.prototype.newUser = function(name, authentication, observer) {
+  if (this._currentUser) {
     var error = new Error("A user is logged in.  You can't create a new user when somebody is already logged in.");
     throw error;
   }
 
-  var newUser = this._createNewItem(inObserver, false);
-  this.__myListOfUsers.push(newUser);
+  var newUser = this._createNewItem(observer, false);
+  this._listOfUsers.push(newUser);
   
   var md5Authentication = null;
-  if (inAuthentication) {
-    md5Authentication = Util.hex_md5(inAuthentication);
+  if (authentication) {
+    md5Authentication = Util.hex_md5(authentication);
   }
-  this.__myHashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = md5Authentication;
+  this._hashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = md5Authentication;
 
-  this.__myCurrentUser = newUser;
+  this._currentUser = newUser;
   var categoryCalledPerson = this.getWorld().getCategoryCalledPerson();
   newUser.assignToCategory(categoryCalledPerson); 
-  if (inName) { 
+  if (name) { 
     var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
-    var entry = newUser.addEntryForAttribute(attributeCalledName, inName);
+    var entry = newUser.addEntryForAttribute(attributeCalledName, name);
   }
-  this.__myCurrentUser = null;
+  this._currentUser = null;
   
   return newUser;
 };
@@ -409,8 +404,8 @@ StubVirtualServer.prototype.newUser = function (inName, inAuthentication, inObse
  * @scope    public instance method
  * @return   A list of items.
  */
-StubVirtualServer.prototype.getUsers = function () {
-  return this.__myListOfUsers;
+StubVirtualServer.prototype.getUsers = function() {
+  return this._listOfUsers;
 };
 
 
@@ -420,8 +415,8 @@ StubVirtualServer.prototype.getUsers = function () {
  * @scope    public instance method
  * @return   An item representing the user who is currently logged in.
  */
-StubVirtualServer.prototype.getCurrentUser = function () {
-  return this.__myCurrentUser;
+StubVirtualServer.prototype.getCurrentUser = function() {
+  return this._currentUser;
 };
 
 
@@ -437,38 +432,38 @@ StubVirtualServer.prototype.getCurrentUser = function () {
  * @param    inPassword    Password supplied at login. 
  * @return   True if we were able to log in the user. False if the login failed.
  */
-StubVirtualServer.prototype.login = function (inUser, inPassword) {
+StubVirtualServer.prototype.login = function(user, password) {
   
   // Only one user can be logged in at once.  We consider it an error
   // if you try to log in a new user before logging out the old one.
-  if (this.__myCurrentUser) {
+  if (this._currentUser) {
     Util.assert(false);
   }
   
-  var isKnownUser = Util.isObjectInSet(inUser, this.__myListOfUsers);
+  var isKnownUser = Util.isObjectInSet(user, this._listOfUsers);
   if (!isKnownUser) {
     return false;
   }
 
-  if (inUser._getUuid() == World.UUID_FOR_USER_AMY) {
+  if (user._getUuid() == World.UUID_FOR_USER_AMY) {
     // nobody is allowed to log in as the axiomatic user
     return false;
   }
   
   var md5hashOfPassword = null;
-  if (inPassword) {
-    md5hashOfPassword = Util.hex_md5(inPassword);
+  if (password) {
+    md5hashOfPassword = Util.hex_md5(password);
   }
-  var realAuthentication = this._getAuthenticationInfoForUser(inUser);
+  var realAuthentication = this._getAuthenticationInfoForUser(user);
   var successfulAuthentication = ((realAuthentication == md5hashOfPassword) || !realAuthentication);
   
   // PENDING: temporary hack
   // if (!successfulAuthentication) {
-  //  successfulAuthentication = ("PENDING: magic super password" == inAuthentication);
+  //  successfulAuthentication = ("PENDING: magic super password" == authentication);
   // }
   
   if (successfulAuthentication) {
-    this.__myCurrentUser = inUser;
+    this._currentUser = user;
     return true;
   } else {
     return false;
@@ -482,9 +477,9 @@ StubVirtualServer.prototype.login = function (inUser, inPassword) {
  * @scope    public instance method
  * @return   True if the current user was logged out. False if there was no current user logged in.
  */
-StubVirtualServer.prototype.logout = function () {
-  if (this.__myCurrentUser) {
-    this.__myCurrentUser = null;
+StubVirtualServer.prototype.logout = function() {
+  if (this._currentUser) {
+    this._currentUser = null;
     return true;
   } else {
     return false;
@@ -500,16 +495,16 @@ StubVirtualServer.prototype.logout = function () {
  * Given a UUID, returns the item identified by that UUID.
  *
  * @scope    public instance method
- * @param    inUuid    The UUID of the item to be returned. 
- * @param    inObserver    Optional. An object to be registered as an observer of the returned item. 
+ * @param    uuid    The UUID of the item to be returned. 
+ * @param    observer    Optional. An object to be registered as an observer of the returned item. 
  * @return   The item identified by the given UUID.
  */
-StubVirtualServer.prototype.getItemFromUuid = function (inUuid, inObserver) {
-  Util.assert(Util.isUuid(inUuid), inUuid + ' is not a Uuid');
+StubVirtualServer.prototype.getItemFromUuid = function(uuid, observer) {
+  Util.assert(Util.isUuid(uuid), uuid + ' is not a Uuid');
   
-  var item = this.__myHashTableOfItemsKeyedByUuid[inUuid];
-  if (item && inObserver) {
-    item.addObserver(inObserver);
+  var item = this._hashTableOfItemsKeyedByUuid[uuid];
+  if (item && observer) {
+    item.addObserver(observer);
   }
   return item;
 };
@@ -541,11 +536,11 @@ StubVirtualServer.prototype.saveChangesToServer = function () {
  *
  * @deprecated    PENDING: use getResultItemsForQueryRunner() instead.
  * @scope    public instance method
- * @param    inQuery    A query item. 
+ * @param    query    A query item. 
  * @return   A list of items.
  */
-StubVirtualServer.prototype.getResultItemsForQuery = function (inQuery, inObserver) {
-  Util.assert(inQuery instanceof Item);
+StubVirtualServer.prototype.getResultItemsForQuery = function(query, observer) {
+  Util.assert(query instanceof Item);
   
   var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
@@ -554,8 +549,8 @@ StubVirtualServer.prototype.getResultItemsForQuery = function (inQuery, inObserv
   var item = null;
   var key;
   var listOfQueryResultItems = [];
-  var listOfMatchingEntries = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
-  var listOfMatchingAttrs = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
+  var listOfMatchingEntries = query.getEntriesForAttribute(attributeCalledQueryMatchingValue);
+  var listOfMatchingAttrs = query.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
   if (!listOfMatchingEntries || listOfMatchingEntries.length === 0) {
     return [];
   }
@@ -571,8 +566,8 @@ StubVirtualServer.prototype.getResultItemsForQuery = function (inQuery, inObserv
 
   // This is a wildly inefficient search.  But maybe it doesn't matter,
   // because this code should all be replaced someday by server code.
-  for (uuid in this.__myHashTableOfItemsKeyedByUuid) {
-    item = this.__myHashTableOfItemsKeyedByUuid[uuid];
+  for (uuid in this._hashTableOfItemsKeyedByUuid) {
+    item = this._hashTableOfItemsKeyedByUuid[uuid];
     if (!item.hasBeenDeleted()) {
       var includeItem = true;
       for (key in listOfMatchingEntries) {
@@ -628,8 +623,8 @@ StubVirtualServer.prototype.getResultItemsForQueryRunner = function(queryRunner)
     }
   } else {
     // General case code for any sort of query. 
-    for (var uuid in this.__myHashTableOfItemsKeyedByUuid) {
-      var item = this.__myHashTableOfItemsKeyedByUuid[uuid];
+    for (var uuid in this._hashTableOfItemsKeyedByUuid) {
+      var item = this._hashTableOfItemsKeyedByUuid[uuid];
       var includeItem = queryRunner.doesItemMatch(item);
       if (includeItem) {
         listOfQueryResultItems.push(item);
@@ -647,19 +642,20 @@ StubVirtualServer.prototype.getResultItemsForQueryRunner = function(queryRunner)
  * included in query result list.
  *
  * @scope    public instance method
- * @param    inItem    An item, which will be modified so that it matches the query. 
- * @param    inQuery    A query item. 
+ * @param    item    An item, which will be modified so that it matches the query. 
+ * @param    query    A query item. 
  */
-StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inItem, inQuery) {
-  Util.assert(inItem instanceof Item);
-  Util.assert(inQuery instanceof Item);
+StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function(item, query) {
+  Util.assert(item instanceof Item);
+  Util.assert(query instanceof Item);
+  
   var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var categoryCalledCategory = this.getWorld().getCategoryCalledCategory();
   
-  var listOfMatchingEntries = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
-  var listOfMatchingAttrs = inQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
+  var listOfMatchingEntries = query.getEntriesForAttribute(attributeCalledQueryMatchingValue);
+  var listOfMatchingAttrs = query.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
   if (!(listOfMatchingEntries && (listOfMatchingEntries.length > 0))) {return;} // query not fully formed, so nothing to add
   var matchingAttribute;
   if (listOfMatchingAttrs.length === 0) {
@@ -674,11 +670,11 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
   for (var key in listOfMatchingEntries) {
     var matchingEntry = listOfMatchingEntries[key];
     var match = matchingEntry.getValue();
-    if (!inItem.hasAttributeValue(matchingAttribute, match)) {
+    if (!item.hasAttributeValue(matchingAttribute, match)) {
       if ((matchingAttribute == attributeCalledCategory) && (match instanceof Item) && (match.isInCategory(categoryCalledCategory))) {
-        inItem.assignToCategory(match);
+        item.assignToCategory(match);
       } else {
-        inItem.addEntryForAttribute(matchingAttribute, match);
+        item.addEntryForAttribute(matchingAttribute, match);
       }
     }
   }
@@ -693,20 +689,9 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function (inI
  * @param    inCategory    A category item. 
  * @return   A list of items.
  */
-StubVirtualServer.prototype.getItemsInCategory = function (category) {
+StubVirtualServer.prototype.getItemsInCategory = function(category) {
   Util.assert(category instanceof Item);
 
-/*  
-  var listOfItems = [];
-  for (var uuid in this.__myHashTableOfItemsKeyedByUuid) {
-    var item = this.__myHashTableOfItemsKeyedByUuid[uuid];
-    if (!item.hasBeenDeleted() && item.isInCategory(category)) {
-      listOfItems.push(item);
-    }
-  }
-  listOfItems.sort(ContentRecord.compareOrdinals);
-  return listOfItems; 
-  */
   var attributeCalledItemsInCategory = this.getWorld().getAttributeCalledItemsInCategory();
   var listOfEntries = category.getEntriesForAttribute(attributeCalledItemsInCategory);
   var listOfItems = [];
@@ -730,8 +715,8 @@ StubVirtualServer.prototype.getItemsInCategory = function (category) {
  * @scope    private instance method
  * @throws   Throws an Error if no user is logged in.
  */
-StubVirtualServer.prototype._throwErrorIfNoUserIsLoggedIn = function () {
-  if (!this.__myCurrentUser) {
+StubVirtualServer.prototype._throwErrorIfNoUserIsLoggedIn = function() {
+  if (!this._currentUser) {
     var error = new Error("No user is logged in.  You can't write to the repository when nobody is logged in.");
     throw error;
   }
@@ -742,15 +727,15 @@ StubVirtualServer.prototype._throwErrorIfNoUserIsLoggedIn = function () {
  * Given a UUID, returns the item or entry identified by that UUID.
  *
  * @scope    private instance method
- * @param    inUuid    The UUID of the item or entry to be returned. 
+ * @param    uuid    The UUID of the item or entry to be returned. 
  * @return   The item or entry identified by the given UUID.
  */
-StubVirtualServer.prototype._getContentRecordFromUuid = function (inUuid) {
-  var item = this.getItemFromUuid(inUuid);
+StubVirtualServer.prototype._getContentRecordFromUuid = function(uuid) {
+  var item = this.getItemFromUuid(uuid);
   if (item) {
     return item;
   } else {
-    return this.__myHashTableOfEntriesKeyedByUuid[inUuid];
+    return this._hashTableOfEntriesKeyedByUuid[uuid];
   }
 };
 
@@ -763,8 +748,8 @@ StubVirtualServer.prototype._getContentRecordFromUuid = function (inUuid) {
  */
 StubVirtualServer.prototype._getNewUuid = function() {
   var newUuid;
-  if (this.__myCurrentUser) {
-    var uuidOfCurrentUser = this.__myCurrentUser._getUuid();
+  if (this._currentUser) {
+    var uuidOfCurrentUser = this._currentUser._getUuid();
     var arrayOfParts = uuidOfCurrentUser.split("-");
     var pseudoNodeOfCurrentUser = arrayOfParts[4];//"0123456789AB";
     newUuid = Util.generateTimeBasedUuid(pseudoNodeOfCurrentUser);
@@ -781,11 +766,11 @@ StubVirtualServer.prototype._getNewUuid = function() {
  * associated with that user.
  *
  * @scope    private instance method
- * @param    inUser    An item representing a user. 
+ * @param    user    An item representing a user. 
  * @return   The authentication info for the user.
  */
-StubVirtualServer.prototype._getAuthenticationInfoForUser = function (inUser) {
-  return this.__myHashTableOfUserAuthenticationInfo[inUser.getUniqueKeyString()];
+StubVirtualServer.prototype._getAuthenticationInfoForUser = function(user) {
+  return this._hashTableOfUserAuthenticationInfo[user.getUniqueKeyString()];
 };
 
 
@@ -794,15 +779,15 @@ StubVirtualServer.prototype._getAuthenticationInfoForUser = function (inUser) {
  * or (b) creates an new item object, set its UUID, and returns that object.
  *
  * @scope    private instance method
- * @param    inUuid    The UUID of the item to be returned. 
+ * @param    uuid    The UUID of the item to be returned. 
  * @return   The item identified by the given UUID.
  */
-StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function (inUuid) {
-  var item = this.getItemFromUuid(inUuid);
+StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function(uuid) {
+  var item = this.getItemFromUuid(uuid);
   if (!item) {
-    item = new Item(this.__myWorld, inUuid);
+    item = new Item(this._world, uuid);
     item._initialize();
-    this.__myHashTableOfItemsKeyedByUuid[inUuid] = item;
+    this._hashTableOfItemsKeyedByUuid[uuid] = item;
     this._currentTransaction.addRecord(item);
   }
   return item;
@@ -815,7 +800,7 @@ StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function (inUuid) 
  *
  * @scope    private instance method
  */
-StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = function (url) {
+StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = function(url) {
   var fileContentString = Util.getStringContentsOfFileAtURL(url);
   Util.assert(Util.isString(fileContentString));
   fileContentString += " ] }";
@@ -841,11 +826,11 @@ StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = function (url) {
  * @param    inUuid    The UUID of the item to be returned. 
  * @return   The item identified by the given UUID.
  */
-StubVirtualServer.prototype.__getItemFromUuidOrBootstrapItem = function (inUuid) {
-  var item = this.getItemFromUuid(inUuid);
+StubVirtualServer.prototype.__getItemFromUuidOrBootstrapItem = function(uuid) {
+  var item = this.getItemFromUuid(uuid);
   if (!item) {
-    item = new Item(this.getWorld(), inUuid);
-    this.__myHashTableOfItemsKeyedByUuid[inUuid] = item;
+    item = new Item(this.getWorld(), uuid);
+    this._hashTableOfItemsKeyedByUuid[uuid] = item;
   }
   return item;
 };
@@ -856,14 +841,14 @@ StubVirtualServer.prototype.__getItemFromUuidOrBootstrapItem = function (inUuid)
  * or (b) creates an new entry object, set its UUID, and returns that object.
  *
  * @scope    private instance method
- * @param    inUuid    The UUID of the entry to be returned. 
+ * @param    uuid    The UUID of the entry to be returned. 
  * @return   The entry identified by the given UUID.
  */
-StubVirtualServer.prototype.__getEntryFromUuidOrBootstrapEntry = function (inUuid) {
-  var entry = this.__myHashTableOfEntriesKeyedByUuid[inUuid];
+StubVirtualServer.prototype.__getEntryFromUuidOrBootstrapEntry = function(uuid) {
+  var entry = this._hashTableOfEntriesKeyedByUuid[uuid];
   if (!entry) {
-    entry = new Entry(this.getWorld(), inUuid);
-    this.__myHashTableOfEntriesKeyedByUuid[inUuid] = entry;
+    entry = new Entry(this.getWorld(), uuid);
+    this._hashTableOfEntriesKeyedByUuid[uuid] = entry;
   }
   return entry;
 };
@@ -874,7 +859,8 @@ StubVirtualServer.prototype.__getEntryFromUuidOrBootstrapEntry = function (inUui
  *
  * @scope    private instance method
  */
-StubVirtualServer.prototype._buildTypeHashTable = function () {
+/*
+StubVirtualServer.prototype._buildTypeHashTable = function() {
   var text      = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_TEXT);
   var number    = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_NUMBER);
   var dateType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_DATE);
@@ -883,64 +869,67 @@ StubVirtualServer.prototype._buildTypeHashTable = function () {
   var itemType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_ITEM);
   var connectionType  = this.__getItemFromUuidOrBootstrapItem(World.UUID_FOR_TYPE_CONNECTION);
   
-  this._myHashTableOfTypesKeyedByToken = {};
-  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_TEXT_VALUE] = text;
-  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_NUMBER_VALUE] = number;
-  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_DATE_VALUE] = dateType;
-  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_CHECKMARK_VALUE] = checkMark;
-  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_URL_VALUE] = url;
-  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_RELATED_UUID] = itemType;
-  this._myHashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_CONNECTION] = connectionType;
+  this._hashTableOfTypesKeyedByToken = {};
+  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_TEXT_VALUE] = text;
+  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_NUMBER_VALUE] = number;
+  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_DATE_VALUE] = dateType;
+  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_CHECKMARK_VALUE] = checkMark;
+  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_URL_VALUE] = url;
+  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_RELATED_UUID] = itemType;
+  this._hashTableOfTypesKeyedByToken[StubVirtualServer.JSON_TYPE_CONNECTION] = connectionType;
 };
-
+*/
 
 /**
  * Given an item that represents that represents a basic data type, this method
  * returns the corresponding string token that represents the same data type.
  *
  * @scope    private instance method
- * @param    inType    An item that represents a basic data type, like Text, Number, or URL. 
+ * @param    type    An item that represents a basic data type, like Text, Number, or URL. 
  * @return   A string token that represents a basic data type.
  */
-StubVirtualServer.prototype._getTypeTokenFromType = function (inType) {
-  for (var token in this._myHashTableOfTypesKeyedByToken) {
-    typeItem = this._myHashTableOfTypesKeyedByToken[token];
-    if (inType == typeItem) {
+/*
+StubVirtualServer.prototype._getTypeTokenFromType = function(type) {
+  for (var token in this._hashTableOfTypesKeyedByToken) {
+    typeItem = this._hashTableOfTypesKeyedByToken[token];
+    if (type == typeItem) {
       return token;
     }
   }
-  Util.assert(false, "no such type: " + inType.getDisplayString());
+  Util.assert(false, "no such type: " + type.getDisplayString());
 };
-
+*/
 
 /**
  * Given a string token that represents a basic data type, this method
  * returns the corresponding item that represents the same data type.
  *
  * @scope    private instance method
- * @param    inToken    A string token that represents a basic data type.
+ * @param    token    A string token that represents a basic data type.
  * @return   An item that represents a basic data type, like Text, Number, or URL. 
  */
-StubVirtualServer.prototype._getTypeFromTypeToken = function (inToken) {
-  return this._myHashTableOfTypesKeyedByToken[inToken];
+/*
+StubVirtualServer.prototype._getTypeFromTypeToken = function(token) {
+  return this._hashTableOfTypesKeyedByToken[token];
 };
+*/
 
 
 /**
  * Given a dehydrated list of records, rehydrates each of the records.
  *
  * @scope    private instance method
- * @param    inListOfRecords    A list of dehydrated records. 
+ * @param    listOfDehydratedRecords    A list of dehydrated records. 
  */
-StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
+StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords) {
   var key;
   var itemUuid;
   var item;
   var contentRecordUuid;
   var contentRecord;
 
-  for (key in inListOfRecords) {
-    var dehydratedRecord = inListOfRecords[key];
+  for (key in listOfDehydratedRecords) {
+    var dehydratedRecord = listOfDehydratedRecords[key];
 
     var dehydratedTransaction = dehydratedRecord[StubVirtualServer.JSON_MEMBER_TRANSACTION_CLASS];
     if (dehydratedTransaction) {
@@ -956,15 +945,15 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
       if (dehydratedItem) {
         itemUuid = dehydratedItem[StubVirtualServer.JSON_MEMBER_UUID];
         item = this.__getItemFromUuidOrBootstrapItem(itemUuid);
-        this.__myChronologicalListOfRecords.push(item);
+        this._chronologicalListOfRecords.push(item);
       }
       
       if (dehydratedUser) {
         var userUuid = dehydratedUser[StubVirtualServer.JSON_MEMBER_USER];
         var userPasswordHash = dehydratedUser[StubVirtualServer.JSON_MEMBER_PASSWORD];
         var user = this.__getItemFromUuidOrBootstrapItem(userUuid);
-        this.__myListOfUsers.push(user);
-        this.__myHashTableOfUserAuthenticationInfo[user.getUniqueKeyString()] = userPasswordHash;
+        this._listOfUsers.push(user);
+        this._hashTableOfUserAuthenticationInfo[user.getUniqueKeyString()] = userPasswordHash;
       }
       
       if (dehydratedVote) {
@@ -981,7 +970,7 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
         contentRecordUuid = dehydratedVote[StubVirtualServer.JSON_MEMBER_RECORD];
         contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
         var vote = new Vote(this.getWorld(), voteUuid, contentRecord, retainFlag);
-        this.__myChronologicalListOfRecords.push(vote);
+        this._chronologicalListOfRecords.push(vote);
       }
       
       if (dehydratedOrdinal) {
@@ -990,7 +979,7 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
         contentRecordUuid = dehydratedOrdinal[StubVirtualServer.JSON_MEMBER_RECORD];
         contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
         var ordinal = new Ordinal(this.getWorld(), ordinalUuid, contentRecord, ordinalNumber);
-        this.__myChronologicalListOfRecords.push(ordinal);
+        this._chronologicalListOfRecords.push(ordinal);
       }
       
       if (dehydratedEntry) {
@@ -1010,9 +999,11 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
           dataType = this.__getItemFromUuidOrBootstrapItem(dataTypeUuid);
         } else {
           // code to deal with the old pre-July-2005 file format
+          /*
           var dataTypeToken = dataTypeUuid;
           dataType = this._getTypeFromTypeToken(dataTypeToken);
           dataTypeUuid = dataType._getUuid();
+          */
         }
         
         if (dataTypeUuid == World.UUID_FOR_TYPE_CONNECTION) {
@@ -1060,11 +1051,11 @@ StubVirtualServer.prototype._rehydrateRecords = function (inListOfRecords) {
               finalData = new Date(rawData);
               break;
             default:
-              Util.assert(false,'Unknown data type while _rehydrating()');
+              Util.assert(false, 'Unknown data type while _rehydrating()');
           }
           entry._rehydrate(item, attribute, finalData, previousEntry, dataType);
         }
-        this.__myChronologicalListOfRecords.push(entry);
+        this._chronologicalListOfRecords.push(entry);
       }
       
     }

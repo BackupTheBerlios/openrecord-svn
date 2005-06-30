@@ -30,10 +30,11 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   User.js
-//   ContentRecord.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global Record */
 // -------------------------------------------------------------------
+
 
 /**
  * Each instance of the Vote class keeps track of a vote to retain or delete
@@ -61,7 +62,7 @@ function Vote(world, uuid, contentRecord, retainFlag) {
  * @scope    public instance method
  * @return   An item or entry.
  */
-Vote.prototype.getContentRecord = function () {
+Vote.prototype.getContentRecord = function() {
   return this._contentRecord;
 };
 
@@ -73,7 +74,7 @@ Vote.prototype.getContentRecord = function () {
  * @scope    public instance method
  * @return   A boolean. True if this is a vote to retain, or false if this is a vote to delete.
  */
-Vote.prototype.getRetainFlag = function () {
+Vote.prototype.getRetainFlag = function() {
   return this._retainFlag;
 };
 
