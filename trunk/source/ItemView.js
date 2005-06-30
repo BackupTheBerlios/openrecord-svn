@@ -64,10 +64,9 @@ function ItemView(inRootView, inHTMLElement, inItem) {
   this.setSuperview(inRootView);
   this.setHTMLElement(inHTMLElement);
   this.myItem = inItem;
-  // this.myDivElement = inHTMLElement;
-  // this.myRootView = inRootView;
   this.myPlugin = null;
 }
+
 
 /**
  * Returns a string that gives the name of the page.
@@ -76,8 +75,8 @@ function ItemView(inRootView, inHTMLElement, inItem) {
  * @return   A string that gives the name of the page.
  */
 ItemView.prototype.getPageTitle = function () {
-  var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
-  return this.myItem.getSingleStringValueFromAttribute(attributeCalledShortName);
+  var pageTitle = this.myItem.getDisplayString();
+  return pageTitle;
 };
 
 
@@ -106,7 +105,7 @@ ItemView.prototype.refresh = function () {
 
   // let the detailPlugin add its own content
   var detailPluginElement = document.getElementById(detailDivId);
-  this.myPlugin = new DetailPlugin(this, detailPluginElement,[this.myItem]);
+  this.myPlugin = new DetailPlugin(this, detailPluginElement, [this.myItem]);
   this.myPlugin.refresh();
 };
 

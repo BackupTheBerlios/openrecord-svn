@@ -547,13 +547,6 @@ function testQueries() {
   assertTrue('Food query returns 3 foods', listOfFoods.length == 3);
   assertTrue('Food query returns all 3 foods', hasAll);
 
-/*  NO LONGER SUPPORT QUERY FOR SPECIFIC ITEMS 6/14/05
-  var queryForCities = world.newQueryForSpecificItems([tokyo, seattle]);
-  var listOfCities = world.getResultItemsForQuery(queryForCities);
-  hasAll = Util.areObjectsInSet([tokyo, seattle], listOfCities);
-  assertTrue('City query returns 2 cities', listOfCities.length == 2);
-  assertTrue('City query returns all cities', hasAll);*/
-
   world.setItemToBeIncludedInQueryResultList(tokyo, queryForFoods);
   assertTrue('Tokyo is now a food', tokyo.isInCategory(categoryCalledFood));
 
@@ -568,9 +561,7 @@ function testQueries() {
   var beijing = world.newItem("Beijing");
   beijing.addEntryForAttribute(attributeCalledContinent, "Asia");
   var seattleEntry = seattle.addEntryForAttribute(attributeCalledContinent, "North America");
-  // var asiaQuery = world.newQuery(attributeCalledContinent, "Asia")
-  // var listOfCountries = world.getResultItemsForQuery(asiaQuery);
-  var queryRunnerForAsia = world.newQueryRunner([attributeCalledContinent, "Asia"]);
+  var queryRunnerForAsia = world.newQueryRunner({attribute: attributeCalledContinent, values:["Asia"]});
   var listOfCountries = queryRunnerForAsia.getResultItems();
   
   assertTrue('Asia query returns 2 countries', listOfCountries.length == 2);
@@ -578,26 +569,22 @@ function testQueries() {
   assertTrue('Asia query returns all 2 countries', hasAll);
   
   var northAmericaQuery = world.newQuery(attributeCalledContinent, "North America");
-  // listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
   var queryRunnerForNorthAmerica = world.newQueryRunner(northAmericaQuery);
   listOfCountries = queryRunnerForNorthAmerica.getResultItems();
   assertTrue('North America query returned only Seattle',
   listOfCountries.length == 1 && Util.isObjectInSet(seattle, listOfCountries));
     
   seattle.addEntryForAttribute(attributeCalledContinent, "Asia");
-  // listOfCountries = world.getResultItemsForQuery(asiaQuery);
   listOfCountries = queryRunnerForAsia.getResultItems();
   assertTrue('Asia query returns 3 countries', listOfCountries.length == 3);
   hasAll = Util.areObjectsInSet([tokyo,beijing,seattle], listOfCountries);
   assertTrue('Asia query returns all 3 countries', hasAll);
   
   world.setItemToBeIncludedInQueryResultList(beijing, northAmericaQuery);
-  // listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
   listOfCountries = queryRunnerForNorthAmerica.getResultItems();
   assertTrue('Beijing is now in North America',Util.isObjectInSet(beijing, listOfCountries));
   assertTrue('North America query returns 2 countries', listOfCountries.length == 2);
   world.setItemToBeIncludedInQueryResultList(seattle, northAmericaQuery);
-  // listOfCountries = world.getResultItemsForQuery(northAmericaQuery);
   listOfCountries = queryRunnerForNorthAmerica.getResultItems();
   assertTrue('North America still returns only 2 countries', listOfCountries.length == 2);
   
@@ -605,9 +592,9 @@ function testQueries() {
 }
 
 
-/*
-Tests World._getFilteredList, via World.getUsers and World.getCategories.
-*/
+/**
+ * Tests World._getFilteredList, via World.getUsers and World.getCategories.
+ */
 function testFilteredLists() {
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);  

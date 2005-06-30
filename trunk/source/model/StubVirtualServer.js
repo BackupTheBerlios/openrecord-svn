@@ -539,6 +539,7 @@ StubVirtualServer.prototype.saveChangesToServer = function () {
  * @param    query    A query item. 
  * @return   A list of items.
  */
+ /*
 StubVirtualServer.prototype.getResultItemsForQuery = function(query, observer) {
   Util.assert(query instanceof Item);
   
@@ -586,7 +587,7 @@ StubVirtualServer.prototype.getResultItemsForQuery = function(query, observer) {
   listOfQueryResultItems.sort(ContentRecord.compareOrdinals);
   return listOfQueryResultItems; 
 };
-
+*/
 
 /**
  * Given a QueryRunner object, this method returns a list of all the items that 

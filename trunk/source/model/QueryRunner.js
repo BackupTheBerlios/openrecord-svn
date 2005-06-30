@@ -37,11 +37,30 @@
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// NavbarView public class constants
+// -------------------------------------------------------------------
+QueryRunner.JSON_MEMBER_ATTRIBUTE  = "attribute";
+QueryRunner.JSON_MEMBER_VALUES     = "values";
+
+QueryRunner.EXPLICIT_LIST_OF_ITEMS = QueryRunner;
+
+
 /**
- * A QueryRunner is used to run a query.  A QueryRunner can be initialized with a
- * query spec item, so that when the QueryRunner is executed it will return the
- * item specified by the query spec.
+ * A QueryRunner is used to run a query.  
  *
+ * A QueryRunner can be initialized with a query spec item, so that when the
+ * QueryRunner is executed it will return the item specified by the query spec.
+ * 
+ * Or, a QueryRunner can be initialized with an ad-hoc query instead of a 
+ * query spec item.  Here are some examples of ad-hoc queries:
+ *
+ *  {attribute: attributeState, values:["MD", "DC"]}             // all items where State is MD or DC
+ *  {attribute: attributeState, values:["MD", "DC", "CA", "WA"]} // all items in any of 4 states
+ *  {attribute: attributeCategory, values:[categoryBug]}         // all items assigned to category Bug
+ *  {values: [categoryBug]}                                      // all items assigned to category Bug
+ *  [berlin, moscow, tokyo, seattle]                             // just these 4 items
+ * 
  * @scope    public instance constructor
  * @param    world    The World of items this query will search within. 
  * @param    querySpec    Optional. A query spec item, or an ad-hoc query. 
@@ -226,24 +245,32 @@ QueryRunner.prototype._readQuerySpec = function() {
       var matchingValue = matchingEntry.getValue();
       this._listOfMatchingValues.push(matchingValue);
     }
+    
+    return;
   }
   
-  // Handle the case where we have an ad-hoc query
+  // Handle the case where we have an ad-hoc query 
+  // that just has a list of items.
   if (Util.isArray(this._querySpec)) {
     var querySpecArray = this._querySpec;
-    if (querySpecArray.length === 0) {
-      return;
-    }
-    if (querySpecArray.length == 1) {
-      this._matchingAttribute = this.getWorld().getAttributeCalledCategory();
-      this._listOfMatchingValues = querySpecArray;
-    }
-    if (querySpecArray.length > 1) {
-      this._matchingAttribute = querySpecArray.shift();
-      this._listOfMatchingValues = querySpecArray;
-    }
+    this._matchingAttribute = QueryRunner.EXPLICIT_LIST_OF_ITEMS;
+    this._listOfMatchingValues = querySpecArray;
+    
+    return;
   }
   
+  // Handle the case where we have an ad-hoc query that
+  // povides a matching attribute and matching values.
+  if (Util.isObject(this._querySpec)) {
+    var querySpecJson = this._querySpec;
+    this._matchingAttribute = querySpecJson[QueryRunner.JSON_MEMBER_ATTRIBUTE];
+    if (!this._matchingAttribute) {
+      this._matchingAttribute = this.getWorld().getAttributeCalledCategory();
+    }
+    this._listOfMatchingValues = querySpecJson[QueryRunner.JSON_MEMBER_VALUES];
+    
+    return;
+  }  
 };
 
 
@@ -253,7 +280,11 @@ QueryRunner.prototype._readQuerySpec = function() {
  * @scope    public instance method
  */
 QueryRunner.prototype._runQuery = function() {
-  this._listOfResultItems = this.getWorld().getResultItemsForQueryRunner(this);
+  if (this._matchingAttribute == QueryRunner.EXPLICIT_LIST_OF_ITEMS) {
+    this._listOfResultItems = this._listOfMatchingValues;
+  } else {
+    this._listOfResultItems = this.getWorld().getResultItemsForQueryRunner(this);
+  }
 };
 
 

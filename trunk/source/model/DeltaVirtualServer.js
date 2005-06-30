@@ -268,7 +268,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
     if (record instanceof Entry) {
       var entry = record;
       var entryType = entry.getType();
-      var typeToken = this._getTypeTokenFromType(entryType);
+      // var typeToken = this._getTypeTokenFromType(entryType);
       var typeUuid = entryType._getUuid();
       commentString = "";
       var entryString = "";
@@ -320,7 +320,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
             valueComment = this._getTypedDisplayStringForItem(contentData);
             break;
           default:
-            Util.assert(false, "no such type: " + typeToken);
+            Util.assert(false, "no such type: " + entryType.getDisplayString());
         }
         entryString += indent + '        "' + StubVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString;
         commentString += indent + '// ' + this._getTypedDisplayStringForItem(entry.getItem());

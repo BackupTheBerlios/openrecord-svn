@@ -877,12 +877,13 @@ World.prototype.getItemFromUuid = function(uuid, observer) {
  * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A list of items.
  */
+ /*
 World.prototype.getResultItemsForQuery = function(query, observer) {
   var listOfItems = this._virtualServer.getResultItemsForQuery(query);
   this.__addListObserver(listOfItems, observer);
   return listOfItems;
 };
-
+*/
 
 /**
  * Given a QueryRunner object, this method returns a list of all the items that 
