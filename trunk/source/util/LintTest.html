@@ -11,29 +11,17 @@
 -->
 
   <head>
-    <title>OpenRecord Test Suite</title>
+    <title>Unit tests using jslint</title>
 
-    <script type="text/javascript" src="../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
-    <script type="text/javascript">
-      function suite() {
-        var testSuite = new top.jsUnitTestSuite();
-        testSuite.addTestSuite(openRecordTestSuite());
-        return testSuite;
-      }
-      
-      function openRecordTestSuite() {
-        var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestPage("../../../source/UtilTest.html");
-        testSuite.addTestPage("../../../source/LintTest.html");
-        testSuite.addTestPage("../../../source/model/TestSuite.html");
-        testSuite.addTestPage("../../../source/util/LintTest.html");
-        return testSuite;
-      }
-    </script>
+    <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
+    <script type="text/javascript" src="../../third_party/jslint/fulljslint.js"></script>
+    <script type="text/javascript" src="../Util.js"></script>
+    <script type="text/javascript" src="../LintTool.js"></script>
+    <script type="text/javascript" src="LintTest.js"></script>
   </head>
   
   <body>
-    <h1>OpenRecord Test Suite</h1>
+    <h1>Unit tests using jslint</h1>
 
     <p>This page is used to run unit tests for the JavaScript code in the 
     OpenRecord project.</p>
@@ -57,7 +45,7 @@
     unit tests. The web server that served you this page may also have a
     JsUnit testRunner available. If so, you should be able to run these unit
     tests by going to
-    <a href="../third_party/jsunit/jsunit2_1/testRunner.html?testpage=" 
+    <a href="../../third_party/jsunit/jsunit2_1/testRunner.html?testpage=" 
     onclick="href+=window.location.href;" rel="external">the local testRunner 
     page</a>, and hitting the <b>Run</b> button.</p>
 

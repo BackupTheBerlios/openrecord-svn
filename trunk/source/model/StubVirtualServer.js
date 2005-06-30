@@ -694,10 +694,10 @@ StubVirtualServer.prototype._getNewUuid = function() {
     var uuidOfCurrentUser = this._currentUser._getUuid();
     var arrayOfParts = uuidOfCurrentUser.split("-");
     var pseudoNodeOfCurrentUser = arrayOfParts[4];//"0123456789AB";
-    newUuid = Util.generateTimeBasedUuid(pseudoNodeOfCurrentUser);
+    newUuid = Uuid.generateTimeBasedUuid(pseudoNodeOfCurrentUser);
   }
   else {
-    newUuid = Util.generateTimeBasedUuid();
+    newUuid = Uuid.generateTimeBasedUuid();
   }
   return newUuid;
 };

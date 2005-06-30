@@ -110,9 +110,9 @@ Record.prototype.getUserstamp = function() {
     return this._creationUserstamp;
   }
   var allUsers = this._world.getUsers();
-  var myPseudonode = this._uuid.split('-')[4];
+  var myPseudonode = Uuid.getNodeFromUuid(this._uuid);
   for (var key in allUsers) {
-    var usersPseudonode = allUsers[key]._getUuid().split('-')[4];
+    var usersPseudonode = Uuid.getNodeFromUuid(allUsers[key]._getUuid());
     if (usersPseudonode == myPseudonode) {
       this._creationUserstamp = allUsers[key];
       return this._creationUserstamp;
@@ -129,38 +129,10 @@ Record.prototype.getUserstamp = function() {
  * @return   ???.
  */
 Record.prototype.getTimestamp = function() {
-  if (this._creationTimestamp) {
-    return this._creationTimestamp;
+  if (!this._creationTimestamp) {
+    this._creationTimestamp = this.getGetCreationDate().valueOf();
   }
-  var hexTimeLow = this._uuid.split('-')[0];
-  var hexTimeMid = this._uuid.split('-')[1];
-  var hexTimeHigh = this._uuid.split('-')[2];
-  var timeLow = parseInt(hexTimeLow, Util.HEX_RADIX);
-  var timeMid = parseInt(hexTimeMid, Util.HEX_RADIX);
-  var timeHigh = parseInt(hexTimeHigh, Util.HEX_RADIX);
-  var hundredNanosecondIntervalsSince1582 = timeHigh & 0x0FFF;
-  hundredNanosecondIntervalsSince1582 <<= 16;
-  hundredNanosecondIntervalsSince1582 += timeMid;
-  // What we really want to do next is shift left 32 bits, but the result will be too big
-  // to fit in an int, so we'll multiply by 2^32, and the result will be a floating point approximation.
-  hundredNanosecondIntervalsSince1582 *= 0x100000000;
-  hundredNanosecondIntervalsSince1582 += timeLow;
-  var millisecondsSince1582 = hundredNanosecondIntervalsSince1582 / 10000;
-
-  // Again, this will be a floating point approximation.
-  // We can make things exact later if we need to.
-  var secondsPerHour = 60 * 60;
-  var hoursBetween1582and1970 = Util.GREGORIAN_CHANGE_OFFSET_IN_HOURS;
-  var secondsBetween1582and1970 = hoursBetween1582and1970 * secondsPerHour;
-  var millisecondsBetween1582and1970 = secondsBetween1582and1970 * 1000;
-
-  var millisecondsSince1970 = millisecondsSince1582 - millisecondsBetween1582and1970;
-
-  // PENDING: 
-  // Do we want this to return a Date object rather than a floating point
-  // value?
-  this._creationTimestamp = millisecondsSince1970;
-  return millisecondsSince1970;
+  return this._creationTimestamp;
 };
 
 
@@ -171,8 +143,10 @@ Record.prototype.getTimestamp = function() {
  * @return   A Date object.
  */
 Record.prototype.getGetCreationDate = function() {
-  var date = new Date(this.getTimestamp());
-  return date;
+  if (!this._creationDate) {
+    this._creationDate = Uuid.getDateFromUuid(this._uuid);
+  }
+  return this._creationDate;
 };
 
 
