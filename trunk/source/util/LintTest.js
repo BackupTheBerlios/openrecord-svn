@@ -39,6 +39,8 @@ function setUp() {
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
+    "Util.js",
+    "UtilTest.js",
     "Uuid.js",
     "LintTool.js"];
   var prefix = "../../../source/util/";

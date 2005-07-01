@@ -56,7 +56,6 @@ function testJsLintOnBadCodeFragment() {
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
-    "Util.js",
     "View.js",
     "RootView.js",
     "ItemView.js",
@@ -69,8 +68,7 @@ function testJsLintOnOpenRecordCode() {
     "TablePlugin.js",
     "OutlinePlugin.js",
     "DetailPlugin.js",
-    "BarChartPlugin.js",
-    "UtilTest.js"];
+    "BarChartPlugin.js"];
   var prefix = "../../../source/";
   var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
   var message = "Lint check \n" + errorReport;
