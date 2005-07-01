@@ -30,8 +30,10 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   Util.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global window, HTMLElement  */
+/*global Util  */
 // -------------------------------------------------------------------
 
 
@@ -42,9 +44,9 @@
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
 function View() {
-  this._mySuperview = null;
-  this._myHTMLElement = null;
-  this._myHasEverBeenDisplayedFlag = false;
+  this._superview = null;
+  this._htmlElement = null;
+  this._myHasEverBeenDisplayedFlag = false; // PENDING: this is accessed directly by subclasses, which is bad
 }
 
 
@@ -57,7 +59,7 @@ function View() {
 View.prototype.setSuperview = function (inSuperview) {
   // Util.assert(ViewInterface.isImplementedBy(inSuperview));
 
-  this._mySuperview = inSuperview;
+  this._superview = inSuperview;
 };
 
 
@@ -68,7 +70,7 @@ View.prototype.setSuperview = function (inSuperview) {
  * @return   A View object. 
  */
 View.prototype.getSuperview = function () {
-  return this._mySuperview;
+  return this._superview;
 };
 
 
@@ -81,7 +83,7 @@ View.prototype.getSuperview = function () {
 View.prototype.setHTMLElement = function (inHTMLElement) {
   Util.assert(inHTMLElement instanceof HTMLElement);
 
-  this._myHTMLElement = inHTMLElement;
+  this._htmlElement = inHTMLElement;
 };
 
 
@@ -92,7 +94,7 @@ View.prototype.setHTMLElement = function (inHTMLElement) {
  * @return   An HTMLElement. 
  */
 View.prototype.getHTMLElement = function () {
-  return this._myHTMLElement;
+  return this._htmlElement;
 };
 
 
@@ -103,7 +105,7 @@ View.prototype.getHTMLElement = function () {
  * @return   A World object. 
  */
 View.prototype.getWorld = function () {
-  return this._mySuperview.getWorld();
+  return this._superview.getWorld();
 };
 
 
@@ -129,7 +131,7 @@ View.prototype.getRootView = function() {
  * @return   A boolean value. True if we are in Edit Mode.
  */
 View.prototype.isInEditMode = function () {
-  return this._mySuperview.isInEditMode();
+  return this._superview.isInEditMode();
 };
 
 
@@ -172,9 +174,9 @@ View.prototype.includeOnScreen = function (inBoolean) {
 
   if (inBoolean) {
     this.refresh();
-    this._myHTMLElement.style.display = "block";
+    this._htmlElement.style.display = "block";
   } else {
-    this._myHTMLElement.style.display = "none";
+    this._htmlElement.style.display = "none";
   }
 };
 

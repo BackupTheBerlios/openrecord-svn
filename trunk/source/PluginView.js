@@ -31,9 +31,9 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   World.js
-//   Util.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global View  */
 // -------------------------------------------------------------------
 
 

@@ -32,11 +32,12 @@
 
  
 // -------------------------------------------------------------------
-// Dependencies:
-//   World.js
-//   SectionView.js
-//   PageView.js
-//   Util.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global window, document, HTMLTableRowElement  */
+/*global Util  */
+/*global Item  */
+/*global View, MultiEntriesView  */
 // -------------------------------------------------------------------
 
 
@@ -69,9 +70,9 @@ function TablePlugin(inSectionView, inHTMLElement, inQuery, inLayout) {
   PluginView.call(this, inSectionView, inHTMLElement, inQuery, inLayout);
 
   // PENDING should probably make this independent of sectionview
-  this.myClass = SectionView.CSS_CLASS_SIMPLE_TABLE;
-  this.myCellClass = SectionView.CSS_CLASS_PLAIN;
-  this.myTable = null;
+  this._cssClass = SectionView.CSS_CLASS_SIMPLE_TABLE;
+  this._cellClass = SectionView.CSS_CLASS_PLAIN;
+  this._table = null;
   this._sortAttribute = null;
   this._ascendingOrder = true;
 }
@@ -223,7 +224,7 @@ TablePlugin.prototype._buildAttributeEditor = function() {
  * @scope    private instance method
  */
 TablePlugin.prototype._insertRow = function(contentItem, rowNum) {
-  var aRow = this.myTable.insertRow(rowNum); 
+  var aRow = this._table.insertRow(rowNum); 
   var columnCount = -1;
   for (var i=0;i<this._displayAttributes.length;++i) {
     var attribute = this._displayAttributes[i];
@@ -296,7 +297,7 @@ TablePlugin.prototype.observedItemHasChanged = function(item) {
   this._listOfItems.push(item); // moving this line affects code below
   
   // tell provisional item views they are no longer provisional
-  var oldProvisionalRow = this.myTable.rows[this._listOfItems.length];
+  var oldProvisionalRow = this._table.rows[this._listOfItems.length];
   for (var i=0; i < oldProvisionalRow.cells.length; ++i) {
     var aCell = oldProvisionalRow.cells[i];
     aCell.or_entriesView.noLongerProvisional();
@@ -315,7 +316,7 @@ TablePlugin.prototype.observedItemHasChanged = function(item) {
  */
 TablePlugin.prototype._buildHeader = function() {
   // add header row
-  var headerRow = this.myTable.insertRow(0);
+  var headerRow = this._table.insertRow(0);
   var numCols = 0;
   for (var i=0; i<this._displayAttributes.length; ++i) {
     var attribute = this._displayAttributes[i];
@@ -349,9 +350,9 @@ TablePlugin.prototype._buildTable = function(inDontRebuildHash) {
   }
   
   //create new table, remove old table if already exists
-  View.removeChildrenOfElement(this._myHTMLElement);
-  this.myTable = document.createElement("table");
-  this.myTable.className = this.myClass;
+  View.removeChildrenOfElement(this.getHTMLElement());
+  this._table = document.createElement("table");
+  this._table.className = this._cssClass;
   
   this._buildHeader();
 
@@ -362,7 +363,7 @@ TablePlugin.prototype._buildTable = function(inDontRebuildHash) {
 
   this._buildTableBody();
   
-  this._myHTMLElement.appendChild(this.myTable);
+  this.getHTMLElement().appendChild(this._table);
   
   if (this.isInEditMode()) {this._buildAttributeEditor();}
 };
@@ -405,8 +406,8 @@ TablePlugin.prototype.getSortIcon = function () {
  */
 TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   var aCell = row.insertCell(col);
-  aCell.className = this.myCellClass;
-  var multiEntriesView = new MultiEntriesView(this, aCell, item, attribute, this.myCellClass);
+  aCell.className = this._cellClass;
+  var multiEntriesView = new MultiEntriesView(this, aCell, item, attribute, this._cellClass);
   aCell.or_entriesView = multiEntriesView;
   multiEntriesView.refresh();
   if (this.isInEditMode()) {
@@ -488,7 +489,7 @@ TablePlugin.prototype._importData = function (inEventObject, fileButton) {
         content += line + java.lang.System.getProperty('line.separator');
       return content;
     }*/
-  open('file://'+fileButton.value,'preview');   
+  window.open('file://'+fileButton.value,'preview');   
 };
 
 /**
@@ -624,7 +625,7 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
         nextRowNumber = 1;
         userHitReturnInLastRow = true;
       }
-      var nextRow = this.myTable.rows[nextRowNumber];
+      var nextRow = this._table.rows[nextRowNumber];
       this.selectRow(nextRow);
       nextCell = nextRow.cells[cellElement.cellIndex];
     }

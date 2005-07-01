@@ -61,10 +61,10 @@ function LintTool() {
  * the lint tests.
  *
  * @scope    public class method
- * @param    inString    A string containing JavaScript code. 
+ * @param    stringContainingCode    A string containing JavaScript code. 
  * @return   Returns an error message string, or returns an empty string if there are no errors (according to jslint).
  */
-LintTool.getErrorReportForCodeInString = function (inString) {
+LintTool.getErrorReportForCodeInString = function(stringContainingCode) {
   var errorMessage = "";
 
   // call jslint, and see if it reported errors
@@ -72,7 +72,7 @@ LintTool.getErrorReportForCodeInString = function (inString) {
   jslint.plusplus = true;
   jslint.cap = false;
   jslint.jscript = false;
-  jslint(inString);
+  jslint(stringContainingCode);
   var report = jslint.report();
   var jslintIsOkay = (report.substr(0, 2) == 'ok');
   if (!jslintIsOkay) {
@@ -80,19 +80,19 @@ LintTool.getErrorReportForCodeInString = function (inString) {
   }
   
   // now check for tabs, backspaces, etc.
-  var noTabs = (inString.indexOf("\t") == -1);
+  var noTabs = (stringContainingCode.indexOf("\t") == -1);
   if (!noTabs) {
     errorMessage += "There are tab characters in the file." + '\n';
   }
-  var noBackspaces = (inString.indexOf("\b") == -1);
+  var noBackspaces = (stringContainingCode.indexOf("\b") == -1);
   if (!noBackspaces) {
     errorMessage += "There are backspace characters in the file." + '\n';
   }
-  var noCarriageReturns = (inString.indexOf("\r") == -1);
+  var noCarriageReturns = (stringContainingCode.indexOf("\r") == -1);
   if (!noCarriageReturns) {
     errorMessage += "There are carriage return characters in the file." + '\n';
   }
-  var noFormFeeds = (inString.indexOf("\f") == -1);
+  var noFormFeeds = (stringContainingCode.indexOf("\f") == -1);
   if (!noCarriageReturns) {
     errorMessage += "There are carriage return characters in the file." + '\n';
   }
@@ -106,11 +106,11 @@ LintTool.getErrorReportForCodeInString = function (inString) {
  * the lint tests.
  *
  * @scope    public class method
- * @param    inUrl    A string with the URL of a file containing JavaScript code. 
+ * @param    url    A string with the URL of a file containing JavaScript code. 
  * @return   Returns an error message string, or returns an empty string if there are no errors (according to jslint).
  */
-LintTool.getErrorReportForCodeAtUrl = function (inUrl) {
-  var fileContents = Util.getStringContentsOfFileAtURL(inUrl);
+LintTool.getErrorReportForCodeAtUrl = function(url) {
+  var fileContents = Util.getStringContentsOfFileAtURL(url);
   return LintTool.getErrorReportForCodeInString(fileContents);
 };
 
@@ -120,23 +120,23 @@ LintTool.getErrorReportForCodeAtUrl = function (inUrl) {
  * returns null if the code passes the lint tests.
  *
  * @scope    public class method
- * @param    inListOfFilenames    A list of filename strings. 
- * @param    inPath    Optional.  A path prefix string to prepend to the filename strings. 
+ * @param    listOfFilenames    A list of filename strings. 
+ * @param    path    Optional.  A path prefix string to prepend to the filename strings. 
  * @return   Returns an error message string, or returns an empty string if there are no errors (according to jslint).
  */
-LintTool.getErrorReportFromListOfFilesnames = function (inListOfFilenames, inPath) {
-  Util.assert(Util.isArray(inListOfFilenames));
-  if (inPath) {
-    Util.assert(Util.isString(inPath));
+LintTool.getErrorReportFromListOfFilesnames = function(listOfFilenames, path) {
+  Util.assert(Util.isArray(listOfFilenames));
+  if (path) {
+    Util.assert(Util.isString(path));
   } else {
-    inPath = "";
+    path = "";
   }
   
   var aggregateErrorReport = "";
   var separatorLine = "_____________________________________" + "\n";
-  for (var key in inListOfFilenames) {
-    var filename = inListOfFilenames[key];
-    var url = inPath + filename;
+  for (var key in listOfFilenames) {
+    var filename = listOfFilenames[key];
+    var url = path + filename;
     var errorReportForFile = LintTool.getErrorReportForCodeAtUrl(url);
     if (errorReportForFile) {
       var message = separatorLine + filename + "\n" + errorReportForFile;

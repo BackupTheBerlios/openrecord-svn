@@ -32,11 +32,12 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   World.js
-//   Util.js
-//   LoginView.js
-//   DetailPlugin.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global document  */
+/*global Util  */
+/*global Cookie  */
+/*global SuggestionBox  */
 // -------------------------------------------------------------------
 
 
@@ -62,8 +63,8 @@ function LoginView(inSuperView, inHTMLElement) {
   this.setHTMLElement(inHTMLElement);
   this._isCreatingNewAccount = false;
   var tenYearCookieExpiration = 10*365*24;   // PENDING: hardcode expiration to 10yrs
-  this.myCookie = new Cookie(document, LoginView.COOKIE_NAME, tenYearCookieExpiration);
-  this.myCookie.load();
+  this._cookie = new Cookie(document, LoginView.COOKIE_NAME, tenYearCookieExpiration);
+  this._cookie.load();
 }
 
 
@@ -102,8 +103,8 @@ LoginView.prototype._rebuildView = function () {
   var currentUser = this.getWorld().getCurrentUser();
   if (!currentUser) {
     // alert("displayControlSpan: !currentUser");
-    var userUuid = this.myCookie.userUuid;
-    var password = this.myCookie.password;
+    var userUuid = this._cookie.userUuid;
+    var password = this._cookie.password;
     // alert("displayControlSpan: userUuid = " + userUuid);
     if (userUuid) {
       var userToLoginAs = this.getWorld().getItemFromUuid(userUuid);
@@ -112,8 +113,8 @@ LoginView.prototype._rebuildView = function () {
         currentUser = this.getWorld().getCurrentUser();
       }
       if (!currentUser) {
-        this.myCookie.userUuid = null;
-        this.myCookie.store();
+        this._cookie.userUuid = null;
+        this._cookie.store();
       }
     }
   }
@@ -222,8 +223,8 @@ LoginView.prototype._clickOnSignoutLink = function(inEventObject) {
   if (this.isInEditMode()) {
     this.getRootView().setEditMode(false);
   }
-  this.myCookie.userUuid = null;
-  this.myCookie.store();
+  this._cookie.userUuid = null;
+  this._cookie.store();
   this.getWorld().logout();
   this._rebuildView();
 };
@@ -346,9 +347,9 @@ LoginView.prototype._loginUser = function (user, password) {
   var loginSuccess = this.getWorld().login(user, password); 
   if (loginSuccess) {
     var userUuid = user._getUuid();
-    this.myCookie.userUuid = userUuid;
-    this.myCookie.password = password;
-    this.myCookie.store();
+    this._cookie.userUuid = userUuid;
+    this._cookie.password = password;
+    this._cookie.store();
     this._rebuildView();
   } else {
     this._reportError("Login failed. Wrong password.");

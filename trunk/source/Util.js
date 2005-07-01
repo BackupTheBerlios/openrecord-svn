@@ -34,7 +34,8 @@
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
-/*global window, document, hex_md5 */
+/*global window, document  */
+/*global hex_md5  */
 // -------------------------------------------------------------------
 
 

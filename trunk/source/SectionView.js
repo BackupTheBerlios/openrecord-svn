@@ -33,12 +33,12 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   World.js
-//   Util.js
-//   PageView.js
-//   TablePlugin.js
-//   TextView.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global window, document  */
+/*global Util  */
+/*global Item  */
+/*global RootView, PageView, TablePlugin, TextView  */
 // -------------------------------------------------------------------
 
 
@@ -59,16 +59,9 @@ SectionView.CSS_CLASS_SECTION_HEADER = "section_header";
 SectionView.CSS_CLASS_SUMMARY_TEXT = "summary_text";
 
 SectionView.ELEMENT_ID_SELECT_MENU_PREFIX = "select_menu_";
-// SectionView.ELEMENT_ID_SELECT_MENU_SUFFIX = "_select_menu";
-// SectionView.ELEMENT_ID_PLUGIN_DIV_SUFFIX = "_plugin_div";
-// SectionView.ELEMENT_ID_CELL_PREFIX = "section_";
-// SectionView.ELEMENT_ID_CELL_MIDFIX = "_cell_";
-// SectionView.ELEMENT_ID_SUMMARY_DIV_SUFFIX = "_summary_div";
 
-SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER = "section_number";
-// SectionView.ELEMENT_ATTRIBUTE_CELL_NUMBER = "cell_number";
+// SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER = "section_number";
 
-// SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_NAME       = "00040000-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW       = "00040101-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA       = "00040102-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN = "00040103-ce7f-11d9-8cd5-0011113ae5d6";
@@ -109,13 +102,13 @@ function SectionView(inPageView, inHTMLElement, inSection, inSectionNumber) {
   // PENDING: these should all be private
   this.setSuperview(inPageView);
   this.setHTMLElement(inHTMLElement);
-  this.mySection = inSection;
-  this.mySectionNumber = inSectionNumber;
+  this._section = inSection;
+  this._sectionNumber = inSectionNumber;
 
-  this._myPlugin = null;
-  this._myPluginDiv = null;
-  this._mySectionSummaryView = null;
-  this._myHeaderView = null;
+  this._pluginView = null;
+  this._pluginDiv = null;
+  this._sectionSummaryView = null;
+  this._headerView = null;
   this._queryEditSpan = null;
   
   if (!SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
@@ -184,9 +177,9 @@ SectionView.prototype.getPluginInstanceFromPluginItem = function (pluginItem, pl
  */
 SectionView.prototype.getQuerySpec = function () {
   var attributeCalledQuerySpec = this.getWorld().getAttributeCalledQuerySpec();
-  var queryEntry = this.mySection.getSingleEntryFromAttribute(attributeCalledQuerySpec);
+  var queryEntry = this._section.getSingleEntryFromAttribute(attributeCalledQuerySpec);
   if (queryEntry) {
-    return queryEntry.getConnectedItem(this.mySection);
+    return queryEntry.getConnectedItem(this._section);
   }
   return null;
 };
@@ -202,11 +195,11 @@ SectionView.prototype.refresh = function () {
   if (!this._myHasEverBeenDisplayedFlag) {
     this.doInitialDisplay();
   } else {
-    // refresh the <h2> element with the value: this.mySection.getDisplayName();  
+    // refresh the <h2> element with the value: this._section.getDisplayName();  
     this._refreshQueryEditSpan();
-    this._mySectionSummaryView.refresh();
-    this._myPlugin.refresh();
-    this._myHeaderView.refresh();
+    this._sectionSummaryView.refresh();
+    this._pluginView.refresh();
+    this._headerView.refresh();
   }
 };
 
@@ -222,7 +215,7 @@ SectionView.prototype.doInitialDisplay = function () {
     return;
   }
   var attributeCalledPluginView = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
-  var selectedPluginViewEntry = this.mySection.getSingleEntryFromAttribute(attributeCalledPluginView);
+  var selectedPluginViewEntry = this._section.getSingleEntryFromAttribute(attributeCalledPluginView);
   var selectedPluginItem;
   var selectedPluginClass;
   if (selectedPluginViewEntry) {
@@ -237,12 +230,12 @@ SectionView.prototype.doInitialDisplay = function () {
   var headerH2 = View.createAndAppendElement(outerDiv, "h2");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
-  this._myHeaderView = new TextView(this, headerH2, this.mySection, attributeCalledName,
-    this.mySection.getSingleEntryFromAttribute(attributeCalledName),
+  this._headerView = new TextView(this, headerH2, this._section, attributeCalledName,
+    this._section.getSingleEntryFromAttribute(attributeCalledName),
     SectionView.CSS_CLASS_SECTION_HEADER);
   var summaryDiv = View.createAndAppendElement(outerDiv, "div");
-  this._mySectionSummaryView = new TextView(this, summaryDiv, this.mySection, attributeCalledSummary,
-    this.mySection.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_TEXT_VIEW, true);
+  this._sectionSummaryView = new TextView(this, summaryDiv, this._section, attributeCalledSummary,
+    this._section.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_TEXT_VIEW, true);
   View.createAndAppendElement(outerDiv, "p");
 
   // create the editing controls, if we're in edit mode
@@ -251,12 +244,12 @@ SectionView.prototype.doInitialDisplay = function () {
   controlArea.appendChild(textShowMeA);
 
   // PENDING: We shouldn't call the private method _getUuid()
-  var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this.mySection._getUuid();
+  var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this._section._getUuid();
   var selectElement = View.createAndAppendElement(controlArea, "select", null, selectMenuId);
   var optionElement;
   var listener;
   selectElement.setAttribute("name", selectMenuId);
-  selectElement.setAttribute(SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER, this.mySectionNumber);
+  // selectElement.setAttribute(SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER, this._sectionNumber);
   for (var key in SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
     var pluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[key];
     optionElement = View.createAndAppendElement(selectElement, "option");
@@ -276,8 +269,8 @@ SectionView.prototype.doInitialDisplay = function () {
   View.createAndAppendTextNode(controlArea,".");
 
   // create a div element for the plugin class to use
-  this._myPluginDiv = View.createAndAppendElement(outerDiv, "div");
-  this._myPlugin = this.getPluginInstanceFromPluginItem(selectedPluginItem, this._myPluginDiv);
+  this._pluginDiv = View.createAndAppendElement(outerDiv, "div");
+  this._pluginView = this.getPluginInstanceFromPluginItem(selectedPluginItem, this._pluginDiv);
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
 };
@@ -293,11 +286,11 @@ SectionView.prototype.doInitialDisplay = function () {
 SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
   var repository = this.getWorld();
   var attrLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA);
-  var entriesLayoutData = this.mySection.getEntriesForAttribute(attrLayoutData);
+  var entriesLayoutData = this._section.getEntriesForAttribute(attrLayoutData);
   var attrAppliesToPlugin = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN);
   if (entriesLayoutData) {
     for (var i=0; i < entriesLayoutData.length; ++i) {
-      var layoutItem = entriesLayoutData[i].getConnectedItem(this.mySection);
+      var layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
       var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attrAppliesToPlugin);
       Util.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
       if (entriesAppliesToPlugin[0].getValue() == inPluginType) {
@@ -310,11 +303,11 @@ SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
   var categoryCalledLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA);
   var attributeCalledSectionThisLayoutDataBelongsTo = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO);
   repository.beginTransaction();
-  layoutItem = repository.newItem("Layout data for " + inPluginType.getDisplayString() + " of " + this.mySection.getDisplayString());
+  layoutItem = repository.newItem("Layout data for " + inPluginType.getDisplayString() + " of " + this._section.getDisplayString());
   layoutItem.assignToCategory(categoryCalledLayoutData);
   layoutItem.addEntryForAttribute(attrAppliesToPlugin, inPluginType);
-  // this.mySection.addEntryForAttribute(attrLayoutData, layoutItem, repository.getTypeCalledItem());
-  this.mySection.addConnectionEntry(attrLayoutData, layoutItem, attributeCalledSectionThisLayoutDataBelongsTo);
+  // this._section.addEntryForAttribute(attrLayoutData, layoutItem, repository.getTypeCalledItem());
+  this._section.addConnectionEntry(attrLayoutData, layoutItem, attributeCalledSectionThisLayoutDataBelongsTo);
   repository.endTransaction();
   return layoutItem;
 };
@@ -349,7 +342,7 @@ SectionView.prototype._refreshQueryEditSpan = function () {
   var selectElement = View.createAndAppendElement(this._queryEditSpan, "select");
   for (var key in listOfAttributes) {
     var anAttribute = listOfAttributes[key];
-    optionElement = View.createAndAppendElement(selectElement, "option");
+    var optionElement = View.createAndAppendElement(selectElement, "option");
     optionElement.selected = (matchingAttribute.getDisplayString() == anAttribute.getDisplayString());
     optionElement.value = anAttribute._getUuid();
     optionElement.onclick = this.clickOnAttributeMenu.bindAsEventListener(this);
@@ -405,9 +398,9 @@ SectionView.prototype.observedItemHasChanged = function(item) {
   item.removeObserver(this); //item no longer needs to be observed as query editor span is rebuilt
   var myQuery = this.getQuerySpec();
   Util.assert(item == myQuery);
-  var pluginItem = this._myPlugin.getPluginItem();
-  this._myPlugin.endOfLife();
-  this._myPlugin = this.getPluginInstanceFromPluginItem(pluginItem, this._myPluginDiv);
+  var pluginItem = this._pluginView.getPluginItem();
+  this._pluginView.endOfLife();
+  this._pluginView = this.getPluginInstanceFromPluginItem(pluginItem, this._pluginDiv);
   this.refresh();
 };
 
@@ -430,25 +423,25 @@ SectionView.prototype.clickOnPluginSelectionMenu = function (inEventObject) {
   var attributeCalledPluginView = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
   var newPluginViewItem = this.getWorld().getItemFromUuid(newChoiceUuid);
  
-  if (this._myPlugin.getPluginItem() == newPluginViewItem) { 
+  if (this._pluginView.getPluginItem() == newPluginViewItem) { 
     return;
   } else {
-    this._myPlugin.endOfLife();
-    this._myPlugin = this.getPluginInstanceFromPluginItem(newPluginViewItem, this._myPluginDiv);
+    this._pluginView.endOfLife();
+    this._pluginView = this.getPluginInstanceFromPluginItem(newPluginViewItem, this._pluginDiv);
 
-    var oldEntry = this.mySection.getSingleEntryFromAttribute(attributeCalledPluginView);
+    var oldEntry = this._section.getSingleEntryFromAttribute(attributeCalledPluginView);
     if (oldEntry) {
-      this.mySection.replaceEntry(oldEntry, newPluginViewItem);
+      this._section.replaceEntry(oldEntry, newPluginViewItem);
     } else {
-      this.mySection.addEntryForAttribute(attributeCalledPluginView, newPluginViewItem);
+      this._section.addEntryForAttribute(attributeCalledPluginView, newPluginViewItem);
     }
     /*
-    var pluginNameEntries = this.mySection.getEntriesForAttribute(attributeCalledPluginName);
+    var pluginNameEntries = this._section.getEntriesForAttribute(attributeCalledPluginName);
     if (pluginNameEntries && pluginNameEntries[0]) {
       var oldEntry = pluginNameEntries[0];
-      this.mySection.replaceEntry(oldEntry, newChoiceName);
+      this._section.replaceEntry(oldEntry, newChoiceName);
     } else {
-      this.mySection.addEntryForAttribute(attributeCalledPluginName, newChoiceName);
+      this._section.addEntryForAttribute(attributeCalledPluginName, newChoiceName);
     }
     */
     this.refresh();
@@ -509,9 +502,9 @@ SectionView.prototype.clickOnAttributeMenu = function (inEventObject) {
     // some refactoring so that the plugin can register as an observer of the
     // query item, and then the plugin itself can know what to do when the
     // query item changes.  
-    var pluginItem = this._myPlugin.getPluginItem();
-    this._myPlugin.endOfLife();
-    this._myPlugin = this.getPluginInstanceFromPluginItem(pluginItem, this._myPluginDiv);
+    var pluginItem = this._pluginView.getPluginItem();
+    this._pluginView.endOfLife();
+    this._pluginView = this.getPluginInstanceFromPluginItem(pluginItem, this._pluginDiv);
 
     this.refresh();
   }

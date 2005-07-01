@@ -30,11 +30,11 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   World.js
-//   SectionView.js
-//   PageView.js
-//   Util.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global Util  */
+/*global SectionView  */
+/*global PluginView  */
 // -------------------------------------------------------------------
 
 

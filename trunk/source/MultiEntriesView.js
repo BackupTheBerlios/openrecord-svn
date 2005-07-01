@@ -32,11 +32,14 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   repository.js
-//   util.js
-//   TextView.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global document  */
+/*global Util  */
+/*global Item  */
+/*global TextView  */
 // -------------------------------------------------------------------
+
 
 
 // -------------------------------------------------------------------
@@ -197,7 +200,9 @@ MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inTextView) 
       }
       if (inTextView != this._entryViews[this._entryViews.length-1]) {move=1;}
       break;
-    default: move = 0; break;
+    default: 
+      move = 0; 
+      break;
   }
   if (doCreateNewEntry) {
     inTextView.stopEditing();
@@ -205,7 +210,7 @@ MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inTextView) 
     this._addEntryView(null).startEditing();
     return true;
   }
-  if (move != 0) {
+  if (move !== 0) {
     var index = Util.getArrayIndex(this._entryViews, inTextView);
     Util.assert(index != -1);
     index += move;
@@ -266,7 +271,7 @@ MultiEntriesView.prototype._buildView = function() {
   this._entryViews = [];
   
   var entries = this._item.getEntriesForAttribute(this._attribute);
-  if (this._item.isProvisional() || entries.length == 0) {
+  if (this._item.isProvisional() || entries.length === 0) {
     this._addEntryView(null);
   }
   else {

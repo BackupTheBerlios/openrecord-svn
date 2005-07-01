@@ -66,6 +66,7 @@ function testJsLintOnOpenRecordCode() {
     "NavbarView.js",
     "SectionView.js",
     "TextView.js",
+    "MultiEntriesView.js",
     "TablePlugin.js",
     "OutlinePlugin.js",
     "DetailPlugin.js",

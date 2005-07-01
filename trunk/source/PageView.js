@@ -32,11 +32,12 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   World.js
-//   Util.js
-//   SectionView.js
-//   TextView.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global document, HTMLElement  */
+/*global Util  */
+/*global Item  */
+/*global RootView, SectionView, TablePlugin, TextView  */
 // -------------------------------------------------------------------
 
 
@@ -97,11 +98,11 @@ function PageView(inRootView, inHTMLElement, inPage) {
   // instance properties
   this.setSuperview(inRootView);
   this.setHTMLElement(inHTMLElement);
-  this.myPage = inPage;
+  this._pageItem = inPage;
   
-  this._myPageSummaryView = null;
-  this._myHeaderText = null;
-  this.myListOfSectionViews = [];
+  this._pageSummaryView = null;
+  this._headerText = null;
+  this._listOfSectionViews = [];
 }
 
 
@@ -112,7 +113,7 @@ function PageView(inRootView, inHTMLElement, inPage) {
  * @return   A string that gives the name of the page.
  */
 PageView.prototype.getPageTitle = function () {
-  var pageTitle = this.myPage.getDisplayString();
+  var pageTitle = this._pageItem.getDisplayString();
   return pageTitle;
 };
 
@@ -127,10 +128,10 @@ PageView.prototype.refresh = function () {
   if (!this._myHasEverBeenDisplayedFlag) {
     this.doInitialDisplay();
   } else {
-    this._myHeaderText.refresh();
-    this._myPageSummaryView.refresh();
-    for (var key in this.myListOfSectionViews) {
-      var sectionView = this.myListOfSectionViews[key];      
+    this._headerText.refresh();
+    this._pageSummaryView.refresh();
+    for (var key in this._listOfSectionViews) {
+      var sectionView = this._listOfSectionViews[key];      
       sectionView.refresh();
     }
     this._refreshEditModeControls();
@@ -153,21 +154,21 @@ PageView.prototype.doInitialDisplay = function () {
   var pageDivElement = this.getHTMLElement();
   
   var headerElement = View.createAndAppendElement(pageDivElement, "h1");
-  this._myHeaderText = new TextView(this, headerElement, this.myPage, attributeCalledName,
-    this.myPage.getSingleEntryFromAttribute(attributeCalledName), PageView.CSS_CLASS_PAGE_HEADER, false);
+  this._headerText = new TextView(this, headerElement, this._pageItem, attributeCalledName,
+    this._pageItem.getSingleEntryFromAttribute(attributeCalledName), PageView.CSS_CLASS_PAGE_HEADER, false);
 
   var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
-  this._myPageSummaryView = new TextView(this, summaryViewDiv, this.myPage, attributeCalledSummary,
-    this.myPage.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_SUMMARY_TEXT, true);
+  this._pageSummaryView = new TextView(this, summaryViewDiv, this._pageItem, attributeCalledSummary,
+    this._pageItem.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_SUMMARY_TEXT, true);
 
   // add <div> elements for each of the sections on the page
   // and create a new SectionView for each section
   var attributeCalledSectionsInPage = this.getWorld().getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTIONS_IN_PAGE);
-  var listOfEntriesForSections = this.myPage.getEntriesForAttribute(attributeCalledSectionsInPage);
+  var listOfEntriesForSections = this._pageItem.getEntriesForAttribute(attributeCalledSectionsInPage);
   
   for (var key in listOfEntriesForSections) {
     var entryForSection = listOfEntriesForSections[key];
-    var section = entryForSection.getConnectedItem(this.myPage);
+    var section = entryForSection.getConnectedItem(this._pageItem);
     if (section) {
       this._buildNewSection(section);
     }
@@ -189,14 +190,14 @@ PageView.prototype.doInitialDisplay = function () {
 PageView.prototype._buildNewSection = function(inSection, inBeforeElt) {
   var pageDivElement = this.getHTMLElement();
   var sectionViewDiv = document.createElement("div");
-  var sectionView = new SectionView(this, sectionViewDiv, inSection, this.myListOfSectionViews.length);
+  var sectionView = new SectionView(this, sectionViewDiv, inSection, this._listOfSectionViews.length);
   if (inBeforeElt) {
     pageDivElement.insertBefore(sectionViewDiv, inBeforeElt);
   }
   else {
     pageDivElement.appendChild(sectionViewDiv);
   }
-  this.myListOfSectionViews.push(sectionView);
+  this._listOfSectionViews.push(sectionView);
   return sectionView;
 };
 
@@ -207,7 +208,7 @@ PageView.prototype._buildNewSection = function(inSection, inBeforeElt) {
  * @scope    private instance method
  */
 PageView.prototype._addNewSection = function() {
-  var newSection = PageView.newSection(this.getWorld(), this.myPage);
+  var newSection = PageView.newSection(this.getWorld(), this._pageItem);
   this._buildNewSection(newSection, this._editModeDiv).refresh();
 };
 

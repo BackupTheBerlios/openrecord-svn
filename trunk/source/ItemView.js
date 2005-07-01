@@ -30,11 +30,13 @@
 
 
 // -------------------------------------------------------------------
-// Dependencies:
-//   World.js
-//   Util.js
-//   RootView.js
-//   DetailPlugin.js
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global document, HTMLElement  */
+/*global Util  */
+/*global Item  */
+/*global DetailPlugin  */
+/*global RootView  */
 // -------------------------------------------------------------------
 
 
@@ -63,8 +65,8 @@ function ItemView(inRootView, inHTMLElement, inItem) {
   // instance properties
   this.setSuperview(inRootView);
   this.setHTMLElement(inHTMLElement);
-  this.myItem = inItem;
-  this.myPlugin = null;
+  this._item = inItem;
+  this._pluginView = null;
 }
 
 
@@ -75,7 +77,7 @@ function ItemView(inRootView, inHTMLElement, inItem) {
  * @return   A string that gives the name of the page.
  */
 ItemView.prototype.getPageTitle = function () {
-  var pageTitle = this.myItem.getDisplayString();
+  var pageTitle = this._item.getDisplayString();
   return pageTitle;
 };
 
@@ -87,16 +89,16 @@ ItemView.prototype.getPageTitle = function () {
  * @scope    public instance method
  */
 ItemView.prototype.refresh = function () {
-  Util.assert(this.myItem instanceof Item);
+  Util.assert(this._item instanceof Item);
   
   // PENDING: this needs to be changed from DOM level 0 to DOM level 2.
   var listOfStrings = [];
 
   // add an <h1> heading with the name of the page
-  listOfStrings.push("<h1 id=\"" + RootView.URL_ITEM_PREFIX + this.myItem._getUuid() + "\">" + this.myItem.getDisplayName() + "</h1>");
+  listOfStrings.push("<h1 id=\"" + RootView.URL_ITEM_PREFIX + this._item._getUuid() + "\">" + this._item.getDisplayName() + "</h1>");
 
   // add a <div> element for the detail plugin
-  var detailDivId = ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this.myItem._getUuid();
+  var detailDivId = ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this._item._getUuid();
   listOfStrings.push("<div id=\"" + detailDivId + "\"></div>");
 
   // write out all the new content 
@@ -105,8 +107,8 @@ ItemView.prototype.refresh = function () {
 
   // let the detailPlugin add its own content
   var detailPluginElement = document.getElementById(detailDivId);
-  this.myPlugin = new DetailPlugin(this, detailPluginElement, [this.myItem]);
-  this.myPlugin.refresh();
+  this._pluginView = new DetailPlugin(this, detailPluginElement, [this._item]);
+  this._pluginView.refresh();
 };
 
 
