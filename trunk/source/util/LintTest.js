@@ -39,7 +39,8 @@ function setUp() {
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
-    "Uuid.js"];
+    "Uuid.js",
+    "LintTool.js"];
   var prefix = "../../../source/util/";
   var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
   var message = "Lint check \n" + errorReport;

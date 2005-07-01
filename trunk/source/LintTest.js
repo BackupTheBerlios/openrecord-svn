@@ -57,7 +57,6 @@ function testJsLintOnBadCodeFragment() {
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
     "Util.js",
-    "LintTool.js",
     "View.js",
     "RootView.js",
     "ItemView.js",
