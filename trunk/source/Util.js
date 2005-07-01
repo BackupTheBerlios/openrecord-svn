@@ -62,7 +62,6 @@ function Util() {
 Util.ASCII_VALUE_FOR_RETURN = 13;
 Util.ASCII_VALUE_FOR_TAB = 9;
 Util.ASCII_VALUE_FOR_ESCAPE = 27;
-Util.ABBREV_MONTHS_ARRAY = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 // &#37; = %
 // &#38; = &
 // &#39; = '
@@ -72,6 +71,7 @@ Util.ASCII_VALUE_FOR_UP_ARROW = 38;    // 126
 Util.ASCII_VALUE_FOR_RIGHT_ARROW = 39; // 124
 Util.ASCII_VALUE_FOR_DOWN_ARROW = 40;  // 125
 
+Util.ABBREV_MONTHS_ARRAY = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 
 
 // -------------------------------------------------------------------
@@ -88,13 +88,13 @@ Util.ASCII_VALUE_FOR_DOWN_ARROW = 40;  // 125
  *
  * @scope    public class method
  * @syntax   var cleanString = Util.getCleanString(dirtyString);
- * @param    inString    A dirty string to be cleaned up.
+ * @param    string    A dirty string to be cleaned up.
  * @return   String
  */
-Util.getCleanString = function(inString) {
-  Util.assert(Util.isString(inString));
+Util.getCleanString = function(string) {
+  Util.assert(Util.isString(string));
   
-  var returnString = inString;
+  var returnString = string;
   returnString = returnString.replace(/&/g, "&amp;");
   returnString = returnString.replace(/</g, "&lt;");
   returnString = returnString.replace(/>/g, "&gt;");
@@ -112,10 +112,10 @@ Util.getCleanString = function(inString) {
  * Registers a function to be used to report errors.
  *
  * @scope    public class method
- * @param    inFunction    A function which takes a single string argument. 
+ * @param    errorReporterFunction    A function which takes a single string argument. 
  */
-Util.setErrorReportCallback = function (inFunction) {
-  Util.ourErrorReporter = inFunction;
+Util.setErrorReportCallback = function(errorReporterFunction) {
+  Util.ourErrorReporter = errorReporterFunction;
 };
 
 
@@ -125,8 +125,8 @@ Util.setErrorReportCallback = function (inFunction) {
  * @scope    public class method
  * @param    inText    The error message to be reported. 
  */
-Util.defaultErrorReporter = function (inText) {
-  window.alert(inText);
+Util.defaultErrorReporter = function(text) {
+  window.alert(text);
 };
 Util.ourErrorReporter = Util.defaultErrorReporter;
 
@@ -135,12 +135,12 @@ Util.ourErrorReporter = Util.defaultErrorReporter;
  * Pops up an alert box showing an error message.
  *
  * @scope    public class method
- * @param    inMessage    A string describing the error.
- * @param    inUrl    A string that gives the name of the file where the error was found.
- * @param    inLine    The line number where the error was found.
+ * @param    message    A string describing the error.
+ * @param    url    A string that gives the name of the file where the error was found.
+ * @param    line    The line number where the error was found.
  */
-Util.handleError = function (inMessage, inUrl, inLine) {
-  Util.ourErrorReporter("Util.handleError()\n" + inMessage + "\nline: " + inLine + "\nURL: " + inUrl);
+Util.handleError = function(message, url, line) {
+  Util.ourErrorReporter("Util.handleError()\n" + message + "\nline: " + line + "\nURL: " + url);
 };
 
 
@@ -153,12 +153,12 @@ Util.handleError = function (inMessage, inUrl, inLine) {
  * number where the assertion failed.
  *
  * @scope    public class method
- * @param    inBoolean    A boolean value, which needs to be true for the assertion to succeed. 
- * @param    inMessage    Optional. A string describing the assertion.
+ * @param    booleanValue    A boolean value, which needs to be true for the assertion to succeed. 
+ * @param    message    Optional. A string describing the assertion.
  */
-Util.assert = function (inBoolean, inMessage) {
-  if (Util.isBoolean(inBoolean)) {
-    if (!inBoolean) {    
+Util.assert = function(booleanValue, message) {
+  if (Util.isBoolean(booleanValue)) {
+    if (!booleanValue) {    
       var exception = new Error();  // create an exception, just to get a stack trace
       var stackString = exception.stack;
       var stackList = stackString.split("\n");
@@ -173,7 +173,7 @@ Util.assert = function (inBoolean, inMessage) {
       }
       stackString = stackList.join("\n");
 
-      Util.ourErrorReporter("An assert statement failed with message: \n" + inMessage + " \nThe method Util.assert() was called with a 'false' value.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
+      Util.ourErrorReporter("An assert statement failed with message: \n" + message + " \nThe method Util.assert() was called with a 'false' value.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
     }
   } else {
     Util.ourErrorReporter("An assert statement went sour.\nThe method Util.assert() was passed a non-boolean argument.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
@@ -185,10 +185,10 @@ Util.assert = function (inBoolean, inMessage) {
  * Registers a function to be used to report status messages to the user.
  *
  * @scope    public class method
- * @param    inFunction    A function which takes a single string argument. 
+ * @param    statusReporterFunction    A function which takes a single string argument. 
  */
-Util.setStatusReporter = function (inFunction) {
-  Util.ourStatusReporter = inFunction;
+Util.setStatusReporter = function(statusReporterFunction) {
+  Util.ourStatusReporter = statusReporterFunction;
 };
 
 
@@ -196,10 +196,10 @@ Util.setStatusReporter = function (inFunction) {
  * Reports a status message to the user.
  *
  * @scope    public class method
- * @param    inMessage    A string with a status message.
+ * @param    message    A string with a status message.
  */
-Util.displayStatusBlurb = function (inMessage) {
-  Util.ourStatusReporter(inMessage);
+Util.displayStatusBlurb = function(message) {
+  Util.ourStatusReporter(message);
 };
 
 
@@ -207,9 +207,9 @@ Util.displayStatusBlurb = function (inMessage) {
  * This defaultStatusReporter simply ignores the status report.
  *
  * @scope    public class method
- * @param    inText    The status message to be reported. 
+ * @param    text    The status message to be reported. 
  */
-Util.defaultStatusReporter = function (inText) {
+Util.defaultStatusReporter = function(text) {
   // do nothing!
 };
 Util.ourStatusReporter = Util.defaultStatusReporter;
@@ -223,11 +223,11 @@ Util.ourStatusReporter = Util.defaultStatusReporter;
  * Returns true if the given value is a function.
  *
  * @scope    public class method
- * @param    inValue    Any object or literal value. 
+ * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a function.
  */
-Util.isFunction = function (inValue) {
-  return ((typeof inValue) == "function");
+Util.isFunction = function(value) {
+  return ((typeof value) == "function");
 };
 
 
@@ -235,11 +235,11 @@ Util.isFunction = function (inValue) {
  * Returns true if the given value is a string.
  *
  * @scope    public class method
- * @param    inValue    Any object or literal value. 
+ * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a string.
  */
-Util.isString = function (inValue) {
-  return ((typeof inValue) == "string");
+Util.isString = function(value) {
+  return ((typeof value) == "string");
 };
 
 
@@ -247,11 +247,11 @@ Util.isString = function (inValue) {
  * Returns true if the given value is a number (and is finite number).
  *
  * @scope    public class method
- * @param    inValue    Any object or literal value. 
+ * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a number.
  */
-Util.isNumber = function (inValue) {
-  return (((typeof inValue) == "number") && isFinite(inValue));
+Util.isNumber = function(value) {
+  return (((typeof value) == "number") && isFinite(value));
 };
 
 
@@ -260,15 +260,15 @@ Util.isNumber = function (inValue) {
  * represents a number.
  *
  * @scope    public class method
- * @param    inValue    Any object or literal value. 
+ * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a number or a string that represents a number.
  */
-Util.isNumeric = function (inValue) {
-  var isNumber = Util.isNumber(inValue);
+Util.isNumeric = function(value) {
+  var isNumber = Util.isNumber(value);
   if (isNumber) {
     return true;
   }
-  var isNumeric = Util.isString(inValue) && Util.isNumber(parseInt(inValue));
+  var isNumeric = Util.isString(value) && Util.isNumber(parseInt(value));
   return isNumeric;
 };
 
@@ -277,11 +277,11 @@ Util.isNumeric = function (inValue) {
  * Returns true if the given value is a boolean.
  *
  * @scope    public class method
- * @param    inValue    Any object or literal value. 
+ * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a boolean.
  */
-Util.isBoolean = function (inValue) {
-  return ((typeof inValue) == "boolean");
+Util.isBoolean = function(value) {
+  return ((typeof value) == "boolean");
 };
 
 
@@ -289,11 +289,11 @@ Util.isBoolean = function (inValue) {
  * Returns true if the given value is an object.
  *
  * @scope    public class method
- * @param    inValue    Any object or literal value. 
+ * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is an object.
  */
-Util.isObject = function (inValue) {
-  return (inValue && ((typeof inValue) == "object"));
+Util.isObject = function(value) {
+  return (value && ((typeof value) == "object"));
 };
 
 
@@ -301,11 +301,11 @@ Util.isObject = function (inValue) {
  * Returns true if the given value is a Date.
  *
  * @scope    public class method
- * @param    inValue    Any object or literal value. 
+ * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a Date.
  */
-Util.isDate = function (inValue) {
-  return (inValue instanceof Date);
+Util.isDate = function(value) {
+  return (value instanceof Date);
 };
 
 
@@ -314,17 +314,17 @@ Util.isDate = function (inValue) {
  * a valid UUID: "e3bf3e14-e8f4-43e2-866c-121c5ab70c0b".
  *
  * @scope    public class method
- * @param    inValue    Any object or literal value. 
+ * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a UUID.
  */
-Util.isUuid = function (inValue) {
+Util.isUuid = function(value) {
   // PENDING: 
   // We should include more rigorous tests, to make sure this
   // is really a UUID, not just a string with 36 characters.
-  if ((typeof inValue) != "string") {
+  if ((typeof value) != "string") {
     return false;
   }
-  return (inValue.length == 36);  
+  return (value.length == 36);  
 };
 
 
@@ -332,14 +332,14 @@ Util.isUuid = function (inValue) {
  * Returns true if the given value is an array.
  *
  * @scope    public class method
- * @param    inValue    Any object or literal value. 
+ * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is an array.
  */
-Util.isArray = function (inValue) {
-  if (!inValue) {
+Util.isArray = function(value) {
+  if (!value) {
     return false;
   }
-  return (((typeof inValue) == "object") && (inValue.constructor == Array));
+  return (((typeof value) == "object") && (value.constructor == Array));
 };
 
 
@@ -347,11 +347,11 @@ Util.isArray = function (inValue) {
  * Returns true if the given value is a hash table.
  *
  * @scope    public class method
- * @param    inValue    Any object or literal value. 
+ * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a hash table.
  */
-Util.isHashTable = function (inValue) {
-  return (inValue && ((typeof inValue) == "object"));  // PENDING: we should be more restrictive!
+Util.isHashTable = function(value) {
+  return (value && ((typeof value) == "object"));  // PENDING: we should be more restrictive!
 };
 
 
@@ -359,12 +359,24 @@ Util.isHashTable = function (inValue) {
 // Methods that operate on Arrays
 // -------------------------------------------------------------------
 
-Util.getArrayIndex = function(inArray, inElt) {
-  for (var i=0; i<inArray.length; ++i) {
-    if (inArray[i] == inElt) {return i;}
+/**
+ * Given an element in an array, returns the position of the element in
+ * the array.  
+ * 
+ * @scope    public class method
+ * @param    array    The Array to look for the element in. 
+ * @param    value    The array element to find the position of. 
+ * @return   Returns a number between 0 and array.length, or -1 if the element was not in the array.
+ */
+Util.getArrayIndex = function(array, value) {
+  for (var i=0; i<array.length; ++i) {
+    if (array[i] == value) {
+      return i;
+    }
   }
   return -1;
 };
+
 
 // -------------------------------------------------------------------
 // Methods that operate on Sets
@@ -374,15 +386,20 @@ Util.getArrayIndex = function(inArray, inElt) {
  * Returns true if the given object is a member of the set.  
  * 
  * @scope    public class method
- * @param    inObject    The object to look for. 
- * @param    inSet    The Array to look for the object in. 
+ * @param    object    The object to look for. 
+ * @param    set    The Array to look for the object in. 
  * @return   Returns true if the object was found in the set.
  */
-Util.isObjectInSet = function (inObject, inSet) {
-  Util.assert(Util.isArray(inSet));
+Util.isObjectInSet = function(object, set) {
+  Util.assert(Util.isArray(set));
   
-  for (var i=0; i<inSet.length; i+=1) {
-    if (inSet[i] == inObject) {
+//  for (var i=0; i<set.length; i+=1) {
+//    if (set[i] == object) {
+//      return true;
+//    }
+//  }
+  for (var key in set) {
+    if (set[key] == object) {
       return true;
     }
   }
@@ -394,17 +411,17 @@ Util.isObjectInSet = function (inObject, inSet) {
  * Returns true if each of the given objects is a member of the set.  
  * 
  * @scope    public class method
- * @param    inArray    An array of objects to look for. 
- * @param    inSet    The Array to look for the objects in. 
+ * @param    array    An array of objects to look for. 
+ * @param    set    The Array to look for the objects in. 
  * @return   Returns true if each of the objects was found in the set.
  */
-Util.areObjectsInSet = function (inArray, inSet) {
-  Util.assert(Util.isArray(inArray));
-  Util.assert(Util.isArray(inSet));
+Util.areObjectsInSet = function(array, set) {
+  Util.assert(Util.isArray(array));
+  Util.assert(Util.isArray(set));
   
-  for (var key in inArray) {
-    var object = inArray[key];
-    var objectIsInSet = Util.isObjectInSet(object, inSet);
+  for (var key in array) {
+    var object = array[key];
+    var objectIsInSet = Util.isObjectInSet(object, set);
     if (!objectIsInSet) {
       return false;
     }
@@ -417,19 +434,19 @@ Util.areObjectsInSet = function (inArray, inSet) {
  * Removes an object from an array.  
  * 
  * @scope    public class method
- * @param    inObject    The object to be removed. 
- * @param    inSet    The Array that the object should be removed from. 
+ * @param    object    The object to be removed. 
+ * @param    set    The Array that the object should be removed from. 
  * @return   Returns true if the object was removed from the array.
  */
-Util.removeObjectFromSet = function (inObject, inSet) {
-  Util.assert(Util.isArray(inSet));
+Util.removeObjectFromSet = function(object, set) {
+  Util.assert(Util.isArray(set));
   
-  if (!inObject) {
+  if (!object) {
     return false;
   }
-  for (var i=0; i<inSet.length; i+=1) {
-    if (inSet[i] == inObject) {
-      inSet.splice(i, 1);
+  for (var i=0; i<set.length; i+=1) {
+    if (set[i] == object) {
+      set.splice(i, 1);
       return true;
     }
   }
@@ -442,20 +459,20 @@ Util.removeObjectFromSet = function (inObject, inSet) {
  * object to the array if the object is not already in the array.  
  * 
  * @scope    public class method
- * @param    inObject    The object to be added. 
- * @param    inSet    The Array that the object should be added to. 
+ * @param    object    The object to be added. 
+ * @param    set    The Array that the object should be added to. 
  * @return   Returns true if the object was added to the array.
  */
-Util.addObjectToSet = function (inObject, inSet) {
-  Util.assert(Util.isArray(inSet));
+Util.addObjectToSet = function(object, set) {
+  Util.assert(Util.isArray(set));
 
-  if (!inObject) {
+  if (!object) {
     return false;
   }
-  if (Util.isObjectInSet(inObject, inSet)) {
+  if (Util.isObjectInSet(object, set)) {
     return false;
   }
-  inSet.push(inObject);
+  set.push(object);
   return true;
 };
 
@@ -464,13 +481,13 @@ Util.addObjectToSet = function (inObject, inSet) {
  * Returns the number of values in a hash table. 
  * 
  * @scope    public class method
- * @param    inHashTable   A hashTable containing values.
+ * @param    hashTable   A hashTable containing values.
  * @return   The number of values in inHashTable.
  */
-Util.lengthOfHashTable = function(inHashTable) {
-  Util.assert(Util.isHashTable(inHashTable));
+Util.lengthOfHashTable = function(hashTable) {
+  Util.assert(Util.isHashTable(hashTable));
   var count = 0;
-  for (var key in inHashTable) {
+  for (var key in hashTable) {
     count += 1;
   }
   return count;
@@ -482,14 +499,14 @@ Util.lengthOfHashTable = function(inHashTable) {
  * Analogous to Python hash.values() 
  * 
  * @scope    public class method
- * @param    inHashTable   A hashTable containing values.
+ * @param    hashTable   A hashTable containing values.
  * @return   An array containing the values that are in inHashTable.
  */
-Util.hashTableValues = function(inHashTable) {
-  Util.assert(Util.isHashTable(inHashTable));
+Util.hashTableValues = function(hashTable) {
+  Util.assert(Util.isHashTable(hashTable));
   var returnArray = [];
-  for (var key in inHashTable) {
-    returnArray.push(inHashTable[key]);
+  for (var key in hashTable) {
+    returnArray.push(hashTable[key]);
   }
   return returnArray;
 };
@@ -509,9 +526,9 @@ Util.getStringMonthDayYear = function(date) {
 // Methods for doing encryption
 // -------------------------------------------------------------------
 
-Util.hex_md5 = function (inString) {
+Util.hex_md5 = function(string) {
   // Calls the hex_md5() function in .../trunk/third_party/md5/md5.js
-  return hex_md5(inString);
+  return hex_md5(string);
 };
 
 
@@ -527,16 +544,16 @@ Util.hex_md5 = function (inString) {
  * Should work for IE, Mozilla, and _some_ other browsers.  
  *
  * @scope    public class method
- * @param    inEventObject    An event object. 
+ * @param    eventObject    An event object. 
  * @return   An HTML element.
  */
-Util.getTargetFromEvent = function (inEventObject) {
+Util.getTargetFromEvent = function(eventObject) {
   var target = null;
-  if (inEventObject.target) {
-    target = inEventObject.target;
+  if (eventObject.target) {
+    target = eventObject.target;
   } else {
-    if (inEventObject.srcElement) {
-      target = inEventObject.srcElement;
+    if (eventObject.srcElement) {
+      target = eventObject.srcElement;
     }
   }
   if (target && target.nodeType == 3) { // defeat Safari bug
@@ -550,19 +567,19 @@ Util.getTargetFromEvent = function (inEventObject) {
  * A cross-browser compatibility method for registering event listeners. 
  *
  * @scope public class method
- * @param inElement    An HTMLElement.
- * @param inEventType    The type of event (e.g. "mousedown", "click").
- * @param inCallback    The function to call when the event happens.
- * @param inCaptures    True if the event should be captured by this function.
+ * @param element    An HTMLElement.
+ * @param eventType    The type of event (e.g. "mousedown", "click").
+ * @param callback    The function to call when the event happens.
+ * @param captures    True if the event should be captured by this function.
  */
-Util.addEventListener = function (inElement, inEventType, inCallback, inCaptures) {
-  if (inElement.addEventListener) {
+Util.addEventListener = function(element, eventType, callback, captures) {
+  if (element.addEventListener) {
     // for DOM Level 2 browsers, like Firefox
-    inElement.addEventListener(inEventType, inCallback, inCaptures);
+    element.addEventListener(eventType, callback, captures);
   } else {
-    if (inElement.attachEvent) {
+    if (element.attachEvent) {
       // for Internet Explorer
-      inElement.attachEvent("on"+inEventType, inCallback, inCaptures);
+      element.attachEvent("on"+eventType, callback, captures);
     }
   } 
 };
@@ -579,7 +596,7 @@ Util.addEventListener = function (inElement, inEventType, inCallback, inCaptures
  * However, empirically, arguments is not an array in Firefox and cannot be
  * concat'd with an array, hence the mod.
  */
-Function.prototype.bindAsEventListener = function (object) {
+Function.prototype.bindAsEventListener = function(object) {
   var method = this;
   var preappliedArguments = arguments;
   return function (event) {
@@ -600,12 +617,12 @@ Function.prototype.bindAsEventListener = function (object) {
  * Given the URL of a file, returns the contents of the file as a text string.
  *
  * @scope    public class method
- * @param    inUrl    A string with the URL of a file containing JavaScript code. 
+ * @param    url    A string with the URL of a file containing JavaScript code. 
  * @return   A string containing the contents of the file.
  */
-Util.getStringContentsOfFileAtURL = function (inUrl) {
+Util.getStringContentsOfFileAtURL = function(url) {
   var anXMLHttpRequestObject = new window.XMLHttpRequest();
-  anXMLHttpRequestObject.open("GET", inUrl, false);
+  anXMLHttpRequestObject.open("GET", url, false);
   anXMLHttpRequestObject.send(null);
   var fileContents = anXMLHttpRequestObject.responseText;
   return fileContents;
@@ -623,7 +640,7 @@ Util.getStringContentsOfFileAtURL = function (inUrl) {
  * 
  * @scope    public class method
  */
-Util.setTargetsForExternalLinks = function () {
+Util.setTargetsForExternalLinks = function() {
   if (!window.document.getElementsByTagName) {
     return;
   }
@@ -644,7 +661,7 @@ Util.setTargetsForExternalLinks = function () {
  * @scope    public class method
  * @return   An HTML "img" element.
  */
-Util.createImageElement = function (imageFileName) {
+Util.createImageElement = function(imageFileName) {
   var imagesDirectory = "images/"; // PENDING: this shouldn't be hard-coded in Util
   var imageElement = document.createElement("img");
   imageElement.src = imagesDirectory + imageFileName;
@@ -657,19 +674,19 @@ Util.createImageElement = function (imageFileName) {
  * meaning the distance in pixels from the left edge of the page.
  *
  * @scope    public class method
- * @param    inHtmlElement    The HTML element that we want the left offest of. 
- * @return   An integer value equal to the number of pixels from the left of the page to inHtmlElement.
+ * @param    htmlElement    The HTML element that we want the left offest of. 
+ * @return   An integer value equal to the number of pixels from the left of the page to htmlElement.
  */
-Util.getOffsetLeftFromElement = function (inHtmlElement) {
+Util.getOffsetLeftFromElement = function(htmlElement) {
   var cumulativeOffset = 0;
-  if (inHtmlElement.offsetParent) {
-    while (inHtmlElement.offsetParent) {
-      cumulativeOffset += inHtmlElement.offsetLeft;
-      inHtmlElement = inHtmlElement.offsetParent;
+  if (htmlElement.offsetParent) {
+    while (htmlElement.offsetParent) {
+      cumulativeOffset += htmlElement.offsetLeft;
+      htmlElement = htmlElement.offsetParent;
     }
   } else {
-    if (inHtmlElement.x) {
-      cumulativeOffset += inHtmlElement.x;
+    if (htmlElement.x) {
+      cumulativeOffset += htmlElement.x;
     }
   }
   return cumulativeOffset;
@@ -681,19 +698,19 @@ Util.getOffsetLeftFromElement = function (inHtmlElement) {
  * meaning the distance in pixels from the top edge of the page.
  *
  * @scope    public class method
- * @param    inHtmlElement    The HTML element that we want the top offest of. 
- * @return   An integer value equal to the number of pixels from the top of the page to inHtmlElement.
+ * @param    htmlElement    The HTML element that we want the top offest of. 
+ * @return   An integer value equal to the number of pixels from the top of the page to htmlElement.
  */
-Util.getOffsetTopFromElement = function (inHtmlElement) {
+Util.getOffsetTopFromElement = function(htmlElement) {
   var cumulativeOffset = 0;
-  if (inHtmlElement.offsetParent) {
-    while (inHtmlElement.offsetParent) {
-      cumulativeOffset += inHtmlElement.offsetTop;
-      inHtmlElement = inHtmlElement.offsetParent;
+  if (htmlElement.offsetParent) {
+    while (htmlElement.offsetParent) {
+      cumulativeOffset += htmlElement.offsetTop;
+      htmlElement = htmlElement.offsetParent;
     }
   } else {
-    if (inHtmlElement.y) {
-      cumulativeOffset += inHtmlElement.y;
+    if (htmlElement.y) {
+      cumulativeOffset += htmlElement.y;
     }
   }
   return cumulativeOffset;
