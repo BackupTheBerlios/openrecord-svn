@@ -37,7 +37,7 @@
 /*global document  */
 /*global Util  */
 /*global Item  */
-/*global TextView  */
+/*global EntryView  */
 // -------------------------------------------------------------------
 
 
@@ -151,7 +151,7 @@ MultiEntriesView.prototype.setKeyPressFunction = function(keyPressFunction) {
 
 
 /**
- * Sets a function to be used when onclick is called to the TextView
+ * Sets a function to be used when onclick is called to the EntryView
  *
  * @scope    public instance method
  * @param    inEventObject    An event object. 
@@ -165,8 +165,8 @@ MultiEntriesView.prototype.setClickFunction = function(inClickFunction) {
 /**
  *
  */
-MultiEntriesView.prototype._handleClick = function(inEvent, inTextView) {
-  if (this._clickFunction && this._clickFunction(inEvent, inTextView)) {
+MultiEntriesView.prototype._handleClick = function(inEvent, inEntryView) {
+  if (this._clickFunction && this._clickFunction(inEvent, inEntryView)) {
     return true;
   }
   return false;
@@ -186,8 +186,8 @@ MultiEntriesView.prototype._handleOwnClick = function(inEvent) {
 /**
  *
  */
-MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inTextView) {
-  Util.assert(inTextView instanceof TextView);
+MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inEntryView) {
+  Util.assert(inEntryView instanceof EntryView);
   var asciiValueOfKey = inEvent.keyCode;
   var move, doCreateNewEntry;
   switch (asciiValueOfKey) {
@@ -198,29 +198,29 @@ MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inTextView) 
         doCreateNewEntry = true;
         break;
       }
-      if (inTextView != this._entryViews[this._entryViews.length-1]) {move=1;}
+      if (inEntryView != this._entryViews[this._entryViews.length-1]) {move=1;}
       break;
     default: 
       move = 0; 
       break;
   }
   if (doCreateNewEntry) {
-    inTextView.stopEditing();
+    inEntryView.stopEditing();
     this._addSeparator();
     this._addEntryView(null).startEditing();
     return true;
   }
   if (move !== 0) {
-    var index = Util.getArrayIndex(this._entryViews, inTextView);
+    var index = Util.getArrayIndex(this._entryViews, inEntryView);
     Util.assert(index != -1);
     index += move;
     if (index >= 0 && index < this._entryViews.length) {
-      inTextView.stopEditing();
+      inEntryView.stopEditing();
       this._entryViews[index].startEditing();
       return true;
     }
   }
-  if (this._keyPressFunction && this._keyPressFunction(inEvent, inTextView)) {
+  if (this._keyPressFunction && this._keyPressFunction(inEvent, inEntryView)) {
     return true;
   }
   return false;
@@ -233,17 +233,17 @@ MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inTextView) 
 MultiEntriesView.prototype._addEntryView = function(inEntry) {
   var spanElt = document.createElement("span");
   spanElt.style.width = '100%';
-  var aTextView = new TextView(this, spanElt, this._item, this._attribute, inEntry, this._className);
-  this._entryViews.push(aTextView);
+  var anEntryView = new EntryView(this, spanElt, this._item, this._attribute, inEntry, this._className);
+  this._entryViews.push(anEntryView);
   this.getHTMLElement().appendChild(spanElt);
-  aTextView.refresh();
+  anEntryView.refresh();
   if (this.isInEditMode()) {
     var listener = this;
-    aTextView.setSuggestions(this._suggestions);
-    aTextView.setKeyPressFunction(function (evt, aTxtView) {return listener._keyPressOnEditField(evt, aTxtView);});
-    aTextView.setClickFunction(function (evt, aTxtView) {return listener._handleClick(evt, aTxtView);});
+    anEntryView.setSuggestions(this._suggestions);
+    anEntryView.setKeyPressFunction(function (evt, entryView) {return listener._keyPressOnEditField(evt, entryView);});
+    anEntryView.setClickFunction(function (evt, entryView) {return listener._handleClick(evt, entryView);});
   }
-  return aTextView;
+  return anEntryView;
 };
 
 

@@ -293,7 +293,7 @@ chao   | 0.5 IED  |         | 14. improve keyboard navigation: tab, arrow, and r
        |          |         | 45. Add support for repository merging
        |          |         | 46. BUG: back button is broken
        |          |         | 47. BUG: "Waiting for localhost..."
-       |          |         | 48. BUG: "Node was not found" exception in TextView/LoginView?
+       |          |         | 48. BUG: "Node was not found" exception in EntryView/LoginView?
        |          |         | 49. Do some testing to find other existing bugs
        |          |         | 50. Have explicit save instead of (or in addition to) autosave
        |          |         | 51. Be able to cancel out of creating a new account
@@ -514,11 +514,11 @@ Tasks we want to defer until after release 0.1
  + Bug: "Node was not found" exception
     Load the demo_page.html page from file:///...
     Go into Edit mode and change some entry.  
-    You get an exception in TextView.js:
+    You get an exception in EntryView.js:
       Util.handleError()
       uncaught exception: [Exception... "Node was not found"  
       code: "8" nsresult: "0x80530008 (NS_ERROR_DOM_NOT_FOUND_ERR)"  
-      location: "file:///K:/www/htdocs/openrecord/demo/current/trunk/source/TextView.js Line: 221"]
+      location: "file:///K:/www/htdocs/openrecord/demo/current/trunk/source/EntryView.js Line: 221"]
       line: 0
     
 ===========================       
@@ -529,4 +529,4 @@ Issues for post iteration#2
 + Should we rename "World"?
 + BUG: need to convert HTML entity codes back at client-server layer
 + BUG: Can't really create own plugins yet (e.g. UUID need to be assigned, plugin item created)
-+ Q: Do we (and how) need a concept of focus for Views? Currently, only Text input and Textarea gets keyboard focus. We need it for table selections and possibly selecting "lozenges" (item references stored in the TextView)
++ Q: Do we (and how) need a concept of focus for Views? Currently, only Text input and Textarea gets keyboard focus. We need it for table selections and possibly selecting "lozenges" (item references stored in the EntryView)

@@ -28,47 +28,20 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
+// -------------------------------------------------------------------
+// Dependencies, expressed in the syntax that JSLint understands:
+// 
+/*global LintTool, assertTrue, setUp, tearDown */
+// -------------------------------------------------------------------
 
 function setUp() {
 }
 
-function testJsLintOnGoodCodeFragment() {
-  var textToRunLintOn = "function iggy() { var pop = 'no fun'; }";
-  assertTrue("jslint says clean code is clean", !LintTool.getErrorReportForCodeInString(textToRunLintOn));
-}
-
-function testJsLintOnBadCodeFragment() {
-  // badFragmentOne has THIS_SYMBOL_IS_BAD, which JSLint should catch
-  var badFragmentOne = "function iggy() { var pop = 'no fun'; } THIS_SYMBOL_IS_BAD";
-
-  // badFragmentTwo has tab characters in it, which our own isCodeCleanInString()
-  // method should catch
-  var badFragmentTwo = "function iggy()		{ var pop = 'no fun'; } ";
-  
-  // badFragmentThree has a carriage return character in it, which our own 
-  // isCodeCleanInString() method should catch
-  var badFragmentThree = "function iggy() \r { var pop = 'no fun'; } ";
-  
-  assertFalse("jslint says dirty code is dirty", !LintTool.getErrorReportForCodeInString(badFragmentOne));
-  assertFalse("jslint says dirty code is dirty", !LintTool.getErrorReportForCodeInString(badFragmentTwo));
-  assertFalse("jslint says dirty code is dirty", !LintTool.getErrorReportForCodeInString(badFragmentThree));
-}
-
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
-    "View.js",
-    "RootView.js",
-    "ItemView.js",
-    "PageView.js",
-    "LoginView.js",
-    "NavbarView.js",
-    "SectionView.js",
-    "MultiEntriesView.js",
-    "TablePlugin.js",
-    "OutlinePlugin.js",
-    "DetailPlugin.js",
-    "BarChartPlugin.js"];
-  var prefix = "../../../source/";
+    "EntryView.js",
+    "SuggestionBox.js"];
+  var prefix = "../../../source/view/";
   var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
   var message = "Lint check \n" + errorReport;
   assertTrue(message, !errorReport);
@@ -76,6 +49,7 @@ function testJsLintOnOpenRecordCode() {
 
 function tearDown() {
 }
+
 
 // -------------------------------------------------------------------
 // End of file

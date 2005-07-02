@@ -612,7 +612,7 @@ li.detail {
 /****************************************/
 /* Text view styles                     */
 
-.text_view {
+.entry_view {
   /* height: 100%; */
   width: 100%;
   font-family: Arial, Verdana, sans-serif;
@@ -622,7 +622,7 @@ li.detail {
   /* overflow: visible; */
 }
 
-.textViewItem {
+.entryViewItem {
   background-color:#DEE7F8;
   padding: 1px;
   border: thin solid #A4BDEC;	

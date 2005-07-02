@@ -38,7 +38,7 @@
 /*global window, document  */
 /*global Util  */
 /*global Item  */
-/*global RootView, PageView, TablePlugin, TextView  */
+/*global RootView, PageView, TablePlugin, EntryView  */
 // -------------------------------------------------------------------
 
 
@@ -54,7 +54,7 @@ SectionView.CSS_CLASS_TITLE = "title";
 SectionView.CSS_CLASS_TEXT_FIELD_IN_TABLE_CELL = "text_field_in_table_cell";
 SectionView.CSS_CLASS_SELECTED = "selected";
 SectionView.CSS_CLASS_MORE_LINK = "more";
-SectionView.CSS_CLASS_TEXT_VIEW = "text_view";
+SectionView.CSS_CLASS_ENTRY_VIEW = "entry_view";
 SectionView.CSS_CLASS_SECTION_HEADER = "section_header";
 SectionView.CSS_CLASS_SUMMARY_TEXT = "summary_text";
 
@@ -230,12 +230,12 @@ SectionView.prototype.doInitialDisplay = function () {
   var headerH2 = View.createAndAppendElement(outerDiv, "h2");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
-  this._headerView = new TextView(this, headerH2, this._section, attributeCalledName,
+  this._headerView = new EntryView(this, headerH2, this._section, attributeCalledName,
     this._section.getSingleEntryFromAttribute(attributeCalledName),
     SectionView.CSS_CLASS_SECTION_HEADER);
   var summaryDiv = View.createAndAppendElement(outerDiv, "div");
-  this._sectionSummaryView = new TextView(this, summaryDiv, this._section, attributeCalledSummary,
-    this._section.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_TEXT_VIEW, true);
+  this._sectionSummaryView = new EntryView(this, summaryDiv, this._section, attributeCalledSummary,
+    this._section.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_ENTRY_VIEW, true);
   View.createAndAppendElement(outerDiv, "p");
 
   // create the editing controls, if we're in edit mode
@@ -354,17 +354,17 @@ SectionView.prototype._refreshQueryEditSpan = function () {
   var listOfPossibleEntries = this.getWorld().getSuggestedItemsForAttribute(matchingAttribute);
   var entrySpan = View.createAndAppendElement(this._queryEditSpan, "span");
   
-  var entryTextView =  new TextView(this, entrySpan, myQuery, attributeCalledQueryMatchingValue, matchingEntry,
+  var entryView =  new EntryView(this, entrySpan, myQuery, attributeCalledQueryMatchingValue, matchingEntry,
     RootView.CSS_CLASS_EDIT_MODE);
-  entryTextView.setSuggestions(listOfPossibleEntries);
-  entryTextView.alwaysUseEditField();
-  entryTextView.setAutoWiden(true);
+  entryView.setSuggestions(listOfPossibleEntries);
+  entryView.alwaysUseEditField();
+  entryView.setAutoWiden(true);
   var attributeCalledExpectedType = this.getWorld().getAttributeCalledExpectedType();
   var listOfExpectedTypeEntries = matchingAttribute.getEntriesForAttribute(attributeCalledExpectedType);
-  entryTextView.setExpectedTypeEntries(listOfExpectedTypeEntries);
-  entryTextView.refresh();
+  entryView.setExpectedTypeEntries(listOfExpectedTypeEntries);
+  entryView.refresh();
   var listener = this;
-  entryTextView.setKeyPressFunction(function (evt, aTxtView) {return listener.keyPressOnMatchingValueField(evt, aTxtView);});
+  entryView.setKeyPressFunction(function (evt, entryView) {return listener.keyPressOnMatchingValueField(evt, entryView);});
   myQuery.addObserver(this);
 };
 
@@ -380,9 +380,9 @@ SectionView.prototype._refreshQueryEditSpan = function () {
  * @scope    public instance method
  * @return   Returns true if the user pressed the return key, or false otherwise.
  */
-SectionView.prototype.keyPressOnMatchingValueField = function(event, aTextView) {
+SectionView.prototype.keyPressOnMatchingValueField = function(event, anEntryView) {
   if (event.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
-    aTextView.stopEditing();
+    anEntryView.stopEditing();
     return true;
   }
   return false;

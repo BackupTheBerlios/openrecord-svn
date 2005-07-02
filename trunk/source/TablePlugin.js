@@ -278,7 +278,7 @@ TablePlugin.prototype._provisionalItemJustBecomeReal = function(item) {
  * PENDING: 
  * This method observedItemHasChanged() was written back before we 
  * wrote the method above this one, _provisionalItemJustBecomeReal().
- * Now we've got things set up so that the TextView will call
+ * Now we've got things set up so that the EntryView will call
  * our _provisionalItemJustBecomeReal() method when the user first
  * makes a change that causes the provisional item to become real.
  * Now that we have _provisionalItemJustBecomeReal(), we might 
@@ -398,8 +398,8 @@ TablePlugin.prototype.getSortIcon = function () {
 
 /**
  * Inserts a table cell into table's row & col, with data from a given item and
- * attribute. Each table cell is displayed with a TextView object.  The HTML 
- * table cell links to the TextView object with the attribute "or_textView"
+ * attribute. Each table cell is displayed with a EntryView object.  The HTML 
+ * table cell links to the EntryView object with the attribute "or_entryView"
  *
  * @scope    public instance method
  * @return   An HTML image element
@@ -413,8 +413,8 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   if (this.isInEditMode()) {
     multiEntriesView.setSuggestions(this._hashTableOfEntries[attribute.getUniqueKeyString()]);
     var listener = this;
-    multiEntriesView.setKeyPressFunction(function (evt, aTxtView) {return listener.keyPressOnEditField(evt, aTxtView);});
-    multiEntriesView.setClickFunction(function (evt, aTxtView) {return listener._handleClick(evt, aTxtView);});
+    multiEntriesView.setKeyPressFunction(function (evt, entryView) {return listener.keyPressOnEditField(evt, entryView);});
+    multiEntriesView.setClickFunction(function (evt, entryView) {return listener._handleClick(evt, entryView);});
   }
 };
 
@@ -533,8 +533,8 @@ TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
   }
 };
 
-TablePlugin.prototype._handleClick = function (inEventObject, aTextView) {
-  var rowElement = aTextView.getSuperview().getHTMLElement().parentNode; // textView -> multiEntriesView -> cellElment -> rowElement
+TablePlugin.prototype._handleClick = function (inEventObject, anEntryView) {
+  var rowElement = anEntryView.getSuperview().getHTMLElement().parentNode; // entryView -> multiEntriesView -> cellElment -> rowElement
   return this.selectRow(rowElement);
 };
 
@@ -549,7 +549,7 @@ TablePlugin.prototype._handleClick = function (inEventObject, aTextView) {
  * @scope    public class method
  * @return   Returns true if the keyPress is a letter, or false if the keyPress is an arrow key or a key that moves the cursor to another cell. 
  */
-TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) {
+TablePlugin.prototype.keyPressOnEditField = function (inEventObject, anEntryView) {
   var eventObject = inEventObject;
   var asciiValueOfKey = eventObject.keyCode;
   var shiftKeyPressed = eventObject.shiftKey;
@@ -590,9 +590,9 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, aTextView) 
     
     // line below needs to be called here i.e. early because stopping an edit may change a provisional item
     // to become a "real" one thereby  creating new row for the next provisional item, e.g. this._listOfItems changes
-    aTextView.stopEditing();
+    anEntryView.stopEditing();
 
-    var cellElement = aTextView.getSuperview().getHTMLElement(); // textView's multiEntriesView's
+    var cellElement = anEntryView.getSuperview().getHTMLElement(); // entryView's multiEntriesView's
     var userHitReturnInLastRow = false;
     var shiftBy;
     var numCols = this._numberOfColumns;

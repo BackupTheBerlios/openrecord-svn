@@ -37,7 +37,7 @@
 /*global document  */
 /*global Util  */
 /*global Cookie  */
-/*global SuggestionBox  */
+/*global UserSuggestionBox  */
 // -------------------------------------------------------------------
 
 
@@ -192,7 +192,7 @@ LoginView.prototype._rebuildView = function () {
     this.passwordInput.onkeypress = this._signinPasswordKeyPress.bindAsEventListener(this);
     this.passwordInput.onfocus = this._signinPasswordFocus.bindAsEventListener(this);
 
-    this._myUsernameSuggestionBox = new SuggestionBox(this.usernameInput, this.getWorld().getUsers(), this.passwordInput);
+    this._myUsernameSuggestionBox = new UserSuggestionBox(this.usernameInput, this.getWorld().getUsers(), this.passwordInput);
 
     var signinButton = document.createElement("input");
     signinButton.value = "Sign in";
@@ -388,16 +388,16 @@ LoginView.prototype._createNewUser = function (username, password) {
 // -------------------------------------------------------------------
 // Suggestion box methods
 // -------------------------------------------------------------------
-function SuggestionBox(inHTMLInputField, inListOfEntries, inNextHTMLField) {
+function UserSuggestionBox(inHTMLInputField, inListOfEntries, inNextHTMLField) {
   this._myInputField = inHTMLInputField;
-  this._myListOfEntries = inListOfEntries.sort(SuggestionBox.compareEntryDisplayNames);
+  this._myListOfEntries = inListOfEntries.sort(UserSuggestionBox.compareEntryDisplayNames);
   this._myNextField = inNextHTMLField;
   
-  this._mySuggestionBoxDivElement = document.createElement('div');
-  // this._mySuggestionBoxDivElement.style.visibility = "hidden";
-  this._mySuggestionBoxDivElement.style.zIndex = 11;
-  this._mySuggestionBoxDivElement.style.display = "none";
-  document.body.appendChild(this._mySuggestionBoxDivElement);
+  this._myUserSuggestionBoxDivElement = document.createElement('div');
+  // this._myUserSuggestionBoxDivElement.style.visibility = "hidden";
+  this._myUserSuggestionBoxDivElement.style.zIndex = 11;
+  this._myUserSuggestionBoxDivElement.style.display = "none";
+  document.body.appendChild(this._myUserSuggestionBoxDivElement);
   
   this._myInputField.onkeyup = this._keyPressOnInputField.bindAsEventListener(this);
   this._myInputField.onfocus = this._focusOnInputField.bindAsEventListener(this);
@@ -405,7 +405,7 @@ function SuggestionBox(inHTMLInputField, inListOfEntries, inNextHTMLField) {
   this._keyPressOnInputField();
 }
 
-SuggestionBox.compareEntryDisplayNames = function (inEntryOne, inEntryTwo) {
+UserSuggestionBox.compareEntryDisplayNames = function (inEntryOne, inEntryTwo) {
   var displayNameOne = inEntryOne.getDisplayName();
   var displayNameTwo = inEntryTwo.getDisplayName();
   if (displayNameOne == displayNameTwo) {
@@ -415,30 +415,30 @@ SuggestionBox.compareEntryDisplayNames = function (inEntryOne, inEntryTwo) {
   }
 };
 
-SuggestionBox.prototype._focusOnInputField = function (inEventObject) {
+UserSuggestionBox.prototype._focusOnInputField = function (inEventObject) {
   this._myInputField.value = "";
-  this._redisplaySuggestionBox();
+  this._redisplayUserSuggestionBox();
 };
 
 
-SuggestionBox.prototype._keyPressOnInputField = function (inEventObject) {
-  this._redisplaySuggestionBox();
+UserSuggestionBox.prototype._keyPressOnInputField = function (inEventObject) {
+  this._redisplayUserSuggestionBox();
 };
 
 
-SuggestionBox.prototype._blurOnInputField = function (inEventObject) {
+UserSuggestionBox.prototype._blurOnInputField = function (inEventObject) {
   // make the suggestion box disappear
-  this._mySuggestionBoxDivElement.style.display = "none";
+  this._myUserSuggestionBoxDivElement.style.display = "none";
 };
 
 
-SuggestionBox.prototype._clickOnSelection = function (inEventObject, inString) {
+UserSuggestionBox.prototype._clickOnSelection = function (inEventObject, inString) {
   this._myInputField.value = inString;
   this._myNextField.select();
 };
 
 
-SuggestionBox.prototype._redisplaySuggestionBox = function () {
+UserSuggestionBox.prototype._redisplayUserSuggestionBox = function () {
   var partialInputString = this._myInputField.value;
   var listOfMatchingStrings = [];
   var key;
@@ -457,9 +457,9 @@ SuggestionBox.prototype._redisplaySuggestionBox = function () {
   
   if (listOfMatchingStrings.length === 0) {
     // make the suggestion box disappear
-    this._mySuggestionBoxDivElement.style.display = "none";
+    this._myUserSuggestionBoxDivElement.style.display = "none";
   } else {
-    View.removeChildrenOfElement(this._mySuggestionBoxDivElement);
+    View.removeChildrenOfElement(this._myUserSuggestionBoxDivElement);
     var table = document.createElement('table');
     var rowNumber = 0;
     var columnNumber = 0;
@@ -472,20 +472,20 @@ SuggestionBox.prototype._redisplaySuggestionBox = function () {
       cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, string);
       rowNumber += 1;
     }
-    this._mySuggestionBoxDivElement.appendChild(table);
+    this._myUserSuggestionBoxDivElement.appendChild(table);
     
     // set-up the suggestion box to open just below the input field it comes from
     var suggestionBoxTop = Util.getOffsetTopFromElement(this._myInputField) + this._myInputField.offsetHeight;
     var suggestionBoxLeft = Util.getOffsetLeftFromElement(this._myInputField);
-    this._mySuggestionBoxDivElement.style.top = suggestionBoxTop + "px"; 
-    this._mySuggestionBoxDivElement.style.left = suggestionBoxLeft + "px";
+    this._myUserSuggestionBoxDivElement.style.top = suggestionBoxTop + "px"; 
+    this._myUserSuggestionBoxDivElement.style.left = suggestionBoxLeft + "px";
     // alert(this._myInputField.offsetWidth);
-    this._mySuggestionBoxDivElement.style.width = (this._myInputField.offsetWidth - 2)+ "px";
+    this._myUserSuggestionBoxDivElement.style.width = (this._myInputField.offsetWidth - 2)+ "px";
     
-    // this._mySuggestionBoxDivElement.style.zIndex = 11;
-    this._mySuggestionBoxDivElement.className = "suggestion_box";
-    this._mySuggestionBoxDivElement.style.visibility = "visible";
-    this._mySuggestionBoxDivElement.style.display = "block";
+    // this._myUserSuggestionBoxDivElement.style.zIndex = 11;
+    this._myUserSuggestionBoxDivElement.className = "suggestion_box";
+    this._myUserSuggestionBoxDivElement.style.visibility = "visible";
+    this._myUserSuggestionBoxDivElement.style.display = "block";
   }
 };
 

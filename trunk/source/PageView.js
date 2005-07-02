@@ -37,7 +37,7 @@
 /*global document, HTMLElement  */
 /*global Util  */
 /*global Item  */
-/*global RootView, SectionView, TablePlugin, TextView  */
+/*global RootView, SectionView, TablePlugin, EntryView  */
 // -------------------------------------------------------------------
 
 
@@ -154,11 +154,11 @@ PageView.prototype.doInitialDisplay = function () {
   var pageDivElement = this.getHTMLElement();
   
   var headerElement = View.createAndAppendElement(pageDivElement, "h1");
-  this._headerText = new TextView(this, headerElement, this._pageItem, attributeCalledName,
+  this._headerText = new EntryView(this, headerElement, this._pageItem, attributeCalledName,
     this._pageItem.getSingleEntryFromAttribute(attributeCalledName), PageView.CSS_CLASS_PAGE_HEADER, false);
 
   var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
-  this._pageSummaryView = new TextView(this, summaryViewDiv, this._pageItem, attributeCalledSummary,
+  this._pageSummaryView = new EntryView(this, summaryViewDiv, this._pageItem, attributeCalledSummary,
     this._pageItem.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_SUMMARY_TEXT, true);
 
   // add <div> elements for each of the sections on the page
