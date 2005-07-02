@@ -62,9 +62,18 @@ Release 0.1 at the start of August?
    OpenRecord software.
  + A logged-in user can write up weekly status reports.
  
+ 
+ 
+################################################################################
+################################################################################
+##                                                                            ##
+##                                Iteration #1                                ##
+##                                  May 2005                                  ##
+##                                                                            ##
+################################################################################
+################################################################################
+ 
 
- 
- 
 =======================================================
 Tasks we need to do for the release 0.1 user stories
 =======================================================
@@ -135,102 +144,165 @@ Chao   |   done   |         | In table columns where the expected type is a Cate
  ~19   = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
    5    = number of weeks in May iteration
  ~ 3.8 = Velocity (in estimated IEDs per week)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  
- 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     Summary of Iteration #2
-            June 2005
-     June 6 to June 27, 2005
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        = number of PLANNED tasks that were finished 
-        = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
-   3    = number of weeks in June iteration
-        = Velocity (in estimated IEDs per week)
 
-   
-        
+################################################################################
+################################################################################
+##                                                                            ##
+##                                Iteration #2                                ##
+##                                  June 2005                                 ##
+##                                                                            ##
+################################################################################
+################################################################################
+ 
+
 ---------------------------------------------------------------------------
-   Tasks that we might want to do during Iteration #2, in June 2005
+   Tasks we originally identified for Iteration #2, in June 2005
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
 brian  | 0.25     | 0.25    |  1. Set up a prototype of the OpenRecord.org "dogfood" site
 mignon | 0.25 IED | 0.5 IED |  2. Have identifiedRecord.getUserstamp() get the user from the UUID
 mignon | 0.5  IED | 0.5 IED |  3. Switch data model to use time-based UUIDs for timestamps & userstamps
-brian  | 0        | 0.5     |     Update the JSON repository file to use time-based UUIDs
-brian  | 0        | 0.25    |     Get deletion votes working again after switching to time-based UUIDs
 brian  | 0.5  IED | 0.25    |  4. Store transaction info in repository
        |          |         |  5. UI for deleting a row from a table
 brian  | 0.5  IED | 0.25    |  6. Save provisional item and then set the category, in that order, and in one transaction
 brian  | 0.25 IED | 0.25    |  7. Fix the bug that happens when you call the PHP server code with no POST data
-brian  |          | 0.25    |     Enabled one server to serve N pages running against N repository files
 chao   | 0.5  IED | 0.5 IED |  8. UI for entering a number literal (instead of a string literal) in a table [with Brian]
 chao   | 1    IED | 1   IED |  9. UI for entering a date literal in a table (and data model support) [with Brian]
 brian  | 1    IED | 1   IED | 10. Add data model support for bi-directional references
-brian  |          | 0.5     |     Convert the code to use bi-directional references
-brian  | 0.25 IED | 0.25    |     Convert the axiomatic items to use bi-directional reference
-brian  |          | 0.75    |     Misc. other improvements to the repository JSON format
 chao   | 2    IED | 1.5 IED | 11. Move to better persistent representation for queries [with Brian]
        |          |         | 12. Make sure view code uses transactions
        |          |         | 13. Deal with \n in page name or summary fields
        |          |         | 14. BUG: problems with newlines and HTML characters in text strings
 brian  | 0.5  IED |         | 15. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
 -------+----------+---------+----------------------------------------------
+
+
+---------------------------------------------------------------------------
+ Additional "hidden" tasks we uncovered during Iteration #2, in June 2005
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+brian  |          | 0.5     |     Update the JSON repository file to use time-based UUIDs
+brian  |          | 0.25    |     Get deletion votes working again after switching to time-based UUIDs
+brian  |          | 0.25    |     Enabled one server to serve N pages running against N repository files
+brian  |          | 0.5     |     Convert the code to use bi-directional references
+brian  |          | 0.25    |     Convert the axiomatic items to use bi-directional reference
+brian  |          | 0.75    |     Misc. other improvements to the repository JSON format
+-------+----------+---------+----------------------------------------------
+
+
+---------------------------------------------------------------------------
+   New tasks that we decided to take on for Iteration #2, in June 2005
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
 chao   |          | done    | 16. Have text-entries and reference-entries look different
-       |          |         | 17. Write one unit test that tests GUI code
-       |          |         | 18. Write one performance test that measures the time some code takes
-       |          |         | 19. Pick one file, and do a group code review on it
-       |          |         | 20. Rationalize our CSS style sheets
-       |          |         | 21. Provide GUI feedback about what's editable
-       |          |         | 22. Reach consensus on (colors, padding, and borders) and then implement
-       |          |         | 23. Get data model to pass the ordinal unit tests again
 mignon |          | done    | 24. Display Navbar pages in the right order
-chao   |          | done?   | 25. Arrow keys in SuggestionBox
-       |          |         | 26. Arrow keys in Table View
-chao   |1.5 IED   |         | 27. Change UI so that non-literal entries are immutable
-       |          |         | 28. Implement a good URL-to-content mapping, such that URLs won't go bad in future releases
-       |          |         | 29. Convert UI code from DOM level 0 to DOM level 2
-       |          |         | 30. Have identifiedRecord.getTimestamp() get the time from the UUID 
--------+----------+---------+----------------------------------------------
-chao   |0.5 IED   |         | 31. Wire up observers & keep views in sync
-       |          |         | 32. improve UI for adding an attribute to an item
-       |          |         | 33. improve UI for setting the expected data type of an attribute
-       |          |         | 34. improve UI for creating a new category
-       |          |         | 35. improve UI for entering references to categories or to other items
-       |          |         | 36. improve UI for creating a new page
-       |          |         | 37. improve UI for adding a new section to a page
-       |          |         | 38. improve UI for creating a new user
+chao   |          | done    | 25. Arrow keys in SuggestionBox
+chao   | 1.5 IED  | done    | 27. Change UI so that non-literal entries are immutable
+mignon |          | done    | 30. Have identifiedRecord.getTimestamp() get the time from the UUID 
 chao   | 1.5 IED  | 1.5 IED | 39. improve UI for editing the query that a section uses
-       |          |         | 40. Have edit mode look like view mode, and remove the "Edit" button
-       |          |         | 41. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
-       |          |         | 42. Rationalize the View api and document public api
-       |          |         | 43. Document the Data model public api
-       |          |         | 44. Check for incorrect dependencies (e.g. a Util dependency on model code)
-       |          |         | 45. Create directories "util", "view", "plugin"
+chao   | 0.5 IED  | 0.5 IED |     Improved UI for autocomplete
+chao   | 0.5 IED  | 0.5 IED |     Allow plugins to store layout data
+chao   | 0.5 IED  | 0.5 IED |     Table plugin persists column order
+brian  |          | 0.5 IED | 48. Add a Query.js class, and/or an Attribute.js class
 -------+----------+---------+----------------------------------------------
-       |          |         | 46. Add support for saving content when used from a file:// URL
-       |          |         | 47. Add support for repository merging
-       |          |         | 48. Add a Query.js class, and/or an Attribute.js class
-       |          |         | 49. BUG: back button is broken
-       |          |         | 50. BUG: "Waiting for localhost..."
-       |          |         | 51. BUG: "Node was not found" exception in TextView/LoginView?
-       |          |         | 52. Do some testing to find other existing bugs
-       |          |         | 53. Drag and drop to re-order pages in the Navbar
-       |          |         | 54. Drag and drop to re-order columns in table view
-       |          |         | 55. Drag and drop to re-order rows in table view
-       |          |         | 56. Have explicit save instead of (or in addition to) autosave
-       |          |         | 57. Be able to cancel out of creating a new account
-       |          |         | 58. Save view layout choice and user preferences
-       |          |         | 59. Do code reviews
-       |          |         | 60. Write concurrency tests 
-       |          |         | 61. Write scalability tests 
-       |          |         | 62. Ensure that PHP scripts and file I/O works for concurrent multi-user access
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Summary of Iteration #2
+            June 2005
+     June 6 to July 4, 2005
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  10    = number of PLANNED tasks that were finished 
+   6    = number of HIDDEN tasks that were finished 
+  10    = number of ADDITIONAL tasks that were finished 
+ ~14   = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
+   4    = number of weeks in June iteration
+ ~ 3.5 = Velocity (in estimated IEDs per week)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   
+
+################################################################################
+################################################################################
+##                                                                            ##
+##                                Iteration #3                                ##
+##                                  July 2005                                 ##
+##                                                                            ##
+################################################################################
+################################################################################
+
+
+---------------------------------------------------------------------------
+   Tasks we originally identified for Iteration #3, in July 2005
 -------+----------+---------+----------------------------------------------
-chao   | 0.5 IED  | 0.5 IED | Improved UI for autocomplete
-chao   | 0.5 IED  | 0.5 IED | Allow plugins to store layout data
-chao   | 0.5 IED  | 0.5 IED | Table plugin persists column order
-chao   | 0.5 IED  |         | Improve UI for navigating between cells and autocomplete
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+       |          |         |  1. Change "Edit"/"Done Editing" button to "Show Tools"/"Hide Tools"
+       |          |         |  2. Allow editing for any logged in user, even if edit tools aren't shown
+       |          |         |  3. Assign system attributes & categories to a "System" category
+       |          |         |  4. Hide "System" items most of the time
+       |          |         |  5. Attempt to embed an OpenRecord view in a MediaWiki page
+       |          |         |  6. Refactor our observer notification API (and implementation)
+chao   |0.5 IED   |         |  7. Wire up observers & keep views in sync
+       |          |         |  8. be able to select a lozenge 
+       |          |         |  9. be able to select a table row 
+       |          |         | 10. be able to select a non-lozenge literal entry
+       |          |         | 11. be able to select the text within an entry
+       |          |         | 12. be able to delete a selected lozenge 
+       |          |         | 13. be able to delete a selected table row 
+chao   | 0.5 IED  |         | 14. improve keyboard navigation: tab, arrow, and return keys
+       |          |         | 15. Get data model to pass the ordinal unit tests again
+       |          |         | 16. drag-and-drop lozenges
+       |          |         | 17. drag-and-drop to re-order navbar menu items
+       |          |         | 18. drag-and-drop to re-order table rows
+       |          |         | 19. drag-and-drop to re-order table columns
+       |          |         | 20. improve UI for "add new attribute" in Table View 
+       |          |         | 21. Rationalize our CSS style sheets
+       |          |         | 22. Reach consensus on (colors, padding, and borders) and then implement
+       |          |         | 23. Make sure view code uses transactions
+       |          |         | 24. Deal with \n in page name or summary fields
+       |          |         | 25. BUG: need to encode reserved characters(<&>\n"') back at client-server layer
+-------+----------+---------+----------------------------------------------
+       |          |         | 26. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
+       |          |         | 27. Write one unit test that tests GUI code
+       |          |         | 28. Write one performance test that measures the time some code takes
+       |          |         | 29. Pick one file, and do a group code review on it
+       |          |         | 30. Provide GUI feedback about what's editable
+       |          |         | 31. Implement a good URL-to-content mapping, such that URLs won't go bad in future releases
+       |          |         | 32. Convert UI code from DOM level 0 to DOM level 2
+       |          |         | 33. Rationalize the View api and document public api
+       |          |         | 34. Document the Data model public api
+       |          |         | 35. Add support for saving content when used from a file:// URL
+       |          |         | 36. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
+       |          |         | 37. improve UI for setting the expected data type of an attribute
+       |          |         | 38. improve UI for creating a new category
+       |          |         | 39. improve UI for entering references to categories or to other items
+       |          |         | 40. improve UI for creating a new page
+       |          |         | 41. improve UI for adding a new section to a page
+       |          |         | 42. improve UI for creating a new user
+       |          |         | 43. Check for incorrect dependencies (e.g. a Util dependency on model code)
+       |          |         | 44. Create directories "view" and "plugin"
+-------+----------+---------+----------------------------------------------
+       |          |         | 45. Add support for repository merging
+       |          |         | 46. BUG: back button is broken
+       |          |         | 47. BUG: "Waiting for localhost..."
+       |          |         | 48. BUG: "Node was not found" exception in TextView/LoginView?
+       |          |         | 49. Do some testing to find other existing bugs
+       |          |         | 50. Have explicit save instead of (or in addition to) autosave
+       |          |         | 51. Be able to cancel out of creating a new account
+       |          |         | 52. Save view layout choice and user preferences
+       |          |         | 53. Do code reviews
+       |          |         | 54. Write concurrency tests 
+       |          |         | 55. Write scalability tests 
+       |          |         | 56. Ensure that PHP scripts and file I/O works for concurrent multi-user access
+-------+----------+---------+----------------------------------------------
        
 
 
@@ -455,10 +527,6 @@ Issues for post iteration#2
 + How should we rename "VirtualServer"?
 + How should we interoperate with other repositories(openrecord + other sources of data)?
 + Should we rename "World"?
-+ Should we adopt "Globals" convention for JSLint?
-+ Should we get rid of semi-colon checking in JSLint?
-+ Should we work on making OpenRecord work within MediaWiki?
 + BUG: need to convert HTML entity codes back at client-server layer
-+ Task: Rename ORlugin to PluginView
 + BUG: Can't really create own plugins yet (e.g. UUID need to be assigned, plugin item created)
 + Q: Do we (and how) need a concept of focus for Views? Currently, only Text input and Textarea gets keyboard focus. We need it for table selections and possibly selecting "lozenges" (item references stored in the TextView)
