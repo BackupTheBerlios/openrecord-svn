@@ -53,14 +53,14 @@ LoginView.COOKIE_NAME = "useruuid";
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    inSuperView    The view that this LoginView is nested in. 
- * @param    inHTMLElement    The HTMLElement to display the HTML in. 
+ * @param    superview    The view that this LoginView is nested in. 
+ * @param    htmlElement    The HTMLElement to display the HTML in. 
  */
 LoginView.prototype = new View();  // makes LoginView be a subclass of View
-function LoginView(inSuperView, inHTMLElement) {
+function LoginView(superview, htmlElement) {
+  View.call(this, superview, htmlElement);
+
   // instance properties
-  this.setSuperview(inSuperView);
-  this.setHTMLElement(inHTMLElement);
   this._isCreatingNewAccount = false;
   var tenYearCookieExpiration = 10*365*24;   // PENDING: hardcode expiration to 10yrs
   this._cookie = new Cookie(document, LoginView.COOKIE_NAME, tenYearCookieExpiration);
@@ -78,7 +78,7 @@ function LoginView(inSuperView, inHTMLElement) {
  *
  * @scope    public instance method
  */
-LoginView.prototype.refresh = function () {
+LoginView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this._rebuildView();
   }
@@ -95,8 +95,8 @@ LoginView.prototype.refresh = function () {
  *
  * @scope    private instance method
  */
-LoginView.prototype._rebuildView = function () {
-  var mySpan = this.getHTMLElement();
+LoginView.prototype._rebuildView = function() {
+  var mySpan = this.getHtmlElement();
   
   View.removeChildrenOfElement(mySpan);
   
@@ -221,7 +221,7 @@ LoginView.prototype._rebuildView = function () {
  *
  * @scope    private instance method
  */
-LoginView.prototype._clickOnSignoutLink = function(inEventObject) {
+LoginView.prototype._clickOnSignoutLink = function(eventObject) {
   if (this.isInEditMode()) {
     this.getRootView().setEditMode(false);
   }
@@ -239,7 +239,7 @@ LoginView.prototype._clickOnSignoutLink = function(inEventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._signinPasswordFocus = function(inEventObject) {
+LoginView.prototype._signinPasswordFocus = function(eventObject) {
   this.passwordInput.value = "";
 };
 
@@ -249,10 +249,10 @@ LoginView.prototype._signinPasswordFocus = function(inEventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._signinPasswordKeyPress = function(inEventObject) {
+LoginView.prototype._signinPasswordKeyPress = function(eventObject) {
   // see if <return> is pressed, if so, similate clicking on sign in button
-  if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
-    this._clickOnSignInButton(inEventObject);
+  if (eventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
+    this._clickOnSignInButton(eventObject);
   }
 };
 
@@ -262,10 +262,10 @@ LoginView.prototype._signinPasswordKeyPress = function(inEventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._createAccountPasswordKeyPress = function(inEventObject) {
+LoginView.prototype._createAccountPasswordKeyPress = function(eventObject) {
   // see if <return> is pressed, if so, similate clicking on sign in button
-  if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
-    this._clickOnNewAcctButton(inEventObject);
+  if (eventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
+    this._clickOnNewAcctButton(eventObject);
   }
 };
 
@@ -275,7 +275,7 @@ LoginView.prototype._createAccountPasswordKeyPress = function(inEventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._clickOnCreateAccountLink = function(inEventObject) {
+LoginView.prototype._clickOnCreateAccountLink = function(eventObject) {
   this._isCreatingNewAccount = true;
   this._rebuildView();
 };
@@ -286,7 +286,7 @@ LoginView.prototype._clickOnCreateAccountLink = function(inEventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._clickOnNewAcctButton = function(inEventObject) {
+LoginView.prototype._clickOnNewAcctButton = function(eventObject) {
   var username = this.usernameInput.value;
   var password = this.passwordInput.value;
   if (password === null) {
@@ -303,7 +303,7 @@ LoginView.prototype._clickOnNewAcctButton = function(inEventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._clickOnSignInButton = function(inEventObject) {
+LoginView.prototype._clickOnSignInButton = function(eventObject) {
 
   var listOfUsers = this.getWorld().getUsers();
   var userNameEntered = this.usernameInput.value;
@@ -336,9 +336,9 @@ LoginView.prototype._clickOnSignInButton = function(inEventObject) {
  * Called when the user clicks on the "Edit" button.
  *
  * @scope    private instance method
- * @param    inEventObject    An event object. 
+ * @param    eventObject    An event object. 
  */
-LoginView.prototype._clickOnShowToolsButton = function (inEventObject) {
+LoginView.prototype._clickOnShowToolsButton = function(eventObject) {
   this.getRootView().setShowToolsMode(!this.getRootView().isInShowToolsMode());
   this._rebuildView();
 };
@@ -348,7 +348,10 @@ LoginView.prototype._clickOnShowToolsButton = function (inEventObject) {
 // Private helper methods
 // -------------------------------------------------------------------
 
-LoginView.prototype._loginUser = function (user, password) {
+/**
+ *
+ */
+LoginView.prototype._loginUser = function(user, password) {
   var loginSuccess = this.getWorld().login(user, password); 
   if (loginSuccess) {
     var userUuid = user._getUuid();
@@ -363,11 +366,14 @@ LoginView.prototype._loginUser = function (user, password) {
 };
 
 
-LoginView.prototype._reportError = function (errorStr) {
-  var newErrorNode = document.createTextNode(errorStr);
-  var mySpan = this.getHTMLElement();
+/**
+ *
+ */
+LoginView.prototype._reportError = function(errorString) {
+  var newErrorNode = document.createTextNode(errorString);
+  var mySpan = this.getHtmlElement();
   if (this.errorNode) {
-    mySpan.replaceChild(newErrorNode,this.errorNode);
+    mySpan.replaceChild(newErrorNode, this.errorNode);
   } else {
     mySpan.appendChild(newErrorNode); 
   }
@@ -375,7 +381,10 @@ LoginView.prototype._reportError = function (errorStr) {
 };
 
 
-LoginView.prototype._createNewUser = function (username, password) {
+/**
+ *
+ */
+LoginView.prototype._createNewUser = function(username, password) {
   function isValidUsername(username) {
     // PENDING: hard coded to validate for alphanumeric usernames of 3 or more characters
     if (!username) {return false;}
@@ -394,26 +403,41 @@ LoginView.prototype._createNewUser = function (username, password) {
 // -------------------------------------------------------------------
 // Suggestion box methods
 // -------------------------------------------------------------------
-function UserSuggestionBox(inHTMLInputField, inListOfEntries, inNextHTMLField) {
-  this._myInputField = inHTMLInputField;
-  this._myListOfEntries = inListOfEntries.sort(UserSuggestionBox.compareEntryDisplayNames);
-  this._myNextField = inNextHTMLField;
+
+/**
+ * PENDING: 
+ * 
+ * We wrote this UserSuggestionBox code back before we had the general
+ * /view/SuggestionBox.js class.  The SuggestionBox.js class is better,
+ * because it allows you to use the arrow keys to scroll through the
+ * options.  We shouldn't be trying to maintain this UserSuggestionBox
+ * too.  Instead, we should make SuggestionBox.js generic enough that
+ * we can just use it instead of UserSuggestionBox.
+ */
+function UserSuggestionBox(htmlInputField, listOfEntries, nextHtmlField) {
+  this._inputField = htmlInputField;
+  this._listOfEntries = listOfEntries.sort(UserSuggestionBox.compareEntryDisplayNames);
+  this._nextField = nextHtmlField;
   
-  this._myUserSuggestionBoxDivElement = document.createElement('div');
-  // this._myUserSuggestionBoxDivElement.style.visibility = "hidden";
-  this._myUserSuggestionBoxDivElement.style.zIndex = 11;
-  this._myUserSuggestionBoxDivElement.style.display = "none";
-  document.body.appendChild(this._myUserSuggestionBoxDivElement);
+  this._userSuggestionBoxDivElement = document.createElement('div');
+  // this._userSuggestionBoxDivElement.style.visibility = "hidden";
+  this._userSuggestionBoxDivElement.style.zIndex = 11;
+  this._userSuggestionBoxDivElement.style.display = "none";
+  document.body.appendChild(this._userSuggestionBoxDivElement);
   
-  this._myInputField.onkeyup = this._keyPressOnInputField.bindAsEventListener(this);
-  this._myInputField.onfocus = this._focusOnInputField.bindAsEventListener(this);
-  this._myInputField.onblur = this._blurOnInputField.bindAsEventListener(this);
+  this._inputField.onkeyup = this._keyPressOnInputField.bindAsEventListener(this);
+  this._inputField.onfocus = this._focusOnInputField.bindAsEventListener(this);
+  this._inputField.onblur = this._blurOnInputField.bindAsEventListener(this);
   this._keyPressOnInputField();
 }
 
-UserSuggestionBox.compareEntryDisplayNames = function (inEntryOne, inEntryTwo) {
-  var displayNameOne = inEntryOne.getDisplayName();
-  var displayNameTwo = inEntryTwo.getDisplayName();
+
+/**
+ *
+ */
+UserSuggestionBox.compareEntryDisplayNames = function(entryOne, entryTwo) {
+  var displayNameOne = entryOne.getDisplayName();
+  var displayNameTwo = entryTwo.getDisplayName();
   if (displayNameOne == displayNameTwo) {
     return 0;
   } else {
@@ -421,36 +445,52 @@ UserSuggestionBox.compareEntryDisplayNames = function (inEntryOne, inEntryTwo) {
   }
 };
 
-UserSuggestionBox.prototype._focusOnInputField = function (inEventObject) {
-  this._myInputField.value = "";
+
+/**
+ *
+ */
+UserSuggestionBox.prototype._focusOnInputField = function(eventObject) {
+  this._inputField.value = "";
   this._redisplayUserSuggestionBox();
 };
 
 
-UserSuggestionBox.prototype._keyPressOnInputField = function (inEventObject) {
+/**
+ *
+ */
+UserSuggestionBox.prototype._keyPressOnInputField = function(eventObject) {
   this._redisplayUserSuggestionBox();
 };
 
 
-UserSuggestionBox.prototype._blurOnInputField = function (inEventObject) {
+/**
+ *
+ */
+UserSuggestionBox.prototype._blurOnInputField = function(eventObject) {
   // make the suggestion box disappear
-  this._myUserSuggestionBoxDivElement.style.display = "none";
+  this._userSuggestionBoxDivElement.style.display = "none";
 };
 
 
-UserSuggestionBox.prototype._clickOnSelection = function (inEventObject, inString) {
-  this._myInputField.value = inString;
-  this._myNextField.select();
+/**
+ *
+ */
+UserSuggestionBox.prototype._clickOnSelection = function(eventObject, string) {
+  this._inputField.value = string;
+  this._nextField.select();
 };
 
 
-UserSuggestionBox.prototype._redisplayUserSuggestionBox = function () {
-  var partialInputString = this._myInputField.value;
+/**
+ *
+ */
+UserSuggestionBox.prototype._redisplayUserSuggestionBox = function() {
+  var partialInputString = this._inputField.value;
   var listOfMatchingStrings = [];
   var key;
   
-  for (key in this._myListOfEntries) {
-    var entry = this._myListOfEntries[key];
+  for (key in this._listOfEntries) {
+    var entry = this._listOfEntries[key];
     var lowerCaseEntryString = entry.getDisplayName().toLowerCase();
     var lowerCaseInputString = partialInputString.toLowerCase();
     var numberOfCharactersToCompare = lowerCaseInputString.length;
@@ -463,9 +503,9 @@ UserSuggestionBox.prototype._redisplayUserSuggestionBox = function () {
   
   if (listOfMatchingStrings.length === 0) {
     // make the suggestion box disappear
-    this._myUserSuggestionBoxDivElement.style.display = "none";
+    this._userSuggestionBoxDivElement.style.display = "none";
   } else {
-    View.removeChildrenOfElement(this._myUserSuggestionBoxDivElement);
+    View.removeChildrenOfElement(this._userSuggestionBoxDivElement);
     var table = document.createElement('table');
     var rowNumber = 0;
     var columnNumber = 0;
@@ -478,20 +518,20 @@ UserSuggestionBox.prototype._redisplayUserSuggestionBox = function () {
       cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, string);
       rowNumber += 1;
     }
-    this._myUserSuggestionBoxDivElement.appendChild(table);
+    this._userSuggestionBoxDivElement.appendChild(table);
     
     // set-up the suggestion box to open just below the input field it comes from
-    var suggestionBoxTop = Util.getOffsetTopFromElement(this._myInputField) + this._myInputField.offsetHeight;
-    var suggestionBoxLeft = Util.getOffsetLeftFromElement(this._myInputField);
-    this._myUserSuggestionBoxDivElement.style.top = suggestionBoxTop + "px"; 
-    this._myUserSuggestionBoxDivElement.style.left = suggestionBoxLeft + "px";
-    // alert(this._myInputField.offsetWidth);
-    this._myUserSuggestionBoxDivElement.style.width = (this._myInputField.offsetWidth - 2)+ "px";
+    var suggestionBoxTop = Util.getOffsetTopFromElement(this._inputField) + this._inputField.offsetHeight;
+    var suggestionBoxLeft = Util.getOffsetLeftFromElement(this._inputField);
+    this._userSuggestionBoxDivElement.style.top = suggestionBoxTop + "px"; 
+    this._userSuggestionBoxDivElement.style.left = suggestionBoxLeft + "px";
+    // alert(this._inputField.offsetWidth);
+    this._userSuggestionBoxDivElement.style.width = (this._inputField.offsetWidth - 2)+ "px";
     
-    // this._myUserSuggestionBoxDivElement.style.zIndex = 11;
-    this._myUserSuggestionBoxDivElement.className = "suggestion_box";
-    this._myUserSuggestionBoxDivElement.style.visibility = "visible";
-    this._myUserSuggestionBoxDivElement.style.display = "block";
+    // this._userSuggestionBoxDivElement.style.zIndex = 11;
+    this._userSuggestionBoxDivElement.className = "suggestion_box";
+    this._userSuggestionBoxDivElement.style.visibility = "visible";
+    this._userSuggestionBoxDivElement.style.display = "block";
   }
 };
 

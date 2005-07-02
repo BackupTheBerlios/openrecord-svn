@@ -61,13 +61,15 @@ TablePlugin.DESCENDING_GIF = "descending.gif";
  * HTML table.
  *
  * @scope    public instance constructor
- * @extends  View
- * @param    inSectionView    The SectionView that this TablePlugin will appears in. 
- * @param    inHTMLElement    The HTMLElement to display this view in. 
+ * @extends  PluginView
+ * @param    superview    The View that serves as the superview for this view. 
+ * @param    htmlElement    The HTMLElement to display this view in. 
+ * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
+ * @param    layoutItem    ???. 
  */
-TablePlugin.prototype = new PluginView();  // makes TablePlugin be a subclass of View
-function TablePlugin(inSectionView, inHTMLElement, inQuery, inLayout) {
-  PluginView.call(this, inSectionView, inHTMLElement, inQuery, inLayout);
+TablePlugin.prototype = new PluginView();  // makes TablePlugin be a subclass of PluginView
+function TablePlugin(superview, htmlElement, querySpec, layoutItem) {
+  PluginView.call(this, superview, htmlElement, querySpec, layoutItem);
 
   // PENDING should probably make this independent of sectionview
   this._cssClass = SectionView.CSS_CLASS_SIMPLE_TABLE;
@@ -88,7 +90,7 @@ function TablePlugin(inSectionView, inHTMLElement, inQuery, inLayout) {
  * @scope    public class method
  * @return   The UUID of the item that represents this class of plugin
  */
-TablePlugin.getPluginItemUuid = function () {
+TablePlugin.getPluginItemUuid = function() {
   return TablePlugin.UUID_FOR_PLUGIN_VIEW_TABLE;
 };
 
@@ -103,7 +105,7 @@ TablePlugin.getPluginItemUuid = function () {
  * @scope    public instance method
  * @return   A JavaScript class. 
  */
-TablePlugin.prototype.getClass = function () {
+TablePlugin.prototype.getClass = function() {
   return TablePlugin;
 };
 
@@ -116,7 +118,7 @@ TablePlugin.prototype.getClass = function () {
  * @param    itemB    One of the two items to be compared. 
  * @return   This method returns 0 if the items are comparable. If _ascendingOrder is true, itemA is less than itemB, this method returns -1, otherwise it returns +1. 
  */
-TablePlugin.prototype.compareItemByAttribute = function (itemA, itemB) {
+TablePlugin.prototype.compareItemByAttribute = function(itemA, itemB) {
   Util.assert(this._sortAttribute !== null);
   var strA = itemA.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
   var strB = itemB.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
@@ -164,7 +166,6 @@ TablePlugin.prototype._buildAttributes = function() {
  *
  */
 TablePlugin.prototype._buildAttributeHashFromScratch = function() {
-  // var PENDING__JUNE_1_EXPERIMENT_BY_BRIAN = true;
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var hashTableOfAttributes = {};
   var hashTableOfEntries = {};
@@ -197,7 +198,7 @@ TablePlugin.prototype._buildAttributeHashFromScratch = function() {
  * @scope    private instance method
  */
 TablePlugin.prototype._buildAttributeEditor = function() {
-  var htmlElement = this.getHTMLElement();
+  var htmlElement = this.getHtmlElement();
   View.createAndAppendElement(htmlElement, "br");
   var selectElt = View.createAndAppendElement(htmlElement, "select", RootView.CSS_CLASS_EDIT_TOOL);
   var listOfAttributes = this.getWorld().getAttributes();
@@ -342,18 +343,19 @@ TablePlugin.prototype._buildHeader = function() {
 /**
  * Re-creates all the HTML for the TablePlugin, and hands the HTML to the 
  * browser to be re-drawn.
- * @param inDontRebuildHas, if true does not refetch query and rebuild attribute hash table
+ *
+ * @param    doNotRebuildHash    If true, this method does not refetch query and rebuild attribute hash table
  * @scope    public instance method
  */
-TablePlugin.prototype._buildTable = function(inDontRebuildHash) {
+TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   // get list of items and attributes
-  if (!inDontRebuildHash) {
+  if (!doNotRebuildHash) {
     this.fetchItems();
     this._buildAttributes();
   }
   
   //create new table, remove old table if already exists
-  View.removeChildrenOfElement(this.getHTMLElement());
+  View.removeChildrenOfElement(this.getHtmlElement());
   this._table = document.createElement("table");
   this._table.className = this._cssClass;
   
@@ -366,7 +368,7 @@ TablePlugin.prototype._buildTable = function(inDontRebuildHash) {
 
   this._buildTableBody();
   
-  this.getHTMLElement().appendChild(this._table);
+  this.getHtmlElement().appendChild(this._table);
   
   // if (this.isInEditMode()) {this._buildAttributeEditor();}
   this._buildAttributeEditor();
@@ -379,7 +381,7 @@ TablePlugin.prototype._buildTable = function(inDontRebuildHash) {
  *
  * @scope    public instance method
  */
-TablePlugin.prototype.refresh = function () {
+TablePlugin.prototype.refresh = function() {
   // PENDING new table is constantly rebuilt currently
   // PENDING new content model with observable queries
   this._buildTable();
@@ -392,7 +394,7 @@ TablePlugin.prototype.refresh = function () {
  * @scope    public instance method
  * @return   An HTML image element
  */
-TablePlugin.prototype.getSortIcon = function () {
+TablePlugin.prototype.getSortIcon = function() {
   var imageName = this._ascendingOrder ? TablePlugin.ASCENDING_GIF : TablePlugin.DESCENDING_GIF;
   var image =  Util.createImageElement(imageName);
   image.align = "middle";
@@ -428,7 +430,7 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
  * 
  * @scope    public class method
  */
-TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
+TablePlugin.prototype.clickOnHeader = function(event, clickAttribute) {
   if (clickAttribute == this._sortAttribute) {
     this._ascendingOrder = !this._ascendingOrder;
   }
@@ -444,7 +446,7 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
  * 
  * @scope    public class method
  */
-TablePlugin.prototype.selectRow = function (rowElement) {
+TablePlugin.prototype.selectRow = function(rowElement) {
   Util.assert(rowElement instanceof HTMLTableRowElement);
   if (rowElement != this._lastSelectedRow) {
     if (this._lastSelectedRow) {
@@ -463,7 +465,7 @@ TablePlugin.prototype.selectRow = function (rowElement) {
 /**
  * 
  */
-TablePlugin.prototype._importData = function (inEventObject, fileButton) {
+TablePlugin.prototype._importData = function(eventObject, fileButton) {
   // Returns null if it can't do it, false if there's an error, or a string of the content if successful
 /*  function mozillaLoadFile(filePath)
   {
@@ -507,8 +509,8 @@ TablePlugin.prototype._importData = function (inEventObject, fileButton) {
  * 
  * @scope    private class method
  */
-TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
-  var attributeUuid = inEventObject.target.value;
+TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
+  var attributeUuid = eventObject.target.value;
   if (attributeUuid) {
     var repository = this.getWorld();
     var attrTableColumns = repository.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
@@ -547,8 +549,8 @@ TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
 /**
  * 
  */
-TablePlugin.prototype._handleClick = function (inEventObject, anEntryView) {
-  var rowElement = anEntryView.getSuperview().getHTMLElement().parentNode; // entryView -> multiEntriesView -> cellElment -> rowElement
+TablePlugin.prototype._handleClick = function(eventObject, anEntryView) {
+  var rowElement = anEntryView.getSuperview().getHtmlElement().parentNode; // entryView -> multiEntriesView -> cellElment -> rowElement
   return this.selectRow(rowElement);
 };
 
@@ -563,8 +565,7 @@ TablePlugin.prototype._handleClick = function (inEventObject, anEntryView) {
  * @scope    public class method
  * @return   Returns true if the keyPress is a letter, or false if the keyPress is an arrow key or a key that moves the cursor to another cell. 
  */
-TablePlugin.prototype.keyPressOnEditField = function (inEventObject, anEntryView) {
-  var eventObject = inEventObject;
+TablePlugin.prototype.keyPressOnEditField = function(eventObject, anEntryView) {
   var asciiValueOfKey = eventObject.keyCode;
   var shiftKeyPressed = eventObject.shiftKey;
   
@@ -606,7 +607,7 @@ TablePlugin.prototype.keyPressOnEditField = function (inEventObject, anEntryView
     // to become a "real" one thereby  creating new row for the next provisional item, e.g. this._listOfItems changes
     anEntryView.stopEditing();
 
-    var cellElement = anEntryView.getSuperview().getHTMLElement(); // entryView's multiEntriesView's
+    var cellElement = anEntryView.getSuperview().getHtmlElement(); // entryView's multiEntriesView's
     var userHitReturnInLastRow = false;
     var shiftBy;
     var numCols = this._numberOfColumns;

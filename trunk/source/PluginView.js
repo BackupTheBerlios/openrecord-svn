@@ -42,19 +42,21 @@
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    inSuperView    The superview for this view. 
- * @param    inHTMLElement    The HTMLElement to display this view in. 
- * @param    inQuery    The Query item that provides the items for this PluginView to display
+ * @param    superview    The superview for this view. 
+ * @param    htmlElement    The HTMLElement to display this view in. 
+ * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
+ * @param    layoutItem    ???. 
  * @syntax   var PluginView = new PluginView()
  */
 PluginView.prototype = new View();  // makes PluginView be a subclass of View
-function PluginView(inSuperView, inHTMLElement, inQuery, inLayout) {
-  if (!inSuperView) {return;} // initial call that subclasses of PluginViews make without parameters
-  this.setSuperview(inSuperView);
-  this.setHTMLElement(inHTMLElement);
-  this._querySpec = inQuery;
+function PluginView(superview, htmlElement, querySpec, layoutItem) {
+  if (!superview) {return;} // initial call that subclasses of PluginViews make without parameters
+
+  View.call(this, superview, htmlElement);
+
+  this._querySpec = querySpec;
   this._queryRunner = this.getWorld().newQueryRunner(this._querySpec, this);
-  this._layout = inLayout;
+  this._layout = layoutItem;
   this._pluginItem = null;
 }
 
@@ -69,7 +71,7 @@ function PluginView(inSuperView, inHTMLElement, inQuery, inLayout) {
  * @scope    public instance method
  * @return   A string.
  */
-PluginView.prototype.getPluginItem = function () {
+PluginView.prototype.getPluginItem = function() {
   if (!this._pluginItem) {
     var pluginClass = this.getClass();
     // alert(pluginClass);
@@ -97,7 +99,7 @@ PluginView.prototype.fetchItems = function() {
  * @scope    public instance method
  * @return   A query spec item.
  */
-PluginView.prototype.getQuerySpec = function () {
+PluginView.prototype.getQuerySpec = function() {
   return this._querySpec;
 };
 
@@ -107,8 +109,8 @@ PluginView.prototype.getQuerySpec = function () {
  *
  * @scope    public instance method
  */
-PluginView.prototype.endOfLife = function () {
-  View.removeChildrenOfElement(this.getHTMLElement());
+PluginView.prototype.endOfLife = function() {
+  View.removeChildrenOfElement(this.getHtmlElement());
 };
 
 

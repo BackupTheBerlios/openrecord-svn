@@ -50,14 +50,16 @@ SectionView.registerPlugin(OutlinePlugin);
  * An OutlinePlugin displays a set of content items for a SectionView. 
  *
  * @scope    public instance constructor
- * @extends  View
- * @param    inSectionView    The SectionView that serves as the superview for this view. 
- * @param    inHTMLElement    The HTMLElement to display this view in. 
+ * @extends  PluginView
+ * @param    superview    The View that serves as the superview for this view. 
+ * @param    htmlElement    The HTMLElement to display this view in. 
+ * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
+ * @param    layoutItem    ???. 
  * @syntax   var outline = new OutlinePlugin()
  */
-OutlinePlugin.prototype = new PluginView();  // makes OutlinePlugin be a subclass of View
-function OutlinePlugin(inSectionView, inHTMLElement, inQuery, inLayout) {
-  PluginView.call(this, inSectionView, inHTMLElement, inQuery, inLayout);
+OutlinePlugin.prototype = new PluginView();  // makes OutlinePlugin be a subclass of PluginView
+function OutlinePlugin(superview, htmlElement, querySpec, layoutItem) {
+  PluginView.call(this, superview, htmlElement, querySpec, layoutItem);
 }
 
 
@@ -71,7 +73,7 @@ function OutlinePlugin(inSectionView, inHTMLElement, inQuery, inLayout) {
  * @scope    public class method
  * @return   The UUID of the item that represents this class of plugin
  */
-OutlinePlugin.getPluginItemUuid = function () {
+OutlinePlugin.getPluginItemUuid = function() {
   return OutlinePlugin.UUID_FOR_PLUGIN_VIEW_OUTLINE;
 };
 
@@ -86,7 +88,7 @@ OutlinePlugin.getPluginItemUuid = function () {
  * @scope    public instance method
  * @return   A JavaScript class. 
  */
-OutlinePlugin.prototype.getClass = function () {
+OutlinePlugin.prototype.getClass = function() {
   return OutlinePlugin;
 };
 
@@ -97,9 +99,9 @@ OutlinePlugin.prototype.getClass = function () {
  *
  * @scope    public instance method
  */
-OutlinePlugin.prototype.refresh = function () {
+OutlinePlugin.prototype.refresh = function() {
   var listOfContentItems = this.fetchItems();
-  var outlineDiv = this.getHTMLElement();
+  var outlineDiv = this.getHtmlElement();
   View.removeChildrenOfElement(outlineDiv);
   var ulElement = View.createAndAppendElement(outlineDiv, "ul");
   for (var contentItemKey in listOfContentItems) {

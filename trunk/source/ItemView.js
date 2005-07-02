@@ -52,20 +52,19 @@ ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_plugin_div_for_item_";
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    inRootView    The RootView that this ItemView is nested in. 
- * @param    inHTMLElement    The HTMLElement to display the HTML in. 
- * @param    inItem    The item to be displayed by this view. 
+ * @param    superview    The View that serves as the superview for this view. 
+ * @param    htmlElement    The HTMLElement to display the HTML in. 
+ * @param    item    The item to be displayed by this view. 
  */
 ItemView.prototype = new View();  // makes ItemView be a subclass of View
-function ItemView(inRootView, inHTMLElement, inItem) {
-  Util.assert(inItem instanceof Item);
-  Util.assert(inHTMLElement instanceof HTMLElement);
-  Util.assert(inRootView instanceof RootView);
+function ItemView(superview, htmlElement, item) {
+  Util.assert(htmlElement instanceof HTMLElement);
+  Util.assert(item instanceof Item);
+
+  View.call(this, superview, htmlElement);
 
   // instance properties
-  this.setSuperview(inRootView);
-  this.setHTMLElement(inHTMLElement);
-  this._item = inItem;
+  this._item = item;
   this._pluginView = null;
 }
 
@@ -76,7 +75,7 @@ function ItemView(inRootView, inHTMLElement, inItem) {
  * @scope    public instance method
  * @return   A string that gives the name of the page.
  */
-ItemView.prototype.getPageTitle = function () {
+ItemView.prototype.getPageTitle = function() {
   var pageTitle = this._item.getDisplayString();
   return pageTitle;
 };
@@ -88,7 +87,7 @@ ItemView.prototype.getPageTitle = function () {
  *
  * @scope    public instance method
  */
-ItemView.prototype.refresh = function () {
+ItemView.prototype.refresh = function() {
   Util.assert(this._item instanceof Item);
   
   // PENDING: this needs to be changed from DOM level 0 to DOM level 2.
@@ -103,7 +102,7 @@ ItemView.prototype.refresh = function () {
 
   // write out all the new content 
   var finalString = listOfStrings.join("");
-  this.getHTMLElement().innerHTML = finalString;
+  this.getHtmlElement().innerHTML = finalString;
 
   // let the detailPlugin add its own content
   var detailPluginElement = document.getElementById(detailDivId);

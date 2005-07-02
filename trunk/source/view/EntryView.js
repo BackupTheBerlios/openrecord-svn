@@ -55,39 +55,39 @@ EntryView.PROVISIONAL_COLOR = '#999999';
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    theSuperview    The view that this view is nested in. 
- * @param    theItem         The Item to be displayed and edited by this view. 
- * @param    theAttribute    The attribute of the item to be displayed.
- * @param    theElement      The HTMLElement to display the HTML in. 
- * @param    theClassType    A string that gives a class name to assign to the HTML element. 
+ * @param    superview    The view that this view is nested in. 
+ * @param    htmlElement      The HTMLElement to display the HTML in. 
+ * @param    item         The Item to be displayed and edited by this view. 
+ * @param    attribute    The attribute of the item to be displayed.
+ * @param    cssClassName    A string that gives a class name to assign to the HTML element. 
+ * @param    entry    The entry that this EntryView displays. 
  * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
 EntryView.prototype = new View();  // makes EntryView be a subclass of View
-function EntryView(theSuperview, inElement, inItem, inAttribute, inEntry, inClassName, isMultiLine) {
-  Util.assert((!inEntry) || inEntry instanceof Entry);
-  Util.assert(inItem instanceof Item);
-  Util.assert(inAttribute instanceof Item);
-  //Util.assert(theAttribute instanceof Attribute); PENDING need to check that attribute is an attribute
+function EntryView(superview, htmlElement, item, attribute, entry, cssClassName, isMultiLine) {
+  Util.assert((!entry) || entry instanceof Entry);
+  Util.assert(item instanceof Item);
+  Util.assert(attribute instanceof Item); // PENDING need to check that attribute is an attribute
   
-  this.setSuperview(theSuperview);
-  this.setHTMLElement(inElement);
-  inElement.style.width = "100%";
-  inElement.style.height = "100%"; // make this element expand to fill parent element where possible
-  this._item = inItem;
-  this._attribute = inAttribute;
-  this._entry = inEntry;
+  View.call(this, superview, htmlElement);
+
+  htmlElement.style.width = "100%";
+  htmlElement.style.height = "100%"; // make this element expand to fill parent element where possible
+  this._item = item;
+  this._attribute = attribute;
+  this._entry = entry;
   this._editField = null;
-  this._className = inClassName;
+  this._className = cssClassName;
   this._isMultiLine = isMultiLine;
   this._isEditing = false;
   this._proxyOnKeyFunction = null;
   this._alwaysUseEditField = null;
   
-  this._isProvisional = inItem.isProvisional();
+  this._isProvisional = item.isProvisional();
   if (this._isProvisional) {
-    this._provisionalText = inAttribute.getDisplayString();
+    this._provisionalText = attribute.getDisplayString();
   }
-  else if (inEntry && inEntry.getValue(this._item) instanceof Item) {
+  else if (entry && entry.getValue(this._item) instanceof Item) {
     this._valueIsItem = true;
   }
 }
@@ -124,8 +124,8 @@ EntryView.prototype.alwaysUseEditField = function() {
 /**
  *
  */
-EntryView.prototype.setAutoWiden = function(inAutoWiden) {
-  this._autoWiden = inAutoWiden;
+EntryView.prototype.setAutoWiden = function(autoWiden) {
+  this._autoWiden = autoWiden;
 };
 
 /**
@@ -143,9 +143,9 @@ EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntries) {
 /**
  *
  */
-EntryView.prototype.setSuggestions = function(suggestionList) {
-  if (suggestionList) {Util.assert(Util.isArray(suggestionList));}
-  this._suggestions = suggestionList;
+EntryView.prototype.setSuggestions = function(listOfSuggestions) {
+  if (listOfSuggestions) {Util.assert(Util.isArray(listOfSuggestions));}
+  this._suggestions = listOfSuggestions;
 };
 
 
@@ -182,7 +182,7 @@ EntryView.prototype._isLozenge = function() {
  * @scope    private instance method
  */
 EntryView.prototype._buildView = function() {
-  var htmlElement = this.getHTMLElement();
+  var htmlElement = this.getHtmlElement();
   View.removeChildrenOfElement(htmlElement);
   
   var textString = this._getText();
@@ -240,11 +240,11 @@ EntryView.prototype.startEditing = function(dontSelect) {
       editField.size = 5; //editField.defaultValue.length+1;
     }
     
-    //editField.style.width = this.getHTMLElement().offsetWidth + "px";  
-    if (this._isMultiLine) {editField.style.height = (this.getHTMLElement().offsetHeight) + "px";}  
+    //editField.style.width = this.getHtmlElement().offsetWidth + "px";  
+    if (this._isMultiLine) {editField.style.height = (this.getHtmlElement().offsetHeight) + "px";}  
     
     this._setupSuggestionBox();
-    this.getHTMLElement().replaceChild(editField, this._textNode);
+    this.getHtmlElement().replaceChild(editField, this._textNode);
     if (!dontSelect) {editField.select();}
     this._isEditing = true;
   }
@@ -266,7 +266,7 @@ EntryView.prototype.stopEditing = function() {
       newValue = this._editField.value;
     }
     var stillProvisional = this._isProvisional && !newValue;
-    var htmlElement = this.getHTMLElement();
+    var htmlElement = this.getHtmlElement();
 
 
     if (this._suggestionBox) {
@@ -286,7 +286,7 @@ EntryView.prototype.stopEditing = function() {
       }
       this._textNode.data = newValueDisplayString;
       this._suggestionBox = null;
-      this.getHTMLElement().replaceChild(this._textNode, this._editField);
+      this.getHtmlElement().replaceChild(this._textNode, this._editField);
     }
 
     // we need this _writeValue() to be after all display related code, because this may trigger an observer call
@@ -384,7 +384,7 @@ EntryView.prototype._writeValue = function(value) {
       }
       if (value instanceof Item) {
         this._valueIsItem = true;
-        var htmlElement = this.getHTMLElement();
+        var htmlElement = this.getHtmlElement();
         if (this._isLozenge() && !htmlElement.className.match(EntryView.CSS_CLASS_VALUE_IS_ITEM)) {
           htmlElement.className += " " + EntryView.CSS_CLASS_VALUE_IS_ITEM;
         }
@@ -433,11 +433,11 @@ EntryView.prototype._restoreText = function(dontSelect) {
  * Sets a function to be used when onclick is called to the EntryView
  *
  * @scope    public instance method
- * @param    inEventObject    An event object. 
+ * @param    onClickFunction    A function to call. 
  */
-EntryView.prototype.setClickFunction = function(inClickFunction) {
-  Util.assert(inClickFunction instanceof Function);
-  this._clickFunction = inClickFunction;
+EntryView.prototype.setClickFunction = function(onClickFunction) {
+  Util.assert(onClickFunction instanceof Function);
+  this._clickFunction = onClickFunction;
 };
 
 
@@ -447,10 +447,10 @@ EntryView.prototype.setClickFunction = function(inClickFunction) {
  * Handles the mouse click event on text view. Called by listener.
  *
  * @scope    public instance method
- * @param    inEventObject    An event object. 
+ * @param    eventObject    An event object. 
  */
-EntryView.prototype.onClick = function(inEventObject) {
-  if (this._clickFunction && this._clickFunction(inEventObject, this)) {
+EntryView.prototype.onClick = function(eventObject) {
+  if (this._clickFunction && this._clickFunction(eventObject, this)) {
     return true;
   }
   if (this.isInEditMode()) {
@@ -462,9 +462,9 @@ EntryView.prototype.onClick = function(inEventObject) {
 /**
  *
  */
-EntryView.prototype.onFocus = function(inEventObject) {
+EntryView.prototype.onFocus = function(eventObject) {
   if (this._suggestionBox) {
-    this._suggestionBox._focusOnInputField(inEventObject);
+    this._suggestionBox._focusOnInputField(eventObject);
   }
 };
 
@@ -478,7 +478,7 @@ EntryView.prototype.onFocus = function(inEventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-EntryView.prototype.onBlur = function(inEventObject) {
+EntryView.prototype.onBlur = function(eventObject) {
   this.stopEditing();
 };
 
@@ -497,9 +497,9 @@ EntryView.prototype.setKeyPressFunction = function(keyPressFunction) {
 /**
  *
  */
-EntryView.prototype.onKeyUp = function(inEventObject) {
+EntryView.prototype.onKeyUp = function(eventObject) {
   if (this._suggestionBox) {
-    this._suggestionBox._keyUpOnInputField(inEventObject);
+    this._suggestionBox._keyUpOnInputField(eventObject);
   }
 };
 
@@ -510,15 +510,15 @@ EntryView.prototype.onKeyUp = function(inEventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-EntryView.prototype.onKeyPress = function(inEventObject) {
-  if (inEventObject.keyCode == Util.ASCII_VALUE_FOR_ESCAPE) {
+EntryView.prototype.onKeyPress = function(eventObject) {
+  if (eventObject.keyCode == Util.ASCII_VALUE_FOR_ESCAPE) {
     this._restoreText();
     return true;
   }
-  if (this._suggestionBox && this._suggestionBox._keyPressOnInputField(inEventObject)) {
+  if (this._suggestionBox && this._suggestionBox._keyPressOnInputField(eventObject)) {
     return true;
   }
-  if (this._keyPressFunction && this._keyPressFunction(inEventObject, this)) {
+  if (this._keyPressFunction && this._keyPressFunction(eventObject, this)) {
     return true;
   }
   var editField = this._editField;
@@ -571,7 +571,7 @@ EntryView.prototype.onKeyPress = function(inEventObject) {
 EntryView.prototype.noLongerProvisional = function() {
   if (this._isProvisional) {
     this._isProvisional = false;
-    this.getHTMLElement().style.color = this._oldColor;
+    this.getHtmlElement().style.color = this._oldColor;
     // need to set line below because _writeValue() hasn't returned an entry yet
     this._entry = this._item.getSingleEntryFromAttribute(this._attribute); 
     this._buildView();

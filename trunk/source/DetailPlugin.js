@@ -50,14 +50,16 @@ SectionView.registerPlugin(DetailPlugin);
  * A DetailPlugin display one or more content items. 
  *
  * @scope    public instance constructor
- * @extends  View
- * @param    inSuperView    The superview for this view. 
- * @param    inHTMLElement    The HTMLElement to display this view in. 
+ * @extends  PluginView
+ * @param    superview    The View that serves as the superview for this view. 
+ * @param    htmlElement    The HTMLElement to display this view in. 
+ * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
+ * @param    layoutItem    ???. 
  * @syntax   var detailPlugin = new DetailPlugin()
  */
-DetailPlugin.prototype = new PluginView();  // makes DetailPlugin be a subclass of View
-function DetailPlugin(inSuperView, inHTMLElement, inQuery, inLayout) {
-  PluginView.call(this, inSuperView, inHTMLElement, inQuery, inLayout);
+DetailPlugin.prototype = new PluginView();  // makes DetailPlugin be a subclass of PluginView
+function DetailPlugin(superview, htmlElement, querySpec, layoutItem) {
+  PluginView.call(this, superview, htmlElement, querySpec, layoutItem);
 }
 
 
@@ -110,7 +112,7 @@ DetailPlugin.prototype.refresh = function () {
 
   // take all the HTML and put it together
   var finalString = listOfStrings.join("");
-  this.getHTMLElement().innerHTML = finalString;
+  this.getHtmlElement().innerHTML = finalString;
 };
 
 

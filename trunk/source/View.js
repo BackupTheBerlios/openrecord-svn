@@ -41,26 +41,16 @@
  * The View class serves as an abstract superclass for other view classes.
  *
  * @scope    public instance constructor
+ * @param    superview    The superview for this view. 
+ * @param    htmlElement    The HTMLElement to display this view in. 
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
-function View() {
-  this._superview = null;
-  this._htmlElement = null;
+function View(superview, htmlElement) {
+  if (!superview) {return;} // initial call that subclasses of PluginViews make without parameters
+  this._superview = superview;
+  this._htmlElement = htmlElement;
   this._myHasEverBeenDisplayedFlag = false; // PENDING: this is accessed directly by subclasses, which is bad
 }
-
-
-/**
- * Tells the View who its parent is in the view hierarchy.
- *
- * @scope    public instance method
- * @param    inSuperview    The superview for this view. 
- */
-View.prototype.setSuperview = function (inSuperview) {
-  // Util.assert(ViewInterface.isImplementedBy(inSuperview));
-
-  this._superview = inSuperview;
-};
 
 
 /**
@@ -69,21 +59,8 @@ View.prototype.setSuperview = function (inSuperview) {
  * @scope    public instance method
  * @return   A View object. 
  */
-View.prototype.getSuperview = function () {
+View.prototype.getSuperview = function() {
   return this._superview;
-};
-
-
-/**
- * Tells the View what HTMLElement to display itself in.
- *
- * @scope    public instance method
- * @param    inHTMLElement    The HTMLDivElement to display the view in. 
- */
-View.prototype.setHTMLElement = function (inHTMLElement) {
-  Util.assert(inHTMLElement instanceof HTMLElement);
-
-  this._htmlElement = inHTMLElement;
 };
 
 
@@ -93,7 +70,7 @@ View.prototype.setHTMLElement = function (inHTMLElement) {
  * @scope    public instance method
  * @return   An HTMLElement. 
  */
-View.prototype.getHTMLElement = function () {
+View.prototype.getHtmlElement = function() {
   return this._htmlElement;
 };
 
@@ -104,7 +81,7 @@ View.prototype.getHTMLElement = function () {
  * @scope    public instance method
  * @return   A World object. 
  */
-View.prototype.getWorld = function () {
+View.prototype.getWorld = function() {
   return this._superview.getWorld();
 };
 
@@ -130,7 +107,7 @@ View.prototype.getRootView = function() {
  * @scope    public instance method
  * @return   A boolean value. True if we are in Edit Mode.
  */
-View.prototype.isInEditMode = function () {
+View.prototype.isInEditMode = function() {
   return this._superview.isInEditMode();
 };
 
@@ -141,7 +118,7 @@ View.prototype.isInEditMode = function () {
  * @scope    public instance method
  * @return   A boolean value. True if the view has ever been displayed.
  */
-View.prototype.hasEverBeenDisplayed = function () {
+View.prototype.hasEverBeenDisplayed = function() {
   return this._myHasEverBeenDisplayedFlag;
 };
 
@@ -152,7 +129,7 @@ View.prototype.hasEverBeenDisplayed = function () {
  *
  * @scope    public instance method
  */
-View.prototype.refresh = function () {
+View.prototype.refresh = function() {
   if (!this.hasEverBeenDisplayed()) {
     // generate HTML elements for the view
     this._myHasEverBeenDisplayedFlag = true;
@@ -167,12 +144,12 @@ View.prototype.refresh = function () {
  * off-screen.
  *
  * @scope    public instance method
- * @param    inBoolean    True if the view should be visible on screen. False if the view should be hidden off screen.
+ * @param    visibleFlag    True if the view should be visible on screen. False if the view should be hidden off screen.
  */
-View.prototype.includeOnScreen = function (inBoolean) {
-  Util.assert(Util.isBoolean(inBoolean));
+View.prototype.includeOnScreen = function(visibleFlag) {
+  Util.assert(Util.isBoolean(visibleFlag));
 
-  if (inBoolean) {
+  if (visibleFlag) {
     this.refresh();
     this._htmlElement.style.display = "block";
   } else {
@@ -204,26 +181,26 @@ View.removeChildrenOfElement = function(element) {
  * element to the given element.
  *
  * @scope    public class method
- * @param    inElement    The existing element that we should append the new element to. 
- * @param    inTagName    The HTML tag for the element ("div", "p", "span", etc.). 
- * @param    inClassName    Optional. The HTML/CSS class to assign to the new element. 
- * @param    inId    Optional. The HTML id to assign to the new element. 
+ * @param    parentElement    The existing element that we should append the new element to. 
+ * @param    tagName    The HTML tag for the element ("div", "p", "span", etc.). 
+ * @param    cssClassName    Optional. The HTML/CSS class to assign to the new element. 
+ * @param    elementId    Optional. The HTML id to assign to the new element. 
  * @return   The newly created HTML element.
  */
-View.createAndAppendElement = function (inElement, inTagName, inClassName, inId) {
-  Util.assert(inElement instanceof HTMLElement);
-  Util.assert(Util.isString(inTagName));
-  Util.assert(!inClassName || Util.isString(inClassName));
-  Util.assert(!inId || Util.isString(inId));
+View.createAndAppendElement = function(parentElement, tagName, cssClassName, elementId) {
+  Util.assert(parentElement instanceof HTMLElement);
+  Util.assert(Util.isString(tagName));
+  Util.assert(!cssClassName || Util.isString(cssClassName));
+  Util.assert(!elementId || Util.isString(elementId));
 
-  var newElement = window.document.createElement(inTagName);
-  if (inClassName) {
-    newElement.className = inClassName;
+  var newElement = window.document.createElement(tagName);
+  if (cssClassName) {
+    newElement.className = cssClassName;
   }
-  if (inId) {
-    newElement.id = inId;
+  if (elementId) {
+    newElement.id = elementId;
   }
-  inElement.appendChild(newElement);
+  parentElement.appendChild(newElement);
   return newElement;
 };
 
@@ -234,16 +211,16 @@ View.createAndAppendElement = function (inElement, inTagName, inClassName, inId)
  * text node to the given element.
  *
  * @scope    public class method
- * @param    inElement    The existing element that we should append the new element to. 
- * @param    inText    The text string to put in the text node.
+ * @param    parentElement    The existing element that we should append the new element to. 
+ * @param    textString    The text string to put in the text node.
  * @return   The newly created text node.
  */
-View.createAndAppendTextNode = function (inElement, inText) {
-  Util.assert(inElement instanceof HTMLElement);
-  Util.assert(Util.isString(inText));
+View.createAndAppendTextNode = function(parentElement, textString) {
+  Util.assert(parentElement instanceof HTMLElement);
+  Util.assert(Util.isString(textString));
 
-  var newTextNode = window.document.createTextNode(inText);
-  inElement.appendChild(newTextNode);
+  var newTextNode = window.document.createTextNode(textString);
+  parentElement.appendChild(newTextNode);
   return newTextNode;
 };
 

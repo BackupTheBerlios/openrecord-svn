@@ -60,8 +60,6 @@ SectionView.CSS_CLASS_SUMMARY_TEXT = "summary_text";
 
 SectionView.ELEMENT_ID_SELECT_MENU_PREFIX = "select_menu_";
 
-// SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER = "section_number";
-
 SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW       = "00040101-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA       = "00040102-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN = "00040103-ce7f-11d9-8cd5-0011113ae5d6";
@@ -87,23 +85,18 @@ SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = null;
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    inPageView    The PageView that serves as the superview for this view. 
- * @param    inHTMLElement The HTMLElement to display the HTML in. 
- * @param    inSection    The Section item to be displayed in by this view. 
- * @param    inSectionNumber    The number of the section on the page (1, 2, 3, 4...). 
+ * @param    superview    The view that serves as the superview for this view. 
+ * @param    htmlElement    The HTMLElement to display the HTML in. 
+ * @param    sectionItem    The Section item to be displayed in by this view. 
  * @syntax   var sectionView = new SectionView()
  */
 SectionView.prototype = new View();  // makes SectionView be a subclass of View
-function SectionView(inPageView, inHTMLElement, inSection, inSectionNumber) {
-  Util.assert(inPageView instanceof PageView);
-  Util.assert(inSection instanceof Item);
-  
+function SectionView(superview, htmlElement, sectionItem) {
+  View.call(this, superview, htmlElement);
+
   // instance properties
-  // PENDING: these should all be private
-  this.setSuperview(inPageView);
-  this.setHTMLElement(inHTMLElement);
-  this._section = inSection;
-  this._sectionNumber = inSectionNumber;
+  Util.assert(sectionItem instanceof Item);
+  this._section = sectionItem;
 
   this._pluginView = null;
   this._pluginDiv = null;
@@ -154,7 +147,7 @@ SectionView.registerPlugin = function(pluginClass, pluginItemUuid) {
  * @param    pluginDiv    The HTMLDivElement to display the plugin in. 
  * @return   A newly created plugin object, initialized to be the plugin for this section.
  */
-SectionView.prototype.getPluginInstanceFromPluginItem = function (pluginItem, pluginDiv) {
+SectionView.prototype.getPluginInstanceFromPluginItem = function(pluginItem, pluginDiv) {
   Util.assert(pluginItem instanceof Item);
   
   var newPlugin = null;
@@ -175,7 +168,7 @@ SectionView.prototype.getPluginInstanceFromPluginItem = function (pluginItem, pl
  * @scope    public instance method
  * @return   query associated to this section.
  */
-SectionView.prototype.getQuerySpec = function () {
+SectionView.prototype.getQuerySpec = function() {
   var attributeCalledQuerySpec = this.getWorld().getAttributeCalledQuerySpec();
   var queryEntry = this._section.getSingleEntryFromAttribute(attributeCalledQuerySpec);
   if (queryEntry) {
@@ -191,7 +184,7 @@ SectionView.prototype.getQuerySpec = function () {
  *
  * @scope    public instance method
  */
-SectionView.prototype.refresh = function () {
+SectionView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this.doInitialDisplay();
   } else {
@@ -210,8 +203,8 @@ SectionView.prototype.refresh = function () {
  *
  * @scope    public instance method
  */
-SectionView.prototype.doInitialDisplay = function () {
-  if (!this.getHTMLElement()) {
+SectionView.prototype.doInitialDisplay = function() {
+  if (!this.getHtmlElement()) {
     return;
   }
   var attributeCalledPluginView = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
@@ -225,7 +218,7 @@ SectionView.prototype.doInitialDisplay = function () {
     selectedPluginClass = TablePlugin; 
   }
   
-  var sectionDiv = this.getHTMLElement();
+  var sectionDiv = this.getHtmlElement();
   var outerDiv = View.createAndAppendElement(sectionDiv, "div", SectionView.CSS_CLASS_SECTION);
   var headerH2 = View.createAndAppendElement(outerDiv, "h2");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
@@ -249,7 +242,6 @@ SectionView.prototype.doInitialDisplay = function () {
   var optionElement;
   var listener;
   selectElement.setAttribute("name", selectMenuId);
-  // selectElement.setAttribute(SectionView.ELEMENT_ATTRIBUTE_SECTION_NUMBER, this._sectionNumber);
   for (var key in SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
     var pluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[key];
     optionElement = View.createAndAppendElement(selectElement, "option");
@@ -280,20 +272,20 @@ SectionView.prototype.doInitialDisplay = function () {
  * Returns layout data of this section for a particular plugin
  * Creates a the layout data item if doesn't exist
  *
- * @param    inPluginType    The name of plugin
+ * @param    pluginTypeItem    An item representing a class of plugin
  * @return    layout data of this section for a particular plugin
  */
-SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
+SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem) {
   var repository = this.getWorld();
-  var attrLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA);
-  var entriesLayoutData = this._section.getEntriesForAttribute(attrLayoutData);
-  var attrAppliesToPlugin = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN);
+  var attributeLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA);
+  var entriesLayoutData = this._section.getEntriesForAttribute(attributeLayoutData);
+  var attributeAppliesToPlugin = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN);
   if (entriesLayoutData) {
     for (var i=0; i < entriesLayoutData.length; ++i) {
       var layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
-      var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attrAppliesToPlugin);
+      var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attributeAppliesToPlugin);
       Util.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
-      if (entriesAppliesToPlugin[0].getValue() == inPluginType) {
+      if (entriesAppliesToPlugin[0].getValue() == pluginTypeItem) {
         return layoutItem;
       }
     }
@@ -303,11 +295,11 @@ SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
   var categoryCalledLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA);
   var attributeCalledSectionThisLayoutDataBelongsTo = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO);
   repository.beginTransaction();
-  layoutItem = repository.newItem("Layout data for " + inPluginType.getDisplayString() + " of " + this._section.getDisplayString());
+  layoutItem = repository.newItem("Layout data for " + pluginTypeItem.getDisplayString() + " of " + this._section.getDisplayString());
   layoutItem.assignToCategory(categoryCalledLayoutData);
-  layoutItem.addEntryForAttribute(attrAppliesToPlugin, inPluginType);
-  // this._section.addEntryForAttribute(attrLayoutData, layoutItem, repository.getTypeCalledItem());
-  this._section.addConnectionEntry(attrLayoutData, layoutItem, attributeCalledSectionThisLayoutDataBelongsTo);
+  layoutItem.addEntryForAttribute(attributeAppliesToPlugin, pluginTypeItem);
+  // this._section.addEntryForAttribute(attributeLayoutData, layoutItem, repository.getTypeCalledItem());
+  this._section.addConnectionEntry(attributeLayoutData, layoutItem, attributeCalledSectionThisLayoutDataBelongsTo);
   repository.endTransaction();
   return layoutItem;
 };
@@ -318,7 +310,7 @@ SectionView.prototype._getLayoutDataForPlugin = function (inPluginType) {
  * browser to be re-drawn.
  *
  */
-SectionView.prototype._refreshQueryEditSpan = function () {
+SectionView.prototype._refreshQueryEditSpan = function() {
   View.removeChildrenOfElement(this._queryEditSpan);
   
   var myQuery = this.getQuerySpec();
@@ -412,8 +404,8 @@ SectionView.prototype.observedItemHasChanged = function(item) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-SectionView.prototype.clickOnPluginSelectionMenu = function (inEventObject) {
-  var eventObject = inEventObject || window.event;
+SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject) {
+  eventObject = eventObject || window.event;
   var optionElement = Util.getTargetFromEvent(eventObject);
   // PENDING: We could replace the lines above with "var optionElement = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
@@ -456,8 +448,8 @@ SectionView.prototype.clickOnPluginSelectionMenu = function (inEventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-SectionView.prototype.clickOnAttributeMenu = function (inEventObject) {
-  var eventObject = inEventObject || window.event;
+SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
+  eventObject = eventObject || window.event;
   var optionElement = Util.getTargetFromEvent(eventObject);
   // PENDING: We could replace the lines above with "var optionElement = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  

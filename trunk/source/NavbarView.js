@@ -52,13 +52,12 @@ NavbarView.CSS_CLASS_MENU_ITEM = "menu_item";
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    superView    The view that this LoginView is nested in. 
+ * @param    superview    The view that serves as the superview for this view. 
  * @param    htmlElement    The HTMLElement to display the HTML in. 
  */
 NavbarView.prototype = new View();  // makes NavbarView be a subclass of View
-function NavbarView(superView, htmlElement, htmlElementForAnchors) {
-  this.setSuperview(superView);
-  this.setHTMLElement(htmlElement);
+function NavbarView(superview, htmlElement, htmlElementForAnchors) {
+  View.call(this, superview, htmlElement);
   this._htmlElementForAnchors = htmlElementForAnchors;
 }
 
@@ -101,7 +100,7 @@ NavbarView.prototype._rebuildView = function() {
     anchor.setAttribute("name", RootView.URL_PAGE_PREFIX + page._getUuid());
   }
   
-  var divElement = this.getHTMLElement();
+  var divElement = this.getHtmlElement();
   View.removeChildrenOfElement(divElement); 
   var ulElement = View.createAndAppendElement(divElement, "ul", NavbarView.CSS_CLASS_MENU);
   var rootView = this.getRootView();

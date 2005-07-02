@@ -55,23 +55,25 @@ MultiEntriesView.SEPARATOR_COLOR = '#999999';
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    theSuperview    The view that this view is nested in. 
- * @param    theItem         The Item to be displayed and edited by this view. 
- * @param    theAttribute    The attribute of the item to be displayed.
- * @param    theElement      The HTMLElement to display the HTML in. 
- * @param    theClassType    A string that gives a class name to assign to the HTML element. 
+ * @param    superview    The view that this view is nested in. 
+ * @param    htmlElement      The HTMLElement to display the HTML in. 
+ * @param    item         The Item to be displayed and edited by this view. 
+ * @param    attribute    The attribute of the item to be displayed.
+ * @param    cssClass     A string that gives a CSS class name to assign to the HTML element. 
  * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
 MultiEntriesView.prototype = new View();  // makes MultiEntriesView be a subclass of View
-function MultiEntriesView(theSuperview, theElement, theItem, theAttribute, theClassType) {
-  Util.assert(theItem instanceof Item);
-  //Util.assert(theAttribute instanceof Attribute); PENDING need to check that attribute is an attribute
+function MultiEntriesView(superview, htmlElement, item, attribute, cssClass) {
+  View.call(this, superview, htmlElement);
+
+  Util.assert(item instanceof Item);
+  Util.assert(attribute instanceof Item); // PENDING need to check that attribute is an attribute
   
-  this.setSuperview(theSuperview);
-  this.setHTMLElement(theElement);
-  this._item = theItem;
-  this._attribute = theAttribute;
-  this._className = theClassType;
+  this._item = item;
+  this._attribute = attribute;
+  this._className = cssClass;
+  this._entryViews = null;
+  this._listOfSuggestions = null;
 }
 
 
@@ -115,8 +117,9 @@ MultiEntriesView.prototype._provisionalItemJustBecomeReal = function(item) {
  */
 MultiEntriesView.prototype.noLongerProvisional = function() {
   Util.assert(this._entryViews.length == 1); // provisional item should only have one entry
-  for (var i=0; i < this._entryViews.length; ++i) {
-    this._entryViews[i].noLongerProvisional();
+  for (var key in this._entryViews) {
+    var entry = this._entryViews[key];
+    entry.noLongerProvisional();
   }
 };
 
@@ -124,8 +127,8 @@ MultiEntriesView.prototype.noLongerProvisional = function() {
 /**
  *
  */
-MultiEntriesView.prototype.select = function(inSelectFirst) {
-  var index = inSelectFirst ? 0 : this._entryViews.length - 1;
+MultiEntriesView.prototype.select = function(selectFirst) {
+  var index = selectFirst ? 0 : this._entryViews.length - 1;
   this._entryViews[index].startEditing();
 };
 
@@ -133,10 +136,11 @@ MultiEntriesView.prototype.select = function(inSelectFirst) {
 /**
  *
  */
-MultiEntriesView.prototype.setSuggestions = function(suggestionList) {
-  this._suggestions = suggestionList;
-  for (var i=0; i < this._entryViews.length; ++i) {
-    this._entryViews[i].setSuggestions(suggestionList);
+MultiEntriesView.prototype.setSuggestions = function(listOfSuggestions) {
+  this._listOfSuggestions = listOfSuggestions;
+  for (var key in this._entryViews) {
+    var entry = this._entryViews[key];
+    entry.setSuggestions(listOfSuggestions);
   }
 };
 
@@ -154,19 +158,19 @@ MultiEntriesView.prototype.setKeyPressFunction = function(keyPressFunction) {
  * Sets a function to be used when onclick is called to the EntryView
  *
  * @scope    public instance method
- * @param    inEventObject    An event object. 
+ * @param    onClickFunction    A function to call. 
  */
-MultiEntriesView.prototype.setClickFunction = function(inClickFunction) {
-  Util.assert(inClickFunction instanceof Function);
-  this._clickFunction = inClickFunction;
+MultiEntriesView.prototype.setClickFunction = function(onClickFunction) {
+  Util.assert(onClickFunction instanceof Function);
+  this._clickFunction = onClickFunction;
 };
 
 
 /**
  *
  */
-MultiEntriesView.prototype._handleClick = function(inEvent, inEntryView) {
-  if (this._clickFunction && this._clickFunction(inEvent, inEntryView)) {
+MultiEntriesView.prototype._handleClick = function(eventObject, entryView) {
+  if (this._clickFunction && this._clickFunction(eventObject, entryView)) {
     return true;
   }
   return false;
@@ -176,51 +180,51 @@ MultiEntriesView.prototype._handleClick = function(inEvent, inEntryView) {
 /**
  *
  */
-MultiEntriesView.prototype._handleOwnClick = function(inEvent) {
+MultiEntriesView.prototype._handleOwnClick = function(eventObject) {
   var lastEntry = this._entryViews[this._entryViews.length-1];
-  if (this._handleClick(inEvent, lastEntry)) {return true;}
-  if (inEvent.target == this.getHTMLElement()) {lastEntry.startEditing();}
+  if (this._handleClick(eventObject, lastEntry)) {return true;}
+  if (eventObject.target == this.getHtmlElement()) {lastEntry.startEditing();}
 };
 
 
 /**
  *
  */
-MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inEntryView) {
-  Util.assert(inEntryView instanceof EntryView);
-  var asciiValueOfKey = inEvent.keyCode;
+MultiEntriesView.prototype._keyPressOnEditField = function(eventObject, entryView) {
+  Util.assert(entryView instanceof EntryView);
+  var asciiValueOfKey = eventObject.keyCode;
   var move, doCreateNewEntry;
   switch (asciiValueOfKey) {
     case Util.ASCII_VALUE_FOR_LEFT_ARROW: move = -1; break;
     case Util.ASCII_VALUE_FOR_RIGHT_ARROW: move = 1; break;
     case Util.ASCII_VALUE_FOR_RETURN:
-      if (inEvent.altKey) {
+      if (eventObject.altKey) {
         doCreateNewEntry = true;
         break;
       }
-      if (inEntryView != this._entryViews[this._entryViews.length-1]) {move=1;}
+      if (entryView != this._entryViews[this._entryViews.length-1]) {move=1;}
       break;
     default: 
       move = 0; 
       break;
   }
   if (doCreateNewEntry) {
-    inEntryView.stopEditing();
+    entryView.stopEditing();
     this._addSeparator();
     this._addEntryView(null).startEditing();
     return true;
   }
   if (move !== 0) {
-    var index = Util.getArrayIndex(this._entryViews, inEntryView);
+    var index = Util.getArrayIndex(this._entryViews, entryView);
     Util.assert(index != -1);
     index += move;
     if (index >= 0 && index < this._entryViews.length) {
-      inEntryView.stopEditing();
+      entryView.stopEditing();
       this._entryViews[index].startEditing();
       return true;
     }
   }
-  if (this._keyPressFunction && this._keyPressFunction(inEvent, inEntryView)) {
+  if (this._keyPressFunction && this._keyPressFunction(eventObject, entryView)) {
     return true;
   }
   return false;
@@ -230,16 +234,16 @@ MultiEntriesView.prototype._keyPressOnEditField = function(inEvent, inEntryView)
 /**
  *
  */
-MultiEntriesView.prototype._addEntryView = function(inEntry) {
-  var spanElt = document.createElement("span");
-  spanElt.style.width = '100%';
-  var anEntryView = new EntryView(this, spanElt, this._item, this._attribute, inEntry, this._className);
+MultiEntriesView.prototype._addEntryView = function(entry) {
+  var spanElement = document.createElement("span");
+  spanElement.style.width = '100%';
+  var anEntryView = new EntryView(this, spanElement, this._item, this._attribute, entry, this._className);
   this._entryViews.push(anEntryView);
-  this.getHTMLElement().appendChild(spanElt);
+  this.getHtmlElement().appendChild(spanElement);
   anEntryView.refresh();
   if (this.isInEditMode()) {
     var listener = this;
-    anEntryView.setSuggestions(this._suggestions);
+    anEntryView.setSuggestions(this._listOfSuggestions);
     anEntryView.setKeyPressFunction(function (evt, entryView) {return listener._keyPressOnEditField(evt, entryView);});
     anEntryView.setClickFunction(function (evt, entryView) {return listener._handleClick(evt, entryView);});
   }
@@ -251,11 +255,11 @@ MultiEntriesView.prototype._addEntryView = function(inEntry) {
  *
  */
 MultiEntriesView.prototype._addSeparator = function() {
-  var spanElt = document.createElement("span");
-  spanElt.appendChild(document.createTextNode(MultiEntriesView.SEPARATOR));
-  spanElt.style.color = MultiEntriesView.SEPARATOR_COLOR;
-  this.getHTMLElement().appendChild(spanElt);
-  return spanElt;
+  var spanElement = document.createElement("span");
+  spanElement.appendChild(document.createTextNode(MultiEntriesView.SEPARATOR));
+  spanElement.style.color = MultiEntriesView.SEPARATOR_COLOR;
+  this.getHtmlElement().appendChild(spanElement);
+  return spanElement;
 };
 
 
@@ -266,7 +270,7 @@ MultiEntriesView.prototype._addSeparator = function() {
  * @scope    public instance method
  */
 MultiEntriesView.prototype._buildView = function() {
-  var htmlElement = this.getHTMLElement();
+  var htmlElement = this.getHtmlElement();
   View.removeChildrenOfElement(htmlElement);
   this._entryViews = [];
   

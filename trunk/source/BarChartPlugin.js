@@ -44,18 +44,21 @@
 BarChartPlugin.UUID_FOR_PLUGIN_VIEW_BAR_CHART = "00040304-ce7f-11d9-8cd5-0011113ae5d6";
 SectionView.registerPlugin(BarChartPlugin);
 
+
 /**
  * A BarChartPlugin displays a set of content items for a SectionView. 
  *
  * @scope    public instance constructor
- * @extends  View
- * @param    inSectionView    The SectionView that serves as the superview for this view. 
- * @param    inHTMLElement    The HTMLElement to display this view in. 
+ * @extends  PluginView
+ * @param    superview    The View that serves as the superview for this view. 
+ * @param    htmlElement    The HTMLElement to display this view in. 
+ * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
+ * @param    layoutItem    ???. 
  * @syntax   var barChart = new BarChartPlugin()
  */
-BarChartPlugin.prototype = new PluginView();  // makes BarChartPlugin be a subclass of View
-function BarChartPlugin(inSuperview, inHTMLElement,inQuery,inLayout) {
-  PluginView.call(this,inSuperview,inHTMLElement,inQuery,inLayout);
+BarChartPlugin.prototype = new PluginView();  // makes BarChartPlugin be a subclass of PluginView
+function BarChartPlugin(superview, htmlElement, querySpec, layoutItem) {
+  PluginView.call(this, superview, htmlElement, querySpec, layoutItem);
 }
 
 
@@ -69,7 +72,7 @@ function BarChartPlugin(inSuperview, inHTMLElement,inQuery,inLayout) {
  * @scope    public class method
  * @return   The UUID of the item that represents this class of plugin
  */
-BarChartPlugin.getPluginItemUuid = function () {
+BarChartPlugin.getPluginItemUuid = function() {
   return BarChartPlugin.UUID_FOR_PLUGIN_VIEW_BAR_CHART;
 };
 
@@ -84,7 +87,7 @@ BarChartPlugin.getPluginItemUuid = function () {
  * @scope    public instance method
  * @return   A JavaScript class. 
  */
-BarChartPlugin.prototype.getClass = function () {
+BarChartPlugin.prototype.getClass = function() {
   return BarChartPlugin;
 };
 
@@ -95,7 +98,7 @@ BarChartPlugin.prototype.getClass = function () {
  *
  * @scope    public instance method
  */
-BarChartPlugin.prototype.refresh = function () {
+BarChartPlugin.prototype.refresh = function() {
   var listOfStrings = [];
 
   var contentItem = null;
@@ -199,7 +202,7 @@ BarChartPlugin.prototype.refresh = function () {
     
   // return all the new content   
   var finalString = listOfStrings.join("");
-  this.getHTMLElement().innerHTML = finalString;
+  this.getHtmlElement().innerHTML = finalString;
 };
 
 

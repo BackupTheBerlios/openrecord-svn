@@ -55,7 +55,7 @@ PageView.UUID_FOR_ATTRIBUTE_PAGE_THIS_SECTION_APPEARS_ON = "00030001-ce7f-11d9-8
  * @scope    public class method
  * @param    inPage    The Page Item to insert the new section into
  */
-PageView.newSection = function (repository, inPage) {
+PageView.newSection = function(repository, inPage) {
   var attributeCalledQuerySpec = repository.getAttributeCalledQuerySpec();
   var categoryCalledQuery = repository.getCategoryCalledQuery();
   var attributeCalledPluginView = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
@@ -85,20 +85,19 @@ PageView.newSection = function (repository, inPage) {
  *
  * @scope    public instance constructor
  * @extends  View
- * @param    inRootView    The RootView that this PageView is nested in. 
- * @param    inHTMLElement The HTMLElement to display the HTML in. 
- * @param    inPage        The page item to be displayed by this view. 
+ * @param    superview    The View that serves as the superview for this view. 
+ * @param    htmlElement    The HTMLElement to display this view in. 
+ * @param    pageItem        The page item to be displayed by this view. 
  */
 PageView.prototype = new View();  // makes PageView be a subclass of View
-function PageView(inRootView, inHTMLElement, inPage) {
-  Util.assert(inRootView instanceof RootView);
-  Util.assert(inHTMLElement instanceof HTMLElement);
-  Util.assert(inPage instanceof Item);
+function PageView(superview, htmlElement, pageItem) {
+  Util.assert(htmlElement instanceof HTMLElement);
+  Util.assert(pageItem instanceof Item);
+
+  View.call(this, superview, htmlElement);
 
   // instance properties
-  this.setSuperview(inRootView);
-  this.setHTMLElement(inHTMLElement);
-  this._pageItem = inPage;
+  this._pageItem = pageItem;
   
   this._pageSummaryView = null;
   this._headerText = null;
@@ -112,7 +111,7 @@ function PageView(inRootView, inHTMLElement, inPage) {
  * @scope    public instance method
  * @return   A string that gives the name of the page.
  */
-PageView.prototype.getPageTitle = function () {
+PageView.prototype.getPageTitle = function() {
   var pageTitle = this._pageItem.getDisplayString();
   return pageTitle;
 };
@@ -124,7 +123,7 @@ PageView.prototype.getPageTitle = function () {
  *
  * @scope    public instance method
  */
-PageView.prototype.refresh = function () {
+PageView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this.doInitialDisplay();
   } else {
@@ -144,13 +143,13 @@ PageView.prototype.refresh = function () {
  *
  * @scope    public instance method
  */
-PageView.prototype.doInitialDisplay = function () {
-  Util.assert(this.getHTMLElement() instanceof HTMLElement);
+PageView.prototype.doInitialDisplay = function() {
+  Util.assert(this.getHtmlElement() instanceof HTMLElement);
   
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
 
-  var pageDivElement = this.getHTMLElement();
+  var pageDivElement = this.getHtmlElement();
   
   var headerElement = View.createAndAppendElement(pageDivElement, "h1");
   this._headerText = new EntryView(this, headerElement, this._pageItem, attributeCalledName,
@@ -187,9 +186,9 @@ PageView.prototype.doInitialDisplay = function () {
  * @param    insertBeforeElement    Optional. The HTML element that this new section view should come before on the page.
  */
 PageView.prototype._buildNewSection = function(sectionItem, insertBeforeElement) {
-  var pageDivElement = this.getHTMLElement();
+  var pageDivElement = this.getHtmlElement();
   var sectionViewDiv = document.createElement("div");
-  var sectionView = new SectionView(this, sectionViewDiv, sectionItem, this._listOfSectionViews.length);
+  var sectionView = new SectionView(this, sectionViewDiv, sectionItem);
   if (insertBeforeElement) {
     pageDivElement.insertBefore(sectionViewDiv, insertBeforeElement);
   }
@@ -219,7 +218,7 @@ PageView.prototype._addNewSection = function() {
  */
 PageView.prototype._buildEditControls = function() {
   if (!this._editModeDiv) {
-    var pageDivElement = this.getHTMLElement();
+    var pageDivElement = this.getHtmlElement();
     var cssClass = SectionView.CSS_CLASS_SECTION + " " + RootView.CSS_CLASS_EDIT_TOOL;
     this._editModeDiv = View.createAndAppendElement(pageDivElement, "div", cssClass);
     View.createAndAppendElement(this._editModeDiv, "br");
