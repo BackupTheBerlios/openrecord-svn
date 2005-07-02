@@ -46,7 +46,7 @@
 RootView.CSS_CLASS_PAGE_EDIT_BUTTON = "page_edit_button";
 RootView.CSS_CLASS_EDIT_MODE = "editmode";
 RootView.CSS_CLASS_VIEW_MODE = "viewmode";
-RootView.CSS_CLASS_EDIT_MODE_ONLY_CONTROL = "edit_mode_only_control";
+RootView.CSS_CLASS_EDIT_TOOL = "edit_tool";
 RootView.CSS_CLASS_CONTROL_SPAN = "control_span";
 
 RootView.ELEMENT_ID_DEBUG_TEXTAREA = "debug_textarea";
@@ -89,6 +89,7 @@ function RootView(world) {
   // instance properties
   this._world = world;
   this._editMode = false;
+  this._showToolsMode = false;
   this._numberOfCallsToDebug = 0;
   this._debugTextarea = null;
   
@@ -233,6 +234,31 @@ RootView.prototype.setEditMode = function(editModeFlag) {
 
 
 /**
+ * Returns true if we are in Show Tools Mode.
+ *
+ * @scope    public instance method
+ * @return   A boolean value. True if we are in Show Tools Mode.
+ */
+RootView.prototype.isInShowToolsMode = function() {
+  return this._showToolsMode;
+};
+
+    
+/**
+ * Switches the UI between showing edit tools and hiding edit tools.
+ *
+ * @scope    public instance method
+ * @param    showToolsFlag    A boolean. True to show edit tools, false to hide edit tools.
+ */
+RootView.prototype.setShowToolsMode = function(showToolsFlag) {
+  if (showToolsFlag != this._showToolsMode) {
+    this._showToolsMode = !this._showToolsMode;
+    this._rootDiv.className = (this.isInShowToolsMode()) ? RootView.CSS_CLASS_EDIT_MODE : RootView.CSS_CLASS_VIEW_MODE;
+  }
+};
+
+
+/**
  * Given an item, returns a relative URL that can be used to redirect the 
  * browser to a page that displays that time.
  *
@@ -330,7 +356,7 @@ RootView.prototype.display = function() {
   Util.assert(this._currentContentView instanceof Object);
 
   document.title = this._currentContentView.getPageTitle() + " - openrecord.org";
-  this._rootDiv.className = (this.isInEditMode()) ? RootView.CSS_CLASS_EDIT_MODE : RootView.CSS_CLASS_VIEW_MODE;
+  this._rootDiv.className = (this.isInShowToolsMode()) ? RootView.CSS_CLASS_EDIT_MODE : RootView.CSS_CLASS_VIEW_MODE;
   this._displayLoginSpan();
   this._displayNavbar();
   this._displayDebugArea();

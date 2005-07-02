@@ -197,22 +197,25 @@ TablePlugin.prototype._buildAttributeHashFromScratch = function() {
  * @scope    private instance method
  */
 TablePlugin.prototype._buildAttributeEditor = function() {
-  var htmlElt = this.getHTMLElement();
-  View.createAndAppendElement(htmlElt,"br");
-  var selectElt = View.createAndAppendElement(htmlElt,"select");
+  var htmlElement = this.getHTMLElement();
+  View.createAndAppendElement(htmlElement, "br");
+  var selectElt = View.createAndAppendElement(htmlElement, "select", RootView.CSS_CLASS_EDIT_TOOL);
   var listOfAttributes = this.getWorld().getAttributes();
-  var optionElt = View.createAndAppendElement(selectElt,"option");
+  var optionElt = View.createAndAppendElement(selectElt, "option");
   optionElt.text = "Add new attribute:";
-  for (var i = 0; i < listOfAttributes.length; ++i) {
-    optionElt = View.createAndAppendElement(selectElt,"option");
-    if (Util.isObjectInSet(listOfAttributes[i],this._displayAttributes)) {optionElt.text = '*';}
-    optionElt.text += listOfAttributes[i].getDisplayString();
-    optionElt.value = listOfAttributes[i].getUniqueKeyString();
+  for (var key in listOfAttributes) {
+    var attribute = listOfAttributes[key];
+    optionElt = View.createAndAppendElement(selectElt, "option");
+    if (Util.isObjectInSet(attribute, this._displayAttributes)) {
+      optionElt.text = '* ';
+    }
+    optionElt.text += attribute.getDisplayString();
+    optionElt.value = attribute.getUniqueKeyString();
     optionElt.onclick = this._attributeEditorChanged.bindAsEventListener(this);
   }
   this._selectElement = selectElt;
-  /*View.createAndAppendTextNode(htmlElt, " Import Data:");
-  var importButton = View.createAndAppendElement(htmlElt,"input");
+  /*View.createAndAppendTextNode(htmlElement, " Import Data:");
+  var importButton = View.createAndAppendElement(htmlElement,"input");
   importButton.type = "file";
   importButton.onchange = this._importData.bindAsEventListener(this, importButton);*/
 };
@@ -365,7 +368,8 @@ TablePlugin.prototype._buildTable = function(inDontRebuildHash) {
   
   this.getHTMLElement().appendChild(this._table);
   
-  if (this.isInEditMode()) {this._buildAttributeEditor();}
+  // if (this.isInEditMode()) {this._buildAttributeEditor();}
+  this._buildAttributeEditor();
 };
 
 
@@ -434,6 +438,7 @@ TablePlugin.prototype.clickOnHeader = function (event, clickAttribute) {
   this._buildTable();
 };
 
+
 /**
  * Called when the user clicks on table header. Resorts table accordingly.
  * 
@@ -454,6 +459,10 @@ TablePlugin.prototype.selectRow = function (rowElement) {
   return false;
 };
  
+
+/**
+ * 
+ */
 TablePlugin.prototype._importData = function (inEventObject, fileButton) {
   // Returns null if it can't do it, false if there's an error, or a string of the content if successful
 /*  function mozillaLoadFile(filePath)
@@ -491,6 +500,7 @@ TablePlugin.prototype._importData = function (inEventObject, fileButton) {
     }*/
   window.open('file://'+fileButton.value,'preview');   
 };
+
 
 /**
  * Called when the user clicks on attribute editor item, either to add or remove attribute column
@@ -532,7 +542,11 @@ TablePlugin.prototype._attributeEditorChanged = function (inEventObject) {
     this._buildTable(true);
   }
 };
+ 
 
+/**
+ * 
+ */
 TablePlugin.prototype._handleClick = function (inEventObject, anEntryView) {
   var rowElement = anEntryView.getSuperview().getHTMLElement().parentNode; // entryView -> multiEntriesView -> cellElment -> rowElement
   return this.selectRow(rowElement);

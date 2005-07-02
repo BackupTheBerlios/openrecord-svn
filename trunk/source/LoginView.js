@@ -118,6 +118,8 @@ LoginView.prototype._rebuildView = function () {
       }
     }
   }
+  var editMode = currentUser ? true : false;
+  this.getRootView().setEditMode(editMode);
   
   var welcomeText, welcomeNode;
   if (this._isCreatingNewAccount) {
@@ -165,11 +167,11 @@ LoginView.prototype._rebuildView = function () {
 
     mySpan.appendChild(document.createTextNode(" "));
 
-    var editButton = document.createElement("input");
-    editButton.type = "button";
-    editButton.value = (this.isInEditMode()) ? "Done editing" : "Edit";
-    editButton.onclick = this._clickOnEditButton.bindAsEventListener(this);
-    mySpan.appendChild(editButton);
+    var toolsButton = document.createElement("input");
+    toolsButton.type = "button";
+    toolsButton.value = (this.getRootView().isInShowToolsMode()) ? "Hide Tools" : "Show Tools";
+    toolsButton.onclick = this._clickOnShowToolsButton.bindAsEventListener(this);
+    mySpan.appendChild(toolsButton);
   }
   else {
     // The user has not yet signed in.
@@ -227,6 +229,8 @@ LoginView.prototype._clickOnSignoutLink = function(inEventObject) {
   this._cookie.store();
   this.getWorld().logout();
   this._rebuildView();
+  this.getRootView().setShowToolsMode(false);
+  this.getRootView().setEditMode(false);
 };
 
 
@@ -275,6 +279,7 @@ LoginView.prototype._clickOnCreateAccountLink = function(inEventObject) {
   this._isCreatingNewAccount = true;
   this._rebuildView();
 };
+
 
 /**
  * Called when the user clicks on the "Create New Account" button.
@@ -333,8 +338,8 @@ LoginView.prototype._clickOnSignInButton = function(inEventObject) {
  * @scope    private instance method
  * @param    inEventObject    An event object. 
  */
-LoginView.prototype._clickOnEditButton = function (inEventObject) {
-  this.getRootView().setEditMode(!this.isInEditMode());
+LoginView.prototype._clickOnShowToolsButton = function (inEventObject) {
+  this.getRootView().setShowToolsMode(!this.getRootView().isInShowToolsMode());
   this._rebuildView();
 };
 
@@ -354,6 +359,7 @@ LoginView.prototype._loginUser = function (user, password) {
   } else {
     this._reportError("Login failed. Wrong password.");
   }
+  this.getRootView().setEditMode(loginSuccess);
 };
 
 

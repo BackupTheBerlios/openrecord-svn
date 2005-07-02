@@ -134,7 +134,6 @@ PageView.prototype.refresh = function () {
       var sectionView = this._listOfSectionViews[key];      
       sectionView.refresh();
     }
-    this._refreshEditModeControls();
   }
 };
 
@@ -173,8 +172,8 @@ PageView.prototype.doInitialDisplay = function () {
       this._buildNewSection(section);
     }
   }
-  this._wasInEditMode = this.isInEditMode();
-  if (this._wasInEditMode) {this._buildEditControls();}
+
+  this._buildEditControls();
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
 };
@@ -183,16 +182,16 @@ PageView.prototype.doInitialDisplay = function () {
 /**
  * Creates a new section in this page.
  *
- * @param  inSection newSection item
- * @param  inBeforeElt (optional) if specified, section view to be inserted before this elt
  * @scope    private instance method
+ * @param    sectionItem    newSection item
+ * @param    insertBeforeElement    Optional. The HTML element that this new section view should come before on the page.
  */
-PageView.prototype._buildNewSection = function(inSection, inBeforeElt) {
+PageView.prototype._buildNewSection = function(sectionItem, insertBeforeElement) {
   var pageDivElement = this.getHTMLElement();
   var sectionViewDiv = document.createElement("div");
-  var sectionView = new SectionView(this, sectionViewDiv, inSection, this._listOfSectionViews.length);
-  if (inBeforeElt) {
-    pageDivElement.insertBefore(sectionViewDiv, inBeforeElt);
+  var sectionView = new SectionView(this, sectionViewDiv, sectionItem, this._listOfSectionViews.length);
+  if (insertBeforeElement) {
+    pageDivElement.insertBefore(sectionViewDiv, insertBeforeElement);
   }
   else {
     pageDivElement.appendChild(sectionViewDiv);
@@ -221,36 +220,13 @@ PageView.prototype._addNewSection = function() {
 PageView.prototype._buildEditControls = function() {
   if (!this._editModeDiv) {
     var pageDivElement = this.getHTMLElement();
-    this._editModeDiv = View.createAndAppendElement(pageDivElement, "div", SectionView.CSS_CLASS_SECTION);
-    View.createAndAppendElement(this._editModeDiv,"br");
-    var editButton = View.createAndAppendElement(this._editModeDiv, "input", 
-      RootView.CSS_CLASS_EDIT_MODE_ONLY_CONTROL);
+    var cssClass = SectionView.CSS_CLASS_SECTION + " " + RootView.CSS_CLASS_EDIT_TOOL;
+    this._editModeDiv = View.createAndAppendElement(pageDivElement, "div", cssClass);
+    View.createAndAppendElement(this._editModeDiv, "br");
+    var editButton = View.createAndAppendElement(this._editModeDiv, "input");
     editButton.type = "Button";
     editButton.value = "New Section";
     editButton.onclick = this._addNewSection.bindAsEventListener(this);
-  }
-  else {
-    this._editModeDiv.display = "Block";
-  }
-};
-
-
-/**
- * Called when edit controls need to be refreshed
- *
- * @scope    private instance method
- */
-PageView.prototype._refreshEditModeControls = function() {
-  if (this._wasInEditMode != this.isInEditMode()) {
-    this._wasInEditMode = this.isInEditMode();
-    if (this.isInEditMode()) {
-      this._buildEditControls();
-    }
-    else {
-      this.getHTMLElement().removeChild(this._editModeDiv);
-      // PENDING: why does hiding _editModeDiv still leave a blue line, gotta ask Brian about CSS
-      this._editModeDiv = null;
-    }
   }
 };
 

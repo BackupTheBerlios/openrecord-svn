@@ -239,7 +239,7 @@ SectionView.prototype.doInitialDisplay = function () {
   View.createAndAppendElement(outerDiv, "p");
 
   // create the editing controls, if we're in edit mode
-  var controlArea = View.createAndAppendElement(outerDiv, "p", RootView.CSS_CLASS_EDIT_MODE_ONLY_CONTROL);
+  var controlArea = View.createAndAppendElement(outerDiv, "p", RootView.CSS_CLASS_EDIT_TOOL);
   var textShowMeA = document.createTextNode("Show me a ");
   controlArea.appendChild(textShowMeA);
 
