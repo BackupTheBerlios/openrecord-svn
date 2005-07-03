@@ -45,7 +45,7 @@
 // -------------------------------------------------------------------
 // SectionView public class constants
 // -------------------------------------------------------------------
-SectionView.CSS_CLASS_SECTION = "section";
+SectionView.CSS_CLASS_SECTION = "SectionView";
 SectionView.CSS_CLASS_SIMPLE_TABLE = "simple_table";
 SectionView.CSS_CLASS_NEW_ITEM = "newitem";
 SectionView.CSS_CLASS_PLAIN = "plain";
