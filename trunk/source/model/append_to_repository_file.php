@@ -9,7 +9,7 @@ $file_name_parameter = $array_of_search_parts[1];
 $array_of_file_name_parameter_parts = explode("/", $file_name_parameter);
 $safe_file_name_with_no_path_exploits = $array_of_file_name_parameter_parts[0];
 
-$file_path = "../repositories/";
+$file_path = "../../repositories/";
 $file_suffix = ".json";
 $repository_file_name = $file_path . $safe_file_name_with_no_path_exploits . $file_suffix;
 

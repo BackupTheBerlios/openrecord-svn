@@ -75,7 +75,7 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   // this._buildTypeHashTable();
   this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
 
-  var pathToRepositoryDirectory = "source/repositories/";
+  var pathToRepositoryDirectory = "repositories/";
   var repositoryFileName = this._repositoryName + ".json";
   var repositoryUrl = this._pathToTrunkDirectory + pathToRepositoryDirectory + repositoryFileName;
   var repositoryContentString = Util.getStringContentsOfFileAtURL(repositoryUrl);
