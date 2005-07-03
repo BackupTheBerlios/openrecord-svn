@@ -244,7 +244,7 @@ brian  |          | 0.5 IED | 48. Add a Query.js class, and/or an Attribute.js c
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-brian  | 0        | 0       |  1. Change "Edit"/"Done Editing" button to "Show Tools"/"Hide Tools"
+brian  | 0        | done    |  1. Change "Edit"/"Done Editing" button to "Show Tools"/"Hide Tools"
 brian  | 0.25 IED | 0.25    |  2. Allow editing for any logged in user, even if edit tools aren't shown
        |          |         |  3. Assign system attributes & categories to a "System" category
        |          |         |  4. Hide "System" items most of the time
@@ -264,7 +264,7 @@ chao   | 0.5  IED |         | 14. improve keyboard navigation: tab, arrow, and r
        |          |         | 18. drag-and-drop to re-order table rows
        |          |         | 19. drag-and-drop to re-order table columns
        |          |         | 20. improve UI for "add new attribute" in Table View 
-       |          |         | 21. Rationalize our CSS style sheets
+brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
        |          |         | 22. Reach consensus on (colors, padding, and borders) and then implement
        |          |         | 23. Make sure view code uses transactions
        |          |         | 24. Deal with \n in page name or summary fields
