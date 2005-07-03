@@ -61,7 +61,7 @@ function ItemView(superview, htmlElement, item) {
   Util.assert(htmlElement instanceof HTMLElement);
   Util.assert(item instanceof Item);
 
-  View.call(this, superview, htmlElement);
+  View.call(this, superview, htmlElement, "ItemView");
 
   // instance properties
   this._item = item;

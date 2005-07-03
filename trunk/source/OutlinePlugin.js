@@ -59,7 +59,7 @@ SectionView.registerPlugin(OutlinePlugin);
  */
 OutlinePlugin.prototype = new PluginView();  // makes OutlinePlugin be a subclass of PluginView
 function OutlinePlugin(superview, htmlElement, querySpec, layoutItem) {
-  PluginView.call(this, superview, htmlElement, querySpec, layoutItem);
+  PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "OutlinePlugin");
 }
 
 

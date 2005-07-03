@@ -47,7 +47,6 @@ RootView.CSS_CLASS_PAGE_EDIT_BUTTON = "page_edit_button";
 RootView.CSS_CLASS_EDIT_MODE = "editmode";
 RootView.CSS_CLASS_VIEW_MODE = "viewmode";
 RootView.CSS_CLASS_EDIT_TOOL = "edit_tool";
-RootView.CSS_CLASS_CONTROL_SPAN = "control_span";
 
 RootView.ELEMENT_ID_DEBUG_TEXTAREA = "debug_textarea";
 
@@ -105,12 +104,12 @@ function RootView(world) {
   var headerP = View.createAndAppendElement(rootDiv, "p", "header");
   var logoSpan = View.createAndAppendElement(headerP, "span", "logo");
   logoSpan.innerHTML = '<a href="http://openrecord.org"><span class="logostart">open</span><span class="logomiddle">record</span><span class="logoend">.org</span></a>';
-  var mainControlSpan = View.createAndAppendElement(headerP, "span", RootView.CSS_CLASS_CONTROL_SPAN, "main_control_span");
+  this._loginViewSpanElement = View.createAndAppendElement(headerP, "span");
   View.createAndAppendElement(headerP, "br");
-  var navbarDiv = View.createAndAppendElement(rootDiv, "div", "navbar");
+  this._navbarDivElement = View.createAndAppendElement(rootDiv, "div");
   var contentAreaDiv = View.createAndAppendElement(rootDiv, "div", "content_area");
-  var contentViewDiv = View.createAndAppendElement(contentAreaDiv, "div");
-  var debugDiv = View.createAndAppendElement(rootDiv, "div", "debug");
+  this._contentViewDivElement = View.createAndAppendElement(contentAreaDiv, "div");
+  this._debugDivElement = View.createAndAppendElement(rootDiv, "div", "debug");
 
   var footerP = View.createAndAppendElement(rootDiv, "p", "footer");
   var copyrightSpan = View.createAndAppendElement(footerP, "span", "copyright");
@@ -118,15 +117,10 @@ function RootView(world) {
     'copyright rights relinquished under the Creative Commons ' +
     '<a rel="license external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain Dedication</a>.';
 
-  var statusBlurbSpan = View.createAndAppendElement(footerP, "span", "fileformat");
+  this._statusBlurbSpanElement = View.createAndAppendElement(footerP, "span", "fileformat");
   View.createAndAppendElement(footerP, "br");
   
-  this._mainControlSpanElement = mainControlSpan;
   this._anchorSpan = anchorSpan;
-  this._navbarDivElement = navbarDiv;
-  this._contentViewDivElement = contentViewDiv;
-  this._debugDivElement = debugDiv;
-  this._statusBlurbSpanElement = statusBlurbSpan;
   this._rootDiv = rootDiv;
   
   Util.setErrorReportCallback(RootView.displayTextInDebugTextarea);
@@ -304,8 +298,7 @@ RootView.prototype.setCurrentContentViewFromUrl = function() {
         if (!contentViewToSwitchTo) {
           itemFromUuid = this._world.getItemFromUuid(uuidText);
           if (itemFromUuid) {
-            divElement = window.document.createElement("div"); 
-            this._contentViewDivElement.appendChild(divElement);
+            divElement = View.createAndAppendElement(this._contentViewDivElement, "div");
             contentViewToSwitchTo = new ItemView(this, divElement, itemFromUuid);
             this._hashTableOfItemViewsKeyedByUuid[uuidText] = contentViewToSwitchTo;
           }
@@ -317,8 +310,7 @@ RootView.prototype.setCurrentContentViewFromUrl = function() {
           if (!contentViewToSwitchTo) {
             pageFromUuid = this.getWorld().getItemFromUuid(uuidText);
             if (pageFromUuid) {
-              divElement = window.document.createElement("div"); 
-              this._contentViewDivElement.appendChild(divElement);
+              divElement = View.createAndAppendElement(this._contentViewDivElement, "div");
               contentViewToSwitchTo = new PageView(this, divElement, pageFromUuid);
               this._hashTableOfPageViewsKeyedByUuid[uuidText] = contentViewToSwitchTo;
             }
@@ -402,7 +394,7 @@ RootView.prototype.newPage = function() {
  */
 RootView.prototype._displayLoginSpan = function() {
   if (!this._loginView) {
-    this._loginView = new LoginView(this, this._mainControlSpanElement);
+    this._loginView = new LoginView(this, this._loginViewSpanElement);
     this._loginView.refresh();
   }
 };

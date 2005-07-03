@@ -55,8 +55,6 @@ SectionView.CSS_CLASS_TEXT_FIELD_IN_TABLE_CELL = "text_field_in_table_cell";
 SectionView.CSS_CLASS_SELECTED = "selected";
 SectionView.CSS_CLASS_MORE_LINK = "more";
 SectionView.CSS_CLASS_ENTRY_VIEW = "entry_view";
-SectionView.CSS_CLASS_SECTION_HEADER = "section_header";
-SectionView.CSS_CLASS_SUMMARY_TEXT = "summary_text";
 
 SectionView.ELEMENT_ID_SELECT_MENU_PREFIX = "select_menu_";
 
@@ -92,7 +90,7 @@ SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = null;
  */
 SectionView.prototype = new View();  // makes SectionView be a subclass of View
 function SectionView(superview, htmlElement, sectionItem) {
-  View.call(this, superview, htmlElement);
+  View.call(this, superview, htmlElement, "SectionView");
 
   // instance properties
   Util.assert(sectionItem instanceof Item);
@@ -219,20 +217,18 @@ SectionView.prototype.doInitialDisplay = function() {
   }
   
   var sectionDiv = this.getHtmlElement();
-  var outerDiv = View.createAndAppendElement(sectionDiv, "div", SectionView.CSS_CLASS_SECTION);
-  var headerH2 = View.createAndAppendElement(outerDiv, "h2");
+  var headerH2 = View.createAndAppendElement(sectionDiv, "h2");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
   this._headerView = new EntryView(this, headerH2, this._section, attributeCalledName,
-    this._section.getSingleEntryFromAttribute(attributeCalledName),
-    SectionView.CSS_CLASS_SECTION_HEADER);
-  var summaryDiv = View.createAndAppendElement(outerDiv, "div");
+    this._section.getSingleEntryFromAttribute(attributeCalledName));
+  var summaryDiv = View.createAndAppendElement(sectionDiv, "div");
   this._sectionSummaryView = new EntryView(this, summaryDiv, this._section, attributeCalledSummary,
-    this._section.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_ENTRY_VIEW, true);
-  View.createAndAppendElement(outerDiv, "p");
+    this._section.getSingleEntryFromAttribute(attributeCalledSummary), true);
+  View.createAndAppendElement(sectionDiv, "p");
 
   // create the editing controls, if we're in edit mode
-  var controlArea = View.createAndAppendElement(outerDiv, "p", RootView.CSS_CLASS_EDIT_TOOL);
+  var controlArea = View.createAndAppendElement(sectionDiv, "p", RootView.CSS_CLASS_EDIT_TOOL);
   var textShowMeA = document.createTextNode("Show me a ");
   controlArea.appendChild(textShowMeA);
 
@@ -261,7 +257,7 @@ SectionView.prototype.doInitialDisplay = function() {
   View.createAndAppendTextNode(controlArea,".");
 
   // create a div element for the plugin class to use
-  this._pluginDiv = View.createAndAppendElement(outerDiv, "div");
+  this._pluginDiv = View.createAndAppendElement(sectionDiv, "div");
   this._pluginView = this.getPluginInstanceFromPluginItem(selectedPluginItem, this._pluginDiv);
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
@@ -346,8 +342,7 @@ SectionView.prototype._refreshQueryEditSpan = function() {
   var listOfPossibleEntries = this.getWorld().getSuggestedItemsForAttribute(matchingAttribute);
   var entrySpan = View.createAndAppendElement(this._queryEditSpan, "span");
   
-  var entryView =  new EntryView(this, entrySpan, myQuery, attributeCalledQueryMatchingValue, matchingEntry,
-    RootView.CSS_CLASS_EDIT_MODE);
+  var entryView =  new EntryView(this, entrySpan, myQuery, attributeCalledQueryMatchingValue, matchingEntry);
   entryView.setSuggestions(listOfPossibleEntries);
   entryView.alwaysUseEditField();
   entryView.setAutoWiden(true);

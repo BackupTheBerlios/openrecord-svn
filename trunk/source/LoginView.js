@@ -58,7 +58,7 @@ LoginView.COOKIE_NAME = "useruuid";
  */
 LoginView.prototype = new View();  // makes LoginView be a subclass of View
 function LoginView(superview, htmlElement) {
-  View.call(this, superview, htmlElement);
+  View.call(this, superview, htmlElement, "LoginView");
 
   // instance properties
   this._isCreatingNewAccount = false;

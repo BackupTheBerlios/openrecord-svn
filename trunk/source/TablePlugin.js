@@ -69,11 +69,10 @@ TablePlugin.DESCENDING_GIF = "descending.gif";
  */
 TablePlugin.prototype = new PluginView();  // makes TablePlugin be a subclass of PluginView
 function TablePlugin(superview, htmlElement, querySpec, layoutItem) {
-  PluginView.call(this, superview, htmlElement, querySpec, layoutItem);
+  PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "TablePlugin");
 
   // PENDING should probably make this independent of sectionview
-  this._cssClass = SectionView.CSS_CLASS_SIMPLE_TABLE;
-  this._cellClass = SectionView.CSS_CLASS_PLAIN;
+  this._cssClassForTable = SectionView.CSS_CLASS_SIMPLE_TABLE;
   this._table = null;
   this._sortAttribute = null;
   this._ascendingOrder = true;
@@ -355,9 +354,9 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   }
   
   //create new table, remove old table if already exists
-  View.removeChildrenOfElement(this.getHtmlElement());
-  this._table = document.createElement("table");
-  this._table.className = this._cssClass;
+  var viewDivElement = this.getHtmlElement();
+  View.removeChildrenOfElement(viewDivElement);
+  this._table = View.createAndAppendElement(viewDivElement, "table", this._cssClassForTable);
   
   this._buildHeader();
 
@@ -368,7 +367,6 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
 
   this._buildTableBody();
   
-  this.getHtmlElement().appendChild(this._table);
   
   // if (this.isInEditMode()) {this._buildAttributeEditor();}
   this._buildAttributeEditor();
@@ -412,8 +410,7 @@ TablePlugin.prototype.getSortIcon = function() {
  */
 TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   var aCell = row.insertCell(col);
-  aCell.className = this._cellClass;
-  var multiEntriesView = new MultiEntriesView(this, aCell, item, attribute, this._cellClass);
+  var multiEntriesView = new MultiEntriesView(this, aCell, item, attribute);
   aCell.or_entriesView = multiEntriesView;
   multiEntriesView.refresh();
   if (this.isInEditMode()) {

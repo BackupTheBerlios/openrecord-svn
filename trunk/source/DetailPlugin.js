@@ -59,7 +59,7 @@ SectionView.registerPlugin(DetailPlugin);
  */
 DetailPlugin.prototype = new PluginView();  // makes DetailPlugin be a subclass of PluginView
 function DetailPlugin(superview, htmlElement, querySpec, layoutItem) {
-  PluginView.call(this, superview, htmlElement, querySpec, layoutItem);
+  PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "DetailPlugin");
 }
 
 

@@ -43,12 +43,16 @@
  * @scope    public instance constructor
  * @param    superview    The superview for this view. 
  * @param    htmlElement    The HTMLElement to display this view in. 
- * @syntax   DO NOT CALL THIS CONSTRUCTOR
+ * @param    className    Optional. The CSS className to assign to the htmlElement.
  */
-function View(superview, htmlElement) {
+function View(superview, htmlElement, className) {
   if (!superview) {return;} // initial call that subclasses of PluginViews make without parameters
   this._superview = superview;
   this._htmlElement = htmlElement;
+  this._className = className;
+  if (this._className) {
+    this._htmlElement.className = this._className;
+  }
   this._myHasEverBeenDisplayedFlag = false; // PENDING: this is accessed directly by subclasses, which is bad
 }
 
@@ -72,6 +76,17 @@ View.prototype.getSuperview = function() {
  */
 View.prototype.getHtmlElement = function() {
   return this._htmlElement;
+};
+
+
+/**
+ * Returns the CSS className associated with this view.
+ *
+ * @scope    public instance method
+ * @return   An HTMLElement. 
+ */
+View.prototype.getClassName = function() {
+  return this._className;
 };
 
 

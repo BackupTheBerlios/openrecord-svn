@@ -49,10 +49,10 @@
  * @syntax   var PluginView = new PluginView()
  */
 PluginView.prototype = new View();  // makes PluginView be a subclass of View
-function PluginView(superview, htmlElement, querySpec, layoutItem) {
+function PluginView(superview, htmlElement, querySpec, layoutItem, cssClassName) {
   if (!superview) {return;} // initial call that subclasses of PluginViews make without parameters
 
-  View.call(this, superview, htmlElement);
+  View.call(this, superview, htmlElement, cssClassName);
 
   this._querySpec = querySpec;
   this._queryRunner = this.getWorld().newQueryRunner(this._querySpec, this);

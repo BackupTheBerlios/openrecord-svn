@@ -59,19 +59,17 @@ MultiEntriesView.SEPARATOR_COLOR = '#999999';
  * @param    htmlElement      The HTMLElement to display the HTML in. 
  * @param    item         The Item to be displayed and edited by this view. 
  * @param    attribute    The attribute of the item to be displayed.
- * @param    cssClass     A string that gives a CSS class name to assign to the HTML element. 
  * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
 MultiEntriesView.prototype = new View();  // makes MultiEntriesView be a subclass of View
-function MultiEntriesView(superview, htmlElement, item, attribute, cssClass) {
-  View.call(this, superview, htmlElement);
+function MultiEntriesView(superview, htmlElement, item, attribute) {
+  View.call(this, superview, htmlElement, "MultiEntriesView");
 
   Util.assert(item instanceof Item);
   Util.assert(attribute instanceof Item); // PENDING need to check that attribute is an attribute
   
   this._item = item;
   this._attribute = attribute;
-  this._className = cssClass;
   this._entryViews = null;
   this._listOfSuggestions = null;
 }
@@ -237,7 +235,7 @@ MultiEntriesView.prototype._keyPressOnEditField = function(eventObject, entryVie
 MultiEntriesView.prototype._addEntryView = function(entry) {
   var spanElement = document.createElement("span");
   spanElement.style.width = '100%';
-  var anEntryView = new EntryView(this, spanElement, this._item, this._attribute, entry, this._className);
+  var anEntryView = new EntryView(this, spanElement, this._item, this._attribute, entry);
   this._entryViews.push(anEntryView);
   this.getHtmlElement().appendChild(spanElement);
   anEntryView.refresh();

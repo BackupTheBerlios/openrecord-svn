@@ -58,7 +58,7 @@ SectionView.registerPlugin(BarChartPlugin);
  */
 BarChartPlugin.prototype = new PluginView();  // makes BarChartPlugin be a subclass of PluginView
 function BarChartPlugin(superview, htmlElement, querySpec, layoutItem) {
-  PluginView.call(this, superview, htmlElement, querySpec, layoutItem);
+  PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "BarChartPlugin");
 }
 
 

@@ -59,17 +59,16 @@ EntryView.PROVISIONAL_COLOR = '#999999';
  * @param    htmlElement      The HTMLElement to display the HTML in. 
  * @param    item         The Item to be displayed and edited by this view. 
  * @param    attribute    The attribute of the item to be displayed.
- * @param    cssClassName    A string that gives a class name to assign to the HTML element. 
  * @param    entry    The entry that this EntryView displays. 
  * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
 EntryView.prototype = new View();  // makes EntryView be a subclass of View
-function EntryView(superview, htmlElement, item, attribute, entry, cssClassName, isMultiLine) {
+function EntryView(superview, htmlElement, item, attribute, entry, isMultiLine) {
   Util.assert((!entry) || entry instanceof Entry);
   Util.assert(item instanceof Item);
   Util.assert(attribute instanceof Item); // PENDING need to check that attribute is an attribute
   
-  View.call(this, superview, htmlElement);
+  View.call(this, superview, htmlElement, "EntryView");
 
   htmlElement.style.width = "100%";
   htmlElement.style.height = "100%"; // make this element expand to fill parent element where possible
@@ -77,7 +76,7 @@ function EntryView(superview, htmlElement, item, attribute, entry, cssClassName,
   this._attribute = attribute;
   this._entry = entry;
   this._editField = null;
-  this._className = cssClassName;
+  // this._className = cssClassName;
   this._isMultiLine = isMultiLine;
   this._isEditing = false;
   this._proxyOnKeyFunction = null;
@@ -230,7 +229,7 @@ EntryView.prototype.startEditing = function(dontSelect) {
         editField = this._editField= document.createElement("input");
         editField.type = 'text';
       }
-      editField.className = this._className;
+      // editField.className = this._className;
       var listener = this; 
       editField.onblur = this.onBlur.bindAsEventListener(this);
       editField.onkeypress = this.onKeyPress.bindAsEventListener(this);

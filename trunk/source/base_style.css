@@ -228,10 +228,6 @@ div.viewmode .header {
 /****************************************/
 /* Edit button styles                   */
 
-#main_control_span {
-  float: right;
-}
-
 div.editmode p.edit_tool {
   background-color: rgb(100%, 100%, 40%);
 }
@@ -248,7 +244,7 @@ div.viewmode .edit_tool {
 /****************************************/
 /* Navigation bar styles                */
 
-div.navbar {
+div.NavbarView {
   float: left;
   width: 100pt;
   margin: 0;
@@ -331,7 +327,7 @@ div.content_area {
   padding: 0pt;
 }
 
-.page_header, .section_header {
+h1.EntryView input {
   color: rgb(0%, 0%, 50%);
   background: rgb(100%, 100%, 40%);
   font-size: 1em;
@@ -344,7 +340,20 @@ div.content_area {
   padding: 0pt;
 }
 
-.summary_text {
+h2.EntryView input {
+  color: rgb(0%, 0%, 50%);
+  background: rgb(100%, 100%, 40%);
+  font-size: 1em;
+  width: 100%;
+  font-family: Arial, Verdana, sans-serif;
+  font-weight: bold;
+  border-width: thin;
+  border-style: solid;
+  border-color: rgb(70%, 70%, 70%);
+  padding: 0pt;
+}
+
+div.EntryView textarea {
   //font-size: large;
   background: rgb(100%, 100%, 40%);
   width: 100%;
@@ -440,7 +449,7 @@ tr.selected {
   background: rgb(100%,100%,40%);
 }
 
-td.plain {
+td.MultiEntriesView {
   font-family: Arial, Verdana, sans-serif;
   text-align: left;
   border: thin solid #CCC;
@@ -486,7 +495,7 @@ td.total {
   background: rgb(90%, 90%, 90%);
 }
 
-input.plain {
+.MultiEntriesView .EntryView input {
   font-family: Arial, Verdana, sans-serif;
   border: 0px;
   width: 100%;
@@ -494,7 +503,7 @@ input.plain {
   padding: 0px;
 }
 
-input.plain:hover {
+.MultiEntriesView .EntryView input:hover {
   border-width: 0px;
   width: 100%;
   background: rgb(100%, 100%, 40%);
@@ -566,8 +575,9 @@ li.detail {
 
 /****************************************/
 /* Control span styles                     */
-.control_span {
+.LoginView {
   font-size: x-small;
+  float: right;
 }
 
 .suggestion_box {
@@ -656,7 +666,7 @@ p.byline a {
   color: rgb(0%,0%,0%);
 }
 
-div.section {
+div.SectionView {
   border-top: solid thin rgb(0%, 0%, 50%);
   margin-top: 3em;
   padding-left: 0px;

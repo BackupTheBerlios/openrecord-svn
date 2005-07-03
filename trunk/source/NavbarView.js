@@ -57,7 +57,7 @@ NavbarView.CSS_CLASS_MENU_ITEM = "menu_item";
  */
 NavbarView.prototype = new View();  // makes NavbarView be a subclass of View
 function NavbarView(superview, htmlElement, htmlElementForAnchors) {
-  View.call(this, superview, htmlElement);
+  View.call(this, superview, htmlElement, "NavbarView");
   this._htmlElementForAnchors = htmlElementForAnchors;
 }
 

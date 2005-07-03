@@ -44,7 +44,7 @@
 // -------------------------------------------------------------------
 // PageView public class constants
 // -------------------------------------------------------------------
-PageView.CSS_CLASS_PAGE_HEADER = "page_header";
+// PageView.CSS_CLASS_PAGE_HEADER = "page_header";
 PageView.UUID_FOR_ATTRIBUTE_SECTIONS_IN_PAGE = "00030000-ce7f-11d9-8cd5-0011113ae5d6";
 PageView.UUID_FOR_ATTRIBUTE_PAGE_THIS_SECTION_APPEARS_ON = "00030001-ce7f-11d9-8cd5-0011113ae5d6";
 
@@ -94,7 +94,7 @@ function PageView(superview, htmlElement, pageItem) {
   Util.assert(htmlElement instanceof HTMLElement);
   Util.assert(pageItem instanceof Item);
 
-  View.call(this, superview, htmlElement);
+  View.call(this, superview, htmlElement, "PageView");
 
   // instance properties
   this._pageItem = pageItem;
@@ -153,11 +153,11 @@ PageView.prototype.doInitialDisplay = function() {
   
   var headerElement = View.createAndAppendElement(pageDivElement, "h1");
   this._headerText = new EntryView(this, headerElement, this._pageItem, attributeCalledName,
-    this._pageItem.getSingleEntryFromAttribute(attributeCalledName), PageView.CSS_CLASS_PAGE_HEADER, false);
+    this._pageItem.getSingleEntryFromAttribute(attributeCalledName), false);
 
   var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
   this._pageSummaryView = new EntryView(this, summaryViewDiv, this._pageItem, attributeCalledSummary,
-    this._pageItem.getSingleEntryFromAttribute(attributeCalledSummary), SectionView.CSS_CLASS_SUMMARY_TEXT, true);
+    this._pageItem.getSingleEntryFromAttribute(attributeCalledSummary), true);
 
   // add <div> elements for each of the sections on the page
   // and create a new SectionView for each section
