@@ -54,7 +54,7 @@ SectionView.CSS_CLASS_TITLE = "title";
 SectionView.CSS_CLASS_TEXT_FIELD_IN_TABLE_CELL = "text_field_in_table_cell";
 SectionView.CSS_CLASS_SELECTED = "selected";
 SectionView.CSS_CLASS_MORE_LINK = "more";
-SectionView.CSS_CLASS_ENTRY_VIEW = "entry_view";
+// SectionView.CSS_CLASS_ENTRY_VIEW = "entry_view";
 
 SectionView.ELEMENT_ID_SELECT_MENU_PREFIX = "select_menu_";
 

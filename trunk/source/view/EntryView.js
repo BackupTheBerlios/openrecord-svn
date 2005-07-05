@@ -44,9 +44,23 @@
 // -------------------------------------------------------------------
 // EntryView public class constants
 // -------------------------------------------------------------------
-// EntryView.ELEMENT_CLASS_TEXT_BLOCK = "text_block"; 
-EntryView.CSS_CLASS_VALUE_IS_ITEM = "entryViewItem";
-EntryView.PROVISIONAL_COLOR = '#999999';
+EntryView.CSS_CLASS_PROVISIONAL      = "provisional";
+
+EntryView.CSS_CLASS_TEXT_VALUE       = "TextValue";
+EntryView.CSS_CLASS_NUMBER_VALUE     = "NumberValue";
+EntryView.CSS_CLASS_DATE_VALUE       = "DateValue";
+EntryView.CSS_CLASS_CHECKMARK_VALUE  = "CheckmarkValue";
+EntryView.CSS_CLASS_URL_VALUE        = "UrlValue";
+EntryView.CSS_CLASS_ITEM_VALUE       = "ItemValue";
+EntryView.CSS_CLASS_CONNECTION_VALUE = "ConnectionValue";
+
+EntryView.CSS_CLASS_NEGATIVE_NUMBER  = "NegativeNumber";
+
+
+// -------------------------------------------------------------------
+// EntryView private class variables
+// -------------------------------------------------------------------
+EntryView._ourHashTableOfTypesKeyedByClassName = null;
 
 
 /**
@@ -70,8 +84,6 @@ function EntryView(superview, htmlElement, item, attribute, entry, isMultiLine) 
   
   View.call(this, superview, htmlElement, "EntryView");
 
-  htmlElement.style.width = "100%";
-  htmlElement.style.height = "100%"; // make this element expand to fill parent element where possible
   this._item = item;
   this._attribute = attribute;
   this._entry = entry;
@@ -138,8 +150,8 @@ EntryView.prototype.setAutoWiden = function(autoWiden) {
  */
 EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntries) {
   Util.assert(Util.isArray(expectedTypeEntries));
-  for(var i=0;i < expectedTypeEntries.length; ++i) {
-    Util.assert(expectedTypeEntries[i] instanceof Entry);
+  for (var key in expectedTypeEntries) {
+    Util.assert(expectedTypeEntries[key] instanceof Entry);
   }
   this._expectedTypeEntries = expectedTypeEntries;
 };
@@ -192,23 +204,40 @@ EntryView.prototype._buildView = function() {
   
   var textString = this._getText();
   
-  if (this._isProvisional) {
-    this._oldColor = htmlElement.style.color;
-    htmlElement.style.color = EntryView.PROVISIONAL_COLOR;
-  }
-  else if (this._isLozenge()) {
-    htmlElement.className += " " + EntryView.CSS_CLASS_VALUE_IS_ITEM;
-  }
   this._textSpan = View.createAndAppendElement(htmlElement, "span");
   this._textNode = View.createAndAppendTextNode(this._textSpan, textString);
-  // this._textNode = document.createTextNode(textString);
-  // htmlElement.appendChild(this._textNode);
-  htmlElement.onclick =  this.onClick.bindAsEventListener(this);
+  if (this._isProvisional) {
+    this._textSpan.className = EntryView.CSS_CLASS_PROVISIONAL;
+  }
+  else if (!this._alwaysUseEditField) {
+    this._setClassName();
+  }
+  
+  htmlElement.onclick = this.onClick.bindAsEventListener(this);
   if (this._alwaysUseEditField) {
     this.startEditing(true);
   }
     
   this._myHasEverBeenDisplayedFlag = true;
+};
+
+
+/**
+ *
+ */
+EntryView.prototype._setClassName = function() {
+  if (this._entry) {
+    var dataType = this._entry.getType();
+    var className = this._getClassNameFromType(dataType);
+    this._textSpan.className = className;
+    
+    var typeNumber = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
+    if (dataType == typeNumber) {
+      if (this._entry.getValue() < 0) {
+        this._textSpan.className += " " + EntryView.CSS_CLASS_NEGATIVE_NUMBER;
+      }
+    }
+  }
 };
 
 
@@ -237,7 +266,6 @@ EntryView.prototype.startEditing = function(dontSelect) {
         editField = this._editField= document.createElement("input");
         editField.type = 'text';
       }
-      // editField.className = this._className;
       var listener = this; 
       editField.onblur = this.onBlur.bindAsEventListener(this);
       editField.onkeypress = this.onKeyPress.bindAsEventListener(this);
@@ -247,11 +275,11 @@ EntryView.prototype.startEditing = function(dontSelect) {
       editField.size = 5; //editField.defaultValue.length+1;
     }
     
-    //editField.style.width = this.getHtmlElement().offsetWidth + "px";  
-    if (this._isMultiLine) {editField.style.height = (this.getHtmlElement().offsetHeight) + "px";}  
+    if (this._isMultiLine) {
+      editField.style.height = (this.getHtmlElement().offsetHeight) + "px";
+    }  
     
     this._setupSuggestionBox();
-    // this.getHtmlElement().replaceChild(editField, this._textNode);
     this.getHtmlElement().replaceChild(editField, this._textSpan);
     if (!dontSelect) {editField.select();}
     this._isEditing = true;
@@ -294,7 +322,6 @@ EntryView.prototype.stopEditing = function() {
       }
       this._textNode.data = newValueDisplayString;
       this._suggestionBox = null;
-      // this.getHtmlElement().replaceChild(this._textNode, this._editField);
       this.getHtmlElement().replaceChild(this._textSpan, this._editField);
     }
 
@@ -397,12 +424,9 @@ EntryView.prototype._writeValue = function(value) {
       }
       if (value instanceof Item) {
         this._valueIsItem = true;
-        var htmlElement = this.getHtmlElement();
-        if (this._isLozenge() && !htmlElement.className.match(EntryView.CSS_CLASS_VALUE_IS_ITEM)) {
-          htmlElement.className += " " + EntryView.CSS_CLASS_VALUE_IS_ITEM;
-        }
       }
-    }    
+      this._setClassName();
+    }
     this.getWorld().endTransaction();
   }
   this._restoreText(true); // call restore text in case item is transformed (e.g. Dates will be normalized)
@@ -584,11 +608,74 @@ EntryView.prototype.onKeyPress = function(eventObject) {
 EntryView.prototype.noLongerProvisional = function() {
   if (this._isProvisional) {
     this._isProvisional = false;
-    this.getHtmlElement().style.color = this._oldColor;
+    this._textSpan.className = "";
     // need to set line below because _writeValue() hasn't returned an entry yet
     this._entry = this._item.getSingleEntryFromAttribute(this._attribute); 
     this._buildView();
   }
+};
+
+
+/**
+ * PENDING.
+ *
+ * @scope    private instance method
+ */
+EntryView.prototype._buildTypeHashTable = function() {
+  var text      = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_TEXT);
+  var number    = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
+  var dateType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_DATE);
+  var checkMark = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CHECK_MARK);
+  var url       = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_URL);
+  var itemType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
+  var connectionType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
+  
+  this._ourHashTableOfTypesKeyedByClassName = {};
+  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_TEXT_VALUE] = text;
+  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_NUMBER_VALUE] = number;
+  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_DATE_VALUE] = dateType;
+  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_CHECKMARK_VALUE] = checkMark;
+  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_URL_VALUE] = url;
+  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_ITEM_VALUE] = itemType;
+  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_CONNECTION_VALUE] = connectionType;
+};
+
+
+/**
+ * Given an item that represents a basic data type, this method returns the 
+ * corresponding CSS className for that data type.
+ *
+ * @scope    private instance method
+ * @param    type    An item that represents a basic data type, like Text, Number, or URL. 
+ * @return   A string with the CSS className for that type.
+ */
+EntryView.prototype._getClassNameFromType = function(type) {
+  if (!this._ourHashTableOfTypesKeyedByClassName) {
+    this._buildTypeHashTable();
+  }
+  for (var className in this._ourHashTableOfTypesKeyedByClassName) {
+    typeItem = this._ourHashTableOfTypesKeyedByClassName[className];
+    if (type == typeItem) {
+      return className;
+    }
+  }
+  Util.assert(false, "no such type: " + type.getDisplayString());
+};
+
+
+/**
+ * Given a string with the CSS className of a basic data type, this method
+ * returns the corresponding item that represents the same data type.
+ *
+ * @scope    private instance method
+ * @param    className    A string with the CSS className for a type.
+ * @return   An item that represents a basic data type, like Text, Number, or URL. 
+ */
+EntryView.prototype._getTypeFromTypeClassName = function(className) {
+  if (!this._ourHashTableOfTypesKeyedByClassName) {
+    this._buildTypeHashTable();
+  }
+  return this._ourHashTableOfTypesKeyedByClassName[className];
 };
 
 

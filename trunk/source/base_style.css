@@ -226,7 +226,7 @@ div.viewmode .header {
 
 
 /****************************************/
-/* Edit button styles                   */
+/* Edit tool styles                     */
 
 div.editmode p.edit_tool {
   background-color: rgb(100%, 100%, 40%);
@@ -242,7 +242,7 @@ div.viewmode .edit_tool {
 
 
 /****************************************/
-/* Navigation bar styles                */
+/* NavbarView styles                */
 
 div.NavbarView {
   float: left;
@@ -325,6 +325,36 @@ div.NavbarView {
 div.content_area {
   margin: 0pt 0pt 0pt 115pt;
   padding: 0pt;
+}
+
+h1.EntryView .TextValue {
+  border-width: thin;
+  border-style: solid;
+  border-color: rgb(100%, 100%, 100%);
+}
+
+h2.EntryView span {
+  border-width: thin;
+  border-style: solid;
+  border-color: rgb(100%, 100%, 100%);
+}
+
+h1.EntryView .TextValue:hover {
+  border-width: thin;
+  border-style: solid;
+  border-color: rgb(70%, 70%, 70%);
+}
+
+h2.EntryView span:hover {
+  border-width: thin;
+  border-style: solid;
+  border-color: rgb(70%, 70%, 70%);
+}
+
+div.EntryView span:hover {
+  border-width: thin;
+  border-style: solid;
+  border-color: rgb(70%, 70%, 70%);
 }
 
 h1.EntryView input {
@@ -634,24 +664,43 @@ div.SectionView {
   background: rgb(100%, 100%, 70%);
 }
 
-/****************************************/
-/* Text view styles                     */
 
-.entry_view {
-  /* height: 100%; */
+/****************************************/
+/* EntryView styles                     */
+
+.EntryView {
   width: 100%;
-  font-family: Arial, Verdana, sans-serif;
-  color: rgb(0%, 0%, 0%);
-  background: rgb(100%, 100%, 40%);
-  border: none; 
-  /* overflow: visible; */
+  height: 100%;
 }
 
-.entryViewItem {
-  background-color:#DEE7F8;
+.EntryView .provisional {
+  color: #999999;
+}
+
+.ItemValue, .ConnectionValue {
+  background-color: #DEE7F8; // light blue
   padding: 1px;
   border: thin solid #A4BDEC;	
-  -moz-border-radius: 6px; // WARNING: Mozilla only attribute. This just makes a rect, a rounded-rect
+  -moz-border-radius: 6px; // WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners
+}
+
+.DateValue {
+  font-style: italic;
+}
+
+.NumberValue {
+  font-weight: bold;
+}
+
+.TextValue {
+}
+
+.UrlValue {
+  text-decoration: underline;
+}
+
+.NegativeNumber {
+  color: rgb(100%, 0%, 0%);
 }
 
 /* obsolete? 
@@ -667,6 +716,7 @@ div.editmode .text_block {
 div.viewmode .text_block {
   border: solid thin rgb(100%, 100%, 100%); 
 } */
+
 
 /****************************************/
 /* PENDING -- time to delete these?     */
