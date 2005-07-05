@@ -39,6 +39,14 @@ function setUp() {
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
+    "View.js",
+    "RootView.js",
+    "ItemView.js",
+    "PageView.js",
+    "LoginView.js",
+    "NavbarView.js",
+    "SectionView.js",
+    "MultiEntriesView.js",
     "EntryView.js",
     "SuggestionBox.js"];
   var prefix = "../../../source/view/";
