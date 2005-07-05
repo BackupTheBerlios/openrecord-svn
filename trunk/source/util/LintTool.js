@@ -61,45 +61,64 @@ function LintTool() {
  * the lint tests.
  *
  * @scope    public class method
- * @param    stringContainingCode    A string containing JavaScript code. 
+ * @param    codeString    A string containing JavaScript code. 
  * @return   Returns an error message string, or returns an empty string if there are no errors (according to jslint).
  */
-LintTool.getErrorReportForCodeInString = function(stringContainingCode) {
+LintTool.getErrorReportForCodeInString = function(codeString) {
   var errorMessage = "";
 
-  // call jslint, and see if it reported errors
+  // Call jslint, and see if it reported errors.
   jslint.laxLineEnd = false;
   jslint.plusplus = true;
   jslint.cap = false;
   jslint.jscript = false;
-  jslint(stringContainingCode);
+  jslint(codeString);
   var report = jslint.report();
   var jslintIsOkay = (report.substr(0, 2) == 'ok');
   if (!jslintIsOkay) {
     errorMessage = report + '\n';
   }
   
-  // now check for tabs, backspaces, etc.
-  var noTabs = (stringContainingCode.indexOf("\t") == -1);
-  if (!noTabs) {
-    errorMessage += "There are tab characters in the file." + '\n';
-  }
-  var noBackspaces = (stringContainingCode.indexOf("\b") == -1);
-  if (!noBackspaces) {
-    errorMessage += "There are backspace characters in the file." + '\n';
-  }
-  var noCarriageReturns = (stringContainingCode.indexOf("\r") == -1);
-  if (!noCarriageReturns) {
-    errorMessage += "There are carriage return characters in the file." + '\n';
-  }
-  var noFormFeeds = (stringContainingCode.indexOf("\f") == -1);
-  if (!noCarriageReturns) {
-    errorMessage += "There are carriage return characters in the file." + '\n';
-  }
-  // var allClean = jslintIsOkay && noTabs && noBackspaces && noCarriageReturns && noFormFeeds;
+  // Check for tabs, backspaces, etc.
+  errorMessage += LintTool.checkForString(codeString, '\t', "There are tab characters in the file.");
+  errorMessage += LintTool.checkForString(codeString, '\b', "There are backspace characters in the file.");
+  errorMessage += LintTool.checkForString(codeString, '\r', "There are carriage return characters in the file.");
+  errorMessage += LintTool.checkForString(codeString, '\f', "There are form feed characters in the file.");
+  
+  // Check for discouraged code
+  // We have to break 'document' + '.write' into two parts, or else this LintTool.js
+  // file won't pass its own lint test.
+  errorMessage += LintTool.checkForString(codeString, 'document' + '.write');
+  errorMessage += LintTool.checkForString(codeString, 'document' + '.all');
+  errorMessage += LintTool.checkForString(codeString, 'document' + '.layers');
+
   return errorMessage;
 }; 
 
+
+/**
+ * Given a string containing JavaScript code, this method checks to make
+ * sure the code does not contain some specific sub-string, and returns 
+ * an error message if the sub-string is found.
+ *
+ * @scope    public class method
+ * @param    codeString    A string containing JavaScript code. 
+ * @param    memberString    The sub-string that should not be in the code. 
+ * @param    errorMessage    Optional. The error message to return if the memberString was found in codeString. 
+ * @return   Returns an error message string, or returns an empty string if there are no errors.
+ */
+LintTool.checkForString = function(codeString, memberString, errorMessage) {
+  var returnString = "";
+  var clean = (codeString.indexOf(memberString) == -1);
+  if (!clean) {
+    if (!errorMessage) {
+      errorMessage = 'The file contains discouraged code: "' + memberString + '"';
+    }
+    returnString += errorMessage + '\n';
+  }
+  return returnString;
+};
+  
 
 /**
  * Given the URL of a file containing JavaScript code, returns null if the code passes 

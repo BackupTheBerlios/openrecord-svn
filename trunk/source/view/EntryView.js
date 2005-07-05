@@ -75,8 +75,11 @@ function EntryView(superview, htmlElement, item, attribute, entry, isMultiLine) 
   this._item = item;
   this._attribute = attribute;
   this._entry = entry;
+  
   this._editField = null;
-  // this._className = cssClassName;
+  this._textNode = null;
+  this._textSpan = null;
+  
   this._isMultiLine = isMultiLine;
   this._isEditing = false;
   this._proxyOnKeyFunction = null;
@@ -196,8 +199,10 @@ EntryView.prototype._buildView = function() {
   else if (this._isLozenge()) {
     htmlElement.className += " " + EntryView.CSS_CLASS_VALUE_IS_ITEM;
   }
-  this._textNode = document.createTextNode(textString);
-  htmlElement.appendChild(this._textNode);
+  this._textSpan = View.createAndAppendElement(htmlElement, "span");
+  this._textNode = View.createAndAppendTextNode(this._textSpan, textString);
+  // this._textNode = document.createTextNode(textString);
+  // htmlElement.appendChild(this._textNode);
   htmlElement.onclick =  this.onClick.bindAsEventListener(this);
   if (this._alwaysUseEditField) {
     this.startEditing(true);
@@ -246,7 +251,8 @@ EntryView.prototype.startEditing = function(dontSelect) {
     if (this._isMultiLine) {editField.style.height = (this.getHtmlElement().offsetHeight) + "px";}  
     
     this._setupSuggestionBox();
-    this.getHtmlElement().replaceChild(editField, this._textNode);
+    // this.getHtmlElement().replaceChild(editField, this._textNode);
+    this.getHtmlElement().replaceChild(editField, this._textSpan);
     if (!dontSelect) {editField.select();}
     this._isEditing = true;
   }
@@ -263,7 +269,6 @@ EntryView.prototype.stopEditing = function() {
     var newValue;
     if (this._suggestionBox) {
       newValue = this._suggestionBox.getSelectedItem();
-      // alert(newValue);
     }
     if (!newValue) {
       newValue = this._editField.value;
@@ -289,7 +294,8 @@ EntryView.prototype.stopEditing = function() {
       }
       this._textNode.data = newValueDisplayString;
       this._suggestionBox = null;
-      this.getHtmlElement().replaceChild(this._textNode, this._editField);
+      // this.getHtmlElement().replaceChild(this._textNode, this._editField);
+      this.getHtmlElement().replaceChild(this._textSpan, this._editField);
     }
 
     // we need this _writeValue() to be after all display related code, because this may trigger an observer call
