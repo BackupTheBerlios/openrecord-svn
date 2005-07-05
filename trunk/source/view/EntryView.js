@@ -110,6 +110,7 @@ EntryView.prototype._setupSuggestionBox = function() {
   }
 };
 
+
 /**
  *
  */
@@ -120,12 +121,14 @@ EntryView.prototype.alwaysUseEditField = function() {
   }
 };
 
+
 /**
  *
  */
 EntryView.prototype.setAutoWiden = function(autoWiden) {
   this._autoWiden = autoWiden;
 };
+
 
 /**
  *
@@ -260,6 +263,7 @@ EntryView.prototype.stopEditing = function() {
     var newValue;
     if (this._suggestionBox) {
       newValue = this._suggestionBox.getSelectedItem();
+      // alert(newValue);
     }
     if (!newValue) {
       newValue = this._editField.value;
@@ -289,7 +293,9 @@ EntryView.prototype.stopEditing = function() {
     }
 
     // we need this _writeValue() to be after all display related code, because this may trigger an observer call
-    if (!stillProvisional) { this._writeValue(newValue); }
+    if (!stillProvisional) { 
+      this._writeValue(newValue); 
+    }
   }
 };
 
@@ -306,7 +312,7 @@ EntryView.prototype.stopEditing = function() {
  * @param    value    The new value to be saved. 
  */
 EntryView.prototype._transformToExpectedType = function(value) {
-if (value && Util.isString(value)) {
+  if (value && Util.isString(value)) {
     var repository = this.getWorld();
     var listOfExpectedTypeEntries;
     if (this._expectedTypeEntries) {
@@ -352,6 +358,8 @@ if (value && Util.isString(value)) {
   }
   return value;
 };
+
+
 /**
  * Writes edited value back into item entry of repository.
  *

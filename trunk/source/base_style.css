@@ -574,13 +574,28 @@ li.detail {
 
 
 /****************************************/
-/* Control span styles                     */
+/* LoginView styles                     */
+
 .LoginView {
   font-size: x-small;
   float: right;
 }
 
-.suggestion_box {
+
+/****************************************/
+/* SectionView styles                 */
+
+div.SectionView {
+  border-top: solid thin rgb(0%, 0%, 50%);
+  margin-top: 3em;
+  padding-left: 0px;
+}
+
+
+/****************************************/
+/* SuggestionBox styles                 */
+
+.SuggestionBox {
   background: rgb(100%, 100%, 100%);
   font-size: small;
   border-style: solid;
@@ -593,7 +608,7 @@ li.detail {
   position: absolute;
 }
 
-.suggestion_box table {
+.SuggestionBox table {
   margin: 0px;
   border: 0px;
   padding: 0px;
@@ -601,21 +616,21 @@ li.detail {
   border-collapse: collapse; 
 }
 
-.suggestion_box tr {
+.SuggestionBox tr {
   margin: 0px;
   border: 0px;
   padding: 0px;
   width: 100%;
 }
 
-.suggestion_box td {
+.SuggestionBox td {
   margin: 0px;
   border: 0px;
   padding: 2px;
   width: 100%;
 }
 
-.suggestion_box tr:hover {
+.SuggestionBox tr:hover {
   background: rgb(100%, 100%, 70%);
 }
 
@@ -666,11 +681,6 @@ p.byline a {
   color: rgb(0%,0%,0%);
 }
 
-div.SectionView {
-  border-top: solid thin rgb(0%, 0%, 50%);
-  margin-top: 3em;
-  padding-left: 0px;
-}
 
 /****************************************/
 /* END                                  */

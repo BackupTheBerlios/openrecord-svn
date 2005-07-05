@@ -41,19 +41,23 @@
 
 
 /**
+ * A DetailPlugin display one or more content items. 
  *
+ * @scope    public instance constructor
+ * @param    htmlInputField    The HTMLElement that this suggestion box is associated with. 
+ * @param    listOfItems    The items to populate the suggestion box with.
  */
-function SuggestionBox(inHTMLInputField, listOfItems) {
-  this._inputField = inHTMLInputField;
-  this._listOfSuggestedItems = listOfItems.sort(SuggestionBox._compareItemDisplayNames);
+function SuggestionBox(htmlInputField, listOfItems) {
+  this._inputField = htmlInputField;
+  this._listOfSuggestedItems = listOfItems.sort(SuggestionBox._compareItemDisplayStrings);
   this._selectedItem = null;
-  this._shouldHide = inHTMLInputField.value.length === 0;
+  this._shouldHide = htmlInputField.value.length === 0;
   
-  this._attributeSuggestionBoxDivElement = document.createElement('div');
-  // this._attributeSuggestionBoxDivElement.style.visibility = "hidden";
-  this._attributeSuggestionBoxDivElement.style.zIndex = 11;
-  this._attributeSuggestionBoxDivElement.style.display = "none";
-  document.body.appendChild(this._attributeSuggestionBoxDivElement);
+  this._suggestionBoxDivElement = View.createAndAppendElement(document.body, "div", "SuggestionBox");
+  // this._suggestionBoxDivElement = document.createElement('div');
+  this._suggestionBoxDivElement.style.zIndex = 11;
+  this._suggestionBoxDivElement.style.display = "none";
+  // document.body.appendChild(this._suggestionBoxDivElement);
 
  /* this._inputField.onkeyup = this._keyPressOnInputField.bindAsEventListener(this);
   this._inputField.onfocus = this._focusOnInputField.bindAsEventListener(this);
@@ -65,13 +69,20 @@ function SuggestionBox(inHTMLInputField, listOfItems) {
 /**
  *
  */
-SuggestionBox.prototype.getSelectedItem = function () {
+SuggestionBox.prototype.getSelectedItem = function() {
   if (!this._selectedItem) {
     // check if typed item is identical to suggested item
     var editValue = this._inputField.value;
-    for (var i = 0; i < this._listOfSuggestedItems.length; ++i) {
-      var item = this._listOfSuggestedItems[i];
-      if (editValue.toLowerCase() == item.getDisplayName().toLowerCase()) {return item;}
+    // for (var i = 0; i < this._listOfSuggestedItems.length; ++i) {
+    //   var item = this._listOfSuggestedItems[i];
+    for (var key in this._listOfSuggestedItems) {
+      var item = this._listOfSuggestedItems[key];
+      if (editValue.toLowerCase() == item.getDisplayName().toLowerCase()) {
+        return item;
+      }
+      if (editValue.toLowerCase() == item.getDisplayString().toLowerCase()) {
+        return item;
+      }
     }
   }
   return this._selectedItem;
@@ -81,7 +92,7 @@ SuggestionBox.prototype.getSelectedItem = function () {
 /**
  *
  */
-SuggestionBox._compareItemDisplayNames = function (itemOne, itemTwo) {
+SuggestionBox._compareItemDisplayStrings = function(itemOne, itemTwo) {
   var displayNameOne = itemOne.getDisplayString();
   var displayNameTwo = itemTwo.getDisplayString();
   if (displayNameOne == displayNameTwo) {
@@ -95,7 +106,7 @@ SuggestionBox._compareItemDisplayNames = function (itemOne, itemTwo) {
 /**
  *
  */
-SuggestionBox.prototype._focusOnInputField = function (inEventObject) {
+SuggestionBox.prototype._focusOnInputField = function(eventObject) {
   this._redisplaySuggestionBox();
 };
 
@@ -103,11 +114,11 @@ SuggestionBox.prototype._focusOnInputField = function (inEventObject) {
 /**
  *
  */
-SuggestionBox.prototype._keyPressOnInputField = function (inEventObject) {
+SuggestionBox.prototype._keyPressOnInputField = function(eventObject) {
   var numberOfMatchingItems = this._listOfMatchingItems.length;
   if (numberOfMatchingItems === 0) {return false;}
 
-  var asciiValueOfKey = inEventObject.keyCode;
+  var asciiValueOfKey = eventObject.keyCode;
   var index = -1;
   var doSelectItem = false;
   switch (asciiValueOfKey) {
@@ -165,7 +176,7 @@ SuggestionBox.prototype._keyPressOnInputField = function (inEventObject) {
 /**
  *
  */
-SuggestionBox.prototype._keyUpOnInputField = function (inEventObject) {
+SuggestionBox.prototype._keyUpOnInputField = function(eventObject) {
   this._redisplaySuggestionBox();
 };
 
@@ -173,16 +184,16 @@ SuggestionBox.prototype._keyUpOnInputField = function (inEventObject) {
 /**
  *
  */
-SuggestionBox.prototype._blurOnInputField = function () {
+SuggestionBox.prototype._blurOnInputField = function() {
   // make the suggestion box disappear
-  this._attributeSuggestionBoxDivElement.style.display = "none";
+  this._suggestionBoxDivElement.style.display = "none";
 };
 
 
 /**
  *
  */
-SuggestionBox.prototype._clickOnSelection = function (inEventObject, item) {
+SuggestionBox.prototype._clickOnSelection = function(eventObject, item) {
   this._selectedItem = item;
 };
 
@@ -190,12 +201,12 @@ SuggestionBox.prototype._clickOnSelection = function (inEventObject, item) {
 /**
  *
  */
-SuggestionBox.prototype._setShouldHide = function (shouldHide) {
+SuggestionBox.prototype._setShouldHide = function(shouldHide) {
   // make the suggestion box disappear
   this._shouldHide = shouldHide;
   this._selectedItem = null;
   if (shouldHide) {
-    this._attributeSuggestionBoxDivElement.style.display = "none";
+    this._suggestionBoxDivElement.style.display = "none";
   }
   else {
     this._redisplaySuggestionBox();
@@ -206,7 +217,7 @@ SuggestionBox.prototype._setShouldHide = function (shouldHide) {
 /**
  *
  */
-SuggestionBox.prototype._redisplaySuggestionBox = function () {
+SuggestionBox.prototype._redisplaySuggestionBox = function() {
   //if (this._shouldHide) {return;} // if SuggestionBox is in hide mode, don't show the box
   
   var partialInputString = this._inputField.value;
@@ -229,9 +240,9 @@ SuggestionBox.prototype._redisplaySuggestionBox = function () {
 
   if (this._shouldHide || listOfMatchingItems.length === 0) {
     // make the suggestion box disappear
-    this._attributeSuggestionBoxDivElement.style.display = "none";
+    this._suggestionBoxDivElement.style.display = "none";
   } else {
-    View.removeChildrenOfElement(this._attributeSuggestionBoxDivElement);
+    View.removeChildrenOfElement(this._suggestionBoxDivElement);
     var table = document.createElement('table');
     var rowNumber = 0;
     var columnNumber = 0;
@@ -246,20 +257,19 @@ SuggestionBox.prototype._redisplaySuggestionBox = function () {
       cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, item);
       rowNumber += 1;
     }
-    this._attributeSuggestionBoxDivElement.appendChild(table);
+    this._suggestionBoxDivElement.appendChild(table);
 
     // set-up the suggestion box to open just below the input field it comes from
     var suggestionBoxTop = Util.getOffsetTopFromElement(this._inputField) + this._inputField.offsetHeight;
     var suggestionBoxLeft = Util.getOffsetLeftFromElement(this._inputField);
-    this._attributeSuggestionBoxDivElement.style.top = suggestionBoxTop + "px"; 
-    this._attributeSuggestionBoxDivElement.style.left = suggestionBoxLeft + "px";
+    this._suggestionBoxDivElement.style.top = suggestionBoxTop + "px"; 
+    this._suggestionBoxDivElement.style.left = suggestionBoxLeft + "px";
     // alert(this._inputField.offsetWidth);
-    this._attributeSuggestionBoxDivElement.style.width = (this._inputField.offsetWidth - 2)+ "px";
+    this._suggestionBoxDivElement.style.width = (this._inputField.offsetWidth - 2)+ "px";
 
-    // this._attributeSuggestionBoxDivElement.style.zIndex = 11;
-    this._attributeSuggestionBoxDivElement.className = "suggestion_box";
-    this._attributeSuggestionBoxDivElement.style.visibility = "visible";
-    this._attributeSuggestionBoxDivElement.style.display = "block";
+    // this._suggestionBoxDivElement.className = "suggestion_box";
+    this._suggestionBoxDivElement.style.visibility = "visible";
+    this._suggestionBoxDivElement.style.display = "block";
   }
 };
 
