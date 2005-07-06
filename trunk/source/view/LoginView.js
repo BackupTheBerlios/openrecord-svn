@@ -529,7 +529,7 @@ UserSuggestionBox.prototype._redisplayUserSuggestionBox = function() {
     this._userSuggestionBoxDivElement.style.width = (this._inputField.offsetWidth - 2)+ "px";
     
     // this._userSuggestionBoxDivElement.style.zIndex = 11;
-    this._userSuggestionBoxDivElement.className = "suggestion_box";
+    this._userSuggestionBoxDivElement.className = "SuggestionBox";
     this._userSuggestionBoxDivElement.style.visibility = "visible";
     this._userSuggestionBoxDivElement.style.display = "block";
   }

@@ -44,7 +44,7 @@
 // -------------------------------------------------------------------
 // EntryView public class constants
 // -------------------------------------------------------------------
-EntryView.CSS_SELECTED = "ItemValueSelected";
+EntryView.CSS_CLASS_SELECTED         = "ItemValueSelected";
 EntryView.CSS_CLASS_PROVISIONAL      = "provisional";
 
 EntryView.CSS_CLASS_TEXT_VALUE       = "TextValue";
@@ -250,7 +250,7 @@ EntryView.prototype._canStartEditing = function() {
 
 EntryView.prototype.unSelect = function() {
   Util.assert(this._isLozenge());
-  Util.css_removeClass(this._textSpan,EntryView.CSS_SELECTED);
+  Util.css_removeClass(this._textSpan, EntryView.CSS_CLASS_SELECTED);
 };
 
 /** Select this Entry
@@ -259,7 +259,7 @@ EntryView.prototype.unSelect = function() {
 EntryView.prototype.selectView = function(eventObject) {
   var rootView = this.getRootView();
   if (this._isLozenge()) {
-    Util.css_addClass(this._textSpan,EntryView.CSS_SELECTED);
+    Util.css_addClass(this._textSpan, EntryView.CSS_CLASS_SELECTED);
     var addToSelection = (eventObject) && (eventObject.shiftKey || eventObject.ctrlKey || eventObject.metaKey);
     if (addToSelection) {
       rootView.addToSelection(this);
