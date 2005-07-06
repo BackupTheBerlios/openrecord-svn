@@ -151,11 +151,11 @@ PageView.prototype.doInitialDisplay = function() {
 
   var pageDivElement = this.getHtmlElement();
   
-  var headerElement = View.createAndAppendElement(pageDivElement, "h1");
+  var headerElement = View.appendNewElement(pageDivElement, "h1");
   this._headerText = new EntryView(this, headerElement, this._pageItem, attributeCalledName,
     this._pageItem.getSingleEntryFromAttribute(attributeCalledName), false);
 
-  var summaryViewDiv = View.createAndAppendElement(pageDivElement, "div");
+  var summaryViewDiv = View.appendNewElement(pageDivElement, "div");
   this._pageSummaryView = new EntryView(this, summaryViewDiv, this._pageItem, attributeCalledSummary,
     this._pageItem.getSingleEntryFromAttribute(attributeCalledSummary), true);
 
@@ -220,9 +220,9 @@ PageView.prototype._buildEditControls = function() {
   if (!this._editModeDiv) {
     var pageDivElement = this.getHtmlElement();
     var cssClass = SectionView.CSS_CLASS_SECTION + " " + RootView.CSS_CLASS_EDIT_TOOL;
-    this._editModeDiv = View.createAndAppendElement(pageDivElement, "div", cssClass);
-    View.createAndAppendElement(this._editModeDiv, "br");
-    var editButton = View.createAndAppendElement(this._editModeDiv, "input");
+    this._editModeDiv = View.appendNewElement(pageDivElement, "div", cssClass);
+    View.appendNewElement(this._editModeDiv, "br");
+    var editButton = View.appendNewElement(this._editModeDiv, "input");
     editButton.type = "Button";
     editButton.value = "New Section";
     editButton.onclick = this._addNewSection.bindAsEventListener(this);

@@ -198,14 +198,14 @@ TablePlugin.prototype._buildAttributeHashFromScratch = function() {
  */
 TablePlugin.prototype._buildAttributeEditor = function() {
   var htmlElement = this.getHtmlElement();
-  View.createAndAppendElement(htmlElement, "br");
-  var selectElt = View.createAndAppendElement(htmlElement, "select", RootView.CSS_CLASS_EDIT_TOOL);
+  View.appendNewElement(htmlElement, "br");
+  var selectElt = View.appendNewElement(htmlElement, "select", RootView.CSS_CLASS_EDIT_TOOL);
   var listOfAttributes = this.getWorld().getAttributes();
-  var optionElt = View.createAndAppendElement(selectElt, "option");
+  var optionElt = View.appendNewElement(selectElt, "option");
   optionElt.text = "Add new attribute:";
   for (var key in listOfAttributes) {
     var attribute = listOfAttributes[key];
-    optionElt = View.createAndAppendElement(selectElt, "option");
+    optionElt = View.appendNewElement(selectElt, "option");
     if (Util.isObjectInSet(attribute, this._displayAttributes)) {
       optionElt.text = '* ';
     }
@@ -214,8 +214,8 @@ TablePlugin.prototype._buildAttributeEditor = function() {
     optionElt.onclick = this._attributeEditorChanged.bindAsEventListener(this);
   }
   this._selectElement = selectElt;
-  /*View.createAndAppendTextNode(htmlElement, " Import Data:");
-  var importButton = View.createAndAppendElement(htmlElement,"input");
+  /*View.appendNewTextNode(htmlElement, " Import Data:");
+  var importButton = View.appendNewElement(htmlElement,"input");
   importButton.type = "file";
   importButton.onchange = this._importData.bindAsEventListener(this, importButton);*/
 };
@@ -356,7 +356,7 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   //create new table, remove old table if already exists
   var viewDivElement = this.getHtmlElement();
   View.removeChildrenOfElement(viewDivElement);
-  this._table = View.createAndAppendElement(viewDivElement, "table", this._cssClassForTable);
+  this._table = View.appendNewElement(viewDivElement, "table", this._cssClassForTable);
   
   this._buildHeader();
 

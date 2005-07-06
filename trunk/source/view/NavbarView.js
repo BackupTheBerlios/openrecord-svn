@@ -96,27 +96,28 @@ NavbarView.prototype._rebuildView = function() {
   View.removeChildrenOfElement(this._htmlElementForAnchors);
   for (key in listOfPages) {
     page = listOfPages[key];
-    var anchor = View.createAndAppendElement(this._htmlElementForAnchors, "a");
-    anchor.setAttribute("name", RootView.URL_PAGE_PREFIX + page._getUuid());
+    var anchorName = RootView.URL_PAGE_PREFIX + page._getUuid();
+    View.appendNewElement(this._htmlElementForAnchors, "a", null, {name: anchorName});
+    // anchor.setAttribute("name", RootView.URL_PAGE_PREFIX + page._getUuid());
   }
   
   var divElement = this.getHtmlElement();
   View.removeChildrenOfElement(divElement); 
-  var ulElement = View.createAndAppendElement(divElement, "ul", NavbarView.CSS_CLASS_MENU);
+  var ulElement = View.appendNewElement(divElement, "ul", NavbarView.CSS_CLASS_MENU);
   var rootView = this.getRootView();
   for (key in listOfPages) {
     page = listOfPages[key];
     page.addObserver(this);
-    var liElement = View.createAndAppendElement(ulElement, "li", NavbarView.CSS_CLASS_MENU_ITEM);
-    var anchorElement = View.createAndAppendElement(liElement, "a");
+    var liElement = View.appendNewElement(ulElement, "li", NavbarView.CSS_CLASS_MENU_ITEM);
     var menuUrl = rootView.getUrlForItem(page);
-    anchorElement.setAttribute("href", menuUrl);
     var menuText = page.getDisplayString();
-    View.createAndAppendTextNode(anchorElement, menuText);
+    var anchorElement = View.appendNewElement(liElement, "a", null, {href: menuUrl}, menuText);
+    // anchorElement.setAttribute("href", menuUrl);
+    // View.appendNewTextNode(anchorElement, menuText);
     anchorElement.onclick = RootView.clickOnLocalLink.bindAsEventListener();
   }
   
-  var newPageButton = View.createAndAppendElement(divElement, "input", RootView.CSS_CLASS_EDIT_TOOL);
+  var newPageButton = View.appendNewElement(divElement, "input", RootView.CSS_CLASS_EDIT_TOOL);
   newPageButton.type = "button";
   newPageButton.value = "New Page";
   newPageButton.onclick = this._clickOnNewPageButton.bindAsEventListener(this);

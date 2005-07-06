@@ -53,11 +53,9 @@ function SuggestionBox(htmlInputField, listOfItems) {
   this._selectedItem = null;
   this._shouldHide = htmlInputField.value.length === 0;
   
-  this._suggestionBoxDivElement = View.createAndAppendElement(document.body, "div", "SuggestionBox");
-  // this._suggestionBoxDivElement = document.createElement('div');
+  this._suggestionBoxDivElement = View.appendNewElement(document.body, "div", "SuggestionBox");
   this._suggestionBoxDivElement.style.zIndex = 11;
   this._suggestionBoxDivElement.style.display = "none";
-  // document.body.appendChild(this._suggestionBoxDivElement);
 
  /* this._inputField.onkeyup = this._keyPressOnInputField.bindAsEventListener(this);
   this._inputField.onfocus = this._focusOnInputField.bindAsEventListener(this);

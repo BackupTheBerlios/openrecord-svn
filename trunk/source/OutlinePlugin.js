@@ -103,19 +103,20 @@ OutlinePlugin.prototype.refresh = function() {
   var listOfContentItems = this.fetchItems();
   var outlineDiv = this.getHtmlElement();
   View.removeChildrenOfElement(outlineDiv);
-  var ulElement = View.createAndAppendElement(outlineDiv, "ul");
+  var ulElement = View.appendNewElement(outlineDiv, "ul");
   for (var contentItemKey in listOfContentItems) {
     var contentItem = listOfContentItems[contentItemKey];
-    var liElement = View.createAndAppendElement(ulElement, "li");
-    View.createAndAppendTextNode(liElement, contentItem.getDisplayName("{no name}") + " ");
-    var anchorElement = View.createAndAppendElement(liElement, "a", SectionView.CSS_CLASS_MORE_LINK);
+    var liText = contentItem.getDisplayName("{no name}") + " ";
+    var liElement = View.appendNewElement(ulElement, "li", null, null, liText);
+    // View.appendNewTextNode(liElement, contentItem.getDisplayName("{no name}") + " ");
+    var anchorElement = View.appendNewElement(liElement, "a", SectionView.CSS_CLASS_MORE_LINK);
 
     // PENDING: 
     //  We shouldn't call the private method _getUuid()
     //  We need a better way to get the URL for a content item
     anchorElement.setAttribute("href", RootView.URL_HASH_ITEM_PREFIX + contentItem._getUuid());
 
-    // View.createAndAppendTextNode(anchorElement, "(more &#8658;)");
+    // View.appendNewTextNode(anchorElement, "(more &#8658;)");
     anchorElement.innerHTML = "(more &#8658;)";
     Util.addEventListener(anchorElement, "click", RootView.clickOnLocalLink);
   }

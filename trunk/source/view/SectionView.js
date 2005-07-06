@@ -217,30 +217,30 @@ SectionView.prototype.doInitialDisplay = function() {
   }
   
   var sectionDiv = this.getHtmlElement();
-  var headerH2 = View.createAndAppendElement(sectionDiv, "h2");
+  var headerH2 = View.appendNewElement(sectionDiv, "h2");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
   this._headerView = new EntryView(this, headerH2, this._section, attributeCalledName,
     this._section.getSingleEntryFromAttribute(attributeCalledName));
-  var summaryDiv = View.createAndAppendElement(sectionDiv, "div");
+  var summaryDiv = View.appendNewElement(sectionDiv, "div");
   this._sectionSummaryView = new EntryView(this, summaryDiv, this._section, attributeCalledSummary,
     this._section.getSingleEntryFromAttribute(attributeCalledSummary), true);
-  View.createAndAppendElement(sectionDiv, "p");
+  View.appendNewElement(sectionDiv, "p");
 
   // create the editing controls, if we're in edit mode
-  var controlArea = View.createAndAppendElement(sectionDiv, "p", RootView.CSS_CLASS_EDIT_TOOL);
-  var textShowMeA = document.createTextNode("Show me a ");
-  controlArea.appendChild(textShowMeA);
+  var controlArea = View.appendNewElement(sectionDiv, "p", RootView.CSS_CLASS_EDIT_TOOL, null, "Show me a ");
+  // var textShowMeA = document.createTextNode("Show me a ");
+  // controlArea.appendChild(textShowMeA);
 
   // PENDING: We shouldn't call the private method _getUuid()
-  var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this._section._getUuid();
-  var selectElement = View.createAndAppendElement(controlArea, "select", null, selectMenuId);
+  // var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this._section._getUuid();
+  var selectElement = View.appendNewElement(controlArea, "select");
   var optionElement;
   var listener;
-  selectElement.setAttribute("name", selectMenuId);
+  // selectElement.setAttribute("name", selectMenuId);
   for (var key in SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
     var pluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[key];
-    optionElement = View.createAndAppendElement(selectElement, "option");
+    optionElement = View.appendNewElement(selectElement, "option");
     optionElement.selected = (selectedPluginClass == pluginClass);
     optionElement.value = pluginClass.getPluginItemUuid();
     var pluginItem = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
@@ -249,15 +249,15 @@ SectionView.prototype.doInitialDisplay = function() {
     Util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
   }
   
-  View.createAndAppendTextNode(controlArea," of items whose ");
+  View.appendNewTextNode(controlArea," of items whose ");
 
-  this._queryEditSpan = View.createAndAppendElement(controlArea, "span");
+  this._queryEditSpan = View.appendNewElement(controlArea, "span");
   // this._refreshQueryEditSpan();
 
-  View.createAndAppendTextNode(controlArea,".");
+  View.appendNewTextNode(controlArea,".");
 
   // create a div element for the plugin class to use
-  this._pluginDiv = View.createAndAppendElement(sectionDiv, "div");
+  this._pluginDiv = View.appendNewElement(sectionDiv, "div");
   this._pluginView = this.getPluginInstanceFromPluginItem(selectedPluginItem, this._pluginDiv);
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
@@ -327,20 +327,20 @@ SectionView.prototype._refreshQueryEditSpan = function() {
   var matchingEntry = hasMatchingEntries ? listOfMatchingEntries[0] : null;
   
   var listOfAttributes = this.getWorld().getAttributes();
-  var selectElement = View.createAndAppendElement(this._queryEditSpan, "select");
+  var selectElement = View.appendNewElement(this._queryEditSpan, "select");
   for (var key in listOfAttributes) {
     var anAttribute = listOfAttributes[key];
-    var optionElement = View.createAndAppendElement(selectElement, "option");
+    var optionElement = View.appendNewElement(selectElement, "option");
     optionElement.selected = (matchingAttribute.getDisplayString() == anAttribute.getDisplayString());
     optionElement.value = anAttribute._getUuid();
     optionElement.onclick = this.clickOnAttributeMenu.bindAsEventListener(this);
     optionElement.text = anAttribute.getDisplayString();
   }
   
-  View.createAndAppendTextNode(this._queryEditSpan, " is ");
+  View.appendNewTextNode(this._queryEditSpan, " is ");
   
   var listOfPossibleEntries = this.getWorld().getSuggestedItemsForAttribute(matchingAttribute);
-  var entrySpan = View.createAndAppendElement(this._queryEditSpan, "span");
+  var entrySpan = View.appendNewElement(this._queryEditSpan, "span");
   
   var entryView =  new EntryView(this, entrySpan, myQuery, attributeCalledQueryMatchingValue, matchingEntry);
   entryView.setSuggestions(listOfPossibleEntries);

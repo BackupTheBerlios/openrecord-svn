@@ -191,30 +191,67 @@ View.removeChildrenOfElement = function(element) {
 
 
 /**
- * Given an HTML element, we first call document.createElement() to 
- * create a new element, and then call appendChild() to add the new 
- * element to the given element.
+ * This method calls document.createElement() to create a new element, and 
+ * then initialized the new element with the values provided by the caller.
  *
  * @scope    public class method
- * @param    parentElement    The existing element that we should append the new element to. 
  * @param    tagName    The HTML tag for the element ("div", "p", "span", etc.). 
  * @param    cssClassName    Optional. The HTML/CSS class to assign to the new element. 
- * @param    elementId    Optional. The HTML id to assign to the new element. 
+ * @param    attributesInJson    Optional. A JSON object with additional attributes to set on the new element. 
+ * @param    text    Optional. A text string to put in a text node within the new element. 
  * @return   The newly created HTML element.
  */
-View.createAndAppendElement = function(parentElement, tagName, cssClassName, elementId) {
-  Util.assert(parentElement instanceof HTMLElement);
+View.newElement = function(tagName, cssClassName, attributesInJson, text) {
   Util.assert(Util.isString(tagName));
   Util.assert(!cssClassName || Util.isString(cssClassName));
-  Util.assert(!elementId || Util.isString(elementId));
+  Util.assert(!attributesInJson || Util.isObject(attributesInJson));
+  Util.assert(!text|| Util.isString(text));
 
   var newElement = window.document.createElement(tagName);
   if (cssClassName) {
     newElement.className = cssClassName;
   }
-  if (elementId) {
-    newElement.id = elementId;
+  if (attributesInJson) {
+    for (var key in attributesInJson) {
+      if (key == 'id') {
+        newElement.id = attributesInJson[key];
+      } else {
+        newElement.setAttribute(key, attributesInJson[key]);
+      }
+    }
   }
+  if (text) {
+    newElement.appendChild(window.document.createTextNode(text));
+  }
+  return newElement;
+};
+
+
+/**
+ * Given an HTML element, we first call document.createElement() to 
+ * create a new element, and then call appendChild() to add the new 
+ * element to the given element.
+ *
+ * Example:
+ * <pre>
+ * var menuUrl = "http://en.wikipedia.org/";
+ * var menuText = "Wikipedia";
+ * var menuItem = View.appendNewElement(mainMenu, "li", NavbarView.CSS_CLASS_MENU_ITEM);
+ * var link = View.appendNewElement(menuItem, "a", null, {href: menuUrl}, menuText);
+ * </pre>
+ *
+ * @scope    public class method
+ * @param    parentElement    The existing element that we should append the new element to. 
+ * @param    tagName    The HTML tag for the element ("div", "p", "span", etc.). 
+ * @param    cssClassName    Optional. The HTML/CSS class to assign to the new element. 
+ * @param    attributesInJson    Optional. A JSON object with additional attributes to set on the new element. 
+ * @param    text    Optional. A text string to put in a text node within the new element. 
+ * @return   The newly created HTML element.
+ */
+View.appendNewElement = function(parentElement, tagName, cssClassName, attributesInJson, text) {
+  Util.assert(parentElement instanceof HTMLElement);
+  
+  var newElement = View.newElement(tagName, cssClassName, attributesInJson, text);
   parentElement.appendChild(newElement);
   return newElement;
 };
@@ -230,7 +267,7 @@ View.createAndAppendElement = function(parentElement, tagName, cssClassName, ele
  * @param    textString    The text string to put in the text node.
  * @return   The newly created text node.
  */
-View.createAndAppendTextNode = function(parentElement, textString) {
+View.appendNewTextNode = function(parentElement, textString) {
   Util.assert(parentElement instanceof HTMLElement);
   Util.assert(Util.isString(textString));
 

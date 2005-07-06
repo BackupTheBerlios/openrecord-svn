@@ -100,27 +100,27 @@ function RootView(world) {
   document.onkeypress = this._onKeyPress.bindAsEventListener(this);
   
   window.document.body.innerHTML = "";
-  var rootDiv = View.createAndAppendElement(window.document.body, "div");
-  var anchorSpan = View.createAndAppendElement(rootDiv, "span");
+  var rootDiv = View.appendNewElement(window.document.body, "div");
+  var anchorSpan = View.appendNewElement(rootDiv, "span");
  
-  var headerP = View.createAndAppendElement(rootDiv, "p", "header");
-  var logoSpan = View.createAndAppendElement(headerP, "span", "logo");
+  var headerP = View.appendNewElement(rootDiv, "p", "header");
+  var logoSpan = View.appendNewElement(headerP, "span", "logo");
   logoSpan.innerHTML = '<a href="http://openrecord.org"><span class="logostart">open</span><span class="logomiddle">record</span><span class="logoend">.org</span></a>';
-  this._loginViewSpanElement = View.createAndAppendElement(headerP, "span");
-  View.createAndAppendElement(headerP, "br");
-  this._navbarDivElement = View.createAndAppendElement(rootDiv, "div");
-  var contentAreaDiv = View.createAndAppendElement(rootDiv, "div", "content_area");
-  this._contentViewDivElement = View.createAndAppendElement(contentAreaDiv, "div");
-  this._debugDivElement = View.createAndAppendElement(rootDiv, "div", "debug");
+  this._loginViewSpanElement = View.appendNewElement(headerP, "span");
+  View.appendNewElement(headerP, "br");
+  this._navbarDivElement = View.appendNewElement(rootDiv, "div");
+  var contentAreaDiv = View.appendNewElement(rootDiv, "div", "content_area");
+  this._contentViewDivElement = View.appendNewElement(contentAreaDiv, "div");
+  this._debugDivElement = View.appendNewElement(rootDiv, "div", "debug");
 
-  var footerP = View.createAndAppendElement(rootDiv, "p", "footer");
-  var copyrightSpan = View.createAndAppendElement(footerP, "span", "copyright");
+  var footerP = View.appendNewElement(rootDiv, "p", "footer");
+  var copyrightSpan = View.appendNewElement(footerP, "span", "copyright");
   copyrightSpan.innerHTML = 'You can copy freely from this site &mdash; ' +
     'copyright rights relinquished under the Creative Commons ' +
     '<a rel="license external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain Dedication</a>.';
 
-  this._statusBlurbSpanElement = View.createAndAppendElement(footerP, "span", "fileformat");
-  View.createAndAppendElement(footerP, "br");
+  this._statusBlurbSpanElement = View.appendNewElement(footerP, "span", "fileformat");
+  View.appendNewElement(footerP, "br");
   
   this._anchorSpan = anchorSpan;
   this._rootDiv = rootDiv;
@@ -300,7 +300,7 @@ RootView.prototype.setCurrentContentViewFromUrl = function() {
         if (!contentViewToSwitchTo) {
           itemFromUuid = this._world.getItemFromUuid(uuidText);
           if (itemFromUuid) {
-            divElement = View.createAndAppendElement(this._contentViewDivElement, "div");
+            divElement = View.appendNewElement(this._contentViewDivElement, "div");
             contentViewToSwitchTo = new ItemView(this, divElement, itemFromUuid);
             this._hashTableOfItemViewsKeyedByUuid[uuidText] = contentViewToSwitchTo;
           }
@@ -312,7 +312,7 @@ RootView.prototype.setCurrentContentViewFromUrl = function() {
           if (!contentViewToSwitchTo) {
             pageFromUuid = this.getWorld().getItemFromUuid(uuidText);
             if (pageFromUuid) {
-              divElement = View.createAndAppendElement(this._contentViewDivElement, "div");
+              divElement = View.appendNewElement(this._contentViewDivElement, "div");
               contentViewToSwitchTo = new PageView(this, divElement, pageFromUuid);
               this._hashTableOfPageViewsKeyedByUuid[uuidText] = contentViewToSwitchTo;
             }

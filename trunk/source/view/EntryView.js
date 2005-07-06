@@ -204,13 +204,16 @@ EntryView.prototype._buildView = function() {
   View.removeChildrenOfElement(htmlElement);
   
   var textString = this._getText();
-  
-  this._textSpan = View.createAndAppendElement(htmlElement, "span");
-  this._textNode = View.createAndAppendTextNode(this._textSpan, textString);
-  if (this._isProvisional) {
-    this._textSpan.className = EntryView.CSS_CLASS_PROVISIONAL;
-  }
-  else if (!this._alwaysUseEditField) {
+  var className = (this._isProvisional ? EntryView.CSS_CLASS_PROVISIONAL : '');
+  this._textSpan = View.appendNewElement(htmlElement, "span", className, null);
+  this._textNode = View.appendNewTextNode(this._textSpan, textString);
+  // if (this._isProvisional) {
+  //   this._textSpan.className = EntryView.CSS_CLASS_PROVISIONAL;
+  // }
+  // else if (!this._alwaysUseEditField) {
+  //   this._setClassName();
+  // }
+  if (!this._isProvisional && !this._alwaysUseEditField) {
     this._setClassName();
   }
   
