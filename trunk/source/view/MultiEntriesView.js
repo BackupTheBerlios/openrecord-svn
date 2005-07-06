@@ -127,7 +127,7 @@ MultiEntriesView.prototype.noLongerProvisional = function() {
  */
 MultiEntriesView.prototype.select = function(selectFirst) {
   var index = selectFirst ? 0 : this._entryViews.length - 1;
-  this._entryViews[index].startEditing();
+  this._entryViews[index].selectView();
 };
 
 
@@ -181,7 +181,7 @@ MultiEntriesView.prototype._handleClick = function(eventObject, entryView) {
 MultiEntriesView.prototype._handleOwnClick = function(eventObject) {
   var lastEntry = this._entryViews[this._entryViews.length-1];
   if (this._handleClick(eventObject, lastEntry)) {return true;}
-  if (eventObject.target == this.getHtmlElement()) {lastEntry.startEditing();}
+  if (eventObject.target == this.getHtmlElement()) {lastEntry.selectView();}
 };
 
 
@@ -218,7 +218,7 @@ MultiEntriesView.prototype._keyPressOnEditField = function(eventObject, entryVie
     index += move;
     if (index >= 0 && index < this._entryViews.length) {
       entryView.stopEditing();
-      this._entryViews[index].startEditing();
+      this._entryViews[index].selectView();
       return true;
     }
   }

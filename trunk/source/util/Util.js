@@ -71,6 +71,9 @@ Util.ASCII_VALUE_FOR_LEFT_ARROW = 37;  // 123
 Util.ASCII_VALUE_FOR_UP_ARROW = 38;    // 126
 Util.ASCII_VALUE_FOR_RIGHT_ARROW = 39; // 124
 Util.ASCII_VALUE_FOR_DOWN_ARROW = 40;  // 125
+Util.KEYCODE_FOR_BACKSPACE = 8;
+Util.KEYCODE_FOR_DELETE = 46;
+
 
 Util.ABBREV_MONTHS_ARRAY = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 
@@ -717,6 +720,47 @@ Util.getOffsetTopFromElement = function(htmlElement) {
   return cumulativeOffset;
 };
 
+// Functions to manipulate CSS
+
+/**
+ * Return true in htmlElement has css classname aClass
+ * @param htmlElement The HTML element to check on
+ * @param aClass The String representing class name to check on
+ */
+Util.css_hasClass = function(htmlElement, aClass) {
+  var matchingRegex = new RegExp("(^|\\s)" + aClass + "($|\\s)");
+  return htmlElement.className.match(matchingRegex);
+};
+
+/**
+ * Adds css classname aClass to an html Element
+ * @param htmlElement The HTML element whose class is to be added
+ * @param newClass The String representing class name to add
+ */
+Util.css_addClass = function(htmlElement, newClass) {
+  if (!Util.css_hasClass(htmlElement,newClass)) {
+    htmlElement.className += ' ' + newClass;
+    return true;
+  }
+  return false;
+};
+
+/**
+ * Removes css classname aClass from an html Element
+ * @param htmlElement The HTML element whose class is to be removed
+ * @param oldClass The String representing class name to remove
+ */
+Util.css_removeClass = function(htmlElement, oldClass) {
+  if (Util.css_hasClass(htmlElement,oldClass)) {
+    var matchingRegex = new RegExp("(^|\\s)" + oldClass); //BUG need to avoid replacing classNames that are a superset of oldClass
+    htmlElement.className = htmlElement.className.replace(matchingRegex,'');
+  }
+};
+
+// String Utilities
+Util.getStringFromKeyEvent = function(eventObj) {
+  return String.fromCharCode(eventObj.charCode); //Mozilla only call
+};
 
 // -------------------------------------------------------------------
 // End of file

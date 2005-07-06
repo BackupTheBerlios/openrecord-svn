@@ -417,7 +417,7 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
     multiEntriesView.setSuggestions(this._hashTableOfEntries[attribute.getUniqueKeyString()]);
     var listener = this;
     multiEntriesView.setKeyPressFunction(function (evt, entryView) {return listener.keyPressOnEditField(evt, entryView);});
-    multiEntriesView.setClickFunction(function (evt, entryView) {return listener._handleClick(evt, entryView);});
+    //multiEntriesView.setClickFunction(function (evt, entryView) {return listener._handleClick(evt, entryView);});
   }
 };
 

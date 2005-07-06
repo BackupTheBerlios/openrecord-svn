@@ -96,6 +96,8 @@ function RootView(world) {
   this._hashTableOfPageViewsKeyedByUuid = {};
   this._currentContentView = null;
   this._homePage = null;
+  this._selections = [];
+  document.onkeypress = this._onKeyPress.bindAsEventListener(this);
   
   window.document.body.innerHTML = "";
   var rootDiv = View.createAndAppendElement(window.document.body, "div");
@@ -506,7 +508,44 @@ RootView.prototype.displayObjectInDebugTextarea = function(object) {
   this.displayTextInDebugTextarea(outputText);
 };
 
+/**
+ * Sets the selection to the given selectable object (current View) or null
+ * Unselects the current selection if any
+ * @scope    public instance method
+ * @param    aView    A selectable object
+ */
+RootView.prototype.setSelection = function(aView) {
+  // unselect current selection
+  for (var i in this._selections) {
+    this._selections[i].unSelect();
+  }
+  if (aView) {
+    Util.assert(aView instanceof View);
+    this._selections = [aView];
+  }
+  else {this._selections = [];}
+};
 
+/**
+ * Adds the selection with the given selectable object (current View) 
+ * @scope    public instance method
+ * @param    aView    A selectable object
+ */
+RootView.prototype.addToSelection = function(aView) {
+  Util.assert(aView instanceof View);
+  Util.addObjectToSet(aView,this._selections);
+};
+
+/**
+ * Removes the given selectable object (current View) from selection
+ * @scope    public instance method
+ * @param    aView    A selectable object
+ */
+RootView.prototype.removeFromSelection = function(aView) {
+  Util.assert(aView instanceof View);
+  Util.assert(Util.removeObjectFromSet(aView,this._selections));
+};
+  
 // -------------------------------------------------------------------
 // Event handler methods
 // -------------------------------------------------------------------
@@ -544,6 +583,14 @@ RootView.clickOnLocalLink = function(eventObject) {
   RootView._ourSingleInstance.displayStatusBlurb("Page load: " + delayInMilliseconds + " milliseconds");
 };
 
+RootView.prototype._onKeyPress = function(anEvent) {
+  if (!(anEvent.target instanceof HTMLInputElement || anEvent.target instanceof HTMLTextAreaElement)) {
+    for (var i in this._selections) {
+      var selectObj = this._selections[i];
+      if (!selectObj.handleKeyEventWhenSelected(anEvent)) {break;}
+    }
+  }
+};
 
 // -------------------------------------------------------------------
 // End of file

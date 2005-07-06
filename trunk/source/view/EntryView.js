@@ -44,6 +44,7 @@
 // -------------------------------------------------------------------
 // EntryView public class constants
 // -------------------------------------------------------------------
+EntryView.CSS_SELECTED = "ItemValueSelected";
 EntryView.CSS_CLASS_PROVISIONAL      = "provisional";
 
 EntryView.CSS_CLASS_TEXT_VALUE       = "TextValue";
@@ -234,7 +235,7 @@ EntryView.prototype._setClassName = function() {
     var typeNumber = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
     if (dataType == typeNumber) {
       if (this._entry.getValue() < 0) {
-        this._textSpan.className += " " + EntryView.CSS_CLASS_NEGATIVE_NUMBER;
+        Util.css_addClass(this._textSpan,EntryView.CSS_CLASS_NEGATIVE_NUMBER);
       }
     }
   }
@@ -243,18 +244,42 @@ EntryView.prototype._setClassName = function() {
 
 /**
  *
- */
 EntryView.prototype._canStartEditing = function() {
   return (!this._isEditing  && !(this._valueIsItem && !this._alwaysUseEditField));
+}; */
+
+EntryView.prototype.unSelect = function() {
+  Util.assert(this._isLozenge());
+  Util.css_removeClass(this._textSpan,EntryView.CSS_SELECTED);
 };
 
+/** Select this Entry
+ *
+ */
+EntryView.prototype.selectView = function(eventObject) {
+  var rootView = this.getRootView();
+  if (this._isLozenge()) {
+    Util.css_addClass(this._textSpan,EntryView.CSS_SELECTED);
+    var addToSelection = (eventObject) && (eventObject.shiftKey || eventObject.ctrlKey || eventObject.metaKey);
+    if (addToSelection) {
+      rootView.addToSelection(this);
+    }
+    else {
+      rootView.setSelection(this);
+    }
+  }
+  else {
+    rootView.setSelection(null);
+    this.startEditing();
+  }
+};
 
 /**
  * Switch to edit text field for editing.
  *
  * @scope    public instance method
  */
-EntryView.prototype.startEditing = function(dontSelect) {
+EntryView.prototype.startEditing = function(dontSelect,initialStr) {
   var canStartEditing = !(this._isEditing || this._isLozenge());
   if (canStartEditing) {
     var editField = this._editField;
@@ -271,7 +296,7 @@ EntryView.prototype.startEditing = function(dontSelect) {
       editField.onkeypress = this.onKeyPress.bindAsEventListener(this);
       editField.onkeyup = this.onKeyUp.bindAsEventListener(this);
       editField.onfocus = this.onFocus.bindAsEventListener(this);
-      editField.defaultValue = this._isProvisional ? '' : this._textNode.data;
+      editField.defaultValue = this._isProvisional ? '' : (initialStr) ? initialStr : this._textNode.data;
       editField.size = 5; //editField.defaultValue.length+1;
     }
     
@@ -282,6 +307,7 @@ EntryView.prototype.startEditing = function(dontSelect) {
     this._setupSuggestionBox();
     this.getHtmlElement().replaceChild(editField, this._textSpan);
     if (!dontSelect) {editField.select();}
+    if (initialStr) {editField.focus();}
     this._isEditing = true;
   }
 };
@@ -491,7 +517,8 @@ EntryView.prototype.onClick = function(eventObject) {
     return true;
   }
   if (this.isInEditMode()) {
-    this.startEditing();
+    this.selectView(eventObject);
+    return true;
   }
 };
 
@@ -601,6 +628,32 @@ EntryView.prototype.onKeyPress = function(eventObject) {
   */
 };
 
+/**
+ * This method is called when user types on the keyboard. This view is given a chance
+ * to process the keypress event, if it is a user selected view
+ * This is different from EntryView.onKeyPress(), which receives key press events directly from the browser
+ */
+EntryView.prototype.handleKeyEventWhenSelected = function(myEvent) {
+  if (myEvent.ctrlKey || myEvent.metaKey) {
+    // ignore keyboard shortcuts
+    return false;
+  }
+  if (myEvent.keyCode ==  Util.KEYCODE_FOR_BACKSPACE || myEvent.keyCode == Util.KEYCODE_FOR_DELETE ||
+      myEvent.keyCode === 0) {
+    Util.assert(this._entry !== null);
+    this._entry.voteToDelete();
+    this._entry = null;
+    this._valueIsItem = false;
+    this._setClassName();
+    this.getRootView().removeFromSelection(this);
+    this._buildView();
+    if (myEvent.keyCode === 0) {
+      this.startEditing(true,Util.getStringFromKeyEvent(myEvent));
+      return true;
+    }
+    return false;
+  }
+};
 
 /**
  *

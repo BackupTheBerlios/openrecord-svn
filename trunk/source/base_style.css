@@ -684,6 +684,10 @@ div.SectionView {
   -moz-border-radius: 6px; // WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners
 }
 
+.ItemValueSelected {
+  background-color:#598bec;
+  color: #FFFFFF;
+}
 .DateValue {
   font-style: italic;
 }
