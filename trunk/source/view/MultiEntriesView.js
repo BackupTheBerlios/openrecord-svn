@@ -130,7 +130,9 @@ MultiEntriesView.prototype.select = function(selectFirst) {
   this._entryViews[index].selectView();
 };
 
-
+MultiEntriesView.prototype.entryRemoved = function(anEntryView) {
+  this._buildView();
+};
 /**
  *
  */

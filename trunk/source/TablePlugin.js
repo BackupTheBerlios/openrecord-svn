@@ -573,15 +573,15 @@ TablePlugin.prototype.keyPressOnEditField = function(eventObject, anEntryView) {
   
   var move = null;
   switch (asciiValueOfKey) {
-/*    case Util.ASCII_VALUE_FOR_LEFT_ARROW:
+    case Util.ASCII_VALUE_FOR_LEFT_ARROW:
       move = MOVE_LEFT;
-      break;*/
+      break;
     case Util.ASCII_VALUE_FOR_UP_ARROW:
       move = MOVE_UP;
       break;
-/*    case Util.ASCII_VALUE_FOR_RIGHT_ARROW:
+    case Util.ASCII_VALUE_FOR_RIGHT_ARROW:
       move = MOVE_RIGHT;
-      break;*/
+      break;
     case Util.ASCII_VALUE_FOR_DOWN_ARROW:
       move = MOVE_DOWN;
       break;
@@ -645,7 +645,7 @@ TablePlugin.prototype.keyPressOnEditField = function(eventObject, anEntryView) {
     var nextMultiEntryView = nextCell.or_entriesView;
     nextMultiEntryView.select(move != MOVE_LEFT);
   }
-  return !move;
+  return move;
 };
 
 

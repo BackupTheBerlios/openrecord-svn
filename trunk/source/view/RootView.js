@@ -97,7 +97,7 @@ function RootView(world) {
   this._currentContentView = null;
   this._homePage = null;
   this._selections = [];
-  document.onkeypress = this._onKeyPress.bindAsEventListener(this);
+  document.addEventListener("keypress",this._onKeyPress.bindAsEventListener(this),false);
   
   window.document.body.innerHTML = "";
   var rootDiv = View.appendNewElement(window.document.body, "div");
@@ -587,7 +587,10 @@ RootView.prototype._onKeyPress = function(anEvent) {
   if (!(anEvent.target instanceof HTMLInputElement || anEvent.target instanceof HTMLTextAreaElement)) {
     for (var i in this._selections) {
       var selectObj = this._selections[i];
-      if (!selectObj.handleKeyEventWhenSelected(anEvent)) {break;}
+      if (selectObj.handleKeyEventWhenSelected(anEvent)) {
+        anEvent.preventDefault();
+        return true;
+      }
     }
   }
 };

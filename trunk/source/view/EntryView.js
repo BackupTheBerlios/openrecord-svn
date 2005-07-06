@@ -585,7 +585,9 @@ EntryView.prototype.onKeyPress = function(eventObject) {
   if (this._suggestionBox && this._suggestionBox._keyPressOnInputField(eventObject)) {
     return true;
   }
-  if (this._keyPressFunction && this._keyPressFunction(eventObject, this)) {
+  var ignoreKeyPressFunc = this._isEditing && (eventObject.keyCode == Util.ASCII_VALUE_FOR_LEFT_ARROW || 
+    eventObject.keyCode == Util.ASCII_VALUE_FOR_RIGHT_ARROW);
+  if (!ignoreKeyPressFunc && this._keyPressFunction && this._keyPressFunction(eventObject, this)) {
     return true;
   }
   var editField = this._editField;
@@ -641,6 +643,9 @@ EntryView.prototype.handleKeyEventWhenSelected = function(myEvent) {
     // ignore keyboard shortcuts
     return false;
   }
+  if (this._keyPressFunction && this._keyPressFunction(myEvent, this)) {
+    return true;
+  }
   if (myEvent.keyCode ==  Util.KEYCODE_FOR_BACKSPACE || myEvent.keyCode == Util.KEYCODE_FOR_DELETE ||
       myEvent.keyCode === 0) {
     Util.assert(this._entry !== null);
@@ -649,7 +654,13 @@ EntryView.prototype.handleKeyEventWhenSelected = function(myEvent) {
     this._valueIsItem = false;
     this._setClassName();
     this.getRootView().removeFromSelection(this);
-    this._buildView();
+    if ((myEvent.keyCode ==  Util.KEYCODE_FOR_BACKSPACE || myEvent.keyCode == Util.KEYCODE_FOR_DELETE) &&
+        this.getSuperview().entryRemoved) {
+      this.getSuperview().entryRemoved(this);
+    }
+    else {
+      this._buildView();
+    }
     if (myEvent.keyCode === 0) {
       this.startEditing(true,Util.getStringFromKeyEvent(myEvent));
       return true;
