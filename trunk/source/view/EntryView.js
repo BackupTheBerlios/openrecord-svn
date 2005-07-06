@@ -683,14 +683,14 @@ EntryView.prototype._buildTypeHashTable = function() {
   var itemType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
   var connectionType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
   
-  this._ourHashTableOfTypesKeyedByClassName = {};
-  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_TEXT_VALUE] = text;
-  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_NUMBER_VALUE] = number;
-  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_DATE_VALUE] = dateType;
-  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_CHECKMARK_VALUE] = checkMark;
-  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_URL_VALUE] = url;
-  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_ITEM_VALUE] = itemType;
-  this._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_CONNECTION_VALUE] = connectionType;
+  EntryView._ourHashTableOfTypesKeyedByClassName = {};
+  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_TEXT_VALUE] = text;
+  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_NUMBER_VALUE] = number;
+  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_DATE_VALUE] = dateType;
+  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_CHECKMARK_VALUE] = checkMark;
+  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_URL_VALUE] = url;
+  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_ITEM_VALUE] = itemType;
+  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_CONNECTION_VALUE] = connectionType;
 };
 
 
@@ -703,11 +703,11 @@ EntryView.prototype._buildTypeHashTable = function() {
  * @return   A string with the CSS className for that type.
  */
 EntryView.prototype._getClassNameFromType = function(type) {
-  if (!this._ourHashTableOfTypesKeyedByClassName) {
+  if (!EntryView._ourHashTableOfTypesKeyedByClassName) {
     this._buildTypeHashTable();
   }
-  for (var className in this._ourHashTableOfTypesKeyedByClassName) {
-    typeItem = this._ourHashTableOfTypesKeyedByClassName[className];
+  for (var className in EntryView._ourHashTableOfTypesKeyedByClassName) {
+    typeItem = EntryView._ourHashTableOfTypesKeyedByClassName[className];
     if (type == typeItem) {
       return className;
     }
@@ -725,10 +725,10 @@ EntryView.prototype._getClassNameFromType = function(type) {
  * @return   An item that represents a basic data type, like Text, Number, or URL. 
  */
 EntryView.prototype._getTypeFromTypeClassName = function(className) {
-  if (!this._ourHashTableOfTypesKeyedByClassName) {
+  if (!EntryView._ourHashTableOfTypesKeyedByClassName) {
     this._buildTypeHashTable();
   }
-  return this._ourHashTableOfTypesKeyedByClassName[className];
+  return EntryView._ourHashTableOfTypesKeyedByClassName[className];
 };
 
 
