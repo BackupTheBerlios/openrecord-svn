@@ -99,8 +99,15 @@ function RootView(world) {
   this._selections = [];
   document.addEventListener("keypress",this._onKeyPress.bindAsEventListener(this),false);
   
-  window.document.body.innerHTML = "";
-  var rootDiv = View.appendNewElement(window.document.body, "div");
+  // window.document.body.innerHTML = "";
+  // var rootDiv = View.appendNewElement(window.document.body, "div");
+  var rootDiv = document.getElementById('OpenRecord');
+  if (!rootDiv) {
+    alert('Sorry, I could not find my <div id="OpenRecord"> element');
+    return;
+  }
+  View.removeChildrenOfElement(rootDiv);
+  
   var anchorSpan = View.appendNewElement(rootDiv, "span");
  
   var headerP = View.appendNewElement(rootDiv, "p", "header");
