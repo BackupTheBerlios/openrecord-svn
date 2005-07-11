@@ -347,7 +347,8 @@ Task
 Bug
   name
   summary
-  (most Bug items will also be categorized as Task items, so each Bug will also have all the attributes of a Task)
+  (most Bug items will also be categorized as Task items, so each Bug will also 
+  have all the attributes of a Task)
   
 
    
@@ -426,7 +427,8 @@ Tasks we want to defer until after release 0.1
    column hiding, etc.
 ---------------------------------------------------
  + Draft a Contributor Agreement
-     We need to draft some sort of Contributor Agreement, like the Apache Contributor Agreement or the Python Contributor Agreement.
+     We need to draft some sort of Contributor Agreement, like the Apache 
+     Contributor Agreement or the Python Contributor Agreement.
      See:
        http://www.apache.org/licenses/icla.txt
        http://www.python.org/psf/contrib-form.html
@@ -524,9 +526,11 @@ Tasks we want to defer until after release 0.1
 ===========================       
 Issues for post iteration#2
 ===========================       
-+ How should we rename "VirtualServer"?
-+ How should we interoperate with other repositories(openrecord + other sources of data)?
-+ Should we rename "World"?
-+ BUG: need to convert HTML entity codes back at client-server layer
-+ BUG: Can't really create own plugins yet (e.g. UUID need to be assigned, plugin item created)
-+ Q: Do we (and how) need a concept of focus for Views? Currently, only Text input and Textarea gets keyboard focus. We need it for table selections and possibly selecting "lozenges" (item references stored in the EntryView)
+ + How should we rename "VirtualServer"?
+ + How should we interoperate with other repositories(openrecord + other sources of data)?
+ + Should we rename "World"?
+ + BUG: need to convert HTML entity codes back at client-server layer
+ + BUG: Can't really create own plugins yet (e.g. UUID need to be assigned, plugin item created)
+ + Q: Do we (and how) need a concept of focus for Views? Currently, only Text input 
+    and Textarea gets keyboard focus. We need it for table selections and possibly 
+    selecting "lozenges" (item references stored in the EntryView)
