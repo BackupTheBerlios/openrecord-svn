@@ -251,11 +251,11 @@ brian  | 0.25 IED | 0.25    |  2. Allow editing for any logged in user, even if 
        |          |         |  5. Attempt to embed an OpenRecord view in a MediaWiki page
        |          |         |  6. Refactor our observer notification API (and implementation)
 chao   | 0.5  IED |         |  7. Wire up observers & keep views in sync
-       |          |         |  8. be able to select a lozenge 
+chao   |          | done?   |  8. be able to select a lozenge 
        |          |         |  9. be able to select a table row 
        |          |         | 10. be able to select a non-lozenge literal entry
        |          |         | 11. be able to select the text within an entry
-       |          |         | 12. be able to delete a selected lozenge 
+chao   |          | done?   | 12. be able to delete a selected lozenge 
        |          |         | 13. be able to delete a selected table row 
 chao   | 0.5  IED |         | 14. improve keyboard navigation: tab, arrow, and return keys
        |          |         | 15. Get data model to pass the ordinal unit tests again
