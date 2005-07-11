@@ -121,34 +121,22 @@ LoginView.prototype._rebuildView = function() {
   var editMode = currentUser ? true : false;
   this.getRootView().setEditMode(editMode);
   
-  var welcomeText, welcomeNode;
+  this.errorNode = View.appendNewElement(mySpan,"span",null,{id:"login_view_error"});
+  this.errorNode.style.display = 'None';
+  this.errorNode.style.color = '#EE0000';
   if (this._isCreatingNewAccount) {
     // The user wants to create a new account.
     // Create a line that looks like this:
-    //   Please enter new name and password:  _username_  _password_  [Create New Account]
+    //   Enter new name and password:  _username_  _password_  [Create New Account]
     
-    welcomeText = "Please enter new name and password:";
-    welcomeNode = document.createTextNode(welcomeText);
-    this.usernameInput = document.createElement("input");
-    this.usernameInput.size = 20;
-    this.usernameInput.value = "Albert Einstein";
-    
-    var passwordInput = document.createElement("input");
-    this.passwordInput.size = 10;
-    this.passwordInput.type = "password";
-    this.passwordInput.value = "randomdots";
+    View.appendNewTextNode(mySpan,"Enter new name and password:");
+    this.usernameInput = View.appendNewElement(mySpan,"input",null,{size:20,value:"Albert Einstein"});
+    View.appendNewTextNode(mySpan," ");
+    this.passwordInput = View.appendNewElement(mySpan,"input",null,{size:10,type:"password",value:"randomdots"});
     this.passwordInput.onkeypress = this._createAccountPasswordKeyPress.bindAsEventListener(this);
-
-    var newAcctButton = document.createElement("input");
-    newAcctButton.value = "Create New Account";
-    newAcctButton.type = "button";
-    newAcctButton.onclick = this._clickOnNewAcctButton.bindAsEventListener(this);
-    mySpan.appendChild(welcomeNode);
-    mySpan.appendChild(this.usernameInput);
-    mySpan.appendChild(document.createTextNode(" "));
-    mySpan.appendChild(this.passwordInput);
-    mySpan.appendChild(document.createTextNode(" "));
-    mySpan.appendChild(newAcctButton);
+    View.appendNewTextNode(mySpan," ");
+    View.appendNewElement(mySpan,"input",null,{value:"Create New Account",type:"button"}).onclick = 
+      this._clickOnNewAcctButton.bindAsEventListener(this);
     this.usernameInput.select();
   }
   else if (currentUser) { 
@@ -156,59 +144,32 @@ LoginView.prototype._rebuildView = function() {
     // Create a line that looks like this:
     //   Hello Jane Doe.  _Sign out_  [Edit]
     
-    welcomeText = "Hello " + currentUser.getDisplayName() + ". ";
-    welcomeNode = document.createTextNode(welcomeText);
-    mySpan.appendChild(welcomeNode);
-
-    var signoutLink = document.createElement("a");
-    signoutLink.appendChild(document.createTextNode("Sign out"));
-    signoutLink.onclick = this._clickOnSignoutLink.bindAsEventListener(this);
-    mySpan.appendChild(signoutLink);
-
-    mySpan.appendChild(document.createTextNode(" "));
-
-    var toolsButton = document.createElement("input");
-    toolsButton.type = "button";
-    toolsButton.value = (this.getRootView().isInShowToolsMode()) ? "Hide Tools" : "Show Tools";
-    toolsButton.onclick = this._clickOnShowToolsButton.bindAsEventListener(this);
-    mySpan.appendChild(toolsButton);
+    View.appendNewTextNode(mySpan,"Hello " + currentUser.getDisplayName() + ". ");
+    View.appendNewElement(mySpan,"a",null,null,"Sign out").onclick = this._clickOnSignoutLink.bindAsEventListener(this);
+    View.appendNewTextNode(mySpan," ");
+    View.appendNewElement(mySpan,"input",null,{type:"button",value:
+      (this.getRootView().isInShowToolsMode()) ? "Hide Tools" : "Show Tools"}).onclick =
+        this._clickOnShowToolsButton.bindAsEventListener(this);
   }
   else {
     // The user has not yet signed in.
     // Create a line that looks like this:
     //   _Create Account_  or sign in:  _username_  _password_  [Sign in]
     
-    var createAcctLink = document.createElement("a");
-    createAcctLink.appendChild(document.createTextNode("Create Account"));
-
-    welcomeText = " or sign in: "; 
-    welcomeNode = document.createTextNode(welcomeText);
-    this.usernameInput = document.createElement("input");
-    this.usernameInput.size = 20;
-    this.usernameInput.value = "Albert Einstein";
-    
-    this.passwordInput = document.createElement("input");
-    this.passwordInput.size = 10;
-    this.passwordInput.type = "password";
-    this.passwordInput.value = "randomdots";
+    View.appendNewElement(mySpan,"a",null,null,"Create Account").onclick = 
+      this._clickOnCreateAccountLink.bindAsEventListener(this);
+    View.appendNewTextNode(mySpan," or sign in: ");
+    this.usernameInput = View.appendNewElement(mySpan,"input",null,{size:20,value:"Albert Einstein"});
+    mySpan.appendChild(document.createTextNode(" "));
+    this.passwordInput = View.appendNewElement(mySpan,"input",null,{size:10,type:"password",value:"randomdots"});
     this.passwordInput.onkeypress = this._signinPasswordKeyPress.bindAsEventListener(this);
     this.passwordInput.onfocus = this._signinPasswordFocus.bindAsEventListener(this);
-
     this._myUsernameSuggestionBox = new UserSuggestionBox(this.usernameInput, this.getWorld().getUsers(), this.passwordInput);
-
-    var signinButton = document.createElement("input");
-    signinButton.value = "Sign in";
-    signinButton.type = "button";
-    signinButton.onclick = this._clickOnSignInButton.bindAsEventListener(this);
-    createAcctLink.onclick = this._clickOnCreateAccountLink.bindAsEventListener(this,signinButton);
-    mySpan.appendChild(createAcctLink);
-    mySpan.appendChild(welcomeNode);
-    mySpan.appendChild(this.usernameInput);
     mySpan.appendChild(document.createTextNode(" "));
-    mySpan.appendChild(this.passwordInput);
-    mySpan.appendChild(document.createTextNode(" "));
-    mySpan.appendChild(signinButton);
+    View.appendNewElement(mySpan,"input",null,{value:"Sign in",type:"button"}).onclick =
+      this._clickOnSignInButton.bindAsEventListener(this);
   }
+  
 };
 
 
@@ -293,8 +254,6 @@ LoginView.prototype._clickOnNewAcctButton = function(eventObject) {
     password = "";
   }
   this._createNewUser(username, password);
-  this._isCreatingNewAccount = false;
-  this._rebuildView();
 };
 
 
@@ -370,14 +329,11 @@ LoginView.prototype._loginUser = function(user, password) {
  *
  */
 LoginView.prototype._reportError = function(errorString) {
-  var newErrorNode = document.createTextNode(errorString);
   var mySpan = this.getHtmlElement();
-  if (this.errorNode) {
-    mySpan.replaceChild(newErrorNode, this.errorNode);
-  } else {
-    mySpan.appendChild(newErrorNode); 
-  }
-  this.errorNode = newErrorNode;
+  Effect.Shake(mySpan);
+  View.removeChildrenOfElement(this.errorNode);
+  View.appendNewTextNode(this.errorNode,errorString + ' ');
+  Effect.Appear(this.errorNode, {duration:2.0, transition:Effect.Transitions.wobble});
 };
 
 
@@ -394,8 +350,10 @@ LoginView.prototype._createNewUser = function(username, password) {
   if (isValidUsername(username)) {
     var newUser = this.getWorld().newUser(username, password); 
     this._loginUser(newUser,password);
+    this._isCreatingNewAccount = false;
+    this._rebuildView();
   } else {
-    this._reportError("\n Your username must be 3 or more alphanumeric characters!");
+    this._reportError("Invalid username"); //pending better error message
   }
 };
 
@@ -420,7 +378,7 @@ function UserSuggestionBox(htmlInputField, listOfEntries, nextHtmlField) {
   this._nextField = nextHtmlField;
   
   this._userSuggestionBoxDivElement = document.createElement('div');
-  // this._userSuggestionBoxDivElement.style.visibility = "hidden";
+  this._userSuggestionBoxDivElement.style.visibility = "hidden";
   this._userSuggestionBoxDivElement.style.zIndex = 11;
   this._userSuggestionBoxDivElement.style.display = "none";
   document.body.appendChild(this._userSuggestionBoxDivElement);
@@ -428,7 +386,7 @@ function UserSuggestionBox(htmlInputField, listOfEntries, nextHtmlField) {
   this._inputField.onkeyup = this._keyPressOnInputField.bindAsEventListener(this);
   this._inputField.onfocus = this._focusOnInputField.bindAsEventListener(this);
   this._inputField.onblur = this._blurOnInputField.bindAsEventListener(this);
-  this._keyPressOnInputField();
+  //this._keyPressOnInputField();
 }
 
 

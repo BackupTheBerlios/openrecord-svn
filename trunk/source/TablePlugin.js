@@ -313,6 +313,13 @@ TablePlugin.prototype.observedItemHasChanged = function(item) {
 
 
 /**
+ *
+ */
+TablePlugin.prototype._handleDrop = function(element) {
+  alert('table plugin: ' + element + ' was dropped on ' + this);
+};
+
+/**
  * Constructs the table header 
  *
  * @scope    private instance method
@@ -324,18 +331,21 @@ TablePlugin.prototype._buildHeader = function() {
   for (var i=0; i<this._displayAttributes.length; ++i) {
     var attribute = this._displayAttributes[i];
     if (!this._sortAttribute) {this._sortAttribute = attribute;}
-    var aCell = document.createElement("th");
-    var headerString = attribute.getDisplayString();
-    aCell.appendChild(document.createTextNode(headerString));
+    var headerElt = View.appendNewElement(headerRow,"th");
+    var aCell = View.appendNewElement(headerElt,"span",null,null,attribute.getDisplayString());
+    aCell.style.background = "rgb(90%, 90%, 90%)";
     if (this._sortAttribute == attribute) {
       aCell.appendChild(this.getSortIcon());
     }
     aCell.onclick = this.clickOnHeader.bindAsEventListener(this, attribute);
-    
-    headerRow.appendChild(aCell);
+    if (this.isInEditMode()) {
+      new Draggable(aCell, {revert:true});
+    }
     ++numCols;
   }
   this._numberOfColumns = numCols;
+  var listener = this;
+  Droppables.add(headerRow, {onDrop: function(element) {listener._handleDrop(element);}});   
 };
 
 
@@ -545,11 +555,11 @@ TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
 
 /**
  * 
- */
 TablePlugin.prototype._handleClick = function(eventObject, anEntryView) {
   var rowElement = anEntryView.getSuperview().getHtmlElement().parentNode; // entryView -> multiEntriesView -> cellElment -> rowElement
   return this.selectRow(rowElement);
 };
+*/
 
 
 /**
@@ -638,7 +648,7 @@ TablePlugin.prototype.keyPressOnEditField = function(eventObject, anEntryView) {
         userHitReturnInLastRow = true;
       }
       var nextRow = this._table.rows[nextRowNumber];
-      this.selectRow(nextRow);
+      //this.selectRow(nextRow);
       nextCell = nextRow.cells[cellElement.cellIndex];
     }
     

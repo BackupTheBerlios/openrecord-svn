@@ -236,10 +236,16 @@ EntryView.prototype._setClassName = function() {
     this._textSpan.className = className;
     
     var typeNumber = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
+    var itemType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
+    var connectionType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
     if (dataType == typeNumber) {
       if (this._entry.getValue() < 0) {
         Util.css_addClass(this._textSpan,EntryView.CSS_CLASS_NEGATIVE_NUMBER);
       }
+    }
+    else if (this.isInEditMode() && (dataType == itemType || dataType == connectionType)) {
+      this._textSpan.setAttribute("or_entry",this._entry);
+      new Draggable(this._textSpan, {revert:true});
     }
   }
 };
@@ -262,7 +268,6 @@ EntryView.prototype.unSelect = function() {
 EntryView.prototype.selectView = function(eventObject) {
   var rootView = this.getRootView();
   if (this._isLozenge()) {
-    Util.css_addClass(this._textSpan, EntryView.CSS_CLASS_SELECTED);
     var addToSelection = (eventObject) && (eventObject.shiftKey || eventObject.ctrlKey || eventObject.metaKey);
     if (addToSelection) {
       rootView.addToSelection(this);
@@ -270,6 +275,7 @@ EntryView.prototype.selectView = function(eventObject) {
     else {
       rootView.setSelection(this);
     }
+    Util.css_addClass(this._textSpan, EntryView.CSS_CLASS_SELECTED); // must set this after setting rootView selection
   }
   else {
     rootView.setSelection(null);
@@ -299,8 +305,13 @@ EntryView.prototype.startEditing = function(dontSelect,initialStr) {
       editField.onkeypress = this.onKeyPress.bindAsEventListener(this);
       editField.onkeyup = this.onKeyUp.bindAsEventListener(this);
       editField.onfocus = this.onFocus.bindAsEventListener(this);
-      editField.defaultValue = this._isProvisional ? '' : (initialStr) ? initialStr : this._textNode.data;
-      editField.size = 5; //editField.defaultValue.length+1;
+      editField.value = this._isProvisional ? '' : (initialStr) ? initialStr : this._textNode.data;
+      if (this.getSuperview().getEntryWidth) {
+        var recommendedWidth = this.getSuperview().getEntryWidth();
+        if (recommendedWidth > 0) {
+          editField.style.width = recommendedWidth + 'px';
+        }
+      }
     }
     
     if (this._isMultiLine) {

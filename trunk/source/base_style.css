@@ -465,7 +465,7 @@ div.EntryView textarea {
   background: rgb(100%, 100%, 100%);
 }
 
-.viewmode .simple_table tr:hover {
+.viewmode .simple_table {
   background: rgb(100%, 100%, 0%);
 }
 
