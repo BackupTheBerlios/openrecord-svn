@@ -627,7 +627,7 @@ div.SectionView {
 
 .SuggestionBox {
   background: rgb(100%, 100%, 100%);
-  font-size: small;
+  font-size: 0.8em;
   border-style: solid;
   border-width: thin;
   border-color: #000000;

@@ -103,6 +103,7 @@ MultiEntriesView.prototype.refresh = function() {
  * @param    item      The Item which just became real. 
  */
 MultiEntriesView.prototype._provisionalItemJustBecomeReal = function(item) {
+  Util.assert(item == this._item);
   var superview = this.getSuperview();
   if (superview._provisionalItemJustBecomeReal) {
     superview._provisionalItemJustBecomeReal(item);
@@ -174,6 +175,15 @@ MultiEntriesView.prototype.setClickFunction = function(onClickFunction) {
   this._clickFunction = onClickFunction;
 };
 
+/**
+ *
+ */
+MultiEntriesView.prototype.hasEntry = function(anEntry) {
+  for (var i in this._entryViews) {
+    if (this._entryViews[i] == anEntry) {return true;}
+  }
+  return false;
+};
 
 /**
  *
@@ -199,7 +209,16 @@ MultiEntriesView.prototype._handleOwnClick = function(eventObject) {
  *
  */
 MultiEntriesView.prototype._handleDrop = function(element) {
-  alert(element + ' was dropped on ' + this);
+  var uuid = element.getAttribute("id");
+  if (!uuid) {Util.assert(false);}
+  var droppedEntry = this.getWorld().getEntryFromUuid(uuid);
+  if (!droppedEntry) {Util.assert(false);}
+  if (!this.hasEntry(droppedEntry)) {
+/*    var entryItem = Util.isArray(droppedEntry._item) ? droppedEntry._item[0] : droppedEntry._item; //pending HACK
+    var newEntry = this.getWorld()._newEntry(this._item, null,
+      this._attribute, droppedEntry.getValue(entryItem), droppedEntry.getType());
+    this._addEntryView(newEntry);*/ //PENDING discussion with Brian on ConnectionEntries
+  }
 };
 
 
@@ -306,6 +325,7 @@ MultiEntriesView.prototype._buildView = function() {
     htmlElement.onclick = this._handleOwnClick.bindAsEventListener(this);
     var listener = this;
     Droppables.add(htmlElement, {accept: [EntryView.CSS_CLASS_CONNECTION_VALUE,EntryView.CSS_ITEM_VALUE],
+      hoverclass: "test",
       onDrop: function(element) {listener._handleDrop(element);}});
   } 
   this._myHasEverBeenDisplayedFlag = true;

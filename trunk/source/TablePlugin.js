@@ -141,13 +141,10 @@ TablePlugin.prototype._buildAttributes = function() {
   var displayAttrs = [];
   var anAttribute;
   if (entriesTableColumns.length > 0) {
-    this._hashTableOfEntries = {};
     for (var i=0;i<entriesTableColumns.length;++i) {
       anAttribute = entriesTableColumns[i].getValue();
       Util.assert(anAttribute instanceof Item);
       displayAttrs.push(anAttribute);
-      this._hashTableOfEntries[anAttribute.getUniqueKeyString()] =
-        this.getWorld().getSuggestedItemsForAttribute(anAttribute);
     }
   }
   else {
@@ -167,7 +164,6 @@ TablePlugin.prototype._buildAttributes = function() {
 TablePlugin.prototype._buildAttributeHashFromScratch = function() {
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var hashTableOfAttributes = {};
-  var hashTableOfEntries = {};
   for (var iKey in this._listOfItems) {
     var contentItem = this._listOfItems[iKey];
     var listOfAttributesForItem = contentItem.getAttributes();
@@ -176,12 +172,10 @@ TablePlugin.prototype._buildAttributeHashFromScratch = function() {
       if (attribute != attributeCalledCategory) {
         var attributeKeyString = attribute.getUniqueKeyString();
         hashTableOfAttributes[attributeKeyString] = attribute;
-        hashTableOfEntries[attributeKeyString] = this.getWorld().getSuggestedItemsForAttribute(attribute);
       }
     }
   }
   
-  this._hashTableOfEntries = hashTableOfEntries;
   if (Util.lengthOfHashTable(hashTableOfAttributes) < 1) {
     var attributeCalledName = this.getWorld().getAttributeCalledName();
     var key = attributeCalledName.getUniqueKeyString();
@@ -424,7 +418,7 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   aCell.or_entriesView = multiEntriesView;
   multiEntriesView.refresh();
   if (this.isInEditMode()) {
-    multiEntriesView.setSuggestions(this._hashTableOfEntries[attribute.getUniqueKeyString()]);
+    //multiEntriesView.setSuggestions(this._hashTableOfEntries[attribute.getUniqueKeyString()]);
     var listener = this;
     multiEntriesView.setKeyPressFunction(function (evt, entryView) {return listener.keyPressOnEditField(evt, entryView);});
     //multiEntriesView.setClickFunction(function (evt, entryView) {return listener._handleClick(evt, entryView);});
@@ -533,11 +527,9 @@ TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
           break;
         }
       }
-      delete this._hashTableOfEntries[attributeUuid];
     }
     else {
       this._displayAttributes.push(changedAttribute);
-      this._hashTableOfEntries[attributeUuid] = this.getWorld().getSuggestedItemsForAttribute(changedAttribute);
     }
     if (noStoredColumns) {
       for (i=0;i<this._displayAttributes.length;++i) {

@@ -862,6 +862,16 @@ World.prototype.getItemFromUuid = function(uuid, observer) {
   return (this._virtualServer.getItemFromUuid(uuid, observer));
 };
 
+/**
+ * Given a UUID, returns the entry identified by that UUID.
+ *
+ * @scope    public instance method
+ * @param    uuid    The UUID of the item to be returned. 
+ * @return   The entry identified by the given UUID.
+ */
+World.prototype.getEntryFromUuid = function(uuid) {
+  return (this._virtualServer.__getEntryFromUuid(uuid));
+};
 
 // -------------------------------------------------------------------
 // Query methods

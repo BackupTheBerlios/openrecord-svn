@@ -777,6 +777,16 @@ StubVirtualServer.prototype.__getItemFromUuidOrBootstrapItem = function(uuid) {
   return item;
 };
 
+/**
+ * Given a UUID, returns the existing entry identified by that UUID. 
+ * 
+ * @scope    private instance method
+ * @param    uuid    The UUID of the entry to be returned. 
+ * @return   The entry identified by the given UUID.
+ */
+StubVirtualServer.prototype.__getEntryFromUuid = function(uuid) {
+  return this._hashTableOfEntriesKeyedByUuid[uuid];
+};
 
 /**
  * Given a UUID, either (a) returns the existing entry identified by that UUID, 

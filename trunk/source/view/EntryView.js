@@ -112,13 +112,14 @@ function EntryView(superview, htmlElement, item, attribute, entry, isMultiLine) 
  *
  */
 EntryView.prototype._setupSuggestionBox = function() {
-  if (this._suggestions) {
-    var suggestionBox = new SuggestionBox(this._editField, this._suggestions);
+  var listOfSuggestions = this._suggestions || this.getWorld().getSuggestedItemsForAttribute(this._attribute);
+  if (listOfSuggestions && listOfSuggestions.length > 0) {
+    var suggestionBox = new SuggestionBox(this._editField, listOfSuggestions);
     this._suggestionBox = suggestionBox;
     if (this._editField && this._autoWiden) {
       var maxLength = 4;
-      for (var i=0; i < this._suggestions.length;++i) {
-        var aSuggestion = this._suggestions[i];
+      for (var i=0; i < listOfSuggestions.length;++i) {
+        var aSuggestion = listOfSuggestions[i];
         if (aSuggestion.getDisplayString().length > maxLength) {maxLength = aSuggestion.getDisplayString().length;}
       }
       this._editField.size = maxLength;
@@ -244,7 +245,7 @@ EntryView.prototype._setClassName = function() {
       }
     }
     else if (this.isInEditMode() && (dataType == itemType || dataType == connectionType)) {
-      this._textSpan.setAttribute("or_entry",this._entry);
+      this._textSpan.setAttribute("id",this._entry._getUuid()); //pending, why is _getUuid a private method?
       new Draggable(this._textSpan, {revert:true});
     }
   }
@@ -407,7 +408,7 @@ EntryView.prototype._transformToExpectedType = function(value) {
             return value;
           case typeCalledNumber:
             var floatVal = parseFloat(value);
-            if (floatVal != NaN) {return floatVal;}
+            if (!isNaN(floatVal)) {return floatVal;}
             break;
           case typeCalledDate:
             var dateVal = Date.parse(value);
@@ -417,11 +418,6 @@ EntryView.prototype._transformToExpectedType = function(value) {
             if (aType.isInCategory(categoryCalledCategory)) {
               value = repository.newItem(value);
               value.assignToCategory(aType);
-              if (this._suggestions) {
-                // add new item to suggestion list if list is present
-                // PENDING: should this be using an observer instead?
-                Util.addObjectToSet(value, this._suggestions);
-              }
               return value;
             }
             break;
@@ -459,7 +455,7 @@ EntryView.prototype._writeValue = function(value) {
         this._entry = this._item.replaceEntryWithEntryForAttribute(this._entry, this._attribute, value);
       }
       var superview = this.getSuperview();
-      if (superview._provisionalItemJustBecomeReal) {
+      if (this._isProvisional && superview._provisionalItemJustBecomeReal) {
         superview._provisionalItemJustBecomeReal(this._item);
       }
       if (value instanceof Item) {
@@ -532,7 +528,7 @@ EntryView.prototype.onClick = function(eventObject) {
   }
   if (this.isInEditMode()) {
     this.selectView(eventObject);
-    return true;
+    return false;
   }
 };
 

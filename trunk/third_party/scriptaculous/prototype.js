@@ -30,13 +30,12 @@ Object.extend = function(destination, source) {
     destination[property] = source[property];
   }
   return destination;
-  // test;
 }
-
-/*Object.prototype.extend = function(object) {
+/*
+Object.prototype.extend = function(object) {
   return Object.extend.apply(this, [this, object]);
-}*/
-
+}
+*/
 Function.prototype.bind = function(object) {
   var __method = this;
   return function() {
@@ -148,7 +147,7 @@ if (!Function.prototype.apply) {
   }
 }
 
-Object.extend(String.prototype,{
+Object.extend(String.prototype, {
   stripTags: function() {
     return this.replace(/<\/?[^>]+>/gi, '');
   },
@@ -184,7 +183,7 @@ Ajax.Base.prototype = {
       method:       'post',
       asynchronous: true,
       parameters:   ''
-    },(options || {}));
+    }, options || {});
   },
 
   responseIsSuccess: function() {
@@ -202,7 +201,7 @@ Ajax.Request = Class.create();
 Ajax.Request.Events = 
   ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete'];
 
-Ajax.Request.prototype = Object.extend(new Ajax.Base(),{
+Ajax.Request.prototype = Object.extend(new Ajax.Base(), {
   initialize: function(url, options) {
     this.transport = Ajax.getTransport();
     this.setOptions(options);
@@ -267,19 +266,23 @@ Ajax.Request.prototype = Object.extend(new Ajax.Base(),{
   respondToReadyState: function(readyState) {
     var event = Ajax.Request.Events[readyState];
 
-    if (event == 'Complete' && this.responseIsFailure())
+    if (event == 'Complete')
       (this.options['on' + this.transport.status]
-       || this.options.onFailure
-       || Prototype.emptyFunction)(this.transport);
+       || this.options['on' + this.responseIsSuccess ? 'Success' : 'Failure']
+       || Prototype.emptyFunction)(this.transport);       
 
-    (this.options['on' + event] || Prototype.emptyFunction)(this.transport);    
+    (this.options['on' + event] || Prototype.emptyFunction)(this.transport);
+
+    /* Avoid memory leak in MSIE: clean up the oncomplete event handler */
+    if (event == 'Complete')
+      this.transport.onreadystatechange = Prototype.emptyFunction;
   }
 });
 
 Ajax.Updater = Class.create();
 Ajax.Updater.ScriptFragment = '(?:<script.*?>)((\n|.)*?)(?:<\/script>)';
 
-Object.extend(Object.extend(Ajax.Updater.prototype,Ajax.Request.prototype),{
+Object.extend(Object.extend(Ajax.Updater.prototype, Ajax.Request.prototype), {
   initialize: function(container, url, options) {
     this.containers = {
       success: container.success ? $(container.success) : $(container),
@@ -293,7 +296,7 @@ Object.extend(Object.extend(Ajax.Updater.prototype,Ajax.Request.prototype),{
     var onComplete = this.options.onComplete || Prototype.emptyFunction;
     this.options.onComplete = (function() {
       this.updateContent();
-      onComplete(this.transport);
+      onComplete(this.transport);      
     }).bind(this);
 
     this.request(url);
@@ -332,7 +335,7 @@ Object.extend(Object.extend(Ajax.Updater.prototype,Ajax.Request.prototype),{
 });
 
 Ajax.PeriodicalUpdater = Class.create();
-Ajax.PeriodicalUpdater.prototype = Object.extend(new Ajax.Base(),{
+Ajax.PeriodicalUpdater.prototype = Object.extend(new Ajax.Base(), {
   initialize: function(container, url, options) {
     this.setOptions(options);
     this.onComplete = this.options.onComplete;
@@ -504,7 +507,7 @@ Abstract.Insertion.prototype = {
 var Insertion = new Object();
 
 Insertion.Before = Class.create();
-Insertion.Before.prototype = Object.extend(new Abstract.Insertion('beforeBegin'),{
+Insertion.Before.prototype = Object.extend(new Abstract.Insertion('beforeBegin'), {
   initializeRange: function() {
     this.range.setStartBefore(this.element);
   },
@@ -515,7 +518,7 @@ Insertion.Before.prototype = Object.extend(new Abstract.Insertion('beforeBegin')
 });
 
 Insertion.Top = Class.create();
-Insertion.Top.prototype = Object.extend(new Abstract.Insertion('afterBegin'),{
+Insertion.Top.prototype = Object.extend(new Abstract.Insertion('afterBegin'), {
   initializeRange: function() {
     this.range.selectNodeContents(this.element);
     this.range.collapse(true);
@@ -527,7 +530,7 @@ Insertion.Top.prototype = Object.extend(new Abstract.Insertion('afterBegin'),{
 });
 
 Insertion.Bottom = Class.create();
-Insertion.Bottom.prototype = Object.extend(new Abstract.Insertion('beforeEnd'),{
+Insertion.Bottom.prototype = Object.extend(new Abstract.Insertion('beforeEnd'), {
   initializeRange: function() {
     this.range.selectNodeContents(this.element);
     this.range.collapse(this.element);
@@ -539,7 +542,7 @@ Insertion.Bottom.prototype = Object.extend(new Abstract.Insertion('beforeEnd'),{
 });
 
 Insertion.After = Class.create();
-Insertion.After.prototype = Object.extend(new Abstract.Insertion('afterEnd'),{
+Insertion.After.prototype = Object.extend(new Abstract.Insertion('afterEnd'), {
   initializeRange: function() {
     this.range.setStartAfter(this.element);
   },
@@ -751,14 +754,14 @@ Abstract.TimedObserver.prototype = {
 }
 
 Form.Element.Observer = Class.create();
-Form.Element.Observer.prototype = Object.extend(new Abstract.TimedObserver(),{
+Form.Element.Observer.prototype = Object.extend(new Abstract.TimedObserver(), {
   getValue: function() {
     return Form.Element.getValue(this.element);
   }
 });
 
 Form.Observer = Class.create();
-Form.Observer.prototype = Object.extend(new Abstract.TimedObserver(),{
+Form.Observer.prototype = Object.extend(new Abstract.TimedObserver(), {
   getValue: function() {
     return Form.serialize(this.element);
   }
@@ -823,14 +826,14 @@ Abstract.EventObserver.prototype = {
 }
 
 Form.Element.EventObserver = Class.create();
-Form.Element.EventObserver.prototype = Object.extend(new Abstract.EventObserver(),{
+Form.Element.EventObserver.prototype = Object.extend(new Abstract.EventObserver(), {
   getValue: function() {
     return Form.Element.getValue(this.element);
   }
 });
 
 Form.EventObserver = Class.create();
-Form.EventObserver.prototype = Object.extend(new Abstract.EventObserver(),{
+Form.EventObserver.prototype = Object.extend(new Abstract.EventObserver(), {
   getValue: function() {
     return Form.serialize(this.element);
   }
@@ -889,53 +892,58 @@ Object.extend(Event, {
       element = element.parentNode;
     return element;
   },
+  
+  observers: false,
+  
+  _observeAndCache: function(element, name, observer, useCapture) {
+    if(!this.observers) this.observers = [];
+    if(element.addEventListener) {
+      this.observers.push([element,name,observer,useCapture]);
+      element.addEventListener(name, observer, useCapture);
+    } else if (element.attachEvent) {
+      this.observers.push([element,name,observer,useCapture]);
+      element.attachEvent('on'+name, observer);
+    }
+  },
+  
+  unloadCache: function() {
+    if(!Event.observers) return;
+    for(var i=0; i<Event.observers.length; i++) {
+      Event.stopObserving(Event.observers[i][0],Event.observers[i][1],Event.observers[i][2],Event.observers[i][3]);
+      Event.observers[i][0] = null;
+    }
+    Event.observers = false;
+  },
 
   observe: function(element, name, observer, useCapture) {
     var element = $(element);
     useCapture = useCapture || false;
     
-    if (name == 'keypress') {
-      if (navigator.appVersion.indexOf('AppleWebKit') > 0) {
-        element.addEventListener('keydown', observer, useCapture);
-        return;
-      }
-      if (element.addEventListener) {
-        element.addEventListener('keypress', observer, useCapture);
-      } else if (element.attachEvent) {
-        element.attachEvent('onkeydown', observer);
-      }
-    } else {
-      if (element.addEventListener) {
-        element.addEventListener(name, observer, useCapture);
-      } else if (element.attachEvent) {
-        element.attachEvent('on' + name, observer);
-      }
-    }
+    if(name == 'keypress' &&
+      ((navigator.appVersion.indexOf('AppleWebKit') > 0) || element.attachEvent))
+        name = 'keydown';
+    
+    this._observeAndCache(element, name, observer, useCapture);
   },
 
   stopObserving: function(element, name, observer, useCapture) {
     var element = $(element);
     useCapture = useCapture || false;
     
-    if (name == 'keypress') {
-      if (navigator.appVersion.indexOf('AppleWebKit') > 0) {
-        element.removeEventListener('keydown', observer, useCapture);
-        return;
-      }
-      if (element.removeEventListener) {
-        element.removeEventListener('keypress', observer, useCapture);
-      } else if (element.detachEvent) {
-        element.detachEvent('onkeydown', observer);
-      }
-    } else {
-      if (element.removeEventListener) {
-        element.removeEventListener(name, observer, useCapture);
-      } else if (element.detachEvent) {
-        element.detachEvent('on' + name, observer);
-      }
+    if(name == 'keypress' &&
+      ((navigator.appVersion.indexOf('AppleWebKit') > 0) || element.detachEvent))
+        name = 'keydown';
+    
+    if (element.removeEventListener) {
+      element.removeEventListener(name, observer, useCapture);
+    } else if (element.detachEvent) {
+      element.detachEvent('on' + name, observer);
     }
   }
 });
+
+// prevent memory leaks
+Event.observe(window,'unload', Event.unloadCache, false);
 
 var Position = {
 
