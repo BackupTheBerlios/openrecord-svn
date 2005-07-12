@@ -245,8 +245,10 @@ EntryView.prototype._setClassName = function() {
       }
     }
     else if (this.isInEditMode() && (dataType == itemType || dataType == connectionType)) {
-      this._textSpan.setAttribute("id",this._entry._getUuid()); //pending, why is _getUuid a private method?
-      new Draggable(this._textSpan, {revert:true});
+      if (!this.draggable) {
+        this._textSpan.or_entryView = this; 
+        this.draggable = new Draggable(this._textSpan, {revert:true});
+      }
     }
   }
 };
@@ -260,7 +262,8 @@ EntryView.prototype._canStartEditing = function() {
 
 EntryView.prototype.unSelect = function() {
   Util.assert(this._isLozenge());
-  Util.css_removeClass(this._textSpan, EntryView.CSS_CLASS_SELECTED);
+  this._setClassName();
+  //Util.css_removeClass(this._textSpan, EntryView.CSS_CLASS_SELECTED);
 };
 
 /** Select this Entry
@@ -276,7 +279,7 @@ EntryView.prototype.selectView = function(eventObject) {
     else {
       rootView.setSelection(this);
     }
-    Util.css_addClass(this._textSpan, EntryView.CSS_CLASS_SELECTED); // must set this after setting rootView selection
+    this._textSpan.className = EntryView.CSS_CLASS_SELECTED; // must set this after setting rootView selection
   }
   else {
     rootView.setSelection(null);
@@ -307,6 +310,7 @@ EntryView.prototype.startEditing = function(dontSelect,initialStr) {
       editField.onkeyup = this.onKeyUp.bindAsEventListener(this);
       editField.onfocus = this.onFocus.bindAsEventListener(this);
       editField.value = this._isProvisional ? '' : (initialStr) ? initialStr : this._textNode.data;
+      //alert(editField.value)
       if (this.getSuperview().getEntryWidth) {
         var recommendedWidth = this.getSuperview().getEntryWidth();
         if (recommendedWidth > 0) {
@@ -528,7 +532,7 @@ EntryView.prototype.onClick = function(eventObject) {
   }
   if (this.isInEditMode()) {
     this.selectView(eventObject);
-    return false;
+    return true;
   }
 };
 

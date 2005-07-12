@@ -180,7 +180,7 @@ MultiEntriesView.prototype.setClickFunction = function(onClickFunction) {
  */
 MultiEntriesView.prototype.hasEntry = function(anEntry) {
   for (var i in this._entryViews) {
-    if (this._entryViews[i] == anEntry) {return true;}
+    if (this._entryViews[i]._entry == anEntry) {return true;}
   }
   return false;
 };
@@ -209,15 +209,21 @@ MultiEntriesView.prototype._handleOwnClick = function(eventObject) {
  *
  */
 MultiEntriesView.prototype._handleDrop = function(element) {
-  var uuid = element.getAttribute("id");
-  if (!uuid) {Util.assert(false);}
-  var droppedEntry = this.getWorld().getEntryFromUuid(uuid);
+  var draggedEntryView = element.or_entryView;
+  if (!draggedEntryView) {Util.assert(false);}
+  var droppedEntry = draggedEntryView._entry;
   if (!droppedEntry) {Util.assert(false);}
   if (!this.hasEntry(droppedEntry)) {
-/*    var entryItem = Util.isArray(droppedEntry._item) ? droppedEntry._item[0] : droppedEntry._item; //pending HACK
-    var newEntry = this.getWorld()._newEntry(this._item, null,
-      this._attribute, droppedEntry.getValue(entryItem), droppedEntry.getType());
-    this._addEntryView(newEntry);*/ //PENDING discussion with Brian on ConnectionEntries
+    var newEntry;
+    if (droppedEntry.getType() == this.getWorld().getTypeCalledConnection()) {
+      var otherItem = droppedEntry.getConnectedItem(draggedEntryView._item);
+      var otherAttribute = droppedEntry.getAttributeForItem(otherItem);
+      newEntry = this._item.addConnectionEntry(this._attribute,otherItem,otherAttribute);
+    }
+    else {
+      newEntry = this._item.addNewEntryForAttribute(this._attribute,droppedEntry.getValue(),droppedEntry.getType());
+    }
+    this._addEntryView(newEntry);
   }
 };
 
@@ -245,7 +251,6 @@ MultiEntriesView.prototype._keyPressOnEditField = function(eventObject, entryVie
   }
   if (doCreateNewEntry) {
     entryView.stopEditing();
-    this._addSeparator();
     this._addEntryView(null).startEditing();
     return true;
   }
@@ -270,6 +275,7 @@ MultiEntriesView.prototype._keyPressOnEditField = function(eventObject, entryVie
  *
  */
 MultiEntriesView.prototype._addEntryView = function(entry) {
+  if (this._entryViews.length > 0 && this._entryViews[0]._entry) {this._addSeparator();}
   var spanElement = document.createElement("span");
   spanElement.style.width = '100%';
   var anEntryView = new EntryView(this, spanElement, this._item, this._attribute, entry);
@@ -317,7 +323,6 @@ MultiEntriesView.prototype._buildView = function() {
     for (var i=0; i<entries.length; ++i) {
       var anEntry = entries[i];
       this._addEntryView(anEntry);
-      if (i < (entries.length-1)) { this._addSeparator();}
     }
   }
   

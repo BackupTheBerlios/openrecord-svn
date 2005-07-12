@@ -683,11 +683,16 @@ div.SectionView {
   border: thin solid #A4BDEC;	
   -moz-border-radius: 6px; // WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners
 }
-
+.ItemValue:hover, .ConnectionValue:hover {
+  background-color: #BBCEF1; // darker blue
+}
 .ItemValueSelected {
   background-color:#598bec;
   color: #FFFFFF;
+  border: thin solid #A4BDEC;	
+  -moz-border-radius: 6px; // WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners
 }
+
 .DateValue {
   font-style: italic;
 }

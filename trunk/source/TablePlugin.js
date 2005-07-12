@@ -325,21 +325,21 @@ TablePlugin.prototype._buildHeader = function() {
   for (var i=0; i<this._displayAttributes.length; ++i) {
     var attribute = this._displayAttributes[i];
     if (!this._sortAttribute) {this._sortAttribute = attribute;}
-    var headerElt = View.appendNewElement(headerRow,"th");
-    var aCell = View.appendNewElement(headerElt,"span",null,null,attribute.getDisplayString());
-    aCell.style.background = "rgb(90%, 90%, 90%)";
+    var aCell = View.appendNewElement(headerRow,"th",null,null,attribute.getDisplayString());
+    //var aCell = View.appendNewElement(headerElt,"span",null,null,attribute.getDisplayString());
+    //aCell.style.background = "rgb(90%, 90%, 90%)";
     if (this._sortAttribute == attribute) {
       aCell.appendChild(this.getSortIcon());
     }
     aCell.onclick = this.clickOnHeader.bindAsEventListener(this, attribute);
     if (this.isInEditMode()) {
-      new Draggable(aCell, {revert:true});
+      //new Draggable(aCell, {revert:true});
     }
     ++numCols;
   }
   this._numberOfColumns = numCols;
   var listener = this;
-  Droppables.add(headerRow, {onDrop: function(element) {listener._handleDrop(element);}});   
+  //Droppables.add(headerRow, {onDrop: function(element) {listener._handleDrop(element);}});   
 };
 
 

@@ -17,12 +17,12 @@
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // "Dashboard"
+    { "Entry": {                                              // "Intro"
              "uuid": "8a3c6b5b-ce7f-11d9-8cd5-e24829d2f59b",
         "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
              "item": "8a3c6b50-ce7f-11d9-8cd5-e24829d2f59b",  // (Page: Dashboard Demo Page)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Dashboard" }
+            "value": "Intro" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // "Dashboard Demo Page"
