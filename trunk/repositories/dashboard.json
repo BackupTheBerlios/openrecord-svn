@@ -2880,4 +2880,614 @@
            "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
            "item": ["2084f120-f3d4-11d9-972b-e24829d2f59b", "2120ead0-e993-11d9-b345-e24829d2f59b"],
       "attribute": ["ba630990-e992-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of New Section)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Item": { "uuid": "589c60c0-f3d4-11d9-972b-e24829d2f59b" } },
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of New Section).(Name) = "Layout data for Table of New Section"
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "589caee0-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "589c60c0-f3d4-11d9-972b-e24829d2f59b",
+            "value": "Layout data for Table of New Section"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of New Section).(Category) = (Category: Layout Data)
+    // (Category: Layout Data).(Items in Category) = (Layout Data: Layout data for Table of New Section)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "589d2410-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["589c60c0-f3d4-11d9-972b-e24829d2f59b", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (Layout Data: Layout data for Table of New Section).(Applies To Plugin) = (Plugin View: Table)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "589d7230-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "589c60c0-f3d4-11d9-972b-e24829d2f59b",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Section: New Section).(Layout Data) = (Layout Data: Layout data for Table of New Section)
+    // (Layout Data: Layout data for Table of New Section).(Section this layout data belongs to) = (Section: New Section)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "589dc050-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["58855650-f3d4-11d9-972b-e24829d2f59b", "589c60c0-f3d4-11d9-972b-e24829d2f59b"],
+        "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Section: New Section)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Item": { "uuid": "58855650-f3d4-11d9-972b-e24829d2f59b" } },
+    // -----------------------------------------------------------------------
+    // (Section: New Section).(Name) = "New Section"
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "5885a470-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "58855650-f3d4-11d9-972b-e24829d2f59b",
+            "value": "New Section"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Section: New Section).(Category) = (Category: Section)
+    // (Category: Section).(Items in Category) = (Section: New Section)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "588619a0-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["58855650-f3d4-11d9-972b-e24829d2f59b", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (Page: Dashboard View).(Sections In Page) = (Section: New Section)
+    // (Section: New Section).(Page this section appears on) = (Page: Dashboard View)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "588667c0-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["99e90d10-e990-11d9-b90a-e24829d2f59b", "58855650-f3d4-11d9-972b-e24829d2f59b"],
+        "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (Section: New Section).(Plugin View) = (Plugin View: Table)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "5886b5e0-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "58855650-f3d4-11d9-972b-e24829d2f59b",
+            "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Query Spec: New Query)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Item": { "uuid": "58888aa0-f3d4-11d9-972b-e24829d2f59b" } },
+    // -----------------------------------------------------------------------
+    // (Query Spec: New Query).(Name) = "New Query"
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "5889c320-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "58888aa0-f3d4-11d9-972b-e24829d2f59b",
+            "value": "New Query"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Query Spec: New Query).(Category) = (Category: Query Spec)
+    // (Category: Query Spec).(Items in Category) = (Query Spec: New Query)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "588a1140-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["58888aa0-f3d4-11d9-972b-e24829d2f59b", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (Section: New Section).(Query Spec) = (Query Spec: New Query)
+    // (Query Spec: New Query).(Section this query spec belongs to) = (Section: New Section)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "588a8670-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["58855650-f3d4-11d9-972b-e24829d2f59b", "58888aa0-f3d4-11d9-972b-e24829d2f59b"],
+        "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // (Query Spec: New Query).(Matching Attribute) = (Attribute: Status)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "5ca7fdf0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001008-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "58888aa0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "c1428740-e992-11d9-9146-e24829d2f59b"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Query Spec: New Query).(Matching Value) = (Status: Done)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "5f1a0f60-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "58888aa0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "e467df90-e992-11d9-b345-e24829d2f59b"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Layout Data: Layout data for Table of New Section).(Table Columns) = (Attribute: Task)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "6541aec0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "589c60c0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "580b3700-e991-11d9-9146-e24829d2f59b"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Layout Data: Layout data for Table of New Section).(Table Columns) = (Attribute: Mail)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "67a8eac0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "589c60c0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "86e20770-e991-11d9-9146-e24829d2f59b"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Layout Data: Layout data for Table of New Section).(Table Columns) = (Attribute: Who)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "6a300ad0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "589c60c0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "41c86750-e992-11d9-9146-e24829d2f59b"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Layout Data: Layout data for Table of New Section).(Table Columns) = (Attribute: About)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "6c6c8d50-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "589c60c0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "81b155c0-e992-11d9-9146-e24829d2f59b"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Layout Data: Layout data for Table of New Section).(Table Columns) = (Attribute: Calendar)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "6efe82d0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "589c60c0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "94845da0-e992-11d9-9146-e24829d2f59b"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Layout Data: Layout data for Table of New Section).(Table Columns) = (Attribute: When)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "7127a460-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "589c60c0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "9e90ff60-e992-11d9-9146-e24829d2f59b"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Layout Data: Layout data for Table of New Section).(Table Columns) = (Attribute: Project)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "734d91a0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "589c60c0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "ba630990-e992-11d9-9146-e24829d2f59b"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Layout Data: Layout data for Table of New Section).(Table Columns) = (Attribute: Status)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "7523d840-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "589c60c0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "c1428740-e992-11d9-9146-e24829d2f59b"  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Item": { "uuid": "752ab610-f3d4-11d9-972b-e24829d2f59b" } },
+    // -----------------------------------------------------------------------
+    // (???).(Mail) = (Mail Status: from:)
+    // (Mail Status: from:).(Items in Category) = (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "811fc6e0-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["752ab610-f3d4-11d9-972b-e24829d2f59b", "f76b0cd0-f3d2-11d9-972b-e24829d2f59b"],
+        "attribute": ["86e20770-e991-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (???).(Status) = (Status: Done)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "81203c10-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "c1428740-e992-11d9-9146-e24829d2f59b",
+             "item": "752ab610-f3d4-11d9-972b-e24829d2f59b",
+            "value": "e467df90-e992-11d9-b345-e24829d2f59b"  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // (???).(Who) = (Person: Mitch)
+  // (Person: Mitch).(Items in Category) = (???)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "834da360-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": ["752ab610-f3d4-11d9-972b-e24829d2f59b", "5d01fa40-f3d3-11d9-972b-e24829d2f59b"],
+      "attribute": ["41c86750-e992-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+  },
+  // -----------------------------------------------------------------------
+  // (???).(About) = "Sec 508 and accessibility issues"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "89096190-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "81b155c0-e992-11d9-9146-e24829d2f59b",
+           "item": "752ab610-f3d4-11d9-972b-e24829d2f59b",
+          "value": "Sec 508 and accessibility issues"  }
+  },
+  // -----------------------------------------------------------------------
+  // (???).(When) = "Wed Apr 27 2005 00:00:00 GMT-0700 (PDT)"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "8efb4af0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "9e90ff60-e992-11d9-9146-e24829d2f59b",
+           "item": "752ab610-f3d4-11d9-972b-e24829d2f59b",
+          "value": "Wed Apr 27 2005 00:00:00 GMT-0700 (PDT)"  }
+  },
+  // -----------------------------------------------------------------------
+  // (???).(Project) = (Project: Accessibility)
+  // (Project: Accessibility).(Items in Category) = (???)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "901371b0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": ["752ab610-f3d4-11d9-972b-e24829d2f59b", "2120ead0-e993-11d9-b345-e24829d2f59b"],
+      "attribute": ["ba630990-e992-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Item": { "uuid": "812719e0-f3d4-11d9-972b-e24829d2f59b" } },
+    // -----------------------------------------------------------------------
+    // (???).(Mail) = (Mail Status: from:)
+    // (Mail Status: from:).(Items in Category) = (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "93274160-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["812719e0-f3d4-11d9-972b-e24829d2f59b", "f76b0cd0-f3d2-11d9-972b-e24829d2f59b"],
+        "attribute": ["86e20770-e991-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (???).(Status) = (Status: Done)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "9327b690-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "c1428740-e992-11d9-9146-e24829d2f59b",
+             "item": "812719e0-f3d4-11d9-972b-e24829d2f59b",
+            "value": "e467df90-e992-11d9-b345-e24829d2f59b"  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Person: Pieter)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Item": { "uuid": "96585d10-f3d4-11d9-972b-e24829d2f59b" } },
+    // -----------------------------------------------------------------------
+    // (Person: Pieter).(Name) = "Pieter"
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "96588420-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "96585d10-f3d4-11d9-972b-e24829d2f59b",
+            "value": "Pieter"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Person: Pieter).(Category) = (Category: Person)
+    // (Category: Person).(Items in Category) = (Person: Pieter)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "9658f950-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["96585d10-f3d4-11d9-972b-e24829d2f59b", "00001201-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (???).(Who) = (Person: Pieter)
+    // (Person: Pieter).(Items in Category) = (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "96594770-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["812719e0-f3d4-11d9-972b-e24829d2f59b", "96585d10-f3d4-11d9-972b-e24829d2f59b"],
+        "attribute": ["41c86750-e992-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // (???).(About) = "Re: text for session"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "9aecd950-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "81b155c0-e992-11d9-9146-e24829d2f59b",
+           "item": "812719e0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "Re: text for session"  }
+  },
+  // -----------------------------------------------------------------------
+  // (???).(When) = "Mon Apr 04 2005 00:00:00 GMT-0700 (PDT)"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "9d236860-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "9e90ff60-e992-11d9-9146-e24829d2f59b",
+           "item": "812719e0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "Mon Apr 04 2005 00:00:00 GMT-0700 (PDT)"  }
+  },
+  // -----------------------------------------------------------------------
+  // (???).(Project) = (Project: PyCon)
+  // (Project: PyCon).(Items in Category) = (???)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "9eed52f0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": ["812719e0-f3d4-11d9-972b-e24829d2f59b", "397b0c50-e993-11d9-b345-e24829d2f59b"],
+      "attribute": ["ba630990-e992-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Item": { "uuid": "932e4640-f3d4-11d9-972b-e24829d2f59b" } },
+    // -----------------------------------------------------------------------
+    // (???).(Mail) = (Mail Status: from:)
+    // (Mail Status: from:).(Items in Category) = (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "a5903cd0-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["932e4640-f3d4-11d9-972b-e24829d2f59b", "f76b0cd0-f3d2-11d9-972b-e24829d2f59b"],
+        "attribute": ["86e20770-e991-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (???).(Status) = (Status: Done)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "a590b200-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "c1428740-e992-11d9-9146-e24829d2f59b",
+             "item": "932e4640-f3d4-11d9-972b-e24829d2f59b",
+            "value": "e467df90-e992-11d9-b345-e24829d2f59b"  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Person: Andi)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Item": { "uuid": "a765e730-f3d4-11d9-972b-e24829d2f59b" } },
+    // -----------------------------------------------------------------------
+    // (Person: Andi).(Name) = "Andi"
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "a7665c60-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "a765e730-f3d4-11d9-972b-e24829d2f59b",
+            "value": "Andi"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Person: Andi).(Category) = (Category: Person)
+    // (Category: Person).(Items in Category) = (Person: Andi)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "a766aa80-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a765e730-f3d4-11d9-972b-e24829d2f59b", "00001201-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (???).(Who) = (Person: Andi)
+    // (Person: Andi).(Items in Category) = (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "a7671fb0-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["932e4640-f3d4-11d9-972b-e24829d2f59b", "a765e730-f3d4-11d9-972b-e24829d2f59b"],
+        "attribute": ["41c86750-e992-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // (???).(About) = "[Dev] PyCON musings"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "abb9ff10-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "81b155c0-e992-11d9-9146-e24829d2f59b",
+           "item": "932e4640-f3d4-11d9-972b-e24829d2f59b",
+          "value": "[Dev] PyCON musings"  }
+  },
+  // -----------------------------------------------------------------------
+  // (???).(When) = "Tue Mar 29 2005 00:00:00 GMT-0800 (PST)"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "adb1b060-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "9e90ff60-e992-11d9-9146-e24829d2f59b",
+           "item": "932e4640-f3d4-11d9-972b-e24829d2f59b",
+          "value": "Tue Mar 29 2005 00:00:00 GMT-0800 (PST)"  }
+  },
+  // -----------------------------------------------------------------------
+  // (???).(Project) = (Project: PyCon)
+  // (Project: PyCon).(Items in Category) = (???)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "af7e8120-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": ["932e4640-f3d4-11d9-972b-e24829d2f59b", "397b0c50-e993-11d9-b345-e24829d2f59b"],
+      "attribute": ["ba630990-e992-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+  },
+  // -----------------------------------------------------------------------
+  // (???).(Task) = (TaskType: Action)
+  // (TaskType: Action).(Items in Category) = (???)
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "b719adb0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": ["932e4640-f3d4-11d9-972b-e24829d2f59b", "20722c70-f3d4-11d9-972b-e24829d2f59b"],
+      "attribute": ["580b3700-e991-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Item": { "uuid": "a59741b0-f3d4-11d9-972b-e24829d2f59b" } },
+    // -----------------------------------------------------------------------
+    // (???).(Mail) = (Mail Status: from:)
+    // (Mail Status: from:).(Items in Category) = (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "c3397800-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a59741b0-f3d4-11d9-972b-e24829d2f59b", "f76b0cd0-f3d2-11d9-972b-e24829d2f59b"],
+        "attribute": ["86e20770-e991-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (???).(Status) = (Status: Done)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "c339ed30-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "c1428740-e992-11d9-9146-e24829d2f59b",
+             "item": "a59741b0-f3d4-11d9-972b-e24829d2f59b",
+            "value": "e467df90-e992-11d9-b345-e24829d2f59b"  }
+    }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Person: Blue)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Item": { "uuid": "c4755360-f3d4-11d9-972b-e24829d2f59b" } },
+    // -----------------------------------------------------------------------
+    // (Person: Blue).(Name) = "Blue"
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "c475a180-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "c4755360-f3d4-11d9-972b-e24829d2f59b",
+            "value": "Blue"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Person: Blue).(Category) = (Category: Person)
+    // (Category: Person).(Items in Category) = (Person: Blue)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "c47616b0-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["c4755360-f3d4-11d9-972b-e24829d2f59b", "00001201-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (???).(Who) = (Person: Blue)
+    // (Person: Blue).(Items in Category) = (???)
+    //           by (Chao) on (Jul 13, 2005)
+    { "Entry": {
+             "uuid": "c4768be0-f3d4-11d9-972b-e24829d2f59b",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["a59741b0-f3d4-11d9-972b-e24829d2f59b", "c4755360-f3d4-11d9-972b-e24829d2f59b"],
+        "attribute": ["41c86750-e992-11d9-9146-e24829d2f59b", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }  ]
+  },
+  // -----------------------------------------------------------------------
+  // (???).(About) = "Lunch!"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "c654e8d0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "81b155c0-e992-11d9-9146-e24829d2f59b",
+           "item": "a59741b0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "Lunch!"  }
+  },
+  // -----------------------------------------------------------------------
+  // (???).(When) = "Wed Apr 27 2005 00:00:00 GMT-0700 (PDT)"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "c89c8ee0-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "9e90ff60-e992-11d9-9146-e24829d2f59b",
+           "item": "a59741b0-f3d4-11d9-972b-e24829d2f59b",
+          "value": "Wed Apr 27 2005 00:00:00 GMT-0700 (PDT)"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Section: Now Items).(Name) = "Now Items"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "d96b1430-f3d4-11d9-972b-e24829d2f59b",
+  "previousEntry": "99eabac0-e990-11d9-b90a-e24829d2f59b",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "99ea6ca0-e990-11d9-b90a-e24829d2f59b",
+          "value": "Now Items"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Section: Later).(Name) = "Later"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "dc21f6d0-f3d4-11d9-972b-e24829d2f59b",
+  "previousEntry": "a1fc3610-f3d3-11d9-972b-e24829d2f59b",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "a1fbe7f0-f3d3-11d9-972b-e24829d2f59b",
+          "value": "Later"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Section: Done).(Name) = "Done"
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "def70fd0-f3d4-11d9-972b-e24829d2f59b",
+  "previousEntry": "5885a470-f3d4-11d9-972b-e24829d2f59b",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "58855650-f3d4-11d9-972b-e24829d2f59b",
+          "value": "Done"  }
   }
