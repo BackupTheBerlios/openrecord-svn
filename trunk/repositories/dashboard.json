@@ -4436,4 +4436,15 @@
       "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
            "item": "75be6330-f3d7-11d9-93f4-e24829d2f59b",
           "value": "397b0c50-e993-11d9-b345-e24829d2f59b"  }
+  },
+  // -----------------------------------------------------------------------
+  // (Page: Dashboard View).(Summary) = "This page lists all your Items sectioned by Triage Status: Now, Later and Do...
+  //           by (Chao) on (Jul 13, 2005)
+  { "Entry": {
+           "uuid": "6a141400-f3f8-11d9-845f-e24829d2f59b",
+  "previousEntry": "99e9f770-e990-11d9-b90a-e24829d2f59b",
+           "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+      "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+           "item": "99e90d10-e990-11d9-b90a-e24829d2f59b",
+          "value": "This page lists all your Items sectioned by Triage Status: Now, Later and Done."  }
   }
