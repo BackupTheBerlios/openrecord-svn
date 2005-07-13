@@ -57,6 +57,7 @@ EntryView.CSS_CLASS_CONNECTION_VALUE = "ConnectionValue";
 
 EntryView.CSS_CLASS_NEGATIVE_NUMBER  = "NegativeNumber";
 
+EntryView.UUID_FOR_ATTRIBUTE_NOT_LOZENGE = "00040106-ce7f-11d9-8cd5-0011113ae5d6";
 
 // -------------------------------------------------------------------
 // EntryView private class variables
@@ -97,6 +98,7 @@ function EntryView(superview, htmlElement, item, attribute, entry, isMultiLine) 
   this._isEditing = false;
   this._proxyOnKeyFunction = null;
   this._alwaysUseEditField = null;
+  this._attributeCanBeLozenge = this._isLozengeAttribute();
   
   this._isProvisional = item.isProvisional();
   if (this._isProvisional) {
@@ -107,6 +109,18 @@ function EntryView(superview, htmlElement, item, attribute, entry, isMultiLine) 
   }
 }
 
+
+/**
+ *
+ */
+EntryView.prototype._isLozengeAttribute = function() {
+  if (!EntryView.attributeCalledNotLozenge) {
+    EntryView.attributeCalledNotLozenge =
+      this.getWorld().getItemFromUuid(EntryView.UUID_FOR_ATTRIBUTE_NOT_LOZENGE);
+  }
+  var entries = this._attribute.getEntriesForAttribute(EntryView.attributeCalledNotLozenge);
+  return entries.length === 0; //PENDING need to actually check value of entries
+};
 
 /**
  *
@@ -190,7 +204,7 @@ EntryView.prototype.refresh = function() {
  *
  */
 EntryView.prototype._isLozenge = function() {
-  return this._valueIsItem && !this._alwaysUseEditField;
+  return this._attributeCanBeLozenge && this._valueIsItem && !this._alwaysUseEditField;
 };
 
 
@@ -234,20 +248,25 @@ EntryView.prototype._setClassName = function() {
   if (this._entry) {
     var dataType = this._entry.getType();
     var className = this._getClassNameFromType(dataType);
+    var itemType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
+    var connectionType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
+    if (dataType == itemType || dataType == connectionType) {
+      if (this._isLozenge()) {
+        if (this.isInEditMode() && !this.draggable) {
+          this._textSpan.or_entryView = this; 
+          this.draggable = new Draggable(this._textSpan, {revert:true});
+        }
+      }
+      else {
+        className = EntryView.CSS_CLASS_TEXT_VALUE;
+      }
+    }
     this._textSpan.className = className;
     
     var typeNumber = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
-    var itemType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
-    var connectionType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
     if (dataType == typeNumber) {
       if (this._entry.getValue() < 0) {
         Util.css_addClass(this._textSpan,EntryView.CSS_CLASS_NEGATIVE_NUMBER);
-      }
-    }
-    else if (this.isInEditMode() && (dataType == itemType || dataType == connectionType)) {
-      if (!this.draggable) {
-        this._textSpan.or_entryView = this; 
-        this.draggable = new Draggable(this._textSpan, {revert:true});
       }
     }
   }
@@ -700,22 +719,14 @@ EntryView.prototype.noLongerProvisional = function() {
  * @scope    private instance method
  */
 EntryView.prototype._buildTypeHashTable = function() {
-  var text      = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_TEXT);
-  var number    = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
-  var dateType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_DATE);
-  var checkMark = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CHECK_MARK);
-  var url       = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_URL);
-  var itemType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
-  var connectionType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
-  
   EntryView._ourHashTableOfTypesKeyedByClassName = {};
-  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_TEXT_VALUE] = text;
-  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_NUMBER_VALUE] = number;
-  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_DATE_VALUE] = dateType;
-  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_CHECKMARK_VALUE] = checkMark;
-  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_URL_VALUE] = url;
-  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_ITEM_VALUE] = itemType;
-  EntryView._ourHashTableOfTypesKeyedByClassName[EntryView.CSS_CLASS_CONNECTION_VALUE] = connectionType;
+  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_TEXT] = EntryView.CSS_CLASS_TEXT_VALUE;
+  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_NUMBER] = EntryView.CSS_CLASS_NUMBER_VALUE;
+  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_DATE] = EntryView.CSS_CLASS_DATE_VALUE;
+  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_CHECK_MARK] = EntryView.CSS_CLASS_CHECKMARK_VALUE;
+  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_URL] = EntryView.CSS_CLASS_URL_VALUE;
+  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_ITEM] = EntryView.CSS_CLASS_ITEM_VALUE;
+  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_CONNECTION] = EntryView.CSS_CLASS_CONNECTION_VALUE;
 };
 
 
@@ -731,13 +742,14 @@ EntryView.prototype._getClassNameFromType = function(type) {
   if (!EntryView._ourHashTableOfTypesKeyedByClassName) {
     this._buildTypeHashTable();
   }
-  for (var className in EntryView._ourHashTableOfTypesKeyedByClassName) {
+  return EntryView._ourHashTableOfTypesKeyedByClassName[type.getUniqueKeyString()];
+/*  for (var className in EntryView._ourHashTableOfTypesKeyedByClassName) {
     typeItem = EntryView._ourHashTableOfTypesKeyedByClassName[className];
     if (type == typeItem) {
       return className;
     }
   }
-  Util.assert(false, "no such type: " + type.getDisplayString());
+  Util.assert(false, "no such type: " + type.getDisplayString());*/
 };
 
 
@@ -748,14 +760,14 @@ EntryView.prototype._getClassNameFromType = function(type) {
  * @scope    private instance method
  * @param    className    A string with the CSS className for a type.
  * @return   An item that represents a basic data type, like Text, Number, or URL. 
- */
+
 EntryView.prototype._getTypeFromTypeClassName = function(className) {
   if (!EntryView._ourHashTableOfTypesKeyedByClassName) {
     this._buildTypeHashTable();
   }
-  return EntryView._ourHashTableOfTypesKeyedByClassName[className];
+  return EntryView._ourHashTableOfTypesKeyedByClassName[className]; //NO LONGER VALID
 };
-
+ */
 
 // -------------------------------------------------------------------
 // End of file

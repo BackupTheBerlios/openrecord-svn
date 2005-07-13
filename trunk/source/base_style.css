@@ -381,7 +381,7 @@ h2.EntryView input {
 }
 
 div.EntryView textarea {
-  //font-size: large;
+  /*font-size: large;*/
   background: #CCCCCC;
   width: 100%;
   font-family: Arial, Verdana, sans-serif;
@@ -450,6 +450,9 @@ div.EntryView textarea {
   border-collapse: collapse; 
 }
 
+.simple_table img {
+  vertical-align: middle;
+}
 .simple_table th {
   padding: 0.3em;
   color: #000000;
@@ -676,19 +679,26 @@ div.SectionView {
 }
 
 .ItemValue, .ConnectionValue {
-  background-color: #DEE7F8; // light blue
-  padding: 1px;
+  background-color: #DEE7F8; /* light blue */
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 8px;
   border: thin solid #A4BDEC;	
-  -moz-border-radius: 6px; // WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners
+  -moz-border-radius: 12px; /* WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners */
 }
 .ItemValue:hover, .ConnectionValue:hover {
-  background-color: #BBCEF1; // darker blue
+  background-color: #BBCEF1; /* darker blue */
 }
 .ItemValueSelected {
   background-color:#598bec;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 8px;
   color: #FFFFFF;
   border: thin solid #A4BDEC;	
-  -moz-border-radius: 6px; // WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners
+  -moz-border-radius: 6px; /* WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners */
 }
 
 .DateValue {

@@ -325,11 +325,11 @@ TablePlugin.prototype._buildHeader = function() {
   for (var i=0; i<this._displayAttributes.length; ++i) {
     var attribute = this._displayAttributes[i];
     if (!this._sortAttribute) {this._sortAttribute = attribute;}
-    var aCell = View.appendNewElement(headerRow,"th",null,null,attribute.getDisplayString());
-    //var aCell = View.appendNewElement(headerElt,"span",null,null,attribute.getDisplayString());
+    var headerElt = View.appendNewElement(headerRow,"th");
+    var aCell = View.appendNewElement(headerElt,"span",null,null,attribute.getDisplayString());
     //aCell.style.background = "rgb(90%, 90%, 90%)";
     if (this._sortAttribute == attribute) {
-      aCell.appendChild(this.getSortIcon());
+      headerElt.appendChild(this.getSortIcon());
     }
     aCell.onclick = this.clickOnHeader.bindAsEventListener(this, attribute);
     if (this.isInEditMode()) {
@@ -399,7 +399,7 @@ TablePlugin.prototype.refresh = function() {
 TablePlugin.prototype.getSortIcon = function() {
   var imageName = this._ascendingOrder ? TablePlugin.ASCENDING_GIF : TablePlugin.DESCENDING_GIF;
   var image =  Util.createImageElement(imageName);
-  image.align = "middle";
+  //image.align = "right";
   return image;
 };
 

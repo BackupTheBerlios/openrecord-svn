@@ -250,7 +250,6 @@ SuggestionBox.prototype._redisplaySuggestionBox = function() {
       var row = table.insertRow(rowNumber);
       var cell = row.insertCell(columnNumber);
       row.className = (this._selectedItem == item) ? "selected":"";
-      //cell.style.background = (this._selectedItem == item) ? "rgb(0%,70%,100%)":""; //pending need to CSS-ify this
       cell.appendChild(textNode);
       cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, item);
       rowNumber += 1;
@@ -261,9 +260,8 @@ SuggestionBox.prototype._redisplaySuggestionBox = function() {
     var suggestionBoxTop = Util.getOffsetTopFromElement(this._inputField) + this._inputField.offsetHeight;
     var suggestionBoxLeft = Util.getOffsetLeftFromElement(this._inputField);
     this._suggestionBoxDivElement.style.top = suggestionBoxTop + "px"; 
-    this._suggestionBoxDivElement.style.left = suggestionBoxLeft + "px";
-    // alert(this._inputField.offsetWidth);
-    this._suggestionBoxDivElement.style.width = (this._inputField.offsetWidth - 2)+ "px";
+    this._suggestionBoxDivElement.style.left = (suggestionBoxLeft-2) + "px";
+    this._suggestionBoxDivElement.style.width = (this._inputField.offsetWidth + 4)+ "px"; //HACK: Need to fix +4
 
     // this._suggestionBoxDivElement.className = "suggestion_box";
     this._suggestionBoxDivElement.style.visibility = "visible";
