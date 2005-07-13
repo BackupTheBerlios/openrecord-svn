@@ -144,7 +144,7 @@ LoginView.prototype._rebuildView = function() {
     // Create a line that looks like this:
     //   Hello Jane Doe.  _Sign out_  [Edit]
     
-    View.appendNewTextNode(mySpan,"Hello " + currentUser.getDisplayName() + ". ");
+    View.appendNewTextNode(mySpan,"Hello " + currentUser.getDisplayString() + ". ");
     View.appendNewElement(mySpan,"a",null,null,"Sign out").onclick = this._clickOnSignoutLink.bindAsEventListener(this);
     View.appendNewTextNode(mySpan," ");
     View.appendNewElement(mySpan,"input",null,{type:"button",value:
