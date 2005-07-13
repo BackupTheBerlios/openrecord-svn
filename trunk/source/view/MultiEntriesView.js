@@ -117,7 +117,7 @@ MultiEntriesView.prototype.getEntryWidth = function() {
   if (this._entryViews.length > 1) {
     return -1;
   }
-  return this.getHtmlElement().offsetWidth-8;
+  return this.getHtmlElement().offsetWidth-7;
 };
 
 /**
@@ -329,7 +329,7 @@ MultiEntriesView.prototype._buildView = function() {
   if (this.isInEditMode()) {
     htmlElement.onclick = this._handleOwnClick.bindAsEventListener(this);
     var listener = this;
-    Droppables.add(htmlElement, {accept: [EntryView.CSS_CLASS_CONNECTION_VALUE,EntryView.CSS_ITEM_VALUE],
+    Droppables.add(htmlElement, {accept: [EntryView.CSS_CLASS_CONNECTION_VALUE,EntryView.CSS_ITEM_VALUE,EntryView.CSS_CLASS_SELECTED],
       hoverclass: "test",
       onDrop: function(element) {listener._handleDrop(element);}});
   } 

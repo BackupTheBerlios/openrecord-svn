@@ -234,7 +234,7 @@ Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute,
   // If we've just been asked to replace the string "Foo" with the string "Foo",
   // then don't even bother creating a new entry. 
   if (previousEntry) {
-    var oldValue = previousEntry.getValue();
+    var oldValue = previousEntry.getValue(this);
     var oldPairOfAttributes = previousEntry.getAttribute();
     var oldPairOfItems = previousEntry.getItem();
     if (Util.isArray(oldPairOfAttributes)) {
