@@ -508,7 +508,7 @@ td.money {
 
 td.title {
   font-weight: bold;  
-  background: #000000;
+  background: #FFFFFF;
 }
 
 td.label {
@@ -618,7 +618,7 @@ li.detail {
 
 div.SectionView {
   border-top: solid thin #CCCCCC;
-  margin-top: 3em;
+  margin-top: 0.5em;
   padding-left: 0px;
 }
 
@@ -698,7 +698,7 @@ div.SectionView {
   padding-right: 8px;
   color: #FFFFFF;
   border: thin solid #A4BDEC;	
-  -moz-border-radius: 6px; /* WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners */
+  -moz-border-radius: 12px; /* WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners */
 }
 
 .DateValue {
