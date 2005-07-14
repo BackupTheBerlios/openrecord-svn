@@ -130,7 +130,7 @@ a:hover {
   text-decoration: none;
   border-bottom-style: solid;
   border-bottom-width: 1pt;
-  background: #99CCFF;
+  background: #A4BDEC;
 }
 
 a.anchor {
@@ -153,7 +153,7 @@ a[rel~="external"]:hover {
   text-decoration: none;
   border-bottom-style: solid;
   border-bottom-width: 1pt;
-  background: #99CCFF;
+  background: #DEE7F8;
 }
 
 a.more {
@@ -288,7 +288,7 @@ div.NavbarView {
 }
 
 .menu_item a:hover {
-  background-color: #99CCFF;
+  background-color: #DEE7F8;
   width: 100%;
   border-left: solid 1pt #6699FF;
   border-bottom-style: none;
@@ -456,7 +456,7 @@ div.EntryView textarea {
 .simple_table th {
   padding: 0.3em;
   color: #000000;
-  background: #99CCFF;
+  background: #BBCEF1;
   font-size: 0.8em;
   text-align: left;
   border: 1pt solid rgb(70%, 70%, 70%);
@@ -467,7 +467,7 @@ div.EntryView textarea {
 }
 
 /*.viewmode .simple_table tr:hover {
-  background: #99CCFF;
+  background: #DEE7F8;
 }*/
 
 .simple_table td {
@@ -508,7 +508,8 @@ td.money {
 
 td.title {
   font-weight: bold;  
-  background: #FFFFFF;
+  color: #000000;
+  background: #BBCEF1;
 }
 
 td.label {
@@ -541,7 +542,7 @@ td.total {
 }
 
 /*.editmode .simple_table td:hover {
-  background: #99CCFF;
+  background: #DEE7F8;
 }*/
 
 td.newitem {
@@ -551,7 +552,7 @@ td.newitem {
 
 .editmode .simple_table td.selected {
   /* padding: 0px 0px; */
-  background: #99CCFF;
+  background: #DEE7F8;
 }
 
 

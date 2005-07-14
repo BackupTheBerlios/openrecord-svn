@@ -51,7 +51,7 @@ function SuggestionBox(htmlInputField, listOfItems) {
   this._inputField = htmlInputField;
   this._listOfSuggestedItems = listOfItems.sort(SuggestionBox._compareItemDisplayStrings);
   this._selectedItem = null;
-  this._shouldHide = htmlInputField.value.length === 0;
+  this._shouldHide = true; //htmlInputField.value.length === 0;
   
   this._suggestionBoxDivElement = View.appendNewElement(document.body, "div", "SuggestionBox");
   this._suggestionBoxDivElement.style.zIndex = 11;
