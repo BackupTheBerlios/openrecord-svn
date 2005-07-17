@@ -130,7 +130,7 @@ Record.prototype.getUserstamp = function() {
  */
 Record.prototype.getTimestamp = function() {
   if (!this._creationTimestamp) {
-    this._creationTimestamp = this.getGetCreationDate().valueOf();
+    this._creationTimestamp = this.getCreationDate().valueOf();
   }
   return this._creationTimestamp;
 };
@@ -142,7 +142,7 @@ Record.prototype.getTimestamp = function() {
  * @scope    public instance method
  * @return   A Date object.
  */
-Record.prototype.getGetCreationDate = function() {
+Record.prototype.getCreationDate = function() {
   if (!this._creationDate) {
     this._creationDate = Uuid.getDateFromUuid(this._uuid);
   }
