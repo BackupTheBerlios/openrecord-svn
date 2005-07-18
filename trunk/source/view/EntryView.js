@@ -57,7 +57,7 @@ EntryView.CSS_CLASS_CONNECTION_VALUE = "ConnectionValue";
 
 EntryView.CSS_CLASS_NEGATIVE_NUMBER  = "NegativeNumber";
 
-EntryView.UUID_FOR_ATTRIBUTE_NOT_LOZENGE = "00040106-ce7f-11d9-8cd5-0011113ae5d6";
+EntryView.UUID_FOR_ATTRIBUTE_NOT_LOZENGE = "0004010f-ce7f-11d9-8cd5-0011113ae5d6";
 
 // -------------------------------------------------------------------
 // EntryView private class variables

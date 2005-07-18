@@ -780,12 +780,12 @@
              "uuid": "00040105-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Not Lozenge (Attribute)
-             "uuid": "00040106-ce7f-11d9-8cd5-0011113ae5d6" }
-    },
-    // -----------------------------------------------------------------------
     { "Item": {                                               // Table Columns (Attribute)
              "uuid": "0004010a-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Not Lozenge (Attribute)
+             "uuid": "0004010f-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Item": {                                               // Plugin View (Category)
@@ -930,23 +930,6 @@
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Not Lozenge
-             "uuid": "0040101d-ce7f-11d9-8cd5-0011113ae5d6",
-        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00040106-ce7f-11d9-8cd5-0011113ae5d6",  // Not Lozenge (Attribute)
-             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Not Lozenge" }
-    },
-    // -----------------------------------------------------------------------
-    { "Entry": {                                              
-             // in item (Attribute: Not Lozenge) assign (Attribute: Category) = (Category: Attribute)
-             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Plugin View)
-             "uuid": "0040101e-ce7f-11d9-8cd5-0011113ae5d6",
-             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
-             "item": ["00040106-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
-        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
-    },  
-    // -----------------------------------------------------------------------
     { "Entry": {                                              // Layout Data
              "uuid": "0040102a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -1089,6 +1072,23 @@
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001210-ce7f-11d9-8cd5-0011113ae5d6" }
     },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Not Lozenge
+             "uuid": "004010fa-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "0004010f-ce7f-11d9-8cd5-0011113ae5d6",  // Not Lozenge (Attribute)
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Not Lozenge" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Not Lozenge) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Plugin View)
+             "uuid": "004010fb-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0004010f-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },  
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Plugin View
              "uuid": "0040201a-ce7f-11d9-8cd5-0011113ae5d6",
