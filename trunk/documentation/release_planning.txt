@@ -269,11 +269,14 @@ brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
        |          |         | 23. Make sure view code uses transactions
        |          |         | 24. Deal with \n in page name or summary fields
        |          |         | 25. BUG: need to encode reserved characters(<&>\n"') back at client-server layer
-       |          |       >>|     Be able to make html files with just one <script> element, not dozens
+       |          |       >>|     Be able to make html files with just one <script> element, not dozens (see http://dojo.jot.com/WikiHome/DojoPackageSystem and http://openjsan.org/doc/c/cw/cwest/JSAN/0.06/lib/JSAN.html
        |          |       >>|     Be able to easily create new documents that are empty
        |          |       >>|     Create a dozen demo documents (quotes, dictionary, movies, books, oil-change, etc.)
        |          |       >>|     Have different documents use different style-sheets
        |          |       >>|     Add a DateValue class that supports dates like "2005"
+       |          |         |     Data model: boolean, URL, entries that apply to timespan (e.g. annual population)
+       |          |         |     improve UI for initial "out of the box" experience
+       |          |         |     UI and data model design to support collaboration
 -------+----------+---------+----------------------------------------------
        |          |         | 26. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
        |          |         | 27. Write one unit test that tests GUI code

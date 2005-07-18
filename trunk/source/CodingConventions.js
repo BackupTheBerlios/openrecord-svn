@@ -12,6 +12,8 @@
 //       + classes are initial caps (CamelCaps): "Rectangle", "FillPattern"
 //       + all variable names and methods names are mixedCaps: "fillPattern"
 //       + acronyms appear in initial caps: "htmlString", not "HTMLString"
+//         (see http://www.dojotoolkit.org/pipermail/dojo-interest/2005-July/000534.html
+//         (see http://www.dojotoolkit.org/pipermail/dojo-interest/2005-July/000535.html)
 //       + constants are all caps, with underscores: FILL_PATTERN_SOLID
 //    + file names
 //       + each file has just one public class
