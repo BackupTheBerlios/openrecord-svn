@@ -258,17 +258,22 @@ chao   |          | done?   |  8. be able to select a lozenge
 chao   |          | done?   | 12. be able to delete a selected lozenge 
        |          |         | 13. be able to delete a selected table row 
 chao   | 0.5  IED |         | 14. improve keyboard navigation: tab, arrow, and return keys
-       |          |         | 15. Get data model to pass the ordinal unit tests again
-       |          |         | 16. drag-and-drop lozenges
-       |          |         | 17. drag-and-drop to re-order navbar menu items
+mignon |          |       >>| 15. Get data model to pass the ordinal unit tests again
+       |          |copy/move? 16. drag-and-drop lozenges
+       |          |       >>| 17. drag-and-drop to re-order navbar menu items
        |          |         | 18. drag-and-drop to re-order table rows
-       |          |         | 19. drag-and-drop to re-order table columns
+       |          |       >>| 19. drag-and-drop to re-order table columns
        |          |         | 20. improve UI for "add new attribute" in Table View 
 brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
        |          |         | 22. Reach consensus on (colors, padding, and borders) and then implement
        |          |         | 23. Make sure view code uses transactions
        |          |         | 24. Deal with \n in page name or summary fields
        |          |         | 25. BUG: need to encode reserved characters(<&>\n"') back at client-server layer
+       |          |       >>|     Be able to make html files with just one <script> element, not dozens
+       |          |       >>|     Be able to easily create new documents that are empty
+       |          |       >>|     Create a dozen demo documents (quotes, dictionary, movies, books, oil-change, etc.)
+       |          |       >>|     Have different documents use different style-sheets
+       |          |       >>|     Add a DateValue class that supports dates like "2005"
 -------+----------+---------+----------------------------------------------
        |          |         | 26. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
        |          |         | 27. Write one unit test that tests GUI code
@@ -278,8 +283,8 @@ brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
        |          |         | 31. Implement a good URL-to-content mapping, such that URLs won't go bad in future releases
        |          |         | 32. Convert UI code from DOM level 0 to DOM level 2
        |          |         | 33. Rationalize the View api and document public api
-       |          |         | 34. Document the Data model public api
-       |          |         | 35. Add support for saving content when used from a file:// URL
+       |          |       >>| 34. Improve and document the Data model public api
+       |          |       >>| 35. Add support for saving content when used from a file:// URL
        |          |         | 36. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
        |          |         | 37. improve UI for setting the expected data type of an attribute
        |          |         | 38. improve UI for creating a new category
@@ -358,8 +363,6 @@ Tasks we want to defer until after release 0.1
 =======================================================
 ---------------------------------------------------
  + Figure out how to write unit tests for GUI code
----------------------------------------------------
- + Refactor the data model code so that categories cache their lists of items
 ---------------------------------------------------
  + BUG: Back button is broken
     The browser's back button doesn't work after you click from 
