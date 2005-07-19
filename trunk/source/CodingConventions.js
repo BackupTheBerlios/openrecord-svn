@@ -45,6 +45,9 @@
 // + compatiblity with other browsers and other JavaScript libraries 
 //    + use "get" and "set" accessors -- do *not* assign Mozilla "getter" and "setter" methods
 //    + [DEPRECATED: add methods in your own namespace -- do *not* extend built-in objects: String.prototype.toEsperanto = function ...]
+//    + do *not* extend Object.prototype
+//      (see http://erik.eae.net/archives/2005/06/06/22.13.54/)
+//      (see http://sourceforge.net/forum/forum.php?thread_id=1315559&forum_id=379297)
 //
 // + indenting, tabs, and line ending characters
 //    + 2-space indenting

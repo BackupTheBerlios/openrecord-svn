@@ -277,6 +277,9 @@ brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
        |          |         |     Data model: boolean, URL, entries that apply to timespan (e.g. annual population)
        |          |         |     improve UI for initial "out of the box" experience
        |          |         |     UI and data model design to support collaboration
+       |          |         |     config option so that only logged-in users have read-access
+       |          |         |     have an "icon" attribute, and use icons in suggestion box and in EntryView
+       |          |         |     run in IE as well as Firefox
 -------+----------+---------+----------------------------------------------
        |          |         | 26. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
        |          |         | 27. Write one unit test that tests GUI code
