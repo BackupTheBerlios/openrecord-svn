@@ -273,7 +273,7 @@ brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
        |          |       >>|     Be able to easily create new documents that are empty
        |          |       >>|     Create a dozen demo documents (quotes, dictionary, movies, books, oil-change, etc.)
        |          |       >>|     Have different documents use different style-sheets
-       |          |       >>|     Add a DateValue class that supports dates like "2005"
+brian  | 1    IED |       >>|     Add a DateValue class that supports dates like "2005"
        |          |         |     Data model: boolean, URL, entries that apply to timespan (e.g. annual population)
        |          |         |     improve UI for initial "out of the box" experience
        |          |         |     UI and data model design to support collaboration
