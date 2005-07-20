@@ -936,10 +936,11 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
               finalData = rawData;
               break;
             case World.UUID_FOR_TYPE_NUMBER:
-              finalData = rawData;
+              finalData = parseFloat(rawData);
               break;
             case World.UUID_FOR_TYPE_DATE:
-              finalData = new Date(rawData);
+              finalData = new DateValue(rawData);
+              Util.assert(finalData.isValid());
               break;
             default:
               Util.assert(false, 'Unknown data type while _rehydrating()');

@@ -34,7 +34,7 @@
 // 
 /*global window */
 /*global XMLHttpRequest, ActiveXObject  */
-/*global Util  */
+/*global Util, DateValue  */
 /*global World, Item, Entry, Ordinal, Vote  */
 // -------------------------------------------------------------------
 
@@ -217,7 +217,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
       var item = record;
       listOfStrings.push(indent + '// ' + this._getTypedDisplayStringForItem(item) + '\n');
       listOfStrings.push(indent + '//           by (' + item.getUserstamp().getDisplayString() + ')');
-      listOfStrings.push(' on (' + Util.getStringMonthDayYear(item.getCreationDate()) + ')\n');
+      listOfStrings.push(' on (' + DateValue.getStringMonthDayYear(item.getCreationDate()) + ')\n');
       listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_ITEM_CLASS + '": ');
       listOfStrings.push('{ "' + StubVirtualServer.JSON_MEMBER_UUID + '": "' + item._getUuid() + '" }');
       listOfStrings.push(' }');
@@ -328,7 +328,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         commentString += " = " + valueComment + "\n";
       }
       commentString += indent + '//           by (' + entry.getUserstamp().getDisplayString() + ')';
-      commentString += ' on (' + Util.getStringMonthDayYear(entry.getCreationDate()) + ')\n';
+      commentString += ' on (' + DateValue.getStringMonthDayYear(entry.getCreationDate()) + ')\n';
       listOfStrings.push(commentString);
       listOfStrings.push(entryString);
       listOfStrings.push('  }\n');

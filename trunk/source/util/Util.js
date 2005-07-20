@@ -75,7 +75,7 @@ Util.KEYCODE_FOR_BACKSPACE = 8;
 Util.KEYCODE_FOR_DELETE = 46;
 
 
-Util.ABBREV_MONTHS_ARRAY = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+// Util.ABBREV_MONTHS_ARRAY = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 
 
 // -------------------------------------------------------------------
@@ -520,10 +520,10 @@ Util.hashTableValues = function(hashTable) {
 // Methods that operate on Dates
 // -------------------------------------------------------------------
 
-Util.getStringMonthDayYear = function(date) {
-  var returnString = Util.ABBREV_MONTHS_ARRAY[date.getMonth()] + ' ' + date.getDate() + ', ' + (date.getYear()+1900);
-  return returnString;
-};
+// Util.getStringMonthDayYear = function(date) {
+//   var returnString = Util.ABBREV_MONTHS_ARRAY[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+//   return returnString;
+// };
 
 
 // -------------------------------------------------------------------

@@ -1809,17 +1809,17 @@
           "value": "3af52130-e77a-11d9-93ea-000c414ce854"  }
   },
   // -----------------------------------------------------------------------
-  // (Iteration: Iteration 1).(Completion Date) = "Mon May 30 2005 00:00:00 GMT-0700 (Pacific Standard Time)"
+  // (Iteration: Iteration 1).(Completion Date) = "Mon May 30 2005"
   //           by (Brian) on (Jun 27, 2005)
   { "Entry": {
            "uuid": "6892d560-e77a-11d9-8196-000c414ce854",
            "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
       "attribute": "3af52130-e77a-11d9-93ea-000c414ce854",
            "item": "ceb795d0-e778-11d9-a7da-000c414ce854",
-          "value": "Mon May 30 2005 00:00:00 GMT-0700 (Pacific Standard Time)"  }
+          "value": "Mon May 30 2005"  }
   },
   // -----------------------------------------------------------------------
-  // (Iteration: Iteration 1).(Completion Date) = "Mon Jun 06 2005 00:00:00 GMT-0700 (Pacific Standard Time)"
+  // (Iteration: Iteration 1).(Completion Date) = "Mon Jun 06 2005"
   //           by (Brian) on (Jun 27, 2005)
   { "Entry": {
            "uuid": "7c85cc30-e77a-11d9-8196-000c414ce854",
@@ -1827,17 +1827,17 @@
            "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
       "attribute": "3af52130-e77a-11d9-93ea-000c414ce854",
            "item": "ceb795d0-e778-11d9-a7da-000c414ce854",
-          "value": "Mon Jun 06 2005 00:00:00 GMT-0700 (Pacific Standard Time)"  }
+          "value": "Mon Jun 06 2005"  }
   },
   // -----------------------------------------------------------------------
-  // (Iteration: Iteration 2).(Completion Date) = "Tue Jul 05 2005 00:00:00 GMT-0700 (Pacific Standard Time)"
+  // (Iteration: Iteration 2).(Completion Date) = "Tue Jul 05 2005"
   //           by (Brian) on (Jun 27, 2005)
   { "Entry": {
            "uuid": "84c88360-e77a-11d9-8196-000c414ce854",
            "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
       "attribute": "3af52130-e77a-11d9-93ea-000c414ce854",
            "item": "e0dc0e30-e778-11d9-a7da-000c414ce854",
-          "value": "Tue Jul 05 2005 00:00:00 GMT-0700 (Pacific Standard Time)"  }
+          "value": "Tue Jul 05 2005"  }
   },
   // =======================================================================
   { "Transaction": [

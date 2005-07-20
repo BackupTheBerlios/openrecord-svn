@@ -336,7 +336,8 @@ Entry.prototype.getDisplayString = function(callingItem) {
       break;
     case this.getWorld().getTypeCalledDate():
       var aDate = this._value;
-      returnString = Util.getStringMonthDayYear(aDate);
+      // returnString = Util.getStringMonthDayYear(aDate);
+      returnString = aDate.toShortLocaleDateString();
       break;
     case this.getWorld().getTypeCalledItem():
       returnString = this._value.getDisplayString();

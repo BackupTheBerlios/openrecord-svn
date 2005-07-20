@@ -434,8 +434,10 @@ EntryView.prototype._transformToExpectedType = function(value) {
             if (!isNaN(floatVal)) {return floatVal;}
             break;
           case typeCalledDate:
-            var dateVal = Date.parse(value);
-            if (!isNaN(dateVal)) {return new Date(value);}
+            // var dateVal = Date.parse(value);
+            // if (!isNaN(dateVal)) {return new Date(value);}
+            var dateValue = new DateValue(value);
+            if (dateValue.isValid()) {return dateValue;}
             break;
           default:
             if (aType.isInCategory(categoryCalledCategory)) {

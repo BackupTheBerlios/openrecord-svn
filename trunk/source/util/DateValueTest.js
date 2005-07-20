@@ -1,5 +1,5 @@
 /*****************************************************************************
- LintTest.js
+ DateValueTest.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -28,32 +28,45 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
-// -------------------------------------------------------------------
-// Dependencies, expressed in the syntax that JSLint understands:
-// 
-/*global LintTool, assertTrue, setUp, tearDown */
-// -------------------------------------------------------------------
+var TestVars = null;
 
 function setUp() {
+  // TestVars = {};
+  // TestVars.theHobbit = "The Hobbit";
 }
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "Util.js",
-    "UtilTest.js",
-    "DateValue.js",
-    "DateValueTest.js",
-    "Uuid.js",
-    "LintTool.js"];
-  var prefix = "../../../source/util/";
-  var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
+function testDateValueConstructor() {
+  var year = 1944;
+  var month = DateValue.MONTH_FEB;
+  var day = 14;
+  var hours = 9;
+  var minutes = 30;
+  var seconds = 15;
+  var ms = 444;
+  var dates = new Array();
+  dates[0] = new DateValue("1944");
+  dates[1] = new DateValue("2/14/1944");
+  dates[2] = new DateValue("Feb 14 1944");
+  dates[3] = new DateValue(-816710400000);
+  dates[4] = new DateValue(year, month);
+  dates[5] = new DateValue(year, month, day);
+  dates[6] = new DateValue(year, month, day, hours);
+  dates[7] = new DateValue(year, month, day, hours, minutes);
+  dates[8] = new DateValue(year, month, day, hours, minutes, seconds);
+  dates[9] = new DateValue(year, month, day, hours, minutes, seconds, ms);
+  for (var i in dates) {
+    var dateValue = dates[i];
+    assertTrue('DateValue is valid', dateValue.isValid());
+    assertTrue('Util.isDate() returns true', Util.isDate(dateValue));
+  }
+  // var alertString = dates.join('\n');
+  // alert(alertString);
 }
+
 
 function tearDown() {
+  // TestVars = null;
 }
-
 
 // -------------------------------------------------------------------
 // End of file
