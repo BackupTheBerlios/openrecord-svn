@@ -56,6 +56,7 @@ function testJsLintOnBadCodeFragment() {
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
+    "OpenRecordLoader.js",
     "TablePlugin.js",
     "OutlinePlugin.js",
     "DetailPlugin.js",

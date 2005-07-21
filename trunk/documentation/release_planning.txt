@@ -269,7 +269,7 @@ brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
        |          |         | 23. Make sure view code uses transactions
        |          |         | 24. Deal with \n in page name or summary fields
        |          |         | 25. BUG: need to encode reserved characters(<&>\n"') back at client-server layer
-       |          |       >>|     Be able to make html files with just one <script> element, not dozens (see http://dojo.jot.com/WikiHome/DojoPackageSystem and http://openjsan.org/doc/c/cw/cwest/JSAN/0.06/lib/JSAN.html
+brian  |          | 0.25    |     Be able to make html files with just one <script> element, not dozens 
        |          |       >>|     Be able to easily create new documents that are empty
        |          |       >>|     Create a dozen demo documents (quotes, dictionary, movies, books, oil-change, etc.)
        |          |       >>|     Have different documents use different style-sheets

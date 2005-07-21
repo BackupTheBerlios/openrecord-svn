@@ -55,7 +55,7 @@ DateValue.ARRAY_OF_MONTH_NAMES = new Array("January", "February", "March", "Apri
  * and "July 1965", as well as complete dates like "May 14, 1982".
  *
  * @scope    public instance constructor
- * @param    foo    A parameter. 
+ * @param    year-etc    Any of the same values that the Date class accepts. 
  */
 function DateValue(year, month, day, hours, minutes, seconds, ms) {
   var date;
@@ -110,10 +110,14 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
   switch (argumentType) {
     case MILLISECONDS:
       date._hasTime = true;
+      // (date._hasTime == true) implies _hasDay and _hasMonth, so we don't need to set them
+      // date._hasDay = true;
+      // date._hasMonth = true;
       break;
     case SEPARATE_FIELDS:
       if (hours || minutes || seconds || ms) {
         date._hasTime = true;
+        // (date._hasTime == true) implies _hasDay and _hasMonth, so we don't need to set them
         // date._hasDay = true;
         // date._hasMonth = true;
       } else {
@@ -123,7 +127,12 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
       }
       break;
     case STRING:
+      // If we were given a string like "Tue Apr 30 2005 09:45:00", then
+      // we know not just the date, but also the time, and we set _hasTime 
+      // to true.  If we were given a string like "Apr 30 2005" then we
+      // set _hasTime to false.
       date._hasTime = (year.indexOf(':') != -1) ? true : false;
+      // (date._hasTime == true) implies _hasDay and _hasMonth, so we don't need to set them
       // if (date._hasTime) {
       //   date._hasDay = true;
       //   date._hasMonth = true;
