@@ -113,11 +113,7 @@ Entry.prototype._initialize = function(item, previousEntry, attribute, value, ty
     }
     else {Util.assert(false, "unknown data type:" + (typeof value) + ' value: ' + value);}
   }
-  if (Util.isString(value)) {
-    this._value = Util.getCleanString(value);
-  } else {
-    this._value = value;
-  }
+  this._value = value;
 };
 
 

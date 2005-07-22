@@ -132,11 +132,13 @@ DeltaVirtualServer.prototype._loadWorldFromJsonString = function(jsonRepositoryS
 DeltaVirtualServer.prototype.truncateString = function(string) {
   var maxLength = 80;
   var ellipsis = "...";
+  var returnString = "";
   if (string.length > maxLength) {
-    return (string.substring(0, (maxLength - ellipsis.length)) + ellipsis);
+    returnString = (string.substring(0, (maxLength - ellipsis.length)) + ellipsis);
   } else {
-    return string;
+    returnString = string;
   }
+  return this.encodeText(returnString);
 };
 
 
@@ -222,7 +224,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
     if (record instanceof Item) {
       var item = record;
       listOfStrings.push(indent + '// ' + this._getTypedDisplayStringForItem(item) + '\n');
-      listOfStrings.push(indent + '//           by (' + item.getUserstamp().getDisplayString() + ')');
+      listOfStrings.push(indent + '//           by (' + this.truncateString(item.getUserstamp().getDisplayString()) + ')');
       listOfStrings.push(' on (' + DateValue.getStringMonthDayYear(item.getCreationDate()) + ')\n');
       listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_ITEM_CLASS + '": ');
       listOfStrings.push('{ "' + StubVirtualServer.JSON_MEMBER_UUID + '": "' + item._getUuid() + '" }');
@@ -240,8 +242,8 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         }
         listOfStrings.push(',\n');
         listOfStrings.push(indent + '// -----------------------------------------------------------------------\n');
-        listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_USER_CLASS + '": ' + '{');
-        listOfStrings.push('                                               // ' + itemDisplayNameSubstring + '\n');
+        listOfStrings.push(indent + '// ' + this._getTypedDisplayStringForItem(user) + '\n');
+        listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_USER_CLASS + '": ' + '{\n');
         listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_USER + '": "' + user._getUuid() + '",\n');
         listOfStrings.push(indent + '     "' + StubVirtualServer.JSON_MEMBER_PASSWORD + '": ' + passwordString + ' }\n');
         listOfStrings.push(indent + '}');
@@ -250,10 +252,10 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
 
     if (record instanceof Vote) {
       var vote = record;
-      listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{');
       entryDisplayNameSubstring = this.truncateString(vote.getContentRecord().getDisplayString());
       var deleteVsRetainString = vote.getRetainFlag() ? "RETAIN" : "DELETE";
-      listOfStrings.push('                                              // vote to ' + deleteVsRetainString + " " + entryDisplayNameSubstring + '\n');
+      listOfStrings.push(indent + '// vote to ' + deleteVsRetainString + " " + entryDisplayNameSubstring + '\n');
+      listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{\n');
       listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": "' + vote._getUuid() + '",\n');
       listOfStrings.push(indent + '       "' + StubVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getContentRecord()._getUuid() + '",\n');
       listOfStrings.push(indent + '   "' + StubVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '"');
@@ -263,6 +265,8 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
 
     if (record instanceof Ordinal) {
       var ordinal = record;
+      entryDisplayNameSubstring = this.truncateString(ordinal.getContentRecord().getDisplayString());
+      listOfStrings.push(indent + '// ordinal # ' + ordinal.getOrdinalNumber() + " for " + entryDisplayNameSubstring + '\n');
       listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
       listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": "' + ordinal._getUuid() + '",\n');
       listOfStrings.push(indent + '    "' + StubVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getContentRecord()._getUuid() + '",\n');
@@ -274,7 +278,6 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
     if (record instanceof Entry) {
       var entry = record;
       var entryType = entry.getType();
-      // var typeToken = this._getTypeTokenFromType(entryType);
       var typeUuid = entryType._getUuid();
       commentString = "";
       var entryString = "";
@@ -295,10 +298,10 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         var secondAttribute = pairOfAttributes[1];
         entryString += indent + '    "' + StubVirtualServer.JSON_MEMBER_ATTRIBUTE + '": ["' + firstAttribute._getUuid() + '", "' + secondAttribute._getUuid() + '"]';
         commentString += indent + '// ' + this._getTypedDisplayStringForItem(firstItem);
-        commentString += ".(" + firstAttribute.getDisplayString("???") + ")";
+        commentString += ".(" + this.truncateString(firstAttribute.getDisplayString("???")) + ")";
         commentString += " = " + this._getTypedDisplayStringForItem(secondItem) + "\n";
         commentString += indent + '// ' + this._getTypedDisplayStringForItem(secondItem);
-        commentString += ".(" + secondAttribute.getDisplayString("???") + ")";
+        commentString += ".(" + this.truncateString(secondAttribute.getDisplayString("???")) + ")";
         commentString += " = " + this._getTypedDisplayStringForItem(firstItem) + "\n";
       } else {
         var attribute = entry.getAttribute();
@@ -314,8 +317,8 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
             valueComment = contentData;
             break;
           case World.UUID_FOR_TYPE_TEXT: 
-            valueString = '"' + contentData + '"';
-            valueComment = this.truncateString(valueString);
+            valueString = '"' + this.encodeText(contentData) + '"';
+            valueComment = '"' + this.truncateString(contentData) + '"';
             break;
           case World.UUID_FOR_TYPE_DATE: 
             valueString = '"' + contentData.toString() + '"';
@@ -330,10 +333,10 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         }
         entryString += indent + '        "' + StubVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString;
         commentString += indent + '// ' + this._getTypedDisplayStringForItem(entry.getItem());
-        commentString += ".(" + attribute.getDisplayString("???") + ")";
+        commentString += ".(" + this.truncateString(attribute.getDisplayString("???")) + ")";
         commentString += " = " + valueComment + "\n";
       }
-      commentString += indent + '//           by (' + entry.getUserstamp().getDisplayString() + ')';
+      commentString += indent + '//           by (' + this.truncateString(entry.getUserstamp().getDisplayString()) + ')';
       commentString += ' on (' + DateValue.getStringMonthDayYear(entry.getCreationDate()) + ')\n';
       listOfStrings.push(commentString);
       listOfStrings.push(entryString);

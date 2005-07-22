@@ -75,38 +75,6 @@ Util.KEYCODE_FOR_BACKSPACE = 8;
 Util.KEYCODE_FOR_DELETE = 46;
 
 
-// Util.ABBREV_MONTHS_ARRAY = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-
-
-// -------------------------------------------------------------------
-// String manipulation methods
-// -------------------------------------------------------------------
-
-/**
- * Returns a copy of the input string, cleaned up so that it can be 
- * included in a valid HTML page.
- *
- * Returns a copy of the string, but with the original characters 
- * '<', '>', and '&' all replaced by their HTML entities: "&lt;", 
- * "&gt;", and "&amp;".  Allows strings to displayed on HTML pages.
- *
- * @scope    public class method
- * @syntax   var cleanString = Util.getCleanString(dirtyString);
- * @param    string    A dirty string to be cleaned up.
- * @return   String
- */
-Util.getCleanString = function(string) {
-  Util.assert(Util.isString(string));
-  
-  var returnString = string;
-  returnString = returnString.replace(/&/g, "&amp;");
-  returnString = returnString.replace(/</g, "&lt;");
-  returnString = returnString.replace(/>/g, "&gt;");
-  returnString = returnString.replace(/"/g, "&quot;");
-  returnString = returnString.replace(/\n/g, " ");
-  return returnString;
-};
-
 
 // -------------------------------------------------------------------
 // Assertions and error handling methods

@@ -140,6 +140,74 @@ StubVirtualServer.prototype.getWorld = function() {
 };
 
 
+/**
+ * Given a text string, this method returns a copy of the text string, 
+ * with certain special characters replaced by escape sequences.
+ * 
+ * For example, given a string like this:
+ * <pre>
+ *    this.encodeText('The quick <brown> fox & the "lazy" hare.\n');
+ * </pre>
+ * The return value will be:
+ * <pre>
+ *    'The quick &lt;brown&gt; fox &amp; the &quot;lazy&quot; hare.&#10;'
+ * </pre>
+ * 
+ * @scope    public instance method
+ * @param    rawText    A text string to encode. 
+ * @return   A copy of the rawText string, with the special characters escaped. 
+ */
+StubVirtualServer.prototype.encodeText = function(rawText) {
+  Util.assert(Util.isString(rawText));
+
+  var returnString = rawText;
+  // Note: it's important that we do '&' first, otherwise we'll accidentally
+  // replace all the & characters that we add in the following lines.
+  returnString = returnString.replace(new RegExp('&','g'), "&amp;");
+  returnString = returnString.replace(new RegExp('<','g'), "&lt;");
+  returnString = returnString.replace(new RegExp('>','g'), "&gt;");
+  returnString = returnString.replace(new RegExp('"','g'), "&quot;");
+  returnString = returnString.replace(new RegExp('\n','g'), "&#10;");
+  returnString = returnString.replace(new RegExp('\r','g'), "&#13;");
+  return returnString;
+};
+
+
+/**
+ * Given a text string that was encoded using encodeText(), this method 
+ * returns a decoded copy of the text string, with the encoded escape 
+ * sequences now replaced by the original special characters.
+ *
+ * For example, given a string like this:
+ * <pre>
+ *    this.decodeText('The quick &lt;brown&gt; fox &amp; the &quot;lazy&quot; hare.&#10;');
+ * </pre>
+ * The return value will be:
+ * <pre>
+ *    'The quick <brown> fox & the "lazy" hare.\n'
+ * </pre>
+ *
+ * @scope    public instance method
+ * @param    encodedText    A text string to decode. 
+ * @return   A copy of the encodedText string, with the escaped characters replaced by the original special characters. 
+ */
+StubVirtualServer.prototype.decodeText = function(encodedText) {
+  Util.assert(Util.isString(encodedText));
+
+  var returnString = encodedText;
+  returnString = returnString.replace(new RegExp('&#13;','g'), "\r");
+  returnString = returnString.replace(new RegExp('&#10;','g'), "\n");
+  returnString = returnString.replace(new RegExp('&quot;','g'), '"');
+  returnString = returnString.replace(new RegExp('&gt;','g'), ">");
+  returnString = returnString.replace(new RegExp('&lt;','g'), "<");
+  returnString = returnString.replace(new RegExp('&amp;','g'), "&");
+  // Note: it's important that we do '&amp;' last, otherwise we won't correctly
+  // handle a case like this:
+  //   text = this.decodeText(this.encodeText('&lt;'));
+  return returnString;
+};
+
+
 // -------------------------------------------------------------------
 // Transaction Methods
 // -------------------------------------------------------------------
@@ -882,20 +950,9 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
           previousEntry = this.__getEntryFromUuidOrBootstrapEntry(previousEntryUuid);
         }
  
-        var dataType;
         var dataTypeUuid = dehydratedEntry[StubVirtualServer.JSON_MEMBER_TYPE];
-        var PENDING_debug = false;
-        if (Util.isUuid(dataTypeUuid)) {
-          PENDING_debug = true;
-          dataType = this.__getItemFromUuidOrBootstrapItem(dataTypeUuid);
-        } else {
-          // code to deal with the old pre-July-2005 file format
-          /*
-          var dataTypeToken = dataTypeUuid;
-          dataType = this._getTypeFromTypeToken(dataTypeToken);
-          dataTypeUuid = dataType._getUuid();
-          */
-        }
+        Util.assert(Util.isUuid(dataTypeUuid));
+        var dataType = this.__getItemFromUuidOrBootstrapItem(dataTypeUuid);
         
         if (dataTypeUuid == World.UUID_FOR_TYPE_CONNECTION) {
           var listOfItemUuids = dehydratedEntry[StubVirtualServer.JSON_MEMBER_ITEM];
@@ -930,10 +987,7 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
               finalData = this.__getItemFromUuidOrBootstrapItem(rawData);
               break;
             case World.UUID_FOR_TYPE_TEXT:
-              // if (PENDING_debug) {
-              //   alert(rawData + "\n" + dataType);
-              // }
-              finalData = rawData;
+              finalData = this.decodeText(rawData);
               break;
             case World.UUID_FOR_TYPE_NUMBER:
               finalData = parseFloat(rawData);
