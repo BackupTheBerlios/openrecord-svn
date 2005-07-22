@@ -49,7 +49,8 @@ function testJsLintOnOpenRecordCode() {
     "QueryRunner.js",
     "World.js",
     "StubVirtualServer.js",
-    "DeltaVirtualServer.js"];
+    "DeltaVirtualServer.js",
+    "HttpSaver.js"];
   var prefix = "../../../source/model/";
   var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
   var message = "Lint check \n" + errorReport;

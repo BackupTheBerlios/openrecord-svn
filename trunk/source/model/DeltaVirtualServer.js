@@ -39,6 +39,12 @@
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// DeltaVirtualServer public class constants
+// -------------------------------------------------------------------
+DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
+
+
 /**
  * The DeltaVirtualServer is a datastore that loads and saves
  * an entire World of items as a single monolithic JSON string.
@@ -75,14 +81,14 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   // this._buildTypeHashTable();
   this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
 
-  var pathToRepositoryDirectory = "repositories/";
   var repositoryFileName = this._repositoryName + ".json";
-  var repositoryUrl = this._pathToTrunkDirectory + pathToRepositoryDirectory + repositoryFileName;
+  var repositoryUrl = this._pathToTrunkDirectory + DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY + "/" + repositoryFileName;
   var repositoryContentString = Util.getStringContentsOfFileAtURL(repositoryUrl);
   repositoryContentString += " ] }";
 
   this._loadWorldFromJsonString(repositoryContentString);
 };
+
 
 // -------------------------------------------------------------------
 // Private Methods
@@ -356,15 +362,14 @@ DeltaVirtualServer.prototype.saveChangesToServer = function(forceSave) {
     return listOfChangesMade;
   }
   
-  var saveChanges = false;
-  if (window.location) {
-    if (window.location.protocol == "http:") {
-      saveChanges = true;
-    }
-    if (window.location.protocol == "file:") {
-      if (!this._hasEverFailedToSaveFlag) {
-        window.alert("I can't save changes to server, because this page was loaded from a \"file:///\" location, not a real \"http://\" location.  Sorry."); 
-        this._hasEverFailedToSaveFlag = true;
+  if (!this._saverObject) {
+    if (window.location) {
+      if (window.location.protocol == "http:") {
+        this._saverObject = new HttpSaver(this._pathToTrunkDirectory, this._repositoryName);
+      }
+      if (window.location.protocol == "file:") {
+        // var fileName = this._repositoryName + ".json";
+        this._saverObject = new FileSaver(this._repositoryName);
       }
     }
   }
@@ -376,57 +381,18 @@ DeltaVirtualServer.prototype.saveChangesToServer = function(forceSave) {
     this._chronologicalListOfRecords.push(newRecord);
   }
 
-  if (saveChanges) {
-    var url = this._pathToTrunkDirectory + "source/model/append_to_repository_file.php?file=" + this._repositoryName;
+  if (this._saverObject) {
     var textToAppend = ",\n" + this._getJsonStringRepresentingTransaction(currentTransaction);
-    var asynchronous;
-    asynchronous = true;
-    
-    // PENDING: 
-    // It might be more efficient to re-use the XMLHttpRequestObject,
-    // rather than creating a new one for new request.  But re-using 
-    // them is complicated, because the requests are asynchronous, so
-    // we need to check to see if the last request is done before we 
-    // can start a new request.
-    var newXMLHttpRequestObject = this.__newXMLHttpRequestObject();
-    newXMLHttpRequestObject.open("POST", url, asynchronous);
-    newXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
-    newXMLHttpRequestObject.send(textToAppend);
+    this._saverObject.appendText(textToAppend);
+  } else {
+    if (!this._hasEverFailedToSaveFlag) {
+      window.alert("I can't save changes to server, because this page was loaded from a \"file:///\" location, not a real \"http://\" location.  Sorry."); 
+      this._hasEverFailedToSaveFlag = true;
+    }
   }
   
   this._currentTransaction = null;
   return listOfChangesMade;
-};
-
-
-/**
- * Returns a newly created XMLHttpRequest object.
- *
- * @scope    private instance method
- * @return   A newly created XMLHttpRequest object. 
- */
-DeltaVirtualServer.prototype.__newXMLHttpRequestObject = function() {
-  var newXMLHttpRequestObject = null;
-  if (window.XMLHttpRequest) {
-    newXMLHttpRequestObject = new XMLHttpRequest();
-  } else {
-    if (window.ActiveXObject) {
-      newXMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-  }
-  if (newXMLHttpRequestObject) {
-    newXMLHttpRequestObject.onreadystatechange = function() {
-      var statusText = newXMLHttpRequestObject.statusText;
-      if (statusText != "OK") {
-        window.alert("onreadystatechange:\n" +
-          "readyState: " + newXMLHttpRequestObject.readyState + "\n" +
-          "status: " + newXMLHttpRequestObject.status + "\n" +
-          "statusText: " + newXMLHttpRequestObject.statusText + "\n" +
-          "responseText: " + newXMLHttpRequestObject.responseText + "\n");
-      }
-    };
-  }
-  return newXMLHttpRequestObject;
 };
 
 

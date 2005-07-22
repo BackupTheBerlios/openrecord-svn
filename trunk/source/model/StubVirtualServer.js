@@ -38,7 +38,7 @@
 
 
 // -------------------------------------------------------------------
-// DeltaVirtualServer public class constants
+// StubVirtualServer public class constants
 // -------------------------------------------------------------------
 StubVirtualServer.JSON_MEMBER_FORMAT = "format";
 StubVirtualServer.JSON_MEMBER_RECORDS = "records";

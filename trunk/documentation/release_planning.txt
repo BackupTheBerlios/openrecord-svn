@@ -270,7 +270,7 @@ brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
        |          |         | 24. Deal with \n in page name or summary fields
        |          |         | 25. BUG: need to encode reserved characters(<&>\n"') back at client-server layer
 brian  |          | 0.25    |     Be able to make html files with just one <script> element, not dozens 
-       |          |       >>|     Be able to easily create new documents that are empty
+brian  |          |       >>|     Be able to easily create new documents that are empty
        |          |       >>|     Create a dozen demo documents (quotes, dictionary, movies, books, oil-change, etc.)
        |          |       >>|     Have different documents use different style-sheets
 brian  | 1    IED | 0.75    |     Add a DateValue class that supports dates like "2005"
@@ -290,7 +290,7 @@ brian  | 1    IED | 0.75    |     Add a DateValue class that supports dates like
        |          |         | 32. Convert UI code from DOM level 0 to DOM level 2
        |          |         | 33. Rationalize the View api and document public api
        |          |       >>| 34. Improve and document the Data model public api
-       |          |       >>| 35. Add support for saving content when used from a file:// URL
+brian  |          | 0.5     | 35. Add support for saving content when used from a file:// URL
        |          |         | 36. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
        |          |         | 37. improve UI for setting the expected data type of an attribute
        |          |         | 38. improve UI for creating a new category

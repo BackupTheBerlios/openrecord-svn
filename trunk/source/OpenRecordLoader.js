@@ -95,6 +95,7 @@ OpenRecordLoader.loadEverything = function(path) {
     "third_party/scriptaculous/prototype.js",
     "third_party/scriptaculous/effects.js",
     "third_party/scriptaculous/dragdrop.js",
+    "third_party/gtd_tiddlywiki/FileSaver.js",
     "source/util/Uuid.js",
     "source/util/Util.js",
     "source/util/Cookie.js",
@@ -124,7 +125,8 @@ OpenRecordLoader.loadEverything = function(path) {
     "source/model/QueryRunner.js",
     "source/model/World.js",
     "source/model/StubVirtualServer.js",
-    "source/model/DeltaVirtualServer.js"];
+    "source/model/DeltaVirtualServer.js",
+    "source/model/HttpSaver.js"];
   for (var i in listOfSourceCodeFiles) {
     var fileName = listOfSourceCodeFiles[i];
     var url = path + fileName;
