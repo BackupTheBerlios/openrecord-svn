@@ -268,7 +268,7 @@ brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
        |          |         | 22. Reach consensus on (colors, padding, and borders) and then implement
        |          |         | 23. Make sure view code uses transactions
        |          |         | 24. Deal with \n in page name or summary fields
-       |          |         | 25. BUG: need to encode reserved characters(<&>\n"') back at client-server layer
+brian  |          |         | 25. BUG: need to encode reserved characters(<&>\n"') back at client-server layer
 brian  |          | 0.25    |     Be able to make html files with just one <script> element, not dozens 
 brian  |          |       >>|     Be able to easily create new documents that are empty
        |          |       >>|     Create a dozen demo documents (quotes, dictionary, movies, books, oil-change, etc.)
