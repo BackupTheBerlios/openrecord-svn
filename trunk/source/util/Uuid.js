@@ -51,9 +51,8 @@
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
 function Uuid() {
-  throw new Error("Uuid is a static class. You can't create instances of it.");
+  this._uuidString = Uuid.generateTimeBasedUuid();
 }
-
 
 // -------------------------------------------------------------------
 // Uuid public class constants
@@ -70,6 +69,42 @@ Uuid.HEX_RADIX = 16;
 Uuid._ourUuidClockSeqString = null;
 Uuid._ourDateValueOfPreviousUuid = null;
 Uuid._ourNextIntraMillisecondIncrement = 0;
+
+
+/**
+ * Returns a 36-character string representing the UUID, such as 
+ * "3B12F1DF-5232-1804-897E-917BF397618A".
+ * 
+ * @scope    public instance method
+ * @return   Returns a 36-character UUID string.
+ */
+Uuid.prototype.toString = function() {
+  return this._uuidString;
+};
+
+
+/**
+ * Returns a 12-character string with the "node" or "pseudonode" portion of 
+ * the UUID, which is the rightmost 12 characters.
+ * 
+ * @scope    public instance method
+ * @return   Returns a 12-character string, which will look something like "917BF397618A".
+ */
+Uuid.prototype.getNode = function() {
+  return Uuid.getNodeFromUuid(this._uuidString);
+};
+
+
+/**
+ * Returns a JavaScript Date object with a value equal to the value in the
+ * time fields of the UUID.
+ * 
+ * @scope    public class method
+ * @return   Returns a JavaScript Date object.
+ */
+Uuid.prototype.getDate = function() {
+  return Uuid.getDateFromUuid(this._uuidString);
+};
 
 
 // -------------------------------------------------------------------
