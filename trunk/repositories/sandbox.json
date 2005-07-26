@@ -1,0 +1,40 @@
+// Repository records, in JSON format
+{ "format": "2005_JUNE_CHRONOLOGICAL_LIST", 
+  "records": [ {},
+  // =======================================================================
+  { "Transaction": [
+    // -----------------------------------------------------------------------
+    // (Page: Welcome)
+    //           by (Brian) on (Jul 25, 2005)
+    { "Item": { "uuid": "82c7f970-fd68-11d9-be6a-000c414ce854" } },
+    // -----------------------------------------------------------------------
+    // (Page: Welcome).(Name) = "Welcome"
+    //           by (Brian) on (Jul 25, 2005)
+    { "Entry": {
+             "uuid": "82c7f971-fd68-11d9-be6a-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "82c7f970-fd68-11d9-be6a-000c414ce854",
+            "value": "Welcome"  }
+    },
+    // -----------------------------------------------------------------------
+    // (Page: Welcome).(Category) = (Category: Page)
+    // (Category: Page).(Items in Category) = (Page: Welcome)
+    //           by (Brian) on (Jul 25, 2005)
+    { "Entry": {
+             "uuid": "82c7f972-fd68-11d9-be6a-000c414ce854",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["82c7f970-fd68-11d9-be6a-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    // (Page: Welcome).(Summary) = "Welcome to the Sandbox repository..."
+    //           by (Brian) on (Jul 25, 2005)
+    { "Entry": {
+             "uuid": "82c7f973-fd68-11d9-be6a-000c414ce854",
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": "82c7f970-fd68-11d9-be6a-000c414ce854",
+            "value": "Welcome to the Sandbox repository. Feel free to use this as a place to play around with OpenRecord. You can experiment with creating pages, setting up tables, and editing items."  }
+    }  ]
+  }

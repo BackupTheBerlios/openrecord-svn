@@ -181,7 +181,7 @@ RootView.prototype.getHomePage = function() {
     if (listOfPages && listOfPages.length > 0) {
       this._homePage = listOfPages[0];
     } else {
-      Util.assert(false);
+      // We may get here if the document does not yet have any pages.
     }
   }
   return this._homePage;
@@ -331,12 +331,14 @@ RootView.prototype.setCurrentContentViewFromUrl = function() {
   
   if (!contentViewToSwitchTo) {
     var page = this.getHomePage();
-    contentViewToSwitchTo = this._hashTableOfPageViewsKeyedByUuid[page._getUuid()];
-    if (!contentViewToSwitchTo) {
-      divElement = window.document.createElement("div"); 
-      this._contentViewDivElement.appendChild(divElement);
-      contentViewToSwitchTo = new PageView(this, divElement, page);
-      this._hashTableOfPageViewsKeyedByUuid[page._getUuid()] = contentViewToSwitchTo;
+    if (page) {
+      contentViewToSwitchTo = this._hashTableOfPageViewsKeyedByUuid[page._getUuid()];
+      if (!contentViewToSwitchTo) {
+        divElement = window.document.createElement("div"); 
+        this._contentViewDivElement.appendChild(divElement);
+        contentViewToSwitchTo = new PageView(this, divElement, page);
+        this._hashTableOfPageViewsKeyedByUuid[page._getUuid()] = contentViewToSwitchTo;
+      }
     }
   }
   if (this._currentContentView) {
@@ -354,14 +356,15 @@ RootView.prototype.setCurrentContentViewFromUrl = function() {
  * @scope    public instance method
  */
 RootView.prototype.display = function() {
-  Util.assert(this._currentContentView instanceof Object);
-
-  document.title = this._currentContentView.getPageTitle() + " - openrecord.org";
   this._rootDiv.className = (this.isInShowToolsMode()) ? RootView.CSS_CLASS_EDIT_MODE : RootView.CSS_CLASS_VIEW_MODE;
   this._displayLoginSpan();
   this._displayNavbar();
   this._displayDebugArea();
-  this._currentContentView.includeOnScreen(true);
+  if (this._currentContentView) {
+    Util.assert(this._currentContentView instanceof Object);
+    document.title = this._currentContentView.getPageTitle() + " - openrecord.org";
+    this._currentContentView.includeOnScreen(true);
+  }
   window.focus();
 };
 
@@ -375,6 +378,7 @@ RootView.prototype.display = function() {
  * @return   The newly created page item.
  */
 RootView.prototype.newPage = function() {
+  var hasAtLeastOnePage = this.getHomePage() ? true : false;
   var repository = this.getWorld();
   repository.beginTransaction();
   var newPage = repository.newItem("New Page");
@@ -383,7 +387,13 @@ RootView.prototype.newPage = function() {
   newPage.assignToCategory(categoryCalledPage);
   newPage.addEntryForAttribute(attributeCalledSummary, "This is a new page.");
 
-  PageView.newSection(repository, newPage);
+  if (hasAtLeastOnePage) {
+    PageView.newSection(repository, newPage);
+  } else {
+    // If we get here it means we're creating the very first page in 
+    // this repository, so make it a "Welcome page" that just has a title
+    // and a summary, without any new sections.
+  }
 
   repository.endTransaction();
   
