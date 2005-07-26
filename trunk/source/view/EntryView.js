@@ -410,43 +410,69 @@ EntryView.prototype.stopEditing = function() {
  */
 EntryView.prototype._transformToExpectedType = function(value) {
   if (value && Util.isString(value)) {
-    var repository = this.getWorld();
+    var world = this.getWorld();
     var listOfExpectedTypeEntries;
     if (this._expectedTypeEntries) {
       listOfExpectedTypeEntries = this._expectedTypeEntries;
     }
     else {
-      var attributeCalledExpectedType = repository.getAttributeCalledExpectedType();
+      var attributeCalledExpectedType = world.getAttributeCalledExpectedType();
       listOfExpectedTypeEntries = this._attribute.getEntriesForAttribute(attributeCalledExpectedType);
     }
-    var categoryCalledCategory = repository.getCategoryCalledCategory();
-    var typeCalledText = repository.getTypeCalledText();
-    var typeCalledDate = repository.getTypeCalledDate();
-    var typeCalledNumber = repository.getTypeCalledNumber();
-    if (listOfExpectedTypeEntries) {
-      for (var i=0; i<listOfExpectedTypeEntries.length; ++i) {
-        var aType = listOfExpectedTypeEntries[i].getValue();
-        switch (aType) {
-          case typeCalledText:
-            return value;
-          case typeCalledNumber:
-            var floatVal = parseFloat(value);
-            if (!isNaN(floatVal)) {return floatVal;}
-            break;
-          case typeCalledDate:
-            // var dateVal = Date.parse(value);
-            // if (!isNaN(dateVal)) {return new Date(value);}
-            var dateValue = new DateValue(value);
-            if (dateValue.isValid()) {return dateValue;}
-            break;
-          default:
-            if (aType.isInCategory(categoryCalledCategory)) {
-              value = repository.newItem(value);
-              value.assignToCategory(aType);
-              return value;
+    var listOfTypes = [];
+    for (var i in listOfExpectedTypeEntries) {
+      var entry = listOfExpectedTypeEntries[i];
+      listOfTypes.push(entry.getValue());
+    }
+    return EntryView._transformValueToExpectedType(world, value, listOfTypes);
+  }
+  return value;
+};
+
+
+/**
+ * Given a string value and a list of types, this method tries to
+ * transform the value to one of the types. 
+ *
+ * @scope    private instance method
+ * @param    world    The new value to be saved. 
+ * @param    value    The new value to be saved. 
+ * @param    listOfTypes    The new value to be saved. 
+ */
+EntryView._transformValueToExpectedType = function(world, value, listOfTypes) {
+  if (value && Util.isString(value) && listOfTypes && Util.isArray(listOfTypes)) {
+    var categoryCalledCategory = world.getCategoryCalledCategory();
+    var typeCalledText = world.getTypeCalledText();
+    var typeCalledDate = world.getTypeCalledDate();
+    var typeCalledNumber = world.getTypeCalledNumber();
+    for (var i in listOfTypes) {
+      var aType = listOfTypes[i];
+      switch (aType) {
+        case typeCalledText:
+          return value;
+        case typeCalledNumber:
+          var floatVal = parseFloat(value);
+          if (!isNaN(floatVal)) {return floatVal;}
+          break;
+        case typeCalledDate:
+          var dateValue = new DateValue(value);
+          if (dateValue.isValid()) {return dateValue;}
+          break;
+        default:
+          if (aType.isInCategory(categoryCalledCategory)) {
+            var listOfItems = world.getItemsInCategory(aType);
+            var item;
+            for (var j in listOfItems) {
+              item = listOfItems[j];
+              if (item.doesStringMatchName(value)) {
+                return item;
+              }
             }
-            break;
-        }
+            item = world.newItem(value);
+            item.assignToCategory(aType);
+            return item;
+          }
+          break;
       }
     }
   }
@@ -469,14 +495,11 @@ EntryView.prototype._writeValue = function(value) {
     if (this._entry) {oldValue = this._entry.getValue(this._item);}
     if (oldValue != value) {
       var attributeCalledInverseAttribute = this.getWorld().getAttributeCalledInverseAttribute();
-      var listOfInverseAttributeEntries = this._attribute.getEntriesForAttribute(attributeCalledInverseAttribute);
-      if (listOfInverseAttributeEntries.length > 0) {
-        // alert(this._attribute.getDisplayString());
-        // alert(listOfInverseAttributeEntries[0].getDisplayString());
-        var inverseAttr = listOfInverseAttributeEntries[0].getValue(this._attribute);
+      var inverseAttributeEntry = this._attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
+      if (inverseAttributeEntry) {
+        var inverseAttr = inverseAttributeEntry.getValue(this._attribute);
         this._entry = this._item.replaceEntryWithConnection(this._entry, this._attribute, value, inverseAttr);
-      }
-      else {
+      } else {
         this._entry = this._item.replaceEntryWithEntryForAttribute(this._entry, this._attribute, value);
       }
       var superview = this.getSuperview();

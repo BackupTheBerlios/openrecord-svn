@@ -91,15 +91,19 @@ OpenRecordLoader.loadEverything = function(path) {
   path = path || "";
   OpenRecordLoader.loadStylesheet(path + "source/base_style.css"); 
   var listOfSourceCodeFiles = [
+    // third_party
     "third_party/md5/md5.js",
     "third_party/scriptaculous/prototype.js",
     "third_party/scriptaculous/effects.js",
     "third_party/scriptaculous/dragdrop.js",
     "third_party/gtd_tiddlywiki/FileSaver.js",
+    // util
     "source/util/Uuid.js",
     "source/util/Util.js",
     "source/util/Cookie.js",
     "source/util/DateValue.js",
+    "source/util/CsvParser.js",
+    // view
     "source/view/View.js",
     "source/view/RootView.js",
     "source/view/ItemView.js",
@@ -111,10 +115,12 @@ OpenRecordLoader.loadEverything = function(path) {
     "source/view/SuggestionBox.js",
     "source/view/EntryView.js",
     "source/view/PluginView.js", 
+    // plugin
     "source/TablePlugin.js",
     "source/OutlinePlugin.js",
     "source/DetailPlugin.js",
     "source/BarChartPlugin.js",
+    // model
     "source/model/Record.js",
     "source/model/Ordinal.js",
     "source/model/Vote.js",

@@ -258,7 +258,7 @@ chao   |          | done?   |  8. be able to select a lozenge
 chao   |          | done?   | 12. be able to delete a selected lozenge 
        |          |         | 13. be able to delete a selected table row 
 chao   | 0.5  IED |         | 14. improve keyboard navigation: tab, arrow, and return keys
-mignon |          |       >>| 15. Get data model to pass the ordinal unit tests again
+mignon |          | done?   | 15. Get data model to pass the ordinal unit tests again
        |          |copy/move? 16. drag-and-drop lozenges
        |          |       >>| 17. drag-and-drop to re-order navbar menu items
        |          |         | 18. drag-and-drop to re-order table rows
@@ -271,6 +271,7 @@ brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
 brian  |          | 0.25    | 25. BUG: need to encode reserved characters(<&>\n"') back at client-server layer
 brian  |          | 0.25    |     Be able to make html files with just one <script> element, not dozens 
 brian  |          | 0.25    |     Be able to easily create new documents that are empty
+brian  |          | 0.5     |     Import CSV data files when running from a file:/// page
        |          |       >>|     Create a dozen demo documents (quotes, dictionary, movies, books, oil-change, etc.)
        |          |       >>|     Have different documents use different style-sheets
 brian  | 1    IED | 0.75    |     Add a DateValue class that supports dates like "2005"

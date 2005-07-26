@@ -556,6 +556,7 @@ Item.prototype.hasAttributeValue = function(attribute, value) {
   return false;
 };
 
+
 /**
  * Given a category, returns "true" if the item has been assigned to 
  * that category.
@@ -570,6 +571,24 @@ Item.prototype.isInCategory = function(category) {
   return this.hasAttributeValue(categoryAttribute, category);
 };
  
+
+/**
+ * Given a string, returns "true" if the string is the same as the name
+ * or the short name of the item.  The comparison is case insensitive.
+ *
+ * @scope    public instance method
+ * @return   A boolean.  True if the string matches the item's name.
+ */
+Item.prototype.doesStringMatchName = function(string) {
+  if (string.toLowerCase() == this.getDisplayName().toLowerCase()) {
+    return true;
+  }
+  if (string.toLowerCase() == this.getDisplayString().toLowerCase()) {
+    return true;
+  }
+  return false;
+};
+
 
 // -------------------------------------------------------------------
 // Observer/Observable Methods

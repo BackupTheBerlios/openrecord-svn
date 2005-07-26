@@ -192,7 +192,6 @@ TablePlugin.prototype._buildAttributeHashFromScratch = function() {
  */
 TablePlugin.prototype._buildAttributeEditor = function() {
   var htmlElement = this.getHtmlElement();
-  View.appendNewElement(htmlElement, "br");
   var selectElt = View.appendNewElement(htmlElement, "select", RootView.CSS_CLASS_EDIT_TOOL);
   var listOfAttributes = this.getWorld().getAttributes();
   var optionElt = View.appendNewElement(selectElt, "option");
@@ -208,10 +207,14 @@ TablePlugin.prototype._buildAttributeEditor = function() {
     optionElt.onclick = this._attributeEditorChanged.bindAsEventListener(this);
   }
   this._selectElement = selectElt;
-  /*View.appendNewTextNode(htmlElement, " Import Data:");
-  var importButton = View.appendNewElement(htmlElement,"input");
-  importButton.type = "file";
-  importButton.onchange = this._importData.bindAsEventListener(this, importButton);*/
+  
+  if (window.location.protocol == "file:") {
+    var importDiv = View.appendNewElement(htmlElement, "div", RootView.CSS_CLASS_EDIT_TOOL);
+    View.appendNewTextNode(importDiv, " Import Data:");
+    var importButton = View.appendNewElement(importDiv, "input");
+    importButton.type = "file";
+    importButton.onchange = this._importData.bindAsEventListener(this, importButton);
+  }
 };
 
 
@@ -356,10 +359,11 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
     this.fetchItems();
     this._buildAttributes();
   }
-  
+ 
   //create new table, remove old table if already exists
   var viewDivElement = this.getHtmlElement();
   View.removeChildrenOfElement(viewDivElement);
+  this._buildAttributeEditor();
   this._table = View.appendNewElement(viewDivElement, "table", this._cssClassForTable);
   
   this._buildHeader();
@@ -370,10 +374,6 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   this._listOfItems.sort(function(a,b) {return staticThis.compareItemByAttribute(a,b);}); // need to sort after header row added because default sort attribute is set there
 
   this._buildTableBody();
-  
-  
-  // if (this.isInEditMode()) {this._buildAttributeEditor();}
-  this._buildAttributeEditor();
 };
 
 
@@ -409,7 +409,7 @@ TablePlugin.prototype.getSortIcon = function() {
  * attribute. Each table cell is displayed with a EntryView object.  The HTML 
  * table cell links to the EntryView object with the attribute "or_entryView"
  *
- * @scope    public instance method
+ * @scope    private instance method
  * @return   An HTML image element
  */
 TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
@@ -429,7 +429,7 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
 /**
  * Called when the user clicks on table header. Resorts table accordingly.
  * 
- * @scope    public class method
+ * @scope    public instance method
  */
 TablePlugin.prototype.clickOnHeader = function(event, clickAttribute) {
   if (clickAttribute == this._sortAttribute) {
@@ -445,7 +445,7 @@ TablePlugin.prototype.clickOnHeader = function(event, clickAttribute) {
 /**
  * Called when the user clicks on table header. Resorts table accordingly.
  * 
- * @scope    public class method
+ * @scope    public instance method
  */
 TablePlugin.prototype.selectRow = function(rowElement) {
   Util.assert(rowElement instanceof HTMLTableRowElement);
@@ -464,44 +464,61 @@ TablePlugin.prototype.selectRow = function(rowElement) {
  
 
 /**
+ * Reads from a CSV format data file and creates items and entries that
+ * correspond to the rows and fields in the CSV file.
  * 
+ * @scope    private instance method
  */
 TablePlugin.prototype._importData = function(eventObject, fileButton) {
-  // Returns null if it can't do it, false if there's an error, or a string of the content if successful
-/*  function mozillaLoadFile(filePath)
-  {
-      if(window.Components)
-          try 
-              {
-              netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-              var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
-              file.initWithPath(filePath);
-              if (!file.exists())
-                  return(null);
-              var inputStream = Components.classes["@mozilla.org/network/file-input-stream;1"].createInstance(Components.interfaces.nsIFileInputStream);
-              inputStream.init(file, 0x01, 00004, null);
-              var sInputStream = Components.classes["@mozilla.org/scriptableinputstream;1"].createInstance(Components.interfaces.nsIScriptableInputStream);
-              sInputStream.init(inputStream);
-              return(sInputStream.read(sInputStream.available()));
-              }
-          catch(e)
-              {
-              alert("Exception while attempting to load\n\n" + e);
-              return(false);
-              }
-      return(null);
-  }
+  var fileContents = Util.getStringContentsOfFileAtURL('file://' + fileButton.value);
+
+  var csvParser = new CsvParser();
+  var listOfRecords = csvParser.getStringValuesFromCsvData(fileContents);
   
-  function readFile (fileName) {
-      netscape.security.PrivilegeManager.enablePrivilege('UniversalFileRead');
-      var bfr = new java.io.BufferedReader(new java.io.FileReader(fileName));
-      var line;
-      var content = '';
-      while ((line = bfr.readLine()) != null)
-        content += line + java.lang.System.getProperty('line.separator');
-      return content;
-    }*/
-  window.open('file://'+fileButton.value,'preview');   
+  var listOfAttributes = this._displayAttributes;
+  var world = this.getWorld();
+  var attributeCalledExpectedType = world.getAttributeCalledExpectedType();
+  var attributeCalledInverseAttribute = world.getAttributeCalledInverseAttribute();
+
+  var hashTableOfTypesKeyedByAttribute = {};
+  for (var i in listOfAttributes) {
+    var attribute = listOfAttributes[i];
+    var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
+    var listOfTypes = [];
+    for (var j in listOfExpectedTypeEntries) {
+      var entry = listOfExpectedTypeEntries[j];
+      listOfTypes.push(entry.getValue());
+    }
+    var attributeKeyString = attribute.getUniqueKeyString();
+    hashTableOfTypesKeyedByAttribute[attributeKeyString] = listOfTypes;
+  }
+  world.beginTransaction();
+  for (i in listOfRecords) {
+    var listOfFields = listOfRecords[i];
+    if (listOfFields.length == listOfAttributes.length) {
+      var newItem = world.newItem();
+      world.setItemToBeIncludedInQueryResultList(newItem, this.getQuerySpec());
+      for (j in listOfAttributes) {
+        attribute = listOfAttributes[j];
+        var value = listOfFields[j];
+        listOfTypes = hashTableOfTypesKeyedByAttribute[attribute.getUniqueKeyString()];
+        value = EntryView._transformValueToExpectedType(world, value, listOfTypes);
+        var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
+        if (inverseAttributeEntry) {
+          var inverseAttribute = inverseAttributeEntry.getValue(attribute);
+          newItem.addConnectionEntry(attribute, value, inverseAttribute);
+        } else {
+          newItem.addEntryForAttribute(attribute, value);
+        }
+      }
+    } else {
+      alert("CSV record does not have the right number of fields: " + listOfFields[0]);
+    }
+  }
+  world.endTransaction();
+  this.refresh();
+  // fileContents = listOfStrings.join('');
+  // alert(fileContents);
 };
 
 

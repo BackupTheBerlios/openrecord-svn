@@ -114,9 +114,9 @@ Uuid.prototype.getDate = function() {
 mockUuidGenerator.queueOfUuids = new Array();
 
 function mockUuidGenerator() {
-  if (mockUuidGenerator.queueOfUuids.length == 0) {
-// This should probably throw an exception instead.    
-      return "00000000-0000-0000-0000-000000000000";
+  if (mockUuidGenerator.queueOfUuids.length === 0) {
+    // This should probably throw an exception instead.    
+    return "00000000-0000-0000-0000-000000000000";
   }
   return mockUuidGenerator.queueOfUuids.shift();
 }

@@ -190,7 +190,7 @@ span.bad {
 }
 
 div.editmode .header {
-  background-color: rgb(100%, 100%, 40%);
+  background-color: rgb(100%, 100%, 100%);
 }
 
 div.viewmode .header {
@@ -348,10 +348,16 @@ h2.EntryView span:hover {
   border-color: rgb(100%, 100%, 100%);
 }
 
-div.EntryView span:hover {
+div.EntryView {
   border-width: thin;
   border-style: solid;
-  border-color: rgb(70%, 70%, 70%);
+  border-color: rgb(100%, 100%, 100%);
+}
+
+div.EntryView:hover {
+  border-width: thin;
+  border-style: solid;
+  border-color: rgb(100%, 100%, 100%);
 }
 
 h1.EntryView input {
@@ -703,7 +709,7 @@ div.SectionView {
 }
 
 .DateValue {
-  font-color: #808080;
+  color: #808080;
 }
 
 .NumberValue {

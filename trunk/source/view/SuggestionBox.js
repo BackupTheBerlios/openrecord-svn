@@ -71,14 +71,9 @@ SuggestionBox.prototype.getSelectedItem = function() {
   if (!this._selectedItem) {
     // check if typed item is identical to suggested item
     var editValue = this._inputField.value;
-    // for (var i = 0; i < this._listOfSuggestedItems.length; ++i) {
-    //   var item = this._listOfSuggestedItems[i];
-    for (var key in this._listOfSuggestedItems) {
-      var item = this._listOfSuggestedItems[key];
-      if (editValue.toLowerCase() == item.getDisplayName().toLowerCase()) {
-        return item;
-      }
-      if (editValue.toLowerCase() == item.getDisplayString().toLowerCase()) {
+    for (var i in this._listOfSuggestedItems) {
+      var item = this._listOfSuggestedItems[i];
+      if (item.doesStringMatchName(editValue)) {
         return item;
       }
     }

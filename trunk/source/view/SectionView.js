@@ -99,7 +99,7 @@ function SectionView(superview, htmlElement, sectionItem) {
 
   this._pluginView = null;
   this._pluginDiv = null;
-  this._sectionSummaryView = null;
+  // this._sectionSummaryView = null;
   this._headerView = null;
   this._queryEditSpan = null;
   
@@ -189,7 +189,7 @@ SectionView.prototype.refresh = function() {
   } else {
     // refresh the <h2> element with the value: this._section.getDisplayName();  
     this._refreshQueryEditSpan();
-    this._sectionSummaryView.refresh();
+    // this._sectionSummaryView.refresh();
     this._pluginView.refresh();
     this._headerView.refresh();
   }
@@ -220,28 +220,21 @@ SectionView.prototype.doInitialDisplay = function() {
   var sectionDiv = this.getHtmlElement();
   var headerH2 = View.appendNewElement(sectionDiv, "h2");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
-  var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
+  // var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
   this._headerView = new EntryView(this, headerH2, this._section, attributeCalledName,
     this._section.getSingleEntryFromAttribute(attributeCalledName));
-  var summaryDiv = View.appendNewElement(sectionDiv, "div");
-  this._sectionSummaryView = new EntryView(this, summaryDiv, this._section, attributeCalledSummary,
-    this._section.getSingleEntryFromAttribute(attributeCalledSummary), true);
-  View.appendNewElement(sectionDiv, "p");
+  // var summaryDiv = View.appendNewElement(sectionDiv, "div");
+  // this._sectionSummaryView = new EntryView(this, summaryDiv, this._section, attributeCalledSummary,
+  //   this._section.getSingleEntryFromAttribute(attributeCalledSummary), true);
+  // View.appendNewElement(sectionDiv, "p");
 
   // create the editing controls, if we're in edit mode
   var controlArea = View.appendNewElement(sectionDiv, "p", RootView.CSS_CLASS_EDIT_TOOL, null, "Show me a ");
-  // var textShowMeA = document.createTextNode("Show me a ");
-  // controlArea.appendChild(textShowMeA);
-
-  // PENDING: We shouldn't call the private method _getUuid()
-  // var selectMenuId = SectionView.ELEMENT_ID_SELECT_MENU_PREFIX + this._section._getUuid();
   var selectElement = View.appendNewElement(controlArea, "select");
-  var optionElement;
   var listener;
-  // selectElement.setAttribute("name", selectMenuId);
   for (var key in SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
     var pluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[key];
-    optionElement = View.appendNewElement(selectElement, "option");
+    var optionElement = View.appendNewElement(selectElement, "option");
     optionElement.selected = (selectedPluginClass == pluginClass);
     optionElement.value = pluginClass.getPluginItemUuid();
     var pluginItem = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
@@ -249,12 +242,8 @@ SectionView.prototype.doInitialDisplay = function() {
     listener = this; 
     Util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
   }
-  
   View.appendNewTextNode(controlArea," of items whose ");
-
   this._queryEditSpan = View.appendNewElement(controlArea, "span");
-  // this._refreshQueryEditSpan();
-
   View.appendNewTextNode(controlArea,".");
 
   // create a div element for the plugin class to use
