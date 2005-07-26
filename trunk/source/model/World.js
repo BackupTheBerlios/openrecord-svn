@@ -924,7 +924,7 @@ World.prototype.getItemsInCategory = function(category, observer) {
 
 
 /**
- * Returns an list of all the items that represent categories.
+ * Returns a list of all the items that represent categories.
  *
  * @scope    public instance method
  * @return   A list of items that represent categories.
@@ -935,7 +935,7 @@ World.prototype.getCategories = function(observer) {
 };
 
 /**
- * Returns an list of all the items that represent attributes.
+ * Returns a list of all the items that represent attributes.
  *
  * @scope    public instance method
  * @return   A list of items that represent attributes.

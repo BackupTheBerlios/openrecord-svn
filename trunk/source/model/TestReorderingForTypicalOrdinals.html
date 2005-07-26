@@ -3,37 +3,36 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
 
 <!-- 
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
-  
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
     http://creativecommons.org/licenses/publicdomain/
 -->
 
   <head>
-    <title>Data Model Test Suite</title>
+    <title>Test reordering items with typical ordinals (via a mock)</title>
 
     <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
-    <script type="text/javascript">
-      function suite() {
-        var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestSuite(dataModelTestSuite());
-        return testSuite;
-      }
-      
-      function dataModelTestSuite() {
-        var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestPage("../../../source/model/ModelTest.html");
-        testSuite.addTestPage("../../../source/model/TestReorderingForTypicalOrdinals.html");
-        testSuite.addTestPage("../../../source/model/TestReorderingForSpecialCases.html");
-        testSuite.addTestPage("../../../source/model/LintTest.html");
-        return testSuite;
-      }
-    </script>
+    <script type="text/javascript" src="../../third_party/md5/md5.js"></script>
+    <script type="text/javascript" src="../util/Util.js"></script>
+    <script type="text/javascript" src="../util/Uuid.js"></script>
+    <script type="text/javascript" src="../util/DateValue.js"></script>
+    <script type="text/javascript" src="HttpSaver.js"></script>
+    <script type="text/javascript" src="Record.js"></script>
+    <script type="text/javascript" src="Ordinal.js"></script>
+    <script type="text/javascript" src="Vote.js"></script>
+    <script type="text/javascript" src="ContentRecord.js"></script>
+    <script type="text/javascript" src="Item.js"></script>
+    <script type="text/javascript" src="Entry.js"></script>
+    <script type="text/javascript" src="Transaction.js"></script>
+    <script type="text/javascript" src="QueryRunner.js"></script>
+    <script type="text/javascript" src="World.js"></script>
+    <script type="text/javascript" src="StubVirtualServer.js"></script>
+    <script type="text/javascript" src="DeltaVirtualServer.js"></script>
+    <script type="text/javascript" src="TestReorderingForTypicalOrdinals.js"></script>
   </head>
   
   <body>
-    <h1>Data Model Test Suite</h1>
+    <h1>Test reordering items with typical ordinals (via a mock)</h1>
 
     <p>This page is used to run unit tests for the JavaScript code in the 
     OpenRecord project.</p>

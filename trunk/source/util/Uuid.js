@@ -111,6 +111,16 @@ Uuid.prototype.getDate = function() {
 // Public methods for working with UUIDs
 // -------------------------------------------------------------------
 
+mockUuidGenerator.queueOfUuids = new Array();
+
+function mockUuidGenerator() {
+  if (mockUuidGenerator.queueOfUuids.length == 0) {
+// This should probably throw an exception instead.    
+      return "00000000-0000-0000-0000-000000000000";
+  }
+  return mockUuidGenerator.queueOfUuids.shift();
+}
+
 /**
  * Generates a time-based UUID, meaning a "version 1" UUID.  JavaScript
  * code running in a browser doesn't have access to the IEEE 802.3 address
@@ -171,7 +181,7 @@ Uuid.generateTimeBasedUuid = function(pseudoNode) {
     Uuid._ourNextIntraMillisecondIncrement += 1;
     if (Uuid._ourNextIntraMillisecondIncrement == 10000) {
       // If we've gotten to here, it means we've already generated 10,000
-      // UUIDs in this single milliseconds, which is the most that the UUID
+      // UUIDs in this single millisecond, which is the most that the UUID
       // timestamp field allows for.  So now we'll just sit here and wait
       // for a fraction of a millisecond, so as to ensure that the next 
       // time this method is called there will be a different millisecond 
@@ -279,6 +289,13 @@ Uuid.getDateFromUuid = function(uuid) {
   return date;
 };
 
+
+Uuid.getOriginalOrdinalFromUuid = function(uuid) {
+  var hexTimeLow = uuid.split('-')[0];
+  var hexTimeMid = uuid.split('-')[1];
+  var hexTimeHigh = uuid.split('-')[2];
+  return hexTimeHigh + hexTimeMid + hexTimeLow;
+};
 
 // -------------------------------------------------------------------
 // Private methods

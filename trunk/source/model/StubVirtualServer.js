@@ -74,6 +74,18 @@ StubVirtualServer.JSON_MEMBER_ITEM = "item";
 StubVirtualServer.JSON_MEMBER_RETAIN_FLAG = "retainFlag";
 StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "ordinalNumber";
 
+StubVirtualServer.prototype._generateUuid = function(arg1) {
+  return Uuid.generateTimeBasedUuid(arg1);
+};
+
+StubVirtualServer.prototype._processOptionalDefaultOverrides = function(optionalDefaultOverrides) {
+  for (key in optionalDefaultOverrides) {
+    // Should I check first that there is already a property called 'key'?
+    this[key] = optionalDefaultOverrides[key];
+//alert("key = " + key + "\noptionalDefaultOverrides[key] = " + optionalDefaultOverrides[key]);
+  }
+};
+
 
 /**
  * The StubVirtualServer is a dummy place-holder datastore that does
@@ -81,7 +93,7 @@ StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "ordinalNumber";
  *
  * @scope    public instance constructor
  */
-function StubVirtualServer(pathToTrunkDirectory) {
+function StubVirtualServer(pathToTrunkDirectory, optionalDefaultOverrides) {
   var fileName = "2005_june_axiomatic_items.json";
   var urlForAxiomaticFile = "";
   if (pathToTrunkDirectory) {
@@ -90,8 +102,11 @@ function StubVirtualServer(pathToTrunkDirectory) {
   urlForAxiomaticFile += "source/model/" + fileName;
   
   this._dehydratedAxiomFileURL = urlForAxiomaticFile;
+//  this._generateUuid = Uuid.generateTimeBasedUuid;
+  if (optionalDefaultOverrides) {
+    this._processOptionalDefaultOverrides(optionalDefaultOverrides, "Stub");
+  }
 }
-
 
 /**
  * Initializes the instance variables for a newly created StubVirtualServer.
@@ -762,10 +777,10 @@ StubVirtualServer.prototype._getNewUuid = function() {
     var uuidOfCurrentUser = this._currentUser._getUuid();
     var arrayOfParts = uuidOfCurrentUser.split("-");
     var pseudoNodeOfCurrentUser = arrayOfParts[4];//"0123456789AB";
-    newUuid = Uuid.generateTimeBasedUuid(pseudoNodeOfCurrentUser);
+    newUuid = this._generateUuid(pseudoNodeOfCurrentUser);
   }
   else {
-    newUuid = Uuid.generateTimeBasedUuid();
+    newUuid = this._generateUuid();
   }
   return newUuid;
 };

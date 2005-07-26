@@ -110,8 +110,7 @@ ContentRecord.prototype._addOrdinal = function(ordinal) {
  * @return   A number.
  */
 ContentRecord.prototype.getOrdinalNumberAtCreation = function() {
-  // return (0 - this._creationTimestamp.valueOf());
-  return (0 - this.getTimestamp());
+  return Uuid.getOriginalOrdinalFromUuid(this._uuid);
 };
 
 
@@ -248,6 +247,7 @@ ContentRecord.prototype.hasBeenDeleted = function() {
  * Moves this contentRecord to a new position in a list, by creating a new
  * ordinal for this contentRecord with an ordinal number that is set such
  * that this contentRecord appears between two other entries.
+ * The randomness is to avoid ever generating the same ordinal twice.
  *
  * @scope    public instance method
  * @param    contentRecordFirst    The contentRecord that should come before this one. 
@@ -257,7 +257,6 @@ ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRec
   var firstOrdinalNumber = null;
   var secondOrdinalNumber = null;
   var thirdOrdinalNumber = null;
-  var arbitraryNumberToMoveUsUpOrDownSlightly = 0.01;
   
   if (contentRecordFirst) {
     firstOrdinalNumber = contentRecordFirst.getOrdinalNumber();
@@ -267,15 +266,42 @@ ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRec
   }
   
   if (firstOrdinalNumber && thirdOrdinalNumber) {
-    secondOrdinalNumber = (firstOrdinalNumber + thirdOrdinalNumber) / 2;
+    if (firstOrdinalNumber == thirdOrdinalNumber) {
+      Util.assert(false, "Tried to reorder between two items with the same ordinal.");
+    }
+    else {
+      if (firstOrdinalNumber > thirdOrdinalNumber) {
+        temp = firstOrdinalNumber;
+        firstOrdinalNumber = thirdOrdinalNumber;
+        thirdOrdinalNumber = temp;
+      }
+      secondOrdinalNumber = firstOrdinalNumber + Uuid._getRandomEightCharacterHexString();
+      var zeroes = "";
+      while (secondOrdinalNumber >= thirdOrdinalNumber) {
+        zeroes += "0";
+        secondOrdinalNumber = firstOrdinalNumber + zeroes + Uuid._getRandomEightCharacterHexString();
+      }
+    }
   }
   if (firstOrdinalNumber && !thirdOrdinalNumber) {
-    secondOrdinalNumber = (firstOrdinalNumber - arbitraryNumberToMoveUsUpOrDownSlightly);
+    secondOrdinalNumber = firstOrdinalNumber + Uuid._getRandomEightCharacterHexString();
   }
   if (!firstOrdinalNumber && thirdOrdinalNumber) {
-    secondOrdinalNumber = (firstOrdinalNumber + arbitraryNumberToMoveUsUpOrDownSlightly);
+    secondOrdinalNumber = thirdOrdinalNumber;
+    i = secondOrdinalNumber.length - 1;
+    while (secondOrdinalNumber.charAt(i) == '0') {
+      i = i - 1;
+    }
+    var origLen = secondOrdinalNumber.length;
+    prefix = secondOrdinalNumber.substring(0, i);
+    firstNonZero = secondOrdinalNumber.charAt(i);
+    firstNonZero = firstNonZero - 1;
+    secondOrdinalNumber = prefix + firstNonZero;
+    while (secondOrdinalNumber.length < origLen) {
+      secondOrdinalNumber += "f";
+    }
+    secondOrdinalNumber += Uuid._getRandomEightCharacterHexString();
   }
-
   this.getWorld()._newOrdinal(this, secondOrdinalNumber);
 };
 
@@ -305,14 +331,20 @@ ContentRecord.prototype.voteToRetain = function() {
 // -------------------------------------------------------------------
 
 /**
- * Registers a vote to retain this contentRecord. 
+ * Uses lexicographic ordering.
  *
  * @scope    public class method
  */
 ContentRecord.compareOrdinals = function(contentRecordOne, contentRecordTwo) {
   var ordinalNumberOne = contentRecordOne.getOrdinalNumber();
   var ordinalNumberTwo = contentRecordTwo.getOrdinalNumber();
-  return (ordinalNumberTwo - ordinalNumberOne);
+  if (ordinalNumberOne < ordinalNumberTwo) {
+    return -1;
+  }
+  if (ordinalNumberOne > ordinalNumberTwo) {
+    return 1;
+  }
+  return 0;
 };
 
 

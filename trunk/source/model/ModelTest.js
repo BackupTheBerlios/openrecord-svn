@@ -366,8 +366,6 @@ function testOrdinals() {
   assertTrue('Cupcake starts out second in the list"', foodItems[1] == cupcake);
   assertTrue('Brownie starts out second in the list"', foodItems[2] == brownie);
 
-/*
-PENDING: the ordinal implementation was broken by the new UUID code
   brownie.reorderBetween(apple, cupcake);
   foodItems = world.getItemsInCategory(categoryCalledFood);
   assertTrue('Apple is now first in the list"', foodItems[0] == apple);
@@ -385,7 +383,6 @@ PENDING: the ordinal implementation was broken by the new UUID code
   assertTrue('Apple is now first in the list"', foodItems[0] == apple);
   assertTrue('Brownie is now second in the list"', foodItems[1] == brownie);
   assertTrue('Cupcake is now third in the list"', foodItems[2] == cupcake);
-*/
   
   world.logout();
 }

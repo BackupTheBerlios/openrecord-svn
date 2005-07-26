@@ -53,8 +53,8 @@ DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
  * @param    inJsonRepositoryString    A JSON string literal representing the world of items. 
  */
 DeltaVirtualServer.prototype = new StubVirtualServer();  // makes DeltaVirtualServer be a subclass of StubVirtualServer
-function DeltaVirtualServer(repositoryName, pathToTrunkDirectory) {
-
+function DeltaVirtualServer(repositoryName, pathToTrunkDirectory, optionalDefaultOverrides) {
+  StubVirtualServer.call(this, pathToTrunkDirectory, optionalDefaultOverrides);
   this._pathToTrunkDirectory = "";
   if (pathToTrunkDirectory) {
     this._pathToTrunkDirectory = pathToTrunkDirectory;
