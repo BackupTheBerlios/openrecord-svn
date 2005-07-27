@@ -72,7 +72,7 @@ StubVirtualServer.JSON_MEMBER_PREVIOUS_VALUE = "previousEntry";
 StubVirtualServer.JSON_MEMBER_RECORD = "record";
 StubVirtualServer.JSON_MEMBER_ITEM = "item";
 StubVirtualServer.JSON_MEMBER_RETAIN_FLAG = "retainFlag";
-StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "ordinalNumber";
+StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "value";
 
 StubVirtualServer.prototype._generateUuid = function(arg1) {
   return Uuid.generateTimeBasedUuid(arg1);

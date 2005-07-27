@@ -36,6 +36,7 @@
 // 
 /*global window */
 /*global RootView */
+/*global Sortable */
 // -------------------------------------------------------------------
 
 
@@ -44,6 +45,11 @@
 // -------------------------------------------------------------------
 NavbarView.CSS_CLASS_MENU      = "menu";
 NavbarView.CSS_CLASS_MENU_ITEM = "menu_item";
+
+// Caution: 
+// In order for us to use the "Sortable" feature in the script.aculo.us 
+// dragdrop.js library, this Id must *not* have an underscore in it.
+NavbarView.ELEMENT_ID_MENU     = "MainMenu";  
 
 
 /**
@@ -59,6 +65,8 @@ NavbarView.prototype = new View();  // makes NavbarView be a subclass of View
 function NavbarView(superview, htmlElement, htmlElementForAnchors) {
   View.call(this, superview, htmlElement, "NavbarView");
   this._htmlElementForAnchors = htmlElementForAnchors;
+  this._liElementBeingTouched = null;
+  // this._listOfPages = null;
 }
 
 
@@ -81,6 +89,73 @@ NavbarView.prototype.refresh = function() {
 // -------------------------------------------------------------------
 
 /**
+ * Called whenever there is a mousedown event on one of the menu item
+ * html "li" elements.  All we do here is record which element is 
+ * being touched, because we may need that info later on in the 
+ * _sortOrderUpdate() method. 
+ *
+ * @scope    public instance method
+ * @param    event    The mousedown event object. 
+ * @param    liElement    The HTMLElement for this menu item. 
+ */
+NavbarView.prototype._mouseDownOnMenuItem = function(event, liElement) {
+  this._liElementBeingTouched = liElement;
+};
+
+
+/**
+ * Called by the "Sortable" feature in the script.aculo.us dragdrop.js library.
+ * This method gets called when the user drags and drops a menu item in the
+ * Navbar.  We only get called if the new location of the menu item is 
+ * different from the old location.
+ *
+ * @scope    public instance method
+ * @param    ulElement    The "ul" HTMLElement for the menu of menu items. 
+ */
+NavbarView.prototype._sortOrderUpdate = function(ulElement) {
+  Util.assert(this._liElementBeingTouched !== null);
+  
+  var liElementPrefixString = NavbarView.ELEMENT_ID_MENU + '_';
+  var menuItemElementId = this._liElementBeingTouched.id;
+  var pageUuid = menuItemElementId.replace(liElementPrefixString, '');
+  var pageToReorder = this.getWorld().getItemFromUuid(pageUuid);
+  
+  var listOfPages = this._getNewOrderingForPageList(ulElement);
+  
+  var arrayIndex = Util.getArrayIndex(listOfPages, pageToReorder);
+  Util.assert(arrayIndex != -1);
+  var pageAbove = (arrayIndex === 0) ? null : listOfPages[arrayIndex-1];
+  var pageBelow = (arrayIndex > listOfPages.length) ? null : listOfPages[arrayIndex+1];
+  pageToReorder.reorderBetween(pageAbove, pageBelow);
+};
+
+
+/**
+ * Returns a list of page items, arranged in the new order that resulted
+ * from the most recent drag-and-drop re-ordering.
+ *
+ * @scope    public instance method
+ * @param    ulElement    The "ul" HTMLElement for the menu of menu items. 
+ * @return   A list of items representing pages.
+ */
+NavbarView.prototype._getNewOrderingForPageList = function(ulElement) {
+  // The string '[]=' is used by the "Sortable" feature in the script.aculo.us 
+  // dragdrop.js library within each token in the serialization string.
+  var prefixString = NavbarView.ELEMENT_ID_MENU + '[]=';
+  
+  var serializationString = Sortable.serialize(ulElement);
+  var listOfTokens = serializationString.split('&');
+  var listOfPages = [];
+  for (var i in listOfTokens) {
+    var uuidForPage = listOfTokens[i].replace(prefixString, '');
+    var page = this.getWorld().getItemFromUuid(uuidForPage);
+    listOfPages.push(page);
+  }
+  return listOfPages;
+};
+
+
+/**
  * Re-creates the HTML for the view, and hands the HTML to the 
  * browser to be re-drawn.
  *
@@ -98,24 +173,32 @@ NavbarView.prototype._rebuildView = function() {
     page = listOfPages[key];
     var anchorName = RootView.URL_PAGE_PREFIX + page._getUuid();
     View.appendNewElement(this._htmlElementForAnchors, "a", null, {name: anchorName});
-    // anchor.setAttribute("name", RootView.URL_PAGE_PREFIX + page._getUuid());
   }
   
   var divElement = this.getHtmlElement();
   View.removeChildrenOfElement(divElement); 
-  var ulElement = View.appendNewElement(divElement, "ul", NavbarView.CSS_CLASS_MENU);
+  var ulElement = View.appendNewElement(divElement, "ul", NavbarView.CSS_CLASS_MENU, {id: NavbarView.ELEMENT_ID_MENU});
   var rootView = this.getRootView();
   for (key in listOfPages) {
     page = listOfPages[key];
     page.addObserver(this);
-    var liElement = View.appendNewElement(ulElement, "li", NavbarView.CSS_CLASS_MENU_ITEM);
     var menuUrl = rootView.getUrlForItem(page);
     var menuText = page.getDisplayString();
+    // Caution: 
+    // In order for us to use the "Sortable" feature in the script.aculo.us 
+    // dragdrop.js library, this menuItemId must have exactly one underscore in
+    // it, with the id for the whole menu is to the left of the underscore, and
+    // the id for the individual menu item to the right of the underscore.
+    var menuItemId = NavbarView.ELEMENT_ID_MENU + '_' + page._getUuid();
+    var liElement = View.appendNewElement(ulElement, "li", NavbarView.CSS_CLASS_MENU_ITEM, {id: menuItemId});
     var anchorElement = View.appendNewElement(liElement, "a", null, {href: menuUrl}, menuText);
-    // anchorElement.setAttribute("href", menuUrl);
-    // View.appendNewTextNode(anchorElement, menuText);
-    anchorElement.onclick = RootView.clickOnLocalLink.bindAsEventListener();
+    Event.observe(anchorElement, "click", RootView.clickOnLocalLink.bindAsEventListener());
+    Event.observe(liElement, "mousedown", this._mouseDownOnMenuItem.bindAsEventListener(this, liElement));
   }
+  var listener = this;
+  Sortable.create(NavbarView.ELEMENT_ID_MENU, {
+    onUpdate: function(element){ listener._sortOrderUpdate(element);}
+  });
   
   var newPageButton = View.appendNewElement(divElement, "input", RootView.CSS_CLASS_EDIT_TOOL);
   newPageButton.type = "button";

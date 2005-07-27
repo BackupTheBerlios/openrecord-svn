@@ -252,9 +252,9 @@ EntryView.prototype._setClassName = function() {
     var connectionType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
     if (dataType == itemType || dataType == connectionType) {
       if (this._isLozenge()) {
-        if (this.isInEditMode() && !this.draggable) {
+        if (this.isInEditMode() && !this._draggable) {
           this._textSpan.or_entryView = this; 
-          this.draggable = new Draggable(this._textSpan, {revert:true});
+          this._draggable = new Draggable(this._textSpan, {revert:true});
         }
       }
       else {

@@ -260,7 +260,7 @@ chao   |          | done    | 12. be able to delete a selected lozenge
 chao   | 0.5  IED | done    | 14. improve keyboard navigation: tab, arrow, and return keys
 mignon |          | done?   | 15. Get data model to pass the ordinal unit tests again
        |          |copy/move? 16. drag-and-drop lozenges
-       |          |       >>| 17. drag-and-drop to re-order navbar menu items
+brian  |          | 0.5     | 17. drag-and-drop to re-order navbar menu items
        |          |         | 18. drag-and-drop to re-order table rows
        |          |       >>| 19. drag-and-drop to re-order table columns
        |          |         | 20. improve UI for "add new attribute" in Table View 
@@ -281,13 +281,13 @@ brian  | 1    IED | 0.75    |     Add a DateValue class that supports dates like
        |          |         |     config option so that only logged-in users have read-access
        |          |         |     have an "icon" attribute, and use icons in suggestion box and in EntryView
        |          |         |     run in IE as well as Firefox
-chao   |0.25 IED  |         |     Show start time for DateValues if time was entered
-chao   |0.25 IED  |         |     Suppport for relative date entry e.g. "today", "end of day/week", "tomorrow"
-chao   |0.25 IED  |         |     Display relative dates for entries e.g. "today"
-chao   |0.25 IED  |         |     Support for Year/Month entry for DateValue, e.g. 2005/07, July 2005
-chao   |0.25 IED  |         |     Support anchor links to each section on a PageView
-chao   |0.25 IED  |         |     Make currently sorted column to have a special CSS class so that it can look different
-chao   |0.25 IED  |         |     Resolve: How should table cells deal with <enter>, move down a cell or to the right?
+chao   | 0.25 IED |         |     Show start time for DateValues if time was entered
+chao   | 0.25 IED |         |     Suppport for relative date entry e.g. "today", "end of day/week", "tomorrow"
+chao   | 0.25 IED |         |     Display relative dates for entries e.g. "today"
+chao   | 0.25 IED |         |     Support for Year/Month entry for DateValue, e.g. 2005/07, July 2005
+chao   | 0.25 IED |         |     Support anchor links to each section on a PageView
+chao   | 0.25 IED |         |     Make currently sorted column to have a special CSS class so that it can look different
+chao   | 0.25 IED |         |     Resolve: How should table cells deal with <enter>, move down a cell or to the right?
 -------+----------+---------+----------------------------------------------
        |          |         | 26. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
        |          |         | 27. Write one unit test that tests GUI code
