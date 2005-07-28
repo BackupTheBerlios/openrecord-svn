@@ -218,7 +218,7 @@ EntryView.prototype._buildView = function() {
   var htmlElement = this.getHtmlElement();
   View.removeChildrenOfElement(htmlElement);
   
-  var textString = this._getText();
+  var textString = this._getText(true);
   var className = (this._isProvisional ? EntryView.CSS_CLASS_PROVISIONAL : '');
   this._textSpan = View.appendNewElement(htmlElement, "span", className, null);
   this._textNode = View.appendNewTextNode(this._textSpan, textString);
@@ -522,9 +522,22 @@ EntryView.prototype._writeValue = function(value) {
  *
  * @scope    private instance method
  */
-EntryView.prototype._getText = function() {
-  if (this._isProvisional) {return this._provisionalText;}
-  if (this._entry) {return this._item.getDisplayStringForEntry(this._entry);}
+EntryView.prototype._getText = function(useNonBreakingSpaces) {
+  if (this._isProvisional) {
+    return this._provisionalText;
+  }
+  if (this._entry) {
+    var text = this._item.getDisplayStringForEntry(this._entry);
+    if (useNonBreakingSpaces) {
+      var dataType = this._entry.getType();
+      if (dataType != this.getWorld().getTypeCalledText()) {
+        var regExpForAllSpaces = new RegExp(' ','g');
+        var unicodeNonBreakingSpace = '\u00a0'; // The same as &nbsp; in HTML
+        text = text.replace(regExpForAllSpaces, unicodeNonBreakingSpace);
+      }
+    }
+    return text;
+  }
   return '';
 };
 
@@ -535,11 +548,11 @@ EntryView.prototype._getText = function() {
  * @scope    private instance method
  */
 EntryView.prototype._restoreText = function(dontSelect) {
-  var oldText = (this._entry) ?  this._getText() : '';
+  var useNonBreakingSpaces = !this._isEditing;
+  var oldText = (this._entry) ?  this._getText(useNonBreakingSpaces) : '';
   if (this._isEditing) {
     this._editField.value = oldText;
-  }
-  else {
+  } else {
     this._textNode.data = oldText;
   }
   if (!dontSelect) {this._editField.select();}
