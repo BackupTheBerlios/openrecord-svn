@@ -97,6 +97,9 @@ function RootView(world) {
   this._currentContentView = null;
   this._homePage = null;
   this._selections = [];
+  
+  this._currentlyInDisplayMethod = false;
+  
   document.addEventListener("keypress",this._onKeyPress.bindAsEventListener(this),false);
   
   // window.document.body.innerHTML = "";
@@ -356,16 +359,20 @@ RootView.prototype.setCurrentContentViewFromUrl = function() {
  * @scope    public instance method
  */
 RootView.prototype.display = function() {
-  this._rootDiv.className = (this.isInShowToolsMode()) ? RootView.CSS_CLASS_EDIT_MODE : RootView.CSS_CLASS_VIEW_MODE;
-  this._displayLoginSpan();
-  this._displayNavbar();
-  this._displayDebugArea();
-  if (this._currentContentView) {
-    Util.assert(this._currentContentView instanceof Object);
-    document.title = this._currentContentView.getPageTitle() + " - openrecord.org";
-    this._currentContentView.includeOnScreen(true);
+  if (!this._currentlyInDisplayMethod) {
+    this._currentlyInDisplayMethod = true;
+    this._rootDiv.className = (this.isInShowToolsMode()) ? RootView.CSS_CLASS_EDIT_MODE : RootView.CSS_CLASS_VIEW_MODE;
+    this._displayLoginSpan();
+    this._displayNavbar();
+    this._displayDebugArea();
+    if (this._currentContentView) {
+      Util.assert(this._currentContentView instanceof Object);
+      document.title = this._currentContentView.getPageTitle() + " - openrecord.org";
+      this._currentContentView.includeOnScreen(true);
+    }
+    window.focus();
+    this._currentlyInDisplayMethod = false;
   }
-  window.focus();
 };
 
 

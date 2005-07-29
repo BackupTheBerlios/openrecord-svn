@@ -66,7 +66,7 @@ function NavbarView(superview, htmlElement, htmlElementForAnchors) {
   View.call(this, superview, htmlElement, "NavbarView");
   this._htmlElementForAnchors = htmlElementForAnchors;
   this._liElementBeingTouched = null;
-  // this._listOfPages = null;
+  this._builtForEditMode = false;
 }
 
 
@@ -80,6 +80,10 @@ NavbarView.prototype.refresh = function() {
   if (!this.hasEverBeenDisplayed()) {
     this._rebuildView();
     this._myHasEverBeenDisplayedFlag = true;
+  } else {
+    if (this._builtForEditMode != this.isInEditMode()) {
+      this._rebuildView();
+    }
   }
 };
 
@@ -196,9 +200,12 @@ NavbarView.prototype._rebuildView = function() {
     Event.observe(liElement, "mousedown", this._mouseDownOnMenuItem.bindAsEventListener(this, liElement));
   }
   var listener = this;
-  Sortable.create(NavbarView.ELEMENT_ID_MENU, {
-    onUpdate: function(element){ listener._sortOrderUpdate(element);}
-  });
+  this._builtForEditMode = this.isInEditMode();
+  if (this._builtForEditMode) {
+    Sortable.create(NavbarView.ELEMENT_ID_MENU, {
+      onUpdate: function(element){ listener._sortOrderUpdate(element);}
+    });
+  }
   
   var newPageButton = View.appendNewElement(divElement, "input", RootView.CSS_CLASS_EDIT_TOOL);
   newPageButton.type = "button";

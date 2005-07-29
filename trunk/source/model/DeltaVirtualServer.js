@@ -181,12 +181,16 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = function(tr
 DeltaVirtualServer.prototype._getTypedDisplayStringForItem = function(item) {
   var returnString = "(";
   if (item) {
-    Util.assert(item instanceof Item);
-    var category = item.getFirstCategory();
-    if (category) {
-      returnString += this.truncateString(category.getDisplayString("???")) + ": ";
+    if (item instanceof Item) {
+      var category = item.getFirstCategory();
+      if (category) {
+        returnString += this.truncateString(category.getDisplayString("???")) + ": ";
+      }
+      returnString += this.truncateString(item.getDisplayString("???"));
     }
-    returnString += this.truncateString(item.getDisplayString("???"));
+    if (item instanceof Entry) {
+      returnString += "Entry";
+    }
   }
   returnString += ")";
   return returnString;

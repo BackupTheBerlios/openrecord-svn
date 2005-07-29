@@ -35,9 +35,11 @@
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global window, document, HTMLTableRowElement  */
+/*global Draggable, Droppables,  */
 /*global Util  */
 /*global Item  */
-/*global View, MultiEntriesView  */
+/*global CsvParser  */
+/*global View, MultiEntriesView, EntryView, RootView  */
 // -------------------------------------------------------------------
 
 
@@ -117,7 +119,7 @@ TablePlugin.prototype.getClass = function() {
  * @param    itemB    One of the two items to be compared. 
  * @return   This method returns 0 if the items are comparable. If _ascendingOrder is true, itemA is less than itemB, this method returns -1, otherwise it returns +1. 
  */
-TablePlugin.prototype.compareItemByAttribute = function(itemA, itemB) {
+TablePlugin.prototype.compareItemsBySortAttribute = function(itemA, itemB) {
   Util.assert(this._sortAttribute !== null);
   var strA = itemA.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
   var strB = itemB.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
@@ -129,59 +131,57 @@ TablePlugin.prototype.compareItemByAttribute = function(itemA, itemB) {
 
 
 /**
- * Creates an array containing all the attributes of the content items 
- * in this table.  Populates list of suggested items for relevant attributes
+ * Returns a list of all the attributes that this table should have columns for.
  *
  * @scope    private instance method
  */
-TablePlugin.prototype._buildAttributes = function() {
-  var repository = this.getWorld();
-  var attrTableColumns = repository.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
-  var entriesTableColumns = this._layout.getEntriesForAttribute(attrTableColumns);
-  var displayAttrs = [];
+TablePlugin.prototype._getListOfColumns = function() {
+  var world = this.getWorld();
+  var attributeTableColumns = world.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
+  var listOfTableColumnEntries = this._layout.getEntriesForAttribute(attributeTableColumns);
+  var displayAttributes = [];
   var anAttribute;
-  if (entriesTableColumns.length > 0) {
-    for (var i=0;i<entriesTableColumns.length;++i) {
-      anAttribute = entriesTableColumns[i].getValue();
+  if (listOfTableColumnEntries.length > 0) {
+    // If we get here, it means this table has a saved list of user-selected
+    // columns, and we just want to use that list.
+    for (var i in listOfTableColumnEntries) {
+      anAttribute = listOfTableColumnEntries[i].getValue();
       Util.assert(anAttribute instanceof Item);
-      displayAttrs.push(anAttribute);
+      displayAttributes.push(anAttribute);
     }
-  }
-  else {
-    var hashTableOfAttributes = this._buildAttributeHashFromScratch();
-    for (var key in hashTableOfAttributes) {
-      anAttribute = hashTableOfAttributes[key];
-      displayAttrs.push(anAttribute);
-    }
-  }
-  this._displayAttributes = displayAttrs;
-};
-
-
-/**
- *
- */
-TablePlugin.prototype._buildAttributeHashFromScratch = function() {
-  var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
-  var hashTableOfAttributes = {};
-  for (var iKey in this._listOfItems) {
-    var contentItem = this._listOfItems[iKey];
-    var listOfAttributesForItem = contentItem.getAttributes();
-    for (var attributeKey in listOfAttributesForItem) {
-      var attribute = listOfAttributesForItem[attributeKey];
-      if (attribute != attributeCalledCategory) {
-        var attributeKeyString = attribute.getUniqueKeyString();
-        hashTableOfAttributes[attributeKeyString] = attribute;
+  } else {
+    // If we get here, it means this table did not have a saved list of 
+    // user-selected columns, so we need to come up with a list.
+    // We will build a list of display attributes by looking at all the items in 
+    // the table and finding the union of all the attributes of those items.
+    var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
+    var hashTableOfAttributes = {};
+    for (var j in this._listOfItems) {
+      var contentItem = this._listOfItems[j];
+      var listOfAttributesForItem = contentItem.getAttributes();
+      for (var k in listOfAttributesForItem) {
+        var attribute = listOfAttributesForItem[k];
+        if (attribute != attributeCalledCategory) {
+          var attributeKeyString = attribute.getUniqueKeyString();
+          hashTableOfAttributes[attributeKeyString] = attribute;
+        }
       }
     }
+    
+    if (Util.lengthOfHashTable(hashTableOfAttributes) < 1) {
+      // If we have not yet identified any display attributes to use as
+      // column headers, then we'll just use the "Name" attribute so that
+      // our table will have at least one column.
+      var attributeCalledName = this.getWorld().getAttributeCalledName();
+      var keyString = attributeCalledName.getUniqueKeyString();
+      hashTableOfAttributes[keyString] = attributeCalledName;
+    }
+    for (var key in hashTableOfAttributes) {
+      anAttribute = hashTableOfAttributes[key];
+      displayAttributes.push(anAttribute);
+    }
   }
-  
-  if (Util.lengthOfHashTable(hashTableOfAttributes) < 1) {
-    var attributeCalledName = this.getWorld().getAttributeCalledName();
-    var key = attributeCalledName.getUniqueKeyString();
-    hashTableOfAttributes[key] = attributeCalledName;
-  }
-  return hashTableOfAttributes;
+  return displayAttributes;
 };
 
 
@@ -312,9 +312,80 @@ TablePlugin.prototype.observedItemHasChanged = function(item) {
 /**
  *
  */
-TablePlugin.prototype._handleDrop = function(element) {
-  alert('table plugin: ' + element + ' was dropped on ' + this);
+TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppableObject) {
+  // First figure out what column header was dropped where
+  var world = this.getWorld();
+  var draggedUuid = elementThatWasDragged.getAttribute('uuid');
+  var draggedAttribute = world.getItemFromUuid(draggedUuid);
+  var headerCellElement = droppableObject.element;
+  var headerCellUuid = headerCellElement.getAttribute('uuid');
+  var droppedOnAttribute = world.getItemFromUuid(headerCellUuid);
+  var indexOfDraggedAttribute = Util.getArrayIndex(this._displayAttributes, draggedAttribute);
+  var indexOfDroppedOnAttribute = Util.getArrayIndex(this._displayAttributes, droppedOnAttribute);
+
+  // If the user dragged a column header and dropped it on the same column 
+  // header, then we don't need to change the column order.
+  if (indexOfDraggedAttribute == indexOfDroppedOnAttribute) {
+    return;
+  }
+
+  // This is a little hack that accesses instance variables of the "Draggable"
+  // object in the script.aculo.us dragdrop.js library.
+  // We set "revert" to false to prevent the UI animation where the dragged 
+  // column header goes "flying" home again
+  var draggable = elementThatWasDragged.or_draggable;
+  draggable.options.revert = false;
+
+  // Now we need to save the new column order to the repository.
+  var attributeTableColumns = world.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
+  var listOfTableColumnEntries = this._layout.getEntriesForAttribute(attributeTableColumns);
+  if (listOfTableColumnEntries.length > 0) {
+    // If we get here, it means this table has a saved list of user-selected
+    // columns, and we just want to re-order that list.
+    Util.assert(this._displayAttributes.length == listOfTableColumnEntries.length);
+    var draggedEntry = listOfTableColumnEntries[indexOfDraggedAttribute];
+    var droppedOnEntry = listOfTableColumnEntries[indexOfDroppedOnAttribute];
+    if (indexOfDraggedAttribute > indexOfDroppedOnAttribute) {
+      // the user dragged the column to the left
+      var entryBeforeDroppedOnEntry = null;
+      if (indexOfDroppedOnAttribute > 0) {
+        entryBeforeDroppedOnEntry = listOfTableColumnEntries[indexOfDroppedOnAttribute-1];
+      }
+      draggedEntry.reorderBetween(entryBeforeDroppedOnEntry, droppedOnEntry);
+    }
+    if (indexOfDraggedAttribute < indexOfDroppedOnAttribute) {
+      // the user dragged the column to the right
+      var entryAfterDroppedOnEntry = null;
+      if (indexOfDroppedOnAttribute < (listOfTableColumnEntries.length - 1)) {
+        entryAfterDroppedOnEntry = listOfTableColumnEntries[indexOfDroppedOnAttribute+1];
+      }
+      draggedEntry.reorderBetween(droppedOnEntry, entryAfterDroppedOnEntry);
+    }
+  } else {
+    // If we get here, it means we need to save a newly created list of
+    // user-selected columns.
+    this._displayAttributes.splice(indexOfDraggedAttribute, 1);
+    if (indexOfDraggedAttribute > indexOfDroppedOnAttribute) {
+      // the user dragged the column to the left
+      this._displayAttributes.splice(indexOfDroppedOnAttribute, 0, draggedAttribute);
+    }
+    if (indexOfDraggedAttribute < indexOfDroppedOnAttribute) {
+      // the user dragged the column to the right
+      this._displayAttributes.splice(indexOfDroppedOnAttribute, 0, draggedAttribute);
+    }
+    world.beginTransaction();
+    // alertString = "";
+    for (var i in this._displayAttributes) {
+      var attribute = this._displayAttributes[i];
+      this._layout.addEntryForAttribute(attributeTableColumns, attribute);
+      // alertString += attribute.getDisplayString() + '\n';
+    }
+    // alert(alertString);
+    world.endTransaction();
+  }
+  this.refresh();
 };
+
 
 /**
  * Constructs the table header 
@@ -325,24 +396,28 @@ TablePlugin.prototype._buildHeader = function() {
   // add header row
   var headerRow = this._table.insertRow(0);
   var numCols = 0;
-  for (var i=0; i<this._displayAttributes.length; ++i) {
+  for (var i in this._displayAttributes) {
     var attribute = this._displayAttributes[i];
     if (!this._sortAttribute) {this._sortAttribute = attribute;}
-    var headerElt = View.appendNewElement(headerRow,"th");
-    var aCell = View.appendNewElement(headerElt,"span",null,null,attribute.getDisplayString());
-    //aCell.style.background = "rgb(90%, 90%, 90%)";
+    var headerCell = View.appendNewElement(headerRow, "th", null, {uuid: attribute._getUuid()});
+    var headerCellContentSpan = View.appendNewElement(headerCell, "span", "headerCellContentSpan", {uuid: attribute._getUuid()});
+    var textSpan = View.appendNewElement(headerCellContentSpan, "span", null, null, attribute.getDisplayString());
     if (this._sortAttribute == attribute) {
-      headerElt.appendChild(this.getSortIcon());
+      headerCellContentSpan.appendChild(this.getSortIcon());
     }
-    aCell.onclick = this.clickOnHeader.bindAsEventListener(this, attribute);
+    Event.observe(headerCell, "click", this.clickOnHeader.bindAsEventListener(this, attribute));
     if (this.isInEditMode()) {
-      //new Draggable(aCell, {revert:true});
+      var listener = this;
+      var draggable = new Draggable(headerCellContentSpan, {revert:true});
+      headerCellContentSpan.or_draggable = draggable;
+      Droppables.add(headerCell, {
+        accept: "headerCellContentSpan",
+        hoverclass: 'drophover',
+        onDrop: function(element, droppableObject) {listener._handleDrop(element, droppableObject);}});   
     }
     ++numCols;
   }
   this._numberOfColumns = numCols;
-  var listener = this;
-  //Droppables.add(headerRow, {onDrop: function(element) {listener._handleDrop(element);}});   
 };
 
 
@@ -357,13 +432,14 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   // get list of items and attributes
   if (!doNotRebuildHash) {
     this.fetchItems();
-    this._buildAttributes();
+    this._displayAttributes = this._getListOfColumns();
   }
  
   //create new table, remove old table if already exists
   var viewDivElement = this.getHtmlElement();
   View.removeChildrenOfElement(viewDivElement);
   this._buildAttributeEditor();
+  
   this._table = View.appendNewElement(viewDivElement, "table", this._cssClassForTable);
   
   this._buildHeader();
@@ -371,7 +447,7 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   // sort the list of items. SIDE EFFECT, table header needs to be built before items are sorted
   // because default _sortAttribute is specified there if not previously specificed
   var staticThis = this;
-  this._listOfItems.sort(function(a,b) {return staticThis.compareItemByAttribute(a,b);}); // need to sort after header row added because default sort attribute is set there
+  this._listOfItems.sort(function(a,b) {return staticThis.compareItemsBySortAttribute(a,b);}); // need to sort after header row added because default sort attribute is set there
 
   this._buildTableBody();
 };
@@ -418,10 +494,8 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   aCell.or_entriesView = multiEntriesView;
   multiEntriesView.refresh();
   if (this.isInEditMode()) {
-    //multiEntriesView.setSuggestions(this._hashTableOfEntries[attribute.getUniqueKeyString()]);
     var listener = this;
     multiEntriesView.setKeyPressFunction(function (evt, entryView) {return listener.keyPressOnEditField(evt, entryView);});
-    //multiEntriesView.setClickFunction(function (evt, entryView) {return listener._handleClick(evt, entryView);});
   }
 };
 
@@ -451,11 +525,9 @@ TablePlugin.prototype.selectRow = function(rowElement) {
   Util.assert(rowElement instanceof HTMLTableRowElement);
   if (rowElement != this._lastSelectedRow) {
     if (this._lastSelectedRow) {
-      //this._lastSelectedRow.style.background = "";
       this._lastSelectedRow.className = "";
     }
     this._lastSelectedRow = rowElement;
-    //rowElement.style.background = "rgb(100%,100%,0%)"; // PENDING: need to css-ify this selection
     rowElement.className = "selected"; 
     return true;
   }
@@ -517,8 +589,6 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
   }
   world.endTransaction();
   this.refresh();
-  // fileContents = listOfStrings.join('');
-  // alert(fileContents);
 };
 
 
