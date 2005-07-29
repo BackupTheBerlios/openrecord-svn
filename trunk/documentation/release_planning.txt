@@ -310,22 +310,22 @@ chao   | 0.25 IED |         |  8. Support for Year/Month entry for DateValue, e.
 chao   | 0.25 IED |         |  9. Support anchor links to each section on a PageView
 chao   | 0.25 IED |         | 10. Make currently sorted column have a special CSS class so that it can look different
 chao   | 0.25 IED |         | 11. Resolve: How should table cells deal with <enter>, move down a cell or to the right?
+       |          |         | 12. drag-and-drop lozenges: move instead of copy
 -------+----------+---------+----------------------------------------------
-       |          |         | 12. Assign system attributes & categories to a "System" category
-       |          |         | 13. Hide "System" items most of the time
-       |          |         | 14. rename FileSaver + HttpSaver to FileSystemStorage + HttpStorage
-       |          |         | 15. create a FakeStorage class
-brian  | 1    IED |         | 16. Rationalize our CSS style sheet approach
-       |          |         | 17. Have different documents use different style-sheets
-       |          |         | 18. Improve and document the Data model public api
-       |          |         | 19. Refactor our observer notification API (and implementation)
-chao   | 0.5  IED |         | 20. Wire up observers & keep views in sync
-       |          |         | 21. be able to select a table row 
-       |          |         | 22. be able to select a non-lozenge literal entry
-       |          |         | 23. be able to select the text within an entry
+       |          |         | 13. Assign system attributes & categories to a "System" category
+       |          |         | 14. Hide "System" items most of the time
+       |          |         | 15. rename FileSaver + HttpSaver to FileSystemStorage + HttpStorage
+       |          |         | 16. create a FakeStorage class
+brian  | 1    IED |         | 17. Rationalize our CSS style sheet approach
+       |          |         | 18. Have different documents use different style-sheets
+       |          |         | 19. Improve and document the Data model public api
+       |          |         | 20. Refactor our observer notification API (and implementation)
+chao   | 0.5  IED |         | 21. Wire up observers & keep views in sync
+       |          |         | 22. be able to select a table row 
+       |          |         | 23. be able to select a non-lozenge literal entry
+       |          |         | 24. be able to select the text within an entry
 -------+----------+---------+----------------------------------------------
-       |          |         | 24. be able to delete a selected table row 
-       |          |         | 25. drag-and-drop lozenges: move instead of copy
+       |          |         | 25. be able to delete a selected table row 
        |          |         | 26. drag-and-drop to re-order table rows
        |          |         | 27. improve UI for "add new attribute" in Table View 
        |          |         | 28. Reach consensus on (colors, padding, and borders) and then implement
