@@ -246,81 +246,128 @@ Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
 brian  | 0        | done    |  1. Change "Edit"/"Done Editing" button to "Show Tools"/"Hide Tools"
 brian  | 0.25 IED | 0.25    |  2. Allow editing for any logged in user, even if edit tools aren't shown
-       |          |         |  3. Assign system attributes & categories to a "System" category
-       |          |         |  4. Hide "System" items most of the time
-       |          |         |  5. Attempt to embed an OpenRecord view in a MediaWiki page
-       |          |         |  6. Refactor our observer notification API (and implementation)
-chao   | 0.5  IED |         |  7. Wire up observers & keep views in sync
 chao   |          | done    |  8. be able to select a lozenge 
-       |          |         |  9. be able to select a table row 
-       |          |         | 10. be able to select a non-lozenge literal entry
-       |          |         | 11. be able to select the text within an entry
 chao   |          | done    | 12. be able to delete a selected lozenge 
-       |          |         | 13. be able to delete a selected table row 
 chao   | 0.5  IED | done    | 14. improve keyboard navigation: tab, arrow, and return keys
-mignon |          | done?   | 15. Get data model to pass the ordinal unit tests again
-       |          |copy/move? 16. drag-and-drop lozenges
+mignon |          | done    | 15. Get data model to pass the ordinal unit tests again
+chao   |          | done    | 16. copy lozenges via drag-and-drop
 brian  |          | 0.5     | 17. drag-and-drop to re-order navbar menu items
-       |          |         | 18. drag-and-drop to re-order table rows
 brian  |          | 0.5     | 19. drag-and-drop to re-order table columns
-       |          |         | 20. improve UI for "add new attribute" in Table View 
-brian  | 1    IED |         | 21. Rationalize our CSS style sheet approach
-       |          |         | 22. Reach consensus on (colors, padding, and borders) and then implement
-       |          |         | 23. Make sure view code uses transactions
-       |          |         | 24. Deal with \n in page name or summary fields
 brian  |          | 0.25    | 25. BUG: need to encode reserved characters(<&>\n"') back at client-server layer
+brian  |          | 0.5     | 35. Add support for saving content when used from a file:// URL
+-------+----------+---------+----------------------------------------------
+
+
+---------------------------------------------------------------------------
+   New tasks that we decided to take on for Iteration #3, in July 2005
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+brian  | 1    IED | 0.75    |     Add a DateValue class that supports dates like "2005"
 brian  |          | 0.25    |     Be able to make html files with just one <script> element, not dozens 
 brian  |          | 0.25    |     Be able to easily create new documents that are empty
 brian  |          | 0.5     |     Import CSV data files when running from a file:/// page
-       |          |       >>|     Create a dozen demo documents (quotes, dictionary, movies, books, oil-change, etc.)
-       |          |       >>|     Have different documents use different style-sheets
-brian  | 1    IED | 0.75    |     Add a DateValue class that supports dates like "2005"
-       |          |         |     Data model: boolean, URL, entries that apply to timespan (e.g. annual population)
-       |          |         |     improve UI for initial "out of the box" experience
-       |          |         |     UI and data model design to support collaboration
-       |          |         |     config option so that only logged-in users have read-access
-       |          |         |     have an "icon" attribute, and use icons in suggestion box and in EntryView
-       |          |         |     run in IE as well as Firefox
-chao   | 0.25 IED |         |     Show start time for DateValues if time was entered
-chao   | 0.25 IED |         |     Suppport for relative date entry e.g. "today", "end of day/week", "tomorrow"
-chao   | 0.25 IED |         |     Display relative dates for entries e.g. "today"
-chao   | 0.25 IED |         |     Support for Year/Month entry for DateValue, e.g. 2005/07, July 2005
-chao   | 0.25 IED |         |     Support anchor links to each section on a PageView
-chao   | 0.25 IED |         |     Make currently sorted column to have a special CSS class so that it can look different
-chao   | 0.25 IED |         |     Resolve: How should table cells deal with <enter>, move down a cell or to the right?
 -------+----------+---------+----------------------------------------------
-       |          |         | 26. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
-       |          |         | 27. Write one unit test that tests GUI code
-       |          |         | 28. Write one performance test that measures the time some code takes
-       |          |         | 29. Pick one file, and do a group code review on it
-       |          |         | 30. Provide GUI feedback about what's editable
-       |          |         | 31. Implement a good URL-to-content mapping, such that URLs won't go bad in future releases
-       |          |         | 32. Convert UI code from DOM level 0 to DOM level 2
-       |          |         | 33. Rationalize the View api and document public api
-       |          |       >>| 34. Improve and document the Data model public api
-brian  |          | 0.5     | 35. Add support for saving content when used from a file:// URL
-       |          |         | 36. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
-       |          |         | 37. improve UI for setting the expected data type of an attribute
-       |          |         | 38. improve UI for creating a new category
-       |          |         | 39. improve UI for entering references to categories or to other items
-       |          |         | 40. improve UI for creating a new page
-       |          |         | 41. improve UI for adding a new section to a page
-       |          |         | 42. improve UI for creating a new user
-       |          |         | 43. Check for incorrect dependencies (e.g. a Util dependency on model code)
-       |          |         | 44. Create directories "view" and "plugin"
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Summary of Iteration #3
+            July 2005
+     July 4 to August 1, 2005
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  11    = number of PLANNED tasks that were finished 
+   4    = number of ADDITIONAL tasks that were finished 
+  ~9    = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
+   4    = number of weeks in June iteration
+ ~ 2.25 = Velocity (in estimated IEDs per week)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   
+
+################################################################################
+################################################################################
+##                                                                            ##
+##                                Iteration #4                                ##
+##                                 August 2005                                ##
+##                                                                            ##
+################################################################################
+################################################################################
+
+---------------------------------------------------------------------------
+   Tasks we originally identified for Iteration #3, in July 2005
 -------+----------+---------+----------------------------------------------
-       |          |         | 45. Add support for repository merging
-       |          |         | 46. BUG: back button is broken
-       |          |         | 47. BUG: "Waiting for localhost..."
-       |          |         | 48. BUG: "Node was not found" exception in EntryView/LoginView?
-       |          |         | 49. Do some testing to find other existing bugs
-       |          |         | 50. Have explicit save instead of (or in addition to) autosave
-       |          |         | 51. Be able to cancel out of creating a new account
-       |          |         | 52. Save view layout choice and user preferences
-       |          |         | 53. Do code reviews
-       |          |         | 54. Write concurrency tests 
-       |          |         | 55. Write scalability tests 
-       |          |         | 56. Ensure that PHP scripts and file I/O works for concurrent multi-user access
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+       |          |         |  0. Do lazy creation of layout data items
+brian  |          |         |  1. Create demo documents (quotes, dictionary, movies, books, oil-change, etc.)
+brian  |          |         |  2. Make demo hand-outs with notes about architecture, data model, use cases
+brian  |          |         |  3. Configure demo machine (install Subversion, Firefox, Apache, PHP, jEdit, etc.)
+       |          |         |  4. Attempt to embed an OpenRecord view in a MediaWiki page
+chao   | 0.25 IED |         |  5. Show start time for DateValues if time was entered
+chao   | 0.25 IED |         |  6. Suppport for relative date entry e.g. "today", "end of day/week", "tomorrow"
+chao   | 0.25 IED |         |  7. Display relative dates for entries e.g. "today"
+chao   | 0.25 IED |         |  8. Support for Year/Month entry for DateValue, e.g. 2005/07, July 2005
+chao   | 0.25 IED |         |  9. Support anchor links to each section on a PageView
+chao   | 0.25 IED |         | 10. Make currently sorted column have a special CSS class so that it can look different
+chao   | 0.25 IED |         | 11. Resolve: How should table cells deal with <enter>, move down a cell or to the right?
+-------+----------+---------+----------------------------------------------
+       |          |         | 12. Assign system attributes & categories to a "System" category
+       |          |         | 13. Hide "System" items most of the time
+       |          |         | 14. rename FileSaver + HttpSaver to FileSystemStorage + HttpStorage
+       |          |         | 15. create a FakeStorage class
+brian  | 1    IED |         | 16. Rationalize our CSS style sheet approach
+       |          |         | 17. Have different documents use different style-sheets
+       |          |         | 18. Improve and document the Data model public api
+       |          |         | 19. Refactor our observer notification API (and implementation)
+chao   | 0.5  IED |         | 20. Wire up observers & keep views in sync
+       |          |         | 21. be able to select a table row 
+       |          |         | 22. be able to select a non-lozenge literal entry
+       |          |         | 23. be able to select the text within an entry
+-------+----------+---------+----------------------------------------------
+       |          |         | 24. be able to delete a selected table row 
+       |          |         | 25. drag-and-drop lozenges: move instead of copy
+       |          |         | 26. drag-and-drop to re-order table rows
+       |          |         | 27. improve UI for "add new attribute" in Table View 
+       |          |         | 28. Reach consensus on (colors, padding, and borders) and then implement
+       |          |         | 29. Make sure view code uses transactions
+       |          |         | 30. Deal with \n in page name or summary fields
+       |          |         | 31. Data model: boolean, URL, entries that apply to timespan (e.g. annual population)
+       |          |         | 32. improve UI for initial "out of the box" experience
+       |          |         | 33. UI and data model design to support collaboration
+       |          |         | 34. config option so that only logged-in users have read-access
+       |          |         | 35. have an "icon" attribute, and use icons in suggestion box and in EntryView
+-------+----------+---------+----------------------------------------------
+       |          |         | 36. run in IE as well as Firefox
+       |          |         | 37. Write one unit test that tests GUI code
+       |          |         | 38. Write one performance test that measures the time some code takes
+       |          |         | 39. Pick one file, and do a group code review on it
+       |          |         | 40. Provide GUI feedback about what's editable
+       |          |         | 41. Implement a good URL-to-content mapping, so that URLs won't go bad in future releases
+       |          |         | 42. Convert UI code from DOM level 0 to DOM level 2
+       |          |         | 43. Rationalize the View api and document public api
+       |          |         | 44. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
+       |          |         | 45. improve UI for setting the expected data type of an attribute
+       |          |         | 46. improve UI for creating a new category
+       |          |         | 47. improve UI for entering references to categories or to other items
+-------+----------+---------+----------------------------------------------
+       |          |         | 48. improve UI for creating a new page
+       |          |         | 49. improve UI for adding a new section to a page
+       |          |         | 50. improve UI for creating a new user
+       |          |         | 51. Check for incorrect dependencies (e.g. a Util dependency on model code)
+       |          |         | 52. Create a "plugin" directory 
+       |          |         | 53. Add support for repository merging
+       |          |         | 54. BUG: back button is broken
+       |          |         | 55. BUG: "Waiting for localhost..."
+       |          |         | 56. BUG: "Node was not found" exception in EntryView/LoginView?
+       |          |         | 57. Do some testing to find other existing bugs
+       |          |         | 58. Have explicit save instead of (or in addition to) autosave
+       |          |         | 59. Be able to cancel out of creating a new account
+       |          |         | 60. Save view layout choice and user preferences
+       |          |         | 61. Do code reviews
+       |          |         | 62. Write concurrency tests 
+       |          |         | 63. Write scalability tests 
+       |          |         | 64. Ensure that PHP scripts and file I/O works for concurrent multi-user access
+       |          |         | 65. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
 -------+----------+---------+----------------------------------------------
        
 
