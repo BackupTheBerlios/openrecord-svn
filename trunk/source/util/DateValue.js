@@ -45,6 +45,9 @@ DateValue.MONTH_OCT = 9;
 DateValue.MONTH_NOV = 10;
 DateValue.MONTH_DEC = 11;
 
+DateValue.MILLISECS_IN_A_DAY = 86400000;
+DateValue.TIMEZONE_OFFSET = new Date().getTimezoneOffset()*60*1000;
+
 DateValue.ARRAY_OF_MONTH_SHORT_NAMES = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
 DateValue.ARRAY_OF_MONTH_NAMES = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
@@ -86,7 +89,16 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
   // Create a conventional JavaScript Date object.
   switch (argumentType) {
     case STRING:
-      date = new Date(year);
+      var evalStr = Util.trimString(year).toLowerCase();
+      if (evalStr == 'today') {
+        date = new Date(Math.floor(Date.now()/DateValue.MILLISECS_IN_A_DAY)*DateValue.MILLISECS_IN_A_DAY + DateValue.TIMEZONE_OFFSET);
+      }
+      else if (evalStr == 'tomorrow') {
+        date = new Date(Math.floor(Date.now()/DateValue.MILLISECS_IN_A_DAY)*DateValue.MILLISECS_IN_A_DAY+ DateValue.TIMEZONE_OFFSET+ DateValue.MILLISECS_IN_A_DAY);
+      }
+      else {
+        date = new Date(year);
+      }
       break;
     case MILLISECONDS:
       date = new Date(year);
@@ -184,7 +196,33 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
   }
   date.toShortLocaleDateString = function() {
     if (this._hasTime || (this._hasDay && this._hasMonth)) {
-      return DateValue.ARRAY_OF_MONTH_SHORT_NAMES[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+      var timezoneOffsetMS = this.getTimezoneOffset()*60*1000; // converting from minutes to millisecs
+      var todayInDays = Math.floor((Date.now()-timezoneOffsetMS)/DateValue.MILLISECS_IN_A_DAY);
+      var dateInDays = Math.floor((this.getTime()-timezoneOffsetMS)/DateValue.MILLISECS_IN_A_DAY);
+      var returnStr;
+      if (dateInDays == todayInDays) {
+        returnStr = 'Today';
+      }
+      else if (dateInDays == (todayInDays + 1)) {
+        returnStr = 'Tomorrow';
+      }
+      else {
+        returnStr = DateValue.ARRAY_OF_MONTH_SHORT_NAMES[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+      }
+      if (this._hasTime) {
+        //PENDING i18n settings
+        var timeStr = '';
+        var minutes = date.getMinutes();
+        var hours = date.getHours();
+        if (minutes !== 0 || hours !== 0) {
+          returnStr += ' ' + (hours % 12);
+          if (minutes !== 0) { 
+            returnStr += ':' + (minutes < 10 ? '0' + minutes : minutes);
+          }
+          returnStr += ' ' + (hours > 12 ? 'pm' : 'am');
+        }
+      }
+      return returnStr;   
     } else {
       if (this._hasMonth) {
         return DateValue.ARRAY_OF_MONTH_SHORT_NAMES[this.getUTCMonth()] + ' ' + this.getUTCFullYear();

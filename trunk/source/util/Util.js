@@ -483,6 +483,10 @@ Util.hashTableValues = function(hashTable) {
   return returnArray;
 };
 
+Util.trimString = function(str) {
+   return str.replace(/^\s*|\s*$/g,"");
+};
+
 
 // -------------------------------------------------------------------
 // Methods that operate on Dates

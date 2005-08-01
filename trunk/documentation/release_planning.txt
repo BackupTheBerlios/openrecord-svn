@@ -303,7 +303,7 @@ brian  |          |         |  1. Create demo documents (quotes, dictionary, mov
 brian  |          |         |  2. Make demo hand-outs with notes about architecture, data model, use cases
 brian  |          |         |  3. Configure demo machine (install Subversion, Firefox, Apache, PHP, jEdit, etc.)
        |          |         |  4. Attempt to embed an OpenRecord view in a MediaWiki page
-chao   | 0.25 IED |         |  5. Show start time for DateValues if time was entered
+chao   | 0.25 IED | done    |  5. Show start time for DateValues if time was entered
 chao   | 0.25 IED |         |  6. Suppport for relative date entry e.g. "today", "end of day/week", "tomorrow"
 chao   | 0.25 IED |         |  7. Display relative dates for entries e.g. "today"
 chao   | 0.25 IED |         |  8. Support for Year/Month entry for DateValue, e.g. 2005/07, July 2005
