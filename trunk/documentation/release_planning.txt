@@ -294,7 +294,7 @@ brian  |          | 0.5     |     Import CSV data files when running from a file
 ################################################################################
 
 ---------------------------------------------------------------------------
-   Tasks we originally identified for Iteration #3, in July 2005
+   Tasks we originally identified for Iteration #4, in July 2005
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
@@ -314,8 +314,8 @@ chao   | 0.25 IED |         | 11. Resolve: How should table cells deal with <ent
 -------+----------+---------+----------------------------------------------
        |          |         | 13. Assign system attributes & categories to a "System" category
        |          |         | 14. Hide "System" items most of the time
-       |          |         | 15. rename FileSaver + HttpSaver to FileSystemStorage + HttpStorage
-       |          |         | 16. create a FakeStorage class
+       |          |         | 15. create a FakeStorage class, + rename FileSaver + HttpSaver to FileSystemStorage + HttpStorage
+       |          |         | 16. rename Dehydrate and Rehydrate to Serialize and Deserialize
 brian  | 1    IED |         | 17. Rationalize our CSS style sheet approach
        |          |         | 18. Have different documents use different style-sheets
        |          |         | 19. Improve and document the Data model public api
