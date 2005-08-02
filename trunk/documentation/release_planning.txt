@@ -304,10 +304,10 @@ brian  |          |         |  2. Make demo hand-outs with notes about architect
 brian  |          |         |  3. Configure demo machine (install Subversion, Firefox, Apache, PHP, jEdit, etc.)
        |          |         |  4. Attempt to embed an OpenRecord view in a MediaWiki page
 chao   | 0.25 IED | done    |  5. Show start time for DateValues if time was entered
-chao   | 0.25 IED |         |  6. Suppport for relative date entry e.g. "today", "end of day/week", "tomorrow"
-chao   | 0.25 IED |         |  7. Display relative dates for entries e.g. "today"
-chao   | 0.25 IED |         |  8. Support for Year/Month entry for DateValue, e.g. 2005/07, July 2005
-chao   | 0.25 IED |         |  9. Support anchor links to each section on a PageView
+chao   | 0.25 IED | done    |  6. Suppport for relative date entry e.g. "today", "end of day/week", "tomorrow"
+chao   | 0.25 IED | done    |  7. Display relative dates for entries e.g. "today"
+chao   | 0.25 IED | 0.25 IED|  8. Support for Year/Month entry for DateValue, e.g. 2005/07, July 2005
+chao   | 0.25 IED | 0.1 IED |  9. Support anchor links to each section on a PageView
 chao   | 0.25 IED |         | 10. Make currently sorted column have a special CSS class so that it can look different
 chao   | 0.25 IED |         | 11. Resolve: How should table cells deal with <enter>, move down a cell or to the right?
        |          |         | 12. drag-and-drop lozenges: move instead of copy

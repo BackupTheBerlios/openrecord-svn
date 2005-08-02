@@ -218,7 +218,7 @@ SectionView.prototype.doInitialDisplay = function() {
   }
   
   var sectionDiv = this.getHtmlElement();
-  var headerH2 = View.appendNewElement(sectionDiv, "h2");
+  var headerH2 = View.appendNewElement(sectionDiv, "h2",null, {'id':this._section.getUniqueKeyString()});
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   // var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
   this._headerView = new EntryView(this, headerH2, this._section, attributeCalledName,

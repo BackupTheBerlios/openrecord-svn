@@ -164,10 +164,19 @@ PageView.prototype.doInitialDisplay = function() {
   var attributeCalledSectionsInPage = this.getWorld().getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTIONS_IN_PAGE);
   var listOfEntriesForSections = this._pageItem.getEntriesForAttribute(attributeCalledSectionsInPage);
   
+  var sectionNavigatorDiv = null;
+  if (listOfEntriesForSections.length > 1 ) {
+    sectionNavigatorDiv = View.appendNewElement(pageDivElement, "div",null,null,"Sections: ");
+  }
+  
   for (var key in listOfEntriesForSections) {
     var entryForSection = listOfEntriesForSections[key];
     var section = entryForSection.getConnectedItem(this._pageItem);
     if (section) {
+      if (sectionNavigatorDiv) {
+        View.appendNewElement(sectionNavigatorDiv, "A",null , {'href' : '#' + section.getUniqueKeyString()},section.getDisplayName());
+        View.appendNewTextNode(sectionNavigatorDiv," ");
+      }
       this._buildNewSection(section);
     }
   }

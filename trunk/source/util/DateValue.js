@@ -155,7 +155,7 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
         if (!isNaN(date.valueOf())) {
           date._hasDay = true;
           date._hasMonth = true;
-       } else {
+        } else {
           // If we get here, it means we may have been passed a string like 
           // "1944" or "July 1944", which the Date class was not able to parse.
           // We should try to parse the string ourselves and create a valid
@@ -172,7 +172,33 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
             date._hasDay = false;
             date._hasMonth = false;
           }
-       }
+          else {
+            var monthMatchStr = DateValue.ARRAY_OF_MONTH_SHORT_NAMES.concat(DateValue.ARRAY_OF_MONTH_NAMES).join('|');
+            var regExpr = new RegExp("^\\s*("+monthMatchStr+")\\s+(\\d{4})\\s*$","i");
+            var matchArray = year.match(regExpr);
+            var monthIndex;
+            if (matchArray) {
+              monthIndex = Util.getArrayIndex(DateValue.ARRAY_OF_MONTH_SHORT_NAMES,matchArray[1]);
+              if (monthIndex == -1) {
+                monthIndex = Util.getArrayIndex(DateValue.ARRAY_OF_MONTH_NAMES,matchArray[1]);
+              }
+            }
+            else {
+              regExpr = new RegExp("^\\s*(\\d{1,2})\\s*[-|/]\\s*(\\d{4})\\s*$","i");
+              matchArray = year.match(regExpr);
+              if (matchArray) {
+                monthIndex = parseInt(matchArray[1]) - 1;
+                if (monthIndex > 11) {matchArray = null;}
+              }
+            }
+            if (matchArray) {
+              date = new Date(parseInt(matchArray[2]), monthIndex);        
+              date._hasTime = false;
+              date._hasDay = false;
+              date._hasMonth = true;
+            }
+          }
+        }
       }
       break;
   }

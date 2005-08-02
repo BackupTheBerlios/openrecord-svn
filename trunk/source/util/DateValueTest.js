@@ -54,11 +54,23 @@ function testDateValueConstructor() {
   dates[7] = new DateValue(year, month, day, hours, minutes);
   dates[8] = new DateValue(year, month, day, hours, minutes, seconds);
   dates[9] = new DateValue(year, month, day, hours, minutes, seconds, ms);
+  dates[10] = new DateValue(' today  ');
+  dates[11] = new DateValue(Date.now());
+  dates[12] = new DateValue('tomorrow');
+  dates[13] = new DateValue('April 2006');
+  dates[14] = new DateValue('7/2003');
   for (var i in dates) {
     var dateValue = dates[i];
     assertTrue('DateValue is valid', dateValue.isValid());
     assertTrue('Util.isDate() returns true', Util.isDate(dateValue));
   }
+  assertTrue('Time display is right', dates[8].toShortLocaleDateString() == 'Feb 14, 1944 9:30 am');
+  assertTrue('Today is parsed correctly', dates[10].toShortLocaleDateString() =='Today');
+  assertTrue('Today displays correctly', dates[11].toShortLocaleDateString().indexOf('Today') === 0);
+  assertTrue('Tomorrow is parsed correctly', dates[12].toShortLocaleDateString().toLowerCase() == 'tomorrow');
+  assertTrue('today is correct in millisecs', Date.now() - dates[10].getTime() < DateValue.MILLISECS_IN_A_DAY);
+  assertTrue('Month/Year parsing is right', dates[13].getYear() == 106 && dates[13].getMonth() == 3);
+  assertTrue('Numeric month/year parsing correct', dates[14].getYear() == 103 && dates[14].getMonth() == 6);
   // var alertString = dates.join('\n');
   // alert(alertString);
 }
