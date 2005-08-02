@@ -91,10 +91,12 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
     case STRING:
       var evalStr = Util.trimString(year).toLowerCase();
       if (evalStr == 'today') {
-        date = new Date(Math.floor(Date.now()/DateValue.MILLISECS_IN_A_DAY)*DateValue.MILLISECS_IN_A_DAY + DateValue.TIMEZONE_OFFSET);
+        date = new Date(Math.floor((Date.now()-DateValue.TIMEZONE_OFFSET)/DateValue.MILLISECS_IN_A_DAY) *
+          DateValue.MILLISECS_IN_A_DAY + DateValue.TIMEZONE_OFFSET);
       }
       else if (evalStr == 'tomorrow') {
-        date = new Date(Math.floor(Date.now()/DateValue.MILLISECS_IN_A_DAY)*DateValue.MILLISECS_IN_A_DAY+ DateValue.TIMEZONE_OFFSET+ DateValue.MILLISECS_IN_A_DAY);
+        date = new Date(Math.floor((Date.now()-DateValue.TIMEZONE_OFFSET)/DateValue.MILLISECS_IN_A_DAY) *
+          DateValue.MILLISECS_IN_A_DAY+ DateValue.TIMEZONE_OFFSET+ DateValue.MILLISECS_IN_A_DAY);
       }
       else {
         date = new Date(year);
