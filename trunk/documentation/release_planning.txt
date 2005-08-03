@@ -294,14 +294,14 @@ brian  |          | 0.5     |     Import CSV data files when running from a file
 ################################################################################
 
 ---------------------------------------------------------------------------
-   Tasks we originally identified for Iteration #4, in July 2005
+   Tasks we originally identified for Iteration #4, in August 2005
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
        |          |         |  0. Do lazy creation of layout data items
 brian  |          |         |  1. Create demo documents (quotes, dictionary, movies, books, oil-change, etc.)
 brian  |          |         |  2. Make demo hand-outs with notes about architecture, data model, use cases
-brian  |          |         |  3. Configure demo machine (install Subversion, Firefox, Apache, PHP, jEdit, etc.)
+brian  | 1    IED | 0.75 IED|  3. Configure demo machine (install Subversion, Firefox, Apache, PHP, jEdit, etc.)
        |          |         |  4. Attempt to embed an OpenRecord view in a MediaWiki page
 chao   | 0.25 IED | done    |  5. Show start time for DateValues if time was entered
 chao   | 0.25 IED | done    |  6. Suppport for relative date entry e.g. "today", "end of day/week", "tomorrow"
@@ -311,6 +311,7 @@ chao   | 0.25 IED | 0.1 IED |  9. Support anchor links to each section on a Page
 chao   | 0.25 IED |         | 10. Make currently sorted column have a special CSS class so that it can look different
 chao   | 0.25 IED |         | 11. Resolve: How should table cells deal with <enter>, move down a cell or to the right?
        |          |         | 12. drag-and-drop lozenges: move instead of copy
+       |          |         |     BUG: as you drag-and-drop, other text gets selected 
 -------+----------+---------+----------------------------------------------
        |          |         | 13. Assign system attributes & categories to a "System" category
        |          |         | 14. Hide "System" items most of the time
