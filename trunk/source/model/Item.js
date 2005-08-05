@@ -58,6 +58,8 @@ function Item(world, uuid) {
   
   this._hashTableOfEntryListsKeyedByAttributeUuid = {};
   this._provisionalFlag = false;
+
+  this._noteChanges(null);
 }
 
 
@@ -196,6 +198,7 @@ Item.prototype._createNewEntry = function(previousEntry, attribute, value, type)
   
   var entry = this.getWorld()._newEntry(this, previousEntry, attribute, value, type);
   this.getWorld().endTransaction();
+  this._noteChanges(null);
   return entry;
 };
 
@@ -265,6 +268,7 @@ Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute,
 
   var entry = this.getWorld()._newConnectionEntry(previousEntry, this, myAttribute, otherItem, otherAttribute);
   this.getWorld().endTransaction();
+  this._noteChanges(null);
   return entry;  
 };
 
@@ -304,6 +308,14 @@ Item.prototype.assignToCategory = function(category) {
  */
 Item.prototype.getEntriesForAttribute = function(attribute) {
   Util.assert(attribute instanceof Item);
+  
+  if (this._cachedEntriesKeyedByAttributeUuid !== null) {
+    var listOfCachedEntries = this._cachedEntriesKeyedByAttributeUuid[attribute._getUuid()];
+    if (listOfCachedEntries) {
+      return listOfCachedEntries;
+    }
+  }
+  
   var listOfEntriesForAttribute = this._hashTableOfEntryListsKeyedByAttributeUuid[attribute._getUuid()];
   if (!listOfEntriesForAttribute) {
     listOfEntriesForAttribute = [];
@@ -340,6 +352,12 @@ Item.prototype.getEntriesForAttribute = function(attribute) {
       break;
   }
   filteredListOfEntries.sort(ContentRecord.compareOrdinals);
+
+  if (!this._cachedEntriesKeyedByAttributeUuid) {
+    this._cachedEntriesKeyedByAttributeUuid = {};
+  }
+  this._cachedEntriesKeyedByAttributeUuid[attribute._getUuid()] = filteredListOfEntries;
+
   return filteredListOfEntries;
 };
 
@@ -386,14 +404,19 @@ Item.prototype.getAttributes = function() {
  *
  */
 Item.prototype.getFirstCategory = function() {
-  var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
-  var listOfCategoryEntries = this.getEntriesForAttribute(attributeCalledCategory);
-  var returnEntry = null;
-  if (listOfCategoryEntries && listOfCategoryEntries.length > 0) {
-    var firstEntry = listOfCategoryEntries[0];
-    var returnCategory = firstEntry.getValue(this);
+  if (this._cachedFirstCategory !== null) {
+    return this._cachedFirstCategory;
+  } else {
+    var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
+    var listOfCategoryEntries = this.getEntriesForAttribute(attributeCalledCategory);
+    var returnEntry = null;
+    if (listOfCategoryEntries && listOfCategoryEntries.length > 0) {
+      var firstEntry = listOfCategoryEntries[0];
+      var returnCategory = firstEntry.getValue(this);
+    }
+    this._cachedFirstCategory = returnCategory;
+    return returnCategory;
   }
-  return returnCategory;
 };
 
 // -------------------------------------------------------------------
@@ -419,13 +442,18 @@ Item.prototype.isProvisional = function() {
  * @return   A string with a display name for the item.
  */
 Item.prototype.getDisplayName = function(defaultString) {
-  var displayName = defaultString || "(no name)";
-  var listOfNameEntries = this.getNameEntries();
-  if (listOfNameEntries.length > 0) {
-    var primaryName = listOfNameEntries[0];
-    displayName = primaryName.getDisplayString();
+  if (this._cachedDisplayName !== null) {
+    return this._cachedDisplayName;
+  } else {
+    var displayName = defaultString || "(no name)";
+    var listOfNameEntries = this.getNameEntries();
+    if (listOfNameEntries.length > 0) {
+      var primaryName = listOfNameEntries[0];
+      displayName = primaryName.getDisplayString();
+      this._cachedDisplayName = displayName;
+    }
+    return displayName;
   }
-  return displayName;
 };
   
 
@@ -437,12 +465,17 @@ Item.prototype.getDisplayName = function(defaultString) {
  * @return   A string with a name for the item.
  */
 Item.prototype.getDisplayString = function(defaultString) {
-  var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
-  var shortNameString = this.getSingleStringValueFromAttribute(attributeCalledShortName);
-  if (!shortNameString) {
-    shortNameString = this.getDisplayName(defaultString);
+  if (this._cachedDisplayString !== null) {
+    return this._cachedDisplayString;
+  } else {
+    var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
+    var shortNameString = this.getSingleStringValueFromAttribute(attributeCalledShortName);
+    if (!shortNameString) {
+      shortNameString = this.getDisplayName(defaultString);
+    }
+    this._cachedDisplayString = shortNameString;
+    return shortNameString;
   }
-  return shortNameString;
 };
 
 
@@ -547,8 +580,8 @@ Item.prototype.hasAttributeValue = function(attribute, value) {
 
   // look at all the entries this item's attribute is assigned to, 
   // and see if one of them is "inEntry"
-  for (var key in entryList) {
-    var entry = entryList[key];
+  for (var i in entryList) {
+    var entry = entryList[i];
     if (entry.getValue(this) == value) {
       return true;
     }
@@ -637,6 +670,23 @@ Item.prototype._addRehydratedEntry = function(entry, attribute) {
   this.__addEntryToListOfEntriesForAttribute(entry, attribute);
 };
   
+
+/**
+ * Called by the world to let this item know that it was modified
+ * during the last transaction.
+ *
+ * WARNING: This method should be called ONLY from the  
+ * world._notifyObserversOfChanges() method.
+ * 
+ * @scope    protected instance method
+ * @param    listOfRecords    A list of the modifications. 
+ */
+Item.prototype._noteChanges = function(listOfRecords) {
+  this._cachedDisplayName = null;
+  this._cachedDisplayString = null;
+  this._cachedFirstCategory = null;
+  this._cachedEntriesKeyedByAttributeUuid = null;
+};
 
 // -------------------------------------------------------------------
 // Private Methods

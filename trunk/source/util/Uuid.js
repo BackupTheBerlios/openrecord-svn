@@ -70,6 +70,8 @@ Uuid._ourUuidClockSeqString = null;
 Uuid._ourDateValueOfPreviousUuid = null;
 Uuid._ourNextIntraMillisecondIncrement = 0;
 
+Uuid._ourCachedMillisecondsBetween1582and1970 = null;
+Uuid._ourCachedHundredNanosecondIntervalsPerMillisecond = null;
 
 /**
  * Returns a 36-character string representing the UUID, such as 
@@ -163,17 +165,21 @@ Uuid.generateTimeBasedUuid = function(pseudoNode) {
   // like "wholeSecondsPerHour" rather than "arraySecondsPerHour"?
   var now = new Date();
   var nowArray = Uuid._get64bitArrayFromFloat(now.valueOf());
-  var arraySecondsPerHour = Uuid._get64bitArrayFromFloat(60 * 60);
-  var arrayHoursBetween1582and1970 = Uuid._get64bitArrayFromFloat(Uuid.GREGORIAN_CHANGE_OFFSET_IN_HOURS);
-  var arraySecondsBetween1582and1970 = Uuid._multiplyTwo64bitArrays(arrayHoursBetween1582and1970, arraySecondsPerHour);
-  var arrayMillisecondsPerSecond = Uuid._get64bitArrayFromFloat(1000);
-  var arrayMillisecondsBetween1582and1970 = Uuid._multiplyTwo64bitArrays(arraySecondsBetween1582and1970, arrayMillisecondsPerSecond);
+  if (!Uuid._ourCachedMillisecondsBetween1582and1970) {
+    var arraySecondsPerHour = Uuid._get64bitArrayFromFloat(60 * 60);
+    var arrayHoursBetween1582and1970 = Uuid._get64bitArrayFromFloat(Uuid.GREGORIAN_CHANGE_OFFSET_IN_HOURS);
+    var arraySecondsBetween1582and1970 = Uuid._multiplyTwo64bitArrays(arrayHoursBetween1582and1970, arraySecondsPerHour);
+    var arrayMillisecondsPerSecond = Uuid._get64bitArrayFromFloat(1000);
+    Uuid._ourCachedMillisecondsBetween1582and1970 = Uuid._multiplyTwo64bitArrays(arraySecondsBetween1582and1970, arrayMillisecondsPerSecond);
+    Uuid._ourCachedHundredNanosecondIntervalsPerMillisecond = Uuid._get64bitArrayFromFloat(10000);
+  }
   var arrayMillisecondsSince1970 = nowArray;
-  var arrayMillisecondsSince1582 = Uuid._addTwo64bitArrays(arrayMillisecondsBetween1582and1970, arrayMillisecondsSince1970);
-  var arrayMicrosecondsPerMillisecond = Uuid._get64bitArrayFromFloat(1000);
-  var arrayMicrosecondsSince1582 = Uuid._multiplyTwo64bitArrays(arrayMillisecondsSince1582, arrayMicrosecondsPerMillisecond);
-  var arrayHundredNanosecondIntervalsPerMicrosecond = Uuid._get64bitArrayFromFloat(10);
-  var arrayHundredNanosecondIntervalsSince1582 = Uuid._multiplyTwo64bitArrays(arrayMicrosecondsSince1582, arrayHundredNanosecondIntervalsPerMicrosecond);
+  var arrayMillisecondsSince1582 = Uuid._addTwo64bitArrays(Uuid._ourCachedMillisecondsBetween1582and1970, arrayMillisecondsSince1970);
+  // var arrayMicrosecondsPerMillisecond = Uuid._get64bitArrayFromFloat(1000);
+  // var arrayMicrosecondsSince1582 = Uuid._multiplyTwo64bitArrays(arrayMillisecondsSince1582, arrayMicrosecondsPerMillisecond);
+  // var arrayHundredNanosecondIntervalsPerMicrosecond = Uuid._get64bitArrayFromFloat(10);
+  // var arrayHundredNanosecondIntervalsSince1582 = Uuid._multiplyTwo64bitArrays(arrayMicrosecondsSince1582, arrayHundredNanosecondIntervalsPerMicrosecond);
+  var arrayHundredNanosecondIntervalsSince1582 = Uuid._multiplyTwo64bitArrays(arrayMillisecondsSince1582, Uuid._ourCachedHundredNanosecondIntervalsPerMillisecond);
   
   if (now.valueOf() == Uuid._ourDateValueOfPreviousUuid) {
     arrayHundredNanosecondIntervalsSince1582[3] += Uuid._ourNextIntraMillisecondIncrement;

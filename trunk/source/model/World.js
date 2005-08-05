@@ -240,8 +240,8 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
         listOfItems.push(itemOrPairOfItems[1]);
       }
     }
-    for (var innerKey in listOfItems) {
-      item = listOfItems[innerKey];
+    for (var j in listOfItems) {
+      item = listOfItems[j];
       listOfRecordsForItem = hashTableOfNewlyCreatedRecordsKeyedByItemUuid[item._getUuid()];
       if (!listOfRecordsForItem) {
         listOfRecordsForItem = [];
@@ -251,6 +251,14 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
     }
   }
   
+  // For each of the items that was impacted by some changes, 
+  // notify that item of the changes.
+  for (uuid in hashTableOfNewlyCreatedRecordsKeyedByItemUuid) {
+    item = this.getItemFromUuid(uuid);
+    listOfRecordsForItem = hashTableOfNewlyCreatedRecordsKeyedByItemUuid[uuid];
+    item._noteChanges(listOfRecordsForItem);
+  }
+
   // For each of the items that was impacted by some changes, find
   // the observers of that item, and notify them of the changes.
   for (uuid in hashTableOfNewlyCreatedRecordsKeyedByItemUuid) {
