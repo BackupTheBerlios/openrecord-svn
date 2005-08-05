@@ -171,6 +171,14 @@ Record.prototype._getUuid = function() {
 };
 
 
+// PENDING: this should be an instance method on Uuid
+Record.prototype._getUuidInQuotes = function() {
+  if (!this._uuidInQuotes) {
+    this._uuidInQuotes = '"' + this._uuid + '"';
+  }
+  return this._uuidInQuotes;
+};
+
 
 // -------------------------------------------------------------------
 // End of file

@@ -291,9 +291,10 @@ Uuid.getDateFromUuid = function(uuid) {
 
 
 Uuid.getOriginalOrdinalFromUuid = function(uuid) {
-  var hexTimeLow = uuid.split('-')[0];
-  var hexTimeMid = uuid.split('-')[1];
-  var hexTimeHigh = uuid.split('-')[2];
+  var arrayOfParts = uuid.split('-');
+  var hexTimeLow = arrayOfParts[0];
+  var hexTimeMid = arrayOfParts[1];
+  var hexTimeHigh = arrayOfParts[2];
   return hexTimeHigh + hexTimeMid + hexTimeLow;
 };
 

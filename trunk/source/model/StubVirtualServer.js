@@ -1009,6 +1009,9 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
               break;
             case World.UUID_FOR_TYPE_DATE:
               finalData = new DateValue(rawData);
+              if (!finalData.isValid()) {
+                alert(rawData + " " + finalData);
+              }
               Util.assert(finalData.isValid());
               break;
             default:

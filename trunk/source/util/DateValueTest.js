@@ -71,6 +71,17 @@ function testDateValueConstructor() {
   assertTrue('today is correct in millisecs', Date.now() - dates[10].getTime() < DateValue.MILLISECS_IN_A_DAY);
   assertTrue('Month/Year parsing is right', dates[13].getYear() == 106 && dates[13].getMonth() == 3);
   assertTrue('Numeric month/year parsing correct', dates[14].getYear() == 103 && dates[14].getMonth() == 6);
+
+  var notDates = new Array();
+  notDates[0] = new DateValue("194z");
+  notDates[1] = new DateValue("");
+  notDates[2] = new DateValue("8979789");
+  notDates[3] = new DateValue("April");
+  for (var j in notDates) {
+    var notDateValue = notDates[j];
+    assertTrue('DateValue is not valid', !notDateValue.isValid());
+  }
+  
   // var alertString = dates.join('\n');
   // alert(alertString);
 }

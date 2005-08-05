@@ -253,8 +253,16 @@ EntryView.prototype._setClassName = function() {
     if (dataType == itemType || dataType == connectionType) {
       if (this._isLozenge()) {
         if (this.isInEditMode() && !this._draggable) {
-          this._textSpan.or_entryView = this; 
-          this._draggable = new Draggable(this._textSpan, {revert:true});
+          var PENDING_temporaryHackToDecreaseLayoutTime = true;
+          if (PENDING_temporaryHackToDecreaseLayoutTime) {
+            if (this.getRootView().isInShowToolsMode()) {
+              this._textSpan.or_entryView = this; 
+              this._draggable = new Draggable(this._textSpan, {revert:true});
+            }
+          } else {
+            this._textSpan.or_entryView = this; 
+            this._draggable = new Draggable(this._textSpan, {revert:true});
+          }
         }
       }
       else {

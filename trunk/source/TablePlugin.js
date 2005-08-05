@@ -186,7 +186,7 @@ TablePlugin.prototype._getListOfColumns = function() {
 
 
 /**
- * Builds editor to add/remove attribute columns of table
+ * Builds editor to add/remove attribute columns of table.
  *
  * @scope    private instance method
  */
@@ -208,6 +208,15 @@ TablePlugin.prototype._buildAttributeEditor = function() {
   }
   this._selectElement = selectElt;
   
+};
+
+/**
+ * Builds UI widgets to let the user import a CSV data file into the table.
+ *
+ * @scope    private instance method
+ */
+TablePlugin.prototype._buildFileImportTool = function() {
+  var htmlElement = this.getHtmlElement();
   if (window.location.protocol == "file:") {
     var importDiv = View.appendNewElement(htmlElement, "div", RootView.CSS_CLASS_EDIT_TOOL);
     View.appendNewTextNode(importDiv, " Import Data:");
@@ -450,6 +459,8 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   this._listOfItems.sort(function(a,b) {return staticThis.compareItemsBySortAttribute(a,b);}); // need to sort after header row added because default sort attribute is set there
 
   this._buildTableBody();
+  
+  this._buildFileImportTool();
 };
 
 
@@ -542,22 +553,47 @@ TablePlugin.prototype.selectRow = function(rowElement) {
  * @scope    private instance method
  */
 TablePlugin.prototype._importData = function(eventObject, fileButton) {
+  var listOfAttributes = this._displayAttributes;
+  var startTime = new Date();
+  
   var fileContents = Util.getStringContentsOfFileAtURL('file://' + fileButton.value);
-
   var csvParser = new CsvParser();
   var listOfRecords = csvParser.getStringValuesFromCsvData(fileContents);
+  var listOfFields;
+  var i, j;
+
+  // First do some minimal error checking
+  for (i in listOfRecords) {
+    listOfFields = listOfRecords[i];
+    if (listOfFields.length != listOfAttributes.length) {
+      alert("CSV record #" + (i+1) + " has " + listOfFields.length + " fields, but the table has " + listOfAttributes.length + " columns.\n" +
+            "I'm giving up on importing any records.");
+      return;
+    }
+    var valueFound = false;
+    for (j in listOfFields) {
+      var field = listOfFields[j];
+      if (field !== "") {
+        valueFound = true;
+      }
+    }
+    if (!valueFound) {
+      alert("CSV record #" + (i+1) + " has no fields.\n" +
+            "I'm giving up on importing any records.");
+      return;
+    }
+  }
   
-  var listOfAttributes = this._displayAttributes;
   var world = this.getWorld();
   var attributeCalledExpectedType = world.getAttributeCalledExpectedType();
   var attributeCalledInverseAttribute = world.getAttributeCalledInverseAttribute();
 
   var hashTableOfTypesKeyedByAttribute = {};
-  for (var i in listOfAttributes) {
+  for (i in listOfAttributes) {
     var attribute = listOfAttributes[i];
     var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
     var listOfTypes = [];
-    for (var j in listOfExpectedTypeEntries) {
+    for (j in listOfExpectedTypeEntries) {
       var entry = listOfExpectedTypeEntries[j];
       listOfTypes.push(entry.getValue());
     }
@@ -566,13 +602,14 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
   }
   world.beginTransaction();
   for (i in listOfRecords) {
-    var listOfFields = listOfRecords[i];
-    if (listOfFields.length == listOfAttributes.length) {
-      var newItem = world.newItem();
-      world.setItemToBeIncludedInQueryResultList(newItem, this.getQuerySpec());
-      for (j in listOfAttributes) {
-        attribute = listOfAttributes[j];
-        var value = listOfFields[j];
+    listOfFields = listOfRecords[i];
+    Util.assert(listOfFields.length == listOfAttributes.length);
+    var newItem = world.newItem();
+    world.setItemToBeIncludedInQueryResultList(newItem, this.getQuerySpec());
+    for (j in listOfAttributes) {
+      attribute = listOfAttributes[j];
+      var value = listOfFields[j];
+      if (value !== "") {
         listOfTypes = hashTableOfTypesKeyedByAttribute[attribute.getUniqueKeyString()];
         value = EntryView._transformValueToExpectedType(world, value, listOfTypes);
         var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
@@ -583,11 +620,24 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
           newItem.addEntryForAttribute(attribute, value);
         }
       }
-    } else {
-      alert("CSV record does not have the right number of fields: " + listOfFields[0]);
     }
   }
   world.endTransaction();
+  var endTime = new Date();
+  var seconds = 0;
+  var milliseconds = endTime.valueOf() - startTime.valueOf();
+  if (milliseconds !== 0) {
+    seconds = milliseconds / 1000;
+  }
+  alert("Imported " + listOfRecords.length + " records\n" +
+        "in " + seconds + " seconds.");
+
+  // PENDING: This is a hack.
+  // When showToolsMode to false, EntryView will not make the lozenges
+  // be draggable.  Setting up the draggable stuff takes longer than all
+  // the other refresh code put together, so to make the screen redraw 
+  // faster, we just set the showToolsMode to false.
+  this.getRootView().setShowToolsMode(false);        
   this.refresh();
 };
 

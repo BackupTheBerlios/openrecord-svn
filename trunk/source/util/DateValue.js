@@ -166,13 +166,18 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
           // We should expand this to deal with strings like "Feb 1944",
           // "February 1944", "1944/02", etc.
           var yearAsInt = parseInt(year);
-          if ((year.length == 4) && !isNaN(yearAsInt)) {
+          if ((year.length == 4) && !isNaN(yearAsInt) && (year == yearAsInt)) {
+            // This code handles strings like "1944" and "2340"
             date = new Date(yearAsInt, DateValue.MONTH_JAN);
             date._hasTime = false;
             date._hasDay = false;
             date._hasMonth = false;
           }
           else {
+            // This code handles strings like:
+            //   "August 1944"
+            //   "Aug 1944"
+            //   "08/1944"
             var monthMatchStr = DateValue.ARRAY_OF_MONTH_SHORT_NAMES.concat(DateValue.ARRAY_OF_MONTH_NAMES).join('|');
             var regExpr = new RegExp("^\\s*("+monthMatchStr+")\\s+(\\d{4})\\s*$","i");
             var matchArray = year.match(regExpr);

@@ -110,7 +110,11 @@ ContentRecord.prototype._addOrdinal = function(ordinal) {
  * @return   A number.
  */
 ContentRecord.prototype.getOrdinalNumberAtCreation = function() {
-  return Uuid.getOriginalOrdinalFromUuid(this._uuid);
+  // PENDING: we should cache this value in the Uuid instance instead of in the ContentRecord instance
+  if (!this._ordinalNumberAtCreation) {
+    this._ordinalNumberAtCreation = Uuid.getOriginalOrdinalFromUuid(this._uuid);
+  }
+  return this._ordinalNumberAtCreation;
 };
 
 
