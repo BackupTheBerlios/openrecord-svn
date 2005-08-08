@@ -31,8 +31,9 @@
 var CsvData = null;
 
 function setUp() {
-  var CsvRecords = ['2001: A Space Odyssey, 1968, Stanley Kubrick',
-                    '12 Angry Men, 1957, Sidney Lumet',
+  var CsvRecords = ['Title, Year, Producer',
+                    '2001: A Space Odyssey, 1968, Stanley Kubrick',
+                    '"This is a ""fake"" movie title", 1957, Sidney Lumet',
                     'Alien, 1979, Ridley Scott  ',
                     'Blade Runner, 1982, Ridley Scott',
                     '"Caine Mutiny, The", 1954, Edward Dymtryk',

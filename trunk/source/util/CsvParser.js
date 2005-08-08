@@ -58,7 +58,7 @@ function CsvParser() {
  * 
  * For example, given this CSV string as input:
  * <pre>
- *   "Alien, 1979, Ridley Scott \n Blade Runner, 1982, Ridley Scott"
+ *   "Title, Year, Producer \n Alien, 1979, Ridley Scott \n Blade Runner, 1982, Ridley Scott"
  * </pre>
  * We will return this data structure:
  * <pre>
@@ -75,12 +75,14 @@ CsvParser.prototype.getStringValuesFromCsvData = function(csvData) {
   var lineEndingCharacters = new RegExp("\r\n|\n|\r");
   var leadingWhiteSpaceCharacters = new RegExp("^\\s+",'g');
   var trailingWhiteSpaceCharacters = new RegExp("\\s+$",'g');
+  var doubleQuotes = new RegExp('""','g');
   var listOfOutputRecords = [];
   
   var listOfInputLines = csvData.split(lineEndingCharacters);
+  var firstLine = true;
   for (var i in listOfInputLines) {
     var singleLine = listOfInputLines[i];
-    if (singleLine.length > 0) {
+    if ((!firstLine) && (singleLine.length > 0)) {
       var listOfFields = singleLine.split(',');
       var j = 0;
       while (j < listOfFields.length) {
@@ -90,12 +92,17 @@ CsvParser.prototype.getStringValuesFromCsvData = function(csvData) {
         var firstCharacter = field.charAt(0);
         var lastCharacter = field.charAt(field.length - 1);
         if ((firstCharacter == '"') && (lastCharacter != '"')) {
+          if (j+1 === listOfFields.length) {
+            alert("The last field in record " + i + " is corrupted.");
+            return null;
+          }
           var nextField = listOfFields[j+1];
           listOfFields[j] = field_space + ',' + nextField;
           listOfFields.splice(j+1, 1); // delete element [j+1] from the list
         } else {
           if ((firstCharacter == '"') && (lastCharacter == '"')) {
-            field = field.slice(1, (field.length - 1)); // trim the " characters off
+            field = field.slice(1, (field.length - 1)); // trim the " characters off the ends
+            field = field.replace(doubleQuotes, '"');   // replace "" with "
           }
           listOfFields[j] = field;
           j += 1;
@@ -103,6 +110,7 @@ CsvParser.prototype.getStringValuesFromCsvData = function(csvData) {
       }
       listOfOutputRecords.push(listOfFields);
     }
+    firstLine = false;
   }
   return listOfOutputRecords;
 };

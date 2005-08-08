@@ -369,6 +369,8 @@ chao   | 0.5  IED |         | 21. Wire up observers & keep views in sync
        |          |         | 63. Write scalability tests 
        |          |         | 64. Ensure that PHP scripts and file I/O works for concurrent multi-user access
        |          |         | 65. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
+       |          |         |     Make RootView subclass from View, or add comments explaining why it doesn't
+       |          |         |     Make DateValue subclass from Date, or wrap an internal Date object
 -------+----------+---------+----------------------------------------------
        
 
