@@ -89,18 +89,22 @@ CsvParser.prototype.getStringValuesFromCsvData = function(csvData) {
         var space_field_space = listOfFields[j];
         var field_space = space_field_space.replace(leadingWhiteSpaceCharacters, ''); // trim leading whitespace
         var field = field_space.replace(trailingWhiteSpaceCharacters, ''); // trim trailing whitespace
-        var firstCharacter = field.charAt(0);
-        var lastCharacter = field.charAt(field.length - 1);
-        if ((firstCharacter == '"') && (lastCharacter != '"')) {
+        var firstChar = field.charAt(0);
+        var lastChar = field.charAt(field.length - 1);
+        var secondToLastChar = field.charAt(field.length - 2);
+        var thirdToLastChar = field.charAt(field.length - 3);
+        if ((firstChar == '"') && 
+            ((lastChar != '"') || 
+             ((lastChar == '"') && (secondToLastChar == '"') && (thirdToLastChar != '"')) )) {
           if (j+1 === listOfFields.length) {
-            alert("The last field in record " + i + " is corrupted.");
+            alert("The last field in record " + i + " is corrupted:\n" + field);
             return null;
           }
           var nextField = listOfFields[j+1];
           listOfFields[j] = field_space + ',' + nextField;
           listOfFields.splice(j+1, 1); // delete element [j+1] from the list
         } else {
-          if ((firstCharacter == '"') && (lastCharacter == '"')) {
+          if ((firstChar == '"') && (lastChar == '"')) {
             field = field.slice(1, (field.length - 1)); // trim the " characters off the ends
             field = field.replace(doubleQuotes, '"');   // replace "" with "
           }

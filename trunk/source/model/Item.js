@@ -269,6 +269,7 @@ Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute,
   var entry = this.getWorld()._newConnectionEntry(previousEntry, this, myAttribute, otherItem, otherAttribute);
   this.getWorld().endTransaction();
   this._noteChanges(null);
+  otherItem._noteChanges(null);
   return entry;  
 };
 

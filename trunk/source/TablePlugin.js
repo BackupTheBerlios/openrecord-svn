@@ -149,6 +149,16 @@ TablePlugin.prototype._getListOfColumns = function() {
       Util.assert(anAttribute instanceof Item);
       displayAttributes.push(anAttribute);
     }
+    /*
+    var PENDING_debug = false;
+    if (PENDING_debug) {
+      var string = "";
+      for (i in listOfTableColumnEntries) {
+        string += listOfTableColumnEntries[i]._getUuid() + '\n';
+      }
+      alert(listOfTableColumnEntries.length + " columns\n" + string);
+    }
+    */
   } else {
     // If we get here, it means this table did not have a saved list of 
     // user-selected columns, so we need to come up with a list.
@@ -559,6 +569,11 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
   var fileContents = Util.getStringContentsOfFileAtURL('file://' + fileButton.value);
   var csvParser = new CsvParser();
   var listOfRecords = csvParser.getStringValuesFromCsvData(fileContents);
+  if (!listOfRecords) {
+    return;
+  }
+  alert("Importing " + listOfRecords.length + " records...");
+  
   var listOfFields;
   var i, j;
 
@@ -566,6 +581,7 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
   for (i in listOfRecords) {
     listOfFields = listOfRecords[i];
     if (listOfFields.length != listOfAttributes.length) {
+      alert(listOfFields.join('\n'));
       alert("CSV record #" + (i+1) + " has " + listOfFields.length + " fields, but the table has " + listOfAttributes.length + " columns.\n" +
             "I'm giving up on importing any records.");
       return;
@@ -601,7 +617,13 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
     hashTableOfTypesKeyedByAttribute[attributeKeyString] = listOfTypes;
   }
   world.beginTransaction();
+  var count = 0;
   for (i in listOfRecords) {
+    count += 1;
+    if ((count % 200) === 0) {
+      world.endTransaction();
+      world.beginTransaction();
+    }
     listOfFields = listOfRecords[i];
     Util.assert(listOfFields.length == listOfAttributes.length);
     var newItem = world.newItem();
@@ -643,7 +665,8 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
 
 
 /**
- * Called when the user clicks on attribute editor item, either to add or remove attribute column
+ * Called when the user clicks on attribute editor item, either to add or 
+ * remove attribute column
  * 
  * @scope    private class method
  */
@@ -651,31 +674,31 @@ TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
   var attributeUuid = eventObject.target.value;
   if (attributeUuid) {
     var repository = this.getWorld();
-    var attrTableColumns = repository.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
-    var entriesTableColumns = this._layout.getEntriesForAttribute(attrTableColumns);
-    var noStoredColumns = entriesTableColumns.length === 0;
+    var attributeTableColumns = repository.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
+    var entriesTableColumns = this._layout.getEntriesForAttribute(attributeTableColumns);
+    var noStoredColumns = (entriesTableColumns.length === 0);
     var changedAttribute = this.getWorld().getItemFromUuid(attributeUuid);
     var removeAttribute = Util.removeObjectFromSet(changedAttribute,this._displayAttributes);
     var typeCalledItem = repository.getTypeCalledItem();
     if (removeAttribute) {
-      for (var i=0;i < entriesTableColumns.length;++i) {
+      for (var i in entriesTableColumns) {
         if (changedAttribute == entriesTableColumns[i].getValue()) {
           entriesTableColumns[i].voteToDelete();
           break;
         }
       }
-    }
-    else {
+    } else {
       this._displayAttributes.push(changedAttribute);
     }
     if (noStoredColumns) {
-      for (i=0;i<this._displayAttributes.length;++i) {
+      for (i in this._displayAttributes) {
         var anAttribute = this._displayAttributes[i];
-        this._layout.addEntryForAttribute(attrTableColumns,anAttribute,typeCalledItem);
+        this._layout.addEntryForAttribute(attributeTableColumns,anAttribute,typeCalledItem);
       }
-    }
-    else {
-      this._layout.addEntryForAttribute(attrTableColumns,changedAttribute,typeCalledItem);
+    } else {
+      if (!removeAttribute) {
+        this._layout.addEntryForAttribute(attributeTableColumns,changedAttribute,typeCalledItem);
+      }
     }
     this._buildTable(true);
   }
