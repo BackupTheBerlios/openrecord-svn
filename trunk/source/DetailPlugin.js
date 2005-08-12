@@ -144,7 +144,7 @@ DetailPlugin.prototype.getXhtmlTableForItem = function (inItem) {
       var listOfEntries = inItem.getEntriesForAttribute(attribute); 
       listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_PLAIN + "\">");
       for (var j = 0; j < listOfEntries.length; ++j) {
-        listOfStrings.push(listOfEntries[j].getDisplayString() + "<br/>");
+        listOfStrings.push(listOfEntries[j].getDisplayString(inItem) + "<br/>");
       }
       listOfStrings.push("</td>");
       listOfStrings.push("</tr>");
