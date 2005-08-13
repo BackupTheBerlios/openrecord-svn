@@ -252,6 +252,7 @@ EntryView.prototype._setClassName = function() {
     var connectionType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
     if (dataType == itemType || dataType == connectionType) {
       if (this._isLozenge()) {
+        this.getHtmlElement().ondblclick = this.onDoubleClick.bindAsEventListener(this);
         if (this.isInEditMode() && !this._draggable) {
           var PENDING_temporaryHackToDecreaseLayoutTime = true;
           if (PENDING_temporaryHackToDecreaseLayoutTime) {
@@ -599,6 +600,23 @@ EntryView.prototype.onClick = function(eventObject) {
     this.selectView(eventObject);
     return true;
   }
+};
+
+
+/**
+ * Called when the user double clicks on a lozenge.
+ *
+ * @scope    public instance method
+ * @param    eventObject    An event object. 
+ */
+EntryView.prototype.onDoubleClick = function(eventObject) {
+  if (this._valueIsItem) {
+    var relatedItem = this._entry.getValue(this._item);
+    var urlOfRelatedItem = RootView.URL_HASH_ITEM_PREFIX + relatedItem._getUuid();
+    window.location = urlOfRelatedItem;
+    this.getRootView().setCurrentContentViewFromUrl();
+  }
+  return true;
 };
 
 
