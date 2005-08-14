@@ -1,0 +1,2611 @@
+// Repository records, in JSON format
+{ "format": "2005_JUNE_CHRONOLOGICAL_LIST", 
+  "records": [ {},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "295652f0-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "295652f1-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "295652f0-0c6e-11da-beea-000c414ce854",
+        "value": "New Page"  }
+},
+{ "Entry": {
+         "uuid": "295652f2-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["295652f0-0c6e-11da-beea-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "295652f3-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "295652f0-0c6e-11da-beea-000c414ce854",
+        "value": "This is a new page."  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "3295b9a0-0c6e-11da-beea-000c414ce854",
+"previousEntry": "295652f1-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "295652f0-0c6e-11da-beea-000c414ce854",
+        "value": "Collaborative Philanthropy"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "5ebf9280-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "5ebf9281-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ebf9280-0c6e-11da-beea-000c414ce854",
+        "value": "New Page"  }
+},
+{ "Entry": {
+         "uuid": "5ec20380-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["5ebf9280-0c6e-11da-beea-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "5ec20381-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ebf9280-0c6e-11da-beea-000c414ce854",
+        "value": "This is a new page."  }
+},
+{ "Item": { "uuid": "5ec20382-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "5ec20383-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ec20382-0c6e-11da-beea-000c414ce854",
+        "value": "New Section"  }
+},
+{ "Entry": {
+         "uuid": "5ec20384-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["5ec20382-0c6e-11da-beea-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "5ec20385-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["5ebf9280-0c6e-11da-beea-000c414ce854", "5ec20382-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "5ec20386-0c6e-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ec20382-0c6e-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Item": { "uuid": "5ec20387-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "5ec20388-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ec20387-0c6e-11da-beea-000c414ce854",
+        "value": "New Query"  }
+},
+{ "Entry": {
+         "uuid": "5ec20389-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["5ec20387-0c6e-11da-beea-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "5ec2038a-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["5ec20382-0c6e-11da-beea-000c414ce854", "5ec20387-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "5ed51650-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "5ed51651-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ed51650-0c6e-11da-beea-000c414ce854",
+        "value": "Layout data for Table of New Section"  }
+},
+{ "Entry": {
+         "uuid": "5ed51652-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["5ed51650-0c6e-11da-beea-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "5ed51653-0c6e-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ed51650-0c6e-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "5ed51654-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["5ec20382-0c6e-11da-beea-000c414ce854", "5ed51650-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "7a0932d0-0c6e-11da-beea-000c414ce854",
+"previousEntry": "5ebf9281-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ebf9280-0c6e-11da-beea-000c414ce854",
+        "value": "Organizations"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "7b5e3b80-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "7b5e3b81-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b5e3b80-0c6e-11da-beea-000c414ce854",
+        "value": "New Page"  }
+},
+{ "Entry": {
+         "uuid": "7b5e3b82-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["7b5e3b80-0c6e-11da-beea-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "7b5e3b83-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b5e3b80-0c6e-11da-beea-000c414ce854",
+        "value": "This is a new page."  }
+},
+{ "Item": { "uuid": "7b5e3b84-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "7b5e3b85-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b5e3b84-0c6e-11da-beea-000c414ce854",
+        "value": "New Section"  }
+},
+{ "Entry": {
+         "uuid": "7b5e3b86-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["7b5e3b84-0c6e-11da-beea-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "7b5e3b87-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["7b5e3b80-0c6e-11da-beea-000c414ce854", "7b5e3b84-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "7b5e3b88-0c6e-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b5e3b84-0c6e-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Item": { "uuid": "7b5e3b89-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "7b5e3b8a-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b5e3b89-0c6e-11da-beea-000c414ce854",
+        "value": "New Query"  }
+},
+{ "Entry": {
+         "uuid": "7b5e3b8b-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["7b5e3b89-0c6e-11da-beea-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "7b5e3b8c-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["7b5e3b84-0c6e-11da-beea-000c414ce854", "7b5e3b89-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "7b739840-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "7b739841-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b739840-0c6e-11da-beea-000c414ce854",
+        "value": "Layout data for Table of New Section"  }
+},
+{ "Entry": {
+         "uuid": "7b739842-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["7b739840-0c6e-11da-beea-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "7b739843-0c6e-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b739840-0c6e-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "7b739844-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["7b5e3b84-0c6e-11da-beea-000c414ce854", "7b739840-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "89ecbbe0-0c6e-11da-beea-000c414ce854",
+"previousEntry": "7b5e3b81-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b5e3b80-0c6e-11da-beea-000c414ce854",
+        "value": "Problems"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "8b0ad610-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "8b0ad611-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b0ad610-0c6e-11da-beea-000c414ce854",
+        "value": "New Page"  }
+},
+{ "Entry": {
+         "uuid": "8b0ad612-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["8b0ad610-0c6e-11da-beea-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "8b0ad613-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b0ad610-0c6e-11da-beea-000c414ce854",
+        "value": "This is a new page."  }
+},
+{ "Item": { "uuid": "8b0ad614-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "8b0d2000-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b0ad614-0c6e-11da-beea-000c414ce854",
+        "value": "New Section"  }
+},
+{ "Entry": {
+         "uuid": "8b0d2001-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["8b0ad614-0c6e-11da-beea-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "8b0d2002-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["8b0ad610-0c6e-11da-beea-000c414ce854", "8b0ad614-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "8b0d2003-0c6e-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b0ad614-0c6e-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Item": { "uuid": "8b0d2004-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "8b0d2005-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b0d2004-0c6e-11da-beea-000c414ce854",
+        "value": "New Query"  }
+},
+{ "Entry": {
+         "uuid": "8b0d2006-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["8b0d2004-0c6e-11da-beea-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "8b0d2007-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["8b0ad614-0c6e-11da-beea-000c414ce854", "8b0d2004-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "8b275ec0-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "8b275ec1-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b275ec0-0c6e-11da-beea-000c414ce854",
+        "value": "Layout data for Table of New Section"  }
+},
+{ "Entry": {
+         "uuid": "8b275ec2-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["8b275ec0-0c6e-11da-beea-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "8b29cfc0-0c6e-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b275ec0-0c6e-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "8b29cfc1-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["8b0ad614-0c6e-11da-beea-000c414ce854", "8b275ec0-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "95b98430-0c6e-11da-beea-000c414ce854",
+"previousEntry": "8b0ad611-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b0ad610-0c6e-11da-beea-000c414ce854",
+        "value": "Criteria"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "ad3d9100-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "ad3d9101-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "ad3d9100-0c6e-11da-beea-000c414ce854",
+        "value": "Problem"  }
+},
+{ "Entry": {
+         "uuid": "ad3d9102-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["ad3d9100-0c6e-11da-beea-000c414ce854", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "ad3fdaf0-0c6e-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b5e3b89-0c6e-11da-beea-000c414ce854",
+        "value": "ad3d9100-0c6e-11da-beea-000c414ce854"  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "ad4bc1d0-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "b36caa70-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "ad4bc1d0-0c6e-11da-beea-000c414ce854",
+        "value": "Global Warming"  }
+},
+{ "Entry": {
+         "uuid": "b36caa71-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["ad4bc1d0-0c6e-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "b37adb40-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "bb252300-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "b37adb40-0c6e-11da-beea-000c414ce854",
+        "value": "AIDS"  }
+},
+{ "Entry": {
+         "uuid": "bb252301-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["b37adb40-0c6e-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "bb337ae0-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "cf8a8ab0-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bb337ae0-0c6e-11da-beea-000c414ce854",
+        "value": "Malaria"  }
+},
+{ "Entry": {
+         "uuid": "cf8a8ab1-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["bb337ae0-0c6e-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "cf8f45a0-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "f29afb70-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "cf8f45a0-0c6e-11da-beea-000c414ce854",
+        "value": "Tuberculosis"  }
+},
+{ "Entry": {
+         "uuid": "f29afb71-0c6e-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["cf8f45a0-0c6e-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "f2a22760-0c6e-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "11486030-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "f2a22760-0c6e-11da-beea-000c414ce854",
+        "value": "Illiteracy"  }
+},
+{ "Entry": {
+         "uuid": "11486031-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["f2a22760-0c6e-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "114ad130-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "27e08660-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "114ad130-0c6f-11da-beea-000c414ce854",
+        "value": "Lack of clean water"  }
+},
+{ "Entry": {
+         "uuid": "27e08661-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["114ad130-0c6f-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "2cdc01d0-0c6f-11da-beea-000c414ce854",
+"previousEntry": "b36caa70-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "ad4bc1d0-0c6e-11da-beea-000c414ce854",
+        "value": "Global warming"  }
+},
+{ "Entry": {
+         "uuid": "411b43e0-0c6f-11da-beea-000c414ce854",
+"previousEntry": "27e08660-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "114ad130-0c6f-11da-beea-000c414ce854",
+        "value": "Lack of safe water"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "27eeb730-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "4d4c2530-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "27eeb730-0c6f-11da-beea-000c414ce854",
+        "value": "Trade barriers"  }
+},
+{ "Entry": {
+         "uuid": "4d4c2531-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["27eeb730-0c6f-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "4d50e020-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "4ffd3b70-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "4d50e020-0c6f-11da-beea-000c414ce854",
+        "value": "Migration barriers"  }
+},
+{ "Entry": {
+         "uuid": "4ffd3b71-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["4d50e020-0c6f-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "500b6c40-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "57a2a130-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "500b6c40-0c6f-11da-beea-000c414ce854",
+        "value": "Government corruption"  }
+},
+{ "Entry": {
+         "uuid": "57a2a131-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["500b6c40-0c6f-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "57a75c20-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "807ba160-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "57a75c20-0c6f-11da-beea-000c414ce854",
+        "value": "International war"  }
+},
+{ "Entry": {
+         "uuid": "807ba161-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["57a75c20-0c6f-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "80805c50-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "943a1ab0-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "80805c50-0c6f-11da-beea-000c414ce854",
+        "value": "Civil war"  }
+},
+{ "Entry": {
+         "uuid": "943a1ab1-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["80805c50-0c6f-11da-beea-000c414ce854", "ad3d9100-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "bea616f0-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "bea616f1-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bea616f0-0c6f-11da-beea-000c414ce854",
+        "value": "New Page"  }
+},
+{ "Entry": {
+         "uuid": "bea616f2-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["bea616f0-0c6f-11da-beea-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "bea616f3-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bea616f0-0c6f-11da-beea-000c414ce854",
+        "value": "This is a new page."  }
+},
+{ "Item": { "uuid": "bea616f4-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "bea616f5-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bea616f4-0c6f-11da-beea-000c414ce854",
+        "value": "New Section"  }
+},
+{ "Entry": {
+         "uuid": "bea616f6-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["bea616f4-0c6f-11da-beea-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "bea616f7-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["bea616f0-0c6f-11da-beea-000c414ce854", "bea616f4-0c6f-11da-beea-000c414ce854"],
+    "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "bea616f8-0c6f-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bea616f4-0c6f-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Item": { "uuid": "bea616f9-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "bea616fa-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bea616f9-0c6f-11da-beea-000c414ce854",
+        "value": "New Query"  }
+},
+{ "Entry": {
+         "uuid": "bea616fb-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["bea616f9-0c6f-11da-beea-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "bea616fc-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["bea616f4-0c6f-11da-beea-000c414ce854", "bea616f9-0c6f-11da-beea-000c414ce854"],
+    "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "beb46ed0-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "beb46ed1-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "beb46ed0-0c6f-11da-beea-000c414ce854",
+        "value": "Layout data for Table of New Section"  }
+},
+{ "Entry": {
+         "uuid": "beb46ed2-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["beb46ed0-0c6f-11da-beea-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "beb46ed3-0c6f-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "beb46ed0-0c6f-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "beb46ed4-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["bea616f4-0c6f-11da-beea-000c414ce854", "beb46ed0-0c6f-11da-beea-000c414ce854"],
+    "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "c5407550-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "c5407551-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "c5407550-0c6f-11da-beea-000c414ce854",
+        "value": "Interventions"  }
+},
+{ "Entry": {
+         "uuid": "c5407552-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["c5407550-0c6f-11da-beea-000c414ce854", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "c5407553-0c6f-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bea616f9-0c6f-11da-beea-000c414ce854",
+        "value": "c5407550-0c6f-11da-beea-000c414ce854"  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "c54ecd30-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "d0b02980-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "c54ecd30-0c6f-11da-beea-000c414ce854",
+        "value": "Kyoto Protocol"  }
+},
+{ "Entry": {
+         "uuid": "d0b02981-0c6f-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["c54ecd30-0c6f-11da-beea-000c414ce854", "c5407550-0c6f-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "f1598550-0c6f-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "beb46ed0-0c6f-11da-beea-000c414ce854",
+        "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "f167dd30-0c6f-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "beb46ed0-0c6f-11da-beea-000c414ce854",
+        "value": "00001002-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "f4464500-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "c54ecd30-0c6f-11da-beea-000c414ce854",
+        "value": "Kyoto"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "f173c410-0c6f-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "25b57390-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "f173c410-0c6f-11da-beea-000c414ce854",
+        "value": "Insecticide-treated nets"  }
+},
+{ "Entry": {
+         "uuid": "25b57391-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["f173c410-0c6f-11da-beea-000c414ce854", "c5407550-0c6f-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "281ef980-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "f173c410-0c6f-11da-beea-000c414ce854",
+        "value": "ITNs"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "25c3cb70-0c70-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "5d66f570-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "25c3cb70-0c70-11da-beea-000c414ce854",
+        "value": "Carbon tax"  }
+},
+{ "Entry": {
+         "uuid": "5d66f571-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["25c3cb70-0c70-11da-beea-000c414ce854", "c5407550-0c6f-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "608a5580-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "25c3cb70-0c70-11da-beea-000c414ce854",
+        "value": "CO2 tax"  }
+},
+{ "Entry": {
+         "uuid": "65111620-0c70-11da-beea-000c414ce854",
+"previousEntry": "bea616f1-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bea616f0-0c6f-11da-beea-000c414ce854",
+        "value": "Interventions"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "66ab1710-0c70-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "66ab1711-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "66ab1710-0c70-11da-beea-000c414ce854",
+        "value": "New Page"  }
+},
+{ "Entry": {
+         "uuid": "66ab1712-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["66ab1710-0c70-11da-beea-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "66ab1713-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "66ab1710-0c70-11da-beea-000c414ce854",
+        "value": "This is a new page."  }
+},
+{ "Item": { "uuid": "66ab1714-0c70-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "66ab1715-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "66ab1714-0c70-11da-beea-000c414ce854",
+        "value": "New Section"  }
+},
+{ "Entry": {
+         "uuid": "66ab1716-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["66ab1714-0c70-11da-beea-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "66ab1717-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["66ab1710-0c70-11da-beea-000c414ce854", "66ab1714-0c70-11da-beea-000c414ce854"],
+    "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "66ab1718-0c70-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "66ab1714-0c70-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Item": { "uuid": "66ab1719-0c70-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "66ab171a-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "66ab1719-0c70-11da-beea-000c414ce854",
+        "value": "New Query"  }
+},
+{ "Entry": {
+         "uuid": "66ab171b-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["66ab1719-0c70-11da-beea-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "66ab171c-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["66ab1714-0c70-11da-beea-000c414ce854", "66ab1719-0c70-11da-beea-000c414ce854"],
+    "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "66b96ef0-0c70-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "66b96ef1-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "66b96ef0-0c70-11da-beea-000c414ce854",
+        "value": "Layout data for Table of New Section"  }
+},
+{ "Entry": {
+         "uuid": "66b96ef2-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["66b96ef0-0c70-11da-beea-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "66b96ef3-0c70-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "66b96ef0-0c70-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "66b96ef4-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["66ab1714-0c70-11da-beea-000c414ce854", "66b96ef0-0c70-11da-beea-000c414ce854"],
+    "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "697d9800-0c70-11da-beea-000c414ce854",
+"previousEntry": "66ab1711-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "66ab1710-0c70-11da-beea-000c414ce854",
+        "value": "Attributes"  }
+},
+{ "Entry": {
+         "uuid": "bebe6470-0c70-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "66ab1719-0c70-11da-beea-000c414ce854",
+        "value": "00001210-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "bf0383c0-0c70-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "c3b9dfe0-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bf0383c0-0c70-11da-beea-000c414ce854",
+        "value": "Mitigates"  }
+},
+{ "Entry": {
+         "uuid": "c3b9dfe1-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["bf0383c0-0c70-11da-beea-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "c63678a0-0c70-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bf0383c0-0c70-11da-beea-000c414ce854",
+        "value": "ad3d9100-0c6e-11da-beea-000c414ce854"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "c3bec1e0-0c70-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "ca7819f0-0c70-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "c3bec1e0-0c70-11da-beea-000c414ce854",
+        "value": "Mitigated by"  }
+},
+{ "Entry": {
+         "uuid": "ca7819f1-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["c3bec1e0-0c70-11da-beea-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "cbfcbe20-0c70-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "c3bec1e0-0c70-11da-beea-000c414ce854",
+        "value": "c5407550-0c6f-11da-beea-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "d2d2c5f0-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["bf0383c0-0c70-11da-beea-000c414ce854", "c3bec1e0-0c70-11da-beea-000c414ce854"],
+    "attribute": ["0000100b-ce7f-11d9-8cd5-0011113ae5d6", "0000100b-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "dc502000-0c70-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "beb46ed0-0c6f-11da-beea-000c414ce854",
+        "value": "bf0383c0-0c70-11da-beea-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "dfd57630-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["25c3cb70-0c70-11da-beea-000c414ce854", "ad4bc1d0-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["bf0383c0-0c70-11da-beea-000c414ce854", "c3bec1e0-0c70-11da-beea-000c414ce854"]  }
+},
+{ "Entry": {
+         "uuid": "e3320eb0-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["f173c410-0c6f-11da-beea-000c414ce854", "bb337ae0-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["bf0383c0-0c70-11da-beea-000c414ce854", "c3bec1e0-0c70-11da-beea-000c414ce854"]  }
+},
+{ "Entry": {
+         "uuid": "e8457ef0-0c70-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["c54ecd30-0c6f-11da-beea-000c414ce854", "ad4bc1d0-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["bf0383c0-0c70-11da-beea-000c414ce854", "c3bec1e0-0c70-11da-beea-000c414ce854"]  }
+},
+{ "Ordinal": {
+         "uuid": "f3773fc0-0c70-11da-beea-000c414ce854",
+       "record": "f167dd30-0c6f-11da-beea-000c414ce854",
+        "value": "11da0c6ff159854fa9c1dd89"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "f38808a0-0c70-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "40a76180-0c71-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "f38808a0-0c70-11da-beea-000c414ce854",
+        "value": "IPTp"  }
+},
+{ "Entry": {
+         "uuid": "40a76181-0c71-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["f38808a0-0c70-11da-beea-000c414ce854", "c5407550-0c6f-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "48459b50-0c71-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "f38808a0-0c70-11da-beea-000c414ce854",
+        "value": "Intermittent presumptive treatment"  }
+},
+{ "Entry": {
+         "uuid": "4a358470-0c71-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["f38808a0-0c70-11da-beea-000c414ce854", "bb337ae0-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["bf0383c0-0c70-11da-beea-000c414ce854", "c3bec1e0-0c70-11da-beea-000c414ce854"]  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "40ac1c70-0c71-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "70d73240-0c71-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "40ac1c70-0c71-11da-beea-000c414ce854",
+        "value": "SP to ACT"  }
+},
+{ "Entry": {
+         "uuid": "70d73241-0c71-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["40ac1c70-0c71-11da-beea-000c414ce854", "c5407550-0c6f-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "9340b4a0-0c71-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "40ac1c70-0c71-11da-beea-000c414ce854",
+        "value": "Switching from SP to ACT"  }
+},
+{ "Entry": {
+         "uuid": "9518d000-0c71-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["40ac1c70-0c71-11da-beea-000c414ce854", "bb337ae0-0c6e-11da-beea-000c414ce854"],
+    "attribute": ["bf0383c0-0c70-11da-beea-000c414ce854", "c3bec1e0-0c70-11da-beea-000c414ce854"]  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "3222fdd0-0c72-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "3222fdd1-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3222fdd0-0c72-11da-beea-000c414ce854",
+        "value": "New Page"  }
+},
+{ "Entry": {
+         "uuid": "3222fdd2-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["3222fdd0-0c72-11da-beea-000c414ce854", "00020000-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "3222fdd3-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3222fdd0-0c72-11da-beea-000c414ce854",
+        "value": "This is a new page."  }
+},
+{ "Item": { "uuid": "3222fdd4-0c72-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "3222fdd5-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3222fdd4-0c72-11da-beea-000c414ce854",
+        "value": "New Section"  }
+},
+{ "Entry": {
+         "uuid": "3222fdd6-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["3222fdd4-0c72-11da-beea-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "3222fdd7-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["3222fdd0-0c72-11da-beea-000c414ce854", "3222fdd4-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "3222fdd8-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3222fdd4-0c72-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Item": { "uuid": "3222fdd9-0c72-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "3222fdda-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3222fdd9-0c72-11da-beea-000c414ce854",
+        "value": "New Query"  }
+},
+{ "Entry": {
+         "uuid": "3222fddb-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["3222fdd9-0c72-11da-beea-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "3222fddc-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["3222fdd4-0c72-11da-beea-000c414ce854", "3222fdd9-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "323d3c90-0c72-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "323d3c91-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "323d3c90-0c72-11da-beea-000c414ce854",
+        "value": "Layout data for Table of New Section"  }
+},
+{ "Entry": {
+         "uuid": "323d3c92-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["323d3c90-0c72-11da-beea-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "323d3c93-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "323d3c90-0c72-11da-beea-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "323d3c94-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["3222fdd4-0c72-11da-beea-000c414ce854", "323d3c90-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "35905f30-0c72-11da-beea-000c414ce854",
+"previousEntry": "3222fdd1-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3222fdd0-0c72-11da-beea-000c414ce854",
+        "value": "Glossary"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "46242570-0c72-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "46242571-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "46242570-0c72-11da-beea-000c414ce854",
+        "value": "Term"  }
+},
+{ "Entry": {
+         "uuid": "46242572-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["46242570-0c72-11da-beea-000c414ce854", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "46242573-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3222fdd9-0c72-11da-beea-000c414ce854",
+        "value": "46242570-0c72-11da-beea-000c414ce854"  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "670b74a0-0c72-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "670b74a1-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "670b74a0-0c72-11da-beea-000c414ce854",
+        "value": "Terminology"  }
+},
+{ "Entry": {
+         "uuid": "670b74a2-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["670b74a0-0c72-11da-beea-000c414ce854", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "670b74a3-0c72-11da-beea-000c414ce854",
+"previousEntry": "46242573-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3222fdd9-0c72-11da-beea-000c414ce854",
+        "value": "670b74a0-0c72-11da-beea-000c414ce854"  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "70c95a20-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "beb46ed0-0c6f-11da-beea-000c414ce854",
+        "value": "00001005-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "76ff9f80-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["f173c410-0c6f-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "7c2f9870-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["f38808a0-0c70-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Entry": {
+         "uuid": "86161490-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "323d3c90-0c72-11da-beea-000c414ce854",
+        "value": "00001002-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "86161491-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "323d3c90-0c72-11da-beea-000c414ce854",
+        "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "86161492-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "323d3c90-0c72-11da-beea-000c414ce854",
+        "value": "bf0383c0-0c70-11da-beea-000c414ce854"  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "86244560-0c72-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "93ecddb0-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "86244560-0c72-11da-beea-000c414ce854",
+        "value": "BCR"  }
+},
+{ "Entry": {
+         "uuid": "93ecddb1-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["86244560-0c72-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "99eea590-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "86244560-0c72-11da-beea-000c414ce854",
+        "value": "Benefit-Cost Ratio"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "93f409a0-0c72-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "9fd173c0-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "93f409a0-0c72-11da-beea-000c414ce854",
+        "value": "DALY"  }
+},
+{ "Entry": {
+         "uuid": "9fd173c1-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["93f409a0-0c72-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "a55c0fd0-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "93f409a0-0c72-11da-beea-000c414ce854",
+        "value": "Disability-Adjusted Life Year"  }
+},
+{ "Entry": {
+         "uuid": "b62b7f80-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "323d3c90-0c72-11da-beea-000c414ce854",
+        "value": "00001003-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "cb1d96d0-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "86244560-0c72-11da-beea-000c414ce854",
+        "value": "A BCR is a unitless number, like &quot;0.26&quot;, or &quot;4.25&quot;. The bigger the BCR, the more cost-effective the project is. If the BCR is greater than 1.0, then the benefits outweigh the costs, and the project is cost-effective."  }
+},
+{ "Vote": {
+         "uuid": "d1de1ad0-0c72-11da-beea-000c414ce854",
+       "record": "86161492-0c72-11da-beea-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Entry": {
+         "uuid": "e4133500-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b739840-0c6e-11da-beea-000c414ce854",
+        "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "e4218ce0-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b739840-0c6e-11da-beea-000c414ce854",
+        "value": "c3bec1e0-0c70-11da-beea-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "e42b02c0-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b739840-0c6e-11da-beea-000c414ce854",
+        "value": "00001002-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "e742a300-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "cf8f45a0-0c6e-11da-beea-000c414ce854",
+        "value": "TB"  }
+},
+{ "Entry": {
+         "uuid": "e9432df0-0c72-11da-beea-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b739840-0c6e-11da-beea-000c414ce854",
+        "value": "00001005-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "eeb38b40-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["cf8f45a0-0c6e-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "f3890820-0c72-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "fd0fff20-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "f3890820-0c72-11da-beea-000c414ce854",
+        "value": "YLL"  }
+},
+{ "Entry": {
+         "uuid": "fd0fff21-0c72-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["f3890820-0c72-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "ffc35f50-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "f3890820-0c72-11da-beea-000c414ce854",
+        "value": "Year of Life Lost"  }
+},
+{ "Entry": {
+         "uuid": "09755df0-0c73-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "f3890820-0c72-11da-beea-000c414ce854",
+        "value": "YLLs are a unit of measurement for comparing at health outcomes. YLLs are similar to DALYs, although they don't account for disability caused by disease."  }
+},
+{ "Entry": {
+         "uuid": "18312fe0-0c73-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "93f409a0-0c72-11da-beea-000c414ce854",
+        "value": "A DALY is a unit of measurement that's widely-used when trying to measure health outcomes. DALYs are measured by taking into account the years of life gained and the years that are lived with some disability, with a weighting for the severity of the disability."  }
+},
+{ "Entry": {
+         "uuid": "2d52e2b0-0c73-11da-beea-000c414ce854",
+"previousEntry": "3222fdd3-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3222fdd0-0c72-11da-beea-000c414ce854",
+        "value": "Here's a collection of acronyms, abbreviations, and special jargon that comes up when you start looking at international cost-benefit philanthropy."  }
+},
+{ "Entry": {
+         "uuid": "32f79670-0c73-11da-beea-000c414ce854",
+"previousEntry": "3222fdd5-0c72-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3222fdd4-0c72-11da-beea-000c414ce854",
+        "value": "List of all terms"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "22b99150-0c73-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "5b22a360-0c73-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "22b99150-0c73-11da-beea-000c414ce854",
+        "value": "Morbidity"  }
+},
+{ "Entry": {
+         "uuid": "5b22a361-0c73-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["22b99150-0c73-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "60efedc0-0c73-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "22b99150-0c73-11da-beea-000c414ce854",
+        "value": "Morbidity usually means the relative incidence of illness in a population  for example, the number of people who have AIDS per 1,000 people in the population."  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "5b30fb40-0c73-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "6519c150-0c73-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5b30fb40-0c73-11da-beea-000c414ce854",
+        "value": "Mortality"  }
+},
+{ "Entry": {
+         "uuid": "6519c151-0c73-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["5b30fb40-0c73-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "6cac1440-0c73-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5b30fb40-0c73-11da-beea-000c414ce854",
+        "value": "Mortality usually means the relative incidence of death in a population  for example, the number of people who die of AIDS per 1,000 people in the population."  }
+},
+{ "Vote": {
+         "uuid": "92f7d9e0-0c73-11da-beea-000c414ce854",
+       "record": "e42b02c0-0c72-11da-beea-000c414ce854",
+   "retainFlag": "false"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "4e083320-0c78-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "515dc6c0-0c78-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "4e083320-0c78-11da-beea-000c414ce854",
+        "value": "SP"  }
+},
+{ "Entry": {
+         "uuid": "515dc6c1-0c78-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["4e083320-0c78-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "66bfddf0-0c78-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "4e083320-0c78-11da-beea-000c414ce854",
+        "value": "Sulfadoxine pyramethamine"  }
+},
+{ "Entry": {
+         "uuid": "a2c37be0-0c78-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "4e083320-0c78-11da-beea-000c414ce854",
+        "value": "An antimalarial drug."  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "516c1ea0-0c78-11da-beea-000c414ce854" } },
+{ "Entry": {
+         "uuid": "bd7bb1a0-0c78-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "516c1ea0-0c78-11da-beea-000c414ce854",
+        "value": "ACT"  }
+},
+{ "Entry": {
+         "uuid": "bd7bb1a1-0c78-11da-beea-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["516c1ea0-0c78-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "cc7576f0-0c78-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "516c1ea0-0c78-11da-beea-000c414ce854",
+        "value": "Artemisinin-based combination therapies"  }
+},
+{ "Entry": {
+         "uuid": "fe4da080-0c78-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "516c1ea0-0c78-11da-beea-000c414ce854",
+        "value": "Artemisinin is an antimalarial agent"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "cab35f20-0c79-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "cab35f21-0c79-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "cab35f20-0c79-11da-9290-000c414ce854",
+        "value": "Organization"  }
+},
+{ "Entry": {
+         "uuid": "cab35f22-0c79-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["cab35f20-0c79-11da-9290-000c414ce854", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "cab35f23-0c79-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ec20387-0c6e-11da-beea-000c414ce854",
+        "value": "cab35f20-0c79-11da-9290-000c414ce854"  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "cacb53f0-0c79-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "07461db0-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "cacb53f0-0c79-11da-9290-000c414ce854",
+        "value": "The Global Fund for Women"  }
+},
+{ "Entry": {
+         "uuid": "07461db1-0c7a-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["cacb53f0-0c79-11da-9290-000c414ce854", "cab35f20-0c79-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "08ae3930-0c7a-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ed51650-0c6e-11da-beea-000c414ce854",
+        "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "08b2f420-0c7a-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ed51650-0c6e-11da-beea-000c414ce854",
+        "value": "00001002-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "0e06a1b0-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "cacb53f0-0c79-11da-9290-000c414ce854",
+        "value": "GF Women"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "08bedb00-0c7a-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "0faf2190-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "08bedb00-0c7a-11da-9290-000c414ce854",
+        "value": "Ipas"  }
+},
+{ "Entry": {
+         "uuid": "0faf2191-0c7a-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["08bedb00-0c7a-11da-9290-000c414ce854", "cab35f20-0c79-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "0fb64d80-0c7a-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "132d24c0-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "0fb64d80-0c7a-11da-9290-000c414ce854",
+        "value": "Pathfinder International"  }
+},
+{ "Entry": {
+         "uuid": "132d24c1-0c7a-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["0fb64d80-0c7a-11da-9290-000c414ce854", "cab35f20-0c79-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "15a74c80-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "0fb64d80-0c7a-11da-9290-000c414ce854",
+        "value": "Pathfinder"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "1331dfb0-0c7a-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "1eeb9530-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "1331dfb0-0c7a-11da-9290-000c414ce854",
+        "value": "International Planned Parenthood Federation"  }
+},
+{ "Entry": {
+         "uuid": "1eeb9531-0c7a-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["1331dfb0-0c7a-11da-9290-000c414ce854", "cab35f20-0c79-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "204c84c0-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "1331dfb0-0c7a-11da-9290-000c414ce854",
+        "value": "IPPF"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "1ef05020-0c7a-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "23c816f0-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "1ef05020-0c7a-11da-9290-000c414ce854",
+        "value": "Child Family Health International"  }
+},
+{ "Entry": {
+         "uuid": "23c816f1-0c7a-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["1ef05020-0c7a-11da-9290-000c414ce854", "cab35f20-0c79-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "265ca480-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "1ef05020-0c7a-11da-9290-000c414ce854",
+        "value": "CFHI"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "23d66ed0-0c7a-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "2a07f940-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "23d66ed0-0c7a-11da-9290-000c414ce854",
+        "value": "Medicines for Malaria Venture"  }
+},
+{ "Entry": {
+         "uuid": "2a07f941-0c7a-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["23d66ed0-0c7a-11da-9290-000c414ce854", "cab35f20-0c79-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "2ecef730-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "23d66ed0-0c7a-11da-9290-000c414ce854",
+        "value": "MMV"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "2a165120-0c7a-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "386de300-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": "The Global Fund to Fights AIDS, TB, and Malaria"  }
+},
+{ "Entry": {
+         "uuid": "386de301-0c7a-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["2a165120-0c7a-11da-9290-000c414ce854", "cab35f20-0c79-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "3b42ade0-0c7a-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": "GFATM"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "7da5a790-0c7b-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "80d9d080-0c7b-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7da5a790-0c7b-11da-9290-000c414ce854",
+        "value": "Founded"  }
+},
+{ "Entry": {
+         "uuid": "80d9d081-0c7b-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["7da5a790-0c7b-11da-9290-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "826a5b90-0c7b-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7da5a790-0c7b-11da-9290-000c414ce854",
+        "value": "00001022-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "86c63ba0-0c7b-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ed51650-0c6e-11da-beea-000c414ce854",
+        "value": "7da5a790-0c7b-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "9438ebc0-0c7b-11da-9290-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "cacb53f0-0c79-11da-9290-000c414ce854",
+        "value": "1987"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "da505760-0c7b-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "de4cb250-0c7b-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "da505760-0c7b-11da-9290-000c414ce854",
+        "value": "Annual Budget"  }
+},
+{ "Entry": {
+         "uuid": "de4f2350-0c7b-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["da505760-0c7b-11da-9290-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "e35685a0-0c7b-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "da505760-0c7b-11da-9290-000c414ce854",
+        "value": "00001021-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "de5d7b30-0c7b-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "ebc1d370-0c7b-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "de5d7b30-0c7b-11da-9290-000c414ce854",
+        "value": "Net Assets"  }
+},
+{ "Entry": {
+         "uuid": "ebc1d371-0c7b-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["de5d7b30-0c7b-11da-9290-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "ed3a90c0-0c7b-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "de5d7b30-0c7b-11da-9290-000c414ce854",
+        "value": "00001021-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "f246d510-0c7b-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ed51650-0c6e-11da-beea-000c414ce854",
+        "value": "da505760-0c7b-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "f49d4830-0c7b-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ed51650-0c6e-11da-beea-000c414ce854",
+        "value": "de5d7b30-0c7b-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "07c7e5f0-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "da505760-0c7b-11da-9290-000c414ce854",
+         "item": "cacb53f0-0c79-11da-9290-000c414ce854",
+        "value": "9141349"  }
+},
+{ "Entry": {
+         "uuid": "0c215500-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "de5d7b30-0c7b-11da-9290-000c414ce854",
+         "item": "cacb53f0-0c79-11da-9290-000c414ce854",
+        "value": "15058294"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "2f2f54c0-0c7c-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "3493cb30-0c7c-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "2f2f54c0-0c7c-11da-9290-000c414ce854",
+        "value": "Program Budget"  }
+},
+{ "Entry": {
+         "uuid": "3493cb31-0c7c-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["2f2f54c0-0c7c-11da-9290-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "35e1a7f0-0c7c-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "2f2f54c0-0c7c-11da-9290-000c414ce854",
+        "value": "00001021-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "34b9f0d0-0c7c-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "3ad13c80-0c7c-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "34b9f0d0-0c7c-11da-9290-000c414ce854",
+        "value": "Fundraising Expenses"  }
+},
+{ "Entry": {
+         "uuid": "3ad13c81-0c7c-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["34b9f0d0-0c7c-11da-9290-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "3c3ba1f0-0c7c-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "34b9f0d0-0c7c-11da-9290-000c414ce854",
+        "value": "00001021-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "3adf9460-0c7c-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "445f5f70-0c7c-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3adf9460-0c7c-11da-9290-000c414ce854",
+        "value": "Management Expenses"  }
+},
+{ "Entry": {
+         "uuid": "445f5f71-0c7c-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["3adf9460-0c7c-11da-9290-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "45c9c4e0-0c7c-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "3adf9460-0c7c-11da-9290-000c414ce854",
+        "value": "00001021-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "4bac9310-0c7c-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ed51650-0c6e-11da-beea-000c414ce854",
+        "value": "2f2f54c0-0c7c-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "4e9470c0-0c7c-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ed51650-0c6e-11da-beea-000c414ce854",
+        "value": "34b9f0d0-0c7c-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "50c72f40-0c7c-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ed51650-0c6e-11da-beea-000c414ce854",
+        "value": "3adf9460-0c7c-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "582504b0-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "2f2f54c0-0c7c-11da-9290-000c414ce854",
+         "item": "cacb53f0-0c79-11da-9290-000c414ce854",
+        "value": "7143982"  }
+},
+{ "Entry": {
+         "uuid": "5bc95490-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "34b9f0d0-0c7c-11da-9290-000c414ce854",
+         "item": "cacb53f0-0c79-11da-9290-000c414ce854",
+        "value": "1340015"  }
+},
+{ "Entry": {
+         "uuid": "6134cfe0-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "3adf9460-0c7c-11da-9290-000c414ce854",
+         "item": "cacb53f0-0c79-11da-9290-000c414ce854",
+        "value": "657352"  }
+},
+{ "Entry": {
+         "uuid": "89a76d20-0c7c-11da-9290-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "0fb64d80-0c7a-11da-9290-000c414ce854",
+        "value": "1957"  }
+},
+{ "Entry": {
+         "uuid": "9ab98b20-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "da505760-0c7b-11da-9290-000c414ce854",
+         "item": "0fb64d80-0c7a-11da-9290-000c414ce854",
+        "value": "57439252"  }
+},
+{ "Entry": {
+         "uuid": "9f535e90-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "de5d7b30-0c7b-11da-9290-000c414ce854",
+         "item": "0fb64d80-0c7a-11da-9290-000c414ce854",
+        "value": "13603783"  }
+},
+{ "Entry": {
+         "uuid": "a86a55b0-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "2f2f54c0-0c7c-11da-9290-000c414ce854",
+         "item": "0fb64d80-0c7a-11da-9290-000c414ce854",
+        "value": "51281446"  }
+},
+{ "Entry": {
+         "uuid": "ae080490-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "34b9f0d0-0c7c-11da-9290-000c414ce854",
+         "item": "0fb64d80-0c7a-11da-9290-000c414ce854",
+        "value": "1059517"  }
+},
+{ "Entry": {
+         "uuid": "b2531bc0-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "3adf9460-0c7c-11da-9290-000c414ce854",
+         "item": "0fb64d80-0c7a-11da-9290-000c414ce854",
+        "value": "5098289"  }
+},
+{ "Entry": {
+         "uuid": "c7cd00b0-0c7c-11da-9290-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "08bedb00-0c7a-11da-9290-000c414ce854",
+        "value": "1974"  }
+},
+{ "Entry": {
+         "uuid": "d498e980-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "da505760-0c7b-11da-9290-000c414ce854",
+         "item": "08bedb00-0c7a-11da-9290-000c414ce854",
+        "value": "15086624"  }
+},
+{ "Entry": {
+         "uuid": "d91aef30-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "de5d7b30-0c7b-11da-9290-000c414ce854",
+         "item": "08bedb00-0c7a-11da-9290-000c414ce854",
+        "value": "6305593"  }
+},
+{ "Entry": {
+         "uuid": "e33cedb0-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "2f2f54c0-0c7c-11da-9290-000c414ce854",
+         "item": "08bedb00-0c7a-11da-9290-000c414ce854",
+        "value": "11978344"  }
+},
+{ "Entry": {
+         "uuid": "e72635d0-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "34b9f0d0-0c7c-11da-9290-000c414ce854",
+         "item": "08bedb00-0c7a-11da-9290-000c414ce854",
+        "value": "793526"  }
+},
+{ "Entry": {
+         "uuid": "eb087910-0c7c-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "3adf9460-0c7c-11da-9290-000c414ce854",
+         "item": "08bedb00-0c7a-11da-9290-000c414ce854",
+        "value": "2314754"  }
+},
+{ "Entry": {
+         "uuid": "0a153be0-0c7d-11da-9290-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": "2002"  }
+},
+{ "Entry": {
+         "uuid": "17a251d0-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "da505760-0c7b-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": "1095858880"  }
+},
+{ "Entry": {
+         "uuid": "1c694fc0-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "de5d7b30-0c7b-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": "1028006208"  }
+},
+{ "Entry": {
+         "uuid": "25ad9870-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "2f2f54c0-0c7c-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": "1089738501"  }
+},
+{ "Entry": {
+         "uuid": "29ac6460-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "34b9f0d0-0c7c-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": "3044794"  }
+},
+{ "Entry": {
+         "uuid": "2c329a10-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "3adf9460-0c7c-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": "3075585"  }
+},
+{ "Entry": {
+         "uuid": "4008e120-0c7d-11da-9290-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "1ef05020-0c7a-11da-9290-000c414ce854",
+        "value": "1992"  }
+},
+{ "Entry": {
+         "uuid": "4d5f0890-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "da505760-0c7b-11da-9290-000c414ce854",
+         "item": "1ef05020-0c7a-11da-9290-000c414ce854",
+        "value": "990585"  }
+},
+{ "Entry": {
+         "uuid": "50388e60-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "de5d7b30-0c7b-11da-9290-000c414ce854",
+         "item": "1ef05020-0c7a-11da-9290-000c414ce854",
+        "value": "34613"  }
+},
+{ "Entry": {
+         "uuid": "55f07c00-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "2f2f54c0-0c7c-11da-9290-000c414ce854",
+         "item": "1ef05020-0c7a-11da-9290-000c414ce854",
+        "value": "944765"  }
+},
+{ "Entry": {
+         "uuid": "59cddd40-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "34b9f0d0-0c7c-11da-9290-000c414ce854",
+         "item": "1ef05020-0c7a-11da-9290-000c414ce854",
+        "value": "17770"  }
+},
+{ "Entry": {
+         "uuid": "5c9ded30-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "3adf9460-0c7c-11da-9290-000c414ce854",
+         "item": "1ef05020-0c7a-11da-9290-000c414ce854",
+        "value": "28050"  }
+},
+{ "Entry": {
+         "uuid": "7137d260-0c7d-11da-9290-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "1331dfb0-0c7a-11da-9290-000c414ce854",
+        "value": "1954"  }
+},
+{ "Entry": {
+         "uuid": "7e5bed50-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "da505760-0c7b-11da-9290-000c414ce854",
+         "item": "1331dfb0-0c7a-11da-9290-000c414ce854",
+        "value": "8317477"  }
+},
+{ "Entry": {
+         "uuid": "8354f7c0-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "de5d7b30-0c7b-11da-9290-000c414ce854",
+         "item": "1331dfb0-0c7a-11da-9290-000c414ce854",
+        "value": "35464067"  }
+},
+{ "Entry": {
+         "uuid": "8acf7cf0-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "2f2f54c0-0c7c-11da-9290-000c414ce854",
+         "item": "1331dfb0-0c7a-11da-9290-000c414ce854",
+        "value": "5642925"  }
+},
+{ "Entry": {
+         "uuid": "8d6d8060-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "34b9f0d0-0c7c-11da-9290-000c414ce854",
+         "item": "1331dfb0-0c7a-11da-9290-000c414ce854",
+        "value": "626359"  }
+},
+{ "Entry": {
+         "uuid": "912be7f0-0c7d-11da-9290-000c414ce854",
+         "type": "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "3adf9460-0c7c-11da-9290-000c414ce854",
+         "item": "1331dfb0-0c7a-11da-9290-000c414ce854",
+        "value": "2048193"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "9b0ff310-0c7d-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "9b0ff311-0c7d-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "9b0ff310-0c7d-11da-9290-000c414ce854",
+        "value": "New Section"  }
+},
+{ "Entry": {
+         "uuid": "9b0ff312-0c7d-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["9b0ff310-0c7d-11da-9290-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "9b0ff313-0c7d-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["5ebf9280-0c6e-11da-beea-000c414ce854", "9b0ff310-0c7d-11da-9290-000c414ce854"],
+    "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "9b0ff314-0c7d-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "9b0ff310-0c7d-11da-9290-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Item": { "uuid": "9b0ff315-0c7d-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "9b0ff316-0c7d-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "9b0ff315-0c7d-11da-9290-000c414ce854",
+        "value": "New Query"  }
+},
+{ "Entry": {
+         "uuid": "9b0ff317-0c7d-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["9b0ff315-0c7d-11da-9290-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "9b0ff318-0c7d-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["9b0ff310-0c7d-11da-9290-000c414ce854", "9b0ff315-0c7d-11da-9290-000c414ce854"],
+    "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "9b2305e0-0c7d-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "9b2305e1-0c7d-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "9b2305e0-0c7d-11da-9290-000c414ce854",
+        "value": "Layout data for Table of New Section"  }
+},
+{ "Entry": {
+         "uuid": "9b2305e2-0c7d-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["9b2305e0-0c7d-11da-9290-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "9b2305e3-0c7d-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "9b2305e0-0c7d-11da-9290-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "9b2305e4-0c7d-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["9b0ff310-0c7d-11da-9290-000c414ce854", "9b2305e0-0c7d-11da-9290-000c414ce854"],
+    "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "a1e389e0-0c7d-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "9b0ff315-0c7d-11da-9290-000c414ce854",
+        "value": "cab35f20-0c79-11da-9290-000c414ce854"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "a4222f40-0c7d-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "a4222f41-0c7d-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "a4222f40-0c7d-11da-9290-000c414ce854",
+        "value": "Layout data for Bar Chart of New Section"  }
+},
+{ "Entry": {
+         "uuid": "a4222f42-0c7d-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["a4222f40-0c7d-11da-9290-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "a4222f43-0c7d-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "a4222f40-0c7d-11da-9290-000c414ce854",
+        "value": "00040304-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "a4222f44-0c7d-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["9b0ff310-0c7d-11da-9290-000c414ce854", "a4222f40-0c7d-11da-9290-000c414ce854"],
+    "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "a4306010-0c7d-11da-9290-000c414ce854",
+"previousEntry": "9b0ff314-0c7d-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "9b0ff310-0c7d-11da-9290-000c414ce854",
+        "value": "00040304-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "be9a00a0-0c7d-11da-9290-000c414ce854",
+"previousEntry": "17a251d0-0c7d-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "da505760-0c7b-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": " "  }
+},
+{ "Entry": {
+         "uuid": "bf992120-0c7d-11da-9290-000c414ce854",
+"previousEntry": "1c694fc0-0c7d-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "de5d7b30-0c7b-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": " "  }
+},
+{ "Entry": {
+         "uuid": "c0235fc0-0c7d-11da-9290-000c414ce854",
+"previousEntry": "25ad9870-0c7d-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "2f2f54c0-0c7c-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": " "  }
+},
+{ "Entry": {
+         "uuid": "c0a42880-0c7d-11da-9290-000c414ce854",
+"previousEntry": "29ac6460-0c7d-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "34b9f0d0-0c7c-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": " "  }
+},
+{ "Entry": {
+         "uuid": "c17ab260-0c7d-11da-9290-000c414ce854",
+"previousEntry": "2c329a10-0c7d-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "3adf9460-0c7c-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": " "  }
+},
+{ "Entry": {
+         "uuid": "f181ec80-0c7d-11da-9290-000c414ce854",
+"previousEntry": "9b0ff311-0c7d-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "9b0ff310-0c7d-11da-9290-000c414ce854",
+        "value": "Graph Comparing Annual Budgets"  }
+},
+{ "Entry": {
+         "uuid": "fb3fd200-0c7d-11da-9290-000c414ce854",
+"previousEntry": "5ec20383-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ec20382-0c6e-11da-beea-000c414ce854",
+        "value": "Budget Overview Table"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "4e46db10-0c7e-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "4e46db11-0c7e-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "4e46db10-0c7e-11da-9290-000c414ce854",
+        "value": "Funding Criterion"  }
+},
+{ "Entry": {
+         "uuid": "4e46db12-0c7e-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["4e46db10-0c7e-11da-9290-000c414ce854", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "4e46db13-0c7e-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b0d2004-0c6e-11da-beea-000c414ce854",
+        "value": "4e46db10-0c7e-11da-9290-000c414ce854"  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "4e5c37d0-0c7e-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "60667170-0c7e-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "4e5c37d0-0c7e-11da-9290-000c414ce854",
+        "value": "Established organization"  }
+},
+{ "Entry": {
+         "uuid": "60667171-0c7e-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["4e5c37d0-0c7e-11da-9290-000c414ce854", "4e46db10-0c7e-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "647d0b20-0c7e-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b275ec0-0c6e-11da-beea-000c414ce854",
+        "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "647f7c20-0c7e-11da-9290-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b275ec0-0c6e-11da-beea-000c414ce854",
+        "value": "00001003-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "6d240260-0c7e-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "4e5c37d0-0c7e-11da-9290-000c414ce854",
+        "value": "Has this organization been around for a while?"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "648dd400-0c7e-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "768e70b0-0c7e-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "648dd400-0c7e-11da-9290-000c414ce854",
+        "value": "Low overhead costs"  }
+},
+{ "Entry": {
+         "uuid": "768e70b1-0c7e-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["648dd400-0c7e-11da-9290-000c414ce854", "4e46db10-0c7e-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "9cbd8690-0c7e-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "648dd400-0c7e-11da-9290-000c414ce854",
+        "value": "Is most of their annual budget spent on core programs, or do they have high fundraising and management overhead costs?"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "872718f0-0c7e-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "a6554670-0c7e-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "872718f0-0c7e-11da-9290-000c414ce854",
+        "value": "International"  }
+},
+{ "Entry": {
+         "uuid": "a6554671-0c7e-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["872718f0-0c7e-11da-9290-000c414ce854", "4e46db10-0c7e-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "b20a4100-0c7e-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "872718f0-0c7e-11da-9290-000c414ce854",
+        "value": "Is most of the program budget spent overseas?"  }
+},
+{ "Entry": {
+         "uuid": "c5e54300-0c7e-11da-9290-000c414ce854",
+"previousEntry": "8b0ad613-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b0ad610-0c6e-11da-beea-000c414ce854",
+        "value": "These are some of the criteria that we're thinking of using to decide what organizations to fund."  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "a65a0160-0c7e-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "db154db0-0c7e-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "a65a0160-0c7e-11da-9290-000c414ce854",
+        "value": "Open operations"  }
+},
+{ "Entry": {
+         "uuid": "db154db1-0c7e-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["a65a0160-0c7e-11da-9290-000c414ce854", "4e46db10-0c7e-11da-9290-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "e2221cf0-0c7e-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "a65a0160-0c7e-11da-9290-000c414ce854",
+        "value": "How transparently does the organization operate?"  }
+},
+{ "Entry": {
+         "uuid": "eb4c26e0-0c7e-11da-9290-000c414ce854",
+"previousEntry": "8b0d2000-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b0ad614-0c6e-11da-beea-000c414ce854",
+        "value": "Possible Criteria"  }
+},
+{ "Vote": {
+         "uuid": "fa58ff00-0c7e-11da-9290-000c414ce854",
+       "record": "e9432df0-0c72-11da-beea-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Entry": {
+         "uuid": "07417080-0c7f-11da-9290-000c414ce854",
+"previousEntry": "7b5e3b85-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b5e3b84-0c6e-11da-beea-000c414ce854",
+        "value": "List of problems"  }
+},
+{ "Entry": {
+         "uuid": "46a1f510-0c7f-11da-9290-000c414ce854",
+"previousEntry": "7b5e3b83-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "7b5e3b80-0c6e-11da-beea-000c414ce854",
+        "value": "This list tries to capture ten or twenty of the largest world problems."  }
+},
+{ "Entry": {
+         "uuid": "5275c240-0c7f-11da-9290-000c414ce854",
+"previousEntry": "5ec20381-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ebf9280-0c6e-11da-beea-000c414ce854",
+        "value": "These are the organizations that people have nominated so far."  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "5ea6a390-0c7f-11da-9290-000c414ce854" } },
+{ "Entry": {
+         "uuid": "639d8b20-0c7f-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ea6a390-0c7f-11da-9290-000c414ce854",
+        "value": "CO2"  }
+},
+{ "Entry": {
+         "uuid": "639d8b21-0c7f-11da-9290-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["5ea6a390-0c7f-11da-9290-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "67894440-0c7f-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ea6a390-0c7f-11da-9290-000c414ce854",
+        "value": "Carbon Dioxide"  }
+},
+{ "Entry": {
+         "uuid": "6eccdaf0-0c7f-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "5ea6a390-0c7f-11da-9290-000c414ce854",
+        "value": "One of the main causes of global warming."  }
+},
+{ "Entry": {
+         "uuid": "8d4f8630-0c7f-11da-9290-000c414ce854",
+"previousEntry": "bea616f3-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bea616f0-0c6f-11da-beea-000c414ce854",
+        "value": "Here are some of the things that people are doing to mitigate world problems."  }
+},
+{ "Entry": {
+         "uuid": "9b5d3dd0-0c7f-11da-9290-000c414ce854",
+"previousEntry": "bea616f5-0c6f-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "bea616f4-0c6f-11da-beea-000c414ce854",
+        "value": "List of known interventions"  }
+},
+{ "Vote": {
+         "uuid": "b12d0af0-0c7f-11da-9290-000c414ce854",
+       "record": "70c95a20-0c72-11da-beea-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Entry": {
+         "uuid": "12716720-0c80-11da-9290-000c414ce854",
+"previousEntry": "295652f3-0c6e-11da-beea-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "295652f0-0c6e-11da-beea-000c414ce854",
+        "value": "Welcome to our collaborative philanthropy web site, where we work together to figure out what charities are the best choices for us to fund."  }
+},
+{ "Entry": {
+         "uuid": "175059e0-0c80-11da-9290-000c414ce854",
+"previousEntry": "12716720-0c80-11da-9290-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "295652f0-0c6e-11da-beea-000c414ce854",
+        "value": "Welcome to our collaborative philanthropy web site, where we work together to figure out what organizations are the best choices for us to fund."  }
+}
