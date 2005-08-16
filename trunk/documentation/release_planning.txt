@@ -372,7 +372,9 @@ chao   | 0.5  IED |         | 21. Wire up observers & keep views in sync
        |          |         |     Make RootView subclass from View, or add comments explaining why it doesn't
        |          |         |     Make DateValue subclass from Date, or wrap an internal Date object
 -------+----------+---------+----------------------------------------------
-       
+chao   | 		  | 0.1 IED | Show current active page on sidebar
+                              Better time parsing e.g. 3pm
+                              
 
 
 =======================================================

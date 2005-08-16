@@ -45,7 +45,7 @@
 // -------------------------------------------------------------------
 NavbarView.CSS_CLASS_MENU      = "menu";
 NavbarView.CSS_CLASS_MENU_ITEM = "menu_item";
-
+NavbarView.CSS_CLASS_SELECTED = "selected";
 // Caution: 
 // In order for us to use the "Sortable" feature in the script.aculo.us 
 // dragdrop.js library, this Id must *not* have an underscore in it.
@@ -195,6 +195,7 @@ NavbarView.prototype._rebuildView = function() {
     // the id for the individual menu item to the right of the underscore.
     var menuItemId = NavbarView.ELEMENT_ID_MENU + '_' + page._getUuid();
     var liElement = View.appendNewElement(ulElement, "li", NavbarView.CSS_CLASS_MENU_ITEM, {id: menuItemId});
+    if (page == this.getRootView().getCurrentPage()) {Util.css_addClass(liElement,NavbarView.CSS_CLASS_SELECTED);}
     var anchorElement = View.appendNewElement(liElement, "a", null, {href: menuUrl}, menuText);
     Event.observe(anchorElement, "click", RootView.clickOnLocalLink.bindAsEventListener());
     Event.observe(liElement, "mousedown", this._mouseDownOnMenuItem.bindAsEventListener(this, liElement));

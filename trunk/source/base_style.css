@@ -278,6 +278,10 @@ div.NavbarView {
   color: rgb(0%, 0%, 0%); 
 }
 
+.menu_item.selected a{
+  background-color: #DEE7F8;
+}
+
 .class_fake_menu {    // PENDING: delete me
   padding-left: 0;
   padding-top: 0pt;

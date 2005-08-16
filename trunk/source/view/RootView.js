@@ -96,6 +96,7 @@ function RootView(world) {
   this._hashTableOfPageViewsKeyedByUuid = {};
   this._currentContentView = null;
   this._homePage = null;
+  this._currentPage = null;
   this._selections = [];
   
   this._currentlyInDisplayMethod = false;
@@ -265,6 +266,26 @@ RootView.prototype.setShowToolsMode = function(showToolsFlag) {
 
 
 /**
+ * Returns the current page that Rootview is displaying. Null, if it's an item view
+ *
+ * @scope    public instance method
+ */
+RootView.prototype.getCurrentPage = function() {
+  return this._currentPage;
+};
+
+/**
+ * Set the Root View's currentPage instance variable and
+ * notify other views that the current page that Rootview is displaying has changed. 
+ *
+ * @scope    public instance method
+ */
+RootView.prototype.setCurrentPage = function(newPage) {
+  this._currentPage = newPage;
+  if (this._navbarView) {this._navbarView._rebuildView();}
+};
+
+/**
  * Given an item, returns a relative URL that can be used to redirect the 
  * browser to a page that displays that time.
  *
@@ -305,6 +326,7 @@ RootView.prototype.setCurrentContentViewFromUrl = function() {
       var isUrlForPage = (originalHash.indexOf(RootView.URL_HASH_PAGE_PREFIX) != -1);
       var isUrlForItem = (originalHash.indexOf(RootView.URL_HASH_ITEM_PREFIX) != -1);
       if (isUrlForItem) {
+        this.setCurrentPage(null);
         uuidText = originalHash.replace(RootView.URL_HASH_ITEM_PREFIX, "");
         contentViewToSwitchTo = this._hashTableOfItemViewsKeyedByUuid[uuidText];
         if (!contentViewToSwitchTo) {
@@ -318,9 +340,10 @@ RootView.prototype.setCurrentContentViewFromUrl = function() {
       } else {
         if (isUrlForPage) {
           uuidText = originalHash.replace(RootView.URL_HASH_PAGE_PREFIX, "");
+          pageFromUuid = this.getWorld().getItemFromUuid(uuidText);
+          this.setCurrentPage(pageFromUuid); // if pageFromUuid is null, then just set currentPage to null
           contentViewToSwitchTo = this._hashTableOfPageViewsKeyedByUuid[uuidText];
           if (!contentViewToSwitchTo) {
-            pageFromUuid = this.getWorld().getItemFromUuid(uuidText);
             if (pageFromUuid) {
               divElement = View.appendNewElement(this._contentViewDivElement, "div");
               contentViewToSwitchTo = new PageView(this, divElement, pageFromUuid);
