@@ -301,7 +301,7 @@ Draggable.prototype = {
       this.offsetY =  event.clientY - this.originalY - this.originalTop;
       this.offsetX =  event.clientX - this.originalX - this.originalLeft;
       
-      //Event.stop(event);
+      Event.stop(event);
     }
   },
   finishDrag: function(event, success) {

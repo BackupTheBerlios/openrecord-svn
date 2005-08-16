@@ -325,7 +325,34 @@ Entry.prototype.getDisplayString = function(callingItem) {
   var returnString = "";
   switch (this._type) {
     case this.getWorld().getTypeCalledNumber():
-      returnString = "" + this._value;
+      var originalString = this._value.toString();
+      var arrayOfTwoStrings = originalString.split('.');
+      Util.assert(arrayOfTwoStrings.length < 3);
+      wholeNumberString = arrayOfTwoStrings[0];
+      fractionalNumberString = null;
+      if (arrayOfTwoStrings.length == 2) {
+        fractionalNumberString = arrayOfTwoStrings[1];
+      }
+      var length = wholeNumberString.length;
+      if (length > 3) {
+        var sections = [];
+        var lengthOfFirstSection = length % 3;
+        var plusOneIfFirstSection = (lengthOfFirstSection > 0) ? 1 : 0;
+        var numberOfSections = ((length - lengthOfFirstSection) / 3) + plusOneIfFirstSection;
+        for (i = 0; i < numberOfSections; ++i) {
+          var end = length - (i * 3);
+          var start = end - 3;
+          if (start < 0) { start = 0; }
+          sections[i] = wholeNumberString.slice(start, end);
+        }
+        sections.reverse();
+        returnString = sections.join(',');
+      } else {
+        returnString = wholeNumberString;
+      }
+      if (fractionalNumberString) {
+        returnString += '.' + fractionalNumberString;
+      }
       break;
     case this.getWorld().getTypeCalledText():
       returnString = this._value;

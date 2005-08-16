@@ -122,6 +122,7 @@ EntryView.prototype._isLozengeAttribute = function() {
   return entries.length === 0; //PENDING need to actually check value of entries
 };
 
+
 /**
  *
  */
@@ -460,7 +461,8 @@ EntryView._transformValueToExpectedType = function(world, value, listOfTypes) {
         case typeCalledText:
           return value;
         case typeCalledNumber:
-          var floatVal = parseFloat(value);
+          var valueWithoutCommas = value.replace(new RegExp(',','g'), '');
+          var floatVal = parseFloat(valueWithoutCommas);
           if (!isNaN(floatVal)) {return floatVal;}
           break;
         case typeCalledDate:
