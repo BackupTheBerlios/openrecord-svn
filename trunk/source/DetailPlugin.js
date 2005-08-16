@@ -100,19 +100,13 @@ DetailPlugin.prototype.getClass = function () {
  * @scope    public instance method
  */
 DetailPlugin.prototype.refresh = function () {
-  var listOfStrings = [];
-
-  // for each content item, add its HTML representation to the output
+  // for each content item, create a table for it
   var listOfContentItems = this.fetchItems();
   for (var contentItemKey in listOfContentItems) {
     var contentItem = listOfContentItems[contentItemKey];
-    listOfStrings.push(this.getXhtmlTableForItem(contentItem));
-    listOfStrings.push("<p>&nbsp;</p>");
+    this.createTableForItem(contentItem);
+    View.appendNewElement(this.getHtmlElement(),"p",null,null,'\u00a0'); // unicode for &nbsp;
   }
-
-  // take all the HTML and put it together
-  var finalString = listOfStrings.join("");
-  this.getHtmlElement().innerHTML = finalString;
 };
 
 
@@ -124,37 +118,28 @@ DetailPlugin.prototype.refresh = function () {
  * @param    inItem    An item to be displayed. 
  * @return   A string containing the XHTML to display the item.
  */
-DetailPlugin.prototype.getXhtmlTableForItem = function (inItem) {
+DetailPlugin.prototype.createTableForItem = function (inItem) {
   Util.assert(inItem instanceof Item);
   
-  var listOfStrings = [];
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   
-  listOfStrings.push("<table class=\"" + SectionView.CSS_CLASS_SIMPLE_TABLE + "\">");
-  listOfStrings.push("<tr>");
-  listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_LABEL + " " + SectionView.CSS_CLASS_TITLE + "\">" + attributeCalledName.getDisplayName() + "</td>");
-  listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_TITLE + "\">" + inItem.getDisplayName() + "</td>");
-  listOfStrings.push("</tr>");
+  var itemTable = View.appendNewElement(this.getHtmlElement(),"table",SectionView.CSS_CLASS_SIMPLE_TABLE);
+  var headerRow = View.appendNewElement(itemTable,"tr");
+  View.appendNewElement(headerRow,"td",SectionView.CSS_CLASS_LABEL + " " + SectionView.CSS_CLASS_TITLE,null,attributeCalledName.getDisplayName());
+  var aCell = View.appendNewElement(headerRow,"td",SectionView.CSS_CLASS_TITLE,null,inItem.getDisplayName());
+  var multiEntriesView = new MultiEntriesView(this, aCell, inItem, attributeCalledName);
+  multiEntriesView.refresh();
   var listOfAttributes = inItem.getAttributes();
   for (var key in listOfAttributes) { 
     var attribute = listOfAttributes[key];
     if (attribute != attributeCalledName) {
-      listOfStrings.push("<tr>");
-      listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_LABEL + "\">" + attribute.getDisplayName() + "</td>");
-      var listOfEntries = inItem.getEntriesForAttribute(attribute); 
-      listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_PLAIN + "\">");
-      for (var j = 0; j < listOfEntries.length; ++j) {
-        listOfStrings.push(listOfEntries[j].getDisplayString(inItem) + "<br/>");
-      }
-      listOfStrings.push("</td>");
-      listOfStrings.push("</tr>");
+      var itemRow = View.appendNewElement(itemTable,"tr");
+      View.appendNewElement(itemRow,"td",SectionView.CSS_CLASS_LABEL,null,attribute.getDisplayName());
+      aCell = View.appendNewElement(itemRow,"td",SectionView.CSS_CLASS_PLAIN);
+      multiEntriesView = new MultiEntriesView(this, aCell, inItem, attribute);
+      multiEntriesView.refresh();
     }
   }
-  listOfStrings.push("</table>");
-
-  // return all the new content
-  var finalString = listOfStrings.join("");
-  return finalString;
 };
 
 
