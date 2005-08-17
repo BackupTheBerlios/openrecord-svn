@@ -64,6 +64,9 @@ EntryView.UUID_FOR_ATTRIBUTE_NOT_LOZENGE = "0004010f-ce7f-11d9-8cd5-0011113ae5d6
 // -------------------------------------------------------------------
 EntryView._ourHashTableOfTypesKeyedByClassName = null;
 
+EntryView._PENDING_temporaryHackToDecreaseLayoutTime = true;
+EntryView._PENDING_enableDragging = true;
+
 
 /**
  * An instance of EntryView can be placed in any parent container View
@@ -255,9 +258,9 @@ EntryView.prototype._setClassName = function() {
       if (this._isLozenge()) {
         this.getHtmlElement().ondblclick = this.onDoubleClick.bindAsEventListener(this);
         if (this.isInEditMode() && !this._draggable) {
-          var PENDING_temporaryHackToDecreaseLayoutTime = true;
-          if (PENDING_temporaryHackToDecreaseLayoutTime) {
-            if (this.getRootView().isInShowToolsMode()) {
+          if (EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
+            // if (this.getRootView().isInShowToolsMode()) {
+            if (EntryView._PENDING_enableDragging) {
               this._textSpan.or_entryView = this; 
               this._draggable = new Draggable(this._textSpan, {revert:true});
             }

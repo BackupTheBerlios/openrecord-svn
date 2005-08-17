@@ -218,12 +218,23 @@ MultiEntriesView.prototype._handleDrop = function(element) {
     if (droppedEntry.getType() == this.getWorld().getTypeCalledConnection()) {
       var otherItem = droppedEntry.getConnectedItem(draggedEntryView._item);
       var otherAttribute = droppedEntry.getAttributeForItem(otherItem);
-      newEntry = this._item.addConnectionEntry(this._attribute,otherItem,otherAttribute);
-    }
-    else {
-      newEntry = this._item.addNewEntryForAttribute(this._attribute,droppedEntry.getValue(),droppedEntry.getType());
+      // newEntry = this._item.addConnectionEntry(this._attribute,otherItem,otherAttribute);
+      newEntry = this._item.replaceEntryWithConnection(droppedEntry, this._attribute, otherItem, otherAttribute);
+    } else {
+      // newEntry = this._item.addNewEntryForAttribute(this._attribute,droppedEntry.getValue(),droppedEntry.getType());
+      newEntry = this._item.replaceEntry(droppedEntry, droppedEntry.getValue(), droppedEntry.getType());
     }
     this._addEntryView(newEntry);
+
+    // This is a little hack that accesses instance variables of the "Draggable"
+    // object in the script.aculo.us dragdrop.js library.
+    // We set "revert" to false to prevent the UI animation where the dragged 
+    // column header goes "flying" home again
+    var draggable = draggedEntryView._draggable;
+    draggable.options.revert = false;
+    // element.style.display = "none";
+    
+    this.getSuperview().refresh();
   }
 };
 

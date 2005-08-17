@@ -518,6 +518,15 @@ TablePlugin.prototype.getSortIcon = function() {
  * @return   An HTML image element
  */
 TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
+  if (EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
+    if (this._listOfItems.length > 20) {
+      EntryView._PENDING_enableDragging = false;
+    } else {
+      var listOfEntries = item.getEntriesForAttribute(attribute);
+      EntryView._PENDING_enableDragging = (listOfEntries.length < 10);
+    }
+  } 
+  
   var aCell = row.insertCell(col);
   var multiEntriesView = new MultiEntriesView(this, aCell, item, attribute);
   aCell.or_entriesView = multiEntriesView;
@@ -525,6 +534,10 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   if (this.isInEditMode()) {
     var listener = this;
     multiEntriesView.setKeyPressFunction(function (evt, entryView) {return listener.keyPressOnEditField(evt, entryView);});
+  }
+  
+  if (EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
+    EntryView._PENDING_enableDragging = true;
   }
 };
 
