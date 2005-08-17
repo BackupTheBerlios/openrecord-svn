@@ -756,7 +756,7 @@
              "uuid": "00030000-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Attribute: Page this section appears on
+    { "Item": {                                               // Attribute: Page for section
              "uuid": "00030001-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -772,11 +772,11 @@
              "uuid": "00040103-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Section this layout data belongs to (Attribute)
+    { "Item": {                                               // Section for layout data (Attribute)
              "uuid": "00040104-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Section this query spec belongs to (Attribute)
+    { "Item": {                                               // Section for query spec (Attribute)
              "uuid": "00040105-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -872,25 +872,25 @@
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Sections In Page) assign (Attribute: Inverse Attribute) = (Attribute: Page this section appears on)
-             // in item (Attribute: Page this section appears on) assign (Attribute: Inverse Attribute) = (Attribute: Sections In Page)
+             // in item (Attribute: Sections In Page) assign (Attribute: Inverse Attribute) = (Attribute: Page for section)
+             // in item (Attribute: Page for section) assign (Attribute: Inverse Attribute) = (Attribute: Sections In Page)
              "uuid": "0030000d-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["0000100b-ce7f-11d9-8cd5-0011113ae5d6", "0000100b-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Page this section appears on
+    { "Entry": {                                              // Page for section
              "uuid": "0030001a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00030001-ce7f-11d9-8cd5-0011113ae5d6",  // Page this section appears on
+             "item": "00030001-ce7f-11d9-8cd5-0011113ae5d6",  // Page for section
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Page this section appears on" }
+            "value": "Page for section" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Page this section appears on) assign (Attribute: Category) = (Category: Attribute)
-             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Page this section appears on)
+             // in item (Attribute: Page for section) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Page for section)
              "uuid": "0030001b-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00030001-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
@@ -900,7 +900,7 @@
     { "Entry": {                                              // Section
              "uuid": "0030001c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "item": "00030001-ce7f-11d9-8cd5-0011113ae5d6",  // Page this section appears on (Attribute)
+             "item": "00030001-ce7f-11d9-8cd5-0011113ae5d6",  // Page for section (Attribute)
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00020000-ce7f-11d9-8cd5-0011113ae5d6" }
     },
@@ -980,17 +980,17 @@
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Section this layout data belongs to 
+    { "Entry": {                                              // Section for layout data 
              "uuid": "0040104a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Section this layout data belongs to (Attribute)
+             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Section for layout data (Attribute)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Section this layout data belongs to" }
+            "value": "Section for layout data" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Section this layout data belongs to) assign (Attribute: Category) = (Category: Attribute)
-             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Section this layout data belongs to)
+             // in item (Attribute: Section for layout data) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Section for layout data)
              "uuid": "0040104b-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00040104-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
@@ -998,8 +998,8 @@
     },  
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Layout Data) assign (Attribute: Inverse Attribute) = (Attribute: Section this layout data belongs to)
-             // in item (Attribute: Section this layout data belongs to) assign (Attribute: Inverse Attribute) = (Attribute: Layout Data)
+             // in item (Attribute: Layout Data) assign (Attribute: Inverse Attribute) = (Attribute: Section for layout data)
+             // in item (Attribute: Section for layout data) assign (Attribute: Inverse Attribute) = (Attribute: Layout Data)
              "uuid": "0040104c-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"],
@@ -1009,22 +1009,22 @@
     { "Entry": {                                              // Section
              "uuid": "0040104d-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Section this layout data belongs to (Attribute)
+             "item": "00040104-ce7f-11d9-8cd5-0011113ae5d6",  // Section for layout data (Attribute)
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00020100-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Section this query spec belongs to 
+    { "Entry": {                                              // Section for query spec 
              "uuid": "0040105a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00040105-ce7f-11d9-8cd5-0011113ae5d6",  // Section this query spec belongs to (Attribute)
+             "item": "00040105-ce7f-11d9-8cd5-0011113ae5d6",  // Section for query spec (Attribute)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Section this query spec belongs to" }
+            "value": "Section for query spec" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Section this query spec belongs to) assign (Attribute: Category) = (Category: Attribute)
-             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Section this query spec belongs to)
+             // in item (Attribute: Section for query spec) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Section for query spec)
              "uuid": "0040105b-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00040105-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
@@ -1032,8 +1032,8 @@
     },  
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Query Spec) assign (Attribute: Inverse Attribute) = (Attribute: Section this query spec belongs to)
-             // in item (Attribute: Section this query spec belongs to) assign (Attribute: Inverse Attribute) = (Attribute: Query Spec)
+             // in item (Attribute: Query Spec) assign (Attribute: Inverse Attribute) = (Attribute: Section for query spec)
+             // in item (Attribute: Section for query spec) assign (Attribute: Inverse Attribute) = (Attribute: Query Spec)
              "uuid": "0040105c-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"],
@@ -1043,7 +1043,7 @@
     { "Entry": {                                              // Section
              "uuid": "0040105d-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "item": "00040105-ce7f-11d9-8cd5-0011113ae5d6",  // Section this query spec belongs to (Attribute)
+             "item": "00040105-ce7f-11d9-8cd5-0011113ae5d6",  // Section for query spec (Attribute)
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00020100-ce7f-11d9-8cd5-0011113ae5d6" }
     },
