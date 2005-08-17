@@ -2334,7 +2334,7 @@
          "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
     "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "4e5c37d0-0c7e-11da-9290-000c414ce854",
-        "value": "Established organization"  }
+        "value": "Established"  }
 },
 { "Entry": {
          "uuid": "60667171-0c7e-11da-9290-000c414ce854",
@@ -2372,7 +2372,7 @@
          "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
     "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "648dd400-0c7e-11da-9290-000c414ce854",
-        "value": "Low overhead costs"  }
+        "value": "Low overhead"  }
 },
 { "Entry": {
          "uuid": "768e70b1-0c7e-11da-9290-000c414ce854",
@@ -2386,7 +2386,7 @@
          "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
     "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "648dd400-0c7e-11da-9290-000c414ce854",
-        "value": "Is most of their annual budget spent on core programs, or do they have high fundraising and management overhead costs?"  }
+        "value": "Does the budget go on core programs, not fundraising and  overhead?"  }
 },
   // =======================================================================
   { "Transaction": [
@@ -2839,4 +2839,196 @@
     "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "56f92700-0dbd-11da-82ee-000c414ce854",
         "value": "00001022-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Ordinal": {
+         "uuid": "8118cec0-0ebf-11da-95b8-000c414ce854",
+       "record": "8b0ad610-0c6e-11da-beea-000c414ce854",
+        "value": "11da0c6e295652f00dfb3a8e"  }
+},
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "152d4910-0ec0-11da-8fe3-000c414ce854" } },
+{ "Entry": {
+         "uuid": "152d4911-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "152d4910-0ec0-11da-8fe3-000c414ce854",
+        "value": "New Section"  }
+},
+{ "Entry": {
+         "uuid": "152d4912-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["152d4910-0ec0-11da-8fe3-000c414ce854", "00020100-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "152d4913-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["8b0ad610-0c6e-11da-beea-000c414ce854", "152d4910-0ec0-11da-8fe3-000c414ce854"],
+    "attribute": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00030001-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "152d4914-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "152d4910-0ec0-11da-8fe3-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Item": { "uuid": "152d4915-0ec0-11da-8fe3-000c414ce854" } },
+{ "Entry": {
+         "uuid": "152d4916-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "152d4915-0ec0-11da-8fe3-000c414ce854",
+        "value": "New Query"  }
+},
+{ "Entry": {
+         "uuid": "152d4917-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["152d4915-0ec0-11da-8fe3-000c414ce854", "00001212-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "152d4918-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["152d4910-0ec0-11da-8fe3-000c414ce854", "152d4915-0ec0-11da-8fe3-000c414ce854"],
+    "attribute": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00040105-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "153e11f0-0ec0-11da-8fe3-000c414ce854" } },
+{ "Entry": {
+         "uuid": "153e11f1-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "153e11f0-0ec0-11da-8fe3-000c414ce854",
+        "value": "Layout data for Table of New Section"  }
+},
+{ "Entry": {
+         "uuid": "153e11f2-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["153e11f0-0ec0-11da-8fe3-000c414ce854", "00040202-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Entry": {
+         "uuid": "153e11f3-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "153e11f0-0ec0-11da-8fe3-000c414ce854",
+        "value": "00040301-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "153e11f4-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["152d4910-0ec0-11da-8fe3-000c414ce854", "153e11f0-0ec0-11da-8fe3-000c414ce854"],
+    "attribute": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00040104-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
+  },
+{ "Entry": {
+         "uuid": "193a6ce0-0ec0-11da-8fe3-000c414ce854",
+"previousEntry": "152d4911-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "152d4910-0ec0-11da-8fe3-000c414ce854",
+        "value": "Organizations"  }
+},
+{ "Entry": {
+         "uuid": "57baa390-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "152d4915-0ec0-11da-8fe3-000c414ce854",
+        "value": "cab35f20-0c79-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "5f1aea00-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "153e11f0-0ec0-11da-8fe3-000c414ce854",
+        "value": "00001001-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "5f26f7f0-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "153e11f0-0ec0-11da-8fe3-000c414ce854",
+        "value": "00001002-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "5f2dfcd0-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "153e11f0-0ec0-11da-8fe3-000c414ce854",
+        "value": "da505760-0c7b-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "5f3799c0-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "153e11f0-0ec0-11da-8fe3-000c414ce854",
+        "value": "de5d7b30-0c7b-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "5f3ec5b0-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "153e11f0-0ec0-11da-8fe3-000c414ce854",
+        "value": "2f2f54c0-0c7c-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "5f483b90-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "153e11f0-0ec0-11da-8fe3-000c414ce854",
+        "value": "34b9f0d0-0c7c-11da-9290-000c414ce854"  }
+},
+{ "Entry": {
+         "uuid": "5f4f6780-0ec0-11da-8fe3-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "153e11f0-0ec0-11da-8fe3-000c414ce854",
+        "value": "3adf9460-0c7c-11da-9290-000c414ce854"  }
+},
+{ "Vote": {
+         "uuid": "62328a40-0ec0-11da-8fe3-000c414ce854",
+       "record": "5f2dfcd0-0ec0-11da-8fe3-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Vote": {
+         "uuid": "654a0370-0ec0-11da-8fe3-000c414ce854",
+       "record": "5f3799c0-0ec0-11da-8fe3-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Vote": {
+         "uuid": "67d4f410-0ec0-11da-8fe3-000c414ce854",
+       "record": "5f3ec5b0-0ec0-11da-8fe3-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Vote": {
+         "uuid": "6b5c9430-0ec0-11da-8fe3-000c414ce854",
+       "record": "5f483b90-0ec0-11da-8fe3-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Vote": {
+         "uuid": "6df0fab0-0ec0-11da-8fe3-000c414ce854",
+       "record": "5f4f6780-0ec0-11da-8fe3-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Entry": {
+         "uuid": "fbd80fa0-0ec8-11da-aba8-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "8b275ec0-0c6e-11da-beea-000c414ce854",
+        "value": "00001005-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Entry": {
+         "uuid": "0217cae0-0ec9-11da-aba8-000c414ce854",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["872718f0-0c7e-11da-9290-000c414ce854", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+},
+{ "Vote": {
+         "uuid": "05e6fb50-0ec9-11da-aba8-000c414ce854",
+       "record": "fbd80fa0-0ec8-11da-aba8-000c414ce854",
+   "retainFlag": "false"  }
 }
