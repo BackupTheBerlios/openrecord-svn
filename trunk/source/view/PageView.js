@@ -164,18 +164,25 @@ PageView.prototype.doInitialDisplay = function() {
   var attributeCalledSectionsInPage = this.getWorld().getItemFromUuid(PageView.UUID_FOR_ATTRIBUTE_SECTIONS_IN_PAGE);
   var listOfEntriesForSections = this._pageItem.getEntriesForAttribute(attributeCalledSectionsInPage);
   
-  var sectionNavigatorDiv = null;
-  if (listOfEntriesForSections.length > 1 ) {
-    sectionNavigatorDiv = View.appendNewElement(pageDivElement, "div",null,null,"Sections: ");
-  }
+  // PENDING: 
+  // Turn off the links-to-sections table-of-contents feature until
+  // we have the bugs worked out.
+  var PENDING_include_links_to_sections = false; 
   
+  if (PENDING_include_links_to_sections) {
+    var sectionNavigatorDiv = null;
+    if (listOfEntriesForSections.length > 1 ) {
+      sectionNavigatorDiv = View.appendNewElement(pageDivElement, "div", null, null, "Sections: ");
+    }
+  }
+   
   for (var key in listOfEntriesForSections) {
     var entryForSection = listOfEntriesForSections[key];
     var section = entryForSection.getConnectedItem(this._pageItem);
     if (section) {
-      if (sectionNavigatorDiv) {
-        View.appendNewElement(sectionNavigatorDiv, "A",null , {'href' : '#' + section.getUniqueKeyString()},section.getDisplayName());
-        View.appendNewTextNode(sectionNavigatorDiv," ");
+      if (PENDING_include_links_to_sections && sectionNavigatorDiv) {
+        View.appendNewElement(sectionNavigatorDiv, "a", null, {'href' : '#' + section.getUniqueKeyString()}, section.getDisplayName());
+        View.appendNewTextNode(sectionNavigatorDiv, " ");
       }
       this._buildNewSection(section);
     }
