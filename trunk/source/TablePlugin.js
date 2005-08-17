@@ -459,7 +459,14 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   View.removeChildrenOfElement(viewDivElement);
   this._buildAttributeEditor();
   
-  this._table = View.appendNewElement(viewDivElement, "table", this._cssClassForTable);
+  // We could do use View.appendNewElement() here, but we seem to get a 20%
+  // speed improvement by instead using View.newElement() and then making our 
+  // own call to viewDivElement.appendChild(this._table) 10 lines further down.
+  // If there is a real 20% speed-up, it's probably because we prevent the 
+  // browser from trying to re-render the table until we call appendChild()
+  // 
+  // this._table = View.appendNewElement(viewDivElement, "table", this._cssClassForTable);
+  this._table = View.newElement("table", this._cssClassForTable);
   
   this._buildHeader();
 
@@ -469,6 +476,7 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   this._listOfItems.sort(function(a,b) {return staticThis.compareItemsBySortAttribute(a,b);}); // need to sort after header row added because default sort attribute is set there
 
   this._buildTableBody();
+  viewDivElement.appendChild(this._table);
   
   this._buildFileImportTool();
 };
