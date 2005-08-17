@@ -314,7 +314,8 @@ div.NavbarView {
 }
 
 .menu_item a:visited {
-  color: #6699CC; 
+  /* color: #6699CC; */ 
+  color: #336699; 
 
 }
 
@@ -642,7 +643,7 @@ li.detail {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  background: rgb(0%, 0%, 50%);
+  background: rgb(0%, 40%, 0%);
   border: none;
   text-align: right;
   vertical-align: middle;
@@ -733,9 +734,11 @@ div.SectionView {
   border: thin solid #A4BDEC;	
   -moz-border-radius: 12px; /* WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners */
 }
+
 .ItemValue:hover, .ConnectionValue:hover {
   background-color: #BBCEF1; /* darker blue */
 }
+
 .ItemValueSelected {
   background-color:#598bec;
   padding-top: 1px;
@@ -748,11 +751,12 @@ div.SectionView {
 }
 
 .DateValue {
-  color: #808080;
+  color: #606060;
 }
 
 .NumberValue {
-  font-weight: bold;
+  color: #606060;
+  text-align: right;
 }
 
 .TextValue {
