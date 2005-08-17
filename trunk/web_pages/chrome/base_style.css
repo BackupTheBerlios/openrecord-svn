@@ -1,0 +1,511 @@
+/* -------------------------------------------------------------------
+ * base_style.css
+ * 
+ * -------------------------------------------------------------------
+ * Copyright 2005 Brian Douglas Skinner <skinner@gumption.org>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at 
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ * -------------------------------------------------------------------
+ * OSI Certified Open Source Software -- http://www.opensource.org/
+ * -------------------------------------------------------------------
+*/
+
+/*********************************************************************
+ Font sizes and line sizes
+ 
+ When I first wrote this stylesheet, I tested only in Firefox, not IE.
+ My early versions relied heavily on some CSS values like "thin", 
+ which IE doesn't seem to support.  To make the IE output to match
+ the Firefox output, I reluctantly changed many of the values here.
+ At some point, once IE supports more of CSS, it would be good to 
+ change these values back.  You can safely just do global replacements
+ in this file.  Here's the list of replacements:
+   1pt    -->  thin
+   1.5em  -->  x-large
+   0.8em  -->  small
+   0.6em  -->  x-small
+ ********************************************************************/
+  
+/*********************************************************************
+ Colors
+ 
+ Here are lists of the colors I use.
+ 
+ Background colors:
+   white            -->  rgb(100%,100%,100%);
+   gray background  -->  rgb(90%,90%,90%);
+   green background -->  rgb(80%,100%,80%);
+   red background   -->  rgb(100%,80%,80%);
+   bright yellow    -->  rgb(100%,100%,0%);
+
+ Line colors
+   table line gray  -->  rgb(70%,70%,70%);
+   dark blue        -->  rgb(0%, 0%, 50%);
+ 
+ Font colors:
+   black            -->  rgb(0%, 0%, 0%);
+   logo gray        -->  rgb(60%,60%,60%);  
+   dark blue        -->  rgb(0%, 0%, 50%);
+   red              -->  rgb(100%, 0%, 0%);
+ 
+ Link colors:
+   blue             -->  #0000cc;
+   maroon           -->  #551a8b;
+   dark gray        -->  rgb(30%,30%,30%);  
+
+ ********************************************************************/
+
+
+/****************************************/
+/* Universal styles                     */
+
+html, body {
+  background: rgb(100%,100%,100%);
+  color: rgb(0%,0%,0%);
+  font-family: Arial, Verdana, sans-serif;
+}
+
+div.editmode {
+  background: rgb(100%,100%,100%);
+}
+
+h1 {
+  color: rgb(0%, 0%, 50%);
+  font-size: 1.5em;
+  margin-top: 1.4em;
+}
+
+h2 {
+  color: rgb(0%, 0%, 50%);
+  font-size: large;
+}
+
+h3 {
+  color: rgb(0%, 0%, 0%);
+  font-size: medium;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+  border-bottom-style: dotted;
+  border-bottom-width: thin;
+}
+
+a:link {
+  color: #0000cc;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+a:active {
+  color: rgb(100%, 0%, 0%);
+}
+
+a:hover {
+  text-decoration: none;
+  border-bottom-style: solid;
+  border-bottom-width: 1pt;
+  background: rgb(100%,100%,0%);
+}
+
+a.anchor {
+  text-decoration: none;
+  border-bottom-style: none;
+}
+
+a[rel~="external"]:after {
+  content: " >";
+  font-weight: bold;
+}
+
+a[rel~="external"] {
+  text-decoration: none;
+  border-bottom-style: dotted;
+  border-bottom-width: thin;
+}
+
+a[rel~="external"]:hover {
+  text-decoration: none;
+  border-bottom-style: solid;
+  border-bottom-width: 1pt;
+  background: rgb(100%,100%,0%);
+}
+
+
+.helpbox {
+  margin: 1.4em 6%;
+  padding: 1em;
+  border: solid 1pt rgb(0%, 0%, 50%); 
+}
+
+.helpbox h2 {
+  font-size: medium;
+  font-weight: bold;
+  padding: 0px;
+  margin: 0px;
+}
+
+span.bad {
+  color: rgb(100%, 0%, 0%);
+}
+
+/****************************************/
+/* Header and logo styles               */
+
+.header {
+  clear: both;
+  border-left: solid 1pt rgb(0%, 0%, 50%);
+  border-bottom: solid 1pt rgb(0%, 0%, 50%);
+  padding: 0.3em;
+  width: 100%;
+}
+
+.logo a {
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom-style: none;
+}
+
+.logo a:hover {
+  border-bottom-style: solid;
+}
+
+.logostart {
+  color: rgb(60%,60%,60%);  
+}
+
+.logomiddle {
+  color: rgb(0%, 0%, 50%); 
+}
+
+.logoend {
+  color: rgb(60%,60%,60%);  
+}
+
+.logo {
+  float: left;
+}
+
+
+/****************************************/
+/* Edit button styles                   */
+
+#main_control_span {
+  float: right;
+}
+
+.page_edit_button {
+  /* float: right; */
+}
+
+.section_layout_menu {
+}
+
+
+/****************************************/
+/* Navigation bar styles                */
+
+div.navbar {
+  float: left;
+  width: 100pt;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.menu {
+  padding-left: 0;
+  padding-top: 8pt;
+  padding-bottom: 20pt;
+  margin-left: 0;
+  list-style-type: none;
+  width: 80pt;
+}
+
+.menu_item {
+  list-style: none;
+  margin: 0;
+}
+
+.menu_item a {
+  display: block;
+  width: 100%;
+  padding: 5pt 0pt 5pt 5pt;
+  text-decoration: none; 
+  border-left: solid 5pt rgb(100%, 100%, 100%);
+  border-top: solid 1pt rgb(0%, 0%, 50%);
+  border-right: solid 1pt rgb(0%, 0%, 50%);
+  border-bottom-style: none;
+  color: rgb(0%, 0%, 50%); 
+}
+
+.menu_item a:link {
+  color: rgb(0%, 0%, 50%); 
+  background-color: rgb(100%,100%,100%);
+}
+
+.menu_item a:visited {
+  color: rgb(0%, 0%, 50%); 
+  background-color: rgb(90%,90%,90%);
+  border-left: solid 5pt rgb(90%, 90%, 90%);
+}
+
+.menu_item a:hover {
+  background-color: rgb(100%,100%,0%);
+  width: 100%;
+  border-left: solid 5pt rgb(0%, 0%, 50%);
+  border-bottom-style: none;
+}
+
+.sub_menu {
+  margin-left: 15pt;
+  padding: 0;
+  list-style-type: none;
+}
+
+.sub_menu_item {
+  list-style: none;
+  margin: 0;
+}
+
+.sub_menu_item a {
+  display: block;
+  width: 65pt;  /* menu.width - sub_menu.margin-left = 80pt - 15pt = 65pt */
+  padding: 5pt 0pt 5pt 5pt;
+  text-decoration: none; 
+  border-top: solid 1pt rgb(0%, 0%, 50%);
+  border-right: solid 1pt rgb(0%, 0%, 50%);
+  border-bottom-style: none;
+}
+
+
+
+/****************************************/
+/* Content area styles                  */
+
+div.content_area {
+  margin: 0pt 0pt 0pt 115pt;
+  padding: 0pt;
+}
+
+
+/****************************************/
+/* Footer and copyright styles          */
+.footer {
+  clear: both;
+  border-left: solid 1pt rgb(0%, 0%, 50%);
+  border-top: solid 1pt rgb(0%, 0%, 50%);
+  padding: 0.3em;
+  width: 100%;
+  font-size: 0.6em;
+  margin-top: 3em;
+}
+
+.copyright {
+  float: left;
+}
+
+.fileformat {
+  float: right;
+}
+
+
+/****************************************/
+/* FAQ styles                           */
+
+.faq dt {
+  font-weight: bold;
+  color: rgb(0%,0%,50%);
+  margin-top: 1.4em;
+}
+
+.faq dd {
+  color: rgb(0%,0%,0%);
+}
+
+
+/****************************************/
+/* Table styles                         */
+
+.simple_table {
+  background: rgb(70%,70%,70%);
+  border: 1pt solid rgb(70%,70%,70%);
+  border-collapse: collapse; 
+}
+
+.simple_table th {
+  padding: 0.3em;
+  color: rgb(0%,0%,50%);
+  background: rgb(90%,90%,90%);
+  font-size: 0.8em;
+  border: 1pt solid rgb(70%,70%,70%);
+}
+
+.simple_table tr {
+  background: rgb(100%,100%,100%);
+}
+
+.viewmode .simple_table tr:hover {
+  background: rgb(100%,100%,0%);
+}
+
+.simple_table td {
+  padding: 0.1em 0.3em; 
+  font-size: 0.8em;
+  border: 1pt solid rgb(70%,70%,70%);
+}
+
+td.plain {
+  text-align: left;
+}
+
+td.yup {
+  background: rgb(80%,100%,80%);
+}
+
+td.nope {
+  background: rgb(100%,80%,80%);
+}
+
+td.year {
+  font-weight: bold;  
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+td.money {
+  text-align: right;
+}
+
+td.title {
+  font-weight: bold;  
+  background: rgb(90%,90%,90%);
+}
+
+td.label {
+  font-weight: bold;  
+  text-align: right;
+  vertical-align: top;
+}
+
+td.negative {
+  color: rgb(90%,0%,0%);
+}
+
+td.total {
+  font-weight: bold;  
+  background: rgb(90%,90%,90%);
+}
+
+input.text_field_in_table_cell {
+  border-width: 0px;
+  width: 100%;
+  background: rgb(100%,100%,0%);
+}
+
+input.text_field_in_table_cell:hover {
+  border-width: 0px;
+  width: 100%;
+  background: rgb(100%,100%,0%);
+}
+
+.editmode .simple_table td:hover {
+  background: rgb(100%,100%,70%);
+}
+
+td.newitem {
+  /* background: rgb(100%,100%,50%); */
+  border-top: medium solid rgb(70%,70%,70%);
+}
+
+.editmode .simple_table td.selected {
+  /* padding: 0px 0px; */
+  background: rgb(100%,100%,0%);
+}
+
+
+/****************************************/
+/* Outline styles                       */
+
+li.category {
+   color: rgb(0%, 0%, 50%);
+   line-height: 1em;
+   padding-top: 12pt;
+   font-weight: normal;
+   font-size: medium;
+}
+
+li.primary {
+   font-weight: bold;
+   font-size: medium;
+   line-height: 1.1em;
+   padding-top: 8pt;
+}
+
+li.detail {
+   color: rgb(0%,0%,0%);
+   line-height: 1.2em;
+   padding-top: 4pt;
+   font-weight: normal;
+   font-size: small;
+}
+
+
+/****************************************/
+/* Bar chart styles                     */
+
+.simple_table td.bar_chart_frame {
+  width: 20em;
+  padding: 0px;
+  margin: 0px;
+  text-align: left;
+}
+
+.bar_chart_bar {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  background: rgb(0%, 0%, 50%);
+  border: none;
+  text-align: right;
+  vertical-align: middle;
+  color: white;
+}
+
+
+/****************************************/
+/* PENDING -- time to delete these?     */
+
+p.byline {
+  font-size: 0.8em;
+  text-align: right;
+  line-height: 0.4em;
+}
+
+p.byline a {
+  color: rgb(0%,0%,0%);
+}
+
+div.section {
+  border-top: solid thin rgb(0%, 0%, 50%);
+  margin-top: 3em;
+  padding-left: 0px;
+}
+
+/****************************************/
+/* END                                  */
+/****************************************/

@@ -1,0 +1,1316 @@
+<h1>Product Specification</h1>
+
+<div>
+  <h2>Introduction</h2>
+  
+  <p>This feature list describes a hypothetical system designed to facilitate 
+  web-based collaboration. This OpenRecord design is inspired by wiki software 
+  and sites like Wikipedia, as well as Content Management Systems (CMSs) like 
+  Zope/Plone and <a href="http://www.ez.no/" rel="external">eZ publish</a>. The OpenRecord 
+  design also draws on ideas from outliners like Lotus Agenda and OmniOutliner,
+  spreadsheets like Lotus Improv, and newer work like Chandler and RDF.</p>
+  
+  <p>OpenRecord is similar to a wiki, but with some database features added in. 
+  Wiki systems usually let you organize your content as pages of text, or pages 
+  of rich text. In OpenRecord your content is organized as a database of items, 
+  or records. Each page on an OpenRecord site can query the database to get some 
+  set of items, and those items can be displayed in an editable table, or in an 
+  outline format, or in other formats. In time, OpenRecord could grow to 
+  incorporate simple spreadsheet features, as well as interactive charting and 
+  graphing features, and OLAP and pivot table features.</p>
+
+  <h2>Goals</h2>
+  
+  <ol>
+    <li class="detail">Enable a workgroup to work in an unusually open and transparent style</li>
+    <li class="detail">Facilitate sharing and collaboration</li>
+    <li class="detail">Facilitate tracking of goals, tasks, and work accomplished</li>
+    <li class="detail">Facilitate comparison and prioritization</li>
+    <li class="detail">Facilitate categorization and structuring of content</li>
+    <li class="detail">Make it easy to create new content without first planning how the content will be organized</li>
+    <li class="detail">Make it easy to gradually add structure and organization to the content.</li>
+    <li class="detail">Make it easy to re-organize content in different ways, and have multiple concurrent organization schemes.</li>
+    <li class="detail">Discourage the growth of a jumbled jungle of rambling discussion</li>
+    <li class="detail">Offer features geared more toward collecting facts and figures, 
+    rather than <a href="http://en.wikipedia.org/wiki/Op-Ed" rel="external"><abbr title="Opinion Editorial">op-ed</abbr></a> content</li>
+    <li class="detail">Discourage long pure-text discussion threads (like email or IRC)</li>
+    <li class="detail">Facilitate the creation of valuable reference material</li>
+  </ol>
+  
+  <h2>Examples of use cases</h2>
+  
+  <ol>
+    <li class="detail">People can propose new ideas for the workgroup to consider.
+    It should be easy to do make a new proposal, perhaps by filling in
+    some simple form.</li>
+    <li class="detail">People can add little scraps of new information about a
+    proposal that was previously suggested. For example, if one person proposes
+    that the group lease equipment from a certain vendor, but doesn't give the URL 
+    for the vendor's website, another person
+    can come along later and fill in the missing information.</li>
+    <li class="detail">A site might provide a small database of interesting products,
+    or companies, or non-profit organizations.  Each entry could include lots of 
+    little details we might want to keep track of, like links to the external
+    websites, or the tax id number of the organization.</li>
+    <li class="detail">People can add to the list of things to keep track of about
+    an organization. For example, somebody might create a new field for keeping track of 
+    when each organization was founded, and then other people can fill in the value
+    for that field for each new organization, and people can go back and fill
+    in that information for previously listed organizations.</li>
+    <li class="detail">People can fill out surveys, and the site can gather the
+    and display the results.</li>
+    <li class="detail">People can create new surveys covering 
+    different topics, like what countries the organization operates in, or what
+    their affirmative action and employment practices are, or what their
+    fundraising practices and organizational overhead rates are.</li>
+    <li class="detail">People can create new "scorecards", which give scores to
+    different organizations based on the answers to questions on different surveys.
+    (Or perhaps some other sort of tools geared toward quantitative evaluation?)</li>
+    <li class="detail">People can look at lists of organizations and see how they 
+    scored on scorecards.</li>
+    <li class="detail">People can contribute to cost-benefit estimates based on 
+    knowledge about the work the organizations do.</li>
+    <li class="detail">People can see accounting records about how the group
+    is using its money.</li>
+    <li class="detail">People can see a record of all the email sent and received
+    by the project.</li>
+    <li class="detail">People can see simple charts and graphs, generated from
+    whatever quantitative info we have on record, like the annual budgets of 
+    different organizations, or how much money the project spent
+    this year compared to the last 2 years.</li>
+    <li class="detail">People can disagree with each other, with having to argue
+    about it. Two people can have different answers to the same question, and the
+    system can record both answers, and show both answers to anybody who asks.</li>
+    <li class="detail">People can propose new ideas. People might propose new ways
+    of running the site, or new sections the site should include, or a new ways for
+    selecting what work to do.</li>
+    <li class="detail">People can comment on proposals, and list pros and cons, and 
+    add suggested amendments or refinements.</li>
+    <li class="detail">People can vote for or against proposals, or somehow rate 
+    or rank the proposals.</li>
+  </ol>
+  
+  <h2>Features</h2>
+
+  <ul>
+    <li class="primary">Priority 1 features
+      <ol>
+        <li class="detail">No invisible content
+          <ul>
+            <li class="detail">All the content on the site should be visible to the public.</li>
+            <li class="detail">Anybody can browse the site without logging in, and they can see all the content.</li>
+            <li class="detail">All of the content should be viewable to anyone who 
+            browses to the site. All content available to account holders should 
+            also be available to the general public.</li>
+          </ul>
+        </li>        
+        <li class="detail">No anonymous content
+          <ul>
+            <li class="detail">Nobody should be able to anonymously add content to the site.</li>
+            <li class="detail">In order to add content, you first have to create an account
+            for yourself.</li>
+            <li class="detail">Exception: it might be fine to let anonymous visitors make
+            very minor contributions. For example, we might let people fix small typos,
+            or click on checkboxes to place votes or categorize content. But we should
+            draw the line at entering new content.</li>
+            <li class="detail">Each piece of content is attributable to some particular user.</li>
+          </ul>
+        </li>        
+        <li class="detail">No decaying content
+          <ul>
+            <li class="detail">All content should be permanent.</li>
+            <li class="detail">It should be impossible to delete content, or to make 
+            content invisible. All content should be reachable through the navigation
+            menus, without having to know a secret URL.</li>
+            <li class="detail">It should be possible to "retract" content, if it is
+            obsolete or incorrect or offensive. You should be able to retract content
+            by marking it as retracted. The retracted content is not deleted, and is
+            still publicly available, but it is clearly labeled as retracted.</li>
+          </ul>
+        </li>        
+        <li class="detail">Free accounts for everyone
+          <ul>
+            <li class="detail">Anyone should be able to create an new account for themselves.</li>
+            <li class="detail">Creating a new login account should take a minute or less.</li>
+            <li class="detail">You should be required to provide your real name and a valid email address. 
+            We should not allow for anonymous or pseudononymous accounts.</li> 
+            <li class="detail">We should require that each account name be the user's real name.
+            My account name should be "Brian Douglas Skinner", not something more fun or more
+            cryptic like "brian" or "bskinner" or "papabear".</li> 
+            <li class="detail">In order to get your account, you must agree not to 
+            post content that is protected by copyright or intellectual property law.
+            You will need to agree that by posting content you are dedicating it 
+            to the public domain under the terms of the Creative Commons Public Domain Dedication. 
+            As a result, all content is publicly available for reuse and repurposing &mdash; content
+            is never left in some sort of legal limbo where we don't know who created it
+            or how to reach them.</li> 
+            <li class="detail">Once you have a login account, you can sign up for a 
+            "transparent email account" with an address firstname.lastname@openagenda.org.</li> 
+            <li class="detail">Once you have a login account, you can create any kind of content,
+            and do anything that anyone else can.</li> 
+          </ul>
+        </li>
+        <li class="detail">Change logs
+          <ul>
+            <li class="detail">Change logs should be readily available.</li>
+            <li class="detail">For example, say some piece of content was created a year ago, 
+            and since then has been changed a dozen times.  By default I should see the
+            most recent version of the content, but the version number should be visible with it,
+            and there should be a link (or links) that allow me to see the original version
+            or any of the intermediate versions. I should also be able to see when each 
+            change was made, and who made the change.</li>
+          </ul>
+        </li>        
+        <li class="detail">Standard formats
+          <ul>
+            <li class="detail">All the web pages should be delivered in a small number of standard formats.</li>
+            <li class="detail">XHTML and CSS should be the norm for every page.</li>
+            <li class="detail">Some pages might also use JavaScript.</li>
+            <li class="detail">Some pages might also include .gif or .png or .jpeg images.</li>
+            <li class="detail">Everything is stored in Unicode.</li>
+            <li class="detail">No pages should use Flash or ActiveX.</li>
+            <li class="detail">No content should be in .doc or .xls attachments.</li>
+          </ul>
+        </li>        
+        <li class="detail">Navigation bar
+          <ul>
+            <li class="detail">There should be a nav bar available on every page.</li>
+            <li class="detail">From the nav bar, it should be possible to get to every page.</li>
+            <li class="detail">It should be possible to expand or collapse parts 
+            of the nav bar, to focus on just what you care about and get rid of visual clutter.</li>
+          </ul>
+        </li>
+        <li class="detail">Items and attributes
+          <ul>
+            <li class="detail">When users create content, they're creating items. 
+            Every piece of new content is a new item. The back-end data store simply
+            stores a big jumble of undifferentiated items.</li>
+            <li class="detail">Every item can have a "Name", a "Summary", and a "Body".</li>
+            <li class="detail">Users can make up new attributes to add to an item. &mdash; For 
+            example, I can add a "Phone number" attribute to the item representing
+            Amnesty International.</li>
+            <li class="detail">Any attribute can have more than one value. &mdash; For
+            example, I can put three different phone numbers into the "phone number" attribute
+            for Amnesty International. Or I can put one phone number in the attribute, and you 
+            can put a different phone number there without erasing what I put.</li>
+            <li class="detail">An attribute can have a suggested data type. &mdash; For
+            example, the "Name" attribute would have a suggested data type of "String",
+            while a "Annual budget" attribute would have a suggested data type of "Money".
+            Any attribute can be assigned any type of value, regardless of what the
+            suggested data type is. "Annual budget" may have a suggested data type of "Money",
+            but you're still free to put in a string value like "Too little!".</li>
+            <li class="detail">Attributes can have a literal values (like numbers, or dates, or
+            text strings), and they can also have values that are references to items. For 
+            example, the item representing the book "The Hobbit" might have an attribute
+            called "Author", which could contain a simple text string like 
+            "J.R.R. Tolkien", or which could instead contain a reference to an item
+            representing Tolkien. The Tolkien item could have its own attributes, like
+            data of birth. All references between items are automatically bi-directional,
+            so when you take the item "The Hobbit" and set its "Author" attribute to
+            point to the "Tolkien" item, the system automatically sets an inverse attribute
+            on the "Tolkien" item to point back to "The Hobbit". You can think of these
+            automatic inverse attributes as "of/by/for" attributes  &mdash; "The Hobbit"
+            has an "Author" set to "Tolkien", and inversely, "Tolkien" is the "Author of/by/for"
+            "The Hobbit". An employee item has a "Department" attribute, and the related
+            department item is the "Department of/by/for" that employee.</li>
+            <li class="detail">It should be a two-click operation to take any attribute 
+            value that's a string literal and turn it into a new item.  If the item
+            "The Hobbit" has an "Author" attribute containing the string "J.R.R. Tolkien",
+            you should be able to click on "J.R.R. Tolkien" and do some command called
+            "make this into an item". The command should create a new item which has
+            a "Name" attribute set to "J.R.R. Tolkien", and the "Author" attribute of
+            "The Hobbit" should now point to the new item.</li>
+            <li class="detail">Each attribute is itself an item, with attributes
+            like "Name", "Summary", and "Suggested data type". Users can add other 
+            attributes to an attribute item, and put the attribute item in categories, and so on.</li>
+            <li class="detail">Every item can have a "Start Date" and "End Date".</li>
+            <li class="detail">Every attribute value can have a "Start Date", "End Date", and "Source".</li>
+          </ul>
+        </li>
+        <li class="detail">Items and kinds
+          <ul>
+            <li class="detail">Items do not inherently have a class or kind.</li>
+            <li class="detail">Items can be assigned to kinds. &mdash; For example, I
+            can make my Amnesty International item be of the kind "Charity"</li>
+            <li class="detail">An item can be assigned to more than one kind.</li>
+            <li class="detail">Users can create new kinds.</li>
+            <li class="detail">Each kind can have a list of suggested attributes.
+            For example, the kind "Book" might have suggested attributes like "Title"
+            and "Author". When a user creates a new item of that kind, the entry form  
+            for the item will include fields for all the suggested attributes associated with 
+            the kind.</li>
+            <li class="detail">Users can make up new attributes and add them
+            to the list of suggested attributes for a kind.</li>
+            <li class="detail">Any item can serve as a kind, and any item can be 
+            assigned to be an instance of some kind, or an instance of some any 
+            other item. There is no distinction between Classes and Objects, or 
+            in our vocabulary, between Kinds and Items. This is a "Prototype-based" 
+            system rather than a "Class-based" system. For example, a there could 
+            be items like "Dog" and "Cat", which are of kind "Animal". So, you 
+            could say that "Dog" and "Cat" are instances of "Animal". "Animal" 
+            could have suggested attributes like "hasTail" and "isCarnivore", 
+            and "Dog" and "Cat" would have values for those attributes. 
+            But then "Fido" and "Snoopy" could be of kind "Dog", so that you 
+            could say that "Fido" and "Snoopy" are instances of "Dog", while "Dog" 
+            in turn is an instance "Animal". If "Snoopy" is an instance of "Dog", 
+            it is therefore an instance of "Animal" as well. "Snoopy" might be 
+            also be both a "Dog" and a "Cartoon Character", because we allow
+            an item to be assigned to more than one kind.</li>
+          </ul>
+        </li>
+        <li class="detail">Items and categories
+          <ul>
+            <li class="detail">Users can create new categories, and put items
+            in categories. &mdash; For example, I can create categories called
+            "Fiction" and "Non-fiction", and I can put some books in fiction and
+            others in non-fiction. [PENDING: Maybe consider using the term "tag" instead
+            of "category", on the theory that it's shorter and less intimidating
+            and more likely to give people the sense that an item can have more 
+            than one tag? The downside is that "tag" maybe suggests something that's just
+            a word, not something that might itself have a description and other attributes.]</li>
+            <li class="detail">When a user looks at a category, they can see
+            a list of all the items in that category.</li>
+            <li class="detail">When a user looks at an item, they can see all
+            the categories that item is assigned to.</li>
+            <li class="detail">Each category is itself an item, with standard attributes
+            like "Name" and "Summary". Users can add other attributes to the item,
+            and assign the item to a kind. &mdash; For example, I might create an 
+            item called "Kenya", which is of kind "Country". "Country" has suggested 
+            attributes like "Population" and "GDP". I can create an item called
+            "Africa", which is of kind "Region". I can assign "Kenya" to the 
+            "Africa" category.</li>
+            <li class="detail">Categories can be structured into a hierarchy. [PENDING: how?]</li>
+            <li class="detail">Different users can create their own categorization schemes.
+            I might categorize "Atlas Shrugged" as "Good", while you categorize it as
+            "Polemic". That's fine. We can look at each other's categorizations if 
+            we want to, but we're not forced to.</li>
+            <li class="detail"> [PENDING: Is a kind maybe just a sort category that
+            categorizes attributes? For example, the "Author" attribute belongs to
+            the category "Book". Book is a kind simply because it has some attributes
+            that have it assigned as a category?]</li>
+          </ul>
+        </li>
+        <li class="detail">Items and pages
+          <ul>
+            <li class="detail">There should be a clear and rigidly enforced separation 
+            between content and presentation. Content consists of items, attributes,
+            categories, and kinds. Presentation consists of pages, layouts, and sections.
+            Both the content and the presentation are kept in some form of structured 
+            data store, like an XML file tree, or an RDF database, or a relational 
+            database, or a Chandler repository.</li>
+          </ul>
+        </li>
+        <li class="detail">Editing items
+          <ul>
+            <li class="detail">When a user edits an existing item, or creates a 
+            new item, all the editing is done in some kind of structured form. Each
+            attribute of the item is edited in a separate field. The editing UI
+            is more like a spreadsheet than word processor &mdash; more like an
+            order form than a wiki page.</li>
+            <li class="detail">All editing is done "in line", on the same page
+            the content is being viewed. Unlike a wiki, you don't have to press 
+            an "edit" button, and you don't have to go to a separate page to 
+            start editing. To edit, you just click on some text and start typing.
+            The tool should have a WYSIWYG feel, like a word processor. To
+            play with an example and see how this should feel, check out
+            <a href="http://gumption.org/openchart/experiments/book_form/book_form.html" rel="external">the Hobbit, a click-to-edit example page</a>.
+            </li>
+            <li class="detail">We do not offer any kind of wiki-style mark-up, even
+            for items that have large text bodies. Structure is never encoded in
+            text. If you want something to appear as a list of bullet points, those
+            bullet point line-items are really separate items, not a wiki-style applied to 
+            plain text. The UI makes it easy to create a list of items all at once.</li>
+          </ul>
+        </li>
+        <li class="detail">Editing layouts
+          <ul>
+            <li class="detail">In addition to editing content items themselves,
+            users can also edit the layout of the pages that contain the items. For example,
+            let's say you're looking at a page that has a big table on it, where
+            each row in the table has an entry for a Book &mdash; there's one 
+            row for "The Hobbit", and another for "The Wisdom of Crowds", and so
+            on. Each column of the table is for some attribute, like "Title" or
+            "Author". To edit a content item, you could click on "The Hobbit", 
+            and type in some different text. But you could also edit the layout of the page itself, 
+            rather than an item on the page. For example, you might want to add
+            a new column to the table, or change the width of an existing column,
+            or change the table to be sorted by "Author" instead of "Title".
+            To play with an example of a JavaScript widget that allows this sort 
+            of editing, check out 
+            <a href="http://www.activewidgets.com/grid/" rel="external">the ActiveWidgets Grid widget</a>.
+            </li>
+            <li class="detail">Sometimes the user will want to save the changes 
+            that they make to the page layout, and other times they won't. We
+            need to support both types of use, but it may be tricky to know when
+            to save and when not to. We could automatically save every layout change,
+            but then when I'm just casually poking around a page I might inadvertently 
+            mess up the layout that you carefully arranged. Alternatively, we could 
+            generally refrain from saving layout changes, and only save them when
+            the user explicitly hits a "save layout" button. In either case, we'll
+            want to have some way to let the user do a "save as...", or somehow
+            "copy" or "clone" the entire page and create a new page showing the same
+            content. Both the new page and the old page may continue to show the 
+            same content items for years to come, but one might evolve to have a summary-view style
+            layout, where the other might be a detail-view that shows all the attributes
+            of every content item.</li>
+            <li class="detail">It should be easy for a user to grab the URL of the
+            page that they're currently looking at, where that URL represents the 
+            page exactly as they're current looking at it, with all of the layout
+            options set just as they are now. If I'm looking at a page that I've just sorted
+            and arranged to show some key point, I should be able to easily send you
+            the URL so that you can see what I see. For a great example of this, 
+            check out <a href="http://www.klynch.com/apps/flashlinking/index.html#id=1" rel="external">Kevin Lynch's demonstration of Stateful Linking to Rich Internet Applications</a>.</li>
+          </ul>
+        </li>
+        <li class="detail">Pages and sections
+          <ul>
+            <li class="detail">Each page is defined by a page layout. A page layout 
+            it just a list of sections that appear on the page. The first section
+            appears at the top of the page, the next section below it, and so on. 
+            There's nothing fancy with multiple columns or text flowing around images
+            or anything like that.</li>
+            <li class="detail">What a section looks like depends on two things:
+            what items appear in the section, and what type of section it is. Initially,
+            we'll probably want to have just a few types of section: probably table
+            sections, item detail sections, and outline sections.</li>
+            <li class="detail">A table section would just show a simple table of 
+            items and their attributes, like the table of books on 
+            <a href="http://gumption.org/openchart/experiments/book_form/book_form.html" rel="external">the Hobbit example page</a>.
+            Each table section would have a list telling it what attributes should
+            appear as column headers, and in what order. The table section would also have
+            a list telling it what columns to sort on, and the table section would 
+            know how wide each column should be, and so on.</li>
+            <li class="detail">An outline section would show a bullet-point list of items,
+            arranged in a hierarchy, like the lists on this page.</li>
+            <li class="detail">An item detail section would show the attributes
+            of a single item, with each item on a separate line. An item detail
+            section might show all of the attributes of the item, or might show
+            only a subset of the attributes, depending on how the section is 
+            configured.</li>
+            <li class="detail">Each section has some sort of "content list" that
+            determines what items appear in the section. The content list for a
+            detail section would simply list a single specific item. The content
+            list for a table section might specify "all the Book items in the
+            category Fiction".</li>
+            <li class="detail">It should be possible to set up a content list so
+            that it in effect pre-screens the content to show just the items that 
+            you yourself have created. For example, you might want to see the list 
+            of all the charities that you have nominated, rather than all the charities 
+            that anyone has nominated.</li>
+            <li class="detail">Transclusion is a first class feature. A page doesn't 
+            "own" the items that appear on it. Items exist in their own right, and
+            can appear on lots of different pages at once. An item still exists even
+            if it doesn't currently appear on any pages. This is fundamentally different from
+            how wikis work, or how word processors work, where the page does own
+            all of the content on the page.</li>
+          </ul>
+        </li>
+        <li class="detail">Raw item pages
+          <ul>
+            <li class="detail">Each page has its own URL, and each page may display
+            one or more items, depending on what sections the page layout includes.
+            Independent of pages their URLs, each item has it's own URL, pointing
+            to a raw item page. A raw item page shows item detail information for
+            all of the attributes of the item. The attributes of the item can 
+            be edited, but unlike with normal pages, on the raw item pages the 
+            layout of the page is not editable.</li>
+          </ul>
+        </li>
+        <li class="detail">Access permissions
+          <ul>
+            <li class="detail">There is no access permission model. All items are 
+            editable by anyone. Nobody ever "owns" an item or a page.</li>
+          </ul>
+        </li>
+        <li class="detail">Clean UI
+          <ul>
+            <li class="detail">There should be no modal dialog boxes.</li>
+            <li class="detail">There should be no menus or dialog boxes to "Save" 
+            or "Open" files. All content should be automatically saved.</li>
+            <li class="detail">You should be able to do common tasks in just a few 
+            clicks. (As we're putting together the software we should keep records
+            about how many clicks it takes to do things, and we should work to keep 
+            breaking past records. In version 0.1 you could create an item in 2 clicks,
+            but in version 0.2 you can create an item in 1 click!)</li>
+            <li class="detail">The visual design is simple and clean &mdash; a start page 
+            like <a href="http://google.com/" rel="external">Google</a>, 
+            not <a href="http://yahoo.com/" rel="external">Yahoo</a> &mdash; 
+            colors like <a href="http://plone.org/" rel="external">Plone</a>, 
+            not <a href="http://frontier.userland.com/" rel="external">Userland</a></li>
+            <li class="detail">We should have undo and redo features. (If we wanted,
+            it would be easy to implement a rollback feature that would allow the 
+            entire site to be rolled back to some earlier point in time. Or a "window into
+            the past" feature, that allows a user to look at the site exactly as 
+            it appeared at some earlier date.)</li>
+          </ul>
+        </li>
+        <li class="detail">Built-in data structures
+          <ul>
+            <li class="detail">The software infrastructure should have some kinds of 
+            items available as built-in primitives, including:</li>
+            <li class="detail">User Account</li>
+            <li class="detail">Person &mdash; not necessarily a User</li>
+            <li class="detail">Mail message</li>
+            <li class="detail">Link (name, URL, internal/external)</li>
+            <li class="detail">Page</li>
+            <li class="detail">View</li>
+            <li class="detail">Picture</li>
+            <li class="detail">Category/Collection</li>
+            <li class="detail">Attribute/Value</li>
+            <li class="detail">Comment</li>
+            <li class="detail">Date &mdash; including Timestamp (with date and time), Date (with no time), and Year (with no month or day)</li>
+          </ul>
+        </li>
+        <li class="detail">User-created data structures
+          <ul>
+            <li class="detail">It should be possible for end-users to create new kinds of 
+            items, and create new items of those kinds, like:</li>
+            <li class="detail">Charity</li>
+            <li class="detail">Country</li>
+            <li class="detail">Proposal</li>
+            <li class="detail">Donation &mdash; $1,000 to PATH on May 5, 2006</li>
+            <li class="detail">Goal/Task</li>
+            <li class="detail">Weekly status report</li>
+            <li class="detail">FAQ entry</li>
+            <li class="detail">Glossary entry</li>
+            <li class="detail">Op-ed</li>
+            <li class="detail">Properties and units of measure &mdash; DALYs, dollars, etc.</li>
+            <li class="detail">Variable being measured &mdash; total budget, number of members, etc.</li>
+            <li class="detail">Vote/Rating</li>
+          </ul>
+        </li>
+        <li class="detail">Content export and tool migration
+          <ul>
+            <li class="detail">We should not be "locked in" to a particular software toolset.</li>
+            <li class="detail">It should be possible to export the content into 
+            simple, standard formats, like XML or comma-delimited text files.</li>
+            <li class="detail">Ideally, the content should be automatically exported
+            all the time, so that there's always a current version of the export file
+            on hand.</li>
+            <li class="detail">Five years from now, it should be feasible 
+            to port all of the content into some new content management system.</li>
+          </ul>
+        </li>
+        <li class="detail">Names and identity
+          <ul>
+            <li class="detail">Underneath the covers, each item has a unique
+            identifier, but users never see those identifiers.</li>
+            <li class="detail">Items can have names, but the names do not serve
+            as identifiers.</li>
+            <li class="detail">An item does not have to have a name.</li>
+            <li class="detail">Names do not have to be unique. A user could 
+            create two separate items, each named "The Hobbit".</li>
+            <li class="detail">A single item may have more than one name. Different
+            users can assign different values to the "Name" attribute, or a single
+            user could assign more than one value. A charity might have the name 
+            "Doctors Without Borders" and also the name "Medecins Sans Frontieres".</li>
+            <li class="detail">Whenever an item has any kind of relationship or 
+            interaction with another item, the items keep track of each other based
+            on their identifiers, not their names. This is true for everything
+            in the system: keeping track of what kind an item is assigned to, 
+            what categories an item is in, what attributes an item has, what
+            attributes a derivation rule refers to, etc.</li>
+          </ul>
+        </li>
+        <li class="detail">URLs
+          <ul>
+            <li class="detail">Each piece of content has a unique URL.</li>
+            <li class="detail">All URLs are permanent. No URLs ever go stale or 
+            result in 404 errors. A URL always addresses the same piece of content
+            for its entire life.</li>
+            <li class="detail">The URLs should not disclose any information about 
+            what software products are serving the content. The URLs should not
+            include strings like ".php" or ".asp"</li>
+            <li class="detail">The URLs should be as short as possible. Ideally 
+            they should all be less than 60 or 80 characters long.</li>
+            <li class="detail">The URLs should not include names or descriptions of 
+            the content that's available at the URL. For example, URLs should not
+            include strings like "Mail", "Money", "People", or "Brian".</li>
+            <li class="detail">The URLs should not include any information about
+            how the content is organized in the navigation hierarchy, or about 
+            how the content is categorized in any taxonomies used on the website.</li>
+            <li class="detail">Examples of good URLs:
+              <ul>
+                <li class="detail">http://openagenda.org/page.html?id=38762904</li>
+                <li class="detail">http://openagenda.org/page?id=38762904</li>
+                <li class="detail">http://openagenda.org/page.html#38762904</li>
+                <li class="detail">http://openagenda.org/page_38762904.html</li>
+              </ul>
+            </li>
+            <li class="detail">Examples of bad URLs:
+              <ul>
+                <li class="detail">http://plone.org/documentation/archetypes/quickref#requirements</li>
+                <li class="detail">http://example.org/foo/index.php/iggy/content/view/full/45</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="detail">Free, and supported
+          <ul>
+            <li class="detail">Here's one key feature we're looking for in the software that 
+            we use to run the site &mdash; we'd like it to be free, as in free beer.</li>
+            <li class="detail">We'd also like to know that it will continue to be free
+            for years to come, which suggests that we might to look for software that's
+            available under an open source license, like <a href="http://www.ez.no/" rel="external">eZ publish</a>.</li>
+            <li class="detail">Lastly, we'd like the software we use to end up being
+            active supported for years to come. We'd like to use software that has
+            a thriving ecosystem of customers and developers and companies offering
+            support services. That suggests not trying to cobble something together
+            from scratch, unless you're extremely optimistic about the software
+            gaining widespread popularity and leading to a thriving community.</li>
+          </ul>
+        </li>
+        <li class="detail">Search engine indexing
+          <ul>
+            <li class="detail">We need to make sure that search engines like
+            Google are able to index all the "virtual" pages that OpenRecord 
+            serves.</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li class="primary">Priority 2 features
+      <ol>
+        <li class="detail">Transparent email 
+          <ul>
+            <li class="detail">Any user should be able to have a "transparent email account".</li>
+            <li class="detail">That user should be the only person who can send mail from the e-mail account.</li>
+            <li class="detail">It should be set up so that all copies of all the 
+            messages that user sends are automatically posted on the website.</li> 
+            <li class="detail">Similarly, copies of all the messages the user receives 
+            should be automatically posted to the website.</li> 
+            <li class="detail">People sending mail to the account will need to 
+            know in advance that their messages will be posted publicly, and we 
+            need to make sure they're okay with that. As a safety check, we could 
+            require that the first line of each message be a consent statement, 
+            like "I hereby dedicate the following message to the public domain,
+            under the terms of the Creative Commons Public Domain Dedication, as
+            described on the page http://creativecommons.org/licenses/publicdomain/".
+            If that line is missing, we might automatically bounce the message, 
+            and/or send a reply explaining the problem and offering an alternate
+            email address for private messages.</li>
+            <li class="detail">The email messages should be first-class items, 
+            that can be categorized and annotated just like other items.</li> 
+            <li class="detail">We might want to automatically bounce any message
+            that has an attachment, rather than try to figure out how to post
+            attachments with messages. Also, attachments are likely to be in 
+            proprietary file formats, like .doc and .xls, which we'd rather not
+            have content stored in.</li> 
+            <li class="detail">We could also think about only accepting plain text
+            messages, and automatically bouncing messages sent in rich text or HTML,
+            if that makes our lives easier. Or, we could accept HTML mail, but then 
+            ignore the formatting info and treat the message as plain text.</li> 
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li class="primary">Priority 3 features
+      <ol>
+        <li class="detail">Photos
+          <ul>
+            <li class="detail">It should be possible for account-holders to post photos to the site.</li>
+          </ul>
+        </li>
+        <li class="detail">Subscriptions
+          <ul>
+            <li class="detail">It should be possible to subscribe to all or part of the site.</li>
+            <li class="detail">Anybody should be able to subscribe to RSS feeds generated by the site.</li>
+            <li class="detail">Anybody should be able to subscribe to email mailing list feeds generated by the site.</li>
+            <li class="detail">Ideally, anything that's available for RSS subscription 
+            should also be available for mailing list subscription, and vice versa.</li>
+            <li class="detail">You should be able to subscribe to a feed that includes 
+            all new content posted to the site and all changes made to existing content.</li>
+            <li class="detail">You should be able to subscribe to specific portions of the site, such as
+              <ul>
+                <li class="detail">All the outgoing email messages sent by Brian Skinner.</li>
+                <li class="detail">All the outgoing email messages sent by anyone.</li>
+                <li class="detail">All the changes to the list of proposals.</li>
+                <li class="detail">All the changes to the one proposal my friend wrote.</li>
+                <li class="detail">All the changes to any charity on the list of charities.</li>
+                <li class="detail">All the changes to the records relating to the charity I work for.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="detail">Live updates
+          <ul>
+            <li class="detail">When you're looking at a page, and an item appear
+            in more than one place on the page, if you make a change to the item
+            in one place, the item will automatically be updated everywhere
+            else it appears on the page.</li>
+            <li class="detail">When you're looking at a page, and another user makes
+            a change to one of the items shown on the page, the item on your page
+            is automatically updated to reflect the change.</li>
+            <li class="detail">Similarly, if you have two browser windows open,
+            each looking at a different page, if you change an item on one page
+            the change will automatically propagate to the second page.</li>
+            <li class="detail">(This feature may sound wildly ambitious to experienced
+            engineers, but is actually not too hard implement. The page being viewed
+            just has some simple JavaScript code that polls the server once a minute
+            or so, requesting a list of changes. The server replies with the list of
+            changes, and the JavaScript code on the client updates the page. More
+            details can be found in  
+            <a href="http://wiki.osafoundation.org/bin/view/Jungle/ObservableQueries" rel="external">my 
+            2003 paper about Observable Queries</a>.)</li>
+          </ul>
+        </li>
+        <li class="detail">Additional types of sections
+          <ul>
+            <li class="detail">Pivot table sections &mdash; support for taking
+            a collection of items and rendering them in a pivot table.</li>
+            <li class="detail">Bar chart sections &mdash; support for taking
+            a collection of items and rendering them as a bar chart.</li>
+            <li class="detail">Scatter plot sections &mdash; support for taking
+            a collection of items and rendering them as a scatter plot.</li>
+          </ul>
+        </li>
+        <li class="detail">Derived attributes
+          <ul>
+            <li class="detail">Users can assign simple derivation rules to attributes.
+            For example, for an attribute called "Per capita GDP", I could create
+            a derivation rule that says that "Per capita GDP" for this item is 
+            equal to "GDP" divided by "Population". </li>
+            <li class="detail">The derivation rules may be presented to the user
+            as simple text strings like "[Per capita GDP] = [GDP] / [Population]", but
+            the derivation rules are not stored as simple text strings. Instead,
+            the derivation rules are stored using item pointers for the attribute
+            references. If another user changes the name of the "Population" attribute
+            to read "Total population", that change will not break the rule, and 
+            the next time you view the rule it will appear as "[Per capita GDP] = 
+            [GDP] / [Total Population]"</li>
+            <li class="detail">A derivation rule will only arrive at an answer
+            if the referenced attributes have values that are of compatible types.
+            The rule "[Per capita GDP] = [GDP] / [Population]" will work if 
+            "GDP" and "Population" have number values, but if one of them has
+            a string value, then the rule will quietly give up without raising a fuss.</li>
+            <li class="detail">Even attributes without derivation rules can have 
+            more than one value, and an attribute with a derivation rule can have
+            both a derived value and one or more user-assigned values.</li>
+            <li class="detail">A derivation rule might be used to populate an 
+            attribute with values retrieved by traversing references to other items.
+            For example, for an item that represents a person, I might create a 
+            derivation rule like "[Cousins] = [Parents].[Siblings].[Children]",
+            to say that a person's cousins is the set of all the children of the 
+            siblings of the parent of the person.</li>
+          </ul>
+        </li>
+        <li class="detail">Accessibility
+          <ul>
+            <li class="detail">The graphical styles respect default settings for 
+            fonts and colors in the user's browser, and conform to accessibility 
+            requirements.</li>
+            <li class="detail">The generated web pages follow commons accessibility 
+            guidelines, such as the United States Section 508 Guidelines, or the 
+            W3C's Web Content Accessibility Guidelines.</li>
+          </ul>
+        </li>
+        <li class="detail">On-line help
+          <ul>
+            <li class="detail">On-line help should be available.</li>
+            <li class="detail">Help pages are just normal pages, built out of sections and items.</li>
+          </ul>
+        </li>
+        <li class="detail">Client platforms
+          <ul>
+            <li class="detail">The DHTML pages generated by the site should work 
+            in at least the 2 or 3 most popular browsers on each of the 3 major
+            platforms: Windows, Linux, and the Mac. We probably don't need to 
+            support older browsers, but we should support the versions of
+            IE, Firefox, and Safari that are recent enough to still have a 
+            substantial installed base.</li>
+          </ul>
+        </li>
+        <li class="detail">Scalability
+          <ul>
+            <li class="detail">The system should scale up to handle small workgroups,
+            with maybe a few hundred user accounts, maybe a couple dozen people browsing
+            through pages at any given time, and maybe handful of people editing pages.</li>
+            <li class="detail">Caching?</li>
+            <li class="detail">Load balancing?</li>
+            <li class="detail">Data store replication?</li>
+          </ul>
+        </li>
+        <li class="detail">Polyglot items, internationalization, and localization
+          <ul>
+            <li class="detail">Polyglot strings, and polyglot items &mdash; see 
+            <a href="http://lists.osafoundation.org/pipermail/dev/2003-June/000690.html" rel="external">my 2003 
+            Chandler email message describing polyglot strings and localization</a></li>
+            <li class="detail">Internationalization and localization, built using
+            polyglot strings, and polyglot items</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li class="primary">Lower priority features
+      <ol>
+        <li class="detail">Content rating
+          <ul>
+            <li class="detail">Maybe some sort of features geared towards letting user give
+            ratings or rankings to content, so that the group can collaboratively
+            sift through everything and have the good stuff rise to the top?</li>
+            <li class="detail">Maybe some sort of features for making your own annotations
+            on items or attributes that other people created, so that you can keep 
+            track of what to build on and what to ignore &mdash; maybe tools for 
+            marking content as to whether you "affirm" it or "question" it.?</li>
+            <li class="detail">...?</li>
+          </ul>
+        </li>
+        <li class="detail">Search tools
+          <ul>
+            <li class="detail">Maybe a simple search box in the corner of every page?</li>
+            <li class="detail">Maybe a separate page for doing more complicated searches?</li>
+            <li class="detail">Maybe brute-force full-text searching? Full-text indexing?</li>
+          </ul>
+        </li>
+        <li class="detail">Skins/Themes
+          <ul>
+            <li class="detail">Maybe end users can create new CSS style sheets and save them to the server?</li>
+            <li class="detail">Maybe end users can pick which style sheet to use with a given page?</li>
+            <li class="detail">Maybe each end user can each have their own default style 
+            sheet &mdash; we look at the same page, but I see blue text and you see red?</li>
+          </ul>
+        </li>
+        <li class="detail">Security
+          <ul>
+            <li class="detail">SSL support?</li>
+            <li class="detail">Audit trails?</li>
+            <li class="detail">Kerberos?</li>
+            <li class="detail">Certificates?</li>
+          </ul>
+        </li>
+        <li class="detail">Installers</li>
+        <li class="detail">Submissions
+          <ul>
+            <li class="detail">Maybe workflow features that allow people to create proposed items,
+            and then submit those items for approval?</li>
+            <li class="detail">Maybe workflow features that support the idea of "draft" status
+            vs. "published" status?</li>
+          </ul>
+        </li>
+        <li class="detail">Spell checking</li>
+        <li class="detail">Scripting
+          <ul>
+            <li class="detail">Maybe end-user scripting?</li>
+            <li class="detail">Maybe user defined macros?</li>
+            <li class="detail">Maybe filters?</li>
+            <li class="detail">Maybe rules for automatic categorization?</li>
+          </ul>
+        </li>
+        <li class="detail">Text recognition &mdash; "next Tuesday", or "call Joe"</li>
+        <li class="detail">Interoperability
+          <ul>
+            <li class="detail">Interoperability with what? RDF, WebDAV, FTP, UTF-8?</li>
+          </ul>
+        </li>
+        <li class="detail">Peer-to-peer servers
+          <ul>
+            <li class="detail">Anybody can install this OpenRecord server software 
+            on their apache server, and then point it at a list of other known OpenRecord
+            servers. All the OpenRecord servers can query each other periodically to 
+            stay up to date on the latest changes made on each server, so that all
+            the servers are roughly in sync. All the content remains available and 
+            in the public domain, even if any one server goes down unexpectedly, and
+            even if a server is suddenly taken off-line permanently (think government 
+            coup, or police raid, or corporate bankruptcy). The data is out in the
+            ether, not locked into any one data store on any one server.</li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li class="primary">Features that aren't part of what I have in mind 
+      <ol>
+        <li class="detail">Blog features</li>
+        <li class="detail">Chat features</li>
+        <li class="detail">Discussion forums</li>
+        <li class="detail">E-commerce features</li>
+        <li class="detail">Calendar views</li>
+        <li class="detail">Email compose and send tools</li>
+        <li class="detail">File attachments</li>
+        <li class="detail">Advertising management</li>
+        <li class="detail">Publishing approval workflows</li>
+      </ol>
+    </li>
+  </ul>
+      
+  <h2>Staged Implementation Roadmap</h2>
+
+  <p>Should we decide to build our own software infrastructure "from scratch", 
+  rather than using an existing product like <a href="http://www.ez.no/" rel="external">eZ publish</a>, we will want to build 
+  out in stages. Here's are some initial thoughts about how to sequence the stages.</p>
+
+  <table class="simple_table">
+    <tr>
+      <th rowspan="2">Feature Set</th>
+      <th colspan="10">Milestone</th>
+    </tr>
+    <tr>
+      <th>0.1<br/>(minimal kernel)</th>
+      <th>0.2</th>
+      <th>0.3</th>
+      <th>.4</th>
+      <th>.5</th>
+      <th>.6</th>
+      <th>.7</th>
+      <th>.8</th>
+      <th>.9</th>
+      <th>1.0</th>
+    </tr>
+    <tr>
+      <td class="plain total">Account creation</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope &mdash; demo accounts are hard-coded</td>
+      <td class="plain nope">nope</td>
+      <td class="plain">?</td>
+      <td class="plain">?</td>
+      <td class="plain">?</td>
+      <td class="plain">?</td>
+      <td class="plain">?</td>
+      <td class="plain">?</td>
+      <td class="plain yup">yup &mdash; people can create accounts for themselves</td>
+    </tr>
+    <tr>
+      <td class="plain total">Authentication</td>
+      <td class="plain nope">nope &mdash; you can edit without logging in</td>
+      <td class="plain yup">yup &mdash; users can log in</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Scalability</td>
+      <td class="plain nope">nope &mdash; if two people edit, the system crashes</td>
+      <td class="plain nope">nope &mdash; only one user can be logged in at a time</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup &mdash; a few users can be logged in at a time</td>
+    </tr>
+    <tr>
+      <td class="plain total">Data store</td>
+      <td class="plain nope">nope &mdash; dead-simple single-file plain-text "data store"</td>
+      <td class="plain nope">nope &mdash; dead-simple single-file plain-text "data store"</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup &mdash; safe and reliable</td>
+    </tr>
+    <tr>
+      <td class="plain total">Clean UI</td>
+      <td class="plain yup">yup &mdash; we do good UI design from day one</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">URLs</td>
+      <td class="plain yup">yup &mdash; we do good URL design from day one</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Items</td>
+      <td class="plain yup">yup &mdash; everything is an item</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Attributes</td>
+      <td class="plain yup">yup &mdash; any attribute can have more than one value &mdash; attributes are items too</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Data types</td>
+      <td class="plain nope">nope</td>
+      <td class="plain yup">yup &mdash; an attribute can have a suggested data type</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Kinds</td>
+      <td class="plain yup">yup &mdash; items can be assigned to kinds &mdash; any item can serve as a kind</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Categories</td>
+      <td class="plain yup">yup &mdash; items can be put in categories</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Pages and sections</td>
+      <td class="plain yup">yup &mdash; support for table sections and detail sections</td>
+      <td class="plain yup">yup &mdash; support for outline sections</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Editing items</td>
+      <td class="plain yup">yup &mdash; items can be edited</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Editing page layouts</td>
+      <td class="plain yup">yup &mdash; page layouts can be edited</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Change logs</td>
+      <td class="plain nope">nope &mdash; we only record current values</td>
+      <td class="plain yup">yup &mdash; change histories are recorded</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Nav bar</td>
+      <td class="plain yup">yup &mdash; simple nav bar</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Standard formats</td>
+      <td class="plain yup">yup &mdash; XHTML, CSS, etc.</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Sunshine features</td>
+      <td class="plain yup">yup &mdash; nothing anonymous, nothing invisible, no decay</td>
+      <td class="plain yup">yup</td>
+      <td class="plain yup">yup</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Platforms</td>
+      <td class="plain nope">nope &mdash; just Firefox on windows</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup &mdash; IE, Firefox and Safari, on Windows, Mac, and Linux</td>
+    </tr>
+    <tr>
+      <td class="plain total">Search tools</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Subscriptions</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Photos</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Transparent email accounts</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Live updates</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Content export</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Accessibility</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Interoperability</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain nope">nope</td>
+    </tr>
+    <tr>
+      <td class="plain total">Skins/Themes</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain nope">nope</td>
+    </tr>
+    <tr>
+      <td class="plain total">Derived attributes</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain nope">nope</td>
+    </tr>
+    <tr>
+      <td class="plain total">On-line help</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain yup">yup</td>
+    </tr>
+    <tr>
+      <td class="plain total">Polyglot items, i18n, l10n</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain nope">nope</td>
+    </tr>
+    <tr>
+      <td class="plain total">Security</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain nope">nope</td>
+    </tr>
+    <tr>
+      <td class="plain total">Scripting</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain nope">nope</td>
+    </tr>
+    <tr>
+      <td class="plain total">Text recognition</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain nope">nope</td>
+    </tr>
+    <tr>
+      <td class="plain total">Installers</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain nope">nope</td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain"></td>
+      <td class="plain nope">nope</td>
+    </tr>
+  </table>  
+  
+</div>
+
