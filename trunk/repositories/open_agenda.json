@@ -734,7 +734,7 @@
          "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
     "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "f173c410-0c6f-11da-beea-000c414ce854",
-        "value": "Insecticide-treated nets"  }
+        "value": "Mosquito nets"  }
 },
 { "Entry": {
          "uuid": "25b57391-0c70-11da-beea-000c414ce854",
@@ -743,13 +743,6 @@
     "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
 }  ]
   },
-{ "Entry": {
-         "uuid": "281ef980-0c70-11da-beea-000c414ce854",
-         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
-    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
-         "item": "f173c410-0c6f-11da-beea-000c414ce854",
-        "value": "ITNs"  }
-},
 { "Entry": {
          "uuid": "65111620-0c70-11da-beea-000c414ce854",
 "previousEntry": "bea616f1-0c6f-11da-beea-000c414ce854",
@@ -882,7 +875,7 @@
          "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
     "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "bf0383c0-0c70-11da-beea-000c414ce854",
-        "value": "Mitigates"  }
+        "value": "Related problems"  }
 },
 { "Entry": {
          "uuid": "c3b9dfe1-0c70-11da-beea-000c414ce854",
@@ -906,7 +899,7 @@
          "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
     "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "c3bec1e0-0c70-11da-beea-000c414ce854",
-        "value": "Mitigated by"  }
+        "value": "Related solutions"  }
 },
 { "Entry": {
          "uuid": "ca7819f1-0c70-11da-beea-000c414ce854",
@@ -950,13 +943,6 @@
   { "Transaction": [
 { "Item": { "uuid": "f38808a0-0c70-11da-beea-000c414ce854" } },
 { "Entry": {
-         "uuid": "40a76180-0c71-11da-beea-000c414ce854",
-         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
-    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
-         "item": "f38808a0-0c70-11da-beea-000c414ce854",
-        "value": "IPTp"  }
-},
-{ "Entry": {
          "uuid": "40a76181-0c71-11da-beea-000c414ce854",
          "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
          "item": ["f38808a0-0c70-11da-beea-000c414ce854", "c5407550-0c6f-11da-beea-000c414ce854"],
@@ -968,7 +954,7 @@
          "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
     "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "f38808a0-0c70-11da-beea-000c414ce854",
-        "value": "Intermittent presumptive treatment"  }
+        "value": "Treat expectant mothers"  }
 },
 { "Entry": {
          "uuid": "4a358470-0c71-11da-beea-000c414ce854",
@@ -979,13 +965,6 @@
   // =======================================================================
   { "Transaction": [
 { "Item": { "uuid": "40ac1c70-0c71-11da-beea-000c414ce854" } },
-{ "Entry": {
-         "uuid": "70d73240-0c71-11da-beea-000c414ce854",
-         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
-    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
-         "item": "40ac1c70-0c71-11da-beea-000c414ce854",
-        "value": "SP to ACT"  }
-},
 { "Entry": {
          "uuid": "70d73241-0c71-11da-beea-000c414ce854",
          "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
@@ -998,7 +977,7 @@
          "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
     "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "40ac1c70-0c71-11da-beea-000c414ce854",
-        "value": "Switching from SP to ACT"  }
+        "value": "Switch drugs"  }
 },
 { "Entry": {
          "uuid": "9518d000-0c71-11da-beea-000c414ce854",
@@ -1170,18 +1149,6 @@
     "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "beb46ed0-0c6f-11da-beea-000c414ce854",
         "value": "00001005-ce7f-11d9-8cd5-0011113ae5d6"  }
-},
-{ "Entry": {
-         "uuid": "76ff9f80-0c72-11da-beea-000c414ce854",
-         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
-         "item": ["f173c410-0c6f-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
-    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
-},
-{ "Entry": {
-         "uuid": "7c2f9870-0c72-11da-beea-000c414ce854",
-         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
-         "item": ["f38808a0-0c70-11da-beea-000c414ce854", "670b74a0-0c72-11da-beea-000c414ce854"],
-    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
 },
   // =======================================================================
   { "Transaction": [
@@ -3031,4 +2998,42 @@
          "uuid": "05e6fb50-0ec9-11da-aba8-000c414ce854",
        "record": "fbd80fa0-0ec8-11da-aba8-000c414ce854",
    "retainFlag": "false"  }
+},
+{ "Vote": {
+         "uuid": "c6682930-0fa0-11da-b0fe-000c414ce854",
+       "record": "f167dd30-0c6f-11da-beea-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Entry": {
+         "uuid": "c8e250f0-0fa0-11da-b0fe-000c414ce854",
+         "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "beb46ed0-0c6f-11da-beea-000c414ce854",
+        "value": "00001003-ce7f-11d9-8cd5-0011113ae5d6"  }
+},
+{ "Ordinal": {
+         "uuid": "ccaa5570-0fa0-11da-b0fe-000c414ce854",
+       "record": "c8e250f0-0fa0-11da-b0fe-000c414ce854",
+        "value": "11da0c6ff159855049dfc612"  }
+},
+{ "Entry": {
+         "uuid": "0bf07430-0fa1-11da-8622-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "f173c410-0c6f-11da-beea-000c414ce854",
+        "value": "Insecticde-treated mosquito nets"  }
+},
+{ "Entry": {
+         "uuid": "4344e1f0-0fa1-11da-93ca-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "40ac1c70-0c71-11da-beea-000c414ce854",
+        "value": "Switch from SP to ACT"  }
+},
+{ "Entry": {
+         "uuid": "6b8ee890-0fa1-11da-9ca1-000c414ce854",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "f38808a0-0c70-11da-beea-000c414ce854",
+        "value": "Intermittent presumptive treatment for expectant mothers"  }
 }
