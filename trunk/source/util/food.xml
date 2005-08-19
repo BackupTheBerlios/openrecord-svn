@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<Food_Glossary>
+<Record>
+<name>carrot</name><color>orange</color><flavor>sweet</flavor><vitamins><A>lots</A><C>lots</C></vitamins>
+</Record>
+<Record>
+<name>cheese puff</name><color>orange</color><flavor>salty</flavor><flavor>cheesy</flavor><vitamins><A>0.0</A><C>0.0</C></vitamins>
+</Record>
+<Record>
+<name>radish</name><color>red</color><flavor>hot</flavor><vitamins><A>maybe</A><C>some</C></vitamins>
+</Record>
+</Food_Glossary>
+
