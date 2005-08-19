@@ -531,7 +531,7 @@ World.prototype.getCategoryCalledType = function() {
   return this._categoryCalledType;
 };
 
-World.prototype.getCategoryCalledType = function() {
+World.prototype.getCategoryCalledTag = function() {
   return this._categoryCalledTag;
 };
 
