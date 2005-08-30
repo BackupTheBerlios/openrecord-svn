@@ -37,18 +37,18 @@
 function XmlTextNodeToAttributeSpecifier(tagPath, attribute) {
   Util.assert(tagPath instanceof Array);
   Util.assert(attribute instanceof Item);
-  this.tagPath = tagPath;
-  this.attribute = attribute;
+  this._tagPath = tagPath;
+  this._attribute = attribute;
   var attributeCalledExpectedType = attribute.getWorld().getAttributeCalledExpectedType();
   var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
-  this.listOfTypes = [];
+  this._listOfTypes = [];
   for (j in listOfExpectedTypeEntries) {
     var entry = listOfExpectedTypeEntries[j];
-    this.listOfTypes.push(entry.getValue());
+    this._listOfTypes.push(entry.getValue());
   }
   var attributeCalledInverseAttribute = attribute.getWorld().getAttributeCalledInverseAttribute();
   var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
-  this.inverseAttribute = inverseAttributeEntry? inverseAttributeEntry.getValue(attribute) : null;
+  this._inverseAttribute = inverseAttributeEntry? inverseAttributeEntry.getValue(attribute) : null;
 }
 
 /**
@@ -59,18 +59,18 @@ function XmlTextNodeToAttributeSpecifier(tagPath, attribute) {
  */
 function XmlAttributeToAttributeSpecifier(xmlAttributeName, attribute) {
   Util.assert(attribute instanceof Item);
-  this.xmlAttributeName = xmlAttributeName;
-  this.attribute = attribute;
+  this._xmlAttributeName = xmlAttributeName;
+  this._attribute = attribute;
   var attributeCalledExpectedType = attribute.getWorld().getAttributeCalledExpectedType();
   var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
-  this.listOfTypes = [];
+  this._listOfTypes = [];
   for (j in listOfExpectedTypeEntries) {
     var entry = listOfExpectedTypeEntries[j];
-    this.listOfTypes.push(entry.getValue());
+    this._listOfTypes.push(entry.getValue());
   }
   var attributeCalledInverseAttribute = attribute.getWorld().getAttributeCalledInverseAttribute();
   var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
-  this.inverseAttribute = inverseAttributeEntry? inverseAttributeEntry.getValue(attribute) : null;
+  this._inverseAttribute = inverseAttributeEntry? inverseAttributeEntry.getValue(attribute) : null;
 }
 
 /**
@@ -90,8 +90,9 @@ function XmlConverter(world, url, nameSpace, itemTagName, itemCategory) {
   var urlParts = url.split(urlSeparators);
   var len = urlParts.length;
   Util.assert(urlParts[len-1] == "xml");
-  if (nameSpace == null)
+  if (!nameSpace) {
     nameSpace = urlParts[len-2];
+  }
   Util.assert(Util.isString(itemTagName));
 
   var xmlDoc = document.implementation.createDocument("", "doc", null);
@@ -117,7 +118,7 @@ function XmlConverter(world, url, nameSpace, itemTagName, itemCategory) {
  */
 XmlConverter.prototype.getItemCategory = function() {
   return this._itemCategory;
-}
+};
 
 /**
  * Given the URL of an XML file, a tag name used in the file, and optionally
@@ -159,7 +160,7 @@ XmlConverter.prototype.getItemCategory = function() {
 XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
   world.beginTransaction();
   var listOfOutputItems = [];
-  if (xmlToAttributeSpecifiers == null) {
+  if (!xmlToAttributeSpecifiers) {
     listOfOutputItems = this._doDefaultConversion(this._world, this._nameSpace, this._itemElements, this._itemCategory);
   }
   else {
@@ -169,15 +170,15 @@ XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers,
       var newItem = world.newItem();
       newItem.assignToCategory(this._itemCategory);
       for (var j in xmlToAttributeSpecifiers) {
-        var tagPath = xmlToAttributeSpecifiers[j].tagPath;
+        var tagPath = xmlToAttributeSpecifiers[j]._tagPath;
         this._processElementTree(0, tagPath.length, this._itemElements[i], newItem, xmlToAttributeSpecifiers[j]);
       }
       if (xmlAttributeToAttributeSpecifiers) {
         for (j in xmlAttributeToAttributeSpecifiers) {
-          var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j].xmlAttributeName;
+          var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j]._xmlAttributeName;
           var xmlAttributeValue = this._itemElements[i].getAttribute(xmlAttributeName);
-          if (xmlAttributeValue != "") {
-            newItem.addEntryForAttribute(xmlAttributeToAttributeSpecifiers[j].attribute, xmlAttributeValue);
+          if (xmlAttributeValue !== "") {
+            newItem.addEntryForAttribute(xmlAttributeToAttributeSpecifiers[j]._attribute, xmlAttributeValue);
           }
         }
       }
@@ -186,7 +187,7 @@ XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers,
   }
   world.endTransaction();
   return listOfOutputItems;
-}
+};
 
 /**
  * @scope    public instance method
@@ -197,20 +198,22 @@ XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers,
  * @return   Returns an array of modified or created items.
  */
 XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier, xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
+  var matchXmlAttribute;
   if (equalitySpecifier instanceof XmlAttributeToAttributeSpecifier) {
-    var matchXmlAttribute = true;
-    var xmlAttributeToMatch = equalitySpecifier.xmlAttributeName;
+    matchXmlAttribute = true;
+    var xmlAttributeToMatch = equalitySpecifier._xmlAttributeName;
   } else {
     Util.assert(equalitySpecifier instanceof XmlTextNodeToAttributeSpecifier,
                 "equalitySpecifier should be of type XmlTextNodeToAttributeSpecifier or XmlAttributeToAttributeSpecifier.");
-    var matchXmlAttribute = false;
-    var xmlTagPathToMatch = equalitySpecifier.tagPath;
+    matchXmlAttribute = false;
+    var xmlTagPathToMatch = equalitySpecifier._tagPath;
   }
   world.beginTransaction();
   var itemsInItemCategory = this._world.getItemsInCategory(this._itemCategory);
   var hash = {};
+  var matchString;
   for (var j in itemsInItemCategory) {
-    var matchString = itemsInItemCategory[j].getSingleEntryFromAttribute(equalitySpecifier.attribute);
+    matchString = itemsInItemCategory[j].getSingleEntryFromAttribute(equalitySpecifier._attribute);
     if (matchString) {
       hash[matchString.getValue()] = itemsInItemCategory[j];
     }
@@ -219,27 +222,28 @@ XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier
   for (var i = 0; i < this._itemElements.length; ++i) {
     itemElement = this._itemElements[i];
     if (matchXmlAttribute) {
-      var matchString = itemElement.getAttribute(xmlAttributeToMatch);
+      matchString = itemElement.getAttribute(xmlAttributeToMatch);
     } else {
-      var matchString = this._getTextForTagPath(itemElement, xmlTagPathToMatch);
+      matchString = this._getTextForTagPath(itemElement, xmlTagPathToMatch);
     }
+    var item;
     if (hash[matchString]) {
-      var item = hash[matchString];
+      item = hash[matchString];
     } else {
-      var item = world.newItem();
+      item = world.newItem();
       item.assignToCategory(this._itemCategory);
-      item.addEntryForAttribute(equalitySpecifier.attribute, matchString);
+      item.addEntryForAttribute(equalitySpecifier._attribute, matchString);
     }
-    for (var j in xmlToAttributeSpecifiers) {
-      var tagPath = xmlToAttributeSpecifiers[j].tagPath;
+    for (j in xmlToAttributeSpecifiers) {
+      var tagPath = xmlToAttributeSpecifiers[j]._tagPath;
       this._processElementTree(0, tagPath.length, this._itemElements[i], item, xmlToAttributeSpecifiers[j]);
     }
     if (xmlAttributeToAttributeSpecifiers) {
       for (j in xmlAttributeToAttributeSpecifiers) {
-        var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j].xmlAttributeName;
+        var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j]._xmlAttributeName;
         var xmlAttributeValue = this._itemElements[i].getAttribute(xmlAttributeName);
-        if (xmlAttributeValue != "") {
-          item.addEntryForAttribute(xmlAttributeToAttributeSpecifiers[j].attribute, xmlAttributeValue);
+        if (xmlAttributeValue !== "") {
+          item.addEntryForAttribute(xmlAttributeToAttributeSpecifiers[j]._attribute, xmlAttributeValue);
         }
       }
     }
@@ -247,7 +251,7 @@ XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier
   }
   world.endTransaction();
   return listOfOutputItems;
-}
+};
 
 XmlConverter.prototype._doDefaultConversion = function(world, nameSpace, itemElements, itemCategory) {
   var listOfOutputItems = [];
@@ -271,38 +275,40 @@ XmlConverter.prototype._doDefaultConversion = function(world, nameSpace, itemEle
     listOfOutputItems.push(newItem);
   }
   return listOfOutputItems;
-}
+};
 
 XmlConverter.prototype._processElementTree = function(level, maxLevel, node, newItem, xmlToAttributeSpecifier) {
   if (level == maxLevel) {
     if (node.childNodes && node.childNodes.length > 0 && node.childNodes[0].nodeType == Node.TEXT_NODE) {
-      value = EntryView._transformValueToExpectedType(world, node.childNodes[0].nodeValue, xmlToAttributeSpecifier.listOfTypes);
-      if (xmlToAttributeSpecifier.inverseAttribute) {
-        newItem.addConnectionEntry(xmlToAttributeSpecifier.attribute, value, xmlToAttributeSpecifier.inverseAttribute);
+      value = EntryView._transformValueToExpectedType(world, node.childNodes[0].nodeValue, xmlToAttributeSpecifier._listOfTypes);
+      if (xmlToAttributeSpecifier._inverseAttribute) {
+        newItem.addConnectionEntry(xmlToAttributeSpecifier._attribute, value, xmlToAttributeSpecifier._inverseAttribute);
       } else {
-        newItem.addEntryForAttribute(xmlToAttributeSpecifier.attribute, value);
+        newItem.addEntryForAttribute(xmlToAttributeSpecifier._attribute, value);
       }
     }
     return;
   }
-  var tagName = xmlToAttributeSpecifier.tagPath[level];
+  var tagName = xmlToAttributeSpecifier._tagPath[level];
   var matchingElements = node.getElementsByTagName(tagName);
-  if (matchingElements == null)
+  if (!matchingElements) {
     return;
+  }
   for (i in matchingElements) {
     if (matchingElements[i].childNodes && matchingElements[i].childNodes.length > 0) {
-      this._processElementTree(level + 1, maxLevel, matchingElements[i], newItem, xmlToAttributeSpecifier)
+      this._processElementTree(level + 1, maxLevel, matchingElements[i], newItem, xmlToAttributeSpecifier);
     }
   }
-}
+};
 
 XmlConverter.prototype._getTextForTagPath = function(itemElement, xmlTagPathToMatch) {
   var node = itemElement;
   for (var i in xmlTagPathToMatch) {
     var tagName = xmlTagPathToMatch[i];
     var matchingElements = node.getElementsByTagName(tagName);
-    if (matchingElements == null)
+    if (!matchingElements) {
       return null;
+    }
     node = matchingElements[0];
   }
   if (node.childNodes && node.childNodes.length > 0 && node.childNodes[0].nodeType == Node.TEXT_NODE) {
@@ -310,7 +316,7 @@ XmlConverter.prototype._getTextForTagPath = function(itemElement, xmlTagPathToMa
   } else {
     return null;
   }
-}
+};
 
 // -------------------------------------------------------------------
 // End of file

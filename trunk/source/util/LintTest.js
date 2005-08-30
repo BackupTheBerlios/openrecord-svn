@@ -39,6 +39,7 @@ function setUp() {
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
+    "XmlConverter.js",
     "Util.js",
     "UtilTest.js",
     "DateValue.js",
