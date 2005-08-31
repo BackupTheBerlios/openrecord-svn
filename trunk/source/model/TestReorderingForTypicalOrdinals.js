@@ -2,6 +2,9 @@
  TestReorderingForTypicalOrdinals.js
  
 ******************************************************************************
+ Written in 2005 by 
+    Mignon Belongie
+  
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
     http://creativecommons.org/licenses/publicdomain/
@@ -52,7 +55,9 @@ function setUp() {
   utilAssertReportedError = false;
   Util.setErrorReportCallback(errorReporter);
   var pathToTrunkDirectory = "../../../";
-  var virtualServer = new StubVirtualServer(pathToTrunkDirectory, {"_generateUuid":mockUuidGenerator});
+  // var virtualServer = new StubVirtualServer(pathToTrunkDirectory, {"_generateUuid":mockUuidGenerator});
+  var virtualServer = new StubVirtualServer(pathToTrunkDirectory);
+  StubVirtualServer.prototype._generateUuid = mockUuidGenerator;
 /*
 You can use DeltaVirtualServer instead if you want to append all transactions to a file for debugging purposes.
 Note that the tests will run a lot slower if you do.
@@ -71,7 +76,7 @@ Note that the tests will run a lot slower if you do.
 
   var annsPassword = "Ann's password";
   var userAnn = world.newUser("Ann Doe", annsPassword);
-  assertTrue("Ann has the expected uuid", userAnn.getUniqueKeyString() == annUuid1);
+  assertTrue("Ann has the expected uuid", userAnn.getUuidString() == annUuid1);
   world.login(userAnn, annsPassword);
 
   foodUuid1    = "20000000-2222-3333-4444-555555555555";
@@ -99,13 +104,13 @@ Note that the tests will run a lot slower if you do.
   mockUuidGenerator.queueOfUuids.push(taffyUuid);
   mockUuidGenerator.queueOfUuids.push(taffyNameUuid);
   sushi = world.newItem("Sushi");
-  assertTrue("sushi has the expected uuid", sushi.getUniqueKeyString() == sushiUuid);
+  assertTrue("sushi has the expected uuid", sushi.getUuidString() == sushiUuid);
   pesto = world.newItem("Pesto");
-  assertTrue("pesto has the expected uuid", pesto.getUniqueKeyString() == pestoUuid);
+  assertTrue("pesto has the expected uuid", pesto.getUuidString() == pestoUuid);
   guava = world.newItem("Guava");
-  assertTrue("guava has the expected uuid", guava.getUniqueKeyString() == guavaUuid);
+  assertTrue("guava has the expected uuid", guava.getUuidString() == guavaUuid);
   taffy = world.newItem("Taffy");
-  assertTrue("taffy has the expected uuid", taffy.getUniqueKeyString() == taffyUuid);
+  assertTrue("taffy has the expected uuid", taffy.getUuidString() == taffyUuid);
 
   sushiLinkUuid    = "60000000-2222-3333-4444-555555555555";
   mockUuidGenerator.queueOfUuids.push(sushiLinkUuid);

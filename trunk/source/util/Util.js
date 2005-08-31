@@ -282,21 +282,37 @@ Util.isDate = function(value) {
 
 
 /**
- * Returns true if the given value is a UUID. Here's an example of
- * a valid UUID: "e3bf3e14-e8f4-43e2-866c-121c5ab70c0b".
+ * Returns true if the given value is a UUID object. 
  *
  * @scope    public class method
  * @param    value    Any object or literal value. 
- * @return   A boolean value. True if inValue is a UUID.
+ * @return   A boolean value. True if value is a UUID object.
  */
 Util.isUuid = function(value) {
-  // PENDING: 
-  // We should include more rigorous tests, to make sure this
-  // is really a UUID, not just a string with 36 characters.
-  if ((typeof value) != "string") {
-    return false;
+  return (value instanceof Uuid);
+};
+
+
+/**
+ * Returns true if the given value is a UUID object or a string
+ * that represents a UUID. Here's an example of a string that
+ * represents a UUID: "e3bf3e14-e8f4-43e2-866c-121c5ab70c0b".
+ *
+ * @scope    public class method
+ * @param    value    Any object or literal value. 
+ * @return   A boolean value. True if value is a UUID.
+ */
+Util.isUuidValue = function(value) {
+  if (value instanceof Uuid) {
+    return true;
   }
-  return (value.length == 36);  
+  if ((typeof value) == "string") {
+    // PENDING: 
+    // We should include more rigorous tests, to make sure this
+    // is really a UUID, not just a string with 36 characters.
+    return (value.length == 36);
+  }
+  return false;
 };
 
 

@@ -105,31 +105,31 @@ BarChartPlugin.prototype.refresh = function() {
   var attribute = null;
   var listOfEntries;
   var firstEntry;
-  var attributeKey;
-  var hashTableOfNumericValueIncidenceKeyedByAttributeKey = {};
-  var hashTableOfAttributesKeyedByAttributeKey = {};
+  var attributeUuid;
+  var hashTableOfNumericValueIncidenceKeyedByUuid = {};
+  var hashTableOfAttributesKeyedByUuid = {};
   
   // for each attribute, count the number of items where that attribute has a numeric value
   var listOfContentItems = this.fetchItems();
   for (var iKey in listOfContentItems) {
     contentItem = listOfContentItems[iKey];
     var listOfAttributesForItem = contentItem.getAttributes();
-    for (attributeKey in listOfAttributesForItem) {
-      attribute = listOfAttributesForItem[attributeKey];
-      var attributeKeyString = attribute.getUniqueKeyString();
-      hashTableOfAttributesKeyedByAttributeKey[attributeKeyString] = attribute;
+    for (var i in listOfAttributesForItem) {
+      attribute = listOfAttributesForItem[i];
+      attributeUuid = attribute.getUuid();
+      hashTableOfAttributesKeyedByUuid[attributeUuid] = attribute;
       listOfEntries = contentItem.getEntriesForAttribute(attribute);
       if (listOfEntries) {
         firstEntry = listOfEntries[0];
         if (firstEntry) {
           var value = firstEntry.getValue(contentItem);
           if (Util.isNumber(value)) {
-            var count = hashTableOfNumericValueIncidenceKeyedByAttributeKey[attributeKeyString];
+            var count = hashTableOfNumericValueIncidenceKeyedByUuid[attributeUuid];
             if (!count) {
               count = 0;
             }
             count += 1;
-            hashTableOfNumericValueIncidenceKeyedByAttributeKey[attributeKeyString] = count;
+            hashTableOfNumericValueIncidenceKeyedByUuid[attributeUuid] = count;
           }
         }
       }
@@ -139,10 +139,10 @@ BarChartPlugin.prototype.refresh = function() {
   // find the attribute for which most of the items have a numeric value 
   var maxIncidence = 0;
   var selectedAttribute = null;
-  for (attributeKey in hashTableOfNumericValueIncidenceKeyedByAttributeKey) {
-    var incidence = hashTableOfNumericValueIncidenceKeyedByAttributeKey[attributeKey];
+  for (attributeUuid in hashTableOfNumericValueIncidenceKeyedByUuid) {
+    var incidence = hashTableOfNumericValueIncidenceKeyedByUuid[attributeUuid];
     if (incidence > maxIncidence) {
-      selectedAttribute = hashTableOfAttributesKeyedByAttributeKey[attributeKey];
+      selectedAttribute = hashTableOfAttributesKeyedByUuid[attributeUuid];
       maxIncidence = incidence;
     }
   }

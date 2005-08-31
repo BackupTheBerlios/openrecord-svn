@@ -167,6 +167,7 @@ PageView.prototype.doInitialDisplay = function() {
   // PENDING: 
   // Turn off the links-to-sections table-of-contents feature until
   // we have the bugs worked out.
+  // See: http://lists.berlios.de/pipermail/openrecord-dev/2005-August/000208.html
   var PENDING_include_links_to_sections = false; 
   
   if (PENDING_include_links_to_sections) {
@@ -181,7 +182,7 @@ PageView.prototype.doInitialDisplay = function() {
     var section = entryForSection.getConnectedItem(this._pageItem);
     if (section) {
       if (PENDING_include_links_to_sections && sectionNavigatorDiv) {
-        View.appendNewElement(sectionNavigatorDiv, "a", null, {'href' : '#' + section.getUniqueKeyString()}, section.getDisplayName());
+        View.appendNewElement(sectionNavigatorDiv, "a", null, {'href' : '#' + section.getUuidString()}, section.getDisplayName());
         View.appendNewTextNode(sectionNavigatorDiv, " ");
       }
       this._buildNewSection(section);

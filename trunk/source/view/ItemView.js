@@ -94,10 +94,10 @@ ItemView.prototype.refresh = function() {
   var listOfStrings = [];
 
   // add an <h1> heading with the name of the page
-  listOfStrings.push("<h1 id=\"" + RootView.URL_ITEM_PREFIX + this._item._getUuid() + "\">" + this._item.getDisplayName() + "</h1>");
+  listOfStrings.push("<h1 id=\"" + RootView.URL_ITEM_PREFIX + this._item.getUuidString() + "\">" + this._item.getDisplayName() + "</h1>");
 
   // add a <div> element for the detail plugin
-  var detailDivId = ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this._item._getUuid();
+  var detailDivId = ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this._item.getUuidString();
   listOfStrings.push("<div id=\"" + detailDivId + "\"></div>");
 
   // write out all the new content 

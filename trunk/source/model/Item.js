@@ -321,13 +321,13 @@ Item.prototype.getEntriesForAttribute = function(attribute) {
   Util.assert(attribute instanceof Item);
   
   if (this._cachedEntriesKeyedByAttributeUuid !== null) {
-    var listOfCachedEntries = this._cachedEntriesKeyedByAttributeUuid[attribute._getUuid()];
+    var listOfCachedEntries = this._cachedEntriesKeyedByAttributeUuid[attribute.getUuid()];
     if (listOfCachedEntries) {
       return listOfCachedEntries;
     }
   }
   
-  var listOfEntriesForAttribute = this._hashTableOfEntryListsKeyedByAttributeUuid[attribute._getUuid()];
+  var listOfEntriesForAttribute = this._hashTableOfEntryListsKeyedByAttributeUuid[attribute.getUuid()];
   if (!listOfEntriesForAttribute) {
     listOfEntriesForAttribute = [];
   }
@@ -367,7 +367,7 @@ Item.prototype.getEntriesForAttribute = function(attribute) {
   if (!this._cachedEntriesKeyedByAttributeUuid) {
     this._cachedEntriesKeyedByAttributeUuid = {};
   }
-  this._cachedEntriesKeyedByAttributeUuid[attribute._getUuid()] = filteredListOfEntries;
+  this._cachedEntriesKeyedByAttributeUuid[attribute.getUuid()] = filteredListOfEntries;
 
   return filteredListOfEntries;
 };
@@ -560,7 +560,7 @@ Item.prototype.getSingleStringValueFromAttribute = function(attribute) {
  * @return   A string with a description of the item.
  */
 Item.prototype.toString = function() {
-  var returnString = "[Item #" + this.getUniqueKeyString() + " ";
+  var returnString = "[Item #" + this.getUuid() + " ";
   var attributeCategory = this.getWorld().getAttributeCalledCategory();
   var listOfCategories = this.getEntriesForAttribute(attributeCategory);
   for (var key in listOfCategories) {
@@ -711,7 +711,7 @@ Item.prototype._noteChanges = function(listOfRecords) {
  * @param    attribute    The attribute that this entry is assigned to. 
  */
 Item.prototype.__addEntryToListOfEntriesForAttribute = function(entry, attribute) {
-  var attributeUuid = attribute._getUuid();
+  var attributeUuid = attribute.getUuid();
   var listOfEntries = this._hashTableOfEntryListsKeyedByAttributeUuid[attributeUuid];
   if (!listOfEntries) {
     listOfEntries = [];

@@ -99,6 +99,8 @@ OpenRecordLoader.loadEverything = function(path) {
     "third_party/gtd_tiddlywiki/FileSaver.js",
     // util
     "source/util/Uuid.js",
+    "source/util/RandomUuid.js",
+    "source/util/TimeBasedUuid.js",
     "source/util/Util.js",
     "source/util/Cookie.js",
     "source/util/DateValue.js",

@@ -114,7 +114,7 @@ OutlinePlugin.prototype.refresh = function() {
     // PENDING: 
     //  We shouldn't call the private method _getUuid()
     //  We need a better way to get the URL for a content item
-    anchorElement.setAttribute("href", RootView.URL_HASH_ITEM_PREFIX + contentItem._getUuid());
+    anchorElement.setAttribute("href", RootView.URL_HASH_ITEM_PREFIX + contentItem.getUuidString());
 
     // View.appendNewTextNode(anchorElement, "(more &#8658;)");
     anchorElement.innerHTML = "(more &#8658;)";

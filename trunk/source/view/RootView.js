@@ -301,7 +301,7 @@ RootView.prototype.getUrlForItem = function(item) {
   } else {
     prefix = RootView.URL_HASH_ITEM_PREFIX;
   }
-  var url = prefix + item._getUuid();
+  var url = prefix + item.getUuidString();
   return url;
 };
 
@@ -358,12 +358,12 @@ RootView.prototype.setCurrentContentViewFromUrl = function() {
   if (!contentViewToSwitchTo) {
     var page = this.getHomePage();
     if (page) {
-      contentViewToSwitchTo = this._hashTableOfPageViewsKeyedByUuid[page._getUuid()];
+      contentViewToSwitchTo = this._hashTableOfPageViewsKeyedByUuid[page.getUuid()];
       if (!contentViewToSwitchTo) {
         divElement = window.document.createElement("div"); 
         this._contentViewDivElement.appendChild(divElement);
         contentViewToSwitchTo = new PageView(this, divElement, page);
-        this._hashTableOfPageViewsKeyedByUuid[page._getUuid()] = contentViewToSwitchTo;
+        this._hashTableOfPageViewsKeyedByUuid[page.getUuid()] = contentViewToSwitchTo;
       }
     }
   }

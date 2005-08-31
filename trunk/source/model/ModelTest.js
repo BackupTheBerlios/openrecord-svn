@@ -50,10 +50,26 @@ function setUp() {
   world = new World(stubVirtualServer);
 }
 
+function testUuids() {
+  var janesPassword = "jane's password";
+  var userJane = world.newUser("Jane Doe", janesPassword);  
+
+  world.login(userJane, janesPassword);
+  var apple = world.newItem("Apple");
+  var brownie = world.newItem("Brownie");
+  var cupcake = world.newItem("Cupcake");
+  
+  var appleUuidString = apple.getUuidString();
+  var appleToo = world.getItemFromUuid(appleUuidString);
+  assertTrue('We can retrieve "apple" from its UUID string', (apple == appleToo)); 
+  
+  var appleUuid = apple.getUuid();
+  var appleAgain = world.getItemFromUuid(appleUuid);
+  assertTrue('We can retrieve "apple" from its UUID', (apple == appleAgain)); 
+}
+
 function testGetUserstamp() {
   var listOfUsers = world.getUsers();  
-  // var axiomaticUser = listOfUsers[0];
-  // assertTrue('The axiomaticUser created the axiomaticUser', (axiomaticUser.getUserstamp() == axiomaticUser));
 
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);

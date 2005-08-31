@@ -389,7 +389,7 @@ Entry.prototype.getDisplayString = function(callingItem) {
  * @return   A string with a description of the item.
  */
 Entry.prototype.toString = function() {
-  var returnString = "[Entry #" + this.getUniqueKeyString() + 
+  var returnString = "[Entry #" + this.getUuid() + 
     " \"" + this.getDisplayString() + "\"" + "]";
   return returnString;
 };

@@ -37,6 +37,7 @@
 /*global Util  */
 /*global World  */
 /*global Record  */
+/*global RandomUuid  */
 // -------------------------------------------------------------------
 
 
@@ -110,11 +111,7 @@ ContentRecord.prototype._addOrdinal = function(ordinal) {
  * @return   A number.
  */
 ContentRecord.prototype.getOrdinalNumberAtCreation = function() {
-  // PENDING: we should cache this value in the Uuid instance instead of in the ContentRecord instance
-  if (!this._ordinalNumberAtCreation) {
-    this._ordinalNumberAtCreation = Uuid.getOriginalOrdinalFromUuid(this._uuid);
-  }
-  return this._ordinalNumberAtCreation;
+  return this.getUuid().getTimestampAsHexString();
 };
 
 
@@ -279,16 +276,16 @@ ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRec
         firstOrdinalNumber = thirdOrdinalNumber;
         thirdOrdinalNumber = temp;
       }
-      secondOrdinalNumber = firstOrdinalNumber + Uuid._getRandomEightCharacterHexString();
+      secondOrdinalNumber = firstOrdinalNumber + RandomUuid._generateRandomEightCharacterHexString();
       var zeroes = "";
       while (secondOrdinalNumber >= thirdOrdinalNumber) {
         zeroes += "0";
-        secondOrdinalNumber = firstOrdinalNumber + zeroes + Uuid._getRandomEightCharacterHexString();
+        secondOrdinalNumber = firstOrdinalNumber + zeroes + RandomUuid._generateRandomEightCharacterHexString();
       }
     }
   }
   if (firstOrdinalNumber && !thirdOrdinalNumber) {
-    secondOrdinalNumber = firstOrdinalNumber + Uuid._getRandomEightCharacterHexString();
+    secondOrdinalNumber = firstOrdinalNumber + RandomUuid._generateRandomEightCharacterHexString();
   }
   if (!firstOrdinalNumber && thirdOrdinalNumber) {
     secondOrdinalNumber = thirdOrdinalNumber;
@@ -304,7 +301,7 @@ ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRec
     while (secondOrdinalNumber.length < origLen) {
       secondOrdinalNumber += "f";
     }
-    secondOrdinalNumber += Uuid._getRandomEightCharacterHexString();
+    secondOrdinalNumber += RandomUuid._generateRandomEightCharacterHexString();
   }
   this.getWorld()._newOrdinal(this, secondOrdinalNumber);
 };

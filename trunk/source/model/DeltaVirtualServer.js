@@ -252,7 +252,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
       }
       if (Util.isObjectInSet(item, listOfUsers)) {
         var user = item;
-        var password = this._hashTableOfUserAuthenticationInfo[user.getUniqueKeyString()];
+        var password = this._hashTableOfUserAuthenticationInfo[user.getUuid()];
         var passwordString = "null";
         if (password) {
           passwordString = '"' + password + '"';
@@ -263,7 +263,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
           listOfStrings.push(indent + '// ' + this._getTypedDisplayStringForItem(user) + '\n');
         }
         listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_USER_CLASS + '": ' + '{\n');
-        listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_USER + '": "' + user._getUuid() + '",\n');
+        listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_USER + '": ' + user._getUuidInQuotes() + ',\n');
         listOfStrings.push(indent + '     "' + StubVirtualServer.JSON_MEMBER_PASSWORD + '": ' + passwordString + ' }\n');
         listOfStrings.push(indent + '}');
       }
@@ -277,8 +277,8 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         listOfStrings.push(indent + '// vote to ' + deleteVsRetainString + " " + entryDisplayNameSubstring + '\n');
       }
       listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{\n');
-      listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": "' + vote._getUuid() + '",\n');
-      listOfStrings.push(indent + '       "' + StubVirtualServer.JSON_MEMBER_RECORD + '": "' + vote.getContentRecord()._getUuid() + '",\n');
+      listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": ' + vote._getUuidInQuotes() + ',\n');
+      listOfStrings.push(indent + '       "' + StubVirtualServer.JSON_MEMBER_RECORD + '": ' + vote.getContentRecord()._getUuidInQuotes() + ',\n');
       listOfStrings.push(indent + '   "' + StubVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '"');
       listOfStrings.push('  }\n');
       listOfStrings.push(indent + '}');
@@ -291,8 +291,8 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         listOfStrings.push(indent + '// ordinal # ' + ordinal.getOrdinalNumber() + " for " + entryDisplayNameSubstring + '\n');
       }
       listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
-      listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": "' + ordinal._getUuid() + '",\n');
-      listOfStrings.push(indent + '       "' + StubVirtualServer.JSON_MEMBER_RECORD + '": "' + ordinal.getContentRecord()._getUuid() + '",\n');
+      listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": ' + ordinal._getUuidInQuotes() + ',\n');
+      listOfStrings.push(indent + '       "' + StubVirtualServer.JSON_MEMBER_RECORD + '": ' + ordinal.getContentRecord()._getUuidInQuotes() + ',\n');
       listOfStrings.push(indent + '        "' + StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '"');
       listOfStrings.push('  }\n');
       listOfStrings.push(indent + '}');
@@ -301,7 +301,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
     if (record instanceof Entry) {
       var entry = record;
       var entryType = entry.getType();
-      var typeUuid = entryType._getUuid();
+      var typeUuid = entryType.getUuid();
       // var entryString = "";
       if (generateComments) {
         listOfStringsForEntry = [];
@@ -314,11 +314,11 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
       if (previousEntry) {
         listOfStringsForEntry.push(indent + '"' + StubVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": ' + previousEntry._getUuidInQuotes() + ',\n');
       }
-      listOfStringsForEntry.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_TYPE + '": "' + typeUuid + '",\n');
+      listOfStringsForEntry.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_TYPE + '": "' + typeUuid.toString() + '",\n');
       if (generateComments) {
         commentString = "";
       }
-      if (typeUuid == World.UUID_FOR_TYPE_CONNECTION) {
+      if (typeUuid.toString() == World.UUID_FOR_TYPE_CONNECTION) {
         var pairOfItems = entry.getItem();
         var firstItem = pairOfItems[0];
         var secondItem = pairOfItems[1];
@@ -346,7 +346,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         
         var valueString = null;
         var valueComment = null;
-        switch (typeUuid) {
+        switch (typeUuid.toString()) {
           case World.UUID_FOR_TYPE_NUMBER: 
             valueString = '"' + contentData + '"';
             if (generateComments) {valueComment = contentData;}

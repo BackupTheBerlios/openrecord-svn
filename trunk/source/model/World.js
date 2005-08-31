@@ -242,10 +242,10 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
     }
     for (var j in listOfItems) {
       item = listOfItems[j];
-      listOfRecordsForItem = hashTableOfNewlyCreatedRecordsKeyedByItemUuid[item._getUuid()];
+      listOfRecordsForItem = hashTableOfNewlyCreatedRecordsKeyedByItemUuid[item.getUuid()];
       if (!listOfRecordsForItem) {
         listOfRecordsForItem = [];
-        hashTableOfNewlyCreatedRecordsKeyedByItemUuid[item._getUuid()] = listOfRecordsForItem;
+        hashTableOfNewlyCreatedRecordsKeyedByItemUuid[item.getUuid()] = listOfRecordsForItem;
       }
       listOfRecordsForItem.push(record);
     }
@@ -290,7 +290,7 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
     var listOfItemChangeReports = null;
     for (key in listBeingObserved) {
       item = listBeingObserved[key];
-      var changes = hashTableOfNewlyCreatedRecordsKeyedByItemUuid[item._getUuid()];
+      var changes = hashTableOfNewlyCreatedRecordsKeyedByItemUuid[item.getUuid()];
       if (changes) {
         var changeReportForItem = [item, changes];
         if (!listOfItemChangeReports) {
@@ -870,6 +870,7 @@ World.prototype.getItemFromUuid = function(uuid, observer) {
   return (this._virtualServer.getItemFromUuid(uuid, observer));
 };
 
+
 /**
  * Given a UUID, returns the entry identified by that UUID.
  *
@@ -880,6 +881,7 @@ World.prototype.getItemFromUuid = function(uuid, observer) {
 World.prototype.getEntryFromUuid = function(uuid) {
   return (this._virtualServer.__getEntryFromUuid(uuid));
 };
+
 
 // -------------------------------------------------------------------
 // Query methods
@@ -1062,10 +1064,10 @@ World.prototype.removeListObserver = function(listOfItems, observer) {
  * @param    observer    An object or method to be registered as an observer of the item. 
  */
 World.prototype.addItemObserver = function(item, observer) {
-  var observerList = this._hashTableOfObserverListsKeyedByItemUuid[item._getUuid()];
+  var observerList = this._hashTableOfObserverListsKeyedByItemUuid[item.getUuid()];
   if (!observerList) {
     observerList = [];
-    this._hashTableOfObserverListsKeyedByItemUuid[item._getUuid()] = observerList;
+    this._hashTableOfObserverListsKeyedByItemUuid[item.getUuid()] = observerList;
   }
   var observerWasAdded = Util.addObjectToSet(observer, observerList);
   return observerWasAdded;
@@ -1082,7 +1084,7 @@ World.prototype.addItemObserver = function(item, observer) {
  */
 World.prototype.removeItemObserver = function(item, observer) {
   var observerWasRemoved = false;
-  var observerList = this._hashTableOfObserverListsKeyedByItemUuid[item._getUuid()];
+  var observerList = this._hashTableOfObserverListsKeyedByItemUuid[item.getUuid()];
   if (observerList) {
     observerWasRemoved = Util.removeObjectFromSet(observer, observerList);
   } 

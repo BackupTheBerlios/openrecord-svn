@@ -313,8 +313,8 @@ LoginView.prototype._clickOnShowToolsButton = function(eventObject) {
 LoginView.prototype._loginUser = function(user, password) {
   var loginSuccess = this.getWorld().login(user, password); 
   if (loginSuccess) {
-    var userUuid = user._getUuid();
-    this._cookie.userUuid = userUuid;
+    var userUuidString = user.getUuidString();
+    this._cookie.userUuid = userUuidString;
     this._cookie.password = password;
     this._cookie.store();
     this._rebuildView();

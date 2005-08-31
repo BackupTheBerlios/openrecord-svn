@@ -313,6 +313,7 @@ chao   | 0.25 IED |         | 11. Resolve: How should table cells deal with <ent
 brian  |          | 0    IED| 12. drag-and-drop lozenges: move instead of copy
 brian  |          | 0.25 IED|     display numbers with commas and allow commas during entry 
 brian  |          | 0.5  IED|     profiling and performance improvements
+brian  |          | 1    IED|     moved from string-UUIDs to object-UUIDs; refactored and cleaned-up
        |          |         |     BUG: as you drag-and-drop, other text gets selected 
 -------+----------+---------+----------------------------------------------
        |          |         | 13. Assign system attributes & categories to a "System" category
@@ -600,7 +601,6 @@ Issues for post iteration#2
  + How should we rename "VirtualServer"?
  + How should we interoperate with other repositories(openrecord + other sources of data)?
  + Should we rename "World"?
- + BUG: need to convert HTML entity codes back at client-server layer
  + BUG: Can't really create own plugins yet (e.g. UUID need to be assigned, plugin item created)
  + Q: Do we (and how) need a concept of focus for Views? Currently, only Text input 
     and Textarea gets keyboard focus. We need it for table selections and possibly 

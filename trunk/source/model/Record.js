@@ -65,6 +65,12 @@ function Record() {
  * @param    uuid    The UUID for this Record. 
  */
 Record.prototype._Record = function(world, uuid) {
+  Util.assert(Util.isUuidValue(uuid));
+  if (Util.isString(uuid)) {
+    var uuidString = uuid;
+    Util.assert(uuidString.length == 36);
+    uuid = new TimeBasedUuid(uuidString);
+  }
   Util.assert(Util.isUuid(uuid));
   
   this._world = world;
@@ -89,17 +95,6 @@ Record.prototype.getWorld = function() {
 
 
 /**
- * Returns a string which can be used as a unique key in a hash table. 
- *
- * @scope    public instance method
- * @return   A string which can serve as a unique key.
- */
-Record.prototype.getUniqueKeyString = function() {
-  return this._uuid;
-};
-
-
-/**
  * Returns the item representing the user who created this item.
  *
  * @scope    public instance method
@@ -109,12 +104,13 @@ Record.prototype.getUserstamp = function() {
   if (this._creationUserstamp) {
     return this._creationUserstamp;
   }
+  var myPseudonode = this.getUuid().getNode();
   var allUsers = this._world.getUsers();
-  var myPseudonode = Uuid.getNodeFromUuid(this._uuid);
   for (var key in allUsers) {
-    var usersPseudonode = Uuid.getNodeFromUuid(allUsers[key]._getUuid());
+    var user = allUsers[key];
+    var usersPseudonode = user.getUuid().getNode();
     if (usersPseudonode == myPseudonode) {
-      this._creationUserstamp = allUsers[key];
+      this._creationUserstamp = user;
       return this._creationUserstamp;
     }
   }
@@ -137,16 +133,40 @@ Record.prototype.getTimestamp = function() {
 
 
 /**
- * Returns a Date object with the creation timestamp for this item.
+ * Returns a Date object with the creation timestamp for this record.
  *
  * @scope    public instance method
  * @return   A Date object.
  */
 Record.prototype.getCreationDate = function() {
-  if (!this._creationDate) {
-    this._creationDate = Uuid.getDateFromUuid(this._uuid);
+  /* if (!this._creationDate) {
+    this._creationDate = Uuid.getDateFromUuid(this._uuid.toString());
   }
   return this._creationDate;
+  */
+  return this.getUuid().getDate();
+};
+
+
+/**
+ * Returns the UUID of the record. 
+ *
+ * @scope    public instance method
+ * @return   The UUID of the record.
+ */
+Record.prototype.getUuid = function() {
+  return this._uuid;
+};
+
+
+/**
+ * Returns a string representation of the UUID of the record. 
+ *
+ * @scope    public instance method
+ * @return   A string representing the UUID of the record.
+ */
+Record.prototype.getUuidString = function() {
+  return this._uuid.toString();
 };
 
 
@@ -155,26 +175,20 @@ Record.prototype.getCreationDate = function() {
 // -------------------------------------------------------------------
 
 /**
- * Returns the UUID of the item. 
+ * Returns a string representation of the UUID of the item, wrapped in
+ * quotes.  The return value will always be a 38-character string, 
+ * where the first and last characters are quotes.  For example:  
  *
- * WARNING: This method should be called ONLY from a 
- * VirtualServer implementation.
- *
- * If you're writing code in the view layer, call
- * item.getUniqueKeyString() instead of item._getUuid();
+ * <pre>
+ *   "3B12F1DF-5232-1804-897E-917BF397618A"
+ * </pre>
  *
  * @scope    protected instance method
- * @return   The UUID of the item.
+ * @return   The record's UUID, as a string, wrapped in quotes.
  */
-Record.prototype._getUuid = function() {
-  return this._uuid;
-};
-
-
-// PENDING: this should be an instance method on Uuid
 Record.prototype._getUuidInQuotes = function() {
   if (!this._uuidInQuotes) {
-    this._uuidInQuotes = '"' + this._uuid + '"';
+    this._uuidInQuotes = '"' + this._uuid.toString() + '"';
   }
   return this._uuidInQuotes;
 };

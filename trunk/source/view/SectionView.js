@@ -151,7 +151,7 @@ SectionView.prototype.getPluginInstanceFromPluginItem = function(pluginItem, plu
   
   var newPlugin = null;
   var pluginClass;
-  pluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[pluginItem._getUuid()];
+  pluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[pluginItem.getUuid()];
   if (pluginClass) {
     var pluginType = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
     var layoutData = this._getLayoutDataForPlugin(pluginType);
@@ -212,13 +212,13 @@ SectionView.prototype.doInitialDisplay = function() {
   var selectedPluginClass;
   if (selectedPluginViewEntry) {
     selectedPluginItem = selectedPluginViewEntry.getValue();
-    selectedPluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[selectedPluginItem._getUuid()];
+    selectedPluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[selectedPluginItem.getUuid()];
   } else {
     selectedPluginClass = TablePlugin; 
   }
   
   var sectionDiv = this.getHtmlElement();
-  var headerH2 = View.appendNewElement(sectionDiv, "h2",null, {'id':this._section.getUniqueKeyString()});
+  var headerH2 = View.appendNewElement(sectionDiv, "h2", null, {'id':this._section.getUuidString()});
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   // var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
   this._headerView = new EntryView(this, headerH2, this._section, attributeCalledName,
@@ -322,7 +322,7 @@ SectionView.prototype._refreshQueryEditSpan = function() {
     var anAttribute = listOfAttributes[key];
     var optionElement = View.appendNewElement(selectElement, "option");
     optionElement.selected = (matchingAttribute.getDisplayString() == anAttribute.getDisplayString());
-    optionElement.value = anAttribute._getUuid();
+    optionElement.value = anAttribute.getUuidString();
     optionElement.onclick = this.clickOnAttributeMenu.bindAsEventListener(this);
     optionElement.text = anAttribute.getDisplayString();
   }

@@ -175,7 +175,7 @@ NavbarView.prototype._rebuildView = function() {
   View.removeChildrenOfElement(this._htmlElementForAnchors);
   for (key in listOfPages) {
     page = listOfPages[key];
-    var anchorName = RootView.URL_PAGE_PREFIX + page._getUuid();
+    var anchorName = RootView.URL_PAGE_PREFIX + page.getUuidString();
     View.appendNewElement(this._htmlElementForAnchors, "a", null, {name: anchorName});
   }
   
@@ -193,7 +193,7 @@ NavbarView.prototype._rebuildView = function() {
     // dragdrop.js library, this menuItemId must have exactly one underscore in
     // it, with the id for the whole menu is to the left of the underscore, and
     // the id for the individual menu item to the right of the underscore.
-    var menuItemId = NavbarView.ELEMENT_ID_MENU + '_' + page._getUuid();
+    var menuItemId = NavbarView.ELEMENT_ID_MENU + '_' + page.getUuidString();
     var liElement = View.appendNewElement(ulElement, "li", NavbarView.CSS_CLASS_MENU_ITEM, {id: menuItemId});
     if (page == this.getRootView().getCurrentPage()) {Util.css_addClass(liElement,NavbarView.CSS_CLASS_SELECTED);}
     var anchorElement = View.appendNewElement(liElement, "a", null, {href: menuUrl}, menuText);

@@ -2,6 +2,9 @@
  TestReorderingForSpecialCases.js
  
 ******************************************************************************
+ Written in 2005 by 
+    Mignon Belongie
+
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
     http://creativecommons.org/licenses/publicdomain/
@@ -48,7 +51,9 @@ function setUp() {
   utilAssertReportedError = false;
   Util.setErrorReportCallback(errorReporter);
   var pathToTrunkDirectory = "../../../";
-  var virtualServer = new StubVirtualServer(pathToTrunkDirectory, {"_generateUuid":mockUuidGenerator});
+  // var virtualServer = new StubVirtualServer(pathToTrunkDirectory, {"_generateUuid":mockUuidGenerator});
+  var virtualServer = new StubVirtualServer(pathToTrunkDirectory);
+  StubVirtualServer.prototype._generateUuid = mockUuidGenerator;
   world = new World(virtualServer);
 
   annUuid1 = "10000000-2222-3333-4444-555555555555";
@@ -60,7 +65,7 @@ function setUp() {
 
   var annsPassword = "Ann's password";
   var userAnn = world.newUser("Ann Doe", annsPassword);
-  assertTrue("Ann has the expected uuid", userAnn.getUniqueKeyString() == annUuid1);
+  assertTrue("Ann has the expected uuid", userAnn.getUuidString() == annUuid1);
   world.login(userAnn, annsPassword);
 
   foodUuid1    = "20000000-2222-3333-4444-555555555555";

@@ -149,45 +149,36 @@ TablePlugin.prototype._getListOfColumns = function() {
       Util.assert(anAttribute instanceof Item);
       displayAttributes.push(anAttribute);
     }
-    /*
-    var PENDING_debug = false;
-    if (PENDING_debug) {
-      var string = "";
-      for (i in listOfTableColumnEntries) {
-        string += listOfTableColumnEntries[i]._getUuid() + '\n';
-      }
-      alert(listOfTableColumnEntries.length + " columns\n" + string);
-    }
-    */
   } else {
     // If we get here, it means this table did not have a saved list of 
     // user-selected columns, so we need to come up with a list.
     // We will build a list of display attributes by looking at all the items in 
     // the table and finding the union of all the attributes of those items.
     var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
-    var hashTableOfAttributes = {};
+    var hashTableOfAttributesKeyedByUuid = {};
+    var attributeUuid;
     for (var j in this._listOfItems) {
       var contentItem = this._listOfItems[j];
       var listOfAttributesForItem = contentItem.getAttributes();
       for (var k in listOfAttributesForItem) {
         var attribute = listOfAttributesForItem[k];
         if (attribute != attributeCalledCategory) {
-          var attributeKeyString = attribute.getUniqueKeyString();
-          hashTableOfAttributes[attributeKeyString] = attribute;
+          attributeUuid = attribute.getUuid();
+          hashTableOfAttributesKeyedByUuid[attributeUuid] = attribute;
         }
       }
     }
     
-    if (Util.lengthOfHashTable(hashTableOfAttributes) < 1) {
+    if (Util.lengthOfHashTable(hashTableOfAttributesKeyedByUuid) < 1) {
       // If we have not yet identified any display attributes to use as
       // column headers, then we'll just use the "Name" attribute so that
       // our table will have at least one column.
       var attributeCalledName = this.getWorld().getAttributeCalledName();
-      var keyString = attributeCalledName.getUniqueKeyString();
-      hashTableOfAttributes[keyString] = attributeCalledName;
+      attributeUuid = attributeCalledName.getUuid();
+      hashTableOfAttributesKeyedByUuid[attributeUuid] = attributeCalledName;
     }
-    for (var key in hashTableOfAttributes) {
-      anAttribute = hashTableOfAttributes[key];
+    for (attributeUuid in hashTableOfAttributesKeyedByUuid) {
+      anAttribute = hashTableOfAttributesKeyedByUuid[attributeUuid];
       displayAttributes.push(anAttribute);
     }
   }
@@ -213,7 +204,7 @@ TablePlugin.prototype._buildAttributeEditor = function() {
       optionElt.text = '* ';
     }
     optionElt.text += attribute.getDisplayString();
-    optionElt.value = attribute.getUniqueKeyString();
+    optionElt.value = attribute.getUuidString();
     optionElt.onclick = this._attributeEditorChanged.bindAsEventListener(this);
   }
   this._selectElement = selectElt;
@@ -418,8 +409,8 @@ TablePlugin.prototype._buildHeader = function() {
   for (var i in this._displayAttributes) {
     var attribute = this._displayAttributes[i];
     if (!this._sortAttribute) {this._sortAttribute = attribute;}
-    var headerCell = View.appendNewElement(headerRow, "th", null, {uuid: attribute._getUuid()});
-    var headerCellContentSpan = View.appendNewElement(headerCell, "span", "headerCellContentSpan", {uuid: attribute._getUuid()});
+    var headerCell = View.appendNewElement(headerRow, "th", null, {uuid: attribute.getUuidString()});
+    var headerCellContentSpan = View.appendNewElement(headerCell, "span", "headerCellContentSpan", {uuid: attribute.getUuidString()});
     var textSpan = View.appendNewElement(headerCellContentSpan, "span", null, null, attribute.getDisplayString());
     if (this._sortAttribute == attribute) {
       headerCellContentSpan.appendChild(this.getSortIcon());
@@ -625,7 +616,7 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
   var attributeCalledExpectedType = world.getAttributeCalledExpectedType();
   var attributeCalledInverseAttribute = world.getAttributeCalledInverseAttribute();
 
-  var hashTableOfTypesKeyedByAttribute = {};
+  var hashTableOfTypesKeyedByAttributeUuid = {};
   for (i in listOfAttributes) {
     var attribute = listOfAttributes[i];
     var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
@@ -634,8 +625,7 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
       var entry = listOfExpectedTypeEntries[j];
       listOfTypes.push(entry.getValue());
     }
-    var attributeKeyString = attribute.getUniqueKeyString();
-    hashTableOfTypesKeyedByAttribute[attributeKeyString] = listOfTypes;
+    hashTableOfTypesKeyedByAttributeUuid[attribute.getUuid()] = listOfTypes;
   }
   world.beginTransaction();
   var count = 0;
@@ -653,7 +643,7 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
       attribute = listOfAttributes[j];
       var value = listOfFields[j];
       if (value !== "") {
-        listOfTypes = hashTableOfTypesKeyedByAttribute[attribute.getUniqueKeyString()];
+        listOfTypes = hashTableOfTypesKeyedByAttributeUuid[attribute.getUuid()];
         value = EntryView._transformValueToExpectedType(world, value, listOfTypes);
         var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
         if (inverseAttributeEntry) {

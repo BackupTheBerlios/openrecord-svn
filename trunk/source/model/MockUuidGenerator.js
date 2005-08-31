@@ -1,9 +1,10 @@
 /*****************************************************************************
- LintTest.js
+ MockUuidGenerator.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
-  
+ Written in 2005 by 
+    Mignon Belongie
+
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
     http://creativecommons.org/licenses/publicdomain/
@@ -28,35 +29,18 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
-// -------------------------------------------------------------------
-// Dependencies, expressed in the syntax that JSLint understands:
-// 
-/*global LintTool, assertTrue, setUp, tearDown */
-// -------------------------------------------------------------------
 
-function setUp() {
+mockUuidGenerator.queueOfUuids = new Array();
+
+function mockUuidGenerator() {
+  if (mockUuidGenerator.queueOfUuids.length === 0) {
+    // This should probably throw an exception instead.    
+    return "00000000-0000-0000-0000-000000000000";
+  }
+  var uuidString = mockUuidGenerator.queueOfUuids.shift();
+  var uuid = new TimeBasedUuid(uuidString);
+  return uuid;
 }
-
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "XmlConverter.js",
-    "Util.js",
-    "UtilTest.js",
-    "DateValue.js",
-    "DateValueTest.js",
-    "Uuid.js",
-    "RandomUuid.js",
-    "TimeBasedUuid.js",
-    "LintTool.js"];
-  var prefix = "../../../source/util/";
-  var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
-}
-
-function tearDown() {
-}
-
 
 // -------------------------------------------------------------------
 // End of file

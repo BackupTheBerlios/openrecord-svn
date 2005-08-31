@@ -62,7 +62,7 @@ EntryView.UUID_FOR_ATTRIBUTE_NOT_LOZENGE = "0004010f-ce7f-11d9-8cd5-0011113ae5d6
 // -------------------------------------------------------------------
 // EntryView private class variables
 // -------------------------------------------------------------------
-EntryView._ourHashTableOfTypesKeyedByClassName = null;
+EntryView._ourHashTableOfClassNamesKeyedByTypeUuid = null;
 
 EntryView._PENDING_temporaryHackToDecreaseLayoutTime = true;
 EntryView._PENDING_enableDragging = true;
@@ -617,7 +617,7 @@ EntryView.prototype.onClick = function(eventObject) {
 EntryView.prototype.onDoubleClick = function(eventObject) {
   if (this._valueIsItem) {
     var relatedItem = this._entry.getValue(this._item);
-    var urlOfRelatedItem = RootView.URL_HASH_ITEM_PREFIX + relatedItem._getUuid();
+    var urlOfRelatedItem = RootView.URL_HASH_ITEM_PREFIX + relatedItem.getUuidString();
     window.location = urlOfRelatedItem;
     this.getRootView().setCurrentContentViewFromUrl();
   }
@@ -788,14 +788,14 @@ EntryView.prototype.noLongerProvisional = function() {
  * @scope    private instance method
  */
 EntryView.prototype._buildTypeHashTable = function() {
-  EntryView._ourHashTableOfTypesKeyedByClassName = {};
-  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_TEXT] = EntryView.CSS_CLASS_TEXT_VALUE;
-  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_NUMBER] = EntryView.CSS_CLASS_NUMBER_VALUE;
-  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_DATE] = EntryView.CSS_CLASS_DATE_VALUE;
-  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_CHECK_MARK] = EntryView.CSS_CLASS_CHECKMARK_VALUE;
-  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_URL] = EntryView.CSS_CLASS_URL_VALUE;
-  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_ITEM] = EntryView.CSS_CLASS_ITEM_VALUE;
-  EntryView._ourHashTableOfTypesKeyedByClassName[World.UUID_FOR_TYPE_CONNECTION] = EntryView.CSS_CLASS_CONNECTION_VALUE;
+  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid = {};
+  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_TEXT] = EntryView.CSS_CLASS_TEXT_VALUE;
+  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_NUMBER] = EntryView.CSS_CLASS_NUMBER_VALUE;
+  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_DATE] = EntryView.CSS_CLASS_DATE_VALUE;
+  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_CHECK_MARK] = EntryView.CSS_CLASS_CHECKMARK_VALUE;
+  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_URL] = EntryView.CSS_CLASS_URL_VALUE;
+  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_ITEM] = EntryView.CSS_CLASS_ITEM_VALUE;
+  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_CONNECTION] = EntryView.CSS_CLASS_CONNECTION_VALUE;
 };
 
 
@@ -808,35 +808,12 @@ EntryView.prototype._buildTypeHashTable = function() {
  * @return   A string with the CSS className for that type.
  */
 EntryView.prototype._getClassNameFromType = function(type) {
-  if (!EntryView._ourHashTableOfTypesKeyedByClassName) {
+  if (!EntryView._ourHashTableOfClassNamesKeyedByTypeUuid) {
     this._buildTypeHashTable();
   }
-  return EntryView._ourHashTableOfTypesKeyedByClassName[type.getUniqueKeyString()];
-/*  for (var className in EntryView._ourHashTableOfTypesKeyedByClassName) {
-    typeItem = EntryView._ourHashTableOfTypesKeyedByClassName[className];
-    if (type == typeItem) {
-      return className;
-    }
-  }
-  Util.assert(false, "no such type: " + type.getDisplayString());*/
+  return EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[type.getUuid()];
 };
 
-
-/**
- * Given a string with the CSS className of a basic data type, this method
- * returns the corresponding item that represents the same data type.
- *
- * @scope    private instance method
- * @param    className    A string with the CSS className for a type.
- * @return   An item that represents a basic data type, like Text, Number, or URL. 
-
-EntryView.prototype._getTypeFromTypeClassName = function(className) {
-  if (!EntryView._ourHashTableOfTypesKeyedByClassName) {
-    this._buildTypeHashTable();
-  }
-  return EntryView._ourHashTableOfTypesKeyedByClassName[className]; //NO LONGER VALID
-};
- */
 
 // -------------------------------------------------------------------
 // End of file

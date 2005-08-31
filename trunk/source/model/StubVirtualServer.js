@@ -74,17 +74,19 @@ StubVirtualServer.JSON_MEMBER_ITEM = "item";
 StubVirtualServer.JSON_MEMBER_RETAIN_FLAG = "retainFlag";
 StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER = "value";
 
-StubVirtualServer.prototype._generateUuid = function(arg1) {
-  return Uuid.generateTimeBasedUuid(arg1);
-};
 
+/**
+ * ??.
+ *
+ * @scope    private instance method
 StubVirtualServer.prototype._processOptionalDefaultOverrides = function(optionalDefaultOverrides) {
-  for (key in optionalDefaultOverrides) {
+  for (var key in optionalDefaultOverrides) {
     // Should I check first that there is already a property called 'key'?
     this[key] = optionalDefaultOverrides[key];
-//alert("key = " + key + "\noptionalDefaultOverrides[key] = " + optionalDefaultOverrides[key]);
+    // alert("key = " + key + "\noptionalDefaultOverrides[key] = " + optionalDefaultOverrides[key]);
   }
 };
+ */
 
 
 /**
@@ -93,7 +95,7 @@ StubVirtualServer.prototype._processOptionalDefaultOverrides = function(optional
  *
  * @scope    public instance constructor
  */
-function StubVirtualServer(pathToTrunkDirectory, optionalDefaultOverrides) {
+function StubVirtualServer(pathToTrunkDirectory) {
   var fileName = "2005_june_axiomatic_items.json";
   var urlForAxiomaticFile = "";
   if (pathToTrunkDirectory) {
@@ -102,10 +104,11 @@ function StubVirtualServer(pathToTrunkDirectory, optionalDefaultOverrides) {
   urlForAxiomaticFile += "source/model/" + fileName;
   
   this._dehydratedAxiomFileURL = urlForAxiomaticFile;
-//  this._generateUuid = Uuid.generateTimeBasedUuid;
+  /*
   if (optionalDefaultOverrides) {
     this._processOptionalDefaultOverrides(optionalDefaultOverrides, "Stub");
   }
+  */
 }
 
 /**
@@ -466,7 +469,7 @@ StubVirtualServer.prototype.newUser = function(name, authentication, observer) {
   if (authentication) {
     md5Authentication = Util.hex_md5(authentication);
   }
-  this._hashTableOfUserAuthenticationInfo[newUser.getUniqueKeyString()] = md5Authentication;
+  this._hashTableOfUserAuthenticationInfo[newUser.getUuid()] = md5Authentication;
 
   this._currentUser = newUser;
   var categoryCalledPerson = this.getWorld().getCategoryCalledPerson();
@@ -528,7 +531,7 @@ StubVirtualServer.prototype.login = function(user, password) {
     return false;
   }
 
-  if (user._getUuid() == World.UUID_FOR_USER_AMY) {
+  if (user.getUuidString() == World.UUID_FOR_USER_AMY) {
     // nobody is allowed to log in as the axiomatic user
     return false;
   }
@@ -583,7 +586,7 @@ StubVirtualServer.prototype.logout = function() {
  * @return   The item identified by the given UUID.
  */
 StubVirtualServer.prototype.getItemFromUuid = function(uuid, observer) {
-  Util.assert(Util.isUuid(uuid), uuid + ' is not a Uuid');
+  Util.assert(Util.isUuidValue(uuid));
   
   var item = this._hashTableOfItemsKeyedByUuid[uuid];
   if (item && observer) {
@@ -766,6 +769,17 @@ StubVirtualServer.prototype._getContentRecordFromUuid = function(uuid) {
 
 
 /**
+ * Returns a newly created UUID.
+ *
+ * @scope    private instance method
+ * @param    pseudoNode    The pseudoNode value that the new UUID should have. 
+ */
+StubVirtualServer.prototype._generateUuid = function(pseudoNode) {
+  return new TimeBasedUuid(pseudoNode);
+};
+
+
+/**
  * Creates a brand new UUID to allocate to an item or entry.
  *
  * @scope    private instance method
@@ -774,12 +788,12 @@ StubVirtualServer.prototype._getContentRecordFromUuid = function(uuid) {
 StubVirtualServer.prototype._getNewUuid = function() {
   var newUuid;
   if (this._currentUser) {
-    var uuidOfCurrentUser = this._currentUser._getUuid();
-    var arrayOfParts = uuidOfCurrentUser.split("-");
-    var pseudoNodeOfCurrentUser = arrayOfParts[4];//"0123456789AB";
+    var uuidOfCurrentUser = this._currentUser.getUuid();
+    // var arrayOfParts = uuidOfCurrentUser.split("-");
+    // var pseudoNodeOfCurrentUser = arrayOfParts[4]; // "0123456789AB";
+    var pseudoNodeOfCurrentUser = uuidOfCurrentUser.getNode(); // "0123456789AB";
     newUuid = this._generateUuid(pseudoNodeOfCurrentUser);
-  }
-  else {
+  } else {
     newUuid = this._generateUuid();
   }
   return newUuid;
@@ -795,7 +809,7 @@ StubVirtualServer.prototype._getNewUuid = function() {
  * @return   The authentication info for the user.
  */
 StubVirtualServer.prototype._getAuthenticationInfoForUser = function(user) {
-  return this._hashTableOfUserAuthenticationInfo[user.getUniqueKeyString()];
+  return this._hashTableOfUserAuthenticationInfo[user.getUuid()];
 };
 
 
@@ -927,7 +941,7 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
         var userPasswordHash = dehydratedUser[StubVirtualServer.JSON_MEMBER_PASSWORD];
         var user = this.__getItemFromUuidOrBootstrapItem(userUuid);
         this._listOfUsers.push(user);
-        this._hashTableOfUserAuthenticationInfo[user.getUniqueKeyString()] = userPasswordHash;
+        this._hashTableOfUserAuthenticationInfo[user.getUuid()] = userPasswordHash;
       }
       
       if (dehydratedVote) {
@@ -966,7 +980,7 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
         }
  
         var dataTypeUuid = dehydratedEntry[StubVirtualServer.JSON_MEMBER_TYPE];
-        Util.assert(Util.isUuid(dataTypeUuid));
+        Util.assert(Util.isUuidValue(dataTypeUuid));
         var dataType = this.__getItemFromUuidOrBootstrapItem(dataTypeUuid);
         
         if (dataTypeUuid == World.UUID_FOR_TYPE_CONNECTION) {

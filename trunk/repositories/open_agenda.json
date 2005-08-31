@@ -3036,4 +3036,19 @@
     "attribute": "00001003-ce7f-11d9-8cd5-0011113ae5d6",
          "item": "f38808a0-0c70-11da-beea-000c414ce854",
         "value": "Intermittent presumptive treatment for expectant mothers"  }
+},
+{ "Ordinal": {
+         "uuid": "8dd75d40-1a48-11da-8163-000c414ce854",
+       "record": "295652f0-0c6e-11da-beea-000c414ce854",
+        "value": "11da0c6e295652f00dfb3a8NaN52783fd0"  }
+},
+{ "Ordinal": {
+         "uuid": "97bdb250-1a48-11da-8163-000c414ce854",
+       "record": "5ebf9280-0c6e-11da-beea-000c414ce854",
+        "value": "11da0c6e295652f0809241c4c94a9e4b"  }
+},
+{ "Ordinal": {
+         "uuid": "99bbf350-1a48-11da-8163-000c414ce854",
+       "record": "7b5e3b80-0c6e-11da-beea-000c414ce854",
+        "value": "11da0c6e295652f0809241c4c94a9e4b91b99370"  }
 }
