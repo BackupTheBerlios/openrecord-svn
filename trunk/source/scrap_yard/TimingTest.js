@@ -28,7 +28,19 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
-// Results from running this test, using Brian's Dell 4600:
+// Results from running this test circa Sept 2005, using Brian's Dell Inspiron 9300:
+//  0   microseconds for EMPTY_LOOP
+//  6.0 microseconds for ARRAY_CREATION
+//  4.4 microseconds for OBJECT_CREATION
+//  4.3 microseconds for OBJECT_CREATION_WITH_STRINGS
+//  2.9 microseconds for DATE_CREATION
+//  1.3 microseconds for METHOD_CALL
+//  1.1 microseconds for GLOBAL_VARIABLE_LOOKUP
+//  0.7 microseconds for DATE_VALUEOF
+//  7.5 microseconds for TEST_TYPE_ONE_BOX
+//  5.9 microseconds for TEST_TYPE_TWO_BOX
+
+// Results from running this test circa May 2005, using Brian's Dell Dimension 4600:
 //  0   microseconds for EMPTY_LOOP
 // 16   microseconds for ARRAY_CREATION
 // 15   microseconds for OBJECT_CREATION
@@ -39,7 +51,7 @@
 //  1.2 microseconds for DATE_VALUEOF
 // 16    microseconds for ENTRY_COMPAREORDINALS
 
-// Results from a different test program, using Brian's Dell 4600:
+// Results from a different test program circa May 2005, using Brian's Dell Dimension 4600:
 //  0.78 microseconds to create a new Array:   var a = [x, y];
 //  0.59 microseconds to create a new Object:  var o = {here: x, there: y};
 //  0.59 microseconds to create a new Object:  var o = {"here": x, "there": y};
@@ -57,7 +69,9 @@ var TEST_DATE_CREATION = "DATE_CREATION";
 var TEST_METHOD_CALL = "METHOD_CALL";
 var TEST_GLOBAL_VARIABLE_LOOKUP = "GLOBAL_VARIABLE_LOOKUP";
 var TEST_DATE_VALUEOF = "DATE_VALUEOF";
-var TEST_ENTRY_COMPAREORDINALS = "ENTRY_COMPAREORDINALS";
+// var TEST_ENTRY_COMPAREORDINALS = "ENTRY_COMPAREORDINALS";
+var TEST_TYPE_ONE_BOX = "TYPE_ONE_BOX";
+var TEST_TYPE_TWO_BOX = "TYPE_TWO_BOX";
 
 function testTimes() {
   var testName;
@@ -70,7 +84,9 @@ function testTimes() {
   hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_METHOD_CALL] = null;
   hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_GLOBAL_VARIABLE_LOOKUP] = null;
   hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_DATE_VALUEOF] = null;
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_ENTRY_COMPAREORDINALS] = null;
+  // hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_ENTRY_COMPAREORDINALS] = null;
+  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_TYPE_ONE_BOX] = null;
+  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_TYPE_TWO_BOX] = null;
   for (testName in hashTableOfOperationsPerMillisecondKeyedByTestName) {
     var opsPerMS = getOpsPerMS(testName);
     hashTableOfOperationsPerMillisecondKeyedByTestName[testName] = opsPerMS;
@@ -100,6 +116,7 @@ function getOpsPerMS(inTestName) {
   var operationsPerWhileLoopIteration = numberOfForLoopIterations * operationsPerForLoopIteration;
   var totalOperations = 0;
   
+/*
   if (inTestName == TEST_ENTRY_COMPAREORDINALS) {
     var world = {};
     world.getCurrentUser = function () { return this; };
@@ -110,7 +127,7 @@ function getOpsPerMS(inTestName) {
     e1._initializeEntry();
     e2._initializeEntry();
   }
-
+*/
   var start = new Date();
   var startMS = start.valueOf();
   var nowMS = startMS;
@@ -229,6 +246,7 @@ function getOpsPerMS(inTestName) {
         foo = now.valueOf();
       }
     }
+/*
     if (inTestName == TEST_ENTRY_COMPAREORDINALS) {
       for (i = 0; i < numberOfForLoopIterations; i += 1) {
         foo = Entry.compareOrdinals(e1, e2);
@@ -241,6 +259,35 @@ function getOpsPerMS(inTestName) {
         foo = Entry.compareOrdinals(e1, e2);
         foo = Entry.compareOrdinals(e1, e2);
         foo = Entry.compareOrdinals(e1, e2);
+      }
+    }
+ */
+    if (inTestName == TEST_TYPE_ONE_BOX) {
+      for (i = 0; i < numberOfForLoopIterations; i += 1) {
+        foo = new shapes.TypeOneBox(10, 10);
+        foo = new shapes.TypeOneBox(10, 10);
+        foo = new shapes.TypeOneBox(10, 10);
+        foo = new shapes.TypeOneBox(10, 10);
+        foo = new shapes.TypeOneBox(10, 10);
+        foo = new shapes.TypeOneBox(10, 10);
+        foo = new shapes.TypeOneBox(10, 10);
+        foo = new shapes.TypeOneBox(10, 10);
+        foo = new shapes.TypeOneBox(10, 10);
+        foo = new shapes.TypeOneBox(10, 10);
+      }
+    }
+    if (inTestName == TEST_TYPE_TWO_BOX) {
+      for (i = 0; i < numberOfForLoopIterations; i += 1) {
+        foo = new shapes.TypeTwoBox(10, 10);
+        foo = new shapes.TypeTwoBox(10, 10);
+        foo = new shapes.TypeTwoBox(10, 10);
+        foo = new shapes.TypeTwoBox(10, 10);
+        foo = new shapes.TypeTwoBox(10, 10);
+        foo = new shapes.TypeTwoBox(10, 10);
+        foo = new shapes.TypeTwoBox(10, 10);
+        foo = new shapes.TypeTwoBox(10, 10);
+        foo = new shapes.TypeTwoBox(10, 10);
+        foo = new shapes.TypeTwoBox(10, 10);
       }
     }
     now = new Date();
@@ -257,6 +304,47 @@ function getOpsPerMS(inTestName) {
   var operationsPerMillisecond = totalOperations / numberOfMillisecondsWorthOfTrials;
   return operationsPerMillisecond;  
 }
+
+function testBoxConstruction() {
+  var boxA = new shapes.TypeOneBox(10, 10);
+  var boxB = new shapes.TypeOneBox(10, 10);
+  assertTrue("'TypeOneBox' objects each have their own 'getValue' method", boxA.getArea != boxB.getArea);
+  
+  boxA = new shapes.TypeTwoBox(10, 10);
+  boxB = new shapes.TypeTwoBox(10, 10);
+  assertTrue("'TypeTwoBox' objects share a common 'getValue' method", boxA.getArea == boxB.getArea);
+}
+
+shapes = {
+  TypeOneBox: function(width, height) {
+    this._width = width;
+    this._height = height;
+    
+    this.getArea = function() {
+      // do some busy work
+      var foo = [10];
+      for (var i in foo) {
+        var area = (this._width * this._height);
+      }
+      return area;
+    }
+  }
+};
+
+shapes.TypeTwoBox = function(width, height) {
+  this._width = width;
+  this._height = height;
+}
+
+shapes.TypeTwoBox.prototype.getArea = function() {
+  // do some busy work
+  var foo = [10];
+  for (var i in foo) {
+    var area = (this._width * this._height);
+  }
+  return area;
+};
+
 
 // -------------------------------------------------------------------
 // End of file
