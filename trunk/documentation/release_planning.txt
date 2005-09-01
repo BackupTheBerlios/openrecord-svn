@@ -368,6 +368,7 @@ Who    | Estimate | Actual  | Task
        |          |         | 14. Make RootView subclass from View, or add comments explaining why it doesn't
        |          |         | 15. Make DateValue subclass from Date, or wrap an internal Date object
 -------+----------+---------+----------------------------------------------
+       |          |         |     Fix the message that says "Sorry, for some reason OpenRecrod was not able to launch."
        |          |         | 16. Assign system attributes & categories to a "System" category
        |          |         | 17. Hide "System" items most of the time
        |          |         | 18. improve UI for creating a new category
