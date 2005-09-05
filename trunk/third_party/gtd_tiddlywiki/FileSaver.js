@@ -52,8 +52,9 @@ DAMAGE.
 
 
 /**
- * The FileSaver class knows how to save text to local file.
+ * The FileSaver class knows how to save text to a local file.
  *
+ * @param    repositoryName                 // e.g. demo_page
  * @scope    public instance constructor
  */
 function FileSaver(repositoryName) {
@@ -84,28 +85,28 @@ FileSaver.prototype.appendText = function(textToAppend) {
   var listOfAdditions = [];
   listOfAdditions.push(DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY);
   listOfAdditions.push(this._repositoryName + ".json");
-  var fileUrl = this.getLocalPathFromWindowLocation(listOfAdditions);
+  var fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
   
   var append = true;
-  this.saveTextToFile(textToAppend, fileUrl, append);
+  this._saveTextToFile(textToAppend, fileUrl, append);
 };
-  
+
 
 /**
  * Save the text to the file at the given URL.
  *
- * @scope    public instance method
+ * @scope    private instance method
  * @return   Returns true if the text was saved.
  */
-FileSaver.prototype.saveTextToFile = function(text, fileUrl, append) {
+FileSaver.prototype._saveTextToFile = function(text, fileUrl, append) {
   // Make sure we were loaded from a "file:" URL
   if (window.location.protocol != "file:") {
     Util.assert(false, 'FileSaver.js can only be used for pages loaded from a "file:///" location');
   }
 
-  var success = this.mozillaSaveToFile(text, fileUrl, append);
+  var success = this._mozillaSaveToFile(text, fileUrl, append);
   if (!success) {
-    success = this.ieSaveToFile(text, fileUrl, append);
+    success = this._ieSaveToFile(text, fileUrl, append);
   }
   return(success);
 };
@@ -114,10 +115,10 @@ FileSaver.prototype.saveTextToFile = function(text, fileUrl, append) {
 /**
  * Save the text to the file at the given filePath.
  *
- * @scope    public instance method
+ * @scope    private instance method
  * @return   Returns true if the text was saved, false if there was an error, or null if we couldn't even try.
  */
-FileSaver.prototype.mozillaSaveToFile = function(text, filePath, append) {
+FileSaver.prototype._mozillaSaveToFile = function(text, filePath, append) {
   if (window.Components) {
     try {
       netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
@@ -151,10 +152,10 @@ FileSaver.prototype.mozillaSaveToFile = function(text, filePath, append) {
 /**
  * Save the text to the file at the given filePath.
  *
- * @scope    public instance method
+ * @scope    private instance method
  * @return   Returns true if the text was saved, or false if there was an error.
  */
-FileSaver.prototype.ieSaveToFile = function(text, filePath, append) {
+FileSaver.prototype._ieSaveToFile = function(text, filePath, append) {
   try {
     var fileSystemObject = new ActiveXObject("Scripting.FileSystemObject");
   }
@@ -179,10 +180,10 @@ FileSaver.prototype.ieSaveToFile = function(text, filePath, append) {
  * converts the whole thing to a format that is compatible with the 
  * local file system, and returns the new local path.
  *
- * @scope    public instance method
+ * @scope    private instance method
  * @return   Returns a full local pathname.
  */
-FileSaver.prototype.getLocalPathFromWindowLocation = function(listOfAdditions) {
+FileSaver.prototype._getLocalPathFromWindowLocation = function(listOfAdditions) {
   // Example location:
   //   location.href     == file:///D:/amy/openrecord/foo.html#bar
   //   location.protocol == file:
