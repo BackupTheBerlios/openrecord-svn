@@ -62,9 +62,19 @@ HttpSaver.prototype.appendText = function(textToAppend) {
   newXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
   newXMLHttpRequestObject.send(textToAppend);
 };
-  
-  
-  
+
+HttpSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
+  var url = this._pathToTrunkDirectory + "source/model/write_to_repository_file.php?file=" + this._repositoryName;
+  if (overwriteIfExists) {
+    url += "&overwrite=T";
+  }
+  var newXMLHttpRequestObject = this._newXMLHttpRequestObject();
+  var asynchronous = true;
+  newXMLHttpRequestObject.open("POST", url, asynchronous);
+  newXMLHttpRequestObject.setRequestHeader("Content-Type", "text/plain");
+  newXMLHttpRequestObject.send(textToWrite);
+};
+
 /**
  * Returns a newly created XMLHttpRequest object.
  *

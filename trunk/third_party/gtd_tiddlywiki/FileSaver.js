@@ -55,10 +55,14 @@ DAMAGE.
  * The FileSaver class knows how to save text to a local file.
  *
  * @param    repositoryName                 // e.g. demo_page
+ * @param    pathToTrunkDirectory           // Not needed if window.location.pathname is in the trunk directory.
  * @scope    public instance constructor
  */
-function FileSaver(repositoryName) {
+function FileSaver(repositoryName, pathToTrunkDirectory) {
   this._repositoryName = repositoryName;
+  if (pathToTrunkDirectory) {
+    this._pathToTrunkDirectory = pathToTrunkDirectory;
+  }
 }
 
 
@@ -83,6 +87,9 @@ FileSaver.prototype.appendText = function(textToAppend) {
   //   fileUrl = "K:/www/htdocs/openrecord/demo/current/trunk/repositories/demo_page.json";
 
   var listOfAdditions = [];
+  if (this._pathToTrunkDirectory) {
+    listOfAdditions.push(this._pathToTrunkDirectory);
+  }
   listOfAdditions.push(DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY);
   listOfAdditions.push(this._repositoryName + ".json");
   var fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
@@ -91,6 +98,18 @@ FileSaver.prototype.appendText = function(textToAppend) {
   this._saveTextToFile(textToAppend, fileUrl, append);
 };
 
+FileSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
+  var listOfAdditions = [];
+  if (this._pathToTrunkDirectory) {
+    listOfAdditions.push(this._pathToTrunkDirectory);
+  }
+  listOfAdditions.push(DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY);
+  listOfAdditions.push(this._repositoryName + ".json");
+  var fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
+
+  var append = false;
+  this._saveTextToFile(textToWrite, fileUrl, append);
+}
 
 /**
  * Save the text to the file at the given URL.
@@ -126,6 +145,7 @@ FileSaver.prototype._mozillaSaveToFile = function(text, filePath, append) {
       file.initWithPath(filePath);
       if (!file.exists()) {
         file.create(0, 0664);
+        file.permissions = 0664; // Because create ignores the permissions argument, at least on Mignon's Mac.
       }
       var outputStream = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
       if (append) {
