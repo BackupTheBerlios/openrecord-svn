@@ -258,7 +258,7 @@ StubVirtualServer.prototype.endTransaction = function() {
   Util.assert(this._countOfNestedTransactions >= 0);
 
   if (this._countOfNestedTransactions === 0) {
-    var listOfChangesMade = this.saveChangesToServer();
+    var listOfChangesMade = this._saveChangesToServer();
     this._currentTransaction = null;
     if (listOfChangesMade.length > 0) {
       // alert(listOfChangesMade.length + " changes made");
@@ -600,9 +600,9 @@ StubVirtualServer.prototype.getItemFromUuid = function(uuid, observer) {
  * Sends all the changes to the server, so that the server can record the
  * changes.
  *
- * @scope    public instance method
+ * @scope    private instance method
  */
-StubVirtualServer.prototype.saveChangesToServer = function () {
+StubVirtualServer.prototype._saveChangesToServer = function () {
   // The StubVirtualServer doesn't ever actually talk to a server.
   // Other VirtualServer implementations would be expected to actually
   // implement this method such that it saves changes to the server
@@ -610,7 +610,7 @@ StubVirtualServer.prototype.saveChangesToServer = function () {
   this._currentTransaction = null;
   return listOfChangesMade;
 };
-  
+
 
 // -------------------------------------------------------------------
 // Query methods

@@ -63,7 +63,7 @@ function DeltaVirtualServer(repositoryName, pathToTrunkDirectory, optionalDefaul
   var axiomaticFileName = "2005_june_axiomatic_items.json";
   var urlForAxiomaticFile = this._pathToTrunkDirectory + "source/model/" + axiomaticFileName;
   
-  this._dehydratedAxiomFileURL = urlForAxiomaticFile;  
+  this._dehydratedAxiomFileURL = urlForAxiomaticFile;
   this._repositoryName = repositoryName;
   this._hasEverFailedToSaveFlag = false;
 }
@@ -119,17 +119,17 @@ DeltaVirtualServer.prototype._loadWorldFromJsonString = function(jsonRepositoryS
   
   this._rehydrateRecords(listOfRecords);
 };
-  
+
 
 /**
  * Given a string, returns a copy of the string that is less than
- * 25 characters long.
+ * 80 characters long.
  *
- * @scope    public instance method
+ * @scope    private instance method
  * @param    string    A string that may need truncating.
- * @return   A string that is. 
+ * @return   A string that is no longer than 80 characters long.
  */
-DeltaVirtualServer.prototype.truncateString = function(string) {
+DeltaVirtualServer.prototype._truncateString = function(string) {
   var maxLength = 80;
   var ellipsis = "...";
   var returnString = "";
@@ -184,9 +184,9 @@ DeltaVirtualServer.prototype._getTypedDisplayStringForItem = function(item) {
     if (item instanceof Item) {
       var category = item.getFirstCategory();
       if (category) {
-        returnString += this.truncateString(category.getDisplayString("???")) + ": ";
+        returnString += this._truncateString(category.getDisplayString("???")) + ": ";
       }
-      returnString += this.truncateString(item.getDisplayString("???"));
+      returnString += this._truncateString(item.getDisplayString("???"));
     }
     if (item instanceof Entry) {
       returnString += "Entry";
@@ -236,7 +236,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
       var item = record;
       if (generateComments) {
         listOfStrings.push(indent + '// ' + this._getTypedDisplayStringForItem(item) + '\n');
-        listOfStrings.push(indent + '//           by (' + this.truncateString(item.getUserstamp().getDisplayString()) + ')');
+        listOfStrings.push(indent + '//           by (' + this._truncateString(item.getUserstamp().getDisplayString()) + ')');
         listOfStrings.push(' on (' + DateValue.getStringMonthDayYear(item.getCreationDate()) + ')\n');
       }
       if (!this._jsonFragmentForItemPrefix) {
@@ -329,10 +329,10 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         listOfStringsForEntry.push(indent + '    "' + StubVirtualServer.JSON_MEMBER_ATTRIBUTE + '": [' + firstAttribute._getUuidInQuotes() + ', ' + secondAttribute._getUuidInQuotes() + ']');
         if (generateComments) {
           commentString += indent + '// ' + this._getTypedDisplayStringForItem(firstItem);
-          commentString += ".(" + this.truncateString(firstAttribute.getDisplayString("???")) + ")";
+          commentString += ".(" + this._truncateString(firstAttribute.getDisplayString("???")) + ")";
           commentString += " = " + this._getTypedDisplayStringForItem(secondItem) + "\n";
           commentString += indent + '// ' + this._getTypedDisplayStringForItem(secondItem);
-          commentString += ".(" + this.truncateString(secondAttribute.getDisplayString("???")) + ")";
+          commentString += ".(" + this._truncateString(secondAttribute.getDisplayString("???")) + ")";
           commentString += " = " + this._getTypedDisplayStringForItem(firstItem) + "\n";
         }
       } else {
@@ -353,7 +353,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
             break;
           case World.UUID_FOR_TYPE_TEXT: 
             valueString = '"' + this.encodeText(contentData) + '"';
-            if (generateComments) {valueComment = '"' + this.truncateString(contentData) + '"';}
+            if (generateComments) {valueComment = '"' + this._truncateString(contentData) + '"';}
             break;
           case World.UUID_FOR_TYPE_DATE: 
             valueString = '"' + contentData.toString() + '"';
@@ -369,12 +369,12 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         listOfStringsForEntry.push(indent + '        "' + StubVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString);
         if (generateComments) {
           commentString += indent + '// ' + this._getTypedDisplayStringForItem(entry.getItem());
-          commentString += ".(" + this.truncateString(attribute.getDisplayString("???")) + ")";
+          commentString += ".(" + this._truncateString(attribute.getDisplayString("???")) + ")";
           commentString += " = " + valueComment + "\n";
         }
       }
       if (generateComments) {
-        commentString += indent + '//           by (' + this.truncateString(entry.getUserstamp().getDisplayString()) + ')';
+        commentString += indent + '//           by (' + this._truncateString(entry.getUserstamp().getDisplayString()) + ')';
         commentString += ' on (' + DateValue.getStringMonthDayYear(entry.getCreationDate()) + ')\n';
         listOfStrings.push(commentString);
         for (var j in listOfStringsForEntry) {
@@ -396,11 +396,11 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
  * Sends all the changes to the server, so that the server can record the
  * changes.
  *
- * @scope    public instance method
+ * @scope    private instance method
  * @param    forceSave    Optional. Forces a save if set to true. 
  * @return   The list of changes made. 
  */
-DeltaVirtualServer.prototype.saveChangesToServer = function(forceSave) {
+DeltaVirtualServer.prototype._saveChangesToServer = function(forceSave) {
   var currentTransaction = this.getCurrentTransaction();
   var listOfChangesMade = currentTransaction.getRecords();
   if (!forceSave && listOfChangesMade.length === 0) {
