@@ -334,7 +334,7 @@ shapes = {
 shapes.TypeTwoBox = function(width, height) {
   this._width = width;
   this._height = height;
-}
+};
 
 shapes.TypeTwoBox.prototype.getArea = function() {
   // do some busy work
