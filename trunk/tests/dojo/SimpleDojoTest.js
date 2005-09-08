@@ -1,5 +1,5 @@
 /*****************************************************************************
- CsvParserTest.js
+ SimpleDojoTest.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -27,44 +27,20 @@
  liability, or tort (including negligence), arising in any way out of or in 
  connection with the use or distribution of the work.
 *****************************************************************************/
- 
-var CsvData = null;
 
 function setUp() {
-  var CsvRecords = ['Title, Year, Producer',
-                    '2001: A Space Odyssey, 1968, Stanley Kubrick',
-                    '"This is a ""fake"" movie title", 1957, Sidney Lumet',
-                    'Alien, 1979, Ridley Scott  ',
-                    '"The Sequel to ""Dances With Wolves.""", 1982, Ridley Scott',
-                    '"Caine Mutiny, The", 1954, "Dymtryk ""the King"", Edward"',
-                    '',
-                    ''];
-  CsvData = CsvRecords.join('\n');
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.require("dojo.text.*");
 }
 
-function testCsvParser() {
-  var csvParser = new CsvParser();
-  var listOfRecords = csvParser.getStringValuesFromCsvData(CsvData);
-  var whiteSpaceCharacters = " \t\n\r";
-  
-  assertTrue('CsvData has 5 lines', listOfRecords.length == 5);
-  for (var i in listOfRecords) {
-    var row = listOfRecords[i];
-    assertTrue('Each row has 3 fields', row.length == 3);
-    for (var j in row) {
-      var field = row[j];
-      assertTrue('Each field is a string', Util.isString(field));
-      var firstChar = field.charAt(0);
-      var lastChar = field.charAt(field.length - 1);
-      assertTrue('The first character is not white space', whiteSpaceCharacters.indexOf(firstChar) == -1);
-      assertTrue('The last character is not white space', whiteSpaceCharacters.indexOf(lastChar) == -1);
-    };
-  }
+function testDojoTextTrim() {
+  var string = "     Just Foo    ";
+  var trimmedString = dojo.text.trim(string);
+  assertTrue("'Just Foo' remains after trimming.", trimmedString == "Just Foo");
 }
-
 
 function tearDown() {
-  CsvData = null;
+  // do nothing
 }
 
 // -------------------------------------------------------------------

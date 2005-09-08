@@ -28,6 +28,7 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+dojo.provide("orp.util.CsvParser");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -43,7 +44,7 @@
  *
  * @scope    public instance constructor
  */
-function CsvParser() {
+orp.util.CsvParser = function() {
 }
 
 
@@ -69,7 +70,7 @@ function CsvParser() {
  * @param    csvData    A string containing CSV records. 
  * @return   Returns an array containing sub-arrays containing strings.
  */
-CsvParser.prototype.getStringValuesFromCsvData = function(csvData) {
+orp.util.CsvParser.prototype.getStringValuesFromCsvData = function(csvData) {
   Util.assert(Util.isString(csvData));
   
   var lineEndingCharacters = new RegExp("\r\n|\n|\r");

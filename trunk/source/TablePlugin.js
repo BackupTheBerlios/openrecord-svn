@@ -41,6 +41,7 @@
 /*global CsvParser  */
 /*global View, MultiEntriesView, EntryView, RootView  */
 // -------------------------------------------------------------------
+dojo.require("orp.util.CsvParser");
 
 
 // -------------------------------------------------------------------
@@ -579,7 +580,7 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
   var startTime = new Date();
   
   var fileContents = Util.getStringContentsOfFileAtURL('file://' + fileButton.value);
-  var csvParser = new CsvParser();
+  var csvParser = new orp.util.CsvParser();
   var listOfRecords = csvParser.getStringValuesFromCsvData(fileContents);
   if (!listOfRecords) {
     return;

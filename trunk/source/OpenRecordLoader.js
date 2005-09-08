@@ -93,6 +93,7 @@ OpenRecordLoader.loadEverything = function(path) {
   var listOfSourceCodeFiles = [
     // third_party
     "third_party/md5/md5.js",
+    /* "third_party/dojo/dojo-0.1.0/dojo.js", */
     "third_party/scriptaculous/prototype.js",
     "third_party/scriptaculous/effects.js",
     "third_party/scriptaculous/dragdrop.js",
@@ -104,7 +105,6 @@ OpenRecordLoader.loadEverything = function(path) {
     "source/util/Util.js",
     "source/util/Cookie.js",
     "source/util/DateValue.js",
-    "source/util/CsvParser.js",
     // view
     "source/view/View.js",
     "source/view/RootView.js",
@@ -146,6 +146,8 @@ OpenRecordLoader.loadEverything = function(path) {
 // -------------------------------------------------------------------
 // This code is immediately executed when this file is first loaded.
 // -------------------------------------------------------------------
+dojo.hostenv.setModulePrefix("orp", "../../../source");
+// dojo.require("orp.util.CsvParser");
 OpenRecordLoader.loadEverything();
 window.onload = function() { 
   var world = new World();
