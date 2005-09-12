@@ -33,22 +33,32 @@
  * The HttpSaver class knows how to save content to a server by using
  * XMLHttpRequest to call a PHP script.
  *
+ * @param    repositoryName                         // e.g. demo_page
+ * @param    pathToTrunkDirectoryFromWindowLocation // Not needed if window location is at the root of the trunk directory.
  * @scope    public instance constructor
  */
-function HttpSaver(pathToTrunkDirectory, repositoryName) {
-  this._pathToTrunkDirectory = pathToTrunkDirectory;
+function HttpSaver(repositoryName, pathToTrunkDirectoryFromWindowLocation) {
   this._repositoryName = repositoryName;
+  var thisUrl = window.location.pathname; //e.g. /openrecord/trunk/demo_page.html or /openrecord/trunk/source/model/TestRepositoryWriting.html.
+  var arrayOfPathComponents = thisUrl.split('/');
+  arrayOfPathComponents.pop();
+  var thisDirectory = arrayOfPathComponents.join('/'); //e.g. /openrecord/trunk or /openrecord/trunk/source/model
+  if (pathToTrunkDirectoryFromWindowLocation) {
+    this._completePathToTrunkDirectory = thisDirectory + '/' + pathToTrunkDirectoryFromWindowLocation;
+  } else {
+    this._completePathToTrunkDirectory = thisDirectory;
+  }
 }
-
 
 /**
  * Returns a newly created XMLHttpRequest object.
  *
  * @scope    public instance method
- * @return   A newly created XMLHttpRequest object. 
+ * @return   A newly created XMLHttpRequest object.
  */
 HttpSaver.prototype.appendText = function(textToAppend) {
-    var url = this._pathToTrunkDirectory + "source/model/append_to_repository_file.php?file=" + this._repositoryName;
+  var url = this._completePathToTrunkDirectory;
+  url += "/source/model/append_to_repository_file.php?file=" + this._repositoryName;
   
   // PENDING: 
   // It might be more efficient to re-use the XMLHttpRequestObject,
@@ -64,7 +74,8 @@ HttpSaver.prototype.appendText = function(textToAppend) {
 };
 
 HttpSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
-  var url = this._pathToTrunkDirectory + "source/model/write_to_repository_file.php?file=" + this._repositoryName;
+  var url = this._completePathToTrunkDirectory;
+  url += "/source/model/write_to_repository_file.php?file=" + this._repositoryName;
   if (overwriteIfExists) {
     url += "&overwrite=T";
   }

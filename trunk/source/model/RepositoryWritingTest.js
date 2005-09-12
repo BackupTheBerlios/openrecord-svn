@@ -27,11 +27,15 @@
 *****************************************************************************/
 
 var utilAssertReportedError;
-var pathToTrunkDirectory;
-var fileName;
-var universalFileSaver;
+var pathToTrunkDirectoryFromThisDirectory   = "../..";
+var fileName = "FakeRepository";
 var fileUrl;
 var saver;
+var expectedRepositoryHeader = '{ "format": "2005_JUNE_CHRONOLOGICAL_LIST", \n';
+expectedRepositoryHeader +=    '  "records": [\n';
+expectedRepositoryHeader +=    '  // =======================================================================\n';
+expectedRepositoryHeader +=    '  { "Transaction": [ ]\n';
+expectedRepositoryHeader +=    '  }';
 
 function errorReporter() {
   utilAssertReportedError = true;
@@ -54,30 +58,35 @@ function fileHasExpectedContents(expectedContents) {
   return (contents == expectedContents);
 }
 
+function fileHasExpectedSubstring(expectedSubstring) {
+  var contents = Util.getStringContentsOfFileAtURL(fileUrl);
+  for (var i = 0; contents.indexOf(expectedSubstring) == -1 && i < 5; ++i) {
+    waitASecond();
+    contents = Util.getStringContentsOfFileAtURL(fileUrl);
+  }
+  return (contents.indexOf(expectedSubstring) != -1);
+}
+
 function setUp() {
   utilAssertReportedError = false;
   Util.setErrorReportCallback(errorReporter)
-  
-  pathToTrunkDirectoryFromFileSaver       = "../..";
-  pathToTrunkDirectoryFromThisDirectory   = "../..";
-  pathToTrunkDirectoryFromTestRunner      = "../../../";
-  fileName = "FakeRepository";
+
   var isHttp = window.location.protocol == "http:";
-  saver = isHttp? new HttpSaver(pathToTrunkDirectoryFromTestRunner, fileName) 
+  saver = isHttp? new HttpSaver(fileName, pathToTrunkDirectoryFromThisDirectory) 
                 : new FileSaver(fileName, pathToTrunkDirectoryFromThisDirectory);
+
+  // Examples of what window.location.pathname should look like:
+  // for http: protocol: /openrecord/trunk/source/model/TestRepositoryWriting.html
+  // for file: protocol on a Mac: /Libraries/.../openrecord/trunk/source/model/TestRepositoryWriting.html
+  // for file: protocol on a PC:  /C:/Documents and Settings/.../source/model/TestRepositoryWriting.html
+  var thisUrl = window.location.pathname;
+  var arrayOfPathComponents = thisUrl.split('/');
+  arrayOfPathComponents.pop();
+  var thisDirectory = arrayOfPathComponents.join('/'); //e.g. /openrecord/trunk/source/model
 
   // fileUrl must specify a file /repositories/*.json relative to the trunk directory, because
   // that's where FileSaver and HttpSaver will write
-  if (isHttp) {
-    // pathToTrunkDirectoryFromTestRunner is used by HttpSaver only to find the php files.
-    var thisUrl = window.location.pathname; //e.g. /openrecord/trunk/source/model/TestRepositoryWriting.html.    
-    var arrayOfPathComponents = thisUrl.split('/');
-    arrayOfPathComponents.pop();
-    var thisDirectory = arrayOfPathComponents.join('/'); //e.g. /openrecord/trunk/source/model
-    fileUrl = thisDirectory + '/' + pathToTrunkDirectoryFromThisDirectory + "/repositories/" + fileName + ".json";
-  } else {
-    fileUrl = saver._getLocalPathFromWindowLocation([pathToTrunkDirectoryFromFileSaver, "repositories", fileName + ".json"]);
-  }
+  fileUrl = thisDirectory + '/' + pathToTrunkDirectoryFromThisDirectory + "/repositories/" + fileName + ".json";
 }
 
 function tearDown() {
@@ -113,6 +122,34 @@ function testAppendToFile() {
   saver.appendText("\n" + timestamp2);
   var expectedContents = timestamp1 + "\n" + timestamp2;
   assertTrue("Contents should be timestamp1 & timestamp2.", fileHasExpectedContents(expectedContents));
+}
+
+function testCreateNewRepository() {
+  var virtualServer = new DeltaVirtualServer(fileName, pathToTrunkDirectoryFromThisDirectory);
+  var overwriteIfExists = true;
+  virtualServer._createNewRepository(overwriteIfExists);
+  assertTrue("Contents should be '{ \"format\": \"2005_JUNE_CHRONOLOGICAL_LIST\", ...'.", fileHasExpectedContents(expectedRepositoryHeader));
+}
+
+function testAppendToRepository() {
+  var virtualServer = new DeltaVirtualServer(fileName, pathToTrunkDirectoryFromThisDirectory);
+  var overwriteIfExists = true;
+  virtualServer._createNewRepository(overwriteIfExists);
+  var world = new World(virtualServer);
+  var listOfUsers = world.getUsers();
+  var mignon = null;
+  for (var key in listOfUsers) {
+    if (listOfUsers[key].getDisplayName() == "Mignon Belongie") {
+      mignon = listOfUsers[key];
+    }
+  }
+  assertTrue("mignon should not be null", mignon != null);
+  world.login(mignon, "");
+  world.beginTransaction();
+  var apple = world.newItem("Apple");
+  world.endTransaction();
+  assertTrue("Contents should include expectedRepositoryHeader.", fileHasExpectedSubstring(expectedRepositoryHeader));
+  assertTrue("Contents should include '\"value\": \"Apple\"'.", fileHasExpectedSubstring('"value": "Apple"'));
 }
 
 // -------------------------------------------------------------------

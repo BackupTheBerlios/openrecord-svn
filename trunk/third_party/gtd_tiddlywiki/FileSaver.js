@@ -60,18 +60,7 @@ DAMAGE.
  */
 function FileSaver(repositoryName, pathToTrunkDirectory) {
   this._repositoryName = repositoryName;
-  if (pathToTrunkDirectory) {
-    this._pathToTrunkDirectory = pathToTrunkDirectory;
-  }
-}
-
-
-/**
- * Appends text to a file.
- *
- * @scope    public instance method
- */
-FileSaver.prototype.appendText = function(textToAppend) {
+  
   // Step 1: Build the fileUrl
   // 
   // Our saveTextToFile() method needs a fileUrl that looks like this:
@@ -87,28 +76,28 @@ FileSaver.prototype.appendText = function(textToAppend) {
   //   fileUrl = "K:/www/htdocs/openrecord/demo/current/trunk/repositories/demo_page.json";
 
   var listOfAdditions = [];
-  if (this._pathToTrunkDirectory) {
-    listOfAdditions.push(this._pathToTrunkDirectory);
+  if (pathToTrunkDirectory && pathToTrunkDirectory != "") {
+    listOfAdditions.push(pathToTrunkDirectory);
   }
   listOfAdditions.push(DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY);
   listOfAdditions.push(this._repositoryName + ".json");
-  var fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
-  
+  this._fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
+}
+
+
+/**
+ * Appends text to a file.
+ *
+ * @scope    public instance method
+ */
+FileSaver.prototype.appendText = function(textToAppend) {
   var append = true;
-  this._saveTextToFile(textToAppend, fileUrl, append);
+  this._saveTextToFile(textToAppend, this._fileUrl, append);
 };
 
 FileSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
-  var listOfAdditions = [];
-  if (this._pathToTrunkDirectory) {
-    listOfAdditions.push(this._pathToTrunkDirectory);
-  }
-  listOfAdditions.push(DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY);
-  listOfAdditions.push(this._repositoryName + ".json");
-  var fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
-
   var append = false;
-  this._saveTextToFile(textToWrite, fileUrl, append);
+  this._saveTextToFile(textToWrite, this._fileUrl, append);
 }
 
 /**

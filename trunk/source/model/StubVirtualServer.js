@@ -97,13 +97,20 @@ StubVirtualServer.prototype._processOptionalDefaultOverrides = function(optional
  */
 function StubVirtualServer(pathToTrunkDirectory) {
   var fileName = "2005_june_axiomatic_items.json";
-  var urlForAxiomaticFile = "";
+  var relUrlForAxiomaticFile = "source/model/" + fileName;
   if (pathToTrunkDirectory) {
-    urlForAxiomaticFile = pathToTrunkDirectory;
+    this._needCompletePath = true;
+    var thisUrl = window.location.pathname; //e.g. /openrecord/trunk/source/model/TestRepositoryWriting.html.
+    var arrayOfPathComponents = thisUrl.split('/');
+    arrayOfPathComponents.pop();
+    var thisDirectory = arrayOfPathComponents.join('/'); //e.g. /openrecord/trunk/source/model
+    this._completePathToTrunkDirectory = thisDirectory + '/' + pathToTrunkDirectory;
+    this._dehydratedAxiomFileURL = this._completePathToTrunkDirectory + '/' + relUrlForAxiomaticFile;
+  } else {
+    this._needCompletePath = false;
+    this._dehydratedAxiomFileURL = relUrlForAxiomaticFile;    
   }
-  urlForAxiomaticFile += "source/model/" + fileName;
   
-  this._dehydratedAxiomFileURL = urlForAxiomaticFile;
   /*
   if (optionalDefaultOverrides) {
     this._processOptionalDefaultOverrides(optionalDefaultOverrides, "Stub");

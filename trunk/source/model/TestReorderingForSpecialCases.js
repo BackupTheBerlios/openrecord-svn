@@ -50,7 +50,7 @@ errorReporter = function() {
 function setUp() {
   utilAssertReportedError = false;
   Util.setErrorReportCallback(errorReporter);
-  var pathToTrunkDirectory = "../../../";
+  var pathToTrunkDirectory = "../..";
   // var virtualServer = new StubVirtualServer(pathToTrunkDirectory, {"_generateUuid":mockUuidGenerator});
   var virtualServer = new StubVirtualServer(pathToTrunkDirectory);
   StubVirtualServer.prototype._generateUuid = mockUuidGenerator;

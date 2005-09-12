@@ -55,16 +55,11 @@ DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
 DeltaVirtualServer.prototype = new StubVirtualServer();  // makes DeltaVirtualServer be a subclass of StubVirtualServer
 function DeltaVirtualServer(repositoryName, pathToTrunkDirectory, optionalDefaultOverrides) {
   StubVirtualServer.call(this, pathToTrunkDirectory, optionalDefaultOverrides);
+  this._repositoryName = repositoryName;
   this._pathToTrunkDirectory = "";
   if (pathToTrunkDirectory) {
     this._pathToTrunkDirectory = pathToTrunkDirectory;
   }
-  
-  var axiomaticFileName = "2005_june_axiomatic_items.json";
-  var urlForAxiomaticFile = this._pathToTrunkDirectory + "source/model/" + axiomaticFileName;
-  
-  this._dehydratedAxiomFileURL = urlForAxiomaticFile;
-  this._repositoryName = repositoryName;
   this._hasEverFailedToSaveFlag = false;
 }
 
@@ -82,7 +77,11 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
 
   var repositoryFileName = this._repositoryName + ".json";
-  var repositoryUrl = this._pathToTrunkDirectory + DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY + "/" + repositoryFileName;
+  var repositoryUrl = "";
+  if (this._needCompletePath) {
+    repositoryUrl = this._completePathToTrunkDirectory + '/';
+  }
+  repositoryUrl += DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY + "/" + repositoryFileName;
   var repositoryContentString = Util.getStringContentsOfFileAtURL(repositoryUrl);
   repositoryContentString += " ] }";
 
@@ -393,6 +392,40 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
 
 
 /**
+ * @scope    private instance method
+ * @param    overwriteIfExists    Optional
+ * @return   success
+ */
+DeltaVirtualServer.prototype._createNewRepository = function(overwriteIfExists) {
+  if (this._saverObject) {
+    alert("this._saverObject is already initialized.");
+    return false;
+  }
+  if (window.location) {
+    if (window.location.protocol == "http:") {
+      this._saverObject = new HttpSaver(this._repositoryName, this._pathToTrunkDirectory);
+    }
+    if (window.location.protocol == "file:") {
+      this._saverObject = new FileSaver(this._repositoryName, this._pathToTrunkDirectory);
+    }
+  }
+  if (!this._saverObject) {
+    if (!this._hasEverFailedToSaveFlag) {
+      window.alert("I can't save changes to server, because this page was loaded from a \"file:///\" location, not a real \"http://\" location.  Sorry."); 
+      this._hasEverFailedToSaveFlag = true;
+    }
+    return false;
+  }
+  var text = '{ "format": "2005_JUNE_CHRONOLOGICAL_LIST", \n';
+  text +=    '  "records": [\n';
+  text +=    '  // =======================================================================\n';
+  text +=    '  { "Transaction": [ ]\n';
+  text +=    '  }';
+  return this._saverObject.writeText(text, overwriteIfExists);
+};
+
+
+/**
  * Sends all the changes to the server, so that the server can record the
  * changes.
  *
@@ -410,11 +443,10 @@ DeltaVirtualServer.prototype._saveChangesToServer = function(forceSave) {
   if (!this._saverObject) {
     if (window.location) {
       if (window.location.protocol == "http:") {
-        this._saverObject = new HttpSaver(this._pathToTrunkDirectory, this._repositoryName);
+        this._saverObject = new HttpSaver(this._repositoryName, this._pathToTrunkDirectory);
       }
       if (window.location.protocol == "file:") {
-        // var fileName = this._repositoryName + ".json";
-        this._saverObject = new FileSaver(this._repositoryName);
+        this._saverObject = new FileSaver(this._repositoryName, this._pathToTrunkDirectory);
       }
     }
   }

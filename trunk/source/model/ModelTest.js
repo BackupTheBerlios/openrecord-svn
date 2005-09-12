@@ -45,7 +45,7 @@ var world;
 function setUp() {
   ModelTestVars = {};
 
-  var pathToTrunkDirectory = "../../../";
+  var pathToTrunkDirectory = "../..";
   var stubVirtualServer = new StubVirtualServer(pathToTrunkDirectory);
   world = new World(stubVirtualServer);
 }
