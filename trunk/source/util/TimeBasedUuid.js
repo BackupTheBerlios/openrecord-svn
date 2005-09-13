@@ -51,6 +51,44 @@
  *
  * @scope    public instance constructor
  */
+/*
+ * PENDING: refactor constructor API
+ // OLD API
+var uuid = new orp.util.TimeBasedUuid();                 // new
+var uuid = new orp.util.TimeBasedUuid("917BF397618A");   // pseudonode
+var uuid = new orp.util.TimeBasedUuid("3B12F1DF-5232-1804-897E-917BF397618A")
+
+// NEW API
+var uuid = new orp.util.TimeBasedUuid();
+var uuid = new orp.util.TimeBasedUuid({pseudoNode: "917BF397618A"});
+var uuid = new orp.util.TimeBasedUuid({node: "917BF397618A"});
+var uuid = new orp.util.TimeBasedUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
+
+
+var uuid = new orp.util.RandomUuid();
+var uuid = new orp.util.RandomUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
+
+var uuid = new orp.util.Uuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
+var version = orp.util.Uuid.getVersionFromUuidString("3B12F1DF-5232-1804-897E-917BF397618A");
+var version = orp.util.Uuid.getVariantFromUuidString("3B12F1DF-5232-1804-897E-917BF397618A");
+var boolean = orp.util.Uuid.isRandomUuidString("3B12F1DF-5232-1804-897E-917BF397618A");
+var boolean = orp.util.Uuid.isTimeBasedUuidString("3B12F1DF-5232-1804-897E-917BF397618A");
+
+// in Uuid.js
+var Version = {
+  TimeBased: 1,
+  DCESecurity: 2,
+  NameBasedMD5: 3,
+  Random: 4,
+  NameBasedSHA1: 5
+}
+
+var Variant = {
+  NCS: "0",
+  DCE: "10",
+  Microsoft: "110"
+}
+*/
 TimeBasedUuid.prototype = new Uuid();  // makes TimeBasedUuid be a subclass of Uuid
 function TimeBasedUuid(uuidStringOrPseudoNode) {
   if (uuidStringOrPseudoNode) {

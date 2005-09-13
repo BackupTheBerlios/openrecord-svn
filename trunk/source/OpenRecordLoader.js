@@ -147,11 +147,22 @@ OpenRecordLoader.loadEverything = function(path) {
 // This code is immediately executed when this file is first loaded.
 // -------------------------------------------------------------------
 dojo.hostenv.setModulePrefix("orp", "../../../source");
-// dojo.require("orp.util.CsvParser");
 OpenRecordLoader.loadEverything();
 window.onload = function() { 
-  var world = new World();
-  new RootView(world);
+  // figure out if we're running in IE or Firefox
+  var firefox = true;  // PENDING: hack!
+  var errorMessage;
+  if (!firefox) {
+    errorMessage = "IE error message";
+    // display errorMessage
+    return;
+  }
+  if (firefox) {
+    errorMessage = "Loading...";
+    // display errorMessage
+    var world = new World();
+    new RootView(world);
+  }
 };    
 
 

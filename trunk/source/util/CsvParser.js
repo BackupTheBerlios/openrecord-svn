@@ -29,6 +29,7 @@
 *****************************************************************************/
 
 dojo.provide("orp.util.CsvParser");
+// dojo.require("orp.util.Util");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:

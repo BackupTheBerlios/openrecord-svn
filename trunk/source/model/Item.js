@@ -91,6 +91,62 @@ Item.prototype._initialize = function(observer, provisionalFlag) {
 // Entry adding methods
 // -------------------------------------------------------------------
 
+/* PENDING: refactor these methods as per Sept 12 plan:
+// OLD
+item.addEntry(value)
+item.addEntry(value, type)
+item.addEntryForAttribute(attribute, value)
+item.addEntryForAttribute(attribute, value, type)
+
+item.replaceEntry(previousEntry, value)
+item.replaceEntry(previousEntry, value, type)
+item.replaceEntryWithEntryForAttribute(previousEntry, attribute, value)
+item.replaceEntryWithEntryForAttribute(previousEntry, attribute, value, type)
+
+item.addConnectionEntry(myAttribute, otherItem, otherAttribute)
+Item.replaceEntryWithConnection(previousEntry, myAttribute, otherItem, otherAttribute)
+
+// NEW
+ **
+ * Creates a new entry object ...
+ *
+ * @scope    public instance method
+ * @namedParam    value    ... 
+ * @namedParam    type    ... 
+ * @namedParam    attribute    Optional. ...
+ * @return   The new entry object.
+ * @throws   Throws an Error if no user is logged in.
+ *
+Item.prototype.addEntry = function(namedParameters) {
+// function initializer
+// input/parameter/argument hash table
+// input/parameter/argument hash
+// anonymous object
+// input/parameter/argument dictionary
+// input/parameter/argument initializer
+// named parameters
+// keyword parameters
+};
+
+item.addEntry({value:
+               type:
+               attribute: })
+
+item.replaceEntry({value:
+               type:
+               attribute:
+               previousEntry: })
+
+item.addConnectionEntry({myAttribute:
+                        otherItem:
+                        otherAttribute: })
+
+item.replaceEntryWithConnection({previousEntry: 
+                        myAttribute:
+                        otherItem:
+                        otherAttribute: })
+*/
+
 /**
  * Creates a new entry object and adds the new entry to the item's 
  * list of entries.
@@ -300,6 +356,14 @@ Item.prototype.assignToCategory = function(category) {
 // -------------------------------------------------------------------
 // Accessor methods where the answer depends on the retrieval filter
 // -------------------------------------------------------------------
+/* PENDING: add this API
+
+var entries = item.getValuesForAttribute(height);
+for (var i in values) {
+  var value = value[i];
+  // display value on screen
+}
+*/
 
 /**
  * Given an attribute, this method returns the list of all the entries that 
