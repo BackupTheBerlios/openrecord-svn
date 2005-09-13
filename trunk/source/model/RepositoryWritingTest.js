@@ -37,6 +37,11 @@ expectedRepositoryHeader +=    '  // ===========================================
 expectedRepositoryHeader +=    '  { "Transaction": [ ]\n';
 expectedRepositoryHeader +=    '  }';
 
+
+// -------------------------------------------------------------------
+// Helper functions
+// -------------------------------------------------------------------
+
 function errorReporter() {
   utilAssertReportedError = true;
 }
@@ -67,6 +72,11 @@ function fileHasExpectedSubstring(expectedSubstring) {
   return (contents.indexOf(expectedSubstring) != -1);
 }
 
+
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
+
 function setUp() {
   utilAssertReportedError = false;
   Util.setErrorReportCallback(errorReporter)
@@ -92,6 +102,11 @@ function setUp() {
 function tearDown() {
   assertFalse(utilAssertReportedError);
 }
+
+
+// -------------------------------------------------------------------
+// Test methods
+// -------------------------------------------------------------------
 
 function testCreateNewFile() {
   var now = new Date();
