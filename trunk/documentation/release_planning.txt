@@ -352,23 +352,30 @@ chao   | 		      | 0.1  IED|     Show current active page on sidebar
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         |  1. look into using the Dojo Package System
+brian  |          | done    |  1. look into using the Dojo Package System
+       |          |         |     convert code to use Dojo Package System
+brian  | 0.25 IED |         |     move scrap_yard contents to the tests_of_external_code directory and delete scrap_yard
+brian  | 0.25 IED |         |     refactor UUID constructor API
        |          |         |  2. create a FakeStorage class, + rename FileSaver + HttpSaver
        |          |         |  3. rename Dehydrate and Rehydrate to Serialize and Deserialize
        |          |         |  4. merge StubVirtualServer + DeltaVirtualServer, and re-name
-       |          |         |  5. consider a different JSON representation for DateValues
+       |          |         |  5. research standard text representations for DateValues
        |          |         |  6. make ordinal value strings not grow long so quickly
        |          |         |  7. Do lazy creation of layout data items
-       |          |         |  8. Improve and document the Data model public api
+brian  | 0.5  IED |         |     Make Item.js use namedParameter based API
+brian  |          |         |     Decide whether or not to replace bi-directional connection entries with twin-entries
+       |          |         |  8. Document the Data model public API
        |          |         |  9. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
        |          |         | 10. Pick one file, and do a group code review on it
        |          |         | 11. Implement a good URL-to-content mapping, so that URLs won't go bad in future releases
-       |          |         | 12. Rationalize the View api and document public api
-       |          |         | 13. Create a "plugin" or "plugin_view" directory 
+       |          |         | 12. Rationalize the View API and document public API
+mignon | 1    IED |         |     Rationalize the ViewPlugin API
+mignon | 0.25 IED |         | 13. Create a "view_plugins" directory & change "TablePlugin" to "TableView", etc. 
+mignon | 2    IED |         |     Automatically load ViewPlugins found in the view_plugins directory 
        |          |         | 14. Make RootView subclass from View, or add comments explaining why it doesn't
        |          |         | 15. Make DateValue subclass from Date, or wrap an internal Date object
 -------+----------+---------+----------------------------------------------
-       |          |         |     Fix the message that says "Sorry, for some reason OpenRecrod was not able to launch."
+       |          |         |     Fix the message that says "Sorry, for some reason OpenRecord was not able to launch."
        |          |         | 16. Assign system attributes & categories to a "System" category
        |          |         | 17. Hide "System" items most of the time
        |          |         | 18. improve UI for creating a new category
