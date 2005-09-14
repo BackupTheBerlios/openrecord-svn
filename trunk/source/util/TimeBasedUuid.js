@@ -78,39 +78,42 @@ dojo.require("orp.util.Uuid");
  * @namedParam    hardwareNode    A 12-character hex string containing an IEEE 802.3 network node identificator. 
  * @namedParam    pseudoNode    A 12-character hex string representing a pseudoNode. 
  */
-orp.util.TimeBasedUuid = function(namedParameter) {
+orp.util.TimeBasedUuid = function(namedParameters) {
   orp.util.Uuid.call(this);
   var uuidString;
-  if (namedParameter) {
-    if (Util.isObject(namedParameter)) {
-      uuidString = namedParameter[orp.util.Uuid.NamedParameters.uuidString];
-      var node = namedParameter["node"];
-      var pseudoNode = namedParameter["pseudoNode"];
-      var hardwareNode = namedParameter["hardwareNode"];
-      var atLeastOneParameter = (uuidString || node || pseudoNode || hardwareNode) ? true : false;
-      Util.assert(atLeastOneParameter);
-      if (uuidString) {
-        Util.assert(!node && !pseudoNode && !hardwareNode);
-        Util.assert(uuidString.length == 36);
-        this._uuidString = uuidString;
-      }
-      if (node || pseudoNode || hardwareNode) {
-        Util.assert((node || pseudoNode).length == 12);
-        var firstCharacter = (node || pseudoNode).charAt(0);
-        var firstDigit = parseInt(firstCharacter, orp.util.Uuid.HEX_RADIX);
-        if (hardwareNode) { 
-          Util.assert((firstDigit >= 0x0) && (firstDigit <= 0x7)); 
-        }
-        if (pseudoNode) { 
-          Util.assert((firstDigit >= 0x8) && (firstDigit <= 0xF)); 
-        }
-        this._uuidString = this._generateUuidString(node || pseudoNode || hardwareNode);
-      }
-    } else {
-      uuidString = namedParameter;
-      Util.assert(Util.isString(uuidString));
+  if (namedParameters) {
+    if (dojo.lang.isString(namedParameters)) {
+      uuidString = namedParameters;
       Util.assert(uuidString.length == 36);
       this._uuidString = uuidString;
+    } else {
+      if (dojo.lang.isObject(namedParameters)) {
+        uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
+        var node = namedParameters["node"];
+        var pseudoNode = namedParameters["pseudoNode"];
+        var hardwareNode = namedParameters["hardwareNode"];
+        var atLeastOneParameter = (uuidString || node || pseudoNode || hardwareNode) ? true : false;
+        Util.assert(atLeastOneParameter);
+        if (uuidString) {
+          Util.assert(!node && !pseudoNode && !hardwareNode);
+          Util.assert(uuidString.length == 36);
+          this._uuidString = uuidString;
+        }
+        if (node || pseudoNode || hardwareNode) {
+          Util.assert((node || pseudoNode).length == 12);
+          var firstCharacter = (node || pseudoNode).charAt(0);
+          var firstDigit = parseInt(firstCharacter, orp.util.Uuid.HEX_RADIX);
+          if (hardwareNode) { 
+            Util.assert((firstDigit >= 0x0) && (firstDigit <= 0x7)); 
+          }
+          if (pseudoNode) { 
+            Util.assert((firstDigit >= 0x8) && (firstDigit <= 0xF)); 
+          }
+          this._uuidString = this._generateUuidString(node || pseudoNode || hardwareNode);
+        }
+      } else {
+        Util.assert(false);
+      }
     }
   } else {
     this._uuidString = this._generateUuidString();

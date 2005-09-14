@@ -40,9 +40,11 @@ var TimeBasedUuid = null;
 
 function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.require("orp.util.Uuid");
   dojo.require("orp.util.RandomUuid");
   dojo.require("orp.util.TimeBasedUuid");
+  dojo.require("dojo.lang.*");
 
   Uuid = orp.util.Uuid;
   RandomUuid = orp.util.RandomUuid;
@@ -136,12 +138,14 @@ function testRandomUuids() {
   var uuid2 = new RandomUuid();
   var uuid3 = new RandomUuid("3B12F1DF-5232-4804-897E-917BF397618A");
   var uuid4 = new RandomUuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
+  var uuid5 = new RandomUuid(new String("3B12F1DF-5232-4804-897E-917BF397618A"));
 
   // alert(uuid1 + "\n" + uuid2);
   checkRandomUuidValidity(uuid1);
   checkRandomUuidValidity(uuid2);
   checkRandomUuidValidity(uuid3);
   checkRandomUuidValidity(uuid4);
+  checkRandomUuidValidity(uuid5);
 
   var uuidString1 = uuid1.toString();
   var uuidString2 = uuid2.toString();
@@ -160,6 +164,7 @@ function testTimeBasedUuids() {
   var uuid8 = new TimeBasedUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
   var uuid9 = new TimeBasedUuid({'uuidString': "3B12F1DF-5232-1804-897E-917BF397618A"});
   var uuid10 = new TimeBasedUuid("3B12F1DF-5232-1804-897E-917BF397618A");
+  var uuid11 = new TimeBasedUuid(new String("3B12F1DF-5232-1804-897E-917BF397618A"));
   
   checkTimeBasedUuidValidity(uuid1);
   checkTimeBasedUuidValidity(uuid2);
@@ -171,6 +176,7 @@ function testTimeBasedUuids() {
   checkTimeBasedUuidValidity(uuid8);
   checkTimeBasedUuidValidity(uuid9);
   checkTimeBasedUuidValidity(uuid10);
+  checkTimeBasedUuidValidity(uuid11);
 
   uuid1 = uuid1.toString();
   uuid2 = uuid2.toString();
@@ -304,6 +310,8 @@ function testUuidFactory() {
 // -------------------------------------------------------------------
 
 function checkUuidValidity(uuid) {
+  assertTrue('All UUIDs are instances of Uuid', (uuid instanceof Uuid));
+
   var variant = uuid.getVariant();
   assertTrue('All of our UUIDs are DCE UUIDs', (variant == Uuid.Variant.DCE));  
   
@@ -340,6 +348,8 @@ function checkUuidValidity(uuid) {
 function checkRandomUuidValidity(uuid) {
   checkUuidValidity(uuid);
 
+  assertTrue('Random UUIDs are instances of RandomUuid', (uuid instanceof RandomUuid));
+  
   var version = uuid.getVersion();
   assertTrue('Random UUIDs return Uuid.Version.RANDOM', (version == Uuid.Version.RANDOM));  
   
@@ -352,11 +362,13 @@ function checkRandomUuidValidity(uuid) {
 function checkTimeBasedUuidValidity(uuid) {
   checkUuidValidity(uuid);
 
+  assertTrue('TimeBased UUIDs are instances of RandomUuid', (uuid instanceof TimeBasedUuid));
+
   var version = uuid.getVersion();
   assertTrue('TimeBased UUIDs return Uuid.Version.TIME_BASED', (version == Uuid.Version.TIME_BASED));  
 
   var node = uuid.getNode();
-  assertTrue("A UUID's node is a string", (Util.isString(node)));
+  assertTrue("A UUID's node is a string", dojo.lang.isString(node));
   assertTrue("A UUID's node string is 12 characters long.", node.length == 12);
 
   var date = uuid.getDate();

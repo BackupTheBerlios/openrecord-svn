@@ -352,10 +352,10 @@ chao   | 		      | 0.1  IED|     Show current active page on sidebar
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-brian  |          | done    |  1. look into using the Dojo Package System
-       |          |         |     convert code to use Dojo Package System
-brian  | 0.25 IED | 0   IED |     move scrap_yard contents to the tests_of_external_code directory and delete scrap_yard
-brian  | 0.25 IED |         |     refactor UUID constructor API
+brian  |          | 0.5  IED|  1. look into using the Dojo Package System
+       |          | 0.5+    |     convert code to use Dojo Package System
+brian  | 0.25 IED | 0    IED|     move scrap_yard contents to the tests_of_external_code directory and delete scrap_yard
+brian  | 0.25 IED | 0.25 IED|     refactor UUID constructor API, and other UUID improvements
        |          |         |  2. create a FakeStorage class, + rename FileSaver + HttpSaver
        |          |         |  3. rename Dehydrate and Rehydrate to Serialize and Deserialize
        |          |         |  4. merge StubVirtualServer + DeltaVirtualServer, and re-name

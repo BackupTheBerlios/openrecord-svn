@@ -48,6 +48,8 @@ var world;
 
 function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+
   ModelTestVars = {};
 
   var pathToTrunkDirectory = "../..";

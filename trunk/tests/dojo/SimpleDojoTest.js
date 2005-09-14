@@ -30,13 +30,25 @@
 
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
-  dojo.require("dojo.text.*");
 }
 
 function testDojoTextTrim() {
+  // alert("Dojo version: " + dojo.version.toString()); 
+    // Dojo version: 0.1.0 (1321)
+  // alert("dojo.hostenv.getBaseScriptUri() = " + dojo.hostenv.getBaseScriptUri());
+    // dojo.hostenv.getBaseScriptUri() = ../../third_party/dojo/dojo-0.1.0
+
+  dojo.require("dojo.text.*");
+
   var string = "     Just Foo    ";
   var trimmedString = dojo.text.trim(string);
   assertTrue("'Just Foo' remains after trimming.", trimmedString == "Just Foo");
+}
+
+function testDojoLang() {
+  dojo.require("dojo.lang.*");
+
+  assertTrue("'Iggy Pop' is a string.", dojo.lang.isString("Iggy Pop"));
 }
 
 function tearDown() {

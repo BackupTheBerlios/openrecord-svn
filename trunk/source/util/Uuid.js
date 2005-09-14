@@ -35,6 +35,7 @@
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.util.Uuid");
+dojo.require("dojo.lang.*");
 
 
 // -------------------------------------------------------------------
@@ -58,17 +59,17 @@ dojo.provide("orp.util.Uuid");
 orp.util.Uuid = function(uuidString) {
   this._uuidString = null;
   if (uuidString) {
-    if (Util.isObject(uuidString)) {
-      var namedParameters = uuidString;
-      uuidString = namedParameters["uuidString"];
-    }
-    if (Util.isString(uuidString)) {
+    if (dojo.lang.isString(uuidString)) {
       this._uuidString = uuidString;
     } else {
-      Util.assert(false);
+      if (dojo.lang.isObject(uuidString)) {
+        var namedParameters = uuidString;
+        this._uuidString = namedParameters["uuidString"];
+      } else {
+        Util.assert(false);
+      }
     }
   }
-  this._uuidString = uuidString;
 };
 
 
@@ -100,16 +101,21 @@ orp.util.Uuid.NamedParameters = {
  *
  * @scope    public class method
  * @param    uuidString    A 36-character string that conforms to the UUID spec. 
+ * @namedParam    uuidString    A 36-character string that conforms to the UUID spec. 
  * @return   A new instance of Uuid, TimeBasedUuid, or RandomUuid.
  */
-orp.util.Uuid.newUuid = function(uuidString) {
+orp.util.Uuid.newUuid = function(namedParameters) {
   dojo.require("orp.util.RandomUuid");
   dojo.require("orp.util.TimeBasedUuid");
-  if (Util.isObject(uuidString)) {
-    var namedParameters = uuidString;
+  
+  var uuidString;
+  if (dojo.lang.isString(namedParameters)) {
+    uuidString = namedParameters;
+  } else {
+    Util.assert(dojo.lang.isObject(namedParameters));
     uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
+    Util.assert(dojo.lang.isString(uuidString));
   }
-  Util.assert(Util.isString(uuidString));
 
   var uuid = new orp.util.Uuid(uuidString);
   if (uuid.getVersion() == orp.util.Uuid.Version.TIME_BASED) {

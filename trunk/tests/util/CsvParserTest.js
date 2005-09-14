@@ -30,7 +30,17 @@
  
 var CsvData = null;
 
+
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
+
 function setUp() {
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.require("dojo.lang.*");
+  dojo.require("orp.util.CsvParser");
+
   var CsvRecords = ['Title, Year, Producer',
                     '2001: A Space Odyssey, 1968, Stanley Kubrick',
                     '"This is a ""fake"" movie title", 1957, Sidney Lumet',
@@ -42,18 +52,33 @@ function setUp() {
   CsvData = CsvRecords.join('\n');
 }
 
-function testDojoAccess() {
-  // alert("Dojo version: " + dojo.version.toString()); 
-    // Dojo version: 0.1.0 (1321)
-  // alert("dojo.hostenv.getBaseScriptUri() = " + dojo.hostenv.getBaseScriptUri());
-    // dojo.hostenv.getBaseScriptUri() = ../../third_party/dojo/dojo-0.1.0
+function tearDown() {
+  CsvData = null;
+}
+
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
+
+function testCsvParser() {
+  var csvParser = new orp.util.CsvParser();
+  var listOfRecords = csvParser.getStringValuesFromCsvData(CsvData);
+  var whiteSpaceCharacters = " \t\n\r";
   
-  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
-  dojo.require("dojo.text.*");
-  
-  var string = "     Just Foo    ";
-  var trimmedString = dojo.text.trim(string);
-  assertTrue("'Just Foo' remains after trimming.", trimmedString == "Just Foo");
+  assertTrue('CsvData has 5 lines', listOfRecords.length == 5);
+  for (var i in listOfRecords) {
+    var row = listOfRecords[i];
+    assertTrue('Each row has 3 fields', row.length == 3);
+    for (var j in row) {
+      var field = row[j];
+      assertTrue('Each field is a string', dojo.lang.isString(field));
+      var firstChar = field.charAt(0);
+      var lastChar = field.charAt(field.length - 1);
+      assertTrue('The first character is not white space', whiteSpaceCharacters.indexOf(firstChar) == -1);
+      assertTrue('The last character is not white space', whiteSpaceCharacters.indexOf(lastChar) == -1);
+    };
+  }
 }
 
 /*
@@ -70,33 +95,6 @@ function testShapesAccess() {
 }
 */
 
-function testCsvParser() {
-  dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.util.CsvParser");
-
-  var csvParser = new orp.util.CsvParser();
-  var listOfRecords = csvParser.getStringValuesFromCsvData(CsvData);
-  var whiteSpaceCharacters = " \t\n\r";
-  
-  assertTrue('CsvData has 5 lines', listOfRecords.length == 5);
-  for (var i in listOfRecords) {
-    var row = listOfRecords[i];
-    assertTrue('Each row has 3 fields', row.length == 3);
-    for (var j in row) {
-      var field = row[j];
-      assertTrue('Each field is a string', Util.isString(field));
-      var firstChar = field.charAt(0);
-      var lastChar = field.charAt(field.length - 1);
-      assertTrue('The first character is not white space', whiteSpaceCharacters.indexOf(firstChar) == -1);
-      assertTrue('The last character is not white space', whiteSpaceCharacters.indexOf(lastChar) == -1);
-    };
-  }
-}
-
-
-function tearDown() {
-  CsvData = null;
-}
 
 // -------------------------------------------------------------------
 // End of file

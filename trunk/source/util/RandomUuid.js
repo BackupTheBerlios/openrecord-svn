@@ -66,14 +66,20 @@ dojo.require("orp.util.Uuid");
  * @param    uuidString    A 36-character string that conforms to the UUID spec. 
  * @namedParam    uuidString    A 36-character string that conforms to the UUID spec. 
  */
-orp.util.RandomUuid = function(uuidString) {
+orp.util.RandomUuid = function(namedParameters) {
   orp.util.Uuid.call(this);
-  if (uuidString) {
-    if (Util.isObject(uuidString)) {
-      var namedParameters = uuidString;
-      uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
+  var uuidString;
+  if (namedParameters) {
+    if (dojo.lang.isString(namedParameters)) {
+      uuidString = namedParameters;
+    } else {
+      if (dojo.lang.isObject(namedParameters)) {
+        uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
+      } else {
+        Util.assert(false);
+      }
     }
-    Util.assert(Util.isString(uuidString));
+    Util.assert(dojo.lang.isString(uuidString));
     Util.assert(uuidString.length == 36);
     this._uuidString = uuidString;
   } else {
