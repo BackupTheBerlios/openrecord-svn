@@ -29,8 +29,13 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
 dojo.provide("orp.util.RandomUuid");
 dojo.require("orp.util.Uuid");
+
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -38,6 +43,10 @@ dojo.require("orp.util.Uuid");
 /*global Uuid  */
 // -------------------------------------------------------------------
 
+
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 
 /**
  * The RandomUuid class offers methods for working with 
@@ -48,7 +57,6 @@ dojo.require("orp.util.Uuid");
  *
  * @scope    public instance constructor
  */
-// orp.util.RandomUuid.prototype = new orp.util.Uuid();  
 orp.util.RandomUuid = function(uuidString) {
   orp.util.Uuid.call(this);
   if (uuidString) {
@@ -56,17 +64,11 @@ orp.util.RandomUuid = function(uuidString) {
     Util.assert(uuidString.length == 36);
     this._uuidString = uuidString;
   } else {
-    this._uuidString = orp.util.RandomUuid._generateUuidString();
+    this._uuidString = this._generateUuidString();
   }
 };
 
 dj_inherits(orp.util.RandomUuid, orp.util.Uuid);  // makes RandomUuid be a subclass of Uuid
-
-
-// -------------------------------------------------------------------
-// Public class constants
-// -------------------------------------------------------------------
-orp.util.RandomUuid.HEX_RADIX = 16;
 
 
 // -------------------------------------------------------------------
@@ -77,19 +79,19 @@ orp.util.RandomUuid.HEX_RADIX = 16;
  * Generates a random UUID, meaning a "version 4" UUID.  Hopefully this 
  * implementation conforms to the existing standards for UUIDs and GUIDs.  
  * 
- * @scope    public class method
+ * @scope    public instance method
  * @return   Returns a 36-character string, which will look something like "3B12F1DF-5232-4804-897E-917BF397618A".
  */
-orp.util.RandomUuid._generateUuidString = function() {
+orp.util.RandomUuid.prototype._generateUuidString = function() {
   var hyphen = "-";
   var versionCodeForRandomlyGeneratedUuids = "4"; // 8 == binary2hex("0100")
   var variantCodeForDCEUuids = "8"; // 8 == binary2hex("1000")
-  var a = orp.util.RandomUuid._generateRandomEightCharacterHexString();
-  var b = orp.util.RandomUuid._generateRandomEightCharacterHexString();
+  var a = this._generateRandomEightCharacterHexString();
+  var b = this._generateRandomEightCharacterHexString();
   b = b.substring(0, 4) + hyphen + versionCodeForRandomlyGeneratedUuids + b.substring(5, 8);
-  var c = orp.util.RandomUuid._generateRandomEightCharacterHexString();
+  var c = this._generateRandomEightCharacterHexString();
   c = variantCodeForDCEUuids + c.substring(1, 4) + hyphen + c.substring(4, 8);
-  var d = orp.util.RandomUuid._generateRandomEightCharacterHexString();
+  var d = this._generateRandomEightCharacterHexString();
   var result = a + hyphen + b + hyphen + c + d;
   
   return result;
@@ -102,26 +104,11 @@ orp.util.RandomUuid._generateUuidString = function() {
  *
  * @scope    private class method
  */
+/*
 orp.util.RandomUuid._generateRandom32bitNumber = function() {
   return Math.floor( (Math.random() % 1) * Math.pow(2, 32) );
 };
-
-
-/**
- * Returns a randomly generated 8-character string of hex digits.
- *
- * @scope    private class method
- */
-orp.util.RandomUuid._generateRandomEightCharacterHexString = function() {
-  // PENDING: 
-  // This isn't really random.  We should find some source of real 
-  // randomness, and feed it to an MD5 hash algorithm.     
-  var eightCharacterString = orp.util.RandomUuid._generateRandom32bitNumber().toString(orp.util.RandomUuid.HEX_RADIX);
-  while (eightCharacterString.length < 8) {
-    eightCharacterString = "0" + eightCharacterString;
-  }
-  return eightCharacterString;
-};
+*/
 
 
 // -------------------------------------------------------------------

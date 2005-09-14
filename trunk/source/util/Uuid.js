@@ -30,12 +30,16 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
 dojo.provide("orp.util.Uuid");
 
-// -------------------------------------------------------------------
-// Dependencies, expressed in the syntax that JSLint understands:
-// -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 
 /**
  * The Uuid class offers methods for generating UUIDs and 
@@ -49,6 +53,12 @@ dojo.provide("orp.util.Uuid");
 orp.util.Uuid = function() {
   this._uuidString = null;
 };
+
+
+// -------------------------------------------------------------------
+// Public class constants
+// -------------------------------------------------------------------
+orp.util.Uuid.HEX_RADIX = 16;
 
 
 // -------------------------------------------------------------------
@@ -67,6 +77,34 @@ orp.util.Uuid = function() {
 orp.util.Uuid.prototype.toString = function() {
   return this._uuidString;
 };
+
+
+// -------------------------------------------------------------------
+// Private instance methods
+// -------------------------------------------------------------------
+
+/**
+ * Returns a randomly generated 8-character string of hex digits.
+ *
+ * @scope    private instance method
+ */
+orp.util.Uuid.prototype._generateRandomEightCharacterHexString = function() {
+  // PENDING: 
+  // This isn't really random.  We should find some source of real 
+  // randomness, and feed it to an MD5 hash algorithm.
+  
+  
+  // random32bitNumber is a randomly generated floating point number 
+  // between 0 and (4,294,967,296 - 1), inclusive.
+  var random32bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 32) );
+  
+  var eightCharacterString = random32bitNumber.toString(orp.util.Uuid.HEX_RADIX);
+  while (eightCharacterString.length < 8) {
+    eightCharacterString = "0" + eightCharacterString;
+  }
+  return eightCharacterString;
+};
+
 
 
 // -------------------------------------------------------------------

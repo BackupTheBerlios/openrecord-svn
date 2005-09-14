@@ -30,9 +30,13 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
 dojo.provide("orp.util.TimeBasedUuid");
 dojo.require("orp.util.Uuid");
-dojo.require("orp.util.RandomUuid");
+
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -40,6 +44,10 @@ dojo.require("orp.util.RandomUuid");
 /*global Uuid  */
 // -------------------------------------------------------------------
 
+
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 
 /**
  * The TimeBasedUuid class offers methods for working with 
@@ -92,7 +100,6 @@ var Variant = {
   Microsoft: "110"
 }
 */
-// orp.util.TimeBasedUuid.prototype = new orp.util.Uuid();  // makes TimeBasedUuid be a subclass of Uuid
 orp.util.TimeBasedUuid = function(uuidStringOrPseudoNode) {
   orp.util.Uuid.call(this);
   if (uuidStringOrPseudoNode) {
@@ -100,30 +107,31 @@ orp.util.TimeBasedUuid = function(uuidStringOrPseudoNode) {
     var lengthOfPseudoNodeString = 12;
     if (uuidStringOrPseudoNode.length == lengthOfPseudoNodeString) {
       var pseudoNode = uuidStringOrPseudoNode;
-      this._uuidString = orp.util.TimeBasedUuid._generateUuidString(pseudoNode);
+      this._uuidString = this._generateUuidString(pseudoNode);
     } else {
       Util.assert(uuidStringOrPseudoNode.length == 36);
       this._uuidString = uuidStringOrPseudoNode;
     }
   } else {
-    this._uuidString = orp.util.TimeBasedUuid._generateUuidString();
+    this._uuidString = this._generateUuidString();
   }
 };
 
-dj_inherits(orp.util.TimeBasedUuid, orp.util.Uuid);  // makes RandomUuid be a subclass of Uuid
+dj_inherits(orp.util.TimeBasedUuid, orp.util.Uuid);  // makes TimeBasedUuid be a subclass of Uuid
 
 
 // -------------------------------------------------------------------
-// TimeBasedUuid public class constants
+// Public class constants
 // -------------------------------------------------------------------
-// Number of seconds between October 15, 1582 and January 1, 1970
-// Util.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800;
+/* // Number of seconds between October 15, 1582 and January 1, 1970
+   Util.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800;
+*/
+// Number of hours between October 15, 1582 and January 1, 1970
 orp.util.TimeBasedUuid.GREGORIAN_CHANGE_OFFSET_IN_HOURS = 3394248;
-orp.util.TimeBasedUuid.HEX_RADIX = 16;
 
 
 // -------------------------------------------------------------------
-// Uuid private global class variables
+// Private class variables
 // -------------------------------------------------------------------
 orp.util.TimeBasedUuid._ourUuidClockSeqString = null;
 orp.util.TimeBasedUuid._ourDateValueOfPreviousUuid = null;
@@ -180,7 +188,7 @@ orp.util.TimeBasedUuid.prototype.getTimestampAsHexString = function() {
 
 
 // -------------------------------------------------------------------
-// Private class methods
+// Private instance methods
 // -------------------------------------------------------------------
 
 /**
@@ -190,11 +198,12 @@ orp.util.TimeBasedUuid.prototype.getTimestampAsHexString = function() {
  * Hopefully this implementation conforms to the existing standards for 
  * UUIDs and GUIDs.  
  * 
- * @scope    private class method
+ * @scope    private instance method
  * @param    pseudoNode    Optional. A 12-character string to use as the node in the new UUID.
  * @return   Returns a 36 character string, which will look something like "3B12F1DF-5232-1804-897E-917BF397618A".
  */
-orp.util.TimeBasedUuid._generateUuidString = function(pseudoNode) {
+orp.util.TimeBasedUuid.prototype._generateUuidString = function(pseudoNode) {
+  var Uuid          = orp.util.Uuid;
   var TimeBasedUuid = orp.util.TimeBasedUuid;
   
   Util.assert(!pseudoNode || Util.isString(pseudoNode));  
@@ -203,13 +212,13 @@ orp.util.TimeBasedUuid._generateUuidString = function(pseudoNode) {
   } else {
     var pseudoNodeIndicatorBit = 0x8000;
     var random15bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 15) );
-    var leftmost4HexCharacters = (pseudoNodeIndicatorBit | random15bitNumber).toString(TimeBasedUuid.HEX_RADIX);
-    pseudoNode = leftmost4HexCharacters + orp.util.RandomUuid._generateRandomEightCharacterHexString();
+    var leftmost4HexCharacters = (pseudoNodeIndicatorBit | random15bitNumber).toString(Uuid.HEX_RADIX);
+    pseudoNode = leftmost4HexCharacters + this._generateRandomEightCharacterHexString();
   }
   if (!TimeBasedUuid._ourUuidClockSeqString) {
     var variantCodeForDCEUuids = 0x8000; // 10--------------, i.e. uses only first two of 16 bits.
     var random14bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 14) );
-    TimeBasedUuid._ourUuidClockSeqString = (variantCodeForDCEUuids | random14bitNumber).toString(TimeBasedUuid.HEX_RADIX);
+    TimeBasedUuid._ourUuidClockSeqString = (variantCodeForDCEUuids | random14bitNumber).toString(Uuid.HEX_RADIX);
   }
 
   // Maybe someday think about trying to make the code more readable to
@@ -255,12 +264,12 @@ orp.util.TimeBasedUuid._generateUuidString = function(pseudoNode) {
     TimeBasedUuid._ourNextIntraMillisecondIncrement = 1;
   }
   
-  var hexTimeLowLeftHalf  = arrayHundredNanosecondIntervalsSince1582[2].toString(TimeBasedUuid.HEX_RADIX);
-  var hexTimeLowRightHalf = arrayHundredNanosecondIntervalsSince1582[3].toString(TimeBasedUuid.HEX_RADIX);
+  var hexTimeLowLeftHalf  = arrayHundredNanosecondIntervalsSince1582[2].toString(Uuid.HEX_RADIX);
+  var hexTimeLowRightHalf = arrayHundredNanosecondIntervalsSince1582[3].toString(Uuid.HEX_RADIX);
   var hexTimeLow = TimeBasedUuid._padWithLeadingZeros(hexTimeLowLeftHalf, 4) + TimeBasedUuid._padWithLeadingZeros(hexTimeLowRightHalf, 4);
-  var hexTimeMid = arrayHundredNanosecondIntervalsSince1582[1].toString(TimeBasedUuid.HEX_RADIX);
+  var hexTimeMid = arrayHundredNanosecondIntervalsSince1582[1].toString(Uuid.HEX_RADIX);
   hexTimeMid = TimeBasedUuid._padWithLeadingZeros(hexTimeMid, 4);
-  var hexTimeHigh = arrayHundredNanosecondIntervalsSince1582[0].toString(TimeBasedUuid.HEX_RADIX);
+  var hexTimeHigh = arrayHundredNanosecondIntervalsSince1582[0].toString(Uuid.HEX_RADIX);
   hexTimeHigh = TimeBasedUuid._padWithLeadingZeros(hexTimeHigh, 3);
   var hyphen = "-";
   var versionCodeForTimeBasedUuids = "1"; // binary2hex("0001")
@@ -270,6 +279,10 @@ orp.util.TimeBasedUuid._generateUuidString = function(pseudoNode) {
   return resultUuid;
 };
 
+
+// -------------------------------------------------------------------
+// Private class methods
+// -------------------------------------------------------------------
 
 /**
  * Given a 36-character UUID string, this method returns the "node" or 
@@ -295,14 +308,15 @@ orp.util.TimeBasedUuid._getNodeFromUuidString = function(uuidString) {
  * @return   Returns a JavaScript Date objects
  */
 orp.util.TimeBasedUuid._getDateFromUuidString = function(uuidString) {
+  var Uuid          = orp.util.Uuid;
   var TimeBasedUuid = orp.util.TimeBasedUuid;
   
   var hexTimeLow = uuidString.split('-')[0];
   var hexTimeMid = uuidString.split('-')[1];
   var hexTimeHigh = uuidString.split('-')[2];
-  var timeLow = parseInt(hexTimeLow, TimeBasedUuid.HEX_RADIX);
-  var timeMid = parseInt(hexTimeMid, TimeBasedUuid.HEX_RADIX);
-  var timeHigh = parseInt(hexTimeHigh, TimeBasedUuid.HEX_RADIX);
+  var timeLow = parseInt(hexTimeLow, Uuid.HEX_RADIX);
+  var timeMid = parseInt(hexTimeMid, Uuid.HEX_RADIX);
+  var timeHigh = parseInt(hexTimeHigh, Uuid.HEX_RADIX);
   var hundredNanosecondIntervalsSince1582 = timeHigh & 0x0FFF;
   hundredNanosecondIntervalsSince1582 <<= 16;
   hundredNanosecondIntervalsSince1582 += timeMid;

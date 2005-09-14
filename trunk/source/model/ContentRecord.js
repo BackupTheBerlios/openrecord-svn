@@ -37,7 +37,6 @@
 /*global Util  */
 /*global World  */
 /*global Record  */
-/*global RandomUuid  */
 // -------------------------------------------------------------------
 
 
@@ -255,11 +254,12 @@ ContentRecord.prototype.hasBeenDeleted = function() {
  * @param    contentRecordThird    The contentRecord that should come after this one. 
  */
 ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRecordThird) {
-  var RandomUuid = orp.util.RandomUuid;
-  
   var firstOrdinalNumber = null;
   var secondOrdinalNumber = null;
   var thirdOrdinalNumber = null;
+  
+  // PENDING: this is a hack
+  var sourceOfRandomness = contentRecordFirst ? contentRecordFirst.getUuid() : contentRecordThird.getUuid();
   
   if (contentRecordFirst) {
     firstOrdinalNumber = contentRecordFirst.getOrdinalNumber();
@@ -278,16 +278,20 @@ ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRec
         firstOrdinalNumber = thirdOrdinalNumber;
         thirdOrdinalNumber = temp;
       }
-      secondOrdinalNumber = firstOrdinalNumber + RandomUuid._generateRandomEightCharacterHexString();
+      // PENDING: we should not be calling the private method _generateRandomEightCharacterHexString()
+      var randomEightCharacterHexString = sourceOfRandomness._generateRandomEightCharacterHexString();
+      secondOrdinalNumber = firstOrdinalNumber + randomEightCharacterHexString;
       var zeroes = "";
       while (secondOrdinalNumber >= thirdOrdinalNumber) {
         zeroes += "0";
-        secondOrdinalNumber = firstOrdinalNumber + zeroes + RandomUuid._generateRandomEightCharacterHexString();
+        // PENDING: we should not be calling the private method _generateRandomEightCharacterHexString()
+        randomEightCharacterHexString = sourceOfRandomness._generateRandomEightCharacterHexString();
+        secondOrdinalNumber = firstOrdinalNumber + zeroes + randomEightCharacterHexString;
       }
     }
   }
   if (firstOrdinalNumber && !thirdOrdinalNumber) {
-    secondOrdinalNumber = firstOrdinalNumber + RandomUuid._generateRandomEightCharacterHexString();
+    secondOrdinalNumber = firstOrdinalNumber + sourceOfRandomness._generateRandomEightCharacterHexString();
   }
   if (!firstOrdinalNumber && thirdOrdinalNumber) {
     secondOrdinalNumber = thirdOrdinalNumber;
@@ -303,7 +307,7 @@ ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRec
     while (secondOrdinalNumber.length < origLen) {
       secondOrdinalNumber += "f";
     }
-    secondOrdinalNumber += RandomUuid._generateRandomEightCharacterHexString();
+    secondOrdinalNumber += sourceOfRandomness._generateRandomEightCharacterHexString();
   }
   this.getWorld()._newOrdinal(this, secondOrdinalNumber);
 };

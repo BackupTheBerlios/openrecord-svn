@@ -167,7 +167,7 @@ function testMethodsForWorkingWithTimeBasedUuids() {
 
   var section4 = arrayOfParts[4];
   var firstChar = section4.charAt(0);
-  var hexFirstChar = parseInt(firstChar, TimeBasedUuid.HEX_RADIX);
+  var hexFirstChar = parseInt(firstChar, orp.util.Uuid.HEX_RADIX);
   binaryString = hexFirstChar.toString(2);
   var firstBit;
   if (binaryString.length == 4) {
@@ -176,7 +176,7 @@ function testMethodsForWorkingWithTimeBasedUuids() {
     firstBit = '0';
   }
   // alert("firstChar = " + firstChar + "\n as number = " + hexFirstChar + 
-  //      "\n in binary = " + binaryString + "\n first bit = " + firstBit);
+  //       "\n in binary = " + binaryString + "\n first bit = " + firstBit);
   assertTrue("first bit of section 4 is 1", firstBit == '1');
 
   var uuid4 = new TimeBasedUuid("123456789ABC");
@@ -274,7 +274,7 @@ function checkUuidValidity(uuid) {
   assertTrue('Section 4 has 8 characters', (arrayOfParts[4].length == 12));
   
   var section3 = arrayOfParts[3];
-  var hex3 = parseInt(section3, TimeBasedUuid.HEX_RADIX);
+  var hex3 = parseInt(section3, orp.util.Uuid.HEX_RADIX);
   var binaryString = hex3.toString(2);
   // alert("section3 = " + section3 + "\n binaryString = " + binaryString);
   assertTrue('section 3 has 16 bits', binaryString.length == 16);
