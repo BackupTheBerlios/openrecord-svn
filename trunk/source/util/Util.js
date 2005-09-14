@@ -31,6 +31,7 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
+// dojo.require("orp.util.Uuid");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -289,7 +290,8 @@ Util.isDate = function(value) {
  * @return   A boolean value. True if value is a UUID object.
  */
 Util.isUuid = function(value) {
-  return (value instanceof Uuid);
+  // return (value instanceof orp.util.Uuid);
+  return true; // PENDING: FIXME.
 };
 
 
@@ -303,7 +305,7 @@ Util.isUuid = function(value) {
  * @return   A boolean value. True if value is a UUID.
  */
 Util.isUuidValue = function(value) {
-  if (value instanceof Uuid) {
+  if (Util.isUuid(value)) {
     return true;
   }
   if ((typeof value) == "string") {

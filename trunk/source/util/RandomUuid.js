@@ -29,6 +29,8 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+dojo.provide("orp.util.RandomUuid");
+dojo.require("orp.util.Uuid");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -46,22 +48,25 @@
  *
  * @scope    public instance constructor
  */
-RandomUuid.prototype = new Uuid();  // makes RandomUuid be a subclass of Uuid
-function RandomUuid(uuidString) {
+// orp.util.RandomUuid.prototype = new orp.util.Uuid();  
+orp.util.RandomUuid = function(uuidString) {
+  orp.util.Uuid.call(this);
   if (uuidString) {
     Util.assert(Util.isString(uuidString));
     Util.assert(uuidString.length == 36);
     this._uuidString = uuidString;
   } else {
-    this._uuidString = RandomUuid._generateUuidString();
+    this._uuidString = orp.util.RandomUuid._generateUuidString();
   }
-}
+};
+
+dj_inherits(orp.util.RandomUuid, orp.util.Uuid);  // makes RandomUuid be a subclass of Uuid
 
 
 // -------------------------------------------------------------------
 // Public class constants
 // -------------------------------------------------------------------
-RandomUuid.HEX_RADIX = 16;
+orp.util.RandomUuid.HEX_RADIX = 16;
 
 
 // -------------------------------------------------------------------
@@ -75,16 +80,16 @@ RandomUuid.HEX_RADIX = 16;
  * @scope    public class method
  * @return   Returns a 36-character string, which will look something like "3B12F1DF-5232-4804-897E-917BF397618A".
  */
-RandomUuid._generateUuidString = function() {
+orp.util.RandomUuid._generateUuidString = function() {
   var hyphen = "-";
   var versionCodeForRandomlyGeneratedUuids = "4"; // 8 == binary2hex("0100")
   var variantCodeForDCEUuids = "8"; // 8 == binary2hex("1000")
-  var a = RandomUuid._generateRandomEightCharacterHexString();
-  var b = RandomUuid._generateRandomEightCharacterHexString();
+  var a = orp.util.RandomUuid._generateRandomEightCharacterHexString();
+  var b = orp.util.RandomUuid._generateRandomEightCharacterHexString();
   b = b.substring(0, 4) + hyphen + versionCodeForRandomlyGeneratedUuids + b.substring(5, 8);
-  var c = RandomUuid._generateRandomEightCharacterHexString();
+  var c = orp.util.RandomUuid._generateRandomEightCharacterHexString();
   c = variantCodeForDCEUuids + c.substring(1, 4) + hyphen + c.substring(4, 8);
-  var d = RandomUuid._generateRandomEightCharacterHexString();
+  var d = orp.util.RandomUuid._generateRandomEightCharacterHexString();
   var result = a + hyphen + b + hyphen + c + d;
   
   return result;
@@ -97,7 +102,7 @@ RandomUuid._generateUuidString = function() {
  *
  * @scope    private class method
  */
-RandomUuid._generateRandom32bitNumber = function() {
+orp.util.RandomUuid._generateRandom32bitNumber = function() {
   return Math.floor( (Math.random() % 1) * Math.pow(2, 32) );
 };
 
@@ -107,11 +112,11 @@ RandomUuid._generateRandom32bitNumber = function() {
  *
  * @scope    private class method
  */
-RandomUuid._generateRandomEightCharacterHexString = function() {
+orp.util.RandomUuid._generateRandomEightCharacterHexString = function() {
   // PENDING: 
   // This isn't really random.  We should find some source of real 
   // randomness, and feed it to an MD5 hash algorithm.     
-  var eightCharacterString = RandomUuid._generateRandom32bitNumber().toString(RandomUuid.HEX_RADIX);
+  var eightCharacterString = orp.util.RandomUuid._generateRandom32bitNumber().toString(orp.util.RandomUuid.HEX_RADIX);
   while (eightCharacterString.length < 8) {
     eightCharacterString = "0" + eightCharacterString;
   }

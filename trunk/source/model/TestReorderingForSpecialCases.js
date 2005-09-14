@@ -43,15 +43,17 @@ var world;
 var categoryCalledFood = null;
 var utilAssertReportedError;
 
-errorReporter = function() {
-  utilAssertReportedError = true;
-}
+
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
 
 function setUp() {
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+
   utilAssertReportedError = false;
   Util.setErrorReportCallback(errorReporter);
   var pathToTrunkDirectory = "../..";
-  // var virtualServer = new StubVirtualServer(pathToTrunkDirectory, {"_generateUuid":mockUuidGenerator});
   var virtualServer = new StubVirtualServer(pathToTrunkDirectory);
   StubVirtualServer.prototype._generateUuid = mockUuidGenerator;
   world = new World(virtualServer);
@@ -81,6 +83,11 @@ function tearDown() {
   assertFalse(utilAssertReportedError);
   world.logout();
 }
+
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
 
 function testReorderBetweenTwoItemsWithTheSameOrdinal() {
   sushiUuid     = "40000000-2222-3333-4444-555555555555";
@@ -147,6 +154,16 @@ function testReorderBetweenTwoItemsWithTheSameTimestamp() {
   assertTrue('After 2nd reordering, Pesto is second in the list.', foodItems[1] == pesto);
   assertTrue('After 2nd reordering, Guava is third in the list.', foodItems[2] == guava);
 }
+
+
+// -------------------------------------------------------------------
+// Helper functions
+// -------------------------------------------------------------------
+
+errorReporter = function() {
+  utilAssertReportedError = true;
+}
+
 
 // -------------------------------------------------------------------
 // End of file

@@ -47,11 +47,14 @@ var guava;
 var taffy;
 var utilAssertReportedError;
 
-errorReporter = function() {
-  utilAssertReportedError = true;
-}
+
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
 
 function setUp() {
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+
   utilAssertReportedError = false;
   Util.setErrorReportCallback(errorReporter);
   var pathToTrunkDirectory = "../..";
@@ -131,6 +134,11 @@ function tearDown() {
   world.logout();
 }
 
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
+
 function testReorderBetweenTwoItems() {
   guava.reorderBetween(sushi, pesto);
   foodItems = world.getItemsInCategory(categoryCalledFood);
@@ -198,6 +206,16 @@ function testReorderTwoItemsBetweenTheSameTwoItems() {
   assertTrue(ContentRecord.compareOrdinals(taffy, pesto) < 0);
   assertTrue(ContentRecord.compareOrdinals(taffy, guava) != 0);
 }
+
+
+// -------------------------------------------------------------------
+// Helper functions
+// -------------------------------------------------------------------
+
+errorReporter = function() {
+  utilAssertReportedError = true;
+}
+
 
 // -------------------------------------------------------------------
 // End of file

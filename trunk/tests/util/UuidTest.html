@@ -3,44 +3,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
 
 <!-- 
+ Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+  
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
     http://creativecommons.org/licenses/publicdomain/
 -->
 
   <head>
-    <title>Test writing to repositories</title>
+    <title>Unit tests for UUIDs</title>
 
     <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
     <script type="text/javascript" src="../../third_party/dojo/dojo-0.1.0/dojo.js"></script>
-    <script type="text/javascript" src="../../third_party/md5/md5.js"></script>
-    <script type="text/javascript" src="../../third_party/gtd_tiddlywiki/FileSaver.js"></script>
-    <script type="text/javascript" src="../util/Util.js"></script>
-    <script type="text/javascript" src="../util/DateValue.js"></script>
-    <script type="text/javascript" src="HttpSaver.js"></script>
-    <script type="text/javascript" src="Record.js"></script>
-    <script type="text/javascript" src="Ordinal.js"></script>
-    <script type="text/javascript" src="Vote.js"></script>
-    <script type="text/javascript" src="ContentRecord.js"></script>
-    <script type="text/javascript" src="Item.js"></script>
-    <script type="text/javascript" src="Entry.js"></script>
-    <script type="text/javascript" src="Transaction.js"></script>
-    <script type="text/javascript" src="QueryRunner.js"></script>
-    <script type="text/javascript" src="World.js"></script>
-    <script type="text/javascript" src="StubVirtualServer.js"></script>
-    <script type="text/javascript" src="DeltaVirtualServer.js"></script>
-    <script type="text/javascript" src="RepositoryWritingTest.js"></script>
+    <script type="text/javascript" src="../../source/util/Util.js"></script>
+    <script type="text/javascript" src="../../tests/util/UuidTest.js"></script>
   </head>
   
   <body>
-    <h1>Test writing to repositories.</h1>
-    <h2>This suite should be run in both 'file:' mode and 'http:' mode.</h2>
+    <h1>Unit tests for UUIDs</h1>
 
     <p>This page is used to run unit tests for the JavaScript code in the 
     OpenRecord project.</p>
     
     <p>&nbsp;</p>
     <hr/>
+    <p>You should be able to run these unit tests by going to
+    <a href="../../third_party/jsunit/jsunit2_1/testRunner.html?testpage=" 
+    onclick="href+=window.location.href;" rel="external">the local testRunner 
+    page</a>, and hitting the <b>Run</b> button.</p>
+
     <p>To see the tests, open this .html file in a text editor. Or, within a  
     web browser, you should be able see the source for this file by using 
     some menu like <b>View</b> followed by <b>Page Source</b>. The tests 
@@ -53,19 +44,6 @@
     written by 
     <a href="http://www.edwardh.com/" rel="external">Edward Hieatt</a>. </p>
 
-    <p>If you're looking at this page across an "http://" connection, rather
-    than having loaded it as a "file:///", then you may be able to run the
-    unit tests. The web server that served you this page may also have a
-    JsUnit testRunner available. If so, you should be able to run these unit
-    tests by going to
-    <a href="../../third_party/jsunit/jsunit2_1/testRunner.html?testpage=" 
-    onclick="href+=window.location.href;" rel="external">the local testRunner 
-    page</a>, and hitting the <b>Run</b> button.</p>
-
-    <p>You can also run these unit tests on your local computer. To do that you 
-    first need to download <a href="http://www.edwardh.com/jsunit/" 
-    rel="external">JsUnit</a>.</p>
-    
     <p>&nbsp;</p>
     <hr/>
     <p class="copyright">You can copy freely from this work &mdash; copyright 

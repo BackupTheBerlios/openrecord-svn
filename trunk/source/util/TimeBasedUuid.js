@@ -30,6 +30,9 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+dojo.provide("orp.util.TimeBasedUuid");
+dojo.require("orp.util.Uuid");
+dojo.require("orp.util.RandomUuid");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -89,22 +92,25 @@ var Variant = {
   Microsoft: "110"
 }
 */
-TimeBasedUuid.prototype = new Uuid();  // makes TimeBasedUuid be a subclass of Uuid
-function TimeBasedUuid(uuidStringOrPseudoNode) {
+// orp.util.TimeBasedUuid.prototype = new orp.util.Uuid();  // makes TimeBasedUuid be a subclass of Uuid
+orp.util.TimeBasedUuid = function(uuidStringOrPseudoNode) {
+  orp.util.Uuid.call(this);
   if (uuidStringOrPseudoNode) {
     Util.assert(Util.isString(uuidStringOrPseudoNode));
     var lengthOfPseudoNodeString = 12;
     if (uuidStringOrPseudoNode.length == lengthOfPseudoNodeString) {
       var pseudoNode = uuidStringOrPseudoNode;
-      this._uuidString = TimeBasedUuid._generateUuidString(pseudoNode);
+      this._uuidString = orp.util.TimeBasedUuid._generateUuidString(pseudoNode);
     } else {
       Util.assert(uuidStringOrPseudoNode.length == 36);
       this._uuidString = uuidStringOrPseudoNode;
     }
   } else {
-    this._uuidString = TimeBasedUuid._generateUuidString();
+    this._uuidString = orp.util.TimeBasedUuid._generateUuidString();
   }
-}
+};
+
+dj_inherits(orp.util.TimeBasedUuid, orp.util.Uuid);  // makes RandomUuid be a subclass of Uuid
 
 
 // -------------------------------------------------------------------
@@ -112,19 +118,19 @@ function TimeBasedUuid(uuidStringOrPseudoNode) {
 // -------------------------------------------------------------------
 // Number of seconds between October 15, 1582 and January 1, 1970
 // Util.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800;
-TimeBasedUuid.GREGORIAN_CHANGE_OFFSET_IN_HOURS = 3394248;
-TimeBasedUuid.HEX_RADIX = 16;
+orp.util.TimeBasedUuid.GREGORIAN_CHANGE_OFFSET_IN_HOURS = 3394248;
+orp.util.TimeBasedUuid.HEX_RADIX = 16;
 
 
 // -------------------------------------------------------------------
 // Uuid private global class variables
 // -------------------------------------------------------------------
-TimeBasedUuid._ourUuidClockSeqString = null;
-TimeBasedUuid._ourDateValueOfPreviousUuid = null;
-TimeBasedUuid._ourNextIntraMillisecondIncrement = 0;
+orp.util.TimeBasedUuid._ourUuidClockSeqString = null;
+orp.util.TimeBasedUuid._ourDateValueOfPreviousUuid = null;
+orp.util.TimeBasedUuid._ourNextIntraMillisecondIncrement = 0;
 
-TimeBasedUuid._ourCachedMillisecondsBetween1582and1970 = null;
-TimeBasedUuid._ourCachedHundredNanosecondIntervalsPerMillisecond = null;
+orp.util.TimeBasedUuid._ourCachedMillisecondsBetween1582and1970 = null;
+orp.util.TimeBasedUuid._ourCachedHundredNanosecondIntervalsPerMillisecond = null;
 
 
 // -------------------------------------------------------------------
@@ -138,8 +144,8 @@ TimeBasedUuid._ourCachedHundredNanosecondIntervalsPerMillisecond = null;
  * @scope    public instance method
  * @return   Returns a 12-character string, which will look something like "917BF397618A".
  */
-TimeBasedUuid.prototype.getNode = function() {
-  return TimeBasedUuid._getNodeFromUuidString(this._uuidString);
+orp.util.TimeBasedUuid.prototype.getNode = function() {
+  return orp.util.TimeBasedUuid._getNodeFromUuidString(this._uuidString);
 };
 
 
@@ -150,9 +156,9 @@ TimeBasedUuid.prototype.getNode = function() {
  * @scope    public instance method
  * @return   Returns a JavaScript Date object.
  */
-TimeBasedUuid.prototype.getDate = function() {
+orp.util.TimeBasedUuid.prototype.getDate = function() {
   if (!this._date) {
-    this._date = TimeBasedUuid._getDateFromUuidString(this._uuidString);
+    this._date = orp.util.TimeBasedUuid._getDateFromUuidString(this._uuidString);
   } 
   return this._date;
 };
@@ -165,9 +171,9 @@ TimeBasedUuid.prototype.getDate = function() {
  * @scope    public instance method
  * @return   A 15-character string of hex digits.
  */
-TimeBasedUuid.prototype.getTimestampAsHexString = function() {
+orp.util.TimeBasedUuid.prototype.getTimestampAsHexString = function() {
   if (!this._timestampAsHexString) {
-    this._timestampAsHexString = TimeBasedUuid._getTimestampAsHexString(this.toString());
+    this._timestampAsHexString = orp.util.TimeBasedUuid._getTimestampAsHexString(this.toString());
   }
   return this._timestampAsHexString;
 };
@@ -188,7 +194,9 @@ TimeBasedUuid.prototype.getTimestampAsHexString = function() {
  * @param    pseudoNode    Optional. A 12-character string to use as the node in the new UUID.
  * @return   Returns a 36 character string, which will look something like "3B12F1DF-5232-1804-897E-917BF397618A".
  */
-TimeBasedUuid._generateUuidString = function(pseudoNode) {
+orp.util.TimeBasedUuid._generateUuidString = function(pseudoNode) {
+  var TimeBasedUuid = orp.util.TimeBasedUuid;
+  
   Util.assert(!pseudoNode || Util.isString(pseudoNode));  
   if (pseudoNode) {
     Util.assert(pseudoNode.length == 12);  
@@ -196,7 +204,7 @@ TimeBasedUuid._generateUuidString = function(pseudoNode) {
     var pseudoNodeIndicatorBit = 0x8000;
     var random15bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 15) );
     var leftmost4HexCharacters = (pseudoNodeIndicatorBit | random15bitNumber).toString(TimeBasedUuid.HEX_RADIX);
-    pseudoNode = leftmost4HexCharacters + RandomUuid._generateRandomEightCharacterHexString();
+    pseudoNode = leftmost4HexCharacters + orp.util.RandomUuid._generateRandomEightCharacterHexString();
   }
   if (!TimeBasedUuid._ourUuidClockSeqString) {
     var variantCodeForDCEUuids = 0x8000; // 10--------------, i.e. uses only first two of 16 bits.
@@ -271,7 +279,7 @@ TimeBasedUuid._generateUuidString = function(pseudoNode) {
  * @param    uuidString    A 36-character UUID string.
  * @return   Returns a 12-character string, which will look something like "917BF397618A".
  */
-TimeBasedUuid._getNodeFromUuidString = function(uuidString) {
+orp.util.TimeBasedUuid._getNodeFromUuidString = function(uuidString) {
   var arrayOfStrings = uuidString.split('-');
   var nodeString = arrayOfStrings[4];
   return nodeString;
@@ -286,7 +294,9 @@ TimeBasedUuid._getNodeFromUuidString = function(uuidString) {
  * @param    uuidString    A 36-character UUID string for a time-based UUID.
  * @return   Returns a JavaScript Date objects
  */
-TimeBasedUuid._getDateFromUuidString = function(uuidString) {
+orp.util.TimeBasedUuid._getDateFromUuidString = function(uuidString) {
+  var TimeBasedUuid = orp.util.TimeBasedUuid;
+  
   var hexTimeLow = uuidString.split('-')[0];
   var hexTimeMid = uuidString.split('-')[1];
   var hexTimeHigh = uuidString.split('-')[2];
@@ -323,7 +333,7 @@ TimeBasedUuid._getDateFromUuidString = function(uuidString) {
  * @scope    private class method
  * @return   A 15-character string of hex digits.
  */
-TimeBasedUuid._getTimestampAsHexString = function(uuidString) {
+orp.util.TimeBasedUuid._getTimestampAsHexString = function(uuidString) {
   var arrayOfParts = uuidString.split('-');
   var hexTimeLow = arrayOfParts[0];
   var hexTimeMid = arrayOfParts[1];
@@ -348,7 +358,7 @@ TimeBasedUuid._getTimestampAsHexString = function(uuidString) {
  * @scope    private class method
  * @param    arrayA    An array with 4 elements, each of which is a 16-bit number.
  */
-TimeBasedUuid._carry = function(arrayA) {
+orp.util.TimeBasedUuid._carry = function(arrayA) {
   arrayA[2] += arrayA[3] >>> 16;
   arrayA[3] &= 0xFFFF;
   arrayA[1] += arrayA[2] >>> 16;
@@ -367,7 +377,7 @@ TimeBasedUuid._carry = function(arrayA) {
  * @param    x    A floating point number.
  * @return   An array with 4 elements, each of which is a 16-bit number.
  */
-TimeBasedUuid._get64bitArrayFromFloat = function(x) {
+orp.util.TimeBasedUuid._get64bitArrayFromFloat = function(x) {
   var result = new Array(0, 0, 0, 0);
   result[3] = x % 0x10000;
   x -= result[3];
@@ -393,7 +403,7 @@ TimeBasedUuid._get64bitArrayFromFloat = function(x) {
  * @param    arrayB    An array with 4 elements, each of which is a 16-bit number.
  * @return   An array with 4 elements, each of which is a 16-bit number.
  */
-TimeBasedUuid._addTwo64bitArrays = function(arrayA, arrayB) {
+orp.util.TimeBasedUuid._addTwo64bitArrays = function(arrayA, arrayB) {
   Util.assert(Util.isArray(arrayA));
   Util.assert(arrayA.length == 4);
   Util.assert(Util.isArray(arrayB));
@@ -403,7 +413,7 @@ TimeBasedUuid._addTwo64bitArrays = function(arrayA, arrayB) {
   result[2] = arrayA[2] + arrayB[2];
   result[1] = arrayA[1] + arrayB[1];
   result[0] = arrayA[0] + arrayB[0];
-  TimeBasedUuid._carry(result);
+  orp.util.TimeBasedUuid._carry(result);
   return result;
 };
 
@@ -418,7 +428,9 @@ TimeBasedUuid._addTwo64bitArrays = function(arrayA, arrayB) {
  * @param    arrayB    An array with 4 elements, each of which is a 16-bit number.
  * @return   An array with 4 elements, each of which is a 16-bit number.
  */
-TimeBasedUuid._multiplyTwo64bitArrays = function(arrayA, arrayB) {
+orp.util.TimeBasedUuid._multiplyTwo64bitArrays = function(arrayA, arrayB) {
+  var TimeBasedUuid = orp.util.TimeBasedUuid;
+
   Util.assert(Util.isArray(arrayA));
   Util.assert(arrayA.length == 4);
   Util.assert(Util.isArray(arrayB));
@@ -470,7 +482,7 @@ TimeBasedUuid._multiplyTwo64bitArrays = function(arrayA, arrayB) {
  * @param    desiredLength    The number of characters the return string should have.
  * @return   A string.
  */
-TimeBasedUuid._padWithLeadingZeros = function(string, desiredLength) {
+orp.util.TimeBasedUuid._padWithLeadingZeros = function(string, desiredLength) {
   while (string.length < desiredLength) {
     string = "0" + string;
   }

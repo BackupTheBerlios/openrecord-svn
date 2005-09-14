@@ -29,18 +29,21 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
-
-mockUuidGenerator.queueOfUuids = new Array();
+// dojo.require("orp.util.TimeBasedUuid");
 
 function mockUuidGenerator() {
+  dojo.require("orp.util.TimeBasedUuid");
+  
   if (mockUuidGenerator.queueOfUuids.length === 0) {
     // This should probably throw an exception instead.    
     return "00000000-0000-0000-0000-000000000000";
   }
   var uuidString = mockUuidGenerator.queueOfUuids.shift();
-  var uuid = new TimeBasedUuid(uuidString);
+  var uuid = new orp.util.TimeBasedUuid(uuidString);
   return uuid;
 }
+
+mockUuidGenerator.queueOfUuids = new Array();
 
 // -------------------------------------------------------------------
 // End of file

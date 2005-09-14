@@ -30,6 +30,7 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+// dojo.require("orp.util.TimeBasedUuid");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -65,11 +66,13 @@ function Record() {
  * @param    uuid    The UUID for this Record. 
  */
 Record.prototype._Record = function(world, uuid) {
+  dojo.require("orp.util.TimeBasedUuid");
+
   Util.assert(Util.isUuidValue(uuid));
   if (Util.isString(uuid)) {
     var uuidString = uuid;
     Util.assert(uuidString.length == 36);
-    uuid = new TimeBasedUuid(uuidString);
+    uuid = new orp.util.TimeBasedUuid(uuidString);
   }
   Util.assert(Util.isUuid(uuid));
   

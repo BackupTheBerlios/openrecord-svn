@@ -30,6 +30,7 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+dojo.provide("orp.util.Uuid");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -45,9 +46,9 @@
  *
  * @scope    public instance constructor
  */
-function Uuid() {
+orp.util.Uuid = function() {
   this._uuidString = null;
-}
+};
 
 
 // -------------------------------------------------------------------
@@ -63,7 +64,7 @@ function Uuid() {
  * @scope    public instance method
  * @return   Returns a 36-character UUID string.
  */
-Uuid.prototype.toString = function() {
+orp.util.Uuid.prototype.toString = function() {
   return this._uuidString;
 };
 

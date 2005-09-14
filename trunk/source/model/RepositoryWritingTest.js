@@ -37,47 +37,13 @@ expectedRepositoryHeader +=    '  // ===========================================
 expectedRepositoryHeader +=    '  { "Transaction": [ ]\n';
 expectedRepositoryHeader +=    '  }';
 
-
-// -------------------------------------------------------------------
-// Helper functions
-// -------------------------------------------------------------------
-
-function errorReporter() {
-  utilAssertReportedError = true;
-}
-
-function waitASecond() {
-  var now = new Date();
-  var then = now;
-  while (now.valueOf() - then.valueOf() < 1000) {
-    now = new Date();
-  }
-}
-
-function fileHasExpectedContents(expectedContents) {
-  var contents = Util.getStringContentsOfFileAtURL(fileUrl);
-  for (var i = 0; contents != expectedContents && i < 5; ++i) {
-    waitASecond();
-    contents = Util.getStringContentsOfFileAtURL(fileUrl);
-  }
-  return (contents == expectedContents);
-}
-
-function fileHasExpectedSubstring(expectedSubstring) {
-  var contents = Util.getStringContentsOfFileAtURL(fileUrl);
-  for (var i = 0; contents.indexOf(expectedSubstring) == -1 && i < 5; ++i) {
-    waitASecond();
-    contents = Util.getStringContentsOfFileAtURL(fileUrl);
-  }
-  return (contents.indexOf(expectedSubstring) != -1);
-}
-
-
 // -------------------------------------------------------------------
 // setUp and tearDown
 // -------------------------------------------------------------------
 
 function setUp() {
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+
   utilAssertReportedError = false;
   Util.setErrorReportCallback(errorReporter)
 
@@ -105,7 +71,7 @@ function tearDown() {
 
 
 // -------------------------------------------------------------------
-// Test methods
+// Test functions
 // -------------------------------------------------------------------
 
 function testCreateNewFile() {
@@ -166,6 +132,42 @@ function testAppendToRepository() {
   assertTrue("Contents should include expectedRepositoryHeader.", fileHasExpectedSubstring(expectedRepositoryHeader));
   assertTrue("Contents should include '\"value\": \"Apple\"'.", fileHasExpectedSubstring('"value": "Apple"'));
 }
+
+
+// -------------------------------------------------------------------
+// Helper functions
+// -------------------------------------------------------------------
+
+function errorReporter() {
+  utilAssertReportedError = true;
+}
+
+function waitASecond() {
+  var now = new Date();
+  var then = now;
+  while (now.valueOf() - then.valueOf() < 1000) {
+    now = new Date();
+  }
+}
+
+function fileHasExpectedContents(expectedContents) {
+  var contents = Util.getStringContentsOfFileAtURL(fileUrl);
+  for (var i = 0; contents != expectedContents && i < 5; ++i) {
+    waitASecond();
+    contents = Util.getStringContentsOfFileAtURL(fileUrl);
+  }
+  return (contents == expectedContents);
+}
+
+function fileHasExpectedSubstring(expectedSubstring) {
+  var contents = Util.getStringContentsOfFileAtURL(fileUrl);
+  for (var i = 0; contents.indexOf(expectedSubstring) == -1 && i < 5; ++i) {
+    waitASecond();
+    contents = Util.getStringContentsOfFileAtURL(fileUrl);
+  }
+  return (contents.indexOf(expectedSubstring) != -1);
+}
+
 
 // -------------------------------------------------------------------
 // End of file

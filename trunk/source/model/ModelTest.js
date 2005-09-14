@@ -42,13 +42,27 @@
 var ModelTestVars = null;
 var world;
 
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
+
 function setUp() {
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
   ModelTestVars = {};
 
   var pathToTrunkDirectory = "../..";
   var stubVirtualServer = new StubVirtualServer(pathToTrunkDirectory);
   world = new World(stubVirtualServer);
 }
+
+function tearDown() {
+  ModelTestVars = null;
+}
+
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
 
 function testUuids() {
   var janesPassword = "jane's password";
@@ -91,14 +105,6 @@ function testGetUserstamp() {
   assertTrue("The user that created 'elephant' should be Chris", recoveredUser == userChris);
   recoveredUser = starWars.getUserstamp();
   assertTrue("The user that created 'starWars' should be Jane", recoveredUser == userJane);  
-}
-
-function waitForNextMillisecond() {
-  var now = new Date();
-  var then = now;
-  while (now.valueOf() == then.valueOf()) {
-    now = new Date();
-  }
 }
 
 function testGetTimestamp() {
@@ -251,10 +257,9 @@ function noyet_testAdditionsAndRetrievals() {
   hasAll = Util.areObjectsInSet([luck, c3po, r2d2], listOfEntries);
   assertTrue('"Star Wars" has entries: luck, c3po, r2d2', hasAll);  
   
-  // PENDING: broken by new UUID code
-  // var ordinalA = starWars.getOrdinalNumberAtCreation();
-  // var ordinalB = starWars.getOrdinalNumber();
-  // assertTrue('"Star Wars" ordinal values match', ordinalA == ordinalB);  
+  var ordinalA = starWars.getOrdinalNumberAtCreation();
+  var ordinalB = starWars.getOrdinalNumber();
+  assertTrue('"Star Wars" ordinal values match', ordinalA == ordinalB);  
   
   var starWarsTimestamp = starWars.getTimestamp();
   var now = new Date();
@@ -644,8 +649,17 @@ function testItemTypes() {
   var numAttachmentsEntry = anEmail.addEntryForAttribute(noOfAttachments, 4);
 }
 
-function tearDown() {
-  ModelTestVars = null;
+
+// -------------------------------------------------------------------
+// Helper functions
+// -------------------------------------------------------------------
+
+function waitForNextMillisecond() {
+  var now = new Date();
+  var then = now;
+  while (now.valueOf() == then.valueOf()) {
+    now = new Date();
+  }
 }
 
 

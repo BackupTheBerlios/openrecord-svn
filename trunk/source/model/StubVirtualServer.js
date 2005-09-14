@@ -28,6 +28,7 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
+// dojo.require("orp.util.TimeBasedUuid");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -782,7 +783,7 @@ StubVirtualServer.prototype._getContentRecordFromUuid = function(uuid) {
  * @param    pseudoNode    The pseudoNode value that the new UUID should have. 
  */
 StubVirtualServer.prototype._generateUuid = function(pseudoNode) {
-  return new TimeBasedUuid(pseudoNode);
+  return new orp.util.TimeBasedUuid(pseudoNode);
 };
 
 

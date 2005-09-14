@@ -255,6 +255,8 @@ ContentRecord.prototype.hasBeenDeleted = function() {
  * @param    contentRecordThird    The contentRecord that should come after this one. 
  */
 ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRecordThird) {
+  var RandomUuid = orp.util.RandomUuid;
+  
   var firstOrdinalNumber = null;
   var secondOrdinalNumber = null;
   var thirdOrdinalNumber = null;
