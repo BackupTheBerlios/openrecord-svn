@@ -60,61 +60,63 @@ dojo.require("orp.util.Uuid");
  *   http://www.opengroup.org/onlinepubs/009629399/apdxa.htm#tagcjh_20
  *   http://jakarta.apache.org/commons/sandbox/id/apidocs/org/apache/commons/id/uuid/clock/Clock.html
  *
+ * Examples:
+ * <pre>
+ *   var uuid = new orp.util.TimeBasedUuid();
+ *   var uuid = new orp.util.TimeBasedUuid("3B12F1DF-5232-1804-897E-917BF397618A");
+ *   var uuid = new orp.util.TimeBasedUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
+ *   var uuid = new orp.util.TimeBasedUuid({node: "017BF397618A"});
+ *   var uuid = new orp.util.TimeBasedUuid({node: "F17BF397618A"});
+ *   var uuid = new orp.util.TimeBasedUuid({hardwareNode: "017BF397618A"});
+ *   var uuid = new orp.util.TimeBasedUuid({pseudoNode:   "F17BF397618A"});
+ * </pre>
+ *
  * @scope    public instance constructor
+ * @param    uuidString    A 36-character string that conforms to the UUID spec. 
+ * @namedParam    uuidString    A 36-character string that conforms to the UUID spec. 
+ * @namedParam    node    A 12-character hex string representing a pseudoNode or hardwareNode. 
+ * @namedParam    hardwareNode    A 12-character hex string containing an IEEE 802.3 network node identificator. 
+ * @namedParam    pseudoNode    A 12-character hex string representing a pseudoNode. 
  */
-/*
- * PENDING: refactor constructor API
- // OLD API
-var uuid = new orp.util.TimeBasedUuid();                 // new
-var uuid = new orp.util.TimeBasedUuid("917BF397618A");   // pseudonode
-var uuid = new orp.util.TimeBasedUuid("3B12F1DF-5232-1804-897E-917BF397618A")
-
-// NEW API
-var uuid = new orp.util.TimeBasedUuid();
-var uuid = new orp.util.TimeBasedUuid({pseudoNode: "917BF397618A"});
-var uuid = new orp.util.TimeBasedUuid({node: "917BF397618A"});
-var uuid = new orp.util.TimeBasedUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
-
-
-var uuid = new orp.util.RandomUuid();
-var uuid = new orp.util.RandomUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
-
-var uuid = new orp.util.Uuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
-var version = orp.util.Uuid.getVersionFromUuidString("3B12F1DF-5232-1804-897E-917BF397618A");
-var version = orp.util.Uuid.getVariantFromUuidString("3B12F1DF-5232-1804-897E-917BF397618A");
-var boolean = orp.util.Uuid.isRandomUuidString("3B12F1DF-5232-1804-897E-917BF397618A");
-var boolean = orp.util.Uuid.isTimeBasedUuidString("3B12F1DF-5232-1804-897E-917BF397618A");
-
-// in Uuid.js
-var Version = {
-  TimeBased: 1,
-  DCESecurity: 2,
-  NameBasedMD5: 3,
-  Random: 4,
-  NameBasedSHA1: 5
-}
-
-var Variant = {
-  NCS: "0",
-  DCE: "10",
-  Microsoft: "110"
-}
-*/
-orp.util.TimeBasedUuid = function(uuidStringOrPseudoNode) {
+orp.util.TimeBasedUuid = function(namedParameter) {
   orp.util.Uuid.call(this);
-  if (uuidStringOrPseudoNode) {
-    Util.assert(Util.isString(uuidStringOrPseudoNode));
-    var lengthOfPseudoNodeString = 12;
-    if (uuidStringOrPseudoNode.length == lengthOfPseudoNodeString) {
-      var pseudoNode = uuidStringOrPseudoNode;
-      this._uuidString = this._generateUuidString(pseudoNode);
+  var uuidString;
+  if (namedParameter) {
+    if (Util.isObject(namedParameter)) {
+      uuidString = namedParameter[orp.util.Uuid.NamedParameters.uuidString];
+      var node = namedParameter["node"];
+      var pseudoNode = namedParameter["pseudoNode"];
+      var hardwareNode = namedParameter["hardwareNode"];
+      var atLeastOneParameter = (uuidString || node || pseudoNode || hardwareNode) ? true : false;
+      Util.assert(atLeastOneParameter);
+      if (uuidString) {
+        Util.assert(!node && !pseudoNode && !hardwareNode);
+        Util.assert(uuidString.length == 36);
+        this._uuidString = uuidString;
+      }
+      if (node || pseudoNode || hardwareNode) {
+        Util.assert((node || pseudoNode).length == 12);
+        var firstCharacter = (node || pseudoNode).charAt(0);
+        var firstDigit = parseInt(firstCharacter, orp.util.Uuid.HEX_RADIX);
+        if (hardwareNode) { 
+          Util.assert((firstDigit >= 0x0) && (firstDigit <= 0x7)); 
+        }
+        if (pseudoNode) { 
+          Util.assert((firstDigit >= 0x8) && (firstDigit <= 0xF)); 
+        }
+        this._uuidString = this._generateUuidString(node || pseudoNode || hardwareNode);
+      }
     } else {
-      Util.assert(uuidStringOrPseudoNode.length == 36);
-      this._uuidString = uuidStringOrPseudoNode;
+      uuidString = namedParameter;
+      Util.assert(Util.isString(uuidString));
+      Util.assert(uuidString.length == 36);
+      this._uuidString = uuidString;
     }
   } else {
     this._uuidString = this._generateUuidString();
   }
+    
+  Util.assert(this.getVersion() == orp.util.Uuid.Version.TIME_BASED);
 };
 
 dj_inherits(orp.util.TimeBasedUuid, orp.util.Uuid);  // makes TimeBasedUuid be a subclass of Uuid
@@ -123,10 +125,10 @@ dj_inherits(orp.util.TimeBasedUuid, orp.util.Uuid);  // makes TimeBasedUuid be a
 // -------------------------------------------------------------------
 // Public class constants
 // -------------------------------------------------------------------
-/* // Number of seconds between October 15, 1582 and January 1, 1970
-   Util.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800;
-*/
-// Number of hours between October 15, 1582 and January 1, 1970
+// Number of seconds between October 15, 1582 and January 1, 1970:
+// orp.util.TimeBasedUuid.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800;
+//
+// Number of hours between October 15, 1582 and January 1, 1970:
 orp.util.TimeBasedUuid.GREGORIAN_CHANGE_OFFSET_IN_HOURS = 3394248;
 
 
@@ -357,7 +359,7 @@ orp.util.TimeBasedUuid._getTimestampAsHexString = function(uuidString) {
   // time-based UUIDs.
   hexTimeHigh = hexTimeHigh.slice(1); 
   
-  returnString = hexTimeHigh + hexTimeMid + hexTimeLow;
+  var returnString = hexTimeHigh + hexTimeMid + hexTimeLow;
   
   Util.assert(returnString.length == 15);
   return returnString;

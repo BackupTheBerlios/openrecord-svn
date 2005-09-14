@@ -58,8 +58,8 @@ function setUp() {
   utilAssertReportedError = false;
   Util.setErrorReportCallback(errorReporter);
   var pathToTrunkDirectory = "../..";
-  // var virtualServer = new StubVirtualServer(pathToTrunkDirectory, {"_generateUuid":mockUuidGenerator});
   var virtualServer = new StubVirtualServer(pathToTrunkDirectory);
+  var realUuidGenerator = StubVirtualServer.prototype._generateUuid;
   StubVirtualServer.prototype._generateUuid = mockUuidGenerator;
 /*
 You can use DeltaVirtualServer instead if you want to append all transactions to a file for debugging purposes.
@@ -70,9 +70,9 @@ Note that the tests will run a lot slower if you do.
 
   world = new World(virtualServer);
 
-  annUuid1 = "10000000-2222-3333-4444-555555555555";
-  annUuid2 = "10000001-2222-3333-4444-555555555555";
-  annUuid3 = "10000002-2222-3333-4444-555555555555";
+  annUuid1 = "10000000-2222-1333-F444-555555555555";
+  annUuid2 = "10000001-2222-1333-F444-555555555555";
+  annUuid3 = "10000002-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(annUuid1);
   mockUuidGenerator.queueOfUuids.push(annUuid2);
   mockUuidGenerator.queueOfUuids.push(annUuid3);
@@ -82,28 +82,28 @@ Note that the tests will run a lot slower if you do.
   assertTrue("Ann has the expected uuid", userAnn.getUuidString() == annUuid1);
   world.login(userAnn, annsPassword);
 
-  foodUuid1    = "20000000-2222-3333-4444-555555555555";
-  foodUuid2    = "20000001-2222-3333-4444-555555555555";
-  foodUuid3    = "20000002-2222-3333-4444-555555555555";
+  foodUuid1    = "20000000-2222-1333-F444-555555555555";
+  foodUuid2    = "20000001-2222-1333-F444-555555555555";
+  foodUuid3    = "20000002-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(foodUuid1);
   mockUuidGenerator.queueOfUuids.push(foodUuid2);
   mockUuidGenerator.queueOfUuids.push(foodUuid3);
   categoryCalledFood = world.newCategory("Food");
 
-  sushiUuid     = "40000000-2222-3333-4444-555555555555";
-  sushiNameUuid = "40000001-2222-3333-4444-555555555555";
+  sushiUuid     = "40000000-2222-1333-F444-555555555555";
+  sushiNameUuid = "40000001-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(sushiUuid);
   mockUuidGenerator.queueOfUuids.push(sushiNameUuid);
-  pestoUuid     = "40000010-2222-3333-4444-555555555555";
-  pestoNameUuid = "40000011-2222-3333-4444-555555555555";
+  pestoUuid     = "40000010-2222-1333-F444-555555555555";
+  pestoNameUuid = "40000011-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(pestoUuid);
   mockUuidGenerator.queueOfUuids.push(pestoNameUuid);
-  guavaUuid     = "40000020-2222-3333-4444-555555555555";
-  guavaNameUuid = "40000021-2222-3333-4444-555555555555";
+  guavaUuid     = "40000020-2222-1333-F444-555555555555";
+  guavaNameUuid = "40000021-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(guavaUuid);
   mockUuidGenerator.queueOfUuids.push(guavaNameUuid);
-  taffyUuid     = "40000030-2222-3333-4444-555555555555";
-  taffyNameUuid = "40000031-2222-3333-4444-555555555555";
+  taffyUuid     = "40000030-2222-1333-F444-555555555555";
+  taffyNameUuid = "40000031-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(taffyUuid);
   mockUuidGenerator.queueOfUuids.push(taffyNameUuid);
   sushi = world.newItem("Sushi");
@@ -115,18 +115,20 @@ Note that the tests will run a lot slower if you do.
   taffy = world.newItem("Taffy");
   assertTrue("taffy has the expected uuid", taffy.getUuidString() == taffyUuid);
 
-  sushiLinkUuid    = "60000000-2222-3333-4444-555555555555";
+  sushiLinkUuid    = "60000000-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(sushiLinkUuid);
   sushi.assignToCategory(categoryCalledFood);
-  pestoLinkUuid    = "60000001-2222-3333-4444-555555555555";
+  pestoLinkUuid    = "60000001-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(pestoLinkUuid);
   pesto.assignToCategory(categoryCalledFood);
-  guavaLinkUuid    = "60000002-2222-3333-4444-555555555555";
+  guavaLinkUuid    = "60000002-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(guavaLinkUuid);
   guava.assignToCategory(categoryCalledFood);
-  taffyLinkUuid    = "60000002-2222-3333-4444-555555555555";
+  taffyLinkUuid    = "60000002-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(taffyLinkUuid);
   taffy.assignToCategory(categoryCalledFood);
+
+  StubVirtualServer.prototype._generateUuid = realUuidGenerator;
 }
 
 function tearDown() {

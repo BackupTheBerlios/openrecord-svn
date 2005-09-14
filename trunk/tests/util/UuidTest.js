@@ -40,9 +40,11 @@ var TimeBasedUuid = null;
 
 function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.require("orp.util.Uuid");
   dojo.require("orp.util.RandomUuid");
   dojo.require("orp.util.TimeBasedUuid");
 
+  Uuid = orp.util.Uuid;
   RandomUuid = orp.util.RandomUuid;
   TimeBasedUuid = orp.util.TimeBasedUuid;
 }
@@ -129,42 +131,56 @@ function testMultiplyTwo64bitArrays() {
   assert(result[3] === 20);  
 }  
 
-function testMethodsForWorkingWithRandomUuids() {
+function testRandomUuids() {
   var uuid1 = new RandomUuid();
   var uuid2 = new RandomUuid();
-  uuid1 = uuid1.toString();
-  uuid2 = uuid2.toString();
+  var uuid3 = new RandomUuid("3B12F1DF-5232-4804-897E-917BF397618A");
+  var uuid4 = new RandomUuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
 
   // alert(uuid1 + "\n" + uuid2);
-  checkUuidValidity(uuid1);
-  checkUuidValidity(uuid2);
+  checkRandomUuidValidity(uuid1);
+  checkRandomUuidValidity(uuid2);
+  checkRandomUuidValidity(uuid3);
+  checkRandomUuidValidity(uuid4);
+
+  var uuidString1 = uuid1.toString();
+  var uuidString2 = uuid2.toString();
   
-  var arrayOfParts = uuid1.split("-");
-  var section2 = arrayOfParts[2];
-  assertTrue('Section 2 starts with a 4', (section2.charAt(0) == "4"));
-  
-  assertTrue("uuid1 != uuid2", uuid1 != uuid2);
+  assertTrue("uuid1 != uuid2", uuidString1 != uuidString2);
 }
 
-function testMethodsForWorkingWithTimeBasedUuids() {
+function testTimeBasedUuids() {
   var uuid1 = new TimeBasedUuid();
   var uuid2 = new TimeBasedUuid();
   var uuid3 = new TimeBasedUuid();
+  var uuid4 = new TimeBasedUuid({node: "123456789ABC"});
+  var uuid5 = new TimeBasedUuid({'node': "123456789ABC"});
+  var uuid6 = new TimeBasedUuid({pseudoNode: "823456789ABC"});
+  var uuid7 = new TimeBasedUuid({'pseudoNode': "823456789ABC"});
+  var uuid8 = new TimeBasedUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
+  var uuid9 = new TimeBasedUuid({'uuidString': "3B12F1DF-5232-1804-897E-917BF397618A"});
+  var uuid10 = new TimeBasedUuid("3B12F1DF-5232-1804-897E-917BF397618A");
+  
+  checkTimeBasedUuidValidity(uuid1);
+  checkTimeBasedUuidValidity(uuid2);
+  checkTimeBasedUuidValidity(uuid3);
+  checkTimeBasedUuidValidity(uuid4);
+  checkTimeBasedUuidValidity(uuid5);
+  checkTimeBasedUuidValidity(uuid6);
+  checkTimeBasedUuidValidity(uuid7);
+  checkTimeBasedUuidValidity(uuid8);
+  checkTimeBasedUuidValidity(uuid9);
+  checkTimeBasedUuidValidity(uuid10);
+
   uuid1 = uuid1.toString();
   uuid2 = uuid2.toString();
   uuid3 = uuid3.toString();
-  
-  checkUuidValidity(uuid1);
-  checkUuidValidity(uuid2);
-  checkUuidValidity(uuid3);
+  uuid4 = uuid4.toString();
 
   assertTrue("uuid1 != uuid2", uuid1 != uuid2);
   assertTrue("uuid2 != uuid3", uuid1 != uuid2);
   
   var arrayOfParts = uuid1.split("-");
-  var section2 = arrayOfParts[2];
-  assertTrue('Section 2 starts with a 1', (section2.charAt(0) == "1"));  
-
   var section4 = arrayOfParts[4];
   var firstChar = section4.charAt(0);
   var hexFirstChar = parseInt(firstChar, orp.util.Uuid.HEX_RADIX);
@@ -179,12 +195,10 @@ function testMethodsForWorkingWithTimeBasedUuids() {
   //       "\n in binary = " + binaryString + "\n first bit = " + firstBit);
   assertTrue("first bit of section 4 is 1", firstBit == '1');
 
-  var uuid4 = new TimeBasedUuid("123456789ABC");
-  uuid4 = uuid4.toString();
-  checkUuidValidity(uuid4);
+
   arrayOfParts = uuid4.split("-");
   section4 = arrayOfParts[4];
-  assertTrue('Section 4 = pseudoNode input', section4 == "123456789ABC");
+  assertTrue('Section 4 = node input', section4 == "123456789ABC");
 
   /* 
   // Old code that Brian wrote to try to get a sense of how
@@ -242,30 +256,71 @@ function testMethodsForWorkingWithTimeBasedUuids() {
   */
 }
 
-function testUuidObjects() {
-  var uuid1 = new TimeBasedUuid();
-  var timestampAsHexString = uuid1.getTimestampAsHexString();
-  assertTrue("A UUID's timestamp hex string is 15-characters long.", timestampAsHexString.length == 15);
+function testGenericUuids() {
+  // Time-based UUIDs
+  var uuid1 = new Uuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
+  var uuid2 = new Uuid("3B12F1DF-5232-1804-897E-917BF397618A");
+
+  // Random UUIDs
+  var uuid3 = new Uuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
+  var uuid4 = new Uuid("3B12F1DF-5232-4804-897E-917BF397618A");
+  
+  assertTrue('Time-based UUIDs return Uuid.Version.TIME_BASED', (uuid1.getVersion() == Uuid.Version.TIME_BASED));    
+  assertTrue('Time-based UUIDs return Uuid.Version.TIME_BASED', (uuid2.getVersion() == Uuid.Version.TIME_BASED));    
+
+  assertTrue('Random UUIDs return Uuid.Version.RANDOM', (uuid3.getVersion() == Uuid.Version.RANDOM));    
+  assertTrue('Random UUIDs return Uuid.Version.RANDOM', (uuid4.getVersion() == Uuid.Version.RANDOM));    
+
+  checkUuidValidity(uuid1);
+  checkUuidValidity(uuid2);
+  checkUuidValidity(uuid3);
+  checkUuidValidity(uuid4);
 }
 
+function testUuidFactory() {
+  // Time-based UUIDs
+  var uuid1 = Uuid.newUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
+  var uuid2 = Uuid.newUuid("3B12F1DF-5232-1804-897E-917BF397618A");
+
+  // Random UUIDs
+  var uuid3 = Uuid.newUuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
+  var uuid4 = Uuid.newUuid("3B12F1DF-5232-4804-897E-917BF397618A");
+  
+  assertTrue('Time-based UUIDs return Uuid.Version.TIME_BASED', (uuid1.getVersion() == Uuid.Version.TIME_BASED));    
+  assertTrue('Time-based UUIDs return Uuid.Version.TIME_BASED', (uuid2.getVersion() == Uuid.Version.TIME_BASED));    
+
+  assertTrue('Random UUIDs return Uuid.Version.RANDOM', (uuid3.getVersion() == Uuid.Version.RANDOM));    
+  assertTrue('Random UUIDs return Uuid.Version.RANDOM', (uuid4.getVersion() == Uuid.Version.RANDOM));    
+
+  checkTimeBasedUuidValidity(uuid1);
+  checkTimeBasedUuidValidity(uuid2);
+  
+  checkRandomUuidValidity(uuid3);
+  checkRandomUuidValidity(uuid4);
+}
 
 // -------------------------------------------------------------------
 // Helper functions
 // -------------------------------------------------------------------
 
 function checkUuidValidity(uuid) {
-  assertTrue('UUIDs have 36 characters', (uuid.length == 36));
+  var variant = uuid.getVariant();
+  assertTrue('All of our UUIDs are DCE UUIDs', (variant == Uuid.Variant.DCE));  
+  
+  var uuidString = uuid.toString();
+  
+  assertTrue('UUIDs have 36 characters', (uuidString.length == 36));
 
   var validCharacters = "0123456789abcedfABCDEF-";
   var character;
   var position;
   for (var i = 0; i < 36; ++i) {
-    character = uuid.charAt(i);
+    character = uuidString.charAt(i);
     position = validCharacters.indexOf(character);
     assertTrue('UUIDs have only valid characters', (position != -1));
   }
   
-  var arrayOfParts = uuid.split("-");
+  var arrayOfParts = uuidString.split("-");
   assertTrue('UUIDs have 5 sections separated by 4 hyphens', (arrayOfParts.length == 5));
   assertTrue('Section 0 has 8 characters', (arrayOfParts[0].length == 8));
   assertTrue('Section 1 has 4 characters', (arrayOfParts[1].length == 4));
@@ -282,6 +337,41 @@ function checkUuidValidity(uuid) {
   assertTrue("second bit of section 3 is 0", binaryString.charAt(1) == '0');
 }
 
+function checkRandomUuidValidity(uuid) {
+  checkUuidValidity(uuid);
+
+  var version = uuid.getVersion();
+  assertTrue('Random UUIDs return Uuid.Version.RANDOM', (version == Uuid.Version.RANDOM));  
+  
+  var uuidString = uuid.toString();
+  var arrayOfParts = uuidString.split("-");
+  var section2 = arrayOfParts[2];
+  assertTrue('Section 2 starts with a 4', (section2.charAt(0) == "4"));
+}
+
+function checkTimeBasedUuidValidity(uuid) {
+  checkUuidValidity(uuid);
+
+  var version = uuid.getVersion();
+  assertTrue('TimeBased UUIDs return Uuid.Version.TIME_BASED', (version == Uuid.Version.TIME_BASED));  
+
+  var node = uuid.getNode();
+  assertTrue("A UUID's node is a string", (Util.isString(node)));
+  assertTrue("A UUID's node string is 12 characters long.", node.length == 12);
+
+  var date = uuid.getDate();
+  assertTrue("TimeBased UUIDs can return a Date", (date instanceof Date));
+
+  var timestampAsHexString = uuid.getTimestampAsHexString();
+  assertTrue("A UUID's timestamp hex string is 15 characters long.", timestampAsHexString.length == 15);
+  
+  var uuidString = uuid.toString();
+  var arrayOfParts = uuidString.split("-");
+  var section2 = arrayOfParts[2];
+  assertTrue('Section 2 starts with a 1', (section2.charAt(0) == "1"));  
+
+
+}
 
 // -------------------------------------------------------------------
 // End of file

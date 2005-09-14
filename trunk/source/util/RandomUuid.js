@@ -55,17 +55,31 @@ dojo.require("orp.util.Uuid");
  * For more info, see 
  * http://www.webdav.org/specs/draft-leach-uuids-guids-01.txt
  *
+ * Examples:
+ * <pre>
+ *   var uuid = new orp.util.RandomUuid();
+ *   var uuid = new orp.util.RandomUuid("3B12F1DF-5232-4804-897E-917BF397618A");
+ *   var uuid = new orp.util.RandomUuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
+ * </pre>
+ *
  * @scope    public instance constructor
+ * @param    uuidString    A 36-character string that conforms to the UUID spec. 
+ * @namedParam    uuidString    A 36-character string that conforms to the UUID spec. 
  */
 orp.util.RandomUuid = function(uuidString) {
   orp.util.Uuid.call(this);
   if (uuidString) {
+    if (Util.isObject(uuidString)) {
+      var namedParameters = uuidString;
+      uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
+    }
     Util.assert(Util.isString(uuidString));
     Util.assert(uuidString.length == 36);
     this._uuidString = uuidString;
   } else {
     this._uuidString = this._generateUuidString();
   }
+  Util.assert(this.getVersion() == orp.util.Uuid.Version.RANDOM);
 };
 
 dj_inherits(orp.util.RandomUuid, orp.util.Uuid);  // makes RandomUuid be a subclass of Uuid

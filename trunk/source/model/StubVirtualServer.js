@@ -780,10 +780,14 @@ StubVirtualServer.prototype._getContentRecordFromUuid = function(uuid) {
  * Returns a newly created UUID.
  *
  * @scope    private instance method
- * @param    pseudoNode    The pseudoNode value that the new UUID should have. 
+ * @param    node    The node value that the new UUID should have. 
  */
-StubVirtualServer.prototype._generateUuid = function(pseudoNode) {
-  return new orp.util.TimeBasedUuid(pseudoNode);
+StubVirtualServer.prototype._generateUuid = function(node) {
+  if (node) {
+    return new orp.util.TimeBasedUuid({'node': node});
+  } else {
+    return new orp.util.TimeBasedUuid();
+  }
 };
 
 
@@ -797,10 +801,8 @@ StubVirtualServer.prototype._getNewUuid = function() {
   var newUuid;
   if (this._currentUser) {
     var uuidOfCurrentUser = this._currentUser.getUuid();
-    // var arrayOfParts = uuidOfCurrentUser.split("-");
-    // var pseudoNodeOfCurrentUser = arrayOfParts[4]; // "0123456789AB";
-    var pseudoNodeOfCurrentUser = uuidOfCurrentUser.getNode(); // "0123456789AB";
-    newUuid = this._generateUuid(pseudoNodeOfCurrentUser);
+    var nodeForCurrentUser = uuidOfCurrentUser.getNode(); // "0123456789AB";
+    newUuid = this._generateUuid(nodeForCurrentUser);
   } else {
     newUuid = this._generateUuid();
   }
