@@ -647,7 +647,7 @@ function testItemTypes() {
   var aPerson = world.newItem("John Doe");
   var subjectEntry = anEmail.addEntryForAttribute(subjectAttribute, "Money saved for you at Nigerian Bank");
   var fromEntry = anEmail.addEntryForAttribute(fromAttribute, aPerson);
-  var receivedEntry = anEmail.addEntryForAttribute(dateReceivedAttribute, new DateValue("6/8/05"));
+  var receivedEntry = anEmail.addEntryForAttribute(dateReceivedAttribute, new orp.util.DateValue("6/8/05"));
   var numAttachmentsEntry = anEmail.addEntryForAttribute(noOfAttachments, 4);
 }
 

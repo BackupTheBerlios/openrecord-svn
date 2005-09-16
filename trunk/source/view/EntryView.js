@@ -469,7 +469,7 @@ EntryView._transformValueToExpectedType = function(world, value, listOfTypes) {
           if (!isNaN(floatVal)) {return floatVal;}
           break;
         case typeCalledDate:
-          var dateValue = new DateValue(value);
+          var dateValue = new orp.util.DateValue(value);
           if (dateValue.isValid()) {return dateValue;}
           break;
         default:

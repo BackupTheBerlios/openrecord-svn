@@ -34,28 +34,43 @@
 /*global LintTool, assertTrue, setUp, tearDown */
 // -------------------------------------------------------------------
 
-function setUp() {
-}
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "View.js",
-    "RootView.js",
-    "ItemView.js",
-    "PageView.js",
-    "LoginView.js",
-    "NavbarView.js",
-    "SectionView.js",
-    "MultiEntriesView.js",
-    "EntryView.js",
-    "SuggestionBox.js"];
-  var prefix = "../../../source/view/";
-  var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
+
+function setUp() {
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.require("orp.util.LintTool");
 }
 
 function tearDown() {
+}
+
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
+
+function testJsLintOnOpenRecordCode() {
+  var listOfSourceCodeFiles = [
+    "Ordinal.js",
+    "Vote.js",
+    "ContentRecord.js",
+    "Record.js",
+    "Item.js",
+    "Entry.js",
+    "Transaction.js",
+    "QueryRunner.js",
+    "World.js",
+    "StubVirtualServer.js",
+    "DeltaVirtualServer.js",
+    "HttpSaver.js"];
+  var prefix = "../../../source/model/";
+  var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
+  var message = "Lint check \n" + errorReport;
+  assertTrue(message, !errorReport);
 }
 
 

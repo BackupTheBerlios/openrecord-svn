@@ -30,27 +30,15 @@
 
 
 // -------------------------------------------------------------------
-// Util public class constants
+// Provides and Requires
 // -------------------------------------------------------------------
-DateValue.MONTH_JAN = 0;
-DateValue.MONTH_FEB = 1;
-DateValue.MONTH_MAR = 2;
-DateValue.MONTH_APR = 3;
-DateValue.MONTH_MAY = 4;
-DateValue.MONTH_JUN = 5;
-DateValue.MONTH_JUL = 6;
-DateValue.MONTH_AUG = 7;
-DateValue.MONTH_SEP = 8;
-DateValue.MONTH_OCT = 9;
-DateValue.MONTH_NOV = 10;
-DateValue.MONTH_DEC = 11;
+dojo.provide("orp.util.DateValue");
+dojo.require("dojo.lang.*");
 
-DateValue.MILLISECS_IN_A_DAY = 86400000;
-DateValue.TIMEZONE_OFFSET = new Date().getTimezoneOffset()*60*1000;
 
-DateValue.ARRAY_OF_MONTH_SHORT_NAMES = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-DateValue.ARRAY_OF_MONTH_NAMES = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 
 /**
  * The DateValue class is similar to the JavaScript built-in Date class. 
@@ -60,7 +48,8 @@ DateValue.ARRAY_OF_MONTH_NAMES = new Array("January", "February", "March", "Apri
  * @scope    public instance constructor
  * @param    year-etc    Any of the same values that the Date class accepts. 
  */
-function DateValue(year, month, day, hours, minutes, seconds, ms) {
+orp.util.DateValue = function(year, month, day, hours, minutes, seconds, ms) {
+  var DateValue = orp.util.DateValue;
   var date;
 
   // Step 1: 
@@ -168,7 +157,7 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
           var yearAsInt = parseInt(year);
           if ((year.length == 4) && !isNaN(yearAsInt) && (year == yearAsInt)) {
             // This code handles strings like "1944" and "2340"
-            date = new Date(yearAsInt, DateValue.MONTH_JAN);
+            date = new Date(yearAsInt, DateValue.Month.JAN);
             date._hasTime = false;
             date._hasDay = false;
             date._hasMonth = false;
@@ -266,7 +255,32 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
   };
 
   return date;
-}
+};
+
+
+// -------------------------------------------------------------------
+// Public class constants
+// -------------------------------------------------------------------
+orp.util.DateValue.Month = {
+  JAN: 0,
+  FEB: 1,
+  MAR: 2,
+  APR: 3,
+  MAY: 4,
+  JUN: 5,
+  JUL: 6,
+  AUG: 7,
+  SEP: 8,
+  OCT: 9,
+  NOV: 10,
+  DEC: 11 };
+
+orp.util.DateValue.MILLISECS_IN_A_DAY = 86400000;
+orp.util.DateValue.TIMEZONE_OFFSET = new Date().getTimezoneOffset()*60*1000;
+
+orp.util.DateValue.ARRAY_OF_MONTH_SHORT_NAMES = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+orp.util.DateValue.ARRAY_OF_MONTH_NAMES = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
 
 
 // -------------------------------------------------------------------
@@ -280,8 +294,8 @@ function DateValue(year, month, day, hours, minutes, seconds, ms) {
  * @param    date    Either a Date or DateValue object. 
  * @return   A string like "Feb 14, 1944". 
  */
-DateValue.getStringMonthDayYear = function(date) {
-  return DateValue.ARRAY_OF_MONTH_SHORT_NAMES[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+orp.util.DateValue.getStringMonthDayYear = function(date) {
+  return orp.util.DateValue.ARRAY_OF_MONTH_SHORT_NAMES[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
 };
 
 

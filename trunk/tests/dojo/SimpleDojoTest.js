@@ -28,9 +28,22 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
+
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
 }
+
+function tearDown() {
+  // do nothing
+}
+
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
 
 function testDojoTextTrim() {
   // alert("Dojo version: " + dojo.version.toString()); 
@@ -49,10 +62,6 @@ function testDojoLang() {
   dojo.require("dojo.lang.*");
 
   assertTrue("'Iggy Pop' is a string.", dojo.lang.isString("Iggy Pop"));
-}
-
-function tearDown() {
-  // do nothing
 }
 
 // -------------------------------------------------------------------

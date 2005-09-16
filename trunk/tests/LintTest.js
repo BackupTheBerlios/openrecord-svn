@@ -28,33 +28,58 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
+
 // -------------------------------------------------------------------
-// Dependencies, expressed in the syntax that JSLint understands:
-// 
-/*global LintTool, assertTrue, setUp, tearDown */
+// setUp and tearDown
 // -------------------------------------------------------------------
 
 function setUp() {
+  dojo.hostenv.setModulePrefix("dojo", "../../../../dojo/dojo-0.1.0/src");
+  dojo.hostenv.setModulePrefix("orp", "../../../../../source");
+  dojo.require("orp.util.LintTool");
+}
+
+function tearDown() {
+}
+
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
+
+function testJsLintOnGoodCodeFragment() {
+  var textToRunLintOn = "function iggy() { var pop = 'no fun'; }";
+  assertTrue("jslint says clean code is clean", !orp.util.LintTool.getErrorReportForCodeInString(textToRunLintOn));
+}
+
+function testJsLintOnBadCodeFragment() {
+  // badFragmentOne has THIS_SYMBOL_IS_BAD, which JSLint should catch
+  var badFragmentOne = "function iggy() { var pop = 'no fun'; } THIS_SYMBOL_IS_BAD";
+
+  // badFragmentTwo has tab characters in it, which our own isCodeCleanInString()
+  // method should catch
+  var badFragmentTwo = "function iggy()		{ var pop = 'no fun'; } ";
+  
+  // badFragmentThree has a carriage return character in it, which our own 
+  // isCodeCleanInString() method should catch
+  var badFragmentThree = "function iggy() \r { var pop = 'no fun'; } ";
+  
+  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentOne));
+  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentTwo));
+  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentThree));
 }
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
-    "XmlConverter.js",
-    "Util.js",
-    "UtilTest.js",
-    "DateValue.js",
-    "DateValueTest.js",
-    "Uuid.js",
-    "RandomUuid.js",
-    "TimeBasedUuid.js",
-    "LintTool.js"];
-  var prefix = "../../../source/util/";
-  var errorReport = LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
+    "OpenRecordLoader.js",
+    "TablePlugin.js",
+    "OutlinePlugin.js",
+    "DetailPlugin.js",
+    "BarChartPlugin.js"];
+  var prefix = "../../../source/";
+  var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
   var message = "Lint check \n" + errorReport;
   assertTrue(message, !errorReport);
-}
-
-function tearDown() {
 }
 
 

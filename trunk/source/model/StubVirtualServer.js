@@ -1032,7 +1032,7 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
               finalData = parseFloat(rawData);
               break;
             case World.UUID_FOR_TYPE_DATE:
-              finalData = new DateValue(rawData);
+              finalData = new orp.util.DateValue(rawData);
               // if (!finalData.isValid()) {
               //   alert(rawData + " " + finalData);
               // }

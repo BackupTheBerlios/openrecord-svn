@@ -30,8 +30,19 @@
  
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.util.LintTool");
+dojo.require("dojo.lang.*");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 /*global Util, jslint */
+// -------------------------------------------------------------------
+
+
+// -------------------------------------------------------------------
+// Constructor
 // -------------------------------------------------------------------
 
 /**
@@ -47,9 +58,9 @@
  * @scope    public instance constructor
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
-function LintTool() {
+orp.util.LintTool = function() {
   throw new Error("LintTool is a static class. You can't create instances of it.");
-}
+};
 
 
 // -------------------------------------------------------------------
@@ -64,7 +75,7 @@ function LintTool() {
  * @param    codeString    A string containing JavaScript code. 
  * @return   Returns an error message string, or returns an empty string if there are no errors (according to jslint).
  */
-LintTool.getErrorReportForCodeInString = function(codeString) {
+orp.util.LintTool.getErrorReportForCodeInString = function(codeString) {
   var errorMessage = "";
 
   // Call jslint, and see if it reported errors.
@@ -80,17 +91,17 @@ LintTool.getErrorReportForCodeInString = function(codeString) {
   }
   
   // Check for tabs, backspaces, etc.
-  errorMessage += LintTool.checkForString(codeString, '\t', "There are tab characters in the file.");
-  errorMessage += LintTool.checkForString(codeString, '\b', "There are backspace characters in the file.");
-  errorMessage += LintTool.checkForString(codeString, '\r', "There are carriage return characters in the file.");
-  errorMessage += LintTool.checkForString(codeString, '\f', "There are form feed characters in the file.");
+  errorMessage += orp.util.LintTool.checkForString(codeString, '\t', "There are tab characters in the file.");
+  errorMessage += orp.util.LintTool.checkForString(codeString, '\b', "There are backspace characters in the file.");
+  errorMessage += orp.util.LintTool.checkForString(codeString, '\r', "There are carriage return characters in the file.");
+  errorMessage += orp.util.LintTool.checkForString(codeString, '\f', "There are form feed characters in the file.");
   
   // Check for discouraged code
   // We have to break 'document' + '.write' into two parts, or else this LintTool.js
   // file won't pass its own lint test.
-  errorMessage += LintTool.checkForString(codeString, 'document' + '.write');
-  errorMessage += LintTool.checkForString(codeString, 'document' + '.all');
-  errorMessage += LintTool.checkForString(codeString, 'document' + '.layers');
+  errorMessage += orp.util.LintTool.checkForString(codeString, 'document' + '.write');
+  errorMessage += orp.util.LintTool.checkForString(codeString, 'document' + '.all');
+  errorMessage += orp.util.LintTool.checkForString(codeString, 'document' + '.layers');
 
   return errorMessage;
 }; 
@@ -107,7 +118,7 @@ LintTool.getErrorReportForCodeInString = function(codeString) {
  * @param    errorMessage    Optional. The error message to return if the memberString was found in codeString. 
  * @return   Returns an error message string, or returns an empty string if there are no errors.
  */
-LintTool.checkForString = function(codeString, memberString, errorMessage) {
+orp.util.LintTool.checkForString = function(codeString, memberString, errorMessage) {
   var returnString = "";
   var clean = (codeString.indexOf(memberString) == -1);
   if (!clean) {
@@ -128,9 +139,9 @@ LintTool.checkForString = function(codeString, memberString, errorMessage) {
  * @param    url    A string with the URL of a file containing JavaScript code. 
  * @return   Returns an error message string, or returns an empty string if there are no errors (according to jslint).
  */
-LintTool.getErrorReportForCodeAtUrl = function(url) {
+orp.util.LintTool.getErrorReportForCodeAtUrl = function(url) {
   var fileContents = Util.getStringContentsOfFileAtURL(url);
-  return LintTool.getErrorReportForCodeInString(fileContents);
+  return orp.util.LintTool.getErrorReportForCodeInString(fileContents);
 };
 
         
@@ -143,10 +154,10 @@ LintTool.getErrorReportForCodeAtUrl = function(url) {
  * @param    path    Optional.  A path prefix string to prepend to the filename strings. 
  * @return   Returns an error message string, or returns an empty string if there are no errors (according to jslint).
  */
-LintTool.getErrorReportFromListOfFilesnames = function(listOfFilenames, path) {
+orp.util.LintTool.getErrorReportFromListOfFilesnames = function(listOfFilenames, path) {
   Util.assert(Util.isArray(listOfFilenames));
   if (path) {
-    Util.assert(Util.isString(path));
+    Util.assert(dojo.lang.isString(path));
   } else {
     path = "";
   }
@@ -156,7 +167,7 @@ LintTool.getErrorReportFromListOfFilesnames = function(listOfFilenames, path) {
   for (var key in listOfFilenames) {
     var filename = listOfFilenames[key];
     var url = path + filename;
-    var errorReportForFile = LintTool.getErrorReportForCodeAtUrl(url);
+    var errorReportForFile = orp.util.LintTool.getErrorReportForCodeAtUrl(url);
     if (errorReportForFile) {
       var message = separatorLine + filename + "\n" + errorReportForFile;
       aggregateErrorReport += message;

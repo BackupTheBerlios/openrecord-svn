@@ -236,7 +236,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
       if (generateComments) {
         listOfStrings.push(indent + '// ' + this._getTypedDisplayStringForItem(item) + '\n');
         listOfStrings.push(indent + '//           by (' + this._truncateString(item.getUserstamp().getDisplayString()) + ')');
-        listOfStrings.push(' on (' + DateValue.getStringMonthDayYear(item.getCreationDate()) + ')\n');
+        listOfStrings.push(' on (' + orp.util.DateValue.getStringMonthDayYear(item.getCreationDate()) + ')\n');
       }
       if (!this._jsonFragmentForItemPrefix) {
         this._jsonFragmentForItemPrefix = indent + '{ "' + StubVirtualServer.JSON_MEMBER_ITEM_CLASS + '": ';
@@ -374,7 +374,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
       }
       if (generateComments) {
         commentString += indent + '//           by (' + this._truncateString(entry.getUserstamp().getDisplayString()) + ')';
-        commentString += ' on (' + DateValue.getStringMonthDayYear(entry.getCreationDate()) + ')\n';
+        commentString += ' on (' + orp.util.DateValue.getStringMonthDayYear(entry.getCreationDate()) + ')\n';
         listOfStrings.push(commentString);
         for (var j in listOfStringsForEntry) {
           listOfStrings.push(listOfStringsForEntry[j]);

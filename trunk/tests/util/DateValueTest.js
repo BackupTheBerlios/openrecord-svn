@@ -30,14 +30,32 @@
  
 var TestVars = null;
 
+
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
+
 function setUp() {
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.require("orp.util.DateValue");
   // TestVars = {};
-  // TestVars.theHobbit = "The Hobbit";
 }
 
+function tearDown() {
+  // TestVars = null;
+}
+
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
+
 function testDateValueConstructor() {
+  var DateValue = orp.util.DateValue;
+  
   var year = 1944;
-  var month = DateValue.MONTH_FEB;
+  var month = DateValue.Month.FEB;
   var day = 14;
   var hours = 9;
   var minutes = 30;
@@ -86,10 +104,6 @@ function testDateValueConstructor() {
   // alert(alertString);
 }
 
-
-function tearDown() {
-  // TestVars = null;
-}
 
 // -------------------------------------------------------------------
 // End of file
