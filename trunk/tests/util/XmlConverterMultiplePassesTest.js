@@ -54,7 +54,7 @@ function setUp() {
   var annsPassword = "Ann's password";
   var userAnn = world.newUser("Ann Doe", annsPassword);
   world.login(userAnn, annsPassword);
-  var xmlFile = "../../../source/util/food.xml";
+  var xmlFile = "../../../tests/util/food.xml";
   var xmlConverter = new XmlConverter(world, xmlFile, "food", "Record");
   var xmlToAttributeSpecifiers = new Array();
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
