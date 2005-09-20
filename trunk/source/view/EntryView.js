@@ -514,7 +514,8 @@ EntryView.prototype._writeValue = function(value) {
         var inverseAttr = inverseAttributeEntry.getValue(this._attribute);
         this._entry = this._item.replaceEntryWithConnection(this._entry, this._attribute, value, inverseAttr);
       } else {
-        this._entry = this._item.replaceEntryWithEntryForAttribute(this._entry, this._attribute, value);
+        // this._entry = this._item.replaceEntryWithEntryForAttribute(this._entry, this._attribute, value);
+        this._entry = this._item.replaceEntry({previousEntry:this._entry, attribute:this._attribute, value:value});
       }
       var superview = this.getSuperview();
       if (this._isProvisional && superview._provisionalItemJustBecomeReal) {

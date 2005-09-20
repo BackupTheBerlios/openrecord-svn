@@ -388,7 +388,8 @@ TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppableObj
     // alertString = "";
     for (var i in this._displayAttributes) {
       var attribute = this._displayAttributes[i];
-      this._layout.addEntryForAttribute(attributeTableColumns, attribute);
+      // this._layout.addEntryForAttribute(attributeTableColumns, attribute);
+      this._layout.addEntry({attribute:attributeTableColumns, value:attribute});
       // alertString += attribute.getDisplayString() + '\n';
     }
     // alert(alertString);
@@ -651,7 +652,8 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
           var inverseAttribute = inverseAttributeEntry.getValue(attribute);
           newItem.addConnectionEntry(attribute, value, inverseAttribute);
         } else {
-          newItem.addEntryForAttribute(attribute, value);
+          // newItem.addEntryForAttribute(attribute, value);
+          newItem.addEntry({attribute:attribute, value:value});
         }
       }
     }
@@ -705,11 +707,13 @@ TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
     if (noStoredColumns) {
       for (i in this._displayAttributes) {
         var anAttribute = this._displayAttributes[i];
-        this._layout.addEntryForAttribute(attributeTableColumns,anAttribute,typeCalledItem);
+        // this._layout.addEntryForAttribute(attributeTableColumns,anAttribute,typeCalledItem);
+        this._layout.addEntry({attribute:attributeTableColumns, value:anAttribute, type:typeCalledItem});
       }
     } else {
       if (!removeAttribute) {
-        this._layout.addEntryForAttribute(attributeTableColumns,changedAttribute,typeCalledItem);
+        // this._layout.addEntryForAttribute(attributeTableColumns,changedAttribute,typeCalledItem);
+        this._layout.addEntry({attribute:attributeTableColumns, value:changedAttribute, type:typeCalledItem});
       }
     }
     this._buildTable(true);

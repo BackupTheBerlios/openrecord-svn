@@ -714,17 +714,20 @@ World.prototype.newQuery = function(matchingAttribute, matchingEntryOrListOfEntr
   var attributeCalledQueryMatchingAttribute = this.getAttributeCalledQueryMatchingAttribute();
   var attributeCalledQueryMatchingValue = this.getAttributeCalledQueryMatchingValue();
   var matchingEntry;
-  item.addEntryForAttribute(attributeCalledQueryMatchingAttribute, matchingAttribute);
+  // item.addEntryForAttribute(attributeCalledQueryMatchingAttribute, matchingAttribute);
+  item.addEntry({attribute:attributeCalledQueryMatchingAttribute, value:matchingAttribute});
   if (matchingEntryOrListOfEntries) {
     if (Util.isArray(matchingEntryOrListOfEntries)) {
       for (var key in matchingEntryOrListOfEntries) {
         matchingEntry = matchingEntryOrListOfEntries[key];
-        item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
+        // item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
+        item.addEntry({attribute:attributeCalledQueryMatchingValue, value:matchingEntry});
       }
     }
     else {
       matchingEntry = matchingEntryOrListOfEntries;
-      item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
+      // item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
+      item.addEntry({attribute:attributeCalledQueryMatchingValue, value:matchingEntry});
     }
   }
 

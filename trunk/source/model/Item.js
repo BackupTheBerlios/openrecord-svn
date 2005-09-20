@@ -37,6 +37,16 @@
 /*global World, Entry */
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+// dojo.provide("orp.util.Item");
+// dojo.require("dojo.lang.*");
+
+
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 
 /**
  * Instances of the Item class know how to store and retrieve their
@@ -61,6 +71,19 @@ function Item(world, uuid) {
 
   this._noteChanges(null);
 }
+
+
+// -------------------------------------------------------------------
+// Public class constants
+// -------------------------------------------------------------------
+Item.NamedParameters = {
+  attribute:      "attribute",
+  value:          "value",
+  type:           "type",
+  previousEntry:  "previousEntry",
+  myAttribute:    "myAttribute",
+  otherItem:      "otherItem",
+  otherAttribute: "otherAttribute"};
 
 
 /**
@@ -93,50 +116,10 @@ Item.prototype._initialize = function(observer, provisionalFlag) {
 
 /* PENDING: refactor these methods as per Sept 12 plan:
 // OLD
-item.addEntry(value)
-item.addEntry(value, type)
-item.addEntryForAttribute(attribute, value)
-item.addEntryForAttribute(attribute, value, type)
-
-item.replaceEntry(previousEntry, value)
-item.replaceEntry(previousEntry, value, type)
-item.replaceEntryWithEntryForAttribute(previousEntry, attribute, value)
-item.replaceEntryWithEntryForAttribute(previousEntry, attribute, value, type)
-
 item.addConnectionEntry(myAttribute, otherItem, otherAttribute)
 Item.replaceEntryWithConnection(previousEntry, myAttribute, otherItem, otherAttribute)
 
 // NEW
- **
- * Creates a new entry object ...
- *
- * @scope    public instance method
- * @namedParam    value    ... 
- * @namedParam    type    ... 
- * @namedParam    attribute    Optional. ...
- * @return   The new entry object.
- * @throws   Throws an Error if no user is logged in.
- *
-Item.prototype.addEntry = function(namedParameters) {
-// function initializer
-// input/parameter/argument hash table
-// input/parameter/argument hash
-// anonymous object
-// input/parameter/argument dictionary
-// input/parameter/argument initializer
-// named parameters
-// keyword parameters
-};
-
-item.addEntry({value:
-               type:
-               attribute: })
-
-item.replaceEntry({value:
-               type:
-               attribute:
-               previousEntry: })
-
 item.addConnectionEntry({myAttribute:
                         otherItem:
                         otherAttribute: })
@@ -151,24 +134,113 @@ item.replaceEntryWithConnection({previousEntry:
  * Creates a new entry object and adds the new entry to the item's 
  * list of entries.
  *
+ * For example, to make Kermit green, you could use any of these:
+ * <pre>
+ *    kermit.addEntry({value: "green"});
+ *    kermit.addEntry({attribute: color, value: "green"});
+ *    kermit.addEntry({attribute: color, value: "green", type: string});
+ * </pre>
+ *
+ * Attributes can always have more than one assigned entry, so
+ * you can make Kermit be both blue and green by doing:
+ * <pre>
+ *    kermit.addEntry({attribute: color, value: "green"});
+ *    kermit.addEntry({attribute: color, value: "blue"});
+ * </pre>
+ * 
+ * @scope    public instance method
+ * @namedParam    value    The value to initialize the entry to. 
+ * @namedParam    type    Optional. An item representing a data type.
+ * @namedParam    attribute    Optional.  The attribute to assign the entry to. 
+ * @return   An entry object.
+ * @throws   Throws an Error if no user is logged in.
+ */
+Item.prototype.addEntry = function(namedParameters) {
+  Util.assert(dojo.lang.isObject(namedParameters));
+  var arg = Item.NamedParameters;
+  var value = namedParameters[arg.value];
+  var attribute = namedParameters[arg.attribute];
+  var type = namedParameters[arg.type];
+  
+  // Check for typos in parameter names
+  Util.assert(Util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type]));
+  
+  if (!attribute) {
+    attribute = this.getWorld().getAttributeCalledUnfiled();
+  }
+  return this._createNewEntry(null, attribute, value, type);
+};
+ 
+
+/**
+ * Replaces an existing entry with a new entry.
+ *
+ * Examples:
+ * <pre>
+ *    var entry = item.addEntry({value: "green"});
+ *    entry = item.replaceEntry({previousEntry: entry, value: "green"});
+ *    entry = item.replaceEntry({previousEntry: entry, attribute: color, value: "green"});
+ *    entry = item.replaceEntry({previousEntry: entry, attribute: color, value: "green", type: string});
+ * </pre>
+ * 
+ * @scope    public instance method
+ * @namedParam    previousEntry    The old entry to be replaced.
+ * @namedParam    value    The value to initialize the entry to. 
+ * @namedParam    type    Optional. An item representing a data type.
+ * @namedParam    attribute    Optional.  The attribute to assign the entry to. 
+ * @return   An entry object.
+ * @throws   Throws an Error if no user is logged in.
+ */
+Item.prototype.replaceEntry = function(namedParameters) {
+  Util.assert(dojo.lang.isObject(namedParameters));
+  var arg = Item.NamedParameters;
+  var value = namedParameters[arg.value];
+  var attribute = namedParameters[arg.attribute];
+  var type = namedParameters[arg.type];
+  var previousEntry = namedParameters[arg.previousEntry];
+
+  // Check for typos in parameter names
+  Util.assert(Util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type, arg.previousEntry]));
+  
+  Util.assert(dojo.lang.isObject(previousEntry));
+  if (!attribute) {
+    attribute = previousEntry.getAttributeForItem(this);
+  }
+  return this._createNewEntry(previousEntry, attribute, value, type);
+};
+
+
+// -------------------------------------------------------------------
+// DEPRECATED methods
+// -------------------------------------------------------------------
+
+/**
+ * DEPRECATED: use addEntry instead.
+ * 
+ * Creates a new entry object and adds the new entry to the item's 
+ * list of entries.
+ *
  * @scope    public instance method
  * @param    value    The value to initialize the entry to.
  * @param    type    Optional. An item representing a data type.
  * @return   An entry object.
  * @throws   Throws an Error if no user is logged in.
  */
+ /*
 Item.prototype.addEntry = function(value, type) {
   var attributeCalledUnfiled = this.getWorld().getAttributeCalledUnfiled();
   return this._createNewEntry(null, attributeCalledUnfiled, value, type);
 };
-
+*/
 
 /**
+ * DEPRECATED: use addEntry instead.
+ * 
  * Assigns an entry to an attribute in this item.
  *
  * Given an attribute and value, creates an entry object with the 
  * value, and sets the item's attribute to the new entry.
- * For example, to make a Kermit green:
+ * For example, to make Kermit green:
  * <pre>
  *    kermit.addEntryForAttribute(color, "green");
  * </pre>
@@ -186,12 +258,16 @@ Item.prototype.addEntry = function(value, type) {
  * @return   An entry object.
  * @throws   Throws an Error if no user is logged in.
  */
+ /*
 Item.prototype.addEntryForAttribute = function(attribute, value, type) {
   return this._createNewEntry(null, attribute, value, type);
 };
+*/
 
 
 /**
+ * DEPRECATED: use replaceEntry instead.
+ *
  * Replaces an existing entry with a new entry.
  *
  * @scope    public instance method
@@ -201,13 +277,17 @@ Item.prototype.addEntryForAttribute = function(attribute, value, type) {
  * @return   The new replacement entry object.
  * @throws   Throws an Error if no user is logged in.
  */
+ /*
 Item.prototype.replaceEntry = function(previousEntry, value, type) {
   var attribute = previousEntry.getAttributeForItem(this);
   return this._createNewEntry(previousEntry, attribute, value, type);
 };
+*/
 
 
 /**
+ * DEPRECATED: use replaceEntry instead.
+ *
  * Replaces an existing entry with a new entry, and assigns the new entry
  * to an attribute.
  *
@@ -219,9 +299,11 @@ Item.prototype.replaceEntry = function(previousEntry, value, type) {
  * @return   The new replacement entry object.
  * @throws   Throws an Error if no user is logged in.
  */
+ /*
 Item.prototype.replaceEntryWithEntryForAttribute = function(previousEntry, attribute, value, type) {
   return this._createNewEntry(previousEntry, attribute, value, type);
 };
+*/
 
 
 /**

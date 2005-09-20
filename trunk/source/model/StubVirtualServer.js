@@ -306,7 +306,8 @@ StubVirtualServer.prototype.newItem = function(name, observer) {
   var item = this._createNewItem(observer, false);
   if (name) { 
     var attributeCalledName = this._world.getAttributeCalledName();
-    item.addEntryForAttribute(attributeCalledName, name);
+    // item.addEntryForAttribute(attributeCalledName, name);
+    item.addEntry({attribute:attributeCalledName, value:name});
   }
   return item;
 };
@@ -484,7 +485,8 @@ StubVirtualServer.prototype.newUser = function(name, authentication, observer) {
   newUser.assignToCategory(categoryCalledPerson); 
   if (name) { 
     var attributeCalledName = this.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
-    var entry = newUser.addEntryForAttribute(attributeCalledName, name);
+    // var entry = newUser.addEntryForAttribute(attributeCalledName, name);
+    var entry = newUser.addEntry({attribute:attributeCalledName, value:name});
   }
   this._currentUser = null;
   
@@ -710,7 +712,8 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function(item
       if ((matchingAttribute == attributeCalledCategory) && (match instanceof Item) && (match.isInCategory(categoryCalledCategory))) {
         item.assignToCategory(match);
       } else {
-        item.addEntryForAttribute(matchingAttribute, match);
+        // item.addEntryForAttribute(matchingAttribute, match);
+        item.addEntry({attribute:matchingAttribute, value:match});
       }
     }
   }

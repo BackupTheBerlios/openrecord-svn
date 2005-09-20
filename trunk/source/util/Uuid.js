@@ -65,6 +65,9 @@ orp.util.Uuid = function(uuidString) {
       if (dojo.lang.isObject(uuidString)) {
         var namedParameters = uuidString;
         this._uuidString = namedParameters["uuidString"];
+        
+        // Check for typos in parameter names
+        Util.assert(Util.hasNoUnexpectedProperties(namedParameters, ["uuidString"]));
       } else {
         Util.assert(false);
       }
@@ -115,6 +118,9 @@ orp.util.Uuid.newUuid = function(namedParameters) {
     Util.assert(dojo.lang.isObject(namedParameters));
     uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
     Util.assert(dojo.lang.isString(uuidString));
+    
+    // Check for typos in parameter names
+    Util.assert(Util.hasNoUnexpectedProperties(namedParameters, [orp.util.Uuid.NamedParameters.uuidString]));
   }
 
   var uuid = new orp.util.Uuid(uuidString);

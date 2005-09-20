@@ -243,9 +243,9 @@ function noyet_testAdditionsAndRetrievals() {
   var starWars = world.newItem("Star Wars");
   assertTrue('getDisplayName() works for "Star Wars"', (starWars.getDisplayName() == "Star Wars"));
 
-  var luck = starWars.addEntryForAttribute(characterAttribute, "Luck Skywalker");
-  var c3po = starWars.addEntryForAttribute(characterAttribute, "C3PO");
-  var r2d2 = starWars.addEntry("R2D2");
+  var luck = starWars.addEntry({attribute:characterAttribute, value:"Luck Skywalker"});
+  var c3po = starWars.addEntry({attribute:characterAttribute, value:"C3PO"});
+  var r2d2 = starWars.addEntry({value:"R2D2"});
   assertTrue('"Star Wars" has not been deleted', !starWars.hasBeenDeleted());
   assertTrue('"R2D2" has not been deleted', !r2d2.hasBeenDeleted());
   assertTrue('"R2D2" has not been replaced', !r2d2.hasBeenReplaced());
@@ -279,7 +279,7 @@ function noyet_testAdditionsAndRetrievals() {
   worldRetrievalFilter = world.getRetrievalFilter();
   assertTrue('Default retrieval filter is "last edit wins"', worldRetrievalFilter == World.RETRIEVAL_FILTER_LAST_EDIT_WINS);
   
-  var luke = starWars.replaceEntry(luck, "Luke Skywalker");
+  var luke = starWars.replaceEntry({previousEntry:luck, value:"Luke Skywalker"});
   var previousEntry = luke.getPreviousEntry();
   assertTrue('"Luke" has the previous version "Luck"', previousEntry !== null);
   assertTrue('"Luck" has been replaced', luck.hasBeenReplaced());
@@ -301,10 +301,11 @@ function noyet_testAdditionsAndRetrievals() {
   var userChris = world.newUser("Chris Kringle", passwordForChris);
   world.login(userChris, passwordForChris);
 
-  r2d2 = starWars.replaceEntryWithEntryForAttribute(r2d2, characterAttribute, "R2D2");
+  // r2d2 = starWars.replaceEntryWithEntryForAttribute(r2d2, characterAttribute, "R2D2");
+  r2d2 = starWars.replaceEntry({previousEntry:r2d2, attribute:characterAttribute, value:"R2D2"});
   assertTrue('"R2D2" is now character', r2d2.getAttribute() == characterAttribute);
 
-  var failure = starWars.replaceEntry(r2d2, "R2D2");
+  var failure = starWars.replaceEntry({previousEntry:r2d2, value:"R2D2"});
   assertTrue("Can't replace a value with an identical value", failure === null);
 
   listOfCharacters = starWars.getEntriesForAttribute(characterAttribute);
@@ -316,7 +317,7 @@ function noyet_testAdditionsAndRetrievals() {
   
   var attributeCalledName = world.getAttributeCalledName();
   var theHobbit = world.newItem("The Hobbit");
-  theHobbit.addEntryForAttribute(attributeCalledName, "There and Back Again");
+  theHobbit.addEntry({attribute:attributeCalledName, value:"There and Back Again"});
   listOfEntries = theHobbit.getEntriesForAttribute(attributeCalledName);
   assertTrue('"The Hobbit" has two names', listOfEntries.length == 2);
   assertTrue('getDisplayName() returns the first name', (starWars.getDisplayName() == "Star Wars"));
@@ -465,7 +466,7 @@ function testItemObservation() {
   changesObservedByFunction = null;
   world.beginTransaction();
   tokyo.voteToRetain();
-  tokyo.addEntry("Japan");
+  tokyo.addEntry({value:"Japan"});
   assertTrue('tokyoObserverObject does not yet see changes', (changesObservedByObject === null));
   assertTrue('tokyoObserverFunction does not yet see changes', (changesObservedByFunction === null));
   world.endTransaction();
@@ -518,19 +519,19 @@ function testListObservation() {
   };
   var alsoFoodItems = world.getItemsInCategory(categoryCalledFood, foodObserverFunction);
   
-  apple.addEntry("Red");
+  apple.addEntry({value:"Red"});
   assertTrue('foodObserverObject sees a change to apple', (changesObservedByObject !== null));
   assertTrue('foodObserverFunction sees a change to apple', (changesObservedByFunction !== null));
 
   changesObservedByObject = null;
   changesObservedByFunction = null;
-  tokyo.addEntry("Japan");
+  tokyo.addEntry({value:"Japan"});
   assertTrue('foodObserverObject does not see a change to tokyo', (changesObservedByObject === null));
   assertTrue('foodObserverFunction does not see a change to tokyo', (changesObservedByFunction === null));
 
   world.removeListObserver(foodItems, foodObserverObject);
   world.removeListObserver(alsoFoodItems, foodObserverFunction);
-  brownie.addEntry("Brown");
+  brownie.addEntry({value:"Brown"});
   assertTrue('foodObserverObject no longer sees changes to food items', (changesObservedByObject === null));
   assertTrue('foodObserverFunction no longer sees changes to food items', (changesObservedByFunction === null));
   
@@ -577,10 +578,10 @@ function testQueries() {
 
   // test for queries using non-category attribute e.g. continent
   var attributeCalledContinent = world.newItem("Continent");
-  tokyo.addEntryForAttribute(attributeCalledContinent, "Asia");
+  tokyo.addEntry({attribute:attributeCalledContinent, value:"Asia"});
   var beijing = world.newItem("Beijing");
-  beijing.addEntryForAttribute(attributeCalledContinent, "Asia");
-  var seattleEntry = seattle.addEntryForAttribute(attributeCalledContinent, "North America");
+  beijing.addEntry({attribute:attributeCalledContinent, value:"Asia"});
+  var seattleEntry = seattle.addEntry({attribute:attributeCalledContinent, value:"North America"});
   var queryRunnerForAsia = world.newQueryRunner({attribute: attributeCalledContinent, values:["Asia"]});
   var listOfCountries = queryRunnerForAsia.getResultItems();
   
@@ -594,7 +595,7 @@ function testQueries() {
   assertTrue('North America query returned only Seattle',
   listOfCountries.length == 1 && Util.isObjectInSet(seattle, listOfCountries));
     
-  seattle.addEntryForAttribute(attributeCalledContinent, "Asia");
+  seattle.addEntry({attribute:attributeCalledContinent, value:"Asia"});
   listOfCountries = queryRunnerForAsia.getResultItems();
   assertTrue('Asia query returns 3 countries', listOfCountries.length == 3);
   hasAll = Util.areObjectsInSet([tokyo,beijing,seattle], listOfCountries);
@@ -645,10 +646,10 @@ function testItemTypes() {
   var noOfAttachments = world.newAttribute("Number of attachments");
   var subjectAttribute = world.newAttribute("Subject");
   var aPerson = world.newItem("John Doe");
-  var subjectEntry = anEmail.addEntryForAttribute(subjectAttribute, "Money saved for you at Nigerian Bank");
-  var fromEntry = anEmail.addEntryForAttribute(fromAttribute, aPerson);
-  var receivedEntry = anEmail.addEntryForAttribute(dateReceivedAttribute, new orp.util.DateValue("6/8/05"));
-  var numAttachmentsEntry = anEmail.addEntryForAttribute(noOfAttachments, 4);
+  var subjectEntry = anEmail.addEntry({attribute:subjectAttribute, value:"Money saved for you at Nigerian Bank"});
+  var fromEntry = anEmail.addEntry({attribute:fromAttribute, value:aPerson});
+  var receivedEntry = anEmail.addEntry({attribute:dateReceivedAttribute, value:(new orp.util.DateValue("6/8/05"))});
+  var numAttachmentsEntry = anEmail.addEntry({attribute:noOfAttachments, value:4});
 }
 
 

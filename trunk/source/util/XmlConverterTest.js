@@ -167,7 +167,8 @@ function testExpectedType() {
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
   var colorAttribute = world.newAttribute("Color");
   var foodColorCategory = world.newCategory("Food color");
-  colorAttribute.addEntryForAttribute(world.getAttributeCalledExpectedType(), foodColorCategory);
+  // colorAttribute.addEntryForAttribute(world.getAttributeCalledExpectedType(), foodColorCategory);
+  colorAttribute.addEntry({attribute:world.getAttributeCalledExpectedType(), value:foodColorCategory});
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["color"], colorAttribute));
   var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
   assertTrue('3 items should have been created', listOfItems.length == 3);
@@ -184,9 +185,11 @@ function testInverseAttribute() {
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
   var colorAttribute = world.newAttribute("Color");
   var foodColorCategory = world.newCategory("Food Color");
-  colorAttribute.addEntryForAttribute(world.getAttributeCalledExpectedType(), foodColorCategory);
+  // colorAttribute.addEntryForAttribute(world.getAttributeCalledExpectedType(), foodColorCategory);
+  colorAttribute.addEntry({attribute:world.getAttributeCalledExpectedType(), value:foodColorCategory});
   var foodsOfThisColorCategory = world.newCategory("Foods of this color");
-  colorAttribute.addEntryForAttribute(world.getAttributeCalledInverseAttribute(), foodsOfThisColorCategory);
+  // colorAttribute.addEntryForAttribute(world.getAttributeCalledInverseAttribute(), foodsOfThisColorCategory);
+  colorAttribute.addEntry({attribute:world.getAttributeCalledInverseAttribute(), value:foodsOfThisColorCategory});
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["color"], colorAttribute));
   var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
   var colorCategories = world.getItemsInCategory(foodColorCategory);

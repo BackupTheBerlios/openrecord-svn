@@ -75,6 +75,7 @@ orp.util.RandomUuid = function(namedParameters) {
     } else {
       if (dojo.lang.isObject(namedParameters)) {
         uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
+        Util.assert(Util.hasNoUnexpectedProperties(namedParameters, [orp.util.Uuid.NamedParameters.uuidString]));
       } else {
         Util.assert(false);
       }
@@ -116,19 +117,6 @@ orp.util.RandomUuid.prototype._generateUuidString = function() {
   
   return result;
 };
-
-
-/**
- * Returns a randomly generated floating point number 
- * between 0 and (4,294,967,296 - 1), inclusive.
- *
- * @scope    private class method
- */
-/*
-orp.util.RandomUuid._generateRandom32bitNumber = function() {
-  return Math.floor( (Math.random() % 1) * Math.pow(2, 32) );
-};
-*/
 
 
 // -------------------------------------------------------------------

@@ -283,7 +283,8 @@ SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem) {
   repository.beginTransaction();
   layoutItem = repository.newItem("Layout data for " + pluginTypeItem.getDisplayString() + " of " + this._section.getDisplayString());
   layoutItem.assignToCategory(categoryCalledLayoutData);
-  layoutItem.addEntryForAttribute(attributeAppliesToPlugin, pluginTypeItem);
+  // layoutItem.addEntryForAttribute(attributeAppliesToPlugin, pluginTypeItem);
+  layoutItem.addEntry({attribute:attributeAppliesToPlugin, value:pluginTypeItem});
   // this._section.addEntryForAttribute(attributeLayoutData, layoutItem, repository.getTypeCalledItem());
   this._section.addConnectionEntry(attributeLayoutData, layoutItem, attributeCalledSectionThisLayoutDataBelongsTo);
   repository.endTransaction();
@@ -408,19 +409,11 @@ SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject) {
 
     var oldEntry = this._section.getSingleEntryFromAttribute(attributeCalledPluginView);
     if (oldEntry) {
-      this._section.replaceEntry(oldEntry, newPluginViewItem);
+      this._section.replaceEntry({previousEntry:oldEntry, value:newPluginViewItem});
     } else {
-      this._section.addEntryForAttribute(attributeCalledPluginView, newPluginViewItem);
+      // this._section.addEntryForAttribute(attributeCalledPluginView, newPluginViewItem);
+      this._section.addEntry({attribute:attributeCalledPluginView, value:newPluginViewItem});
     }
-    /*
-    var pluginNameEntries = this._section.getEntriesForAttribute(attributeCalledPluginName);
-    if (pluginNameEntries && pluginNameEntries[0]) {
-      var oldEntry = pluginNameEntries[0];
-      this._section.replaceEntry(oldEntry, newChoiceName);
-    } else {
-      this._section.addEntryForAttribute(attributeCalledPluginName, newChoiceName);
-    }
-    */
     this.refresh();
   }
 };
@@ -458,9 +451,11 @@ SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
   }
   if (matchingAttribute.getDisplayString() != newChoiceName) {
     if (listOfMatchingAttrs.length === 0) {
-      myQuery.addEntryForAttribute(attributeCalledQueryMatchingAttribute, newQueryMatchingAttribute);
+      // myQuery.addEntryForAttribute(attributeCalledQueryMatchingAttribute, newQueryMatchingAttribute);
+      myQuery.addEntry({attribute:attributeCalledQueryMatchingAttribute, value:newQueryMatchingAttribute});
     } else {
-      myQuery.replaceEntry(listOfMatchingAttrs[0], newQueryMatchingAttribute);
+      // myQuery.replaceEntry(listOfMatchingAttrs[0], newQueryMatchingAttribute);
+      myQuery.replaceEntry({previousEntry:listOfMatchingAttrs[0], value:newQueryMatchingAttribute});
     }
 
     /* PENDING, PROBLEM to check Can't delete entries already created by previous matching attribute */

@@ -89,6 +89,40 @@ function testEncryptionMethods() {
   assertTrue('md5 of longString is correct', (Util.hex_md5(longString) == "4d694e03af399831c6f0c1f1bcc2fc93"));
 }
 
+function testIsEmpty() {
+  var canada = {name:"Canada", provinces:8};
+  var atlantis = {};
+  
+  assertTrue('Canada has properties', !Util.isEmpty(canada));
+  assertTrue('Atlantis does not have properties', Util.isEmpty(atlantis));
+  
+  delete canada.name;
+  delete canada.provinces;
+  assertTrue('Canada does not have properties', Util.isEmpty(canada));
+}
+
+function testHasProperty() {
+  var canada = {name:"Canada", provinces:8};
+  var atlantis = {};
+
+  assertTrue('Canada has a name', Util.hasProperty(canada, "name"));
+  assertTrue('Canada does not have a foo', !Util.hasProperty(canada, "foo"));
+  
+  assertTrue('Atlantis does not have a name', !Util.hasProperty(atlantis, "name"));
+
+  assertTrue('Atlantis has []', Util.hasProperties(atlantis, []));
+  assertTrue('Canada has ["name", "provinces"]', Util.hasProperties(canada, ["name", "provinces"]));
+  assertTrue('Canada has ["name"]', Util.hasProperties(canada, ["name"]));
+  assertTrue('Canada has []', Util.hasProperties(canada, []));
+  assertTrue('Canada does not have ["foo", "bar"]', !Util.hasProperties(canada, ["foo", "bar"]));
+
+  assertTrue('Canada has only ["name", "provinces"]', Util.hasNoUnexpectedProperties(canada, ["name", "provinces"]));
+  assertTrue('Canada does not have just ["name"]', !Util.hasNoUnexpectedProperties(canada, ["name"]));
+  
+  assertTrue('Canada does not have just ["name"]', !Util.hasExactlyTheseProperties(canada, ["name"]));
+  assertTrue('Canada has ["name", "provinces"]', Util.hasExactlyTheseProperties(canada, ["name", "provinces"]));
+  assertTrue('Canada does not have ["name", "provinces", "foo"]', !Util.hasExactlyTheseProperties(canada, ["name", "provinces", "foo"]));
+}
 
 // -------------------------------------------------------------------
 // End of file

@@ -345,6 +345,38 @@ Util.isHashTable = function(value) {
 };
 
 
+Util.isEmpty = function(object) {
+  for (var key in object) {
+    return false;
+  }
+  return true;
+};
+
+
+Util.hasProperty = function(object, property) {
+  return (object[property] !== undefined);
+};
+
+Util.hasProperties = function(object, properties) {
+  for (var i in properties) {
+    if (object[properties[i]] === undefined) { return false; }
+  }
+  return true;
+};
+
+Util.hasNoUnexpectedProperties = function(object, expectedProperties) {
+  for (var key in object) {
+    if (!Util.isObjectInSet(key, expectedProperties)) { return false; }
+  }
+  return true;
+};
+  
+Util.hasExactlyTheseProperties = function(object, properties) {
+  if (!Util.hasProperties(object, properties)) { return false; }
+  if (!Util.hasNoUnexpectedProperties(object, properties)) { return false; }
+  return true;
+};
+
 // -------------------------------------------------------------------
 // Methods that operate on Arrays
 // -------------------------------------------------------------------
@@ -383,11 +415,6 @@ Util.getArrayIndex = function(array, value) {
 Util.isObjectInSet = function(object, set) {
   Util.assert(Util.isArray(set));
   
-//  for (var i=0; i<set.length; i+=1) {
-//    if (set[i] == object) {
-//      return true;
-//    }
-//  }
   for (var key in set) {
     if (set[key] == object) {
       return true;

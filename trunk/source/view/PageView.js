@@ -69,7 +69,8 @@ PageView.newSection = function(repository, inPage) {
   var newSection = repository.newItem("New Section");
   newSection.assignToCategory(categoryCalledSection);
   inPage.addConnectionEntry(attributeCalledSectionsInPage, newSection, attributeCalledPageThisSectionAppearsOn);
-  newSection.addEntryForAttribute(attributeCalledPluginView, tablePluginView);
+  // newSection.addEntryForAttribute(attributeCalledPluginView, tablePluginView);
+  newSection.addEntry({attribute:attributeCalledPluginView, value:tablePluginView});
 
   var newQuery = repository.newItem("New Query");
   newQuery.assignToCategory(categoryCalledQuery);

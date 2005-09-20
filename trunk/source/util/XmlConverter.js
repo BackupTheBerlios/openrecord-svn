@@ -178,7 +178,8 @@ XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers,
           var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j]._xmlAttributeName;
           var xmlAttributeValue = this._itemElements[i].getAttribute(xmlAttributeName);
           if (xmlAttributeValue !== "") {
-            newItem.addEntryForAttribute(xmlAttributeToAttributeSpecifiers[j]._attribute, xmlAttributeValue);
+            // newItem.addEntryForAttribute(xmlAttributeToAttributeSpecifiers[j]._attribute, xmlAttributeValue);
+            newItem.addEntry({attribute:xmlAttributeToAttributeSpecifiers[j]._attribute, value:xmlAttributeValue});
           }
         }
       }
@@ -232,7 +233,8 @@ XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier
     } else {
       item = world.newItem();
       item.assignToCategory(this._itemCategory);
-      item.addEntryForAttribute(equalitySpecifier._attribute, matchString);
+      // item.addEntryForAttribute(equalitySpecifier._attribute, matchString);
+      item.addEntry({attribute:equalitySpecifier._attribute, value:matchString});
     }
     for (j in xmlToAttributeSpecifiers) {
       var tagPath = xmlToAttributeSpecifiers[j]._tagPath;
@@ -243,7 +245,8 @@ XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier
         var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j]._xmlAttributeName;
         var xmlAttributeValue = this._itemElements[i].getAttribute(xmlAttributeName);
         if (xmlAttributeValue !== "") {
-          item.addEntryForAttribute(xmlAttributeToAttributeSpecifiers[j]._attribute, xmlAttributeValue);
+          // item.addEntryForAttribute(xmlAttributeToAttributeSpecifiers[j]._attribute, xmlAttributeValue);
+          item.addEntry({attribute:xmlAttributeToAttributeSpecifiers[j]._attribute, value:xmlAttributeValue});
         }
       }
     }
@@ -269,7 +272,8 @@ XmlConverter.prototype._doDefaultConversion = function(world, nameSpace, itemEle
           attr = world.newAttribute(attrName);
           hashTableOfAttributesKeyedByName[attrName] = attr;
         }
-        newItem.addEntryForAttribute(attr, node.firstChild.nodeValue);
+        // newItem.addEntryForAttribute(attr, node.firstChild.nodeValue);
+        newItem.addEntry({attribute:attr, value:node.firstChild.nodeValue});
       }
     }
     listOfOutputItems.push(newItem);
@@ -284,7 +288,8 @@ XmlConverter.prototype._processElementTree = function(level, maxLevel, node, new
       if (xmlToAttributeSpecifier._inverseAttribute) {
         newItem.addConnectionEntry(xmlToAttributeSpecifier._attribute, value, xmlToAttributeSpecifier._inverseAttribute);
       } else {
-        newItem.addEntryForAttribute(xmlToAttributeSpecifier._attribute, value);
+        // newItem.addEntryForAttribute(xmlToAttributeSpecifier._attribute, value);
+        newItem.addEntry({attribute:xmlToAttributeSpecifier._attribute, value:value});
       }
     }
     return;

@@ -415,7 +415,8 @@ RootView.prototype.newPage = function() {
   var attributeCalledSummary = repository.getAttributeCalledSummary();
   var categoryCalledPage = repository.getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
   newPage.assignToCategory(categoryCalledPage);
-  newPage.addEntryForAttribute(attributeCalledSummary, "This is a new page.");
+  //newPage.addEntryForAttribute(attributeCalledSummary, "This is a new page.");
+  newPage.addEntry({attribute:attributeCalledSummary, value:"This is a new page."});
 
   if (hasAtLeastOnePage) {
     PageView.newSection(repository, newPage);

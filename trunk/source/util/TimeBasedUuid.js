@@ -94,6 +94,7 @@ orp.util.TimeBasedUuid = function(namedParameters) {
         var hardwareNode = namedParameters["hardwareNode"];
         var atLeastOneParameter = (uuidString || node || pseudoNode || hardwareNode) ? true : false;
         Util.assert(atLeastOneParameter);
+        Util.assert(Util.hasNoUnexpectedProperties(namedParameters, ["uuidString", "node", "pseudoNode", "hardwareNode"]));
         if (uuidString) {
           Util.assert(!node && !pseudoNode && !hardwareNode);
           Util.assert(uuidString.length == 36);
