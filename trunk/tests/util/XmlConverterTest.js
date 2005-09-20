@@ -31,8 +31,22 @@
 var world;
 var xmlConverter;
 
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
+
 function setUp() {
-  var pathToTrunkDirectoryFromThisFile = "../../../";
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.require("orp.util.XmlConverter");
+
+  XmlTextNodeToAttributeSpecifier = orp.util.XmlTextNodeToAttributeSpecifier;
+  XmlAttributeToAttributeSpecifier = orp.util.XmlAttributeToAttributeSpecifier;
+  XmlConverter = orp.util.XmlConverter;
+
+  // var pathToTrunkDirectoryFromThisFile = "../../../";
+  pathToTrunkDirectoryFromThisFile = "../..";
+  
   var virtualServer = new StubVirtualServer(pathToTrunkDirectoryFromThisFile);  
   world = new World(virtualServer);
   var annsPassword = "Ann's password";
@@ -41,6 +55,15 @@ function setUp() {
   var xmlFile = "../../../source/util/food.xml";
   xmlConverter = new XmlConverter(world, xmlFile, "food", "Record");
 }
+
+function tearDown() {
+  world.logout();
+}
+
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
 
 function testDefaultConversionOfTagsToAttributes() {
   var listOfItems = xmlConverter.makeItemsFromXmlFile();
@@ -70,7 +93,7 @@ function testDefaultConversionOfTagsToAttributes() {
 
 function testSimpleXmlToAttributeSpecifiers() {
   var xmlToAttributeSpecifiers = new Array();
-  xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
+  xmlToAttributeSpecifiers.push(new orp.util.XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["flavor"], world.newAttribute("Flavor")));
   var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
   assertTrue('3 items should have been created', listOfItems.length == 3);
@@ -167,7 +190,6 @@ function testExpectedType() {
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
   var colorAttribute = world.newAttribute("Color");
   var foodColorCategory = world.newCategory("Food color");
-  // colorAttribute.addEntryForAttribute(world.getAttributeCalledExpectedType(), foodColorCategory);
   colorAttribute.addEntry({attribute:world.getAttributeCalledExpectedType(), value:foodColorCategory});
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["color"], colorAttribute));
   var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
@@ -185,10 +207,8 @@ function testInverseAttribute() {
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
   var colorAttribute = world.newAttribute("Color");
   var foodColorCategory = world.newCategory("Food Color");
-  // colorAttribute.addEntryForAttribute(world.getAttributeCalledExpectedType(), foodColorCategory);
   colorAttribute.addEntry({attribute:world.getAttributeCalledExpectedType(), value:foodColorCategory});
   var foodsOfThisColorCategory = world.newCategory("Foods of this color");
-  // colorAttribute.addEntryForAttribute(world.getAttributeCalledInverseAttribute(), foodsOfThisColorCategory);
   colorAttribute.addEntry({attribute:world.getAttributeCalledInverseAttribute(), value:foodsOfThisColorCategory});
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["color"], colorAttribute));
   var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
@@ -204,9 +224,6 @@ function testInverseAttribute() {
   assertTrue('There should be two orange foods.', orangeFoods.length == 2);
 }
 
-function tearDown() {
-  world.logout();
-}
 
 // -------------------------------------------------------------------
 // End of file

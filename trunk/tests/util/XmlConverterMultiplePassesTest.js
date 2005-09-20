@@ -33,8 +33,22 @@ var foodIdAttribute;
 var itemCategory;
 var xmlConverterForSecondPass;
 
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
+
 function setUp() {
-  var pathToTrunkDirectoryFromThisFile = "../../../";
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.require("orp.util.XmlConverter");
+
+  XmlTextNodeToAttributeSpecifier = orp.util.XmlTextNodeToAttributeSpecifier;
+  XmlAttributeToAttributeSpecifier = orp.util.XmlAttributeToAttributeSpecifier;
+  XmlConverter = orp.util.XmlConverter;
+  
+  // var pathToTrunkDirectoryFromThisFile = "../../../";
+  var pathToTrunkDirectoryFromThisFile = "../..";
+  
   var virtualServer = new StubVirtualServer(pathToTrunkDirectoryFromThisFile);  
   world = new World(virtualServer);
   var annsPassword = "Ann's password";
@@ -53,6 +67,15 @@ function setUp() {
   itemCategory = xmlConverter.getItemCategory();
   xmlConverterForSecondPass = new XmlConverter(world, xmlFile, null, "Record", itemCategory);
 }
+
+function tearDown() {
+  world.logout();
+}
+
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
 
 function testNewItemsNotCreatedForRecordsWithMatchingXmlAttribute() {
   var equalitySpecifier = new XmlAttributeToAttributeSpecifier("food_id", foodIdAttribute);
@@ -77,7 +100,7 @@ function testNewItemsNotCreatedForRecordsWithMatchingXmlTextNode() {
 function testNewItemCreatedForRecordWithNonMatchingXmlTextNode() {
   var firstItem = world.getItemsInCategory(itemCategory)[0];
   var nameEntry = firstItem.getSingleEntryFromAttribute(world.getAttributeCalledName());
-  firstItem.replaceEntry(nameEntry, "parsnip");
+  firstItem.replaceEntry({previousEntry:nameEntry, value:"parsnip"});
 
   var equalitySpecifier = new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName());
   var xmlTextNodeToAttributeSpecifiers = [new XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C"))];
@@ -116,9 +139,6 @@ function testModifiedItemsHaveAllExpectedAttributes() {
   }
 }
 
-function tearDown() {
-  world.logout();
-}
 
 // -------------------------------------------------------------------
 // End of file

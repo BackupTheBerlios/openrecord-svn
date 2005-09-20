@@ -12,30 +12,30 @@
 
   <head>
     <title>Additional unit tests for XmlConverter.js</title>
-<!-- 
--->
+
     <script type="text/javascript" src="../../source/OpenRecordLoader.js"></script>
     <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
+    <script type="text/javascript" src="../../third_party/dojo/dojo-0.1.0/dojo.js"></script>
     <script type="text/javascript" src="../../third_party/md5/md5.js"></script>
     <script type="text/javascript" src="../../third_party/gtd_tiddlywiki/FileSaver.js"></script>
-    <script type="text/javascript" src="Util.js"></script>
-    <script type="text/javascript" src="Uuid.js"></script>
-    <script type="text/javascript" src="DateValue.js"></script>
-    <script type="text/javascript" src="../model/Record.js"></script>
-    <script type="text/javascript" src="../model/Ordinal.js"></script>
-    <script type="text/javascript" src="../model/Vote.js"></script>
-    <script type="text/javascript" src="../model/ContentRecord.js"></script>
-    <script type="text/javascript" src="../model/Item.js"></script>
-    <script type="text/javascript" src="../model/Entry.js"></script>
-    <script type="text/javascript" src="../model/Transaction.js"></script>
-    <script type="text/javascript" src="../model/QueryRunner.js"></script>
-    <script type="text/javascript" src="../model/World.js"></script>
-    <script type="text/javascript" src="../model/HttpSaver.js"></script>
-    <script type="text/javascript" src="../model/StubVirtualServer.js"></script>
-    <script type="text/javascript" src="../model/DeltaVirtualServer.js"></script>
-    <script type="text/javascript" src="../view/View.js"></script>
-    <script type="text/javascript" src="../view/EntryView.js"></script>
-    <script type="text/javascript" src="XmlConverter.js"></script>
+    <script type="text/javascript" src="../../source/util/Util.js"></script>
+    <script type="text/javascript" src="../../source/util/Uuid.js"></script>
+    <script type="text/javascript" src="../../source/util/DateValue.js"></script>
+    <script type="text/javascript" src="../../source/model/Record.js"></script>
+    <script type="text/javascript" src="../../source/model/Ordinal.js"></script>
+    <script type="text/javascript" src="../../source/model/Vote.js"></script>
+    <script type="text/javascript" src="../../source/model/ContentRecord.js"></script>
+    <script type="text/javascript" src="../../source/model/Item.js"></script>
+    <script type="text/javascript" src="../../source/model/Entry.js"></script>
+    <script type="text/javascript" src="../../source/model/Transaction.js"></script>
+    <script type="text/javascript" src="../../source/model/QueryRunner.js"></script>
+    <script type="text/javascript" src="../../source/model/World.js"></script>
+    <script type="text/javascript" src="../../source/model/HttpSaver.js"></script>
+    <script type="text/javascript" src="../../source/model/StubVirtualServer.js"></script>
+    <script type="text/javascript" src="../../source/model/DeltaVirtualServer.js"></script>
+    <script type="text/javascript" src="../../source/view/View.js"></script>
+    <script type="text/javascript" src="../../source/view/EntryView.js"></script>
+    <script type="text/javascript" src="../../source/util/XmlConverter.js"></script>
     <script type="text/javascript" src="XmlConverterMultiplePassesTest.js"></script>
   </head>
   
@@ -47,6 +47,11 @@
     
     <p>&nbsp;</p>
     <hr/>
+    <p>You should be able to run these unit tests by going to
+    <a href="../../third_party/jsunit/jsunit2_1/testRunner.html?testpage=" 
+    onclick="href+=window.location.href;" rel="external">the local testRunner 
+    page</a>, and hitting the <b>Run</b> button.</p>
+
     <p>To see the tests, open this .html file in a text editor. Or, within a  
     web browser, you should be able see the source for this file by using 
     some menu like <b>View</b> followed by <b>Page Source</b>. The tests 
@@ -59,19 +64,6 @@
     written by 
     <a href="http://www.edwardh.com/" rel="external">Edward Hieatt</a>. </p>
 
-    <p>If you're looking at this page across an "http://" connection, rather
-    than having loaded it as a "file:///", then you may be able to run the
-    unit tests. The web server that served you this page may also have a
-    JsUnit testRunner available. If so, you should be able to run these unit
-    tests by going to
-    <a href="../../third_party/jsunit/jsunit2_1/testRunner.html?testpage=" 
-    onclick="href+=window.location.href;" rel="external">the local testRunner 
-    page</a>, and hitting the <b>Run</b> button.</p>
-
-    <p>You can also run these unit tests on your local computer. To do that you 
-    first need to download <a href="http://www.edwardh.com/jsunit/" 
-    rel="external">JsUnit</a>.</p>
-    
     <p>&nbsp;</p>
     <hr/>
     <p class="copyright">You can copy freely from this work &mdash; copyright 

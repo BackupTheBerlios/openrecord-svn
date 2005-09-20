@@ -28,13 +28,21 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.util.XmlConverter");
+// dojo.provide("orp.util.XmlTextNodeToAttributeSpecifier");
+// dojo.provide("orp.util.XmlAttributeToAttributeSpecifier");
+
 /**
  * @param    tagPath    A sequence of nested XML tags (relative to an 'item-element'; see below).
  * @param    attribute  Will be assigned a value for every text node whose path equals the tag path.
  *
  * @scope    public instance constructor
  */
-function XmlTextNodeToAttributeSpecifier(tagPath, attribute) {
+orp.util.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) {
   Util.assert(tagPath instanceof Array);
   Util.assert(attribute instanceof Item);
   this._tagPath = tagPath;
@@ -49,7 +57,8 @@ function XmlTextNodeToAttributeSpecifier(tagPath, attribute) {
   var attributeCalledInverseAttribute = attribute.getWorld().getAttributeCalledInverseAttribute();
   var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
   this._inverseAttribute = inverseAttributeEntry? inverseAttributeEntry.getValue(attribute) : null;
-}
+};
+
 
 /**
  * @param    xmlAttributeName    Each value corresponding to the xmlAttributeName will be converted an entry of the current item.
@@ -57,7 +66,7 @@ function XmlTextNodeToAttributeSpecifier(tagPath, attribute) {
  *
  * @scope    public instance constructor
  */
-function XmlAttributeToAttributeSpecifier(xmlAttributeName, attribute) {
+orp.util.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, attribute) {
   Util.assert(attribute instanceof Item);
   this._xmlAttributeName = xmlAttributeName;
   this._attribute = attribute;
@@ -71,20 +80,25 @@ function XmlAttributeToAttributeSpecifier(xmlAttributeName, attribute) {
   var attributeCalledInverseAttribute = attribute.getWorld().getAttributeCalledInverseAttribute();
   var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
   this._inverseAttribute = inverseAttributeEntry? inverseAttributeEntry.getValue(attribute) : null;
-}
+};
+
+
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 
 /**
  * The XmlConverter class knows how to load an XML file and make items
  * out of specified parts of the data.
  *
+ * @scope    public instance constructor
  * @param    world             
  * @param    url                                (of an XML file)
  * @param    nameSpace                          If null, the name of the file will be used.
  * @param    itemTagName                        Items will be made from elements with this tag name.
  * @param    itemCategory                       If null, a new category is created from 'namespace' and 'itemTagName'.
- * @scope    public instance constructor
  */
-function XmlConverter(world, url, nameSpace, itemTagName, itemCategory) {
+orp.util.XmlConverter = function(world, url, nameSpace, itemTagName, itemCategory) {
   Util.assert(world instanceof World);
   var urlSeparators = new RegExp("\\.|\\/");
   var urlParts = url.split(urlSeparators);
@@ -109,16 +123,19 @@ function XmlConverter(world, url, nameSpace, itemTagName, itemCategory) {
   }
   this._world = world;
   this._nameSpace = nameSpace;
-}
+};
+
 
 /**
+ * Returns the category that new items are assigned to.
+ * 
  * @scope    public instance method
- *
  * @return   Returns the category that new items are assigned to.
  */
-XmlConverter.prototype.getItemCategory = function() {
+orp.util.XmlConverter.prototype.getItemCategory = function() {
   return this._itemCategory;
 };
+
 
 /**
  * Given the URL of an XML file, a tag name used in the file, and optionally
@@ -145,19 +162,19 @@ XmlConverter.prototype.getItemCategory = function() {
  * then makeItemsFromXmlFile("file:.../file.xml", "food", "Record") would result
  * in three items each with attributes called 'food:name', 'food:color' and 'food:flavor',
  * while makeItemsFromXmlFile("file:.../file.xml", "food", "Record", [["name"], ["vitamins", "C"]) 
- *                            [new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()),
- *                             new XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C"))],
- *                             new XmlAttributeToAttributeSpecifier("id", world.newAttribute("Food ID"));
+ *                            [new orp.util.XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()),
+ *                             new orp.util.XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C"))],
+ *                             new orp.util.XmlAttributeToAttributeSpecifier("id", world.newAttribute("Food ID"));
  * would result in three items each with attributes called 'name', 'Vitamin C' and 'Food ID'.
  * In both cases, the three items are assigned to the category food:Record.
  *
  * @scope    public instance method
- * @param    xmlToAttributeSpecifiers           Array of type XmlTextNodeToAttributeSpecifier
- * @param    xmlAttributeToAttributeSpecifiers  Array of type XmlAttributeToAttributeSpecifier
+ * @param    xmlToAttributeSpecifiers           Array of type orp.util.XmlTextNodeToAttributeSpecifier
+ * @param    xmlAttributeToAttributeSpecifiers  Array of type orp.util.XmlAttributeToAttributeSpecifier
  *
  * @return   Returns an array of created items.
  */
-XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
+orp.util.XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
   world.beginTransaction();
   var listOfOutputItems = [];
   if (!xmlToAttributeSpecifiers) {
@@ -165,7 +182,7 @@ XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers,
   }
   else {
     Util.assert(xmlToAttributeSpecifiers instanceof Array);
-    Util.assert(xmlToAttributeSpecifiers[0] instanceof XmlTextNodeToAttributeSpecifier);
+    Util.assert(xmlToAttributeSpecifiers[0] instanceof orp.util.XmlTextNodeToAttributeSpecifier);
     for (var i = 0; i < this._itemElements.length; ++i) {
       var newItem = world.newItem();
       newItem.assignToCategory(this._itemCategory);
@@ -178,7 +195,6 @@ XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers,
           var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j]._xmlAttributeName;
           var xmlAttributeValue = this._itemElements[i].getAttribute(xmlAttributeName);
           if (xmlAttributeValue !== "") {
-            // newItem.addEntryForAttribute(xmlAttributeToAttributeSpecifiers[j]._attribute, xmlAttributeValue);
             newItem.addEntry({attribute:xmlAttributeToAttributeSpecifiers[j]._attribute, value:xmlAttributeValue});
           }
         }
@@ -190,22 +206,23 @@ XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers,
   return listOfOutputItems;
 };
 
+
 /**
  * @scope    public instance method
- * @param    equalitySpecifier                  type XmlTextNodeToAttributeSpecifier or XmlAttributeToAttributeSpecifier
- * @param    xmlToAttributeSpecifiers           Array of type XmlTextNodeToAttributeSpecifier
- * @param    xmlAttributeToAttributeSpecifiers  Array of type XmlAttributeToAttributeSpecifier
+ * @param    equalitySpecifier                  type orp.util.XmlTextNodeToAttributeSpecifier or orp.util.XmlAttributeToAttributeSpecifier
+ * @param    xmlToAttributeSpecifiers           Array of type orp.util.XmlTextNodeToAttributeSpecifier
+ * @param    xmlAttributeToAttributeSpecifiers  Array of type orp.util.XmlAttributeToAttributeSpecifier
  *
  * @return   Returns an array of modified or created items.
  */
-XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier, xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
+orp.util.XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier, xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
   var matchXmlAttribute;
-  if (equalitySpecifier instanceof XmlAttributeToAttributeSpecifier) {
+  if (equalitySpecifier instanceof orp.util.XmlAttributeToAttributeSpecifier) {
     matchXmlAttribute = true;
     var xmlAttributeToMatch = equalitySpecifier._xmlAttributeName;
   } else {
-    Util.assert(equalitySpecifier instanceof XmlTextNodeToAttributeSpecifier,
-                "equalitySpecifier should be of type XmlTextNodeToAttributeSpecifier or XmlAttributeToAttributeSpecifier.");
+    Util.assert(equalitySpecifier instanceof orp.util.XmlTextNodeToAttributeSpecifier,
+                "equalitySpecifier should be of type orp.util.XmlTextNodeToAttributeSpecifier or orp.util.XmlAttributeToAttributeSpecifier.");
     matchXmlAttribute = false;
     var xmlTagPathToMatch = equalitySpecifier._tagPath;
   }
@@ -233,7 +250,6 @@ XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier
     } else {
       item = world.newItem();
       item.assignToCategory(this._itemCategory);
-      // item.addEntryForAttribute(equalitySpecifier._attribute, matchString);
       item.addEntry({attribute:equalitySpecifier._attribute, value:matchString});
     }
     for (j in xmlToAttributeSpecifiers) {
@@ -245,7 +261,6 @@ XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier
         var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j]._xmlAttributeName;
         var xmlAttributeValue = this._itemElements[i].getAttribute(xmlAttributeName);
         if (xmlAttributeValue !== "") {
-          // item.addEntryForAttribute(xmlAttributeToAttributeSpecifiers[j]._attribute, xmlAttributeValue);
           item.addEntry({attribute:xmlAttributeToAttributeSpecifiers[j]._attribute, value:xmlAttributeValue});
         }
       }
@@ -256,7 +271,15 @@ XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier
   return listOfOutputItems;
 };
 
-XmlConverter.prototype._doDefaultConversion = function(world, nameSpace, itemElements, itemCategory) {
+
+// -------------------------------------------------------------------
+// Private instance methods
+// -------------------------------------------------------------------
+
+/**
+ * @scope    private instance method
+ */
+orp.util.XmlConverter.prototype._doDefaultConversion = function(world, nameSpace, itemElements, itemCategory) {
   var listOfOutputItems = [];
   var hashTableOfAttributesKeyedByName = [];
   for (var i = 0; i < itemElements.length; ++i) {
@@ -272,7 +295,6 @@ XmlConverter.prototype._doDefaultConversion = function(world, nameSpace, itemEle
           attr = world.newAttribute(attrName);
           hashTableOfAttributesKeyedByName[attrName] = attr;
         }
-        // newItem.addEntryForAttribute(attr, node.firstChild.nodeValue);
         newItem.addEntry({attribute:attr, value:node.firstChild.nodeValue});
       }
     }
@@ -281,14 +303,17 @@ XmlConverter.prototype._doDefaultConversion = function(world, nameSpace, itemEle
   return listOfOutputItems;
 };
 
-XmlConverter.prototype._processElementTree = function(level, maxLevel, node, newItem, xmlToAttributeSpecifier) {
+
+/**
+ * @scope    private instance method
+ */
+orp.util.XmlConverter.prototype._processElementTree = function(level, maxLevel, node, newItem, xmlToAttributeSpecifier) {
   if (level == maxLevel) {
     if (node.childNodes && node.childNodes.length > 0 && node.childNodes[0].nodeType == Node.TEXT_NODE) {
       value = EntryView._transformValueToExpectedType(world, node.childNodes[0].nodeValue, xmlToAttributeSpecifier._listOfTypes);
       if (xmlToAttributeSpecifier._inverseAttribute) {
         newItem.addConnectionEntry(xmlToAttributeSpecifier._attribute, value, xmlToAttributeSpecifier._inverseAttribute);
       } else {
-        // newItem.addEntryForAttribute(xmlToAttributeSpecifier._attribute, value);
         newItem.addEntry({attribute:xmlToAttributeSpecifier._attribute, value:value});
       }
     }
@@ -306,7 +331,11 @@ XmlConverter.prototype._processElementTree = function(level, maxLevel, node, new
   }
 };
 
-XmlConverter.prototype._getTextForTagPath = function(itemElement, xmlTagPathToMatch) {
+
+/**
+ * @scope    private instance method
+ */
+orp.util.XmlConverter.prototype._getTextForTagPath = function(itemElement, xmlTagPathToMatch) {
   var node = itemElement;
   for (var i in xmlTagPathToMatch) {
     var tagName = xmlTagPathToMatch[i];
@@ -322,6 +351,7 @@ XmlConverter.prototype._getTextForTagPath = function(itemElement, xmlTagPathToMa
     return null;
   }
 };
+
 
 // -------------------------------------------------------------------
 // End of file
