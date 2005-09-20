@@ -156,14 +156,14 @@ item.replaceEntryWithConnection({previousEntry:
  * @throws   Throws an Error if no user is logged in.
  */
 Item.prototype.addEntry = function(namedParameters) {
-  Util.assert(dojo.lang.isObject(namedParameters));
+  orp.util.assert(dojo.lang.isObject(namedParameters));
   var arg = Item.NamedParameters;
   var value = namedParameters[arg.value];
   var attribute = namedParameters[arg.attribute];
   var type = namedParameters[arg.type];
   
   // Check for typos in parameter names
-  Util.assert(Util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type]));
+  orp.util.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type]));
   
   if (!attribute) {
     attribute = this.getWorld().getAttributeCalledUnfiled();
@@ -192,7 +192,7 @@ Item.prototype.addEntry = function(namedParameters) {
  * @throws   Throws an Error if no user is logged in.
  */
 Item.prototype.replaceEntry = function(namedParameters) {
-  Util.assert(dojo.lang.isObject(namedParameters));
+  orp.util.assert(dojo.lang.isObject(namedParameters));
   var arg = Item.NamedParameters;
   var value = namedParameters[arg.value];
   var attribute = namedParameters[arg.attribute];
@@ -200,9 +200,9 @@ Item.prototype.replaceEntry = function(namedParameters) {
   var previousEntry = namedParameters[arg.previousEntry];
 
   // Check for typos in parameter names
-  Util.assert(Util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type, arg.previousEntry]));
+  orp.util.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type, arg.previousEntry]));
   
-  Util.assert(dojo.lang.isObject(previousEntry));
+  orp.util.assert(dojo.lang.isObject(previousEntry));
   if (!attribute) {
     attribute = previousEntry.getAttributeForItem(this);
   }
@@ -369,8 +369,8 @@ Item.prototype.addConnectionEntry = function(myAttribute, otherItem, otherAttrib
  *
  */
 Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute, otherItem, otherAttribute) {
-  Util.assert(otherItem instanceof Item);
-  Util.assert(myAttribute instanceof Item);
+  orp.util.assert(otherItem instanceof Item);
+  orp.util.assert(myAttribute instanceof Item);
 
   // If we've just been asked to replace the string "Foo" with the string "Foo",
   // then don't even bother creating a new entry. 
@@ -378,10 +378,10 @@ Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute,
     // var oldValue = previousEntry.getValue(this);
     var oldPairOfAttributes = previousEntry.getAttribute();
     var oldPairOfItems = previousEntry.getItem();
-    if (Util.isArray(oldPairOfAttributes)) {
-      Util.assert(Util.isArray(oldPairOfAttributes));
-      Util.assert(oldPairOfAttributes.length == 2);
-      Util.assert(oldPairOfItems.length == 2);
+    if (orp.util.isArray(oldPairOfAttributes)) {
+      orp.util.assert(orp.util.isArray(oldPairOfAttributes));
+      orp.util.assert(oldPairOfAttributes.length == 2);
+      orp.util.assert(oldPairOfItems.length == 2);
       if (((oldPairOfAttributes[0] == myAttribute) &&  (oldPairOfAttributes[1] == otherAttribute) &&
         oldPairOfItems[0] == this && oldPairOfItems[1] == otherItem) ||
         ((oldPairOfAttributes[1] == myAttribute) &&  (oldPairOfAttributes[0] == otherAttribute) &&
@@ -413,7 +413,7 @@ Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute,
     if (oldItemOrPairOfItems instanceof Item) {
       oldItemOrPairOfItems._noteChanges(null);
     }
-    if (Util.isArray(oldItemOrPairOfItems)) {
+    if (orp.util.isArray(oldItemOrPairOfItems)) {
       oldItemOrPairOfItems[0]._noteChanges(null);
       oldItemOrPairOfItems[1]._noteChanges(null);
     }
@@ -464,7 +464,7 @@ for (var i in values) {
  * @return   A list of entry objects.
  */
 Item.prototype.getEntriesForAttribute = function(attribute) {
-  Util.assert(attribute instanceof Item);
+  orp.util.assert(attribute instanceof Item);
   
   if (this._cachedEntriesKeyedByAttributeUuid !== null) {
     var listOfCachedEntries = this._cachedEntriesKeyedByAttributeUuid[attribute.getUuid()];
@@ -494,18 +494,18 @@ Item.prototype.getEntriesForAttribute = function(attribute) {
       break;
     case World.RETRIEVAL_FILTER_SINGLE_USER:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_DEMOCRATIC:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_UNABRIDGED:
       filteredListOfEntries = listOfEntriesForAttribute;
       break;
     default:
       // We should never get here.  If we get here, it's an error.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
   }
   filteredListOfEntries.sort(ContentRecord.compareOrdinals);
@@ -640,7 +640,7 @@ Item.prototype.getDisplayString = function(defaultString) {
  *
  */
 Item.prototype.getDisplayStringForEntry = function(entry) {
-  Util.assert(entry instanceof Entry);
+  orp.util.assert(entry instanceof Entry);
   return entry.getDisplayString(this);
 };
 
@@ -732,7 +732,7 @@ Item.prototype.toString = function() {
  * @return Boolean. True if this item has an attribute with the entry
  */
 Item.prototype.hasAttributeValue = function(attribute, value) {
-  Util.assert(attribute instanceof Item);
+  orp.util.assert(attribute instanceof Item);
   var entryList = this.getEntriesForAttribute(attribute);
 
   // look at all the entries this item's attribute is assigned to, 
@@ -755,7 +755,7 @@ Item.prototype.hasAttributeValue = function(attribute, value) {
  * @return   A boolean.  True if the item has been assigned to the category.
  */
 Item.prototype.isInCategory = function(category) {
-  Util.assert(category instanceof Item);
+  orp.util.assert(category instanceof Item);
 
   var categoryAttribute = this.getWorld().getAttributeCalledCategory();
   return this.hasAttributeValue(categoryAttribute, category);

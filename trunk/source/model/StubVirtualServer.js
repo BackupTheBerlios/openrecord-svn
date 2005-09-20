@@ -184,7 +184,7 @@ StubVirtualServer.prototype.getWorld = function() {
  * @return   A copy of the rawText string, with the special characters escaped. 
  */
 StubVirtualServer.prototype.encodeText = function(rawText) {
-  Util.assert(Util.isString(rawText));
+  orp.util.assert(orp.util.isString(rawText));
 
   var returnString = rawText;
   // Note: it's important that we do '&' first, otherwise we'll accidentally
@@ -218,7 +218,7 @@ StubVirtualServer.prototype.encodeText = function(rawText) {
  * @return   A copy of the encodedText string, with the escaped characters replaced by the original special characters. 
  */
 StubVirtualServer.prototype.decodeText = function(encodedText) {
-  Util.assert(Util.isString(encodedText));
+  orp.util.assert(orp.util.isString(encodedText));
 
   var returnString = encodedText;
   returnString = returnString.replace(new RegExp('&#13;','g'), "\r");
@@ -263,14 +263,14 @@ StubVirtualServer.prototype.beginTransaction = function() {
  */
 StubVirtualServer.prototype.endTransaction = function() {
   this._countOfNestedTransactions -= 1;
-  Util.assert(this._countOfNestedTransactions >= 0);
+  orp.util.assert(this._countOfNestedTransactions >= 0);
 
   if (this._countOfNestedTransactions === 0) {
     var listOfChangesMade = this._saveChangesToServer();
     this._currentTransaction = null;
     if (listOfChangesMade.length > 0) {
       // alert(listOfChangesMade.length + " changes made");
-      // Util.displayStatusBlurb(listOfChangesMade.length + " changes made");
+      // orp.util.displayStatusBlurb(listOfChangesMade.length + " changes made");
       this._world._notifyObserversOfChanges(listOfChangesMade);
     }
   }
@@ -476,7 +476,7 @@ StubVirtualServer.prototype.newUser = function(name, authentication, observer) {
   
   var md5Authentication = null;
   if (authentication) {
-    md5Authentication = Util.hex_md5(authentication);
+    md5Authentication = orp.util.hex_md5(authentication);
   }
   this._hashTableOfUserAuthenticationInfo[newUser.getUuid()] = md5Authentication;
 
@@ -533,10 +533,10 @@ StubVirtualServer.prototype.login = function(user, password) {
   // Only one user can be logged in at once.  We consider it an error
   // if you try to log in a new user before logging out the old one.
   if (this._currentUser) {
-    Util.assert(false);
+    orp.util.assert(false);
   }
   
-  var isKnownUser = Util.isObjectInSet(user, this._listOfUsers);
+  var isKnownUser = orp.util.isObjectInSet(user, this._listOfUsers);
   if (!isKnownUser) {
     return false;
   }
@@ -548,7 +548,7 @@ StubVirtualServer.prototype.login = function(user, password) {
   
   var md5hashOfPassword = null;
   if (password) {
-    md5hashOfPassword = Util.hex_md5(password);
+    md5hashOfPassword = orp.util.hex_md5(password);
   }
   var realAuthentication = this._getAuthenticationInfoForUser(user);
   var successfulAuthentication = ((realAuthentication == md5hashOfPassword) || !realAuthentication);
@@ -596,7 +596,7 @@ StubVirtualServer.prototype.logout = function() {
  * @return   The item identified by the given UUID.
  */
 StubVirtualServer.prototype.getItemFromUuid = function(uuid, observer) {
-  Util.assert(Util.isUuidValue(uuid));
+  orp.util.assert(orp.util.isUuidValue(uuid));
   
   var item = this._hashTableOfItemsKeyedByUuid[uuid];
   if (item && observer) {
@@ -656,7 +656,7 @@ StubVirtualServer.prototype.getResultItemsForQueryRunner = function(queryRunner)
       for (var innerKey in listOfEntriesForItemsInCategory) {
         var entry = listOfEntriesForItemsInCategory[innerKey];
         var itemInCategory = entry.getValue(category);
-        Util.addObjectToSet(itemInCategory, listOfQueryResultItems);
+        orp.util.addObjectToSet(itemInCategory, listOfQueryResultItems);
       }
     }
   } else {
@@ -684,8 +684,8 @@ StubVirtualServer.prototype.getResultItemsForQueryRunner = function(queryRunner)
  * @param    query    A query item. 
  */
 StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function(item, query) {
-  Util.assert(item instanceof Item);
-  Util.assert(query instanceof Item);
+  orp.util.assert(item instanceof Item);
+  orp.util.assert(query instanceof Item);
   
   var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
@@ -701,7 +701,7 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function(item
     matchingAttribute = attributeCalledCategory;
   }
   else {
-    Util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
+    orp.util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
     matchingAttribute = listOfMatchingAttrs[0].getValue();
   }
 
@@ -729,7 +729,7 @@ StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function(item
  * @return   A list of items.
  */
 StubVirtualServer.prototype.getItemsInCategory = function(category) {
-  Util.assert(category instanceof Item);
+  orp.util.assert(category instanceof Item);
 
   var attributeCalledItemsInCategory = this.getWorld().getAttributeCalledItemsInCategory();
   var listOfEntries = category.getEntriesForAttribute(attributeCalledItemsInCategory);
@@ -853,18 +853,18 @@ StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function(uuid) {
  * @scope    private instance method
  */
 StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = function(url) {
-  var fileContentString = Util.getStringContentsOfFileAtURL(url);
-  Util.assert(Util.isString(fileContentString));
+  var fileContentString = orp.util.getStringContentsOfFileAtURL(url);
+  orp.util.assert(orp.util.isString(fileContentString));
   fileContentString += " ] }";
 
-  Util.assert(Util.isString(fileContentString));
+  orp.util.assert(orp.util.isString(fileContentString));
   var dehydratedRecords = null;
   eval("dehydratedRecords = " + fileContentString + ";");
-  Util.assert(Util.isObject(dehydratedRecords));
+  orp.util.assert(orp.util.isObject(dehydratedRecords));
   var recordFormat = dehydratedRecords[StubVirtualServer.JSON_MEMBER_FORMAT];
-  Util.assert(recordFormat == StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS);
+  orp.util.assert(recordFormat == StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS);
   var listOfRecords = dehydratedRecords[StubVirtualServer.JSON_MEMBER_RECORDS];
-  Util.assert(Util.isArray(listOfRecords));
+  orp.util.assert(orp.util.isArray(listOfRecords));
   
   this._rehydrateRecords(listOfRecords);
 };
@@ -967,7 +967,7 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
         if (retainFlagString == "false") {
           retainFlag = false;
         }
-        Util.assert(retainFlag !== null);
+        orp.util.assert(retainFlag !== null);
         contentRecordUuid = dehydratedVote[StubVirtualServer.JSON_MEMBER_RECORD];
         contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
         var vote = new Vote(this.getWorld(), voteUuid, contentRecord, retainFlag);
@@ -993,7 +993,7 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
         }
  
         var dataTypeUuid = dehydratedEntry[StubVirtualServer.JSON_MEMBER_TYPE];
-        Util.assert(Util.isUuidValue(dataTypeUuid));
+        orp.util.assert(orp.util.isUuidValue(dataTypeUuid));
         var dataType = this.__getItemFromUuidOrBootstrapItem(dataTypeUuid);
         
         if (dataTypeUuid == World.UUID_FOR_TYPE_CONNECTION) {
@@ -1020,7 +1020,7 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
           if (attributeUuid) {
             attribute = this.__getItemFromUuidOrBootstrapItem(attributeUuid);
           } else {
-            Util.assert(false); // the attributeUuid should always be there
+            orp.util.assert(false); // the attributeUuid should always be there
           }
           var rawData = dehydratedEntry[StubVirtualServer.JSON_MEMBER_VALUE];
           var finalData = null;
@@ -1039,10 +1039,10 @@ StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords
               // if (!finalData.isValid()) {
               //   alert(rawData + " " + finalData);
               // }
-              Util.assert(finalData.isValid());
+              orp.util.assert(finalData.isValid());
               break;
             default:
-              Util.assert(false, 'Unknown data type while _rehydrating()');
+              orp.util.assert(false, 'Unknown data type while _rehydrating()');
           }
           entry._rehydrate(item, attribute, finalData, previousEntry, dataType);
         }

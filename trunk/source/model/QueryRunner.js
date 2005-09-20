@@ -67,7 +67,7 @@ QueryRunner.EXPLICIT_LIST_OF_ITEMS = QueryRunner;
  * @param    observer    Optional. An object or method to be registered as an observer of the query. 
  */
 function QueryRunner(world, querySpec, observer) {
-  Util.assert(world instanceof World);
+  orp.util.assert(world instanceof World);
   
   this._world = world;
   this._querySpec = querySpec;
@@ -151,7 +151,7 @@ QueryRunner.prototype.doesItemMatch = function(item) {
   var matchingAttribute = this.getMatchingAttribute();
   var listOfMatchingValues = this.getMatchingValues();
   if (matchingAttribute == QueryRunner.EXPLICIT_LIST_OF_ITEMS) {
-    return Util.isObjectInSet(item, listOfMatchingValues);
+    return orp.util.isObjectInSet(item, listOfMatchingValues);
   } else {
     for (var key in listOfMatchingValues) {
       var matchingValue = listOfMatchingValues[key];
@@ -187,7 +187,7 @@ QueryRunner.prototype.endOfLife = function() {
  * @param    listOfChangeRecords    A list of the records that impacted the querySpec. 
  */
 QueryRunner.prototype.observedItemHasChanged = function(querySpec, listOfChangeRecords) {
-  Util.assert(querySpec == this._querySpec);
+  orp.util.assert(querySpec == this._querySpec);
   this._readQuerySpec();
   this._runQuery();
 };
@@ -236,7 +236,7 @@ QueryRunner.prototype._readQuerySpec = function() {
       this._matchingAttribute = this.getWorld().getAttributeCalledCategory();
     }
     else {
-      Util.assert(listOfMatchingAttributeEntries.length == 1, 'There should only be one matching attribute on a Query Spec item.');
+      orp.util.assert(listOfMatchingAttributeEntries.length == 1, 'There should only be one matching attribute on a Query Spec item.');
       this._matchingAttribute = listOfMatchingAttributeEntries[0].getValue();
     }
 
@@ -255,7 +255,7 @@ QueryRunner.prototype._readQuerySpec = function() {
   
   // Handle the case where we have an ad-hoc query 
   // that just has a list of items.
-  if (Util.isArray(this._querySpec)) {
+  if (orp.util.isArray(this._querySpec)) {
     var querySpecArray = this._querySpec;
     this._matchingAttribute = QueryRunner.EXPLICIT_LIST_OF_ITEMS;
     this._listOfMatchingValues = querySpecArray;
@@ -265,7 +265,7 @@ QueryRunner.prototype._readQuerySpec = function() {
   
   // Handle the case where we have an ad-hoc query that
   // povides a matching attribute and matching values.
-  if (Util.isObject(this._querySpec)) {
+  if (orp.util.isObject(this._querySpec)) {
     var querySpecJson = this._querySpec;
     this._matchingAttribute = querySpecJson[QueryRunner.JSON_MEMBER_ATTRIBUTE];
     if (!this._matchingAttribute) {

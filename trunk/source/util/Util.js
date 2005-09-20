@@ -30,7 +30,8 @@
  liability, or tort (including negligence), arising in any way out of or in 
  connection with the use or distribution of the work.
 *****************************************************************************/
- 
+
+dojo.provide("orp.util.Util");
 // dojo.require("orp.util.Uuid");
 
 // -------------------------------------------------------------------
@@ -53,27 +54,29 @@
  * @scope    public instance constructor
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
+ /*
 function Util() {
   throw new Error("Util is a static class. You can't create instances of it.");
 }
-
+*/
 
 // -------------------------------------------------------------------
-// Util public class constants
+// Public class constants
 // -------------------------------------------------------------------
-Util.ASCII_VALUE_FOR_RETURN = 13;
-Util.ASCII_VALUE_FOR_TAB = 9;
-Util.ASCII_VALUE_FOR_ESCAPE = 27;
+orp.util.ASCII = {
+  RETURN: 13,
+  TAB: 9,
+  ESCAPE: 27,
+  LEFT_ARROW: 37,  // 123
+  UP_ARROW: 38,    // 126
+  RIGHT_ARROW: 39, // 124
+  DOWN_ARROW: 40,  // 125
+  BACKSPACE: 8,
+DELETE: 46 };
 // &#37; = %
 // &#38; = &
 // &#39; = '
 // &#40; = (
-Util.ASCII_VALUE_FOR_LEFT_ARROW = 37;  // 123
-Util.ASCII_VALUE_FOR_UP_ARROW = 38;    // 126
-Util.ASCII_VALUE_FOR_RIGHT_ARROW = 39; // 124
-Util.ASCII_VALUE_FOR_DOWN_ARROW = 40;  // 125
-Util.KEYCODE_FOR_BACKSPACE = 8;
-Util.KEYCODE_FOR_DELETE = 46;
 
 
 
@@ -87,8 +90,8 @@ Util.KEYCODE_FOR_DELETE = 46;
  * @scope    public class method
  * @param    errorReporterFunction    A function which takes a single string argument. 
  */
-Util.setErrorReportCallback = function(errorReporterFunction) {
-  Util.ourErrorReporter = errorReporterFunction;
+orp.util.setErrorReportCallback = function(errorReporterFunction) {
+  orp.util.ourErrorReporter = errorReporterFunction;
 };
 
 
@@ -98,10 +101,10 @@ Util.setErrorReportCallback = function(errorReporterFunction) {
  * @scope    public class method
  * @param    inText    The error message to be reported. 
  */
-Util.defaultErrorReporter = function(text) {
+orp.util.defaultErrorReporter = function(text) {
   window.alert(text);
 };
-Util.ourErrorReporter = Util.defaultErrorReporter;
+orp.util.ourErrorReporter = orp.util.defaultErrorReporter;
 
  
  /**
@@ -112,8 +115,8 @@ Util.ourErrorReporter = Util.defaultErrorReporter;
  * @param    url    A string that gives the name of the file where the error was found.
  * @param    line    The line number where the error was found.
  */
-Util.handleError = function(message, url, line) {
-  Util.ourErrorReporter("Util.handleError()\n" + message + "\nline: " + line + "\nURL: " + url);
+orp.util.handleError = function(message, url, line) {
+  orp.util.ourErrorReporter("orp.util.handleError()\n" + message + "\nline: " + line + "\nURL: " + url);
 };
 
 
@@ -129,8 +132,8 @@ Util.handleError = function(message, url, line) {
  * @param    booleanValue    A boolean value, which needs to be true for the assertion to succeed. 
  * @param    message    Optional. A string describing the assertion.
  */
-Util.assert = function(booleanValue, message) {
-  if (Util.isBoolean(booleanValue)) {
+orp.util.assert = function(booleanValue, message) {
+  if (orp.util.isBoolean(booleanValue)) {
     if (!booleanValue) {    
       var exception = new Error();  // create an exception, just to get a stack trace
       var stackString = exception.stack;
@@ -146,10 +149,10 @@ Util.assert = function(booleanValue, message) {
       }
       stackString = stackList.join("\n");
 
-      Util.ourErrorReporter("An assert statement failed with message: \n" + message + " \nThe method Util.assert() was called with a 'false' value.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
+      orp.util.ourErrorReporter("An assert statement failed with message: \n" + message + " \nThe method orp.util.assert() was called with a 'false' value.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
     }
   } else {
-    Util.ourErrorReporter("An assert statement went sour.\nThe method Util.assert() was passed a non-boolean argument.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
+    orp.util.ourErrorReporter("An assert statement went sour.\nThe method orp.util.assert() was passed a non-boolean argument.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
   }
 };
 
@@ -160,8 +163,8 @@ Util.assert = function(booleanValue, message) {
  * @scope    public class method
  * @param    statusReporterFunction    A function which takes a single string argument. 
  */
-Util.setStatusReporter = function(statusReporterFunction) {
-  Util.ourStatusReporter = statusReporterFunction;
+orp.util.setStatusReporter = function(statusReporterFunction) {
+  orp.util.ourStatusReporter = statusReporterFunction;
 };
 
 
@@ -171,8 +174,8 @@ Util.setStatusReporter = function(statusReporterFunction) {
  * @scope    public class method
  * @param    message    A string with a status message.
  */
-Util.displayStatusBlurb = function(message) {
-  Util.ourStatusReporter(message);
+orp.util.displayStatusBlurb = function(message) {
+  orp.util.ourStatusReporter(message);
 };
 
 
@@ -182,10 +185,10 @@ Util.displayStatusBlurb = function(message) {
  * @scope    public class method
  * @param    text    The status message to be reported. 
  */
-Util.defaultStatusReporter = function(text) {
+orp.util.defaultStatusReporter = function(text) {
   // do nothing!
 };
-Util.ourStatusReporter = Util.defaultStatusReporter;
+orp.util.ourStatusReporter = orp.util.defaultStatusReporter;
 
 
 // -------------------------------------------------------------------
@@ -199,7 +202,7 @@ Util.ourStatusReporter = Util.defaultStatusReporter;
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a function.
  */
-Util.isFunction = function(value) {
+orp.util.isFunction = function(value) {
   return ((typeof value) == "function");
 };
 
@@ -211,7 +214,7 @@ Util.isFunction = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a string.
  */
-Util.isString = function(value) {
+orp.util.isString = function(value) {
   return ((typeof value) == "string");
 };
 
@@ -223,7 +226,7 @@ Util.isString = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a number.
  */
-Util.isNumber = function(value) {
+orp.util.isNumber = function(value) {
   return (((typeof value) == "number") && isFinite(value));
 };
 
@@ -236,12 +239,12 @@ Util.isNumber = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a number or a string that represents a number.
  */
-Util.isNumeric = function(value) {
-  var isNumber = Util.isNumber(value);
+orp.util.isNumeric = function(value) {
+  var isNumber = orp.util.isNumber(value);
   if (isNumber) {
     return true;
   }
-  var isNumeric = Util.isString(value) && Util.isNumber(parseInt(value));
+  var isNumeric = orp.util.isString(value) && orp.util.isNumber(parseInt(value));
   return isNumeric;
 };
 
@@ -253,7 +256,7 @@ Util.isNumeric = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a boolean.
  */
-Util.isBoolean = function(value) {
+orp.util.isBoolean = function(value) {
   return ((typeof value) == "boolean");
 };
 
@@ -265,7 +268,7 @@ Util.isBoolean = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is an object.
  */
-Util.isObject = function(value) {
+orp.util.isObject = function(value) {
   return (value && ((typeof value) == "object"));
 };
 
@@ -277,7 +280,7 @@ Util.isObject = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a Date.
  */
-Util.isDate = function(value) {
+orp.util.isDate = function(value) {
   return (value instanceof Date);
 };
 
@@ -289,7 +292,7 @@ Util.isDate = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if value is a UUID object.
  */
-Util.isUuid = function(value) {
+orp.util.isUuid = function(value) {
   // return (value instanceof orp.util.Uuid);
   return true; // PENDING: FIXME.
 };
@@ -304,8 +307,8 @@ Util.isUuid = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if value is a UUID.
  */
-Util.isUuidValue = function(value) {
-  if (Util.isUuid(value)) {
+orp.util.isUuidValue = function(value) {
+  if (orp.util.isUuid(value)) {
     return true;
   }
   if ((typeof value) == "string") {
@@ -325,7 +328,7 @@ Util.isUuidValue = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is an array.
  */
-Util.isArray = function(value) {
+orp.util.isArray = function(value) {
   if (!value) {
     return false;
   }
@@ -340,12 +343,12 @@ Util.isArray = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a hash table.
  */
-Util.isHashTable = function(value) {
+orp.util.isHashTable = function(value) {
   return (value && ((typeof value) == "object"));  // PENDING: we should be more restrictive!
 };
 
 
-Util.isEmpty = function(object) {
+orp.util.isEmpty = function(object) {
   for (var key in object) {
     return false;
   }
@@ -353,27 +356,27 @@ Util.isEmpty = function(object) {
 };
 
 
-Util.hasProperty = function(object, property) {
+orp.util.hasProperty = function(object, property) {
   return (object[property] !== undefined);
 };
 
-Util.hasProperties = function(object, properties) {
+orp.util.hasProperties = function(object, properties) {
   for (var i in properties) {
     if (object[properties[i]] === undefined) { return false; }
   }
   return true;
 };
 
-Util.hasNoUnexpectedProperties = function(object, expectedProperties) {
+orp.util.hasNoUnexpectedProperties = function(object, expectedProperties) {
   for (var key in object) {
-    if (!Util.isObjectInSet(key, expectedProperties)) { return false; }
+    if (!orp.util.isObjectInSet(key, expectedProperties)) { return false; }
   }
   return true;
 };
   
-Util.hasExactlyTheseProperties = function(object, properties) {
-  if (!Util.hasProperties(object, properties)) { return false; }
-  if (!Util.hasNoUnexpectedProperties(object, properties)) { return false; }
+orp.util.hasExactlyTheseProperties = function(object, properties) {
+  if (!orp.util.hasProperties(object, properties)) { return false; }
+  if (!orp.util.hasNoUnexpectedProperties(object, properties)) { return false; }
   return true;
 };
 
@@ -390,7 +393,7 @@ Util.hasExactlyTheseProperties = function(object, properties) {
  * @param    value    The array element to find the position of. 
  * @return   Returns a number between 0 and array.length, or -1 if the element was not in the array.
  */
-Util.getArrayIndex = function(array, value) {
+orp.util.getArrayIndex = function(array, value) {
   for (var i=0; i<array.length; ++i) {
     if (array[i] == value) {
       return i;
@@ -412,8 +415,8 @@ Util.getArrayIndex = function(array, value) {
  * @param    set    The Array to look for the object in. 
  * @return   Returns true if the object was found in the set.
  */
-Util.isObjectInSet = function(object, set) {
-  Util.assert(Util.isArray(set));
+orp.util.isObjectInSet = function(object, set) {
+  orp.util.assert(orp.util.isArray(set));
   
   for (var key in set) {
     if (set[key] == object) {
@@ -432,13 +435,13 @@ Util.isObjectInSet = function(object, set) {
  * @param    set    The Array to look for the objects in. 
  * @return   Returns true if each of the objects was found in the set.
  */
-Util.areObjectsInSet = function(array, set) {
-  Util.assert(Util.isArray(array));
-  Util.assert(Util.isArray(set));
+orp.util.areObjectsInSet = function(array, set) {
+  orp.util.assert(orp.util.isArray(array));
+  orp.util.assert(orp.util.isArray(set));
   
   for (var key in array) {
     var object = array[key];
-    var objectIsInSet = Util.isObjectInSet(object, set);
+    var objectIsInSet = orp.util.isObjectInSet(object, set);
     if (!objectIsInSet) {
       return false;
     }
@@ -455,8 +458,8 @@ Util.areObjectsInSet = function(array, set) {
  * @param    set    The Array that the object should be removed from. 
  * @return   Returns true if the object was removed from the array.
  */
-Util.removeObjectFromSet = function(object, set) {
-  Util.assert(Util.isArray(set));
+orp.util.removeObjectFromSet = function(object, set) {
+  orp.util.assert(orp.util.isArray(set));
   
   if (!object) {
     return false;
@@ -480,13 +483,13 @@ Util.removeObjectFromSet = function(object, set) {
  * @param    set    The Array that the object should be added to. 
  * @return   Returns true if the object was added to the array.
  */
-Util.addObjectToSet = function(object, set) {
-  Util.assert(Util.isArray(set));
+orp.util.addObjectToSet = function(object, set) {
+  orp.util.assert(orp.util.isArray(set));
 
   if (!object) {
     return false;
   }
-  if (Util.isObjectInSet(object, set)) {
+  if (orp.util.isObjectInSet(object, set)) {
     return false;
   }
   set.push(object);
@@ -501,8 +504,8 @@ Util.addObjectToSet = function(object, set) {
  * @param    hashTable   A hashTable containing values.
  * @return   The number of values in inHashTable.
  */
-Util.lengthOfHashTable = function(hashTable) {
-  Util.assert(Util.isHashTable(hashTable));
+orp.util.lengthOfHashTable = function(hashTable) {
+  orp.util.assert(orp.util.isHashTable(hashTable));
   var count = 0;
   for (var key in hashTable) {
     count += 1;
@@ -519,8 +522,8 @@ Util.lengthOfHashTable = function(hashTable) {
  * @param    hashTable   A hashTable containing values.
  * @return   An array containing the values that are in inHashTable.
  */
-Util.hashTableValues = function(hashTable) {
-  Util.assert(Util.isHashTable(hashTable));
+orp.util.hashTableValues = function(hashTable) {
+  orp.util.assert(orp.util.isHashTable(hashTable));
   var returnArray = [];
   for (var key in hashTable) {
     returnArray.push(hashTable[key]);
@@ -528,26 +531,16 @@ Util.hashTableValues = function(hashTable) {
   return returnArray;
 };
 
-Util.trimString = function(str) {
-   return str.replace(/^\s*|\s*$/g,"");
+orp.util.trimString = function(str) {
+  return str.replace(/^\s*|\s*$/g,"");
 };
-
-
-// -------------------------------------------------------------------
-// Methods that operate on Dates
-// -------------------------------------------------------------------
-
-// Util.getStringMonthDayYear = function(date) {
-//   var returnString = Util.ABBREV_MONTHS_ARRAY[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
-//   return returnString;
-// };
 
 
 // -------------------------------------------------------------------
 // Methods for doing encryption
 // -------------------------------------------------------------------
 
-Util.hex_md5 = function(string) {
+orp.util.hex_md5 = function(string) {
   // Calls the hex_md5() function in .../trunk/third_party/md5/md5.js
   return hex_md5(string);
 };
@@ -568,7 +561,7 @@ Util.hex_md5 = function(string) {
  * @param    eventObject    An event object. 
  * @return   An HTML element.
  */
-Util.getTargetFromEvent = function(eventObject) {
+orp.util.getTargetFromEvent = function(eventObject) {
   var target = null;
   if (eventObject.target) {
     target = eventObject.target;
@@ -593,7 +586,7 @@ Util.getTargetFromEvent = function(eventObject) {
  * @param callback    The function to call when the event happens.
  * @param captures    True if the event should be captured by this function.
  */
-Util.addEventListener = function(element, eventType, callback, captures) {
+orp.util.addEventListener = function(element, eventType, callback, captures) {
   if (element.addEventListener) {
     // for DOM Level 2 browsers, like Firefox
     element.addEventListener(eventType, callback, captures);
@@ -641,7 +634,7 @@ Function.prototype.bindAsEventListener = function(object) {
  * @param    url    A string with the URL of a file containing JavaScript code. 
  * @return   A string containing the contents of the file.
  */
-Util.getStringContentsOfFileAtURL = function(url) {
+orp.util.getStringContentsOfFileAtURL = function(url) {
   var anXMLHttpRequestObject = new window.XMLHttpRequest();
   anXMLHttpRequestObject.open("GET", url, false);
   anXMLHttpRequestObject.send(null);
@@ -661,7 +654,7 @@ Util.getStringContentsOfFileAtURL = function(url) {
  * 
  * @scope    public class method
  */
-Util.setTargetsForExternalLinks = function() {
+orp.util.setTargetsForExternalLinks = function() {
   if (!window.document.getElementsByTagName) {
     return;
   }
@@ -682,7 +675,7 @@ Util.setTargetsForExternalLinks = function() {
  * @scope    public class method
  * @return   An HTML "img" element.
  */
-Util.createImageElement = function(imageFileName) {
+orp.util.createImageElement = function(imageFileName) {
   var imagesDirectory = "images/"; // PENDING: this shouldn't be hard-coded in Util
   var imageElement = document.createElement("img");
   imageElement.src = imagesDirectory + imageFileName;
@@ -698,7 +691,7 @@ Util.createImageElement = function(imageFileName) {
  * @param    htmlElement    The HTML element that we want the left offest of. 
  * @return   An integer value equal to the number of pixels from the left of the page to htmlElement.
  */
-Util.getOffsetLeftFromElement = function(htmlElement) {
+orp.util.getOffsetLeftFromElement = function(htmlElement) {
   var cumulativeOffset = 0;
   if (htmlElement.offsetParent) {
     while (htmlElement.offsetParent) {
@@ -722,7 +715,7 @@ Util.getOffsetLeftFromElement = function(htmlElement) {
  * @param    htmlElement    The HTML element that we want the top offest of. 
  * @return   An integer value equal to the number of pixels from the top of the page to htmlElement.
  */
-Util.getOffsetTopFromElement = function(htmlElement) {
+orp.util.getOffsetTopFromElement = function(htmlElement) {
   var cumulativeOffset = 0;
   if (htmlElement.offsetParent) {
     while (htmlElement.offsetParent) {
@@ -744,7 +737,7 @@ Util.getOffsetTopFromElement = function(htmlElement) {
  * @param htmlElement The HTML element to check on
  * @param aClass The String representing class name to check on
  */
-Util.css_hasClass = function(htmlElement, aClass) {
+orp.util.css_hasClass = function(htmlElement, aClass) {
   var matchingRegex = new RegExp("(^|\\s)" + aClass + "($|\\s)");
   return htmlElement.className.match(matchingRegex);
 };
@@ -754,8 +747,8 @@ Util.css_hasClass = function(htmlElement, aClass) {
  * @param htmlElement The HTML element whose class is to be added
  * @param newClass The String representing class name to add
  */
-Util.css_addClass = function(htmlElement, newClass) {
-  if (!Util.css_hasClass(htmlElement,newClass)) {
+orp.util.css_addClass = function(htmlElement, newClass) {
+  if (!orp.util.css_hasClass(htmlElement,newClass)) {
     htmlElement.className += ' ' + newClass;
     return true;
   }
@@ -767,15 +760,15 @@ Util.css_addClass = function(htmlElement, newClass) {
  * @param htmlElement The HTML element whose class is to be removed
  * @param oldClass The String representing class name to remove
  */
-Util.css_removeClass = function(htmlElement, oldClass) {
-  if (Util.css_hasClass(htmlElement,oldClass)) {
+orp.util.css_removeClass = function(htmlElement, oldClass) {
+  if (orp.util.css_hasClass(htmlElement,oldClass)) {
     var matchingRegex = new RegExp("(^|\\s)" + oldClass); //BUG need to avoid replacing classNames that are a superset of oldClass
     htmlElement.className = htmlElement.className.replace(matchingRegex,'');
   }
 };
 
 // String Utilities
-Util.getStringFromKeyEvent = function(eventObj) {
+orp.util.getStringFromKeyEvent = function(eventObj) {
   return String.fromCharCode(eventObj.charCode); //Mozilla only call
 };
 

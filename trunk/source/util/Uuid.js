@@ -36,6 +36,7 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.util.Uuid");
 dojo.require("dojo.lang.*");
+dojo.require("orp.util.Util");
 
 
 // -------------------------------------------------------------------
@@ -67,9 +68,9 @@ orp.util.Uuid = function(uuidString) {
         this._uuidString = namedParameters["uuidString"];
         
         // Check for typos in parameter names
-        Util.assert(Util.hasNoUnexpectedProperties(namedParameters, ["uuidString"]));
+        orp.util.assert(orp.util.hasNoUnexpectedProperties(namedParameters, ["uuidString"]));
       } else {
-        Util.assert(false);
+        orp.util.assert(false);
       }
     }
   }
@@ -115,12 +116,12 @@ orp.util.Uuid.newUuid = function(namedParameters) {
   if (dojo.lang.isString(namedParameters)) {
     uuidString = namedParameters;
   } else {
-    Util.assert(dojo.lang.isObject(namedParameters));
+    orp.util.assert(dojo.lang.isObject(namedParameters));
     uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
-    Util.assert(dojo.lang.isString(uuidString));
+    orp.util.assert(dojo.lang.isString(uuidString));
     
     // Check for typos in parameter names
-    Util.assert(Util.hasNoUnexpectedProperties(namedParameters, [orp.util.Uuid.NamedParameters.uuidString]));
+    orp.util.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [orp.util.Uuid.NamedParameters.uuidString]));
   }
 
   var uuid = new orp.util.Uuid(uuidString);
@@ -164,7 +165,7 @@ orp.util.Uuid.prototype.toString = function() {
  * <pre>
  *   var uuid = new orp.util.Uuid("3B12F1DF-5232-4804-897E-917BF397618A");
  *   var version = uuid.getVersion();
- *   Util.assert(version == orp.util.Uuid.Version.TIME_BASED);
+ *   orp.util.assert(version == orp.util.Uuid.Version.TIME_BASED);
  * </pre>
  *
  * @scope    public instance method
@@ -187,7 +188,7 @@ orp.util.Uuid.prototype.getVersion = function() {
  * <pre>
  *   var uuid = new orp.util.Uuid("3B12F1DF-5232-4804-897E-917BF397618A");
  *   var variant = uuid.getVariant();
- *   Util.assert(variant == orp.util.Uuid.Variant.DCE);
+ *   orp.util.assert(variant == orp.util.Uuid.Variant.DCE);
  * </pre>
  *
  * @scope    public instance method
@@ -200,7 +201,7 @@ orp.util.Uuid.prototype.getVariant = function() {
   //         (variant "10__" == DCE)
   var variantCharacter = this._uuidString.charAt(19);
   var variantNumber = parseInt(variantCharacter, orp.util.Uuid.HEX_RADIX);
-  Util.assert((variantNumber >= 0) && (variantNumber <= 16));
+  orp.util.assert((variantNumber >= 0) && (variantNumber <= 16));
   
   if (!orp.util.Uuid._ourVariantLookupTable) {
     var Variant = orp.util.Uuid.Variant;

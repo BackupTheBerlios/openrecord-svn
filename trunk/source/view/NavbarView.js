@@ -117,7 +117,7 @@ NavbarView.prototype._mouseDownOnMenuItem = function(event, liElement) {
  * @param    ulElement    The "ul" HTMLElement for the menu of menu items. 
  */
 NavbarView.prototype._sortOrderUpdate = function(ulElement) {
-  Util.assert(this._liElementBeingTouched !== null);
+  orp.util.assert(this._liElementBeingTouched !== null);
   
   var liElementPrefixString = NavbarView.ELEMENT_ID_MENU + '_';
   var menuItemElementId = this._liElementBeingTouched.id;
@@ -126,8 +126,8 @@ NavbarView.prototype._sortOrderUpdate = function(ulElement) {
   
   var listOfPages = this._getNewOrderingForPageList(ulElement);
   
-  var arrayIndex = Util.getArrayIndex(listOfPages, pageToReorder);
-  Util.assert(arrayIndex != -1);
+  var arrayIndex = orp.util.getArrayIndex(listOfPages, pageToReorder);
+  orp.util.assert(arrayIndex != -1);
   var pageAbove = (arrayIndex === 0) ? null : listOfPages[arrayIndex-1];
   var pageBelow = (arrayIndex > listOfPages.length) ? null : listOfPages[arrayIndex+1];
   pageToReorder.reorderBetween(pageAbove, pageBelow);
@@ -195,7 +195,7 @@ NavbarView.prototype._rebuildView = function() {
     // the id for the individual menu item to the right of the underscore.
     var menuItemId = NavbarView.ELEMENT_ID_MENU + '_' + page.getUuidString();
     var liElement = View.appendNewElement(ulElement, "li", NavbarView.CSS_CLASS_MENU_ITEM, {id: menuItemId});
-    if (page == this.getRootView().getCurrentPage()) {Util.css_addClass(liElement,NavbarView.CSS_CLASS_SELECTED);}
+    if (page == this.getRootView().getCurrentPage()) {orp.util.css_addClass(liElement,NavbarView.CSS_CLASS_SELECTED);}
     var anchorElement = View.appendNewElement(liElement, "a", null, {href: menuUrl}, menuText);
     Event.observe(anchorElement, "click", RootView.clickOnLocalLink.bindAsEventListener());
     Event.observe(liElement, "mousedown", this._mouseDownOnMenuItem.bindAsEventListener(this, liElement));

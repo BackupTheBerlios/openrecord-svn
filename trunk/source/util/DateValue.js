@@ -34,6 +34,7 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.util.DateValue");
 dojo.require("dojo.lang.*");
+dojo.require("orp.util.Util");
 
 
 // -------------------------------------------------------------------
@@ -78,7 +79,7 @@ orp.util.DateValue = function(year, month, day, hours, minutes, seconds, ms) {
   // Create a conventional JavaScript Date object.
   switch (argumentType) {
     case STRING:
-      var evalStr = Util.trimString(year).toLowerCase();
+      var evalStr = orp.util.trimString(year).toLowerCase();
       if (evalStr == 'today') {
         date = new Date(Math.floor((Date.now()-DateValue.TIMEZONE_OFFSET)/DateValue.MILLISECS_IN_A_DAY) *
           DateValue.MILLISECS_IN_A_DAY + DateValue.TIMEZONE_OFFSET);
@@ -172,9 +173,9 @@ orp.util.DateValue = function(year, month, day, hours, minutes, seconds, ms) {
             var matchArray = year.match(regExpr);
             var monthIndex;
             if (matchArray) {
-              monthIndex = Util.getArrayIndex(DateValue.ARRAY_OF_MONTH_SHORT_NAMES,matchArray[1]);
+              monthIndex = orp.util.getArrayIndex(DateValue.ARRAY_OF_MONTH_SHORT_NAMES,matchArray[1]);
               if (monthIndex == -1) {
-                monthIndex = Util.getArrayIndex(DateValue.ARRAY_OF_MONTH_NAMES,matchArray[1]);
+                monthIndex = orp.util.getArrayIndex(DateValue.ARRAY_OF_MONTH_NAMES,matchArray[1]);
               }
             }
             else {

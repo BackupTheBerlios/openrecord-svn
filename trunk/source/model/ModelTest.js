@@ -199,11 +199,11 @@ function testAccessorsForAxiomaticItems() {
   for (key in listOfAttributes) {
     item = listOfAttributes[key];
     listOfAssignedNames = item.getNameEntries();
-    assertTrue('Every axiomatic attribute has an array of names', Util.isArray(listOfAssignedNames));
+    assertTrue('Every axiomatic attribute has an array of names', orp.util.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic attribute has one name assigned', listOfAssignedNames.length == 1);
     nameEntry = listOfAssignedNames[0];
     assertTrue('Every axiomatic attribute has a name which is an entry', (nameEntry instanceof Entry));
-    assertTrue('Every entry can be displayed as a string', Util.isString(nameEntry.getDisplayString()));
+    assertTrue('Every entry can be displayed as a string', orp.util.isString(nameEntry.getDisplayString()));
   }
   
   var listOfCategories = [];
@@ -212,11 +212,11 @@ function testAccessorsForAxiomaticItems() {
   for (key in listOfCategories) {
     item = listOfCategories[key];
     listOfAssignedNames = item.getNameEntries();
-    assertTrue('Every axiomatic category has an array of names', Util.isArray(listOfAssignedNames));
+    assertTrue('Every axiomatic category has an array of names', orp.util.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic category has one name assigned', listOfAssignedNames.length == 1);
     nameEntry = listOfAssignedNames[0];
     assertTrue('Every axiomatic category has a name which is entry', (nameEntry instanceof Entry));
-    assertTrue('Every entry can be displayed as a string', Util.isString(nameEntry.getDisplayString()));
+    assertTrue('Every entry can be displayed as a string', orp.util.isString(nameEntry.getDisplayString()));
   }
 }
 
@@ -251,12 +251,12 @@ function noyet_testAdditionsAndRetrievals() {
   assertTrue('"R2D2" has not been replaced', !r2d2.hasBeenReplaced());
 
   listOfCharacters = starWars.getEntriesForAttribute(characterAttribute);
-  hasAll = Util.areObjectsInSet([luck, c3po], listOfCharacters);
+  hasAll = orp.util.areObjectsInSet([luck, c3po], listOfCharacters);
   assertTrue('"Star Wars" has characters: luck, c3po', hasAll);
   assertTrue('Exactly 2 characters in Star Wars', listOfCharacters.length == 2);
 
   listOfEntries = starWars.getEntries();
-  hasAll = Util.areObjectsInSet([luck, c3po, r2d2], listOfEntries);
+  hasAll = orp.util.areObjectsInSet([luck, c3po, r2d2], listOfEntries);
   assertTrue('"Star Wars" has entries: luck, c3po, r2d2', hasAll);  
   
   var ordinalA = starWars.getOrdinalNumberAtCreation();
@@ -273,7 +273,7 @@ function noyet_testAdditionsAndRetrievals() {
   assertTrue('"Star Wars" was made by Jane', starWarsUserstamp == userJane);    
 
   listOfAttributes = starWars.getAttributes();
-  hasAll = Util.areObjectsInSet([nameAttribute, characterAttribute], listOfAttributes);
+  hasAll = orp.util.areObjectsInSet([nameAttribute, characterAttribute], listOfAttributes);
   assertTrue('"Star Wars" has both expected attributes', hasAll);
   
   worldRetrievalFilter = world.getRetrievalFilter();
@@ -286,11 +286,11 @@ function noyet_testAdditionsAndRetrievals() {
   assertTrue('"Luck" is a entry in "Star Wars"', luck.getItem() == starWars);
 
   listOfEntries = starWars.getEntries();
-  hasAll = Util.areObjectsInSet([luke, c3po, r2d2], listOfEntries);
+  hasAll = orp.util.areObjectsInSet([luke, c3po, r2d2], listOfEntries);
   assertTrue('"Star Wars" has entries: luke, c3po, r2d2', hasAll);  
 
   listOfCharacters = starWars.getEntriesForAttribute(characterAttribute);
-  hasAll = Util.areObjectsInSet([luke, c3po], listOfCharacters);
+  hasAll = orp.util.areObjectsInSet([luke, c3po], listOfCharacters);
   assertTrue('"Star Wars" has characters: luke, c3po', hasAll);
   assertTrue('Exactly 2 characters in the star wars', listOfCharacters.length == 2);
 
@@ -309,8 +309,8 @@ function noyet_testAdditionsAndRetrievals() {
   assertTrue("Can't replace a value with an identical value", failure === null);
 
   listOfCharacters = starWars.getEntriesForAttribute(characterAttribute);
-  var hasR2d2 = Util.isObjectInSet(r2d2, listOfCharacters);
-  hasAll = Util.areObjectsInSet([luke, c3po, r2d2], listOfCharacters);
+  var hasR2d2 = orp.util.isObjectInSet(r2d2, listOfCharacters);
+  hasAll = orp.util.areObjectsInSet([luke, c3po, r2d2], listOfCharacters);
   assertTrue('Chris sees R2D2 as a character', hasR2d2);
   assertTrue('Chris sees characters: luke, c3po, r2d2', hasAll);
   assertTrue('Chris sees 3 characters in "Star Wars"', listOfCharacters.length == 3);
@@ -323,8 +323,8 @@ function noyet_testAdditionsAndRetrievals() {
   assertTrue('getDisplayName() returns the first name', (starWars.getDisplayName() == "Star Wars"));
   var listOfNames = theHobbit.getNameEntries();
   assertTrue('getContentData() returns a string', listOfNames[0].getValue() == "The Hobbit");
-  hasAll = Util.areObjectsInSet(listOfNames, listOfEntries);
-  hasAll = hasAll && Util.areObjectsInSet(listOfEntries, listOfNames);
+  hasAll = orp.util.areObjectsInSet(listOfNames, listOfEntries);
+  hasAll = hasAll && orp.util.areObjectsInSet(listOfEntries, listOfNames);
   assertTrue('getName() matches getEntriesForAttribute(attributeCalledName)', hasAll);
   
   world.logout();
@@ -363,7 +363,7 @@ function testCategories() {
   assertTrue('"The Hobbit" is in the category "Book"', isInCategory);
  
   var allBooks = world.getItemsInCategory(categoryCalledBook);
-  var hasAll = Util.areObjectsInSet([theHobbit, theWisdomOfCrowds, theTransparentSociety], allBooks);
+  var hasAll = orp.util.areObjectsInSet([theHobbit, theWisdomOfCrowds, theTransparentSociety], allBooks);
   assertTrue('All three books are in the category "Book"', hasAll);
   
   world.logout();
@@ -564,7 +564,7 @@ function testQueries() {
   var queryRunnerForFoods = world.newQueryRunner(queryForFoods);
   var listOfFoods = queryRunnerForFoods.getResultItems();
   
-  hasAll = Util.areObjectsInSet([apple, brownie, cupcake], listOfFoods);
+  hasAll = orp.util.areObjectsInSet([apple, brownie, cupcake], listOfFoods);
   assertTrue('Food query returns 3 foods', listOfFoods.length == 3);
   assertTrue('Food query returns all 3 foods', hasAll);
 
@@ -572,7 +572,7 @@ function testQueries() {
   assertTrue('Tokyo is now a food', tokyo.isInCategory(categoryCalledFood));
 
   listOfFoods = queryRunnerForFoods.getResultItems();
-  hasAll = Util.areObjectsInSet([apple, brownie, cupcake, tokyo], listOfFoods);
+  hasAll = orp.util.areObjectsInSet([apple, brownie, cupcake, tokyo], listOfFoods);
   assertTrue('Food query returns 4 foods', listOfFoods.length == 4);
   assertTrue('Food query returns all 4 foods', hasAll);
 
@@ -586,24 +586,24 @@ function testQueries() {
   var listOfCountries = queryRunnerForAsia.getResultItems();
   
   assertTrue('Asia query returns 2 countries', listOfCountries.length == 2);
-  hasAll = Util.areObjectsInSet([tokyo,beijing], listOfCountries);
+  hasAll = orp.util.areObjectsInSet([tokyo,beijing], listOfCountries);
   assertTrue('Asia query returns all 2 countries', hasAll);
   
   var northAmericaQuery = world.newQuery(attributeCalledContinent, "North America");
   var queryRunnerForNorthAmerica = world.newQueryRunner(northAmericaQuery);
   listOfCountries = queryRunnerForNorthAmerica.getResultItems();
   assertTrue('North America query returned only Seattle',
-  listOfCountries.length == 1 && Util.isObjectInSet(seattle, listOfCountries));
+  listOfCountries.length == 1 && orp.util.isObjectInSet(seattle, listOfCountries));
     
   seattle.addEntry({attribute:attributeCalledContinent, value:"Asia"});
   listOfCountries = queryRunnerForAsia.getResultItems();
   assertTrue('Asia query returns 3 countries', listOfCountries.length == 3);
-  hasAll = Util.areObjectsInSet([tokyo,beijing,seattle], listOfCountries);
+  hasAll = orp.util.areObjectsInSet([tokyo,beijing,seattle], listOfCountries);
   assertTrue('Asia query returns all 3 countries', hasAll);
   
   world.setItemToBeIncludedInQueryResultList(beijing, northAmericaQuery);
   listOfCountries = queryRunnerForNorthAmerica.getResultItems();
-  assertTrue('Beijing is now in North America',Util.isObjectInSet(beijing, listOfCountries));
+  assertTrue('Beijing is now in North America',orp.util.isObjectInSet(beijing, listOfCountries));
   assertTrue('North America query returns 2 countries', listOfCountries.length == 2);
   world.setItemToBeIncludedInQueryResultList(seattle, northAmericaQuery);
   listOfCountries = queryRunnerForNorthAmerica.getResultItems();

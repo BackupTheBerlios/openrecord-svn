@@ -212,7 +212,7 @@ LoginView.prototype._signinPasswordFocus = function(eventObject) {
  */
 LoginView.prototype._signinPasswordKeyPress = function(eventObject) {
   // see if <return> is pressed, if so, similate clicking on sign in button
-  if (eventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
+  if (eventObject.keyCode == orp.util.ASCII.RETURN) {
     this._clickOnSignInButton(eventObject);
   }
 };
@@ -225,7 +225,7 @@ LoginView.prototype._signinPasswordKeyPress = function(eventObject) {
  */
 LoginView.prototype._createAccountPasswordKeyPress = function(eventObject) {
   // see if <return> is pressed, if so, similate clicking on sign in button
-  if (eventObject.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
+  if (eventObject.keyCode == orp.util.ASCII.RETURN) {
     this._clickOnNewAcctButton(eventObject);
   }
 };
@@ -479,8 +479,8 @@ UserSuggestionBox.prototype._redisplayUserSuggestionBox = function() {
     this._userSuggestionBoxDivElement.appendChild(table);
     
     // set-up the suggestion box to open just below the input field it comes from
-    var suggestionBoxTop = Util.getOffsetTopFromElement(this._inputField) + this._inputField.offsetHeight;
-    var suggestionBoxLeft = Util.getOffsetLeftFromElement(this._inputField);
+    var suggestionBoxTop = orp.util.getOffsetTopFromElement(this._inputField) + this._inputField.offsetHeight;
+    var suggestionBoxLeft = orp.util.getOffsetLeftFromElement(this._inputField);
     this._userSuggestionBoxDivElement.style.top = suggestionBoxTop + "px"; 
     this._userSuggestionBoxDivElement.style.left = suggestionBoxLeft + "px";
     // alert(this._inputField.offsetWidth);

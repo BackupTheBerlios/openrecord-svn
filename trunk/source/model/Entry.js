@@ -99,19 +99,19 @@ Entry.prototype._initialize = function(item, previousEntry, attribute, value, ty
   if (type) {
     this._type = type;
   } else {
-    if (Util.isNumber(value)) {
+    if (orp.util.isNumber(value)) {
       this._type = this.getWorld().getTypeCalledNumber();
     }
-    else if (Util.isString(value)) {
+    else if (orp.util.isString(value)) {
       this._type = this.getWorld().getTypeCalledText();
     }
-    else if (Util.isDate(value)) {
+    else if (orp.util.isDate(value)) {
       this._type = this.getWorld().getTypeCalledDate();
     }
     else if (value instanceof Item) {
       this._type = this.getWorld().getTypeCalledItem();
     }
-    else {Util.assert(false, "unknown data type:" + (typeof value) + ' value: ' + value);}
+    else {orp.util.assert(false, "unknown data type:" + (typeof value) + ' value: ' + value);}
   }
   this._value = value;
 };
@@ -181,10 +181,10 @@ Entry.prototype._rehydrate = function(item, attribute, value, previousEntry, typ
   if (this._item instanceof Item) {
     this._item._addRehydratedEntry(this, this._attribute);
   } else {
-    Util.assert(Util.isArray(this._item));
-    Util.assert(this._item.length == 2);
-    Util.assert(Util.isArray(this._attribute));
-    Util.assert(this._attribute.length == 2);
+    orp.util.assert(orp.util.isArray(this._item));
+    orp.util.assert(this._item.length == 2);
+    orp.util.assert(orp.util.isArray(this._attribute));
+    orp.util.assert(this._attribute.length == 2);
     
     var firstItem = this._item[0];
     var secondItem = this._item[1];
@@ -255,7 +255,7 @@ Entry.prototype.getAttributeForItem = function(item) {
   if (this._item == item) {
     return this._attribute;
   }
-  if (Util.isArray(this._item)) {
+  if (orp.util.isArray(this._item)) {
     if (this._item[0] == item) {
       return this._attribute[0];
     }
@@ -276,13 +276,13 @@ Entry.prototype.getAttributeForItem = function(item) {
  * @return   The item that is connected to the given item.
  */
 Entry.prototype.getConnectedItem = function(item) {
-  Util.assert(item instanceof Item);
+  orp.util.assert(item instanceof Item);
   if (this._item == item) {
     if (this._type == this.getWorld().getTypeCalledItem()) {
       return this._value;
     }
   }
-  if (Util.isArray(this._item)) {
+  if (orp.util.isArray(this._item)) {
     if (this._item[0] == item) {
       return this._item[1];
     }
@@ -302,14 +302,14 @@ Entry.prototype.getConnectedItem = function(item) {
  * @return   The value this entry was initialized to hold.
  */
 Entry.prototype.getValue = function(item) {
-  if (Util.isArray(this._item)) {
+  if (orp.util.isArray(this._item)) {
     if (this._item[0] == item) {
       return this._item[1];
     }
     if (this._item[1] == item) {
       return this._item[0];
     }
-    Util.assert(false, "Entry.getValue() was called on a connection entry, but was not passed an item as a parameter.");
+    orp.util.assert(false, "Entry.getValue() was called on a connection entry, but was not passed an item as a parameter.");
   }
   return this._value; 
 };
@@ -327,7 +327,7 @@ Entry.prototype.getDisplayString = function(callingItem) {
     case this.getWorld().getTypeCalledNumber():
       var originalString = this._value.toString();
       var arrayOfTwoStrings = originalString.split('.');
-      Util.assert(arrayOfTwoStrings.length < 3);
+      orp.util.assert(arrayOfTwoStrings.length < 3);
       wholeNumberString = arrayOfTwoStrings[0];
       fractionalNumberString = null;
       if (arrayOfTwoStrings.length == 2) {
@@ -359,7 +359,7 @@ Entry.prototype.getDisplayString = function(callingItem) {
       break;
     case this.getWorld().getTypeCalledDate():
       var aDate = this._value;
-      // returnString = Util.getStringMonthDayYear(aDate);
+      // returnString = orp.util.getStringMonthDayYear(aDate);
       returnString = aDate.toShortLocaleDateString();
       break;
     case this.getWorld().getTypeCalledItem():
@@ -371,7 +371,7 @@ Entry.prototype.getDisplayString = function(callingItem) {
       if (callingItem) {
         if (callingItem == firstItem) {returnString = secondItem.getDisplayString();}
         else if (callingItem == secondItem) {returnString = firstItem.getDisplayString();}
-        else {Util.assert(false, "callingItem isn't part of this Entry");}
+        else {orp.util.assert(false, "callingItem isn't part of this Entry");}
       }
       else {
         returnString = 'connection between "' + firstItem.getDisplayString() + '" and "' + secondItem.getDisplayString() + '"';
@@ -415,17 +415,17 @@ Entry.prototype.hasBeenReplaced = function() {
       return true;
     case World.RETRIEVAL_FILTER_SINGLE_USER:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_DEMOCRATIC:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_UNABRIDGED:
       return false;
     default:
       // We should never get here.  If we get here, it's an error.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
   }
 };

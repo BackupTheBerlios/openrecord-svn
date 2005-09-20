@@ -94,7 +94,7 @@ function SectionView(superview, htmlElement, sectionItem) {
   View.call(this, superview, htmlElement, "SectionView");
 
   // instance properties
-  Util.assert(sectionItem instanceof Item);
+  orp.util.assert(sectionItem instanceof Item);
   this._section = sectionItem;
 
   this._pluginView = null;
@@ -147,7 +147,7 @@ SectionView.registerPlugin = function(pluginClass, pluginItemUuid) {
  * @return   A newly created plugin object, initialized to be the plugin for this section.
  */
 SectionView.prototype.getPluginInstanceFromPluginItem = function(pluginItem, pluginDiv) {
-  Util.assert(pluginItem instanceof Item);
+  orp.util.assert(pluginItem instanceof Item);
   
   var newPlugin = null;
   var pluginClass;
@@ -240,7 +240,7 @@ SectionView.prototype.doInitialDisplay = function() {
     var pluginItem = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
     optionElement.text = pluginItem.getDisplayString();
     listener = this; 
-    Util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
+    orp.util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
   }
   View.appendNewTextNode(controlArea," of items whose ");
   this._queryEditSpan = View.appendNewElement(controlArea, "span");
@@ -270,7 +270,7 @@ SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem) {
     for (var i=0; i < entriesLayoutData.length; ++i) {
       var layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
       var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attributeAppliesToPlugin);
-      Util.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
+      orp.util.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
       if (entriesAppliesToPlugin[0].getValue() == pluginTypeItem) {
         return layoutItem;
       }
@@ -309,7 +309,7 @@ SectionView.prototype._refreshQueryEditSpan = function() {
     matchingAttribute = this.getWorld().getAttributeCalledCategory();
   }
   else {
-    Util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
+    orp.util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
     matchingAttribute = listOfMatchingAttrs[0].getValue();
   }
   var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
@@ -359,7 +359,7 @@ SectionView.prototype._refreshQueryEditSpan = function() {
  * @return   Returns true if the user pressed the return key, or false otherwise.
  */
 SectionView.prototype.keyPressOnMatchingValueField = function(event, anEntryView) {
-  if (event.keyCode == Util.ASCII_VALUE_FOR_RETURN) {
+  if (event.keyCode == orp.util.ASCII.RETURN) {
     anEntryView.stopEditing();
     return true;
   }
@@ -375,7 +375,7 @@ SectionView.prototype.keyPressOnMatchingValueField = function(event, anEntryView
 SectionView.prototype.observedItemHasChanged = function(item) {
   item.removeObserver(this); //item no longer needs to be observed as query editor span is rebuilt
   var myQuery = this.getQuerySpec();
-  Util.assert(item == myQuery);
+  orp.util.assert(item == myQuery);
   var pluginItem = this._pluginView.getPluginItem();
   this._pluginView.endOfLife();
   this._pluginView = this.getPluginInstanceFromPluginItem(pluginItem, this._pluginDiv);
@@ -392,7 +392,7 @@ SectionView.prototype.observedItemHasChanged = function(item) {
  */
 SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject) {
   eventObject = eventObject || window.event;
-  var optionElement = Util.getTargetFromEvent(eventObject);
+  var optionElement = orp.util.getTargetFromEvent(eventObject);
   // PENDING: We could replace the lines above with "var optionElement = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
   
@@ -428,7 +428,7 @@ SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject) {
  */
 SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
   eventObject = eventObject || window.event;
-  var optionElement = Util.getTargetFromEvent(eventObject);
+  var optionElement = orp.util.getTargetFromEvent(eventObject);
   // PENDING: We could replace the lines above with "var optionElement = this;"
   // That would work fine in Firefox, but maybe it wouldn't work in other browsers?  
   
@@ -446,7 +446,7 @@ SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
     matchingAttribute = this.getWorld().getAttributeCalledCategory();
   }
   else {
-    Util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
+    orp.util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
     matchingAttribute = listOfMatchingAttrs[0].getValue();
   }
   if (matchingAttribute.getDisplayString() != newChoiceName) {
@@ -464,10 +464,10 @@ SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
     for (var i in listOfMatchingEntries) {
       var anEntry = listOfMatchingEntries[i];
       anEntry.voteToDelete();
-      Util.assert(anEntry.hasBeenDeleted());
+      orp.util.assert(anEntry.hasBeenDeleted());
     }
     listOfMatchingEntries = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
-    Util.assert(listOfMatchingEntries.length === 0);
+    orp.util.assert(listOfMatchingEntries.length === 0);
     
     // I think we need these next 3 lines in to make sure the view gets updated  
     // to reflect the new query.  When we get a chance we should probably do 

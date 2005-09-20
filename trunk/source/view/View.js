@@ -162,7 +162,7 @@ View.prototype.refresh = function() {
  * @param    visibleFlag    True if the view should be visible on screen. False if the view should be hidden off screen.
  */
 View.prototype.includeOnScreen = function(visibleFlag) {
-  Util.assert(Util.isBoolean(visibleFlag));
+  orp.util.assert(orp.util.isBoolean(visibleFlag));
 
   if (visibleFlag) {
     this.refresh();
@@ -185,7 +185,7 @@ View.prototype.includeOnScreen = function(visibleFlag) {
  * @param    element    An HTML element. 
  */
 View.removeChildrenOfElement = function(element) {
-  Util.assert(element instanceof HTMLElement);
+  orp.util.assert(element instanceof HTMLElement);
   element.innerHTML = '';
 };
 
@@ -202,10 +202,10 @@ View.removeChildrenOfElement = function(element) {
  * @return   The newly created HTML element.
  */
 View.newElement = function(tagName, cssClassName, attributesInJson, text) {
-  Util.assert(Util.isString(tagName));
-  Util.assert(!cssClassName || Util.isString(cssClassName));
-  Util.assert(!attributesInJson || Util.isObject(attributesInJson));
-  Util.assert(!text|| Util.isString(text));
+  orp.util.assert(orp.util.isString(tagName));
+  orp.util.assert(!cssClassName || orp.util.isString(cssClassName));
+  orp.util.assert(!attributesInJson || orp.util.isObject(attributesInJson));
+  orp.util.assert(!text|| orp.util.isString(text));
 
   var newElement = window.document.createElement(tagName);
   if (cssClassName) {
@@ -249,7 +249,7 @@ View.newElement = function(tagName, cssClassName, attributesInJson, text) {
  * @return   The newly created HTML element.
  */
 View.appendNewElement = function(parentElement, tagName, cssClassName, attributesInJson, text) {
-  Util.assert(parentElement instanceof HTMLElement);
+  orp.util.assert(parentElement instanceof HTMLElement);
   
   var newElement = View.newElement(tagName, cssClassName, attributesInJson, text);
   parentElement.appendChild(newElement);
@@ -268,8 +268,8 @@ View.appendNewElement = function(parentElement, tagName, cssClassName, attribute
  * @return   The newly created text node.
  */
 View.appendNewTextNode = function(parentElement, textString) {
-  Util.assert(parentElement instanceof HTMLElement);
-  Util.assert(Util.isString(textString));
+  orp.util.assert(parentElement instanceof HTMLElement);
+  orp.util.assert(orp.util.isString(textString));
 
   var newTextNode = window.document.createTextNode(textString);
   parentElement.appendChild(newTextNode);

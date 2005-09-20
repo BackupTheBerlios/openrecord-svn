@@ -34,7 +34,7 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.util.CsvParser");
 dojo.require("dojo.lang.*");
-// dojo.require("orp.util.Util");
+dojo.require("orp.util.Util");
 
 
 // -------------------------------------------------------------------
@@ -78,7 +78,7 @@ orp.util.CsvParser = function() {
  * @return   Returns an array containing sub-arrays containing strings.
  */
 orp.util.CsvParser.prototype.getStringValuesFromCsvData = function(csvData) {
-  Util.assert(dojo.lang.isString(csvData));
+  orp.util.assert(dojo.lang.isString(csvData));
   
   var lineEndingCharacters = new RegExp("\r\n|\n|\r");
   var leadingWhiteSpaceCharacters = new RegExp("^\\s+",'g');

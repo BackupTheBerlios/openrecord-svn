@@ -74,16 +74,16 @@ RootView._ourSingleInstance = null;
  * @syntax   var rootView = new RootView()
  */
 function RootView(world) {
-  window.onerror = Util.handleError;
+  window.onerror = orp.util.handleError;
   // window.onunload = window.doOnunloadActions;
   // window.onfocus = window.doOnfocusActions;
   // window.onblur = window.doOnblurActions;
   // window.onresize = window.doOnresizeActions;  
-  Util.setTargetsForExternalLinks();
+  orp.util.setTargetsForExternalLinks();
   
   RootView._ourSingleInstance = this;
    
-  Util.assert(world instanceof World);
+  orp.util.assert(world instanceof World);
 
   // instance properties
   this._world = world;
@@ -136,7 +136,7 @@ function RootView(world) {
   this._anchorSpan = anchorSpan;
   this._rootDiv = rootDiv;
   
-  Util.setErrorReportCallback(RootView.displayTextInDebugTextarea);
+  orp.util.setErrorReportCallback(RootView.displayTextInDebugTextarea);
   this.setCurrentContentViewFromUrl();
 }
 
@@ -293,7 +293,7 @@ RootView.prototype.setCurrentPage = function(newPage) {
  * @param    item    Any item.
  */
 RootView.prototype.getUrlForItem = function(item) {
-  Util.assert(item instanceof Item);
+  orp.util.assert(item instanceof Item);
   var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
   var prefix;
   if (item.isInCategory(categoryCalledPage)) {
@@ -389,7 +389,7 @@ RootView.prototype.display = function() {
     this._displayNavbar();
     this._displayDebugArea();
     if (this._currentContentView) {
-      Util.assert(this._currentContentView instanceof Object);
+      orp.util.assert(this._currentContentView instanceof Object);
       document.title = this._currentContentView.getPageTitle() + " - openrecord.org";
       this._currentContentView.includeOnScreen(true);
     }
@@ -471,7 +471,7 @@ RootView.prototype._displayNavbar = function() {
  * @scope    private instance method
  */
 RootView.prototype._displayDebugArea = function() {
-  Util.assert(this._debugDivElement instanceof HTMLDivElement);
+  orp.util.assert(this._debugDivElement instanceof HTMLDivElement);
 
   var listOfStrings = [];
   listOfStrings.push("<textarea readonly id=\"" + RootView.ELEMENT_ID_DEBUG_TEXTAREA + "\" rows=\"20\" cols=\"100\" wrap=\"virtual\"></textarea>");
@@ -568,7 +568,7 @@ RootView.prototype.setSelection = function(aView) {
     this._selections[i].unSelect();
   }
   if (aView) {
-    Util.assert(aView instanceof View);
+    orp.util.assert(aView instanceof View);
     this._selections = [aView];
   }
   else {this._selections = [];}
@@ -580,8 +580,8 @@ RootView.prototype.setSelection = function(aView) {
  * @param    aView    A selectable object
  */
 RootView.prototype.addToSelection = function(aView) {
-  Util.assert(aView instanceof View);
-  Util.addObjectToSet(aView,this._selections);
+  orp.util.assert(aView instanceof View);
+  orp.util.addObjectToSet(aView,this._selections);
 };
 
 /**
@@ -590,8 +590,8 @@ RootView.prototype.addToSelection = function(aView) {
  * @param    aView    A selectable object
  */
 RootView.prototype.removeFromSelection = function(aView) {
-  Util.assert(aView instanceof View);
-  Util.assert(Util.removeObjectFromSet(aView,this._selections));
+  orp.util.assert(aView instanceof View);
+  orp.util.assert(orp.util.removeObjectFromSet(aView,this._selections));
 };
   
 // -------------------------------------------------------------------
@@ -619,7 +619,7 @@ RootView.clickOnLocalLink = function(eventObject) {
   // "ne-resize", "se-resize", "nw-resize", "sw-resize"
   // window.document.body.style.cursor = "wait";
 
-  var htmlAnchorElement = Util.getTargetFromEvent(eventObject);
+  var htmlAnchorElement = orp.util.getTargetFromEvent(eventObject);
   
   window.location = htmlAnchorElement.href;
   RootView._ourSingleInstance.setCurrentContentViewFromUrl();

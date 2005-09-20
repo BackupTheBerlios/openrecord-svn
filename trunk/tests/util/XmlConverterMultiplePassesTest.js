@@ -41,6 +41,7 @@ function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.require("orp.util.XmlConverter");
+  dojo.require("orp.util.Util");
 
   XmlTextNodeToAttributeSpecifier = orp.util.XmlTextNodeToAttributeSpecifier;
   XmlAttributeToAttributeSpecifier = orp.util.XmlAttributeToAttributeSpecifier;
@@ -113,7 +114,7 @@ function testNewItemCreatedForRecordWithNonMatchingXmlTextNode() {
   for (var i in itemsInItemCategory) {
     names.push(itemsInItemCategory[i].getDisplayName());
   }
-  hasAll = Util.areObjectsInSet(["carrot", "cheese puff", "radish", "parsnip"], names);
+  hasAll = orp.util.areObjectsInSet(["carrot", "cheese puff", "radish", "parsnip"], names);
   assertTrue('Item names should include "carrot", "cheese puff", "radish" and "parsnip".', hasAll);  
 }
 
@@ -134,7 +135,7 @@ function testModifiedItemsHaveAllExpectedAttributes() {
     for (var j in listOfAttributes) {
       names.push(listOfAttributes[j].getDisplayName());
     }
-    hasAll = Util.areObjectsInSet(["Category", "Name", "Food ID", "Vitamin A", "Vitamin C"], names);
+    hasAll = orp.util.areObjectsInSet(["Category", "Name", "Food ID", "Vitamin A", "Vitamin C"], names);
     assertTrue('Each item should have attributes called "Category", "Name", "Food ID", "Vitamin A" and "Vitamin C".', hasAll);  
   }
 }

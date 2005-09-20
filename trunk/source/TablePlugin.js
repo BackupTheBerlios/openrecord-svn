@@ -121,7 +121,7 @@ TablePlugin.prototype.getClass = function() {
  * @return   This method returns 0 if the items are comparable. If _ascendingOrder is true, itemA is less than itemB, this method returns -1, otherwise it returns +1. 
  */
 TablePlugin.prototype.compareItemsBySortAttribute = function(itemA, itemB) {
-  Util.assert(this._sortAttribute !== null);
+  orp.util.assert(this._sortAttribute !== null);
   var strA = itemA.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
   var strB = itemB.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
   var ascendingInt = this._ascendingOrder ? -1 : 1;
@@ -147,7 +147,7 @@ TablePlugin.prototype._getListOfColumns = function() {
     // columns, and we just want to use that list.
     for (var i in listOfTableColumnEntries) {
       anAttribute = listOfTableColumnEntries[i].getValue();
-      Util.assert(anAttribute instanceof Item);
+      orp.util.assert(anAttribute instanceof Item);
       displayAttributes.push(anAttribute);
     }
   } else {
@@ -170,7 +170,7 @@ TablePlugin.prototype._getListOfColumns = function() {
       }
     }
     
-    if (Util.lengthOfHashTable(hashTableOfAttributesKeyedByUuid) < 1) {
+    if (orp.util.lengthOfHashTable(hashTableOfAttributesKeyedByUuid) < 1) {
       // If we have not yet identified any display attributes to use as
       // column headers, then we'll just use the "Name" attribute so that
       // our table will have at least one column.
@@ -201,7 +201,7 @@ TablePlugin.prototype._buildAttributeEditor = function() {
   for (var key in listOfAttributes) {
     var attribute = listOfAttributes[key];
     optionElt = View.appendNewElement(selectElt, "option");
-    if (Util.isObjectInSet(attribute, this._displayAttributes)) {
+    if (orp.util.isObjectInSet(attribute, this._displayAttributes)) {
       optionElt.text = '* ';
     }
     optionElt.text += attribute.getDisplayString();
@@ -331,8 +331,8 @@ TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppableObj
   var headerCellElement = droppableObject.element;
   var headerCellUuid = headerCellElement.getAttribute('uuid');
   var droppedOnAttribute = world.getItemFromUuid(headerCellUuid);
-  var indexOfDraggedAttribute = Util.getArrayIndex(this._displayAttributes, draggedAttribute);
-  var indexOfDroppedOnAttribute = Util.getArrayIndex(this._displayAttributes, droppedOnAttribute);
+  var indexOfDraggedAttribute = orp.util.getArrayIndex(this._displayAttributes, draggedAttribute);
+  var indexOfDroppedOnAttribute = orp.util.getArrayIndex(this._displayAttributes, droppedOnAttribute);
 
   // If the user dragged a column header and dropped it on the same column 
   // header, then we don't need to change the column order.
@@ -353,7 +353,7 @@ TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppableObj
   if (listOfTableColumnEntries.length > 0) {
     // If we get here, it means this table has a saved list of user-selected
     // columns, and we just want to re-order that list.
-    Util.assert(this._displayAttributes.length == listOfTableColumnEntries.length);
+    orp.util.assert(this._displayAttributes.length == listOfTableColumnEntries.length);
     var draggedEntry = listOfTableColumnEntries[indexOfDraggedAttribute];
     var droppedOnEntry = listOfTableColumnEntries[indexOfDroppedOnAttribute];
     if (indexOfDraggedAttribute > indexOfDroppedOnAttribute) {
@@ -496,7 +496,7 @@ TablePlugin.prototype.refresh = function() {
  */
 TablePlugin.prototype.getSortIcon = function() {
   var imageName = this._ascendingOrder ? TablePlugin.ASCENDING_GIF : TablePlugin.DESCENDING_GIF;
-  var image =  Util.createImageElement(imageName);
+  var image =  orp.util.createImageElement(imageName);
   //image.align = "right";
   return image;
 };
@@ -557,7 +557,7 @@ TablePlugin.prototype.clickOnHeader = function(event, clickAttribute) {
  * @scope    public instance method
  */
 TablePlugin.prototype.selectRow = function(rowElement) {
-  Util.assert(rowElement instanceof HTMLTableRowElement);
+  orp.util.assert(rowElement instanceof HTMLTableRowElement);
   if (rowElement != this._lastSelectedRow) {
     if (this._lastSelectedRow) {
       this._lastSelectedRow.className = "";
@@ -580,7 +580,7 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
   var listOfAttributes = this._displayAttributes;
   var startTime = new Date();
   
-  var fileContents = Util.getStringContentsOfFileAtURL('file://' + fileButton.value);
+  var fileContents = orp.util.getStringContentsOfFileAtURL('file://' + fileButton.value);
   var csvParser = new orp.util.CsvParser();
   var listOfRecords = csvParser.getStringValuesFromCsvData(fileContents);
   if (!listOfRecords) {
@@ -638,7 +638,7 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
       world.beginTransaction();
     }
     listOfFields = listOfRecords[i];
-    Util.assert(listOfFields.length == listOfAttributes.length);
+    orp.util.assert(listOfFields.length == listOfAttributes.length);
     var newItem = world.newItem();
     world.setItemToBeIncludedInQueryResultList(newItem, this.getQuerySpec());
     for (j in listOfAttributes) {
@@ -692,7 +692,7 @@ TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
     var entriesTableColumns = this._layout.getEntriesForAttribute(attributeTableColumns);
     var noStoredColumns = (entriesTableColumns.length === 0);
     var changedAttribute = this.getWorld().getItemFromUuid(attributeUuid);
-    var removeAttribute = Util.removeObjectFromSet(changedAttribute,this._displayAttributes);
+    var removeAttribute = orp.util.removeObjectFromSet(changedAttribute,this._displayAttributes);
     var typeCalledItem = repository.getTypeCalledItem();
     if (removeAttribute) {
       for (var i in entriesTableColumns) {
@@ -751,22 +751,22 @@ TablePlugin.prototype.keyPressOnEditField = function(eventObject, anEntryView) {
   
   var move = null;
   switch (asciiValueOfKey) {
-    case Util.ASCII_VALUE_FOR_LEFT_ARROW:
+    case orp.util.ASCII.LEFT_ARROW:
       move = MOVE_LEFT;
       break;
-    case Util.ASCII_VALUE_FOR_UP_ARROW:
+    case orp.util.ASCII.UP_ARROW:
       move = MOVE_UP;
       break;
-    case Util.ASCII_VALUE_FOR_RIGHT_ARROW:
+    case orp.util.ASCII.RIGHT_ARROW:
       move = MOVE_RIGHT;
       break;
-    case Util.ASCII_VALUE_FOR_DOWN_ARROW:
+    case orp.util.ASCII.DOWN_ARROW:
       move = MOVE_DOWN;
       break;
-    case Util.ASCII_VALUE_FOR_RETURN:
+    case orp.util.ASCII.RETURN:
       move = (shiftKeyPressed) ? MOVE_UP : MOVE_DOWN;
       break;
-    case Util.ASCII_VALUE_FOR_TAB:
+    case orp.util.ASCII.TAB:
       move = (shiftKeyPressed) ? MOVE_LEFT : MOVE_RIGHT;
       break;
     default:
@@ -775,8 +775,8 @@ TablePlugin.prototype.keyPressOnEditField = function(eventObject, anEntryView) {
   }
   
   if (move) {
-    Util.isNumber(this._numberOfColumns);
-    Util.isArray(this._listOfItems);
+    orp.util.isNumber(this._numberOfColumns);
+    orp.util.isArray(this._listOfItems);
     
     // line below needs to be called here i.e. early because stopping an edit may change a provisional item
     // to become a "real" one thereby  creating new row for the next provisional item, e.g. this._listOfItems changes

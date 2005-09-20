@@ -46,7 +46,7 @@ function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
 
   utilAssertReportedError = false;
-  Util.setErrorReportCallback(errorReporter)
+  orp.util.setErrorReportCallback(errorReporter)
 
   var isHttp = window.location.protocol == "http:";
   saver = isHttp? new HttpSaver(fileName, pathToTrunkDirectoryFromThisDirectory) 
@@ -152,19 +152,19 @@ function waitASecond() {
 }
 
 function fileHasExpectedContents(expectedContents) {
-  var contents = Util.getStringContentsOfFileAtURL(fileUrl);
+  var contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
   for (var i = 0; contents != expectedContents && i < 5; ++i) {
     waitASecond();
-    contents = Util.getStringContentsOfFileAtURL(fileUrl);
+    contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
   }
   return (contents == expectedContents);
 }
 
 function fileHasExpectedSubstring(expectedSubstring) {
-  var contents = Util.getStringContentsOfFileAtURL(fileUrl);
+  var contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
   for (var i = 0; contents.indexOf(expectedSubstring) == -1 && i < 5; ++i) {
     waitASecond();
-    contents = Util.getStringContentsOfFileAtURL(fileUrl);
+    contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
   }
   return (contents.indexOf(expectedSubstring) != -1);
 }

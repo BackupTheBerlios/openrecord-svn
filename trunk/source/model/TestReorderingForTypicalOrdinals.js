@@ -57,7 +57,7 @@ function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
 
   utilAssertReportedError = false;
-  Util.setErrorReportCallback(errorReporter);
+  orp.util.setErrorReportCallback(errorReporter);
   var pathToTrunkDirectory = "../..";
   var virtualServer = new StubVirtualServer(pathToTrunkDirectory);
   var realUuidGenerator = StubVirtualServer.prototype._generateUuid;

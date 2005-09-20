@@ -109,7 +109,7 @@ FileSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
 FileSaver.prototype._saveTextToFile = function(text, fileUrl, append) {
   // Make sure we were loaded from a "file:" URL
   if (window.location.protocol != "file:") {
-    Util.assert(false, 'FileSaver.js can only be used for pages loaded from a "file:///" location');
+    orp.util.assert(false, 'FileSaver.js can only be used for pages loaded from a "file:///" location');
   }
 
   var success = this._mozillaSaveToFile(text, fileUrl, append);
@@ -173,7 +173,7 @@ FileSaver.prototype._ieSaveToFile = function(text, filePath, append) {
     return false;
   }
   if (append) {
-    Util.assert(false, "PENDING: still need to write code for this");
+    orp.util.assert(false, "PENDING: still need to write code for this");
   } else {
     var file = fileSystemObject.OpenTextFile(filePath, 2, -1, 0);
   }

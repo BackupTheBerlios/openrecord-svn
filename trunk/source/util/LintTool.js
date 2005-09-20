@@ -34,6 +34,7 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.util.LintTool");
 dojo.require("dojo.lang.*");
+dojo.require("orp.util.Util");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -140,7 +141,7 @@ orp.util.LintTool.checkForString = function(codeString, memberString, errorMessa
  * @return   Returns an error message string, or returns an empty string if there are no errors (according to jslint).
  */
 orp.util.LintTool.getErrorReportForCodeAtUrl = function(url) {
-  var fileContents = Util.getStringContentsOfFileAtURL(url);
+  var fileContents = orp.util.getStringContentsOfFileAtURL(url);
   return orp.util.LintTool.getErrorReportForCodeInString(fileContents);
 };
 
@@ -155,9 +156,9 @@ orp.util.LintTool.getErrorReportForCodeAtUrl = function(url) {
  * @return   Returns an error message string, or returns an empty string if there are no errors (according to jslint).
  */
 orp.util.LintTool.getErrorReportFromListOfFilesnames = function(listOfFilenames, path) {
-  Util.assert(Util.isArray(listOfFilenames));
+  orp.util.assert(orp.util.isArray(listOfFilenames));
   if (path) {
-    Util.assert(dojo.lang.isString(path));
+    orp.util.assert(dojo.lang.isString(path));
   } else {
     path = "";
   }

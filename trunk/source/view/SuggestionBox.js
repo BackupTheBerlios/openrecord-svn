@@ -115,35 +115,35 @@ SuggestionBox.prototype._keyPressOnInputField = function(eventObject) {
   var index = -1;
   var doSelectItem = false;
   switch (asciiValueOfKey) {
-    case Util.ASCII_VALUE_FOR_DOWN_ARROW:
+    case orp.util.ASCII.DOWN_ARROW:
       if (this._selectedItem) {
-        index = (Util.getArrayIndex(this._listOfMatchingItems, this._selectedItem)+1) % numberOfMatchingItems;
+        index = (orp.util.getArrayIndex(this._listOfMatchingItems, this._selectedItem)+1) % numberOfMatchingItems;
       }
       else {
         index = 0;
       }
       break;
-    case Util.ASCII_VALUE_FOR_UP_ARROW:
+    case orp.util.ASCII.UP_ARROW:
       if (this._selectedItem) {
-        index = Util.getArrayIndex(this._listOfMatchingItems, this._selectedItem)-1;
+        index = orp.util.getArrayIndex(this._listOfMatchingItems, this._selectedItem)-1;
         if (index < 0) {index = numberOfMatchingItems-1;}
       }
       else {
         index = numberOfMatchingItems-1;
       }
       break;
-      case Util.ASCII_VALUE_FOR_TAB:
+      case orp.util.ASCII.TAB:
       if (this._inputField.value.length === 0) {return false;}
       if (!this._selectedItem) {
         this._selectedItem = this._listOfMatchingItems[0];
         doSelectItem = true;
       }
       break;
-    case Util.ASCII_VALUE_FOR_RETURN:
+    case orp.util.ASCII.RETURN:
       if (this._selectedItem) {doSelectItem = true;}
       break;
-    case Util.ASCII_VALUE_FOR_LEFT_ARROW:
-    case Util.ASCII_VALUE_FOR_RIGHT_ARROW:
+    case orp.util.ASCII.LEFT_ARROW:
+    case orp.util.ASCII.RIGHT_ARROW:
       // if left or right arrow keys, then hide suggestion box
       this._setShouldHide(true);
       return false;
@@ -252,8 +252,8 @@ SuggestionBox.prototype._redisplaySuggestionBox = function() {
     this._suggestionBoxDivElement.appendChild(table);
 
     // set-up the suggestion box to open just below the input field it comes from
-    var suggestionBoxTop = Util.getOffsetTopFromElement(this._inputField) + this._inputField.offsetHeight;
-    var suggestionBoxLeft = Util.getOffsetLeftFromElement(this._inputField);
+    var suggestionBoxTop = orp.util.getOffsetTopFromElement(this._inputField) + this._inputField.offsetHeight;
+    var suggestionBoxLeft = orp.util.getOffsetLeftFromElement(this._inputField);
     this._suggestionBoxDivElement.style.top = suggestionBoxTop + "px"; 
     this._suggestionBoxDivElement.style.left = (suggestionBoxLeft-2) + "px";
     this._suggestionBoxDivElement.style.width = (this._inputField.offsetWidth + 4)+ "px"; //HACK: Need to fix +4

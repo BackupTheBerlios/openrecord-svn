@@ -58,8 +58,8 @@ ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_plugin_div_for_item_";
  */
 ItemView.prototype = new View();  // makes ItemView be a subclass of View
 function ItemView(superview, htmlElement, item) {
-  Util.assert(htmlElement instanceof HTMLElement);
-  Util.assert(item instanceof Item);
+  orp.util.assert(htmlElement instanceof HTMLElement);
+  orp.util.assert(item instanceof Item);
 
   View.call(this, superview, htmlElement, "ItemView");
 
@@ -88,7 +88,7 @@ ItemView.prototype.getPageTitle = function() {
  * @scope    public instance method
  */
 ItemView.prototype.refresh = function() {
-  Util.assert(this._item instanceof Item);
+  orp.util.assert(this._item instanceof Item);
   
   // PENDING: this needs to be changed from DOM level 0 to DOM level 2.
   var listOfStrings = [];

@@ -82,7 +82,7 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
     repositoryUrl = this._completePathToTrunkDirectory + '/';
   }
   repositoryUrl += DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY + "/" + repositoryFileName;
-  var repositoryContentString = Util.getStringContentsOfFileAtURL(repositoryUrl);
+  var repositoryContentString = orp.util.getStringContentsOfFileAtURL(repositoryUrl);
   repositoryContentString += " ] }";
 
   this._loadWorldFromJsonString(repositoryContentString);
@@ -105,14 +105,14 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
 DeltaVirtualServer.prototype._loadWorldFromJsonString = function(jsonRepositoryString) {
 
   // load the list of records
-  Util.assert(Util.isString(jsonRepositoryString));
+  orp.util.assert(orp.util.isString(jsonRepositoryString));
   var dehydratedRecords = null;
   eval("dehydratedRecords = " + jsonRepositoryString + ";");
-  Util.assert(Util.isObject(dehydratedRecords));
+  orp.util.assert(orp.util.isObject(dehydratedRecords));
   var recordFormat = dehydratedRecords[StubVirtualServer.JSON_MEMBER_FORMAT];
-  Util.assert(recordFormat == StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS);
+  orp.util.assert(recordFormat == StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS);
   var listOfRecords = dehydratedRecords[StubVirtualServer.JSON_MEMBER_RECORDS];
-  Util.assert(Util.isArray(listOfRecords));
+  orp.util.assert(orp.util.isArray(listOfRecords));
   
   var listOfUsers = null;
   
@@ -249,7 +249,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
       if (!listOfUsers) {
         listOfUsers = this.getUsers();
       }
-      if (Util.isObjectInSet(item, listOfUsers)) {
+      if (orp.util.isObjectInSet(item, listOfUsers)) {
         var user = item;
         var password = this._hashTableOfUserAuthenticationInfo[user.getUuid()];
         var passwordString = "null";
@@ -363,7 +363,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
             if (generateComments) {valueComment = this._getTypedDisplayStringForItem(contentData);}
             break;
           default:
-            Util.assert(false, "no such type: " + entryType.getDisplayString());
+            orp.util.assert(false, "no such type: " + entryType.getDisplayString());
         }
         listOfStringsForEntry.push(indent + '        "' + StubVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString);
         if (generateComments) {

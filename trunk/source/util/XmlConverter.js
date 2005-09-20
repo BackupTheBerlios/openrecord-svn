@@ -33,6 +33,7 @@
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.util.XmlConverter");
+dojo.require("orp.util.Util");
 // dojo.provide("orp.util.XmlTextNodeToAttributeSpecifier");
 // dojo.provide("orp.util.XmlAttributeToAttributeSpecifier");
 
@@ -43,8 +44,8 @@ dojo.provide("orp.util.XmlConverter");
  * @scope    public instance constructor
  */
 orp.util.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) {
-  Util.assert(tagPath instanceof Array);
-  Util.assert(attribute instanceof Item);
+  orp.util.assert(tagPath instanceof Array);
+  orp.util.assert(attribute instanceof Item);
   this._tagPath = tagPath;
   this._attribute = attribute;
   var attributeCalledExpectedType = attribute.getWorld().getAttributeCalledExpectedType();
@@ -67,7 +68,7 @@ orp.util.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) {
  * @scope    public instance constructor
  */
 orp.util.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, attribute) {
-  Util.assert(attribute instanceof Item);
+  orp.util.assert(attribute instanceof Item);
   this._xmlAttributeName = xmlAttributeName;
   this._attribute = attribute;
   var attributeCalledExpectedType = attribute.getWorld().getAttributeCalledExpectedType();
@@ -99,15 +100,15 @@ orp.util.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, attribute
  * @param    itemCategory                       If null, a new category is created from 'namespace' and 'itemTagName'.
  */
 orp.util.XmlConverter = function(world, url, nameSpace, itemTagName, itemCategory) {
-  Util.assert(world instanceof World);
+  orp.util.assert(world instanceof World);
   var urlSeparators = new RegExp("\\.|\\/");
   var urlParts = url.split(urlSeparators);
   var len = urlParts.length;
-  Util.assert(urlParts[len-1] == "xml");
+  orp.util.assert(urlParts[len-1] == "xml");
   if (!nameSpace) {
     nameSpace = urlParts[len-2];
   }
-  Util.assert(Util.isString(itemTagName));
+  orp.util.assert(orp.util.isString(itemTagName));
 
   var xmlDoc = document.implementation.createDocument("", "doc", null);
   var objXMLHTTP = new XMLHttpRequest();
@@ -181,8 +182,8 @@ orp.util.XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSp
     listOfOutputItems = this._doDefaultConversion(this._world, this._nameSpace, this._itemElements, this._itemCategory);
   }
   else {
-    Util.assert(xmlToAttributeSpecifiers instanceof Array);
-    Util.assert(xmlToAttributeSpecifiers[0] instanceof orp.util.XmlTextNodeToAttributeSpecifier);
+    orp.util.assert(xmlToAttributeSpecifiers instanceof Array);
+    orp.util.assert(xmlToAttributeSpecifiers[0] instanceof orp.util.XmlTextNodeToAttributeSpecifier);
     for (var i = 0; i < this._itemElements.length; ++i) {
       var newItem = world.newItem();
       newItem.assignToCategory(this._itemCategory);
@@ -221,7 +222,7 @@ orp.util.XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equality
     matchXmlAttribute = true;
     var xmlAttributeToMatch = equalitySpecifier._xmlAttributeName;
   } else {
-    Util.assert(equalitySpecifier instanceof orp.util.XmlTextNodeToAttributeSpecifier,
+    orp.util.assert(equalitySpecifier instanceof orp.util.XmlTextNodeToAttributeSpecifier,
                 "equalitySpecifier should be of type orp.util.XmlTextNodeToAttributeSpecifier or orp.util.XmlAttributeToAttributeSpecifier.");
     matchXmlAttribute = false;
     var xmlTagPathToMatch = equalitySpecifier._tagPath;

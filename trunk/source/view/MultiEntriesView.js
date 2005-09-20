@@ -65,8 +65,8 @@ MultiEntriesView.prototype = new View();  // makes MultiEntriesView be a subclas
 function MultiEntriesView(superview, htmlElement, item, attribute) {
   View.call(this, superview, htmlElement, "MultiEntriesView");
 
-  Util.assert(item instanceof Item);
-  Util.assert(attribute instanceof Item); // PENDING need to check that attribute is an attribute
+  orp.util.assert(item instanceof Item);
+  orp.util.assert(attribute instanceof Item); // PENDING need to check that attribute is an attribute
   
   this._item = item;
   this._attribute = attribute;
@@ -103,7 +103,7 @@ MultiEntriesView.prototype.refresh = function() {
  * @param    item      The Item which just became real. 
  */
 MultiEntriesView.prototype._provisionalItemJustBecomeReal = function(item) {
-  Util.assert(item == this._item);
+  orp.util.assert(item == this._item);
   var superview = this.getSuperview();
   if (superview._provisionalItemJustBecomeReal) {
     superview._provisionalItemJustBecomeReal(item);
@@ -124,7 +124,7 @@ MultiEntriesView.prototype.getEntryWidth = function() {
  *
  */
 MultiEntriesView.prototype.noLongerProvisional = function() {
-  Util.assert(this._entryViews.length == 1); // provisional item should only have one entry
+  orp.util.assert(this._entryViews.length == 1); // provisional item should only have one entry
   for (var key in this._entryViews) {
     var entry = this._entryViews[key];
     entry.noLongerProvisional();
@@ -159,7 +159,7 @@ MultiEntriesView.prototype.setSuggestions = function(listOfSuggestions) {
  *
  */
 MultiEntriesView.prototype.setKeyPressFunction = function(keyPressFunction) {
-  Util.assert(keyPressFunction instanceof Function);
+  orp.util.assert(keyPressFunction instanceof Function);
   this._keyPressFunction = keyPressFunction;
 };
 
@@ -171,7 +171,7 @@ MultiEntriesView.prototype.setKeyPressFunction = function(keyPressFunction) {
  * @param    onClickFunction    A function to call. 
  */
 MultiEntriesView.prototype.setClickFunction = function(onClickFunction) {
-  Util.assert(onClickFunction instanceof Function);
+  orp.util.assert(onClickFunction instanceof Function);
   this._clickFunction = onClickFunction;
 };
 
@@ -210,9 +210,9 @@ MultiEntriesView.prototype._handleOwnClick = function(eventObject) {
  */
 MultiEntriesView.prototype._handleDrop = function(element) {
   var draggedEntryView = element.or_entryView;
-  if (!draggedEntryView) {Util.assert(false);}
+  if (!draggedEntryView) {orp.util.assert(false);}
   var droppedEntry = draggedEntryView._entry;
-  if (!droppedEntry) {Util.assert(false);}
+  if (!droppedEntry) {orp.util.assert(false);}
   if (!this.hasEntry(droppedEntry)) {
     var newEntry;
     if (droppedEntry.getType() == this.getWorld().getTypeCalledConnection()) {
@@ -243,13 +243,13 @@ MultiEntriesView.prototype._handleDrop = function(element) {
  *
  */
 MultiEntriesView.prototype._keyPressOnEditField = function(eventObject, entryView) {
-  Util.assert(entryView instanceof EntryView);
+  orp.util.assert(entryView instanceof EntryView);
   var asciiValueOfKey = eventObject.keyCode;
   var move, doCreateNewEntry;
   switch (asciiValueOfKey) {
-    case Util.ASCII_VALUE_FOR_LEFT_ARROW: move = -1; break;
-    case Util.ASCII_VALUE_FOR_RIGHT_ARROW: move = 1; break;
-    case Util.ASCII_VALUE_FOR_RETURN:
+    case orp.util.ASCII.LEFT_ARROW: move = -1; break;
+    case orp.util.ASCII.RIGHT_ARROW: move = 1; break;
+    case orp.util.ASCII.RETURN:
       if (eventObject.altKey) {
         doCreateNewEntry = true;
         break;
@@ -266,8 +266,8 @@ MultiEntriesView.prototype._keyPressOnEditField = function(eventObject, entryVie
     return true;
   }
   if (move !== 0) {
-    var index = Util.getArrayIndex(this._entryViews, entryView);
-    Util.assert(index != -1);
+    var index = orp.util.getArrayIndex(this._entryViews, entryView);
+    orp.util.assert(index != -1);
     index += move;
     if (index >= 0 && index < this._entryViews.length) {
       entryView.stopEditing();

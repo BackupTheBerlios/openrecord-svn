@@ -235,7 +235,7 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
       if (itemOrPairOfItems instanceof Item) {
         listOfItems.push(itemOrPairOfItems); 
       }
-      if (Util.isArray(itemOrPairOfItems)) {
+      if (orp.util.isArray(itemOrPairOfItems)) {
         listOfItems.push(itemOrPairOfItems[0]);
         listOfItems.push(itemOrPairOfItems[1]);
       }
@@ -267,14 +267,14 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
     var listOfObserversForItem = this._hashTableOfObserverListsKeyedByItemUuid[uuid];
     for (key in listOfObserversForItem) {
       observer = listOfObserversForItem[key];
-      if (Util.isFunction(observer)) {
+      if (orp.util.isFunction(observer)) {
         observer.call(null, item, listOfRecordsForItem);
       } else {
-        if (Util.isObject(observer)) {
+        if (orp.util.isObject(observer)) {
           observer.observedItemHasChanged(item, listOfRecordsForItem);
         } else {
           // We should never get here.  If we do, consider it an error.
-          Util.assert(false);
+          orp.util.assert(false);
         }
       }
     }
@@ -302,14 +302,14 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
     if (listOfItemChangeReports) {
       for (key in setOfObservers) {
         observer = setOfObservers[key];
-        if (Util.isFunction(observer)) {
+        if (orp.util.isFunction(observer)) {
           observer.call(null, listBeingObserved, listOfItemChangeReports);
         } else {
-          if (Util.isObject(observer)) {
+          if (orp.util.isObject(observer)) {
             observer.observedListHasChanged(listBeingObserved, listOfItemChangeReports);
           } else {
             // We should never get here.  If we do, consider it an error.
-            Util.assert(false);
+            orp.util.assert(false);
           }
         }
       }
@@ -324,7 +324,7 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
     var reportChange = false;
     for (uuid in hashTableOfNewlyCreatedRecordsKeyedByItemUuid) {
       item = this.getItemFromUuid(uuid);
-      if (Util.isObjectInSet(item, oldListOfResultItems)) {
+      if (orp.util.isObjectInSet(item, oldListOfResultItems)) {
         reportChange = true;
         break;
       } else {
@@ -365,7 +365,7 @@ World.prototype.getRetrievalFilter = function() {
  * @param    filter    A string constant representing one of the three supported retrieval filters.
  */
 World.prototype.setRetrievalFilter = function(filter) {
-  Util.assert(filter == World.RETRIEVAL_FILTER_LAST_EDIT_WINS ||
+  orp.util.assert(filter == World.RETRIEVAL_FILTER_LAST_EDIT_WINS ||
               filter == World.RETRIEVAL_FILTER_SINGLE_USER ||
               filter == World.RETRIEVAL_FILTER_DEMOCRATIC ||
               filter == World.RETRIEVAL_FILTER_UNABRIDGED);
@@ -396,18 +396,18 @@ World.prototype._getFilteredList = function(unfilteredList) {
       break;
     case World.RETRIEVAL_FILTER_SINGLE_USER:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_DEMOCRATIC:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_UNABRIDGED:
       filteredList = unfilteredList;
       break;
     default:
       // We should never get here.  If we get here, it's an error.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
   }
 
@@ -705,7 +705,7 @@ World.prototype.newCategory = function(name, observer) {
  * @return   A newly created item representing a query.
  */
 World.prototype.newQuery = function(matchingAttribute, matchingEntryOrListOfEntries) {
-  Util.assert(matchingAttribute instanceof Item);
+  orp.util.assert(matchingAttribute instanceof Item);
   this.beginTransaction();
   var item = this._virtualServer.newItem("A query");
   var categoryCalledQuery = this.getCategoryCalledQuery();
@@ -717,7 +717,7 @@ World.prototype.newQuery = function(matchingAttribute, matchingEntryOrListOfEntr
   // item.addEntryForAttribute(attributeCalledQueryMatchingAttribute, matchingAttribute);
   item.addEntry({attribute:attributeCalledQueryMatchingAttribute, value:matchingAttribute});
   if (matchingEntryOrListOfEntries) {
-    if (Util.isArray(matchingEntryOrListOfEntries)) {
+    if (orp.util.isArray(matchingEntryOrListOfEntries)) {
       for (var key in matchingEntryOrListOfEntries) {
         matchingEntry = matchingEntryOrListOfEntries[key];
         // item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
@@ -771,9 +771,9 @@ World.prototype.newQueryRunner = function(querySpec, observer) {
  * @param    queryRunner    A QueryRunner object. 
  */
 World.prototype._registerQueryRunner = function(queryRunner) {
-  Util.assert(queryRunner instanceof QueryRunner);
-  var success = Util.addObjectToSet(queryRunner, this._registeredQueryRunners);
-  Util.assert(success);
+  orp.util.assert(queryRunner instanceof QueryRunner);
+  var success = orp.util.addObjectToSet(queryRunner, this._registeredQueryRunners);
+  orp.util.assert(success);
 };
 
 
@@ -785,9 +785,9 @@ World.prototype._registerQueryRunner = function(queryRunner) {
  * @param    queryRunner    A previously registered QueryRunner object. 
  */
 World.prototype._unregisterQueryRunner = function(queryRunner) {
-  Util.assert(queryRunner instanceof QueryRunner);
-  var success = Util.removeObjectFromSet(queryRunner, this._registeredQueryRunners);
-  Util.assert(success);
+  orp.util.assert(queryRunner instanceof QueryRunner);
+  var success = orp.util.removeObjectFromSet(queryRunner, this._registeredQueryRunners);
+  orp.util.assert(success);
 };
 
 
@@ -982,7 +982,7 @@ World.prototype.getSuggestedItemsForAttribute = function(attribute, observer) {
     var listOfItems = this.getItemsInCategory(category);
     for (var keyToo in listOfItems) {
       var item = listOfItems[keyToo];
-      Util.addObjectToSet(item, listOfSuggestedItems);
+      orp.util.addObjectToSet(item, listOfSuggestedItems);
     }
   }
   this.__addListObserver(listOfSuggestedItems, observer);
@@ -1022,7 +1022,7 @@ World.prototype.__addListObserver = function(listOfItems, observer) {
     if (tuple[World.__TUPLE_KEY_LIST] == listOfItems) {
       weNeedToMakeANewTupleForThisList = false;
       var setOfObservers = tuple[World.__TUPLE_KEY_OBSERVERS];
-      observerWasAdded = Util.addObjectToSet(observer, setOfObservers);
+      observerWasAdded = orp.util.addObjectToSet(observer, setOfObservers);
     }
   }
   if (weNeedToMakeANewTupleForThisList) {
@@ -1051,7 +1051,7 @@ World.prototype.removeListObserver = function(listOfItems, observer) {
     var tuple = listOfTuples[key];
     if (tuple[World.__TUPLE_KEY_LIST] == listOfItems) {
       var setOfObservers = tuple[World.__TUPLE_KEY_OBSERVERS];
-      observerWasRemoved = Util.removeObjectFromSet(observer, setOfObservers);
+      observerWasRemoved = orp.util.removeObjectFromSet(observer, setOfObservers);
     }
   }
   return observerWasRemoved;
@@ -1072,7 +1072,7 @@ World.prototype.addItemObserver = function(item, observer) {
     observerList = [];
     this._hashTableOfObserverListsKeyedByItemUuid[item.getUuid()] = observerList;
   }
-  var observerWasAdded = Util.addObjectToSet(observer, observerList);
+  var observerWasAdded = orp.util.addObjectToSet(observer, observerList);
   return observerWasAdded;
 };
 
@@ -1089,7 +1089,7 @@ World.prototype.removeItemObserver = function(item, observer) {
   var observerWasRemoved = false;
   var observerList = this._hashTableOfObserverListsKeyedByItemUuid[item.getUuid()];
   if (observerList) {
-    observerWasRemoved = Util.removeObjectFromSet(observer, observerList);
+    observerWasRemoved = orp.util.removeObjectFromSet(observer, observerList);
   } 
   return observerWasRemoved;
 };

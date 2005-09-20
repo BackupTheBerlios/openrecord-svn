@@ -162,19 +162,19 @@ ContentRecord.prototype.getOrdinalNumber = function() {
       break;
     case World.RETRIEVAL_FILTER_SINGLE_USER:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_DEMOCRATIC:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_UNABRIDGED:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     default:
       // We should never get here.  If we get here, it's an error.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
   }
   return ordinalNumber;
@@ -225,18 +225,18 @@ ContentRecord.prototype.hasBeenDeleted = function() {
       break;
     case World.RETRIEVAL_FILTER_SINGLE_USER:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_DEMOCRATIC:
       // PENDING: This still needs to be implemented.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
     case World.RETRIEVAL_FILTER_UNABRIDGED:
       hasBeenDeleted = false;
       break;
     default:
       // We should never get here.  If we get here, it's an error.
-      Util.assert(false);
+      orp.util.assert(false);
       break;
   }
   return hasBeenDeleted;
@@ -270,7 +270,7 @@ ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRec
   
   if (firstOrdinalNumber && thirdOrdinalNumber) {
     if (firstOrdinalNumber == thirdOrdinalNumber) {
-      Util.assert(false, "Tried to reorder between two items with the same ordinal.");
+      orp.util.assert(false, "Tried to reorder between two items with the same ordinal.");
     }
     else {
       if (firstOrdinalNumber > thirdOrdinalNumber) {

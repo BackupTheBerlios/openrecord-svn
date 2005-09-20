@@ -123,7 +123,7 @@ BarChartPlugin.prototype.refresh = function() {
         firstEntry = listOfEntries[0];
         if (firstEntry) {
           var value = firstEntry.getValue(contentItem);
-          if (Util.isNumber(value)) {
+          if (orp.util.isNumber(value)) {
             var count = hashTableOfNumericValueIncidenceKeyedByUuid[attributeUuid];
             if (!count) {
               count = 0;
@@ -156,7 +156,7 @@ BarChartPlugin.prototype.refresh = function() {
       if (listOfEntries && listOfEntries[0]) {
         var nextEntry = listOfEntries[0];
         var nextValue = nextEntry.getValue();
-        if (Util.isNumber(nextValue)) {
+        if (orp.util.isNumber(nextValue)) {
           maxValue = Math.max(maxValue, nextValue);
         }     
       }
@@ -186,7 +186,7 @@ BarChartPlugin.prototype.refresh = function() {
       if (listOfEntries && listOfEntries[0]) {
         firstEntry = listOfEntries[0];
         var firstValue = firstEntry.getValue();
-        if (Util.isNumber(firstValue)) {
+        if (orp.util.isNumber(firstValue)) {
           numericValue = firstValue;
         }
       }

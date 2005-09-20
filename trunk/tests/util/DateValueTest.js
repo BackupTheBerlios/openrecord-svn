@@ -38,6 +38,7 @@ var TestVars = null;
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.require("orp.util.Util");
   dojo.require("orp.util.DateValue");
   // TestVars = {};
 }
@@ -80,7 +81,7 @@ function testDateValueConstructor() {
   for (var i in dates) {
     var dateValue = dates[i];
     assertTrue('DateValue is valid', dateValue.isValid());
-    assertTrue('Util.isDate() returns true', Util.isDate(dateValue));
+    assertTrue('orp.util.isDate() returns true', orp.util.isDate(dateValue));
   }
   assertTrue('Time display is right', dates[8].toShortLocaleDateString() == 'Feb 14, 1944 9:30 am');
   assertTrue('Today is parsed correctly', dates[10].toShortLocaleDateString() =='Today');

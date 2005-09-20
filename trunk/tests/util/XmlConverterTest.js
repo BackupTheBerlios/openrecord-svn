@@ -39,6 +39,7 @@ function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.require("orp.util.XmlConverter");
+  dojo.require("orp.util.Util");
 
   XmlTextNodeToAttributeSpecifier = orp.util.XmlTextNodeToAttributeSpecifier;
   XmlAttributeToAttributeSpecifier = orp.util.XmlAttributeToAttributeSpecifier;
@@ -86,7 +87,7 @@ function testDefaultConversionOfTagsToAttributes() {
     for (var j in listOfAttributes) {
       names.push(listOfAttributes[j].getDisplayName());
     }
-    hasAll = Util.areObjectsInSet(["food:name", "food:color", "food:flavor"], names);
+    hasAll = orp.util.areObjectsInSet(["food:name", "food:color", "food:flavor"], names);
     assertTrue('Each item should have attributes called "food:name", "food:color" and "food:flavor".', hasAll);  
   }
 }
@@ -115,7 +116,7 @@ function testSimpleXmlToAttributeSpecifiers() {
     for (var j in listOfAttributes) {
       names.push(listOfAttributes[j].getDisplayName());
     }
-    assertTrue('Each item should have attributes called "Category", "Name" and "Flavor".', Util.areObjectsInSet(["Category", "Name", "Flavor"], names));
+    assertTrue('Each item should have attributes called "Category", "Name" and "Flavor".', orp.util.areObjectsInSet(["Category", "Name", "Flavor"], names));
   }
 }
 
@@ -139,7 +140,7 @@ function testMultipleValuesForAnAttribute() {
   listOfFlavors = cheesePuff.getEntriesForAttribute(flavorAttribute);
   assertTrue("'cheese puff' should have 2 flavors.", listOfFlavors.length == 2);
   var flavorNames = [listOfFlavors[0].getValue(), listOfFlavors[1].getValue()];
-  assertTrue("'cheese puff' should have flavors called 'salty' and 'cheesy'.", Util.areObjectsInSet(['salty', 'cheesy'], flavorNames));
+  assertTrue("'cheese puff' should have flavors called 'salty' and 'cheesy'.", orp.util.areObjectsInSet(['salty', 'cheesy'], flavorNames));
 }
 
 function testNestedXmlConversion() {
@@ -156,7 +157,7 @@ function testNestedXmlConversion() {
     for (var j in listOfAttributes) {
       names.push(listOfAttributes[j].getDisplayName());
     }
-    assertTrue('Each item should have attributes called "Category", "Name" and "Vitamin C".', Util.areObjectsInSet(["Category", "Name", "Vitamin C"], names));
+    assertTrue('Each item should have attributes called "Category", "Name" and "Vitamin C".', orp.util.areObjectsInSet(["Category", "Name", "Vitamin C"], names));
   }
 }
 
@@ -180,9 +181,9 @@ function testXmlAttributeConversion() {
         listOfIds.push(item.getSingleEntryFromAttribute(listOfAttributes[j]).getValue());
       }
     }
-    assertTrue('Each item should have attributes called "Category", "Name" and "Food ID".', Util.areObjectsInSet(["Category", "Name", "Food ID"], names));
+    assertTrue('Each item should have attributes called "Category", "Name" and "Food ID".', orp.util.areObjectsInSet(["Category", "Name", "Food ID"], names));
   }
-  assertTrue('Values of the "Food ID" attribute should include "32", "47" and "114".', Util.areObjectsInSet(["32", "47", "114"], listOfIds));
+  assertTrue('Values of the "Food ID" attribute should include "32", "47" and "114".', orp.util.areObjectsInSet(["32", "47", "114"], listOfIds));
 }
 
 function testExpectedType() {

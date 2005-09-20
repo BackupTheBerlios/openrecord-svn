@@ -118,7 +118,7 @@ OutlinePlugin.prototype.refresh = function() {
 
     // View.appendNewTextNode(anchorElement, "(more &#8658;)");
     anchorElement.innerHTML = "(more &#8658;)";
-    Util.addEventListener(anchorElement, "click", RootView.clickOnLocalLink);
+    orp.util.addEventListener(anchorElement, "click", RootView.clickOnLocalLink);
   }
 };
 

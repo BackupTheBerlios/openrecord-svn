@@ -92,8 +92,8 @@ PageView.newSection = function(repository, inPage) {
  */
 PageView.prototype = new View();  // makes PageView be a subclass of View
 function PageView(superview, htmlElement, pageItem) {
-  Util.assert(htmlElement instanceof HTMLElement);
-  Util.assert(pageItem instanceof Item);
+  orp.util.assert(htmlElement instanceof HTMLElement);
+  orp.util.assert(pageItem instanceof Item);
 
   View.call(this, superview, htmlElement, "PageView");
 
@@ -145,7 +145,7 @@ PageView.prototype.refresh = function() {
  * @scope    public instance method
  */
 PageView.prototype.doInitialDisplay = function() {
-  Util.assert(this.getHtmlElement() instanceof HTMLElement);
+  orp.util.assert(this.getHtmlElement() instanceof HTMLElement);
   
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();

@@ -83,9 +83,9 @@ EntryView._PENDING_enableDragging = true;
  */
 EntryView.prototype = new View();  // makes EntryView be a subclass of View
 function EntryView(superview, htmlElement, item, attribute, entry, isMultiLine) {
-  Util.assert((!entry) || entry instanceof Entry);
-  Util.assert(item instanceof Item);
-  Util.assert(attribute instanceof Item); // PENDING need to check that attribute is an attribute
+  orp.util.assert((!entry) || entry instanceof Entry);
+  orp.util.assert(item instanceof Item);
+  orp.util.assert(attribute instanceof Item); // PENDING need to check that attribute is an attribute
   
   View.call(this, superview, htmlElement, "EntryView");
 
@@ -169,9 +169,9 @@ EntryView.prototype.setAutoWiden = function(autoWiden) {
  *
  */
 EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntries) {
-  Util.assert(Util.isArray(expectedTypeEntries));
+  orp.util.assert(orp.util.isArray(expectedTypeEntries));
   for (var key in expectedTypeEntries) {
-    Util.assert(expectedTypeEntries[key] instanceof Entry);
+    orp.util.assert(expectedTypeEntries[key] instanceof Entry);
   }
   this._expectedTypeEntries = expectedTypeEntries;
 };
@@ -181,7 +181,7 @@ EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntries) {
  *
  */
 EntryView.prototype.setSuggestions = function(listOfSuggestions) {
-  if (listOfSuggestions) {Util.assert(Util.isArray(listOfSuggestions));}
+  if (listOfSuggestions) {orp.util.assert(orp.util.isArray(listOfSuggestions));}
   this._suggestions = listOfSuggestions;
 };
 
@@ -279,7 +279,7 @@ EntryView.prototype._setClassName = function() {
     var typeNumber = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
     if (dataType == typeNumber) {
       if (this._entry.getValue() < 0) {
-        Util.css_addClass(this._textSpan,EntryView.CSS_CLASS_NEGATIVE_NUMBER);
+        orp.util.css_addClass(this._textSpan,EntryView.CSS_CLASS_NEGATIVE_NUMBER);
       }
     }
   }
@@ -293,9 +293,9 @@ EntryView.prototype._canStartEditing = function() {
 }; */
 
 EntryView.prototype.unSelect = function() {
-  Util.assert(this._isLozenge());
+  orp.util.assert(this._isLozenge());
   this._setClassName();
-  //Util.css_removeClass(this._textSpan, EntryView.CSS_CLASS_SELECTED);
+  //orp.util.css_removeClass(this._textSpan, EntryView.CSS_CLASS_SELECTED);
 };
 
 /** Select this Entry
@@ -391,7 +391,7 @@ EntryView.prototype.stopEditing = function() {
         newValue = this._provisionalText;
       }
       var newValueDisplayString = "";
-      if (Util.isString(newValue)) {
+      if (orp.util.isString(newValue)) {
         newValueDisplayString = newValue;
       }
       else if (newValue instanceof Item) {
@@ -422,7 +422,7 @@ EntryView.prototype.stopEditing = function() {
  * @param    value    The new value to be saved. 
  */
 EntryView.prototype._transformToExpectedType = function(value) {
-  if (value && Util.isString(value)) {
+  if (value && orp.util.isString(value)) {
     var world = this.getWorld();
     var listOfExpectedTypeEntries;
     if (this._expectedTypeEntries) {
@@ -453,7 +453,7 @@ EntryView.prototype._transformToExpectedType = function(value) {
  * @param    listOfTypes    The new value to be saved. 
  */
 EntryView._transformValueToExpectedType = function(world, value, listOfTypes) {
-  if (value && Util.isString(value) && listOfTypes && Util.isArray(listOfTypes)) {
+  if (value && orp.util.isString(value) && listOfTypes && orp.util.isArray(listOfTypes)) {
     var categoryCalledCategory = world.getCategoryCalledCategory();
     var typeCalledText = world.getTypeCalledText();
     var typeCalledDate = world.getTypeCalledDate();
@@ -585,7 +585,7 @@ EntryView.prototype._restoreText = function(dontSelect) {
  * @param    onClickFunction    A function to call. 
  */
 EntryView.prototype.setClickFunction = function(onClickFunction) {
-  Util.assert(onClickFunction instanceof Function);
+  orp.util.assert(onClickFunction instanceof Function);
   this._clickFunction = onClickFunction;
 };
 
@@ -678,15 +678,15 @@ EntryView.prototype.onKeyUp = function(eventObject) {
  * @param    inEventObject    An event object. 
  */
 EntryView.prototype.onKeyPress = function(eventObject) {
-  if (eventObject.keyCode == Util.ASCII_VALUE_FOR_ESCAPE) {
+  if (eventObject.keyCode == orp.util.ASCII.ESCAPE) {
     this._restoreText();
     return true;
   }
   if (this._suggestionBox && this._suggestionBox._keyPressOnInputField(eventObject)) {
     return true;
   }
-  var ignoreKeyPressFunc = this._isEditing && (eventObject.keyCode == Util.ASCII_VALUE_FOR_LEFT_ARROW || 
-    eventObject.keyCode == Util.ASCII_VALUE_FOR_RIGHT_ARROW);
+  var ignoreKeyPressFunc = this._isEditing && (eventObject.keyCode == orp.util.ASCII.LEFT_ARROW || 
+    eventObject.keyCode == orp.util.ASCII.RIGHT_ARROW);
   if (!ignoreKeyPressFunc && this._keyPressFunction && this._keyPressFunction(eventObject, this)) {
     return true;
   }
@@ -746,15 +746,15 @@ EntryView.prototype.handleKeyEventWhenSelected = function(myEvent) {
   if (this._keyPressFunction && this._keyPressFunction(myEvent, this)) {
     return true;
   }
-  if (myEvent.keyCode ==  Util.KEYCODE_FOR_BACKSPACE || myEvent.keyCode == Util.KEYCODE_FOR_DELETE ||
+  if (myEvent.keyCode ==  orp.util.KEYCODE_FOR_BACKSPACE || myEvent.keyCode == orp.util.KEYCODE_FOR_DELETE ||
       myEvent.keyCode === 0) {
-    Util.assert(this._entry !== null);
+    orp.util.assert(this._entry !== null);
     this._entry.voteToDelete();
     this._entry = null;
     this._valueIsItem = false;
     this._setClassName();
     this.getRootView().removeFromSelection(this);
-    if ((myEvent.keyCode ==  Util.KEYCODE_FOR_BACKSPACE || myEvent.keyCode == Util.KEYCODE_FOR_DELETE) &&
+    if ((myEvent.keyCode ==  orp.util.KEYCODE_FOR_BACKSPACE || myEvent.keyCode == orp.util.KEYCODE_FOR_DELETE) &&
         this.getSuperview().entryRemoved) {
       this.getSuperview().entryRemoved(this);
     }
@@ -762,7 +762,7 @@ EntryView.prototype.handleKeyEventWhenSelected = function(myEvent) {
       this._buildView();
     }
     if (myEvent.keyCode === 0) {
-      this.startEditing(true,Util.getStringFromKeyEvent(myEvent));
+      this.startEditing(true, orp.util.getStringFromKeyEvent(myEvent));
       return true;
     }
     return false;

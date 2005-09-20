@@ -68,13 +68,13 @@ function Record() {
 Record.prototype._Record = function(world, uuid) {
   dojo.require("orp.util.TimeBasedUuid");
 
-  Util.assert(Util.isUuidValue(uuid));
-  if (Util.isString(uuid)) {
+  orp.util.assert(orp.util.isUuidValue(uuid));
+  if (orp.util.isString(uuid)) {
     var uuidString = uuid;
-    Util.assert(uuidString.length == 36);
+    orp.util.assert(uuidString.length == 36);
     uuid = new orp.util.TimeBasedUuid(uuidString);
   }
-  Util.assert(Util.isUuid(uuid));
+  orp.util.assert(orp.util.isUuid(uuid));
   
   this._world = world;
   this._uuid = uuid;
