@@ -55,10 +55,12 @@ dojo.require("orp.model.World");
  * and the class Entry.
  *
  * @scope    public instance constructor
- * @syntax   DO NOT CALL THIS CONSTRUCTOR
+ * @param    world    The world that this ContentRecord is a part of. 
+ * @param    uuid    The UUID for this ContentRecord. 
  */
-orp.model.ContentRecord = function() {
-  orp.model.Record.call(this);
+orp.model.ContentRecord = function(world, uuid) {
+  orp.model.Record.call(this, world, uuid);
+  
   // Don't create these properties until we know we need them.
   // this._setOfVotes = null;
   // this._setOfOrdinals = null;
@@ -70,18 +72,6 @@ dj_inherits(orp.model.ContentRecord, orp.model.Record);  // makes ContentRecord 
 // -------------------------------------------------------------------
 // Package/module methods           
 // -------------------------------------------------------------------
-
-/**
- * Called from the constructor function of each subclass of ContentRecord.
- *
- * @scope    protected instance method
- * @param    world    The world that this ContentRecord is a part of. 
- * @param    uuid    The UUID for this ContentRecord. 
- */
-orp.model.ContentRecord.prototype._ContentRecord = function(world, uuid) {
-  this._Record(world, uuid);
-};
-
 
 /**
  * Records a user's vote to retain or delete this ContentRecord.

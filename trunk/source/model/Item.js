@@ -65,8 +65,7 @@ dojo.require("dojo.lang.*");
  * @param    uuid    The UUID for this item. 
  */
 orp.model.Item = function(world, uuid) {
-  orp.model.ContentRecord.call(this);
-  this._ContentRecord(world, uuid);
+  orp.model.ContentRecord.call(this, world, uuid);
   
   this._hashTableOfEntryListsKeyedByAttributeUuid = {};
   this._provisionalFlag = false;

@@ -56,7 +56,7 @@ dojo.require("orp.model.Record");
  * @param    inOrdinalNumber    The ordinal number itself. 
  */
 orp.model.Ordinal = function(world, uuid, contentRecord, ordinalNumber) {
-  this._Record(world, uuid);
+  orp.model.Record.call(this, world, uuid);
 
   this._contentRecord = contentRecord;
   this._ordinalNumber = ordinalNumber;

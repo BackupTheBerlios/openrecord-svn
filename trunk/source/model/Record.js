@@ -53,27 +53,10 @@ dojo.require("orp.util.TimeBasedUuid");
  * for Item and Entry.
  *
  * @scope    public instance constructor
- * @syntax   DO NOT CALL THIS CONSTRUCTOR
- */
-orp.model.Record = function() {
-  // Don't create these properties until we know we need them.
-  // this._creationTimestamp = null;
-  // this._creationUserstamp = null;
-};
-
-
-// -------------------------------------------------------------------
-// Package/module methods           
-// -------------------------------------------------------------------
-
-/**
- * Called from the constructor function of each subclass of Record.
- *
- * @scope    protected instance method
  * @param    world    The world that this Record is a part of. 
  * @param    uuid    The UUID for this Record. 
  */
-orp.model.Record.prototype._Record = function(world, uuid) {
+orp.model.Record = function(world, uuid) {
   orp.util.assert(orp.util.isUuidValue(uuid));
   if (orp.util.isString(uuid)) {
     var uuidString = uuid;
@@ -84,8 +67,11 @@ orp.model.Record.prototype._Record = function(world, uuid) {
   
   this._world = world;
   this._uuid = uuid;
-};
 
+  // Don't create these properties until we know we need them.
+  // this._creationTimestamp = null;
+  // this._creationUserstamp = null;
+};
 
 
 // -------------------------------------------------------------------

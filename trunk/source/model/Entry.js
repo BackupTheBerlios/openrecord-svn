@@ -63,8 +63,7 @@ dojo.require("orp.model.World");
  * @param    uuid    The UUID for this entry. 
  */
 orp.model.Entry = function(world, uuid) {
-  orp.model.ContentRecord.call(this);
-  this._ContentRecord(world, uuid);
+  orp.model.ContentRecord.call(this, world, uuid);
  
   this._previousEntry = null;
   this._listOfSubsequentEntries = [];

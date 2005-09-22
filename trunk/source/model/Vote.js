@@ -56,7 +56,7 @@ dojo.require("orp.model.Record");
  * @param    retainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  */
 orp.model.Vote = function(world, uuid, contentRecord, retainFlag) {
-  this._Record(world, uuid);
+  orp.model.Record.call(this, world, uuid);
 
   this._contentRecord = contentRecord;
   this._retainFlag = retainFlag;

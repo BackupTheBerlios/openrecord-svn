@@ -353,7 +353,14 @@ chao   | 		      | 0.1  IED|     Show current active page on sidebar
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
 brian  |          | 0.5  IED|  1. look into using the Dojo Package System
-       |          | 0.5+    |     convert code to use Dojo Package System
+brian  |          | 0.5+    |     convert code to use Dojo Package System
+       |          |         |     try removing all the lines: dojo.hostenv.setModulePrefix("dojo", ... 
+       |          |         |     try to get djConfig.debugAtAllCosts to work (see sandbox.html)
+       |          |         |     try to replace /source/util/Cookie.js with dojo.io.cookies
+       |          |         |     try to replace Util.js functions with dojo.lang functions
+       |          |         |     move isUuid out of Util.js
+brian  |          | 0    IED|     in model, get rid of ._Record() and ._ContentRecord()
+       |          |         |     make some sort of assertType() method
 brian  | 0.25 IED | 0    IED|     move scrap_yard contents to the tests_of_external_code directory and delete scrap_yard
 brian  | 0.25 IED | 0.25 IED|     refactor UUID constructor API, and other UUID improvements
        |          |         |  2. create a FakeStorage class, + rename FileSaver + HttpSaver
