@@ -118,8 +118,10 @@ dojo.hostenv.setModulePrefix("dojo", "../../dojo/dojo-0.1.0/src");
 dojo.hostenv.setModulePrefix("orp", "../../../source");
 
 OpenRecordLoader.loadEverything();
+
 dojo.require("orp.model.World");
 dojo.require("orp.view.RootView");
+
 dojo.hostenv.writeIncludes(); // needed when using "debugAtAllCosts: true"
 
 window.onload = function() { 
