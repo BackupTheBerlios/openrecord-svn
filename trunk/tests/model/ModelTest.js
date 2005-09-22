@@ -28,7 +28,6 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
-
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
@@ -47,14 +46,17 @@ var world;
 // -------------------------------------------------------------------
 
 function setUp() {
-  dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.require("orp.model.World");
+  dojo.require("orp.model.StubVirtualServer");
+  dojo.require("orp.util.DateValue");
 
   ModelTestVars = {};
 
   var pathToTrunkDirectory = "../..";
-  var stubVirtualServer = new StubVirtualServer(pathToTrunkDirectory);
-  world = new World(stubVirtualServer);
+  var stubVirtualServer = new orp.model.StubVirtualServer(pathToTrunkDirectory);
+  world = new orp.model.World(stubVirtualServer);
 }
 
 function tearDown() {
@@ -202,7 +204,7 @@ function testAccessorsForAxiomaticItems() {
     assertTrue('Every axiomatic attribute has an array of names', orp.util.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic attribute has one name assigned', listOfAssignedNames.length == 1);
     nameEntry = listOfAssignedNames[0];
-    assertTrue('Every axiomatic attribute has a name which is an entry', (nameEntry instanceof Entry));
+    assertTrue('Every axiomatic attribute has a name which is an entry', (nameEntry instanceof orp.model.Entry));
     assertTrue('Every entry can be displayed as a string', orp.util.isString(nameEntry.getDisplayString()));
   }
   
@@ -215,7 +217,7 @@ function testAccessorsForAxiomaticItems() {
     assertTrue('Every axiomatic category has an array of names', orp.util.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic category has one name assigned', listOfAssignedNames.length == 1);
     nameEntry = listOfAssignedNames[0];
-    assertTrue('Every axiomatic category has a name which is entry', (nameEntry instanceof Entry));
+    assertTrue('Every axiomatic category has a name which is entry', (nameEntry instanceof orp.model.Entry));
     assertTrue('Every entry can be displayed as a string', orp.util.isString(nameEntry.getDisplayString()));
   }
 }
@@ -277,7 +279,7 @@ function noyet_testAdditionsAndRetrievals() {
   assertTrue('"Star Wars" has both expected attributes', hasAll);
   
   worldRetrievalFilter = world.getRetrievalFilter();
-  assertTrue('Default retrieval filter is "last edit wins"', worldRetrievalFilter == World.RETRIEVAL_FILTER_LAST_EDIT_WINS);
+  assertTrue('Default retrieval filter is "last edit wins"', worldRetrievalFilter == orp.model.World.RetrievalFilter.LAST_EDIT_WINS);
   
   var luke = starWars.replaceEntry({previousEntry:luck, value:"Luke Skywalker"});
   var previousEntry = luke.getPreviousEntry();
@@ -551,7 +553,7 @@ function testQueries() {
   var cupcake = world.newItem("Cupcake");
 
   var categoryCalledFood = world.newCategory("Food");
-  assertTrue('The category "Food" is an item', (categoryCalledFood instanceof Item));
+  assertTrue('The category "Food" is an item', (categoryCalledFood instanceof orp.model.Item));
   apple.assignToCategory(categoryCalledFood);
   brownie.assignToCategory(categoryCalledFood);
   cupcake.assignToCategory(categoryCalledFood);
@@ -613,9 +615,9 @@ function testQueries() {
 }
 
 
-/**
- * Tests World._getFilteredList, via World.getUsers and World.getCategories.
- */
+
+// Tests World._getFilteredList, via World.getUsers and World.getCategories.
+
 function testFilteredLists() {
   var janesPassword = "jane's password";
   var userJane = world.newUser("Jane Doe", janesPassword);  

@@ -1,10 +1,10 @@
 /*****************************************************************************
- TestReorderingForSpecialCases.js
+ TestReorderingForTypicalOrdinals.js
  
 ******************************************************************************
  Written in 2005 by 
     Mignon Belongie
-
+  
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
     http://creativecommons.org/licenses/publicdomain/
@@ -40,7 +40,11 @@
 // -------------------------------------------------------------------
 
 var world;
-var categoryCalledFood = null;
+var categoryCalledFood;
+var sushi;
+var pesto;
+var guava;
+var taffy;
 var utilAssertReportedError;
 
 
@@ -51,16 +55,25 @@ var utilAssertReportedError;
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.require("orp.model.StubVirtualServer");
+  dojo.require("orp.model.World");
+  
+  ContentRecord = orp.model.ContentRecord;
 
   utilAssertReportedError = false;
   orp.util.setErrorReportCallback(errorReporter);
   var pathToTrunkDirectory = "../..";
-  var virtualServer = new StubVirtualServer(pathToTrunkDirectory);
+  var virtualServer = new orp.model.StubVirtualServer(pathToTrunkDirectory);
+  var realUuidGenerator = orp.model.StubVirtualServer.prototype._generateUuid;
+  orp.model.StubVirtualServer.prototype._generateUuid = mockUuidGenerator;
+/*
+You can use DeltaVirtualServer instead if you want to append all transactions to a file for debugging purposes.
+Note that the tests will run a lot slower if you do.
 
-  realUuidGenerator = StubVirtualServer.prototype._generateUuid;
-  StubVirtualServer.prototype._generateUuid = mockUuidGenerator;
+  var virtualServer = new orp.model.DeltaVirtualServer("OrdinalsTest", pathToTrunkDirectory, {"_generateUuid":mockUuidGenerator});
+*/
 
-  world = new World(virtualServer);
+  world = new orp.model.World(virtualServer);
 
   annUuid1 = "10000000-2222-1333-F444-555555555555";
   annUuid2 = "10000001-2222-1333-F444-555555555555";
@@ -81,6 +94,46 @@ function setUp() {
   mockUuidGenerator.queueOfUuids.push(foodUuid2);
   mockUuidGenerator.queueOfUuids.push(foodUuid3);
   categoryCalledFood = world.newCategory("Food");
+
+  sushiUuid     = "40000000-2222-1333-F444-555555555555";
+  sushiNameUuid = "40000001-2222-1333-F444-555555555555";
+  mockUuidGenerator.queueOfUuids.push(sushiUuid);
+  mockUuidGenerator.queueOfUuids.push(sushiNameUuid);
+  pestoUuid     = "40000010-2222-1333-F444-555555555555";
+  pestoNameUuid = "40000011-2222-1333-F444-555555555555";
+  mockUuidGenerator.queueOfUuids.push(pestoUuid);
+  mockUuidGenerator.queueOfUuids.push(pestoNameUuid);
+  guavaUuid     = "40000020-2222-1333-F444-555555555555";
+  guavaNameUuid = "40000021-2222-1333-F444-555555555555";
+  mockUuidGenerator.queueOfUuids.push(guavaUuid);
+  mockUuidGenerator.queueOfUuids.push(guavaNameUuid);
+  taffyUuid     = "40000030-2222-1333-F444-555555555555";
+  taffyNameUuid = "40000031-2222-1333-F444-555555555555";
+  mockUuidGenerator.queueOfUuids.push(taffyUuid);
+  mockUuidGenerator.queueOfUuids.push(taffyNameUuid);
+  sushi = world.newItem("Sushi");
+  assertTrue("sushi has the expected uuid", sushi.getUuidString() == sushiUuid);
+  pesto = world.newItem("Pesto");
+  assertTrue("pesto has the expected uuid", pesto.getUuidString() == pestoUuid);
+  guava = world.newItem("Guava");
+  assertTrue("guava has the expected uuid", guava.getUuidString() == guavaUuid);
+  taffy = world.newItem("Taffy");
+  assertTrue("taffy has the expected uuid", taffy.getUuidString() == taffyUuid);
+
+  sushiLinkUuid    = "60000000-2222-1333-F444-555555555555";
+  mockUuidGenerator.queueOfUuids.push(sushiLinkUuid);
+  sushi.assignToCategory(categoryCalledFood);
+  pestoLinkUuid    = "60000001-2222-1333-F444-555555555555";
+  mockUuidGenerator.queueOfUuids.push(pestoLinkUuid);
+  pesto.assignToCategory(categoryCalledFood);
+  guavaLinkUuid    = "60000002-2222-1333-F444-555555555555";
+  mockUuidGenerator.queueOfUuids.push(guavaLinkUuid);
+  guava.assignToCategory(categoryCalledFood);
+  taffyLinkUuid    = "60000002-2222-1333-F444-555555555555";
+  mockUuidGenerator.queueOfUuids.push(taffyLinkUuid);
+  taffy.assignToCategory(categoryCalledFood);
+
+  orp.model.StubVirtualServer.prototype._generateUuid = realUuidGenerator;
 }
 
 function tearDown() {
@@ -93,69 +146,27 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
-function testReorderBetweenTwoItemsWithTheSameOrdinal() {
-  sushiUuid     = "40000000-2222-1333-F444-555555555555";
-  sushiNameUuid = "40000001-2222-1333-F444-555555555555";
-  mockUuidGenerator.queueOfUuids.push(sushiUuid);
-  mockUuidGenerator.queueOfUuids.push(sushiNameUuid);
-  pestoUuid     = "40000000-2222-1333-9999-555555555555";
-  pestoNameUuid = "40000001-2222-1333-9999-555555555555";
-  mockUuidGenerator.queueOfUuids.push(pestoUuid);
-  mockUuidGenerator.queueOfUuids.push(pestoNameUuid);
-  guavaUuid     = "50000000-2222-1333-F444-555555555555";
-  guavaNameUuid = "50000001-2222-1333-F444-555555555555";
-  mockUuidGenerator.queueOfUuids.push(guavaUuid);
-  mockUuidGenerator.queueOfUuids.push(guavaNameUuid);
-  var sushi = world.newItem("Sushi");
-  var pesto = world.newItem("Pesto");
-  var guava = world.newItem("Guava");
-
-  StubVirtualServer.prototype._generateUuid = realUuidGenerator;
-  
-  assertTrue(sushi.getOrdinalNumber() == pesto.getOrdinalNumber());
+function testReorderBetweenTwoItems() {
   guava.reorderBetween(sushi, pesto);
-  assertTrue(utilAssertReportedError);
-  utilAssertReportedError = false;
+  foodItems = world.getItemsInCategory(categoryCalledFood);
+  assertTrue('After first reordering, Sushi is first in the list.', foodItems[0] == sushi);
+  assertTrue('After first reordering, Guava is second in the list.', foodItems[1] == guava);
+  assertTrue('After first reordering, Pesto is third in the list.', foodItems[2] == pesto);
 }
 
-function testReorderBetweenTwoItemsWithTheSameTimestamp() {
-  sushiUuid     = "40000000-2222-1333-F444-555555555555";
-  sushiNameUuid = "40000001-2222-1333-F444-555555555555";
-  mockUuidGenerator.queueOfUuids.push(sushiUuid);
-  mockUuidGenerator.queueOfUuids.push(sushiNameUuid);
-  pestoUuid     = "40000002-2222-1333-F444-555555555555";
-  pestoNameUuid = "40000003-2222-1333-F444-555555555555";
-  mockUuidGenerator.queueOfUuids.push(pestoUuid);
-  mockUuidGenerator.queueOfUuids.push(pestoNameUuid);
-  guavaUuid     = "40000004-2222-1333-F444-555555555555";
-  guavaNameUuid = "40000005-2222-1333-F444-555555555555";
-  mockUuidGenerator.queueOfUuids.push(guavaUuid);
-  mockUuidGenerator.queueOfUuids.push(guavaNameUuid);
-  var sushi = world.newItem("Sushi");
-  var pesto = world.newItem("Pesto");
-  var guava = world.newItem("Guava");
-  assertTrue('Sushi and Pesto have same timestamp', sushi.getTimestamp() == pesto.getTimestamp());
-  assertTrue('Sushi and Guava have same timestamp', sushi.getTimestamp() == guava.getTimestamp());
+function testReorderAfterAnItem() {
+  assertTrue(ContentRecord.compareOrdinals(sushi, guava) < 0);
+  sushi.reorderBetween(guava, null);
+  assertTrue(ContentRecord.compareOrdinals(sushi, guava) > 0);
+}
 
-  StubVirtualServer.prototype._generateUuid = realUuidGenerator;
+function testReorderBeforeAnItem() {
+  assertTrue(ContentRecord.compareOrdinals(pesto, guava) < 0);
+  guava.reorderBetween(null, pesto);
+  assertTrue(ContentRecord.compareOrdinals(pesto, guava) > 0);
+}
 
-  guava.reorderBetween(sushi, pesto);
-
-  StubVirtualServer.prototype._generateUuid = mockUuidGenerator;
-
-  sushiLinkUuid    = "60000000-2222-1333-F444-555555555555";
-  mockUuidGenerator.queueOfUuids.push(sushiLinkUuid);
-  sushi.assignToCategory(categoryCalledFood);
-  pestoLinkUuid    = "60000001-2222-1333-F444-555555555555";
-  mockUuidGenerator.queueOfUuids.push(pestoLinkUuid);
-  pesto.assignToCategory(categoryCalledFood);
-  guavaLinkUuid    = "60000002-2222-1333-F444-555555555555";
-  mockUuidGenerator.queueOfUuids.push(guavaLinkUuid);
-  
-  StubVirtualServer.prototype._generateUuid = realUuidGenerator;
-
-  guava.assignToCategory(categoryCalledFood);
-
+function testReorderTwice() {
   guava.reorderBetween(sushi, pesto);
   foodItems = world.getItemsInCategory(categoryCalledFood);
   assertTrue('After first reordering, Sushi is first in the list.', foodItems[0] == sushi);
@@ -167,6 +178,40 @@ function testReorderBetweenTwoItemsWithTheSameTimestamp() {
   assertTrue('After 2nd reordering, Sushi is first in the list.', foodItems[0] == sushi);
   assertTrue('After 2nd reordering, Pesto is second in the list.', foodItems[1] == pesto);
   assertTrue('After 2nd reordering, Guava is third in the list.', foodItems[2] == guava);
+}
+
+function testReorderManyTimes() {
+  for (i = 0; i < 10; i++) {
+    guava.reorderBetween(sushi, pesto);
+    assertTrue(ContentRecord.compareOrdinals(sushi, guava) < 0);
+    assertTrue(ContentRecord.compareOrdinals(guava, pesto) < 0);
+    pesto.reorderBetween(sushi, guava);
+    assertTrue(ContentRecord.compareOrdinals(sushi, pesto) < 0);
+    assertTrue(ContentRecord.compareOrdinals(pesto, guava) < 0);
+  }
+}
+
+function testReorderBetweenTwoItemsWhichAreTheSame() {
+  pesto.reorderBetween(sushi, sushi);
+  assertTrue(utilAssertReportedError);
+  utilAssertReportedError = false;
+}
+
+function testReorderBetweenTwoItemsNotInOrder() {
+  assertTrue(ContentRecord.compareOrdinals(sushi, pesto) < 0);
+  guava.reorderBetween(pesto, sushi);
+  assertTrue(ContentRecord.compareOrdinals(pesto, guava) > 0);
+  assertTrue(ContentRecord.compareOrdinals(guava, sushi) > 0);
+}
+
+function testReorderTwoItemsBetweenTheSameTwoItems() {
+  guava.reorderBetween(sushi, pesto);
+  taffy.reorderBetween(sushi, pesto);
+  assertTrue(ContentRecord.compareOrdinals(sushi, guava) < 0);
+  assertTrue(ContentRecord.compareOrdinals(guava, pesto) < 0);
+  assertTrue(ContentRecord.compareOrdinals(sushi, taffy) < 0);
+  assertTrue(ContentRecord.compareOrdinals(taffy, pesto) < 0);
+  assertTrue(ContentRecord.compareOrdinals(taffy, guava) != 0);
 }
 
 

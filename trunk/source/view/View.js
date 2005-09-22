@@ -30,6 +30,12 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.view.View");
+dojo.require("orp.util.Util");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global window, HTMLElement  */
@@ -37,6 +43,9 @@
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
  * The View class serves as an abstract superclass for other view classes.
  *
@@ -45,7 +54,7 @@
  * @param    htmlElement    The HTMLElement to display this view in. 
  * @param    className    Optional. The CSS className to assign to the htmlElement.
  */
-function View(superview, htmlElement, className) {
+orp.view.View = function(superview, htmlElement, className) {
   if (!superview) {return;} // initial call that subclasses of PluginViews make without parameters
   this._superview = superview;
   this._htmlElement = htmlElement;
@@ -54,8 +63,12 @@ function View(superview, htmlElement, className) {
     this._htmlElement.className = this._className;
   }
   this._myHasEverBeenDisplayedFlag = false; // PENDING: this is accessed directly by subclasses, which is bad
-}
+};
 
+
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
 
 /**
  * Returns the parent view in the view hierarchy.
@@ -63,7 +76,7 @@ function View(superview, htmlElement, className) {
  * @scope    public instance method
  * @return   A View object. 
  */
-View.prototype.getSuperview = function() {
+orp.view.View.prototype.getSuperview = function() {
   return this._superview;
 };
 
@@ -74,7 +87,7 @@ View.prototype.getSuperview = function() {
  * @scope    public instance method
  * @return   An HTMLElement. 
  */
-View.prototype.getHtmlElement = function() {
+orp.view.View.prototype.getHtmlElement = function() {
   return this._htmlElement;
 };
 
@@ -85,7 +98,7 @@ View.prototype.getHtmlElement = function() {
  * @scope    public instance method
  * @return   An HTMLElement. 
  */
-View.prototype.getClassName = function() {
+orp.view.View.prototype.getClassName = function() {
   return this._className;
 };
 
@@ -96,7 +109,7 @@ View.prototype.getClassName = function() {
  * @scope    public instance method
  * @return   A World object. 
  */
-View.prototype.getWorld = function() {
+orp.view.View.prototype.getWorld = function() {
   return this._superview.getWorld();
 };
 
@@ -107,7 +120,7 @@ View.prototype.getWorld = function() {
  * @scope    public instance method
  * @return   An instance of RootView.
  */
-View.prototype.getRootView = function() {
+orp.view.View.prototype.getRootView = function() {
   if (!this.getSuperview()) {
     return null;
   } else {
@@ -122,7 +135,7 @@ View.prototype.getRootView = function() {
  * @scope    public instance method
  * @return   A boolean value. True if we are in Edit Mode.
  */
-View.prototype.isInEditMode = function() {
+orp.view.View.prototype.isInEditMode = function() {
   return this._superview.isInEditMode();
 };
 
@@ -133,7 +146,7 @@ View.prototype.isInEditMode = function() {
  * @scope    public instance method
  * @return   A boolean value. True if the view has ever been displayed.
  */
-View.prototype.hasEverBeenDisplayed = function() {
+orp.view.View.prototype.hasEverBeenDisplayed = function() {
   return this._myHasEverBeenDisplayedFlag;
 };
 
@@ -144,7 +157,7 @@ View.prototype.hasEverBeenDisplayed = function() {
  *
  * @scope    public instance method
  */
-View.prototype.refresh = function() {
+orp.view.View.prototype.refresh = function() {
   if (!this.hasEverBeenDisplayed()) {
     // generate HTML elements for the view
     this._myHasEverBeenDisplayedFlag = true;
@@ -161,7 +174,7 @@ View.prototype.refresh = function() {
  * @scope    public instance method
  * @param    visibleFlag    True if the view should be visible on screen. False if the view should be hidden off screen.
  */
-View.prototype.includeOnScreen = function(visibleFlag) {
+orp.view.View.prototype.includeOnScreen = function(visibleFlag) {
   orp.util.assert(orp.util.isBoolean(visibleFlag));
 
   if (visibleFlag) {
@@ -184,7 +197,7 @@ View.prototype.includeOnScreen = function(visibleFlag) {
  * @scope    public class method
  * @param    element    An HTML element. 
  */
-View.removeChildrenOfElement = function(element) {
+orp.view.View.removeChildrenOfElement = function(element) {
   orp.util.assert(element instanceof HTMLElement);
   element.innerHTML = '';
 };
@@ -201,7 +214,7 @@ View.removeChildrenOfElement = function(element) {
  * @param    text    Optional. A text string to put in a text node within the new element. 
  * @return   The newly created HTML element.
  */
-View.newElement = function(tagName, cssClassName, attributesInJson, text) {
+orp.view.View.newElement = function(tagName, cssClassName, attributesInJson, text) {
   orp.util.assert(orp.util.isString(tagName));
   orp.util.assert(!cssClassName || orp.util.isString(cssClassName));
   orp.util.assert(!attributesInJson || orp.util.isObject(attributesInJson));
@@ -236,8 +249,8 @@ View.newElement = function(tagName, cssClassName, attributesInJson, text) {
  * <pre>
  * var menuUrl = "http://en.wikipedia.org/";
  * var menuText = "Wikipedia";
- * var menuItem = View.appendNewElement(mainMenu, "li", NavbarView.CSS_CLASS_MENU_ITEM);
- * var link = View.appendNewElement(menuItem, "a", null, {href: menuUrl}, menuText);
+ * var menuItem = orp.view.View.appendNewElement(mainMenu, "li", orp.view.NavbarView.cssClass.MENU_ITEM);
+ * var link = orp.view.View.appendNewElement(menuItem, "a", null, {href: menuUrl}, menuText);
  * </pre>
  *
  * @scope    public class method
@@ -248,10 +261,10 @@ View.newElement = function(tagName, cssClassName, attributesInJson, text) {
  * @param    text    Optional. A text string to put in a text node within the new element. 
  * @return   The newly created HTML element.
  */
-View.appendNewElement = function(parentElement, tagName, cssClassName, attributesInJson, text) {
+orp.view.View.appendNewElement = function(parentElement, tagName, cssClassName, attributesInJson, text) {
   orp.util.assert(parentElement instanceof HTMLElement);
   
-  var newElement = View.newElement(tagName, cssClassName, attributesInJson, text);
+  var newElement = orp.view.View.newElement(tagName, cssClassName, attributesInJson, text);
   parentElement.appendChild(newElement);
   return newElement;
 };
@@ -267,7 +280,7 @@ View.appendNewElement = function(parentElement, tagName, cssClassName, attribute
  * @param    textString    The text string to put in the text node.
  * @return   The newly created text node.
  */
-View.appendNewTextNode = function(parentElement, textString) {
+orp.view.View.appendNewTextNode = function(parentElement, textString) {
   orp.util.assert(parentElement instanceof HTMLElement);
   orp.util.assert(orp.util.isString(textString));
 

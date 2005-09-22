@@ -30,6 +30,15 @@
  
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.World");
+dojo.require("orp.model.DeltaVirtualServer");
+dojo.require("orp.model.QueryRunner");
+dojo.require("orp.model.Vote");
+dojo.require("orp.model.Ordinal");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global window */
@@ -41,58 +50,8 @@
 
 
 // -------------------------------------------------------------------
-// World public class constants
+// Constructor
 // -------------------------------------------------------------------
-World.RETRIEVAL_FILTER_LAST_EDIT_WINS = "RETRIEVAL_FILTER_LAST_EDIT_WINS";
-World.RETRIEVAL_FILTER_SINGLE_USER = "RETRIEVAL_FILTER_SINGLE_USER";
-World.RETRIEVAL_FILTER_DEMOCRATIC = "RETRIEVAL_FILTER_DEMOCRATIC";
-World.RETRIEVAL_FILTER_UNABRIDGED = "RETRIEVAL_FILTER_UNABRIDGED";
-
-
-World.NULL_UUID                        = "00000000-ce7f-11d9-8cd5-0011113ae5d6";
-World.IDENTITY_UUID                    = "00000001-ce7f-11d9-8cd5-0011113ae5d6";
-
-World.UUID_FOR_USER_AMY                = "00001000-ce7f-11d9-8cd5-0011113ae5d6";
-
-World.UUID_FOR_ATTRIBUTE_NAME                     = "00001001-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_SHORT_NAME               = "00001002-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_SUMMARY                  = "00001003-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_BODY                     = "00001004-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_CATEGORY                 = "00001005-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_QUERY_SPEC               = "00001006-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE     = "00001007-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE = "00001008-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_UNFILED                  = "00001009-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE            = "0000100a-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_INVERSE_ATTRIBUTE        = "0000100b-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_ITEMS_IN_CATEGORY        = "0000100c-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_TAG                      = "0000100d-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_ATTRIBUTE_TAGGED_ITEMS             = "0000100e-ce7f-11d9-8cd5-0011113ae5d6";
-
-World.UUID_FOR_TYPE_TEXT               = "00001020-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_TYPE_NUMBER             = "00001021-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_TYPE_DATE               = "00001022-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_TYPE_CHECK_MARK         = "00001023-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_TYPE_URL                = "00001024-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_TYPE_ITEM               = "00001030-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_TYPE_ANYTHING           = "00001040-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_TYPE_CONNECTION         = "00001050-ce7f-11d9-8cd5-0011113ae5d6";
-
-World.UUID_FOR_CATEGORY_PERSON         = "00001201-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_CATEGORY_ATTRIBUTE      = "00001210-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_CATEGORY_CATEGORY       = "00001211-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_CATEGORY_QUERY          = "00001212-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_CATEGORY_TYPE           = "00001213-ce7f-11d9-8cd5-0011113ae5d6";
-World.UUID_FOR_CATEGORY_TAG            = "00001214-ce7f-11d9-8cd5-0011113ae5d6";
-
-
-// -------------------------------------------------------------------
-// World private class constants
-// -------------------------------------------------------------------
-World.__TUPLE_KEY_LIST = "list";
-World.__TUPLE_KEY_OBSERVERS = "observers";
-
-
 /**
  * The World class represents a "world" of items.
  *
@@ -103,64 +62,128 @@ World.__TUPLE_KEY_OBSERVERS = "observers";
  * @scope    public instance constructor
  * @param    virtualServer    Optional. The datastore that this world gets its data from. 
  */
-function World(virtualServer) {
+orp.model.World = function(virtualServer) {
   this._hashTableOfObserverListsKeyedByItemUuid = {};
   this._listOfListObserverTuples = [];
   
   this._registeredQueryRunners = [];
-  
-  this._currentRetrievalFilter = World.RETRIEVAL_FILTER_LAST_EDIT_WINS;
+  this._currentRetrievalFilter = "RETRIEVAL_FILTER_LAST_EDIT_WINS";
 
   var server;
   if (virtualServer) {
     server = virtualServer;
   } else {
-    // server = new StubVirtualServer();
     var filepath = window.location.pathname;
     var arrayOfSegments = filepath.split('/');
     var lastSegment = arrayOfSegments.pop();
     var arrayWithFilenameAndExtension = lastSegment.split('.');
     var filename = arrayWithFilenameAndExtension[0];
     var repositoryName = filename;
-    server = new DeltaVirtualServer(repositoryName);
+    server = new orp.model.DeltaVirtualServer(repositoryName);
   }
   this._virtualServer = server;
-
   server.setWorldAndLoadAxiomaticItems(this);
-  
+  this._loadAxiomaticItems();
+};
+
+
+// -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+orp.model.World.RetrievalFilter = {
+  LAST_EDIT_WINS: "RETRIEVAL_FILTER_LAST_EDIT_WINS",
+  SINGLE_USER:    "RETRIEVAL_FILTER_SINGLE_USER",
+  DEMOCRATIC:     "RETRIEVAL_FILTER_DEMOCRATIC",
+  UNABRIDGED:     "RETRIEVAL_FILTER_UNABRIDGED" };
+
+orp.model.World.UUID = {
+  // NULL:                        "00000000-ce7f-11d9-8cd5-0011113ae5d6",
+  // IDENTITY:                    "00000001-ce7f-11d9-8cd5-0011113ae5d6",
+
+  USER_AMY:                       "00001000-ce7f-11d9-8cd5-0011113ae5d6",
+
+  ATTRIBUTE_NAME:                     "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_SHORT_NAME:               "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_SUMMARY:                  "00001003-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_BODY:                     "00001004-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_CATEGORY:                 "00001005-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_QUERY_SPEC:               "00001006-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_QUERY_MATCHING_VALUE:     "00001007-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE: "00001008-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_UNFILED:                  "00001009-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_EXPECTED_TYPE:            "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_INVERSE_ATTRIBUTE:        "0000100b-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_ITEMS_IN_CATEGORY:        "0000100c-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_TAG:                      "0000100d-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_TAGGED_ITEMS:             "0000100e-ce7f-11d9-8cd5-0011113ae5d6",
+
+  TYPE_TEXT:               "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+  TYPE_NUMBER:             "00001021-ce7f-11d9-8cd5-0011113ae5d6",
+  TYPE_DATE:               "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+  TYPE_CHECK_MARK:         "00001023-ce7f-11d9-8cd5-0011113ae5d6",
+  TYPE_URL:                "00001024-ce7f-11d9-8cd5-0011113ae5d6",
+  TYPE_ITEM:               "00001030-ce7f-11d9-8cd5-0011113ae5d6",
+  TYPE_ANYTHING:           "00001040-ce7f-11d9-8cd5-0011113ae5d6",
+  TYPE_CONNECTION:         "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+
+  CATEGORY_PERSON:         "00001201-ce7f-11d9-8cd5-0011113ae5d6",
+  CATEGORY_ATTRIBUTE:      "00001210-ce7f-11d9-8cd5-0011113ae5d6",
+  CATEGORY_CATEGORY:       "00001211-ce7f-11d9-8cd5-0011113ae5d6",
+  CATEGORY_QUERY:          "00001212-ce7f-11d9-8cd5-0011113ae5d6",
+  CATEGORY_TYPE:           "00001213-ce7f-11d9-8cd5-0011113ae5d6",
+  CATEGORY_TAG:            "00001214-ce7f-11d9-8cd5-0011113ae5d6" };
+
+
+// -------------------------------------------------------------------
+// Private constants
+// -------------------------------------------------------------------
+orp.model.World._TUPLE_KEY_LIST = "list";
+orp.model.World._TUPLE_KEY_OBSERVERS = "observers";
+
+
+/**
+ * Initialized the World's private instance variables to point to all
+ * axiomatic attributes, types, and categories.
+ *
+ * @scope    private instance method
+ */
+orp.model.World.prototype._loadAxiomaticItems = function() {
+  var UUID = orp.model.World.UUID;
+  var server = this._virtualServer;
+
   // load the axiomatic attributes
-  this._attributeCalledName                   = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_NAME);
-  this._attributeCalledShortName              = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SHORT_NAME);
-  this._attributeCalledSummary                = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_SUMMARY);
-  this._attributeCalledCategory               = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_CATEGORY);
-  this._attributeCalledQuerySpec              = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_SPEC);
-  this._attributeCalledQueryMatchingValue     = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_VALUE);
-  this._attributeCalledQueryMatchingAttribute = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE);
-  this._attributeCalledUnfiled                = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_UNFILED);
-  this._attributeCalledExpectedType           = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_EXPECTED_TYPE);
-  this._attributeCalledInverseAttribute       = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_INVERSE_ATTRIBUTE);
-  this._attributeCalledItemsInCategory        = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_ITEMS_IN_CATEGORY);
-  this._attributeCalledTag                    = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_TAG);
-  this._attributeCalledTaggedItems            = server.getItemFromUuid(World.UUID_FOR_ATTRIBUTE_TAGGED_ITEMS);
+  this._attributeCalledName                   = server.getItemFromUuid(UUID.ATTRIBUTE_NAME);
+  this._attributeCalledShortName              = server.getItemFromUuid(UUID.ATTRIBUTE_SHORT_NAME);
+  this._attributeCalledSummary                = server.getItemFromUuid(UUID.ATTRIBUTE_SUMMARY);
+  this._attributeCalledCategory               = server.getItemFromUuid(UUID.ATTRIBUTE_CATEGORY);
+  this._attributeCalledQuerySpec              = server.getItemFromUuid(UUID.ATTRIBUTE_QUERY_SPEC);
+  this._attributeCalledQueryMatchingValue     = server.getItemFromUuid(UUID.ATTRIBUTE_QUERY_MATCHING_VALUE);
+  this._attributeCalledQueryMatchingAttribute = server.getItemFromUuid(UUID.ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE);
+  this._attributeCalledUnfiled                = server.getItemFromUuid(UUID.ATTRIBUTE_UNFILED);
+  this._attributeCalledExpectedType           = server.getItemFromUuid(UUID.ATTRIBUTE_EXPECTED_TYPE);
+  this._attributeCalledInverseAttribute       = server.getItemFromUuid(UUID.ATTRIBUTE_INVERSE_ATTRIBUTE);
+  this._attributeCalledItemsInCategory        = server.getItemFromUuid(UUID.ATTRIBUTE_ITEMS_IN_CATEGORY);
+  this._attributeCalledTag                    = server.getItemFromUuid(UUID.ATTRIBUTE_TAG);
+  this._attributeCalledTaggedItems            = server.getItemFromUuid(UUID.ATTRIBUTE_TAGGED_ITEMS);
 
   // load the axiomatic types
-  this._typeCalledText       = server.getItemFromUuid(World.UUID_FOR_TYPE_TEXT);
-  this._typeCalledNumber     = server.getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
-  this._typeCalledDate       = server.getItemFromUuid(World.UUID_FOR_TYPE_DATE);
-  this._typeCalledCheckMark  = server.getItemFromUuid(World.UUID_FOR_TYPE_CHECK_MARK);
-  this._typeCalledUrl        = server.getItemFromUuid(World.UUID_FOR_TYPE_URL);
-  this._typeCalledItem       = server.getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
-  this._typeCalledAnything   = server.getItemFromUuid(World.UUID_FOR_TYPE_ANYTHING);
-  this._typeCalledConnection = server.getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
+  this._typeCalledText       = server.getItemFromUuid(UUID.TYPE_TEXT);
+  this._typeCalledNumber     = server.getItemFromUuid(UUID.TYPE_NUMBER);
+  this._typeCalledDate       = server.getItemFromUuid(UUID.TYPE_DATE);
+  this._typeCalledCheckMark  = server.getItemFromUuid(UUID.TYPE_CHECK_MARK);
+  this._typeCalledUrl        = server.getItemFromUuid(UUID.TYPE_URL);
+  this._typeCalledItem       = server.getItemFromUuid(UUID.TYPE_ITEM);
+  this._typeCalledAnything   = server.getItemFromUuid(UUID.TYPE_ANYTHING);
+  this._typeCalledConnection = server.getItemFromUuid(UUID.TYPE_CONNECTION);
 
   // load the axiomatic categories 
-  this._categoryCalledPerson      = server.getItemFromUuid(World.UUID_FOR_CATEGORY_PERSON);
-  this._categoryCalledAttribute   = server.getItemFromUuid(World.UUID_FOR_CATEGORY_ATTRIBUTE);
-  this._categoryCalledCategory    = server.getItemFromUuid(World.UUID_FOR_CATEGORY_CATEGORY);
-  this._categoryCalledQuery       = server.getItemFromUuid(World.UUID_FOR_CATEGORY_QUERY);
-  this._categoryCalledType        = server.getItemFromUuid(World.UUID_FOR_CATEGORY_TYPE);
-  this._categoryCalledTag         = server.getItemFromUuid(World.UUID_FOR_CATEGORY_TAG);
-}
+  this._categoryCalledPerson      = server.getItemFromUuid(UUID.CATEGORY_PERSON);
+  this._categoryCalledAttribute   = server.getItemFromUuid(UUID.CATEGORY_ATTRIBUTE);
+  this._categoryCalledCategory    = server.getItemFromUuid(UUID.CATEGORY_CATEGORY);
+  this._categoryCalledQuery       = server.getItemFromUuid(UUID.CATEGORY_QUERY);
+  this._categoryCalledType        = server.getItemFromUuid(UUID.CATEGORY_TYPE);
+  this._categoryCalledTag         = server.getItemFromUuid(UUID.CATEGORY_TAG);
+};
 
 
 // -------------------------------------------------------------------
@@ -177,7 +200,7 @@ function World(virtualServer) {
  *
  * @scope    public instance method
  */
-World.prototype.beginTransaction = function() {
+orp.model.World.prototype.beginTransaction = function() {
   this._virtualServer.beginTransaction();
 };
  
@@ -187,7 +210,7 @@ World.prototype.beginTransaction = function() {
  *
  * @scope    public instance method
  */
-World.prototype.endTransaction = function() {
+orp.model.World.prototype.endTransaction = function() {
   this._virtualServer.endTransaction();
 };
 
@@ -199,7 +222,7 @@ World.prototype.endTransaction = function() {
  * @scope    private instance method
  * @param    listOfNewlyCreatedRecords    A list of records representing the changes. 
  */
-World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) {
+orp.model.World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) {
   var hashTableOfNewlyCreatedRecordsKeyedByItemUuid = {};
   var key;
   var uuid;
@@ -216,23 +239,23 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
     var record = listOfNewlyCreatedRecords[key];
     var listOfItems = [];
     var itemOrPairOfItems = null;
-    if (record instanceof Item) {
+    if (record instanceof orp.model.Item) {
       listOfItems.push(record);
     }
-    if ((record instanceof Vote) || (record instanceof Ordinal)) {
+    if ((record instanceof orp.model.Vote) || (record instanceof orp.model.Ordinal)) {
       itemOrEntry = record.getContentRecord();
-      if (itemOrEntry instanceof Item) {
+      if (itemOrEntry instanceof orp.model.Item) {
         listOfItems.push(itemOrEntry);
       }
-      if (itemOrEntry instanceof Entry) {
+      if (itemOrEntry instanceof orp.model.Entry) {
         itemOrPairOfItems = itemOrEntry.getItem();
       }
     }
-    if (record instanceof Entry) {
+    if (record instanceof orp.model.Entry) {
       itemOrPairOfItems = record.getItem();
     }
     if (itemOrPairOfItems) {
-      if (itemOrPairOfItems instanceof Item) {
+      if (itemOrPairOfItems instanceof orp.model.Item) {
         listOfItems.push(itemOrPairOfItems); 
       }
       if (orp.util.isArray(itemOrPairOfItems)) {
@@ -285,8 +308,8 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
   // those observers, notify them of all the changes to all the items.
   for (var iKey in this._listOfListObserverTuples) {
     var observerTuple = this._listOfListObserverTuples[iKey];
-    var listBeingObserved = observerTuple[World.__TUPLE_KEY_LIST];
-    var setOfObservers = observerTuple[World.__TUPLE_KEY_OBSERVERS];
+    var listBeingObserved = observerTuple[orp.model.World._TUPLE_KEY_LIST];
+    var setOfObservers = observerTuple[orp.model.World._TUPLE_KEY_OBSERVERS];
     var listOfItemChangeReports = null;
     for (key in listBeingObserved) {
       item = listBeingObserved[key];
@@ -353,7 +376,7 @@ World.prototype._notifyObserversOfChanges = function(listOfNewlyCreatedRecords) 
  * @scope    public instance method
  * @return   A string constant representing one of the three supported retrieval filters.
  */
-World.prototype.getRetrievalFilter = function() {
+orp.model.World.prototype.getRetrievalFilter = function() {
   return this._currentRetrievalFilter;
 };
 
@@ -364,11 +387,11 @@ World.prototype.getRetrievalFilter = function() {
  * @scope    public instance method
  * @param    filter    A string constant representing one of the three supported retrieval filters.
  */
-World.prototype.setRetrievalFilter = function(filter) {
-  orp.util.assert(filter == World.RETRIEVAL_FILTER_LAST_EDIT_WINS ||
-              filter == World.RETRIEVAL_FILTER_SINGLE_USER ||
-              filter == World.RETRIEVAL_FILTER_DEMOCRATIC ||
-              filter == World.RETRIEVAL_FILTER_UNABRIDGED);
+orp.model.World.prototype.setRetrievalFilter = function(filter) {
+  orp.util.assert(filter == orp.model.World.RetrievalFilter.LAST_EDIT_WINS ||
+              filter == orp.model.World.RetrievalFilter.SINGLE_USER ||
+              filter == orp.model.World.RetrievalFilter.DEMOCRATIC ||
+              filter == orp.model.World.RetrievalFilter.UNABRIDGED);
   this._currentRetrievalFilter = filter;
 };
 
@@ -380,13 +403,13 @@ World.prototype.setRetrievalFilter = function(filter) {
  * @scope    public instance method
  * @return   A list of items that made it through the filter.
  */
-World.prototype._getFilteredList = function(unfilteredList) {
+orp.model.World.prototype._getFilteredList = function(unfilteredList) {
   var filteredList = [];
   var item;
   
   var filter = this.getRetrievalFilter();
   switch (filter) {
-    case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
+    case orp.model.World.RetrievalFilter.LAST_EDIT_WINS:
       for (var key in unfilteredList) {
         item = unfilteredList[key];
         if (!item.hasBeenDeleted()) {
@@ -394,15 +417,15 @@ World.prototype._getFilteredList = function(unfilteredList) {
         }
       }
       break;
-    case World.RETRIEVAL_FILTER_SINGLE_USER:
+    case orp.model.World.RetrievalFilter.SINGLE_USER:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
-    case World.RETRIEVAL_FILTER_DEMOCRATIC:
+    case orp.model.World.RetrievalFilter.DEMOCRATIC:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
-    case World.RETRIEVAL_FILTER_UNABRIDGED:
+    case orp.model.World.RetrievalFilter.UNABRIDGED:
       filteredList = unfilteredList;
       break;
     default:
@@ -411,7 +434,7 @@ World.prototype._getFilteredList = function(unfilteredList) {
       break;
   }
 
-  filteredList.sort(ContentRecord.compareOrdinals);
+  filteredList.sort(orp.model.ContentRecord.compareOrdinals);
   return filteredList;
 };
 
@@ -419,55 +442,55 @@ World.prototype._getFilteredList = function(unfilteredList) {
 // -------------------------------------------------------------------
 // Accessor methods for axiomatic attributes
 // -------------------------------------------------------------------
-World.prototype.getAttributeCalledName = function() {
+orp.model.World.prototype.getAttributeCalledName = function() {
   return this._attributeCalledName;
 };
 
-World.prototype.getAttributeCalledShortName = function() {
+orp.model.World.prototype.getAttributeCalledShortName = function() {
   return this._attributeCalledShortName;
 };
 
-World.prototype.getAttributeCalledSummary = function() {
+orp.model.World.prototype.getAttributeCalledSummary = function() {
   return this._attributeCalledSummary;
 };
 
-World.prototype.getAttributeCalledCategory = function() {
+orp.model.World.prototype.getAttributeCalledCategory = function() {
   return this._attributeCalledCategory;
 };
 
-World.prototype.getAttributeCalledQuerySpec = function() {
+orp.model.World.prototype.getAttributeCalledQuerySpec = function() {
   return this._attributeCalledQuerySpec;
 };
 
-World.prototype.getAttributeCalledQueryMatchingValue = function() {
+orp.model.World.prototype.getAttributeCalledQueryMatchingValue = function() {
   return this._attributeCalledQueryMatchingValue;
 };
 
-World.prototype.getAttributeCalledQueryMatchingAttribute = function() {
+orp.model.World.prototype.getAttributeCalledQueryMatchingAttribute = function() {
   return this._attributeCalledQueryMatchingAttribute;
 };
 
-World.prototype.getAttributeCalledUnfiled = function() {
+orp.model.World.prototype.getAttributeCalledUnfiled = function() {
   return this._attributeCalledUnfiled;
 };
 
-World.prototype.getAttributeCalledExpectedType = function() {
+orp.model.World.prototype.getAttributeCalledExpectedType = function() {
   return this._attributeCalledExpectedType;
 };
 
-World.prototype.getAttributeCalledInverseAttribute = function() {
+orp.model.World.prototype.getAttributeCalledInverseAttribute = function() {
   return this._attributeCalledInverseAttribute;
 };
 
-World.prototype.getAttributeCalledItemsInCategory = function() {
+orp.model.World.prototype.getAttributeCalledItemsInCategory = function() {
   return this._attributeCalledItemsInCategory;
 };
 
-World.prototype.getAttributeCalledTag = function() {
+orp.model.World.prototype.getAttributeCalledTag = function() {
   return this._attributeCalledTag;
 };
 
-World.prototype.getAttributeCalledTaggedItems = function() {
+orp.model.World.prototype.getAttributeCalledTaggedItems = function() {
   return this._attributeCalledTaggedItems;
 };
 
@@ -475,35 +498,35 @@ World.prototype.getAttributeCalledTaggedItems = function() {
 // -------------------------------------------------------------------
 // Accessor methods for axiomatic categories
 // -------------------------------------------------------------------
-World.prototype.getTypeCalledText = function() {
+orp.model.World.prototype.getTypeCalledText = function() {
   return this._typeCalledText;
 };
 
-World.prototype.getTypeCalledNumber = function() {
+orp.model.World.prototype.getTypeCalledNumber = function() {
   return this._typeCalledNumber;
 };
 
-World.prototype.getTypeCalledDate = function() {
+orp.model.World.prototype.getTypeCalledDate = function() {
   return this._typeCalledDate;
 };
 
-World.prototype.getTypeCalledCheckMark = function() {
+orp.model.World.prototype.getTypeCalledCheckMark = function() {
   return this._typeCalledCheckMark;
 };
 
-World.prototype.getTypeCalledUrl = function() {
+orp.model.World.prototype.getTypeCalledUrl = function() {
   return this._typeCalledUrl;
 };
 
-World.prototype.getTypeCalledItem = function() {
+orp.model.World.prototype.getTypeCalledItem = function() {
   return this._typeCalledItem;
 };
 
-World.prototype.getTypeCalledAnything = function() {
+orp.model.World.prototype.getTypeCalledAnything = function() {
   return this._typeCalledAnything;
 };
 
-World.prototype.getTypeCalledConnection = function() {
+orp.model.World.prototype.getTypeCalledConnection = function() {
   return this._typeCalledConnection;
 };
 
@@ -511,27 +534,27 @@ World.prototype.getTypeCalledConnection = function() {
 // -------------------------------------------------------------------
 // Accessor methods for axiomatic categories
 // -------------------------------------------------------------------
-World.prototype.getCategoryCalledPerson = function() {
+orp.model.World.prototype.getCategoryCalledPerson = function() {
   return this._categoryCalledPerson;
 };
 
-World.prototype.getCategoryCalledAttribute = function() {
+orp.model.World.prototype.getCategoryCalledAttribute = function() {
   return this._categoryCalledAttribute;
 };
 
-World.prototype.getCategoryCalledCategory = function() {
+orp.model.World.prototype.getCategoryCalledCategory = function() {
   return this._categoryCalledCategory;
 };
 
-World.prototype.getCategoryCalledQuery = function() {
+orp.model.World.prototype.getCategoryCalledQuery = function() {
   return this._categoryCalledQuery;
 };
 
-World.prototype.getCategoryCalledType = function() {
+orp.model.World.prototype.getCategoryCalledType = function() {
   return this._categoryCalledType;
 };
 
-World.prototype.getCategoryCalledTag = function() {
+orp.model.World.prototype.getCategoryCalledTag = function() {
   return this._categoryCalledTag;
 };
 
@@ -548,7 +571,7 @@ World.prototype.getCategoryCalledTag = function() {
  * @param    authentication    Authentication info for the user. 
  * @return   True if we were able to log in the user. False if the login failed.
  */
-World.prototype.login = function(user, authentication) {
+orp.model.World.prototype.login = function(user, authentication) {
   return this._virtualServer.login(user, authentication);
 };
 
@@ -559,7 +582,7 @@ World.prototype.login = function(user, authentication) {
  * @scope    public instance method
  * @return   True if the current user was logged out. False if there was no current user logged in.
  */
-World.prototype.logout = function() {
+orp.model.World.prototype.logout = function() {
   return this._virtualServer.logout();
 };
 
@@ -574,7 +597,7 @@ World.prototype.logout = function() {
  * @scope    public instance method
  * @return   A list of items that represent users.
  */
-World.prototype.getUsers = function() {
+orp.model.World.prototype.getUsers = function() {
   var listOfUsers = this._virtualServer.getUsers();
   return this._getFilteredList(listOfUsers);
 };
@@ -586,7 +609,7 @@ World.prototype.getUsers = function() {
  * @scope    public instance method
  * @return   An item representing the user who is currently logged in.
  */
-World.prototype.getCurrentUser = function() {
+orp.model.World.prototype.getCurrentUser = function() {
   return this._virtualServer.getCurrentUser();
 };
 
@@ -601,7 +624,7 @@ World.prototype.getCurrentUser = function() {
  * @return   A newly created item representing a user.
  * @throws   Throws an Error if a user is logged in.
  */
-World.prototype.newUser = function(name, authentication, observer) {
+orp.model.World.prototype.newUser = function(name, authentication, observer) {
   this.beginTransaction();
   var newUser = this._virtualServer.newUser(name, authentication, observer);
   this.endTransaction();
@@ -622,7 +645,7 @@ World.prototype.newUser = function(name, authentication, observer) {
  * @return   A newly created item.
  * @throws   Throws an Error if no user is logged in.
  */
-World.prototype.newItem = function(name, observer) {
+orp.model.World.prototype.newItem = function(name, observer) {
   this.beginTransaction();
   var item = this._virtualServer.newItem(name, observer);
   this.endTransaction();
@@ -642,7 +665,7 @@ World.prototype.newItem = function(name, observer) {
  * @return   A newly created provisional item.
  * @throws   Throws an Error if no user is logged in.
  */
-World.prototype.newProvisionalItem = function(observer) {
+orp.model.World.prototype.newProvisionalItem = function(observer) {
   return this._virtualServer.newProvisionalItem(observer);
 };
 
@@ -653,7 +676,7 @@ World.prototype.newProvisionalItem = function(observer) {
  * @scope    package instance method
  * @param    item    The item that was provisional and just became real. 
  */
-World.prototype._provisionalItemJustBecameReal = function(item) {
+orp.model.World.prototype._provisionalItemJustBecameReal = function(item) {
   this._virtualServer._provisionalItemJustBecameReal(item);
 };
 
@@ -667,7 +690,7 @@ World.prototype._provisionalItemJustBecameReal = function(item) {
  * @return   A newly created item representing an attribute.
  * @throws   Throws an Error if no user is logged in.
  */
-World.prototype.newAttribute = function(name, observer) {
+orp.model.World.prototype.newAttribute = function(name, observer) {
   this.beginTransaction();
   var item = this._virtualServer.newItem(name, observer);
   var categoryCalledAttribute = this.getCategoryCalledAttribute();
@@ -686,7 +709,7 @@ World.prototype.newAttribute = function(name, observer) {
  * @return   A newly created item representing a category.
  * @throws   Throws an Error if no user is logged in.
  */
-World.prototype.newCategory = function(name, observer) {
+orp.model.World.prototype.newCategory = function(name, observer) {
   this.beginTransaction();
   var item = this._virtualServer.newItem(name, observer);
   var categoryCalledCategory = this.getCategoryCalledCategory();
@@ -704,8 +727,8 @@ World.prototype.newCategory = function(name, observer) {
  * @param    matchingEntryOrListOfEntries    an Entry or array of entries to be matched against,  
  * @return   A newly created item representing a query.
  */
-World.prototype.newQuery = function(matchingAttribute, matchingEntryOrListOfEntries) {
-  orp.util.assert(matchingAttribute instanceof Item);
+orp.model.World.prototype.newQuery = function(matchingAttribute, matchingEntryOrListOfEntries) {
+  orp.util.assert(matchingAttribute instanceof orp.model.Item);
   this.beginTransaction();
   var item = this._virtualServer.newItem("A query");
   var categoryCalledQuery = this.getCategoryCalledQuery();
@@ -743,7 +766,7 @@ World.prototype.newQuery = function(matchingAttribute, matchingEntryOrListOfEntr
  * @param    category    Optional. A category item, or an array of category items. 
  * @return   A newly created item representing a query.
  */
-World.prototype.newQueryForItemsByCategory = function(categoryOrListOfCategories) {
+orp.model.World.prototype.newQueryForItemsByCategory = function(categoryOrListOfCategories) {
   var attributeCalledCategory = this.getAttributeCalledCategory();
   return this.newQuery(attributeCalledCategory, categoryOrListOfCategories);
 };
@@ -757,8 +780,8 @@ World.prototype.newQueryForItemsByCategory = function(categoryOrListOfCategories
  * @param    observer    Optional. An object or method to be registered as an observer of the query. 
  * @return   A newly created QueryRunner object.
  */
-World.prototype.newQueryRunner = function(querySpec, observer) {
-  var queryRunner = new QueryRunner(this, querySpec, observer);
+orp.model.World.prototype.newQueryRunner = function(querySpec, observer) {
+  var queryRunner = new orp.model.QueryRunner(this, querySpec, observer);
   return queryRunner;
 };
 
@@ -770,8 +793,8 @@ World.prototype.newQueryRunner = function(querySpec, observer) {
  * @scope    public instance method
  * @param    queryRunner    A QueryRunner object. 
  */
-World.prototype._registerQueryRunner = function(queryRunner) {
-  orp.util.assert(queryRunner instanceof QueryRunner);
+orp.model.World.prototype._registerQueryRunner = function(queryRunner) {
+  orp.util.assert(queryRunner instanceof orp.model.QueryRunner);
   var success = orp.util.addObjectToSet(queryRunner, this._registeredQueryRunners);
   orp.util.assert(success);
 };
@@ -784,8 +807,8 @@ World.prototype._registerQueryRunner = function(queryRunner) {
  * @scope    public instance method
  * @param    queryRunner    A previously registered QueryRunner object. 
  */
-World.prototype._unregisterQueryRunner = function(queryRunner) {
-  orp.util.assert(queryRunner instanceof QueryRunner);
+orp.model.World.prototype._unregisterQueryRunner = function(queryRunner) {
+  orp.util.assert(queryRunner instanceof orp.model.QueryRunner);
   var success = orp.util.removeObjectFromSet(queryRunner, this._registeredQueryRunners);
   orp.util.assert(success);
 };
@@ -802,7 +825,7 @@ World.prototype._unregisterQueryRunner = function(queryRunner) {
  * @param    type    Optional. An item representing the data type of the value. 
  * @return   A newly created entry.
  */
-World.prototype._newEntry = function(item, previousEntry, attribute, value, type) {
+orp.model.World.prototype._newEntry = function(item, previousEntry, attribute, value, type) {
   this.beginTransaction();
   var entry = this._virtualServer.newEntry(item, previousEntry, attribute, value, type);
   this.endTransaction();
@@ -821,7 +844,7 @@ World.prototype._newEntry = function(item, previousEntry, attribute, value, type
  * @param    attributeTwo    The attribute of itemTwo that this entry will be assigned to.  
  * @return   A newly created entry.
  */
-World.prototype._newConnectionEntry = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
+orp.model.World.prototype._newConnectionEntry = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
   this.beginTransaction();
   var entry = this._virtualServer.newConnectionEntry(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
   this.endTransaction();
@@ -837,7 +860,7 @@ World.prototype._newConnectionEntry = function(previousEntry, itemOne, attribute
  * @param    ordinalNumber    The ordinal number itself. 
  * @return   A newly created ordinal.
  */
-World.prototype._newOrdinal = function(contentRecord, ordinalNumber) {
+orp.model.World.prototype._newOrdinal = function(contentRecord, ordinalNumber) {
   this.beginTransaction();
   var ordinal = this._virtualServer.newOrdinal(contentRecord, ordinalNumber);
   this.endTransaction();
@@ -853,7 +876,7 @@ World.prototype._newOrdinal = function(contentRecord, ordinalNumber) {
  * @param    retainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  * @return   A newly created vote.
  */
-World.prototype._newVote = function(contentRecord, retainFlag) {
+orp.model.World.prototype._newVote = function(contentRecord, retainFlag) {
   this.beginTransaction();
   var vote = this._virtualServer.newVote(contentRecord, retainFlag);
   this.endTransaction();
@@ -869,7 +892,7 @@ World.prototype._newVote = function(contentRecord, retainFlag) {
  * @param    observer    Optional. An object to be registered as an observer of the returned item. 
  * @return   The item identified by the given UUID.
  */
-World.prototype.getItemFromUuid = function(uuid, observer) {
+orp.model.World.prototype.getItemFromUuid = function(uuid, observer) {
   return (this._virtualServer.getItemFromUuid(uuid, observer));
 };
 
@@ -881,8 +904,8 @@ World.prototype.getItemFromUuid = function(uuid, observer) {
  * @param    uuid    The UUID of the item to be returned. 
  * @return   The entry identified by the given UUID.
  */
-World.prototype.getEntryFromUuid = function(uuid) {
-  return (this._virtualServer.__getEntryFromUuid(uuid));
+orp.model.World.prototype.getEntryFromUuid = function(uuid) {
+  return (this._virtualServer._getEntryFromUuid(uuid));
 };
 
 
@@ -898,7 +921,7 @@ World.prototype.getEntryFromUuid = function(uuid) {
  * @param    queryRunner    A QueryRunner object. 
  * @return   A list of items.
  */
-World.prototype.getResultItemsForQueryRunner = function(queryRunner) {
+orp.model.World.prototype.getResultItemsForQueryRunner = function(queryRunner) {
   var listOfItems = this._virtualServer.getResultItemsForQueryRunner(queryRunner);
   return listOfItems;
 };
@@ -914,7 +937,7 @@ World.prototype.getResultItemsForQueryRunner = function(queryRunner) {
  * @param    query    A query item. 
  * @throws   Throws an Error if no user is logged in.
  */
-World.prototype.setItemToBeIncludedInQueryResultList = function(item, query) {
+orp.model.World.prototype.setItemToBeIncludedInQueryResultList = function(item, query) {
   this._virtualServer.setItemToBeIncludedInQueryResultList(item, query);
 };
 
@@ -928,10 +951,10 @@ World.prototype.setItemToBeIncludedInQueryResultList = function(item, query) {
  * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
  * @return   A list of items.
  */
-World.prototype.getItemsInCategory = function(category, observer) {
+orp.model.World.prototype.getItemsInCategory = function(category, observer) {
   var listOfItems = this._virtualServer.getItemsInCategory(category);
   // listOfItems = this._getFilteredList(listOfItems); PENDING: not sure if I should call this?
-  this.__addListObserver(listOfItems, observer);
+  this._addListObserver(listOfItems, observer);
   return (listOfItems);
 };
 
@@ -942,7 +965,7 @@ World.prototype.getItemsInCategory = function(category, observer) {
  * @scope    public instance method
  * @return   A list of items that represent categories.
  */
-World.prototype.getCategories = function(observer) {
+orp.model.World.prototype.getCategories = function(observer) {
   var categoryCalledCategory = this.getCategoryCalledCategory();
   return this.getItemsInCategory(categoryCalledCategory, observer);
 };
@@ -953,7 +976,7 @@ World.prototype.getCategories = function(observer) {
  * @scope    public instance method
  * @return   A list of items that represent attributes.
  */
-World.prototype.getAttributes = function(observer) {
+orp.model.World.prototype.getAttributes = function(observer) {
   var categoryCalledAttribute = this.getCategoryCalledAttribute();
   return this.getItemsInCategory(categoryCalledAttribute, observer);
 };
@@ -962,7 +985,7 @@ World.prototype.getAttributes = function(observer) {
 /**
  *
  */
-World.prototype.getSuggestedItemsForAttribute = function(attribute, observer) {
+orp.model.World.prototype.getSuggestedItemsForAttribute = function(attribute, observer) {
   var listOfSuggestedItems = [];
   var key;
   var categoryCalledCategory = this.getCategoryCalledCategory();
@@ -985,13 +1008,62 @@ World.prototype.getSuggestedItemsForAttribute = function(attribute, observer) {
       orp.util.addObjectToSet(item, listOfSuggestedItems);
     }
   }
-  this.__addListObserver(listOfSuggestedItems, observer);
+  this._addListObserver(listOfSuggestedItems, observer);
   
   // For no suggested items, TablePlugin expects an empty array rather than null 
   return listOfSuggestedItems;
 };
 
 
+/**
+ * Given a string value and a list of types, this method tries to
+ * transform the value to one of the types. 
+ *
+ * @scope    private instance method
+ * @param    value    A string value. 
+ * @param    listOfTypes    An array of items representing data types. 
+ * @return   A number, a DateValue, an item, or the original string value.
+ */
+orp.model.World.prototype.transformValueToExpectedType = function(value, listOfTypes) {
+  if (value && orp.util.isString(value) && listOfTypes && orp.util.isArray(listOfTypes)) {
+    var categoryCalledCategory = this.getCategoryCalledCategory();
+    var typeCalledText = this.getTypeCalledText();
+    var typeCalledDate = this.getTypeCalledDate();
+    var typeCalledNumber = this.getTypeCalledNumber();
+    for (var i in listOfTypes) {
+      var aType = listOfTypes[i];
+      switch (aType) {
+        case typeCalledText:
+          return value;
+        case typeCalledNumber:
+          var valueWithoutCommas = value.replace(new RegExp(',','g'), '');
+          var floatVal = parseFloat(valueWithoutCommas);
+          if (!isNaN(floatVal)) {return floatVal;}
+          break;
+        case typeCalledDate:
+          var dateValue = new orp.util.DateValue(value);
+          if (dateValue.isValid()) {return dateValue;}
+          break;
+        default:
+          if (aType.isInCategory(categoryCalledCategory)) {
+            var listOfItems = this.getItemsInCategory(aType);
+            var item;
+            for (var j in listOfItems) {
+              item = listOfItems[j];
+              if (item.doesStringMatchName(value)) {
+                return item;
+              }
+            }
+            item = this.newItem(value);
+            item.assignToCategory(aType);
+            return item;
+          }
+          break;
+      }
+    }
+  }
+  return value;
+};
 
 // -------------------------------------------------------------------
 // Observer methods
@@ -1010,7 +1082,7 @@ World.prototype.getSuggestedItemsForAttribute = function(attribute, observer) {
  * @param    listOfItems    The list of items to be observed. 
  * @param    observer    An object or method to be registered as an observer of the item. 
  */
-World.prototype.__addListObserver = function(listOfItems, observer) {
+orp.model.World.prototype._addListObserver = function(listOfItems, observer) {
   var observerWasAdded = false;
   if (!observer) {
     return observerWasAdded;
@@ -1019,16 +1091,16 @@ World.prototype.__addListObserver = function(listOfItems, observer) {
   var listOfTuples = this._listOfListObserverTuples;
   for (var key in listOfTuples) {
     var tuple = listOfTuples[key];
-    if (tuple[World.__TUPLE_KEY_LIST] == listOfItems) {
+    if (tuple[orp.model.World._TUPLE_KEY_LIST] == listOfItems) {
       weNeedToMakeANewTupleForThisList = false;
-      var setOfObservers = tuple[World.__TUPLE_KEY_OBSERVERS];
+      var setOfObservers = tuple[orp.model.World._TUPLE_KEY_OBSERVERS];
       observerWasAdded = orp.util.addObjectToSet(observer, setOfObservers);
     }
   }
   if (weNeedToMakeANewTupleForThisList) {
     var newTuple = {};
-    newTuple[World.__TUPLE_KEY_LIST] = listOfItems;
-    newTuple[World.__TUPLE_KEY_OBSERVERS] = [observer];
+    newTuple[orp.model.World._TUPLE_KEY_LIST] = listOfItems;
+    newTuple[orp.model.World._TUPLE_KEY_OBSERVERS] = [observer];
     listOfTuples.push(newTuple);
     observerWasAdded = true;
   }
@@ -1044,13 +1116,13 @@ World.prototype.__addListObserver = function(listOfItems, observer) {
  * @param    listOfItems    The list of items that was being observed. 
  * @param    observer    The object or method to be removed from the set of observers. 
  */
-World.prototype.removeListObserver = function(listOfItems, observer) {
+orp.model.World.prototype.removeListObserver = function(listOfItems, observer) {
   var observerWasRemoved = false;
   var listOfTuples = this._listOfListObserverTuples;
   for (var key in listOfTuples) {
     var tuple = listOfTuples[key];
-    if (tuple[World.__TUPLE_KEY_LIST] == listOfItems) {
-      var setOfObservers = tuple[World.__TUPLE_KEY_OBSERVERS];
+    if (tuple[orp.model.World._TUPLE_KEY_LIST] == listOfItems) {
+      var setOfObservers = tuple[orp.model.World._TUPLE_KEY_OBSERVERS];
       observerWasRemoved = orp.util.removeObjectFromSet(observer, setOfObservers);
     }
   }
@@ -1066,7 +1138,7 @@ World.prototype.removeListObserver = function(listOfItems, observer) {
  * @param    item    The item to be observed. 
  * @param    observer    An object or method to be registered as an observer of the item. 
  */
-World.prototype.addItemObserver = function(item, observer) {
+orp.model.World.prototype.addItemObserver = function(item, observer) {
   var observerList = this._hashTableOfObserverListsKeyedByItemUuid[item.getUuid()];
   if (!observerList) {
     observerList = [];
@@ -1085,7 +1157,7 @@ World.prototype.addItemObserver = function(item, observer) {
  * @param    item    The item that was being observed. 
  * @param    observer    The object or method to be removed from the set of observers. 
  */
-World.prototype.removeItemObserver = function(item, observer) {
+orp.model.World.prototype.removeItemObserver = function(item, observer) {
   var observerWasRemoved = false;
   var observerList = this._hashTableOfObserverListsKeyedByItemUuid[item.getUuid()];
   if (observerList) {

@@ -31,12 +31,21 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.view.PluginView");
+dojo.require("orp.view.View");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global View  */
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
  * A PluginView displays one or more content items. 
  *
@@ -48,17 +57,18 @@
  * @param    layoutItem    ???. 
  * @syntax   var PluginView = new PluginView()
  */
-PluginView.prototype = new View();  // makes PluginView be a subclass of View
-function PluginView(superview, htmlElement, querySpec, layoutItem, cssClassName) {
+orp.view.PluginView = function(superview, htmlElement, querySpec, layoutItem, cssClassName) {
   if (!superview) {return;} // initial call that subclasses of PluginViews make without parameters
 
-  View.call(this, superview, htmlElement, cssClassName);
+  orp.view.View.call(this, superview, htmlElement, cssClassName);
 
   this._querySpec = querySpec;
   this._queryRunner = this.getWorld().newQueryRunner(this._querySpec, this);
   this._layout = layoutItem;
   this._pluginItem = null;
-}
+};
+
+dj_inherits(orp.view.PluginView, orp.view.View);  // makes PluginView be a subclass of View
 
 
 // -------------------------------------------------------------------
@@ -71,7 +81,7 @@ function PluginView(superview, htmlElement, querySpec, layoutItem, cssClassName)
  * @scope    public instance method
  * @return   A string.
  */
-PluginView.prototype.getPluginItem = function() {
+orp.view.PluginView.prototype.getPluginItem = function() {
   if (!this._pluginItem) {
     var pluginClass = this.getClass();
     // alert(pluginClass);
@@ -87,7 +97,7 @@ PluginView.prototype.getPluginItem = function() {
  *
  * @scope    PENDING
  */
-PluginView.prototype.fetchItems = function() {
+orp.view.PluginView.prototype.fetchItems = function() {
   this._listOfItems = this._queryRunner.getResultItems();
   return this._listOfItems;
 };
@@ -99,7 +109,7 @@ PluginView.prototype.fetchItems = function() {
  * @scope    public instance method
  * @return   A query spec item.
  */
-PluginView.prototype.getQuerySpec = function() {
+orp.view.PluginView.prototype.getQuerySpec = function() {
   return this._querySpec;
 };
 
@@ -109,8 +119,8 @@ PluginView.prototype.getQuerySpec = function() {
  *
  * @scope    public instance method
  */
-PluginView.prototype.endOfLife = function() {
-  View.removeChildrenOfElement(this.getHtmlElement());
+orp.view.PluginView.prototype.endOfLife = function() {
+  orp.view.View.removeChildrenOfElement(this.getHtmlElement());
 };
 
 

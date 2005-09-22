@@ -32,6 +32,13 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.view.NavbarView");
+dojo.require("orp.view.View");
+dojo.require("orp.view.RootView");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global window */
@@ -41,16 +48,8 @@
 
 
 // -------------------------------------------------------------------
-// NavbarView public class constants
+// Constructor
 // -------------------------------------------------------------------
-NavbarView.CSS_CLASS_MENU      = "menu";
-NavbarView.CSS_CLASS_MENU_ITEM = "menu_item";
-NavbarView.CSS_CLASS_SELECTED = "selected";
-// Caution: 
-// In order for us to use the "Sortable" feature in the script.aculo.us 
-// dragdrop.js library, this Id must *not* have an underscore in it.
-NavbarView.ELEMENT_ID_MENU     = "MainMenu";  
-
 
 /**
  * The RootView uses an instance of a NavbarView to display a navigation
@@ -61,14 +60,35 @@ NavbarView.ELEMENT_ID_MENU     = "MainMenu";
  * @param    superview    The view that serves as the superview for this view. 
  * @param    htmlElement    The HTMLElement to display the HTML in. 
  */
-NavbarView.prototype = new View();  // makes NavbarView be a subclass of View
-function NavbarView(superview, htmlElement, htmlElementForAnchors) {
-  View.call(this, superview, htmlElement, "NavbarView");
+orp.view.NavbarView = function(superview, htmlElement, htmlElementForAnchors) {
+  orp.view.View.call(this, superview, htmlElement, "NavbarView");
   this._htmlElementForAnchors = htmlElementForAnchors;
   this._liElementBeingTouched = null;
   this._builtForEditMode = false;
-}
+};
 
+dj_inherits(orp.view.NavbarView, orp.view.View);  // makes NavbarView be a subclass of View
+
+
+// -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+orp.view.NavbarView.cssClass = {
+  MENU:      "menu",
+  MENU_ITEM: "menu_item",
+  SELECTED:  "selected" };
+
+// Caution: 
+// In order for us to use the "Sortable" feature in the script.aculo.us 
+// dragdrop.js library, this "MainMenu" Id must *not* have an underscore 
+// in it.
+orp.view.NavbarView.elementId = {
+  MENU:      "MainMenu" };
+  
+
+// -------------------------------------------------------------------
+// Public methods
+// -------------------------------------------------------------------
 
 /**
  * Re-creates all the HTML for the view, and hands the HTML to the 
@@ -76,7 +96,7 @@ function NavbarView(superview, htmlElement, htmlElementForAnchors) {
  *
  * @scope    public instance method
  */
-NavbarView.prototype.refresh = function() {
+orp.view.NavbarView.prototype.refresh = function() {
   if (!this.hasEverBeenDisplayed()) {
     this._rebuildView();
     this._myHasEverBeenDisplayedFlag = true;
@@ -102,7 +122,7 @@ NavbarView.prototype.refresh = function() {
  * @param    event    The mousedown event object. 
  * @param    liElement    The HTMLElement for this menu item. 
  */
-NavbarView.prototype._mouseDownOnMenuItem = function(event, liElement) {
+orp.view.NavbarView.prototype._mouseDownOnMenuItem = function(event, liElement) {
   this._liElementBeingTouched = liElement;
 };
 
@@ -116,10 +136,10 @@ NavbarView.prototype._mouseDownOnMenuItem = function(event, liElement) {
  * @scope    public instance method
  * @param    ulElement    The "ul" HTMLElement for the menu of menu items. 
  */
-NavbarView.prototype._sortOrderUpdate = function(ulElement) {
+orp.view.NavbarView.prototype._sortOrderUpdate = function(ulElement) {
   orp.util.assert(this._liElementBeingTouched !== null);
   
-  var liElementPrefixString = NavbarView.ELEMENT_ID_MENU + '_';
+  var liElementPrefixString = orp.view.NavbarView.elementId.MENU + '_';
   var menuItemElementId = this._liElementBeingTouched.id;
   var pageUuid = menuItemElementId.replace(liElementPrefixString, '');
   var pageToReorder = this.getWorld().getItemFromUuid(pageUuid);
@@ -142,10 +162,10 @@ NavbarView.prototype._sortOrderUpdate = function(ulElement) {
  * @param    ulElement    The "ul" HTMLElement for the menu of menu items. 
  * @return   A list of items representing pages.
  */
-NavbarView.prototype._getNewOrderingForPageList = function(ulElement) {
+orp.view.NavbarView.prototype._getNewOrderingForPageList = function(ulElement) {
   // The string '[]=' is used by the "Sortable" feature in the script.aculo.us 
   // dragdrop.js library within each token in the serialization string.
-  var prefixString = NavbarView.ELEMENT_ID_MENU + '[]=';
+  var prefixString = orp.view.NavbarView.elementId.MENU + '[]=';
   
   var serializationString = Sortable.serialize(ulElement);
   var listOfTokens = serializationString.split('&');
@@ -165,23 +185,23 @@ NavbarView.prototype._getNewOrderingForPageList = function(ulElement) {
  *
  * @scope    private instance method
  */
-NavbarView.prototype._rebuildView = function() {
-  var categoryCalledPage = this.getWorld().getItemFromUuid(RootView.UUID_FOR_CATEGORY_PAGE);
+orp.view.NavbarView.prototype._rebuildView = function() {
+  var categoryCalledPage = this.getWorld().getItemFromUuid(orp.view.RootView.UUID.CATEGORY_PAGE);
   categoryCalledPage.addObserver(this);
   var listOfPages = this.getWorld().getItemsInCategory(categoryCalledPage);
   var key;
   var page;
 
-  View.removeChildrenOfElement(this._htmlElementForAnchors);
+  orp.view.View.removeChildrenOfElement(this._htmlElementForAnchors);
   for (key in listOfPages) {
     page = listOfPages[key];
-    var anchorName = RootView.URL_PAGE_PREFIX + page.getUuidString();
-    View.appendNewElement(this._htmlElementForAnchors, "a", null, {name: anchorName});
+    var anchorName = orp.view.RootView.URL_PAGE_PREFIX + page.getUuidString();
+    orp.view.View.appendNewElement(this._htmlElementForAnchors, "a", null, {name: anchorName});
   }
   
   var divElement = this.getHtmlElement();
-  View.removeChildrenOfElement(divElement); 
-  var ulElement = View.appendNewElement(divElement, "ul", NavbarView.CSS_CLASS_MENU, {id: NavbarView.ELEMENT_ID_MENU});
+  orp.view.View.removeChildrenOfElement(divElement); 
+  var ulElement = orp.view.View.appendNewElement(divElement, "ul", orp.view.NavbarView.cssClass.MENU, {id: orp.view.NavbarView.elementId.MENU});
   var rootView = this.getRootView();
   for (key in listOfPages) {
     page = listOfPages[key];
@@ -193,25 +213,25 @@ NavbarView.prototype._rebuildView = function() {
     // dragdrop.js library, this menuItemId must have exactly one underscore in
     // it, with the id for the whole menu is to the left of the underscore, and
     // the id for the individual menu item to the right of the underscore.
-    var menuItemId = NavbarView.ELEMENT_ID_MENU + '_' + page.getUuidString();
-    var liElement = View.appendNewElement(ulElement, "li", NavbarView.CSS_CLASS_MENU_ITEM, {id: menuItemId});
-    if (page == this.getRootView().getCurrentPage()) {orp.util.css_addClass(liElement,NavbarView.CSS_CLASS_SELECTED);}
-    var anchorElement = View.appendNewElement(liElement, "a", null, {href: menuUrl}, menuText);
-    Event.observe(anchorElement, "click", RootView.clickOnLocalLink.bindAsEventListener());
-    Event.observe(liElement, "mousedown", this._mouseDownOnMenuItem.bindAsEventListener(this, liElement));
+    var menuItemId = orp.view.NavbarView.elementId.MENU + '_' + page.getUuidString();
+    var liElement = orp.view.View.appendNewElement(ulElement, "li", orp.view.NavbarView.cssClass.MENU_ITEM, {id: menuItemId});
+    if (page == this.getRootView().getCurrentPage()) {orp.util.css_addClass(liElement, orp.view.NavbarView.cssClass.SELECTED);}
+    var anchorElement = orp.view.View.appendNewElement(liElement, "a", null, {href: menuUrl}, menuText);
+    Event.observe(anchorElement, "click", orp.view.RootView.clickOnLocalLink.orpBindAsEventListener());
+    Event.observe(liElement, "mousedown", this._mouseDownOnMenuItem.orpBindAsEventListener(this, liElement));
   }
   var listener = this;
   this._builtForEditMode = this.isInEditMode();
   if (this._builtForEditMode) {
-    Sortable.create(NavbarView.ELEMENT_ID_MENU, {
+    Sortable.create(orp.view.NavbarView.elementId.MENU, {
       onUpdate: function(element){ listener._sortOrderUpdate(element);}
     });
   }
   
-  var newPageButton = View.appendNewElement(divElement, "input", RootView.CSS_CLASS_EDIT_TOOL);
+  var newPageButton = orp.view.View.appendNewElement(divElement, "input", orp.view.RootView.cssClass.EDIT_TOOL);
   newPageButton.type = "button";
   newPageButton.value = "New Page";
-  newPageButton.onclick = this._clickOnNewPageButton.bindAsEventListener(this);
+  newPageButton.onclick = this._clickOnNewPageButton.orpBindAsEventListener(this);
 };
 
 
@@ -224,7 +244,7 @@ NavbarView.prototype._rebuildView = function() {
  *
  * @scope    private instance method
  */
-NavbarView.prototype._clickOnNewPageButton = function(eventObject) {
+orp.view.NavbarView.prototype._clickOnNewPageButton = function(eventObject) {
   var rootView = this.getRootView();
   var newPage = rootView.newPage();
   window.location = rootView.getUrlForItem(newPage);
@@ -242,7 +262,7 @@ NavbarView.prototype._clickOnNewPageButton = function(eventObject) {
  *
  * @scope    public instance method
  */
-NavbarView.prototype.observedItemHasChanged = function(item, listOfRecordsForItem) {
+orp.view.NavbarView.prototype.observedItemHasChanged = function(item, listOfRecordsForItem) {
   // alert("Navbar observed: " + item.getDisplayString());
   this._rebuildView();
 };

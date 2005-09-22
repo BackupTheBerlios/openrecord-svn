@@ -30,6 +30,15 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.view.ItemView");
+dojo.require("orp.view.View");
+dojo.require("orp.view.RootView");
+dojo.require("orp.model.Item");
+dojo.require("orp.DetailPlugin");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global document, HTMLElement  */
@@ -41,10 +50,8 @@
 
 
 // -------------------------------------------------------------------
-// ItemView public class constants
+// Constructor
 // -------------------------------------------------------------------
-ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_plugin_div_for_item_";
-
 
 /**
  * The RootView uses an instance of a ItemView to display an Item in the
@@ -56,18 +63,29 @@ ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_plugin_div_for_item_";
  * @param    htmlElement    The HTMLElement to display the HTML in. 
  * @param    item    The item to be displayed by this view. 
  */
-ItemView.prototype = new View();  // makes ItemView be a subclass of View
-function ItemView(superview, htmlElement, item) {
+orp.view.ItemView = function(superview, htmlElement, item) {
   orp.util.assert(htmlElement instanceof HTMLElement);
-  orp.util.assert(item instanceof Item);
+  orp.util.assert(item instanceof orp.model.Item);
 
-  View.call(this, superview, htmlElement, "ItemView");
+  orp.view.View.call(this, superview, htmlElement, "ItemView");
 
   // instance properties
   this._item = item;
   this._pluginView = null;
-}
+};
 
+dj_inherits(orp.view.ItemView, orp.view.View);  // makes ItemView be a subclass of View
+
+
+// -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+orp.view.ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_plugin_div_for_item_";
+
+
+// -------------------------------------------------------------------
+// Public methods
+// -------------------------------------------------------------------
 
 /**
  * Returns a string that gives the name of the page.
@@ -75,7 +93,7 @@ function ItemView(superview, htmlElement, item) {
  * @scope    public instance method
  * @return   A string that gives the name of the page.
  */
-ItemView.prototype.getPageTitle = function() {
+orp.view.ItemView.prototype.getPageTitle = function() {
   var pageTitle = this._item.getDisplayString();
   return pageTitle;
 };
@@ -87,17 +105,17 @@ ItemView.prototype.getPageTitle = function() {
  *
  * @scope    public instance method
  */
-ItemView.prototype.refresh = function() {
-  orp.util.assert(this._item instanceof Item);
+orp.view.ItemView.prototype.refresh = function() {
+  orp.util.assert(this._item instanceof orp.model.Item);
   
   // PENDING: this needs to be changed from DOM level 0 to DOM level 2.
   var listOfStrings = [];
 
   // add an <h1> heading with the name of the page
-  listOfStrings.push("<h1 id=\"" + RootView.URL_ITEM_PREFIX + this._item.getUuidString() + "\">" + this._item.getDisplayName() + "</h1>");
+  listOfStrings.push("<h1 id=\"" + orp.view.RootView.URL_ITEM_PREFIX + this._item.getUuidString() + "\">" + this._item.getDisplayName() + "</h1>");
 
   // add a <div> element for the detail plugin
-  var detailDivId = ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this._item.getUuidString();
+  var detailDivId = orp.view.ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this._item.getUuidString();
   listOfStrings.push("<div id=\"" + detailDivId + "\"></div>");
 
   // write out all the new content 
@@ -106,7 +124,7 @@ ItemView.prototype.refresh = function() {
 
   // let the detailPlugin add its own content
   var detailPluginElement = document.getElementById(detailDivId);
-  this._pluginView = new DetailPlugin(this, detailPluginElement, [this._item]);
+  this._pluginView = new orp.DetailPlugin(this, detailPluginElement, [this._item]);
   this._pluginView.refresh();
 };
 

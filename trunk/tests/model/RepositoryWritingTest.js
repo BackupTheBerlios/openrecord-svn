@@ -44,13 +44,15 @@ expectedRepositoryHeader +=    '  }';
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.require("orp.model.DeltaVirtualServer");
+  dojo.require("orp.model.World");
 
   utilAssertReportedError = false;
   orp.util.setErrorReportCallback(errorReporter)
 
   var isHttp = window.location.protocol == "http:";
-  saver = isHttp? new HttpSaver(fileName, pathToTrunkDirectoryFromThisDirectory) 
-                : new FileSaver(fileName, pathToTrunkDirectoryFromThisDirectory);
+  saver = isHttp? new orp.model.HttpSaver(fileName, pathToTrunkDirectoryFromThisDirectory) 
+                : new orp.model.FileSaver(fileName, pathToTrunkDirectoryFromThisDirectory);
 
   // Examples of what window.location.pathname should look like:
   // for http: protocol: /openrecord/trunk/source/model/TestRepositoryWriting.html
@@ -107,17 +109,17 @@ function testAppendToFile() {
 }
 
 function testCreateNewRepository() {
-  var virtualServer = new DeltaVirtualServer(fileName, pathToTrunkDirectoryFromThisDirectory);
+  var virtualServer = new orp.model.DeltaVirtualServer(fileName, pathToTrunkDirectoryFromThisDirectory);
   var overwriteIfExists = true;
   virtualServer._createNewRepository(overwriteIfExists);
   assertTrue("Contents should be '{ \"format\": \"2005_JUNE_CHRONOLOGICAL_LIST\", ...'.", fileHasExpectedContents(expectedRepositoryHeader));
 }
 
 function testAppendToRepository() {
-  var virtualServer = new DeltaVirtualServer(fileName, pathToTrunkDirectoryFromThisDirectory);
+  var virtualServer = new orp.model.DeltaVirtualServer(fileName, pathToTrunkDirectoryFromThisDirectory);
   var overwriteIfExists = true;
   virtualServer._createNewRepository(overwriteIfExists);
-  var world = new World(virtualServer);
+  var world = new orp.model.World(virtualServer);
   var listOfUsers = world.getUsers();
   var mignon = null;
   for (var key in listOfUsers) {

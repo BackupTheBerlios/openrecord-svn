@@ -51,6 +51,12 @@ DAMAGE.
 *****************************************************************************/
 
 
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.FileSaver");
+dojo.require("orp.model.DeltaVirtualServer");
+
 /**
  * The FileSaver class knows how to save text to a local file.
  *
@@ -58,7 +64,7 @@ DAMAGE.
  * @param    pathToTrunkDirectory           // Not needed if window.location.pathname is in the trunk directory.
  * @scope    public instance constructor
  */
-function FileSaver(repositoryName, pathToTrunkDirectory) {
+orp.model.FileSaver = function(repositoryName, pathToTrunkDirectory) {
   this._repositoryName = repositoryName;
   
   // Step 1: Build the fileUrl
@@ -76,13 +82,13 @@ function FileSaver(repositoryName, pathToTrunkDirectory) {
   //   fileUrl = "K:/www/htdocs/openrecord/demo/current/trunk/repositories/demo_page.json";
 
   var listOfAdditions = [];
-  if (pathToTrunkDirectory && pathToTrunkDirectory != "") {
+  if (pathToTrunkDirectory && pathToTrunkDirectory !== "") {
     listOfAdditions.push(pathToTrunkDirectory);
   }
-  listOfAdditions.push(DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY);
+  listOfAdditions.push(orp.model.DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY);
   listOfAdditions.push(this._repositoryName + ".json");
   this._fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
-}
+};
 
 
 /**
@@ -90,15 +96,15 @@ function FileSaver(repositoryName, pathToTrunkDirectory) {
  *
  * @scope    public instance method
  */
-FileSaver.prototype.appendText = function(textToAppend) {
+orp.model.FileSaver.prototype.appendText = function(textToAppend) {
   var append = true;
   this._saveTextToFile(textToAppend, this._fileUrl, append);
 };
 
-FileSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
+orp.model.FileSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
   var append = false;
   this._saveTextToFile(textToWrite, this._fileUrl, append);
-}
+};
 
 /**
  * Save the text to the file at the given URL.
@@ -106,7 +112,7 @@ FileSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
  * @scope    private instance method
  * @return   Returns true if the text was saved.
  */
-FileSaver.prototype._saveTextToFile = function(text, fileUrl, append) {
+orp.model.FileSaver.prototype._saveTextToFile = function(text, fileUrl, append) {
   // Make sure we were loaded from a "file:" URL
   if (window.location.protocol != "file:") {
     orp.util.assert(false, 'FileSaver.js can only be used for pages loaded from a "file:///" location');
@@ -126,21 +132,25 @@ FileSaver.prototype._saveTextToFile = function(text, fileUrl, append) {
  * @scope    private instance method
  * @return   Returns true if the text was saved, false if there was an error, or null if we couldn't even try.
  */
-FileSaver.prototype._mozillaSaveToFile = function(text, filePath, append) {
+orp.model.FileSaver.prototype._mozillaSaveToFile = function(text, filePath, append) {
   if (window.Components) {
     try {
       netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
       var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
       file.initWithPath(filePath);
       if (!file.exists()) {
-        file.create(0, 0664);
-        file.permissions = 0664; // Because create ignores the permissions argument, at least on Mignon's Mac.
+        // Not all JavaScript implementations  support octal literals,
+        // so it's not safe to use '0664' here:
+        //   file.create(0, 0664);
+        //   file.permissions = 0664; // Because create ignores the permissions argument, at least on Mignon's Mac.
+        file.create(0, 0x1B4);
+        file.permissions = 0x1B4; // Because create ignores the permissions argument, at least on Mignon's Mac.
       }
       var outputStream = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
       if (append) {
-        outputStream.init(file, 0x10 | 0x02, 00004, null);
+        outputStream.init(file, 0x10 | 0x02, 0x0004, null);
       } else {
-        outputStream.init(file, 0x20 | 0x02, 00004, null);
+        outputStream.init(file, 0x20 | 0x02, 0x0004, null);
       }
       outputStream.write(text, text.length);
       outputStream.flush();
@@ -164,7 +174,7 @@ FileSaver.prototype._mozillaSaveToFile = function(text, filePath, append) {
  * @scope    private instance method
  * @return   Returns true if the text was saved, or false if there was an error.
  */
-FileSaver.prototype._ieSaveToFile = function(text, filePath, append) {
+orp.model.FileSaver.prototype._ieSaveToFile = function(text, filePath, append) {
   try {
     var fileSystemObject = new ActiveXObject("Scripting.FileSystemObject");
   }
@@ -192,7 +202,7 @@ FileSaver.prototype._ieSaveToFile = function(text, filePath, append) {
  * @scope    private instance method
  * @return   Returns a full local pathname.
  */
-FileSaver.prototype._getLocalPathFromWindowLocation = function(listOfAdditions) {
+orp.model.FileSaver.prototype._getLocalPathFromWindowLocation = function(listOfAdditions) {
   // Example location:
   //   location.href     == file:///D:/amy/openrecord/foo.html#bar
   //   location.protocol == file:
@@ -215,43 +225,44 @@ FileSaver.prototype._getLocalPathFromWindowLocation = function(listOfAdditions) 
   
   // Step 2: Figure out what type of URL we're working with
   // Constants
-  var PATH_TYPE_LOCAL_PC        = "PATH_TYPE_LOCAL_PC";        // "file:///x:/path/path..." 
-  var PATH_TYPE_LOCAL_UNIX_MAC  = "PATH_TYPE_LOCAL_UNIX_MAC";  // "file:///path/path..."
-  var PATH_TYPE_NETWORK_PC      = "PATH_TYPE_NETWORK_PC";      // "file://server/share/path/path..."
-  var PATH_TYPE_NETWORK_FIREFOX = "PATH_TYPE_NETWORK_FIREFOX"; // "file://///server/share/path/path..."
-  // "file:///x:/path/path..."             == PATH_TYPE_LOCAL_PC        --> "x:\path\path..."
-  // "file:///path/path..."                == PATH_TYPE_LOCAL_UNIX_MAC  --> "/path/path..."
-  // "file://server/share/path/path..."    == PATH_TYPE_NETWORK_PC      --> "\\server\share\path\path..."
-  // "file://///server/share/path/path..." == PATH_TYPE_NETWORK_FIREFOX --> "\\server\share\path\path..."
+  var PathType = {
+    LOCAL_PC:        "LOCAL_PC",          // "file:///x:/path/path..." 
+    LOCAL_UNIX_MAC:  "LOCAL_UNIX_MAC",    // "file:///path/path..."
+    NETWORK_PC:      "NETWORK_PC",        // "file://server/share/path/path..."
+    NETWORK_FIREFOX: "NETWORK_FIREFOX" }; // "file://///server/share/path/path..."
+  // "file:///x:/path/path..."             == PathType.LOCAL_PC        --> "x:\path\path..."
+  // "file:///path/path..."                == PathType.LOCAL_UNIX_MAC  --> "/path/path..."
+  // "file://server/share/path/path..."    == PathType.NETWORK_PC      --> "\\server\share\path\path..."
+  // "file://///server/share/path/path..." == PathType.NETWORK_FIREFOX --> "\\server\share\path\path..."
 
   var pathType = null;
   if (pathname.charAt(2) == ":") {
-    pathType = PATH_TYPE_LOCAL_PC;
+    pathType = PathType.LOCAL_PC;
   } else if (pathname.indexOf("///") === 0) {
-    pathType = PATH_TYPE_NETWORK_FIREFOX;
+    pathType = PathType.NETWORK_FIREFOX;
   } else if (pathname.indexOf("/") === 0) {
-    pathType = PATH_TYPE_LOCAL_UNIX_MAC;
+    pathType = PathType.LOCAL_UNIX_MAC;
   } else {
-    pathType = PATH_TYPE_NETWORK_PC;
+    pathType = PathType.NETWORK_PC;
   }
 
 
   // Step 3: Convert the URL to a file path
   var localPath = pathname;
   switch (pathType) {
-    case PATH_TYPE_LOCAL_PC:
+    case PathType.LOCAL_PC:
       // example: "/x:/path/path..."
       localPath = localPath.substring(1);  // get rid of initial '/'
       localPath = unescape(localPath);
       localPath = localPath.replace(new RegExp("/","g"),"\\");
       // result: "x:\path\path..."
       break;
-    case PATH_TYPE_LOCAL_UNIX_MAC:         
+    case PathType.LOCAL_UNIX_MAC:         
     // example: "/path/path..."
       localPath = unescape(localPath);
       // result: "/path/path..."
       break;
-    case PATH_TYPE_NETWORK_FIREFOX:
+    case PathType.NETWORK_FIREFOX:
       // example: "///server/share/path/path..."
       localPath = localPath.substring(3);  // get rid of initial '///'
       localPath = unescape(localPath);
@@ -259,7 +270,7 @@ FileSaver.prototype._getLocalPathFromWindowLocation = function(listOfAdditions) 
       localPath = "\\\\" + localPath;      
       // result: "\\server\share\path\path..."
       break;
-    case PATH_TYPE_NETWORK_PC:
+    case PathType.NETWORK_PC:
       // example: "server/share/path/path..."
       localPath = unescape(localPath);
       localPath = localPath.replace(new RegExp("/","g"),"\\");

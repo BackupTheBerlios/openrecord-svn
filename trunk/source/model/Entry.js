@@ -30,14 +30,24 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.Entry");
+dojo.require("orp.model.ContentRecord");
+dojo.require("orp.model.World");
+
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global ContentRecord */
-/*global Util */
 /*global World, Item */
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
  * Instances of the Entry class hold literal values (like strings
  * and numbers), or reference values (pointers to Items).
@@ -52,8 +62,8 @@
  * @param    world    The world that this entry is a part of. 
  * @param    uuid    The UUID for this entry. 
  */
-Entry.prototype = new ContentRecord();  // makes Entry be a subclass of ContentRecord
-function Entry(world, uuid) {
+orp.model.Entry = function(world, uuid) {
+  orp.model.ContentRecord.call(this);
   this._ContentRecord(world, uuid);
  
   this._previousEntry = null;
@@ -63,9 +73,14 @@ function Entry(world, uuid) {
   this._attribute = null;
   this._value = null;
   this._type = null;
-}
+};
+
+dj_inherits(orp.model.Entry, orp.model.ContentRecord);  // makes Entry be a subclass of ContentRecord
 
 
+// -------------------------------------------------------------------
+// Private methods
+// -------------------------------------------------------------------
 /**
  * Initializes a new entry that has just been created by a user action.
  *
@@ -85,13 +100,13 @@ function Entry(world, uuid) {
  * @param    value    The value to initialize the entry with. 
  * @param    type    Optional.  The data type to interpret the value as. 
  */
-Entry.prototype._initialize = function(item, previousEntry, attribute, value, type) {
+orp.model.Entry.prototype._initialize = function(item, previousEntry, attribute, value, type) {
   this._item = item;
   this._attribute = attribute;
 
   if (previousEntry) {
     this._previousEntry = previousEntry;
-    this._previousEntry.__addSubsequentEntry(this);
+    this._previousEntry._addSubsequentEntry(this);
   } else {
     this._previousEntry = null;
   }
@@ -108,7 +123,7 @@ Entry.prototype._initialize = function(item, previousEntry, attribute, value, ty
     else if (orp.util.isDate(value)) {
       this._type = this.getWorld().getTypeCalledDate();
     }
-    else if (value instanceof Item) {
+    else if (value instanceof orp.model.Item) {
       this._type = this.getWorld().getTypeCalledItem();
     }
     else {orp.util.assert(false, "unknown data type:" + (typeof value) + ' value: ' + value);}
@@ -134,10 +149,10 @@ Entry.prototype._initialize = function(item, previousEntry, attribute, value, ty
  * @param    itemTwo    One of the two items that this entry will connect. 
  * @param    attributeTwo    Optional. The attribute of itemTwo that this entry will be assigned to.  
  */
-Entry.prototype._initializeConnection = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
+orp.model.Entry.prototype._initializeConnection = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
   if (previousEntry) {
     this._previousEntry = previousEntry;
-    this._previousEntry.__addSubsequentEntry(this);
+    this._previousEntry._addSubsequentEntry(this);
   } else {
     this._previousEntry = null;
   }
@@ -164,11 +179,11 @@ Entry.prototype._initializeConnection = function(previousEntry, itemOne, attribu
  * @param    previousEntry    Optional. An old entry that this entry replaces. 
  * @param    type    Optional. An item representing a data type. 
  */
-Entry.prototype._rehydrate = function(item, attribute, value, previousEntry, type) {
+orp.model.Entry.prototype._rehydrate = function(item, attribute, value, previousEntry, type) {
   this._item = item;
   if (previousEntry) {
     this._previousEntry = previousEntry;
-    this._previousEntry.__addSubsequentEntry(this);
+    this._previousEntry._addSubsequentEntry(this);
   } else {
     this._previousEntry = null;
   }
@@ -178,7 +193,7 @@ Entry.prototype._rehydrate = function(item, attribute, value, previousEntry, typ
   
   this._type = type;
 
-  if (this._item instanceof Item) {
+  if (this._item instanceof orp.model.Item) {
     this._item._addRehydratedEntry(this, this._attribute);
   } else {
     orp.util.assert(orp.util.isArray(this._item));
@@ -204,7 +219,7 @@ Entry.prototype._rehydrate = function(item, attribute, value, previousEntry, typ
  * @scope    public instance method
  * @return   The item that this is a entry of.
  */
-Entry.prototype.getItem = function() {
+orp.model.Entry.prototype.getItem = function() {
   return this._item;
 };
 
@@ -215,7 +230,7 @@ Entry.prototype.getItem = function() {
  * @scope    public instance method
  * @return   the type of this entry
  */
-Entry.prototype.getType = function() {
+orp.model.Entry.prototype.getType = function() {
   return this._type;
 };
 
@@ -227,7 +242,7 @@ Entry.prototype.getType = function() {
  * @scope    public instance method
  * @return   The previous entry, which this entry replaces. 
  */
-Entry.prototype.getPreviousEntry = function() {
+orp.model.Entry.prototype.getPreviousEntry = function() {
   return this._previousEntry;
 };
 
@@ -238,7 +253,7 @@ Entry.prototype.getPreviousEntry = function() {
  * @scope    public instance method
  * @return   An attribute item.
  */
-Entry.prototype.getAttribute = function() {
+orp.model.Entry.prototype.getAttribute = function() {
   return this._attribute;
 };
 
@@ -251,7 +266,7 @@ Entry.prototype.getAttribute = function() {
  * @param    item    The item that this is an entry of. 
  * @return   An attribute item.
  */
-Entry.prototype.getAttributeForItem = function(item) {
+orp.model.Entry.prototype.getAttributeForItem = function(item) {
   if (this._item == item) {
     return this._attribute;
   }
@@ -275,8 +290,8 @@ Entry.prototype.getAttributeForItem = function(item) {
  * @param    item    The item that this is an entry of. 
  * @return   The item that is connected to the given item.
  */
-Entry.prototype.getConnectedItem = function(item) {
-  orp.util.assert(item instanceof Item);
+orp.model.Entry.prototype.getConnectedItem = function(item) {
+  orp.util.assert(item instanceof orp.model.Item);
   if (this._item == item) {
     if (this._type == this.getWorld().getTypeCalledItem()) {
       return this._value;
@@ -301,7 +316,7 @@ Entry.prototype.getConnectedItem = function(item) {
  * @param    item    The item that this is an entry of. 
  * @return   The value this entry was initialized to hold.
  */
-Entry.prototype.getValue = function(item) {
+orp.model.Entry.prototype.getValue = function(item) {
   if (orp.util.isArray(this._item)) {
     if (this._item[0] == item) {
       return this._item[1];
@@ -309,7 +324,7 @@ Entry.prototype.getValue = function(item) {
     if (this._item[1] == item) {
       return this._item[0];
     }
-    orp.util.assert(false, "Entry.getValue() was called on a connection entry, but was not passed an item as a parameter.");
+    orp.util.assert(false, "orp.model.Entry.getValue() was called on a connection entry, but was not passed an item as a parameter.");
   }
   return this._value; 
 };
@@ -321,7 +336,7 @@ Entry.prototype.getValue = function(item) {
  * @scope    public instance method
  * @return   A string representing the literal data in this entry.
  */
-Entry.prototype.getDisplayString = function(callingItem) {
+orp.model.Entry.prototype.getDisplayString = function(callingItem) {
   var returnString = "";
   switch (this._type) {
     case this.getWorld().getTypeCalledNumber():
@@ -371,7 +386,7 @@ Entry.prototype.getDisplayString = function(callingItem) {
       if (callingItem) {
         if (callingItem == firstItem) {returnString = secondItem.getDisplayString();}
         else if (callingItem == secondItem) {returnString = firstItem.getDisplayString();}
-        else {orp.util.assert(false, "callingItem isn't part of this Entry");}
+        else {orp.util.assert(false, "callingItem isn't part of this orp.model.Entry");}
       }
       else {
         returnString = 'connection between "' + firstItem.getDisplayString() + '" and "' + secondItem.getDisplayString() + '"';
@@ -388,7 +403,7 @@ Entry.prototype.getDisplayString = function(callingItem) {
  * @scope    public instance method
  * @return   A string with a description of the item.
  */
-Entry.prototype.toString = function() {
+orp.model.Entry.prototype.toString = function() {
   var returnString = "[Entry #" + this.getUuid() + 
     " \"" + this.getDisplayString() + "\"" + "]";
   return returnString;
@@ -401,7 +416,7 @@ Entry.prototype.toString = function() {
  * @scope    public instance method
  * @return   True if this entry has been replaced. False if it has not.
  */
-Entry.prototype.hasBeenReplaced = function() {
+orp.model.Entry.prototype.hasBeenReplaced = function() {
   var listOfEntries = this._listOfSubsequentEntries;
 
   if (!listOfEntries || listOfEntries.length === 0) {
@@ -411,17 +426,17 @@ Entry.prototype.hasBeenReplaced = function() {
   var filter = this.getWorld().getRetrievalFilter();
 
   switch (filter) {
-    case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
+    case orp.model.World.RetrievalFilter.LAST_EDIT_WINS:
       return true;
-    case World.RETRIEVAL_FILTER_SINGLE_USER:
+    case orp.model.World.RetrievalFilter.SINGLE_USER:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
-    case World.RETRIEVAL_FILTER_DEMOCRATIC:
+    case orp.model.World.RetrievalFilter.DEMOCRATIC:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
-    case World.RETRIEVAL_FILTER_UNABRIDGED:
+    case orp.model.World.RetrievalFilter.UNABRIDGED:
       return false;
     default:
       // We should never get here.  If we get here, it's an error.
@@ -440,7 +455,7 @@ Entry.prototype.hasBeenReplaced = function() {
  * @scope    private instance method
  * @param    entry    The entry that replaces this one.
  */
-Entry.prototype.__addSubsequentEntry = function(entry) {
+orp.model.Entry.prototype._addSubsequentEntry = function(entry) {
   this._listOfSubsequentEntries.push(entry);
 };
 

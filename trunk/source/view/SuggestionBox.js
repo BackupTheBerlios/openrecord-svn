@@ -32,6 +32,12 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.view.SuggestionBox");
+dojo.require("orp.util.Util");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global document  */
@@ -40,34 +46,36 @@
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
- * A DetailPlugin display one or more content items. 
+ * SuggestionBox... 
  *
  * @scope    public instance constructor
  * @param    htmlInputField    The HTMLElement that this suggestion box is associated with. 
  * @param    listOfItems    The items to populate the suggestion box with.
  */
-function SuggestionBox(htmlInputField, listOfItems) {
+orp.view.SuggestionBox = function(htmlInputField, listOfItems) {
   this._inputField = htmlInputField;
-  this._listOfSuggestedItems = listOfItems.sort(SuggestionBox._compareItemDisplayStrings);
+  this._listOfSuggestedItems = listOfItems.sort(orp.view.SuggestionBox._compareItemDisplayStrings);
   this._selectedItem = null;
   this._shouldHide = true; //htmlInputField.value.length === 0;
   
-  this._suggestionBoxDivElement = View.appendNewElement(document.body, "div", "SuggestionBox");
+  this._suggestionBoxDivElement = orp.view.View.appendNewElement(document.body, "div", "SuggestionBox");
   this._suggestionBoxDivElement.style.zIndex = 11;
   this._suggestionBoxDivElement.style.display = "none";
+};
 
- /* this._inputField.onkeyup = this._keyPressOnInputField.bindAsEventListener(this);
-  this._inputField.onfocus = this._focusOnInputField.bindAsEventListener(this);
-  this._inputField.onblur = this._blurOnInputField.bindAsEventListener(this); */
-  //this._keyPressOnInputField();
-}
 
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
 
 /**
  *
  */
-SuggestionBox.prototype.getSelectedItem = function() {
+orp.view.SuggestionBox.prototype.getSelectedItem = function() {
   if (!this._selectedItem) {
     // check if typed item is identical to suggested item
     var editValue = this._inputField.value;
@@ -85,7 +93,7 @@ SuggestionBox.prototype.getSelectedItem = function() {
 /**
  *
  */
-SuggestionBox._compareItemDisplayStrings = function(itemOne, itemTwo) {
+orp.view.SuggestionBox._compareItemDisplayStrings = function(itemOne, itemTwo) {
   var displayNameOne = itemOne.getDisplayString();
   var displayNameTwo = itemTwo.getDisplayString();
   if (displayNameOne == displayNameTwo) {
@@ -99,7 +107,7 @@ SuggestionBox._compareItemDisplayStrings = function(itemOne, itemTwo) {
 /**
  *
  */
-SuggestionBox.prototype._focusOnInputField = function(eventObject) {
+orp.view.SuggestionBox.prototype._focusOnInputField = function(eventObject) {
   this._redisplaySuggestionBox();
 };
 
@@ -107,7 +115,7 @@ SuggestionBox.prototype._focusOnInputField = function(eventObject) {
 /**
  *
  */
-SuggestionBox.prototype._keyPressOnInputField = function(eventObject) {
+orp.view.SuggestionBox.prototype._keyPressOnInputField = function(eventObject) {
   var numberOfMatchingItems = this._listOfMatchingItems.length;
   if (numberOfMatchingItems === 0) {return false;}
 
@@ -169,7 +177,7 @@ SuggestionBox.prototype._keyPressOnInputField = function(eventObject) {
 /**
  *
  */
-SuggestionBox.prototype._keyUpOnInputField = function(eventObject) {
+orp.view.SuggestionBox.prototype._keyUpOnInputField = function(eventObject) {
   this._redisplaySuggestionBox();
 };
 
@@ -177,7 +185,7 @@ SuggestionBox.prototype._keyUpOnInputField = function(eventObject) {
 /**
  *
  */
-SuggestionBox.prototype._blurOnInputField = function() {
+orp.view.SuggestionBox.prototype._blurOnInputField = function() {
   // make the suggestion box disappear
   this._suggestionBoxDivElement.style.display = "none";
 };
@@ -186,7 +194,7 @@ SuggestionBox.prototype._blurOnInputField = function() {
 /**
  *
  */
-SuggestionBox.prototype._clickOnSelection = function(eventObject, item) {
+orp.view.SuggestionBox.prototype._clickOnSelection = function(eventObject, item) {
   this._selectedItem = item;
 };
 
@@ -194,7 +202,7 @@ SuggestionBox.prototype._clickOnSelection = function(eventObject, item) {
 /**
  *
  */
-SuggestionBox.prototype._setShouldHide = function(shouldHide) {
+orp.view.SuggestionBox.prototype._setShouldHide = function(shouldHide) {
   // make the suggestion box disappear
   this._shouldHide = shouldHide;
   this._selectedItem = null;
@@ -210,7 +218,7 @@ SuggestionBox.prototype._setShouldHide = function(shouldHide) {
 /**
  *
  */
-SuggestionBox.prototype._redisplaySuggestionBox = function() {
+orp.view.SuggestionBox.prototype._redisplaySuggestionBox = function() {
   //if (this._shouldHide) {return;} // if SuggestionBox is in hide mode, don't show the box
   
   var partialInputString = this._inputField.value;
@@ -235,7 +243,7 @@ SuggestionBox.prototype._redisplaySuggestionBox = function() {
     // make the suggestion box disappear
     this._suggestionBoxDivElement.style.display = "none";
   } else {
-    View.removeChildrenOfElement(this._suggestionBoxDivElement);
+    orp.view.View.removeChildrenOfElement(this._suggestionBoxDivElement);
     var table = document.createElement('table');
     var rowNumber = 0;
     var columnNumber = 0;
@@ -246,7 +254,7 @@ SuggestionBox.prototype._redisplaySuggestionBox = function() {
       var cell = row.insertCell(columnNumber);
       row.className = (this._selectedItem == item) ? "selected":"";
       cell.appendChild(textNode);
-      cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, item);
+      cell.onmousedown = this._clickOnSelection.orpBindAsEventListener(this, item);
       rowNumber += 1;
     }
     this._suggestionBoxDivElement.appendChild(table);

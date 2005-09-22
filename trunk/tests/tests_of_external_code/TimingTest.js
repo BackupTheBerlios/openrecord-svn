@@ -73,6 +73,23 @@ var TEST_DATE_VALUEOF = "DATE_VALUEOF";
 var TEST_TYPE_ONE_BOX = "TYPE_ONE_BOX";
 var TEST_TYPE_TWO_BOX = "TYPE_TWO_BOX";
 
+// -------------------------------------------------------------------
+// setUp and tearDown
+// -------------------------------------------------------------------
+
+function setUp() {
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.require("orp.util.Util");
+}
+
+function tearDown() {
+}
+
+// -------------------------------------------------------------------
+// Test functions
+// -------------------------------------------------------------------
+
 function testTimes() {
   var testName;
   var hashTableOfOperationsPerMillisecondKeyedByTestName = {};
@@ -120,8 +137,8 @@ function getOpsPerMS(inTestName) {
   if (inTestName == TEST_ENTRY_COMPAREORDINALS) {
     var world = {};
     world.getCurrentUser = function () { return this; };
-    var e1 = new Entry();
-    var e2 = new Entry();
+    var e1 = new orp.model.Entry();
+    var e2 = new orp.model.Entry();
     e1._Entry(world, 1);
     e2._Entry(world, 2);
     e1._initializeEntry();

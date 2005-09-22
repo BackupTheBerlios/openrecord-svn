@@ -33,6 +33,20 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.view.SectionView");
+dojo.require("orp.view.View");
+dojo.require("orp.view.RootView");
+dojo.require("orp.TablePlugin");
+dojo.require("orp.model.Item");
+
+// FIXME: We shouldn't need to include these three lines:
+dojo.require("orp.DetailPlugin");
+dojo.require("orp.OutlinePlugin");
+dojo.require("orp.BarChartPlugin");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global window, document  */
@@ -43,41 +57,8 @@
 
 
 // -------------------------------------------------------------------
-// SectionView public class constants
+// Constructor
 // -------------------------------------------------------------------
-SectionView.CSS_CLASS_SECTION = "SectionView";
-SectionView.CSS_CLASS_SIMPLE_TABLE = "simple_table";
-SectionView.CSS_CLASS_NEW_ITEM = "newitem";
-SectionView.CSS_CLASS_PLAIN = "plain";
-SectionView.CSS_CLASS_LABEL = "label";
-SectionView.CSS_CLASS_TITLE = "title";
-SectionView.CSS_CLASS_TEXT_FIELD_IN_TABLE_CELL = "text_field_in_table_cell";
-SectionView.CSS_CLASS_SELECTED = "selected";
-SectionView.CSS_CLASS_MORE_LINK = "more";
-// SectionView.CSS_CLASS_ENTRY_VIEW = "entry_view";
-
-SectionView.ELEMENT_ID_SELECT_MENU_PREFIX = "select_menu_";
-
-SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW       = "00040101-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA       = "00040102-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN = "00040103-ce7f-11d9-8cd5-0011113ae5d6";
-
-SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO = "00040104-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_QUERY_BELONGS_TO = "00040105-ce7f-11d9-8cd5-0011113ae5d6";
-// TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS  = "0004010a-ce7f-11d9-8cd5-0011113ae5d6";
-// EntryView.UUID_FOR_ATTRIBUTE_NOT_LOZENGE      = "0004010f-ce7f-11d9-8cd5-0011113ae5d6";
-
-SectionView.UUID_FOR_CATEGORY_PLUGIN_VIEW        = "00040201-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA        = "00040202-ce7f-11d9-8cd5-0011113ae5d6";
-
-
-// -------------------------------------------------------------------
-// SectionView class properties
-// -------------------------------------------------------------------
-SectionView._ourListOfRegisteredPluginClasses = [];
-SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = null;
-
-
 /**
  * A PageView uses instances of a SectionViews to display the Sections 
  * of a page. 
@@ -87,14 +68,13 @@ SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = null;
  * @param    superview    The view that serves as the superview for this view. 
  * @param    htmlElement    The HTMLElement to display the HTML in. 
  * @param    sectionItem    The Section item to be displayed in by this view. 
- * @syntax   var sectionView = new SectionView()
+ * @syntax   var sectionView = new orp.view.SectionView()
  */
-SectionView.prototype = new View();  // makes SectionView be a subclass of View
-function SectionView(superview, htmlElement, sectionItem) {
-  View.call(this, superview, htmlElement, "SectionView");
+orp.view.SectionView = function(superview, htmlElement, sectionItem) {
+  orp.view.View.call(this, superview, htmlElement, "SectionView");
 
   // instance properties
-  orp.util.assert(sectionItem instanceof Item);
+  orp.util.assert(sectionItem instanceof orp.model.Item);
   this._section = sectionItem;
 
   this._pluginView = null;
@@ -103,15 +83,73 @@ function SectionView(superview, htmlElement, sectionItem) {
   this._headerView = null;
   this._queryEditSpan = null;
   
-  if (!SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
-    SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = {};
-    for (var key in SectionView._ourListOfRegisteredPluginClasses) {
-      var pluginClass = SectionView._ourListOfRegisteredPluginClasses[key];
+  // -----------------------------------------------------------------------
+  // FIXME: temporary hack
+  // 
+  // Brian inserted this hack on 2005/09/21 as part of converting everything  
+  // to use the Dojo package system.  Now that we explicitly control the order 
+  // in which files are loaded, the old calls to "SectionView.registerPlugin()" 
+  // in (TablePlugin.js, OutlinePlugin.js etc.) no longer work, I think because 
+  // SectionView.registerPlugin doesn't exist at the time the calls are made.
+  if (orp.view.SectionView._ourListOfRegisteredPluginClasses.length === 0) {
+    orp.view.SectionView.registerPlugin(orp.TablePlugin);
+    orp.view.SectionView.registerPlugin(orp.OutlinePlugin);
+    orp.view.SectionView.registerPlugin(orp.DetailPlugin);
+    orp.view.SectionView.registerPlugin(orp.BarChartPlugin);
+  }
+  // 
+  // -----------------------------------------------------------------------
+  
+  if (!orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
+    orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = {};
+    for (var key in orp.view.SectionView._ourListOfRegisteredPluginClasses) {
+      var pluginClass = orp.view.SectionView._ourListOfRegisteredPluginClasses[key];
       var pluginItemUuid = pluginClass.getPluginItemUuid();
-      SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[pluginItemUuid] = pluginClass;
+      orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[pluginItemUuid] = pluginClass;
     }
   }
-}
+};
+
+dj_inherits(orp.view.SectionView, orp.view.View);  // makes SectionView be a subclass of View
+
+
+// -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+orp.view.SectionView.cssClass = {
+  // ENTRY_VIEW: "entry_view",
+  SECTION: "SectionView",
+  SIMPLE_TABLE: "simple_table",
+  NEW_ITEM: "newitem",
+  PLAIN: "plain",
+  LABEL: "label",
+  TITLE: "title",
+  TEXT_FIELD_IN_TABLE_CELL: "text_field_in_table_cell",
+  SELECTED: "selected",
+  MORE_LINK: "more" };
+
+// orp.view.SectionView.elementId = {
+//  SELECT_MENU_PREFIX: "select_menu_" };
+  
+// TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS  = "0004010a-ce7f-11d9-8cd5-0011113ae5d6";
+// orp.view.EntryView.UUID.ATTRIBUTE_NOT_LOZENGE      = "0004010f-ce7f-11d9-8cd5-0011113ae5d6";
+orp.view.SectionView.UUID = {
+  ATTRIBUTE_PLUGIN_VIEW:       "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_LAYOUT_DATA:       "00040102-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_APPLIES_TO_PLUGIN: "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+
+  ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO: "00040104-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_SECTION_THIS_QUERY_BELONGS_TO: "00040105-ce7f-11d9-8cd5-0011113ae5d6",
+
+  CATEGORY_PLUGIN_VIEW:        "00040201-ce7f-11d9-8cd5-0011113ae5d6",
+  CATEGORY_LAYOUT_DATA:        "00040202-ce7f-11d9-8cd5-0011113ae5d6" };
+
+
+// -------------------------------------------------------------------
+// Class properties
+// -------------------------------------------------------------------
+orp.view.SectionView._ourListOfRegisteredPluginClasses = [];
+orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = null;
 
 
 // -------------------------------------------------------------------
@@ -127,8 +165,8 @@ function SectionView(superview, htmlElement, sectionItem) {
  * @param    pluginClass    A JavaScript class, such as TablePlugin. 
  * @param    pluginItemUuid    The UUID of the item representing that class of plugin. 
  */
-SectionView.registerPlugin = function(pluginClass, pluginItemUuid) {
-  SectionView._ourListOfRegisteredPluginClasses.push(pluginClass);
+orp.view.SectionView.registerPlugin = function(pluginClass, pluginItemUuid) {
+  orp.view.SectionView._ourListOfRegisteredPluginClasses.push(pluginClass);
 };
 
 
@@ -146,12 +184,12 @@ SectionView.registerPlugin = function(pluginClass, pluginItemUuid) {
  * @param    pluginDiv    The HTMLDivElement to display the plugin in. 
  * @return   A newly created plugin object, initialized to be the plugin for this section.
  */
-SectionView.prototype.getPluginInstanceFromPluginItem = function(pluginItem, pluginDiv) {
-  orp.util.assert(pluginItem instanceof Item);
+orp.view.SectionView.prototype.getPluginInstanceFromPluginItem = function(pluginItem, pluginDiv) {
+  orp.util.assert(pluginItem instanceof orp.model.Item);
   
   var newPlugin = null;
   var pluginClass;
-  pluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[pluginItem.getUuid()];
+  pluginClass = orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[pluginItem.getUuid()];
   if (pluginClass) {
     var pluginType = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
     var layoutData = this._getLayoutDataForPlugin(pluginType);
@@ -167,7 +205,7 @@ SectionView.prototype.getPluginInstanceFromPluginItem = function(pluginItem, plu
  * @scope    public instance method
  * @return   query associated to this section.
  */
-SectionView.prototype.getQuerySpec = function() {
+orp.view.SectionView.prototype.getQuerySpec = function() {
   var attributeCalledQuerySpec = this.getWorld().getAttributeCalledQuerySpec();
   var queryEntry = this._section.getSingleEntryFromAttribute(attributeCalledQuerySpec);
   if (queryEntry) {
@@ -183,7 +221,7 @@ SectionView.prototype.getQuerySpec = function() {
  *
  * @scope    public instance method
  */
-SectionView.prototype.refresh = function() {
+orp.view.SectionView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this.doInitialDisplay();
   } else {
@@ -202,39 +240,39 @@ SectionView.prototype.refresh = function() {
  *
  * @scope    public instance method
  */
-SectionView.prototype.doInitialDisplay = function() {
+orp.view.SectionView.prototype.doInitialDisplay = function() {
   if (!this.getHtmlElement()) {
     return;
   }
-  var attributeCalledPluginView = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
+  var attributeCalledPluginView = this.getWorld().getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_PLUGIN_VIEW);
   var selectedPluginViewEntry = this._section.getSingleEntryFromAttribute(attributeCalledPluginView);
   var selectedPluginItem;
   var selectedPluginClass;
   if (selectedPluginViewEntry) {
     selectedPluginItem = selectedPluginViewEntry.getValue();
-    selectedPluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[selectedPluginItem.getUuid()];
+    selectedPluginClass = orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[selectedPluginItem.getUuid()];
   } else {
-    selectedPluginClass = TablePlugin; 
+    selectedPluginClass = orp.TablePlugin; 
   }
   
   var sectionDiv = this.getHtmlElement();
-  var headerH2 = View.appendNewElement(sectionDiv, "h2", null, {'id':this._section.getUuidString()});
+  var headerH2 = orp.view.View.appendNewElement(sectionDiv, "h2", null, {'id':this._section.getUuidString()});
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   // var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
-  this._headerView = new EntryView(this, headerH2, this._section, attributeCalledName,
+  this._headerView = new orp.view.EntryView(this, headerH2, this._section, attributeCalledName,
     this._section.getSingleEntryFromAttribute(attributeCalledName));
-  // var summaryDiv = View.appendNewElement(sectionDiv, "div");
-  // this._sectionSummaryView = new EntryView(this, summaryDiv, this._section, attributeCalledSummary,
+  // var summaryDiv = orp.view.View.appendNewElement(sectionDiv, "div");
+  // this._sectionSummaryView = new orp.view.EntryView(this, summaryDiv, this._section, attributeCalledSummary,
   //   this._section.getSingleEntryFromAttribute(attributeCalledSummary), true);
-  // View.appendNewElement(sectionDiv, "p");
+  // orp.view.View.appendNewElement(sectionDiv, "p");
 
   // create the editing controls, if we're in edit mode
-  var controlArea = View.appendNewElement(sectionDiv, "p", RootView.CSS_CLASS_EDIT_TOOL, null, "Show me a ");
-  var selectElement = View.appendNewElement(controlArea, "select");
+  var controlArea = orp.view.View.appendNewElement(sectionDiv, "p", orp.view.RootView.cssClass.EDIT_TOOL, null, "Show me a ");
+  var selectElement = orp.view.View.appendNewElement(controlArea, "select");
   var listener;
-  for (var key in SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
-    var pluginClass = SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[key];
-    var optionElement = View.appendNewElement(selectElement, "option");
+  for (var key in orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
+    var pluginClass = orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[key];
+    var optionElement = orp.view.View.appendNewElement(selectElement, "option");
     optionElement.selected = (selectedPluginClass == pluginClass);
     optionElement.value = pluginClass.getPluginItemUuid();
     var pluginItem = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
@@ -242,12 +280,12 @@ SectionView.prototype.doInitialDisplay = function() {
     listener = this; 
     orp.util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
   }
-  View.appendNewTextNode(controlArea," of items whose ");
-  this._queryEditSpan = View.appendNewElement(controlArea, "span");
-  View.appendNewTextNode(controlArea,".");
+  orp.view.View.appendNewTextNode(controlArea," of items whose ");
+  this._queryEditSpan = orp.view.View.appendNewElement(controlArea, "span");
+  orp.view.View.appendNewTextNode(controlArea,".");
 
   // create a div element for the plugin class to use
-  this._pluginDiv = View.appendNewElement(sectionDiv, "div");
+  this._pluginDiv = orp.view.View.appendNewElement(sectionDiv, "div");
   this._pluginView = this.getPluginInstanceFromPluginItem(selectedPluginItem, this._pluginDiv);
   this._myHasEverBeenDisplayedFlag = true;
   this.refresh();
@@ -261,11 +299,11 @@ SectionView.prototype.doInitialDisplay = function() {
  * @param    pluginTypeItem    An item representing a class of plugin
  * @return    layout data of this section for a particular plugin
  */
-SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem) {
+orp.view.SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem) {
   var repository = this.getWorld();
-  var attributeLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_LAYOUT_DATA);
+  var attributeLayoutData = repository.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_LAYOUT_DATA);
   var entriesLayoutData = this._section.getEntriesForAttribute(attributeLayoutData);
-  var attributeAppliesToPlugin = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_APPLIES_TO_PLUGIN);
+  var attributeAppliesToPlugin = repository.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_APPLIES_TO_PLUGIN);
   if (entriesLayoutData) {
     for (var i=0; i < entriesLayoutData.length; ++i) {
       var layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
@@ -278,8 +316,8 @@ SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem) {
   }
   
   // layoutData not found, so create the item
-  var categoryCalledLayoutData = repository.getItemFromUuid(SectionView.UUID_FOR_CATEGORY_LAYOUT_DATA);
-  var attributeCalledSectionThisLayoutDataBelongsTo = repository.getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO);
+  var categoryCalledLayoutData = repository.getItemFromUuid(orp.view.SectionView.UUID.CATEGORY_LAYOUT_DATA);
+  var attributeCalledSectionThisLayoutDataBelongsTo = repository.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO);
   repository.beginTransaction();
   layoutItem = repository.newItem("Layout data for " + pluginTypeItem.getDisplayString() + " of " + this._section.getDisplayString());
   layoutItem.assignToCategory(categoryCalledLayoutData);
@@ -297,8 +335,8 @@ SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem) {
  * browser to be re-drawn.
  *
  */
-SectionView.prototype._refreshQueryEditSpan = function() {
-  View.removeChildrenOfElement(this._queryEditSpan);
+orp.view.SectionView.prototype._refreshQueryEditSpan = function() {
+  orp.view.View.removeChildrenOfElement(this._queryEditSpan);
   
   var myQuery = this.getQuerySpec();
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
@@ -318,22 +356,22 @@ SectionView.prototype._refreshQueryEditSpan = function() {
   var matchingEntry = hasMatchingEntries ? listOfMatchingEntries[0] : null;
   
   var listOfAttributes = this.getWorld().getAttributes();
-  var selectElement = View.appendNewElement(this._queryEditSpan, "select");
+  var selectElement = orp.view.View.appendNewElement(this._queryEditSpan, "select");
   for (var key in listOfAttributes) {
     var anAttribute = listOfAttributes[key];
-    var optionElement = View.appendNewElement(selectElement, "option");
+    var optionElement = orp.view.View.appendNewElement(selectElement, "option");
     optionElement.selected = (matchingAttribute.getDisplayString() == anAttribute.getDisplayString());
     optionElement.value = anAttribute.getUuidString();
-    optionElement.onclick = this.clickOnAttributeMenu.bindAsEventListener(this);
+    optionElement.onclick = this.clickOnAttributeMenu.orpBindAsEventListener(this);
     optionElement.text = anAttribute.getDisplayString();
   }
   
-  View.appendNewTextNode(this._queryEditSpan, " is ");
+  orp.view.View.appendNewTextNode(this._queryEditSpan, " is ");
   
   var listOfPossibleEntries = this.getWorld().getSuggestedItemsForAttribute(matchingAttribute);
-  var entrySpan = View.appendNewElement(this._queryEditSpan, "span");
+  var entrySpan = orp.view.View.appendNewElement(this._queryEditSpan, "span");
   
-  var entryView =  new EntryView(this, entrySpan, myQuery, attributeCalledQueryMatchingValue, matchingEntry);
+  var entryView = new orp.view.EntryView(this, entrySpan, myQuery, attributeCalledQueryMatchingValue, matchingEntry);
   entryView.setSuggestions(listOfPossibleEntries);
   entryView.alwaysUseEditField();
   entryView.setAutoWiden(true);
@@ -358,7 +396,7 @@ SectionView.prototype._refreshQueryEditSpan = function() {
  * @scope    public instance method
  * @return   Returns true if the user pressed the return key, or false otherwise.
  */
-SectionView.prototype.keyPressOnMatchingValueField = function(event, anEntryView) {
+orp.view.SectionView.prototype.keyPressOnMatchingValueField = function(event, anEntryView) {
   if (event.keyCode == orp.util.ASCII.RETURN) {
     anEntryView.stopEditing();
     return true;
@@ -372,7 +410,7 @@ SectionView.prototype.keyPressOnMatchingValueField = function(event, anEntryView
  *
  * @scope    public instance method
  */
-SectionView.prototype.observedItemHasChanged = function(item) {
+orp.view.SectionView.prototype.observedItemHasChanged = function(item) {
   item.removeObserver(this); //item no longer needs to be observed as query editor span is rebuilt
   var myQuery = this.getQuerySpec();
   orp.util.assert(item == myQuery);
@@ -390,7 +428,7 @@ SectionView.prototype.observedItemHasChanged = function(item) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject) {
+orp.view.SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject) {
   eventObject = eventObject || window.event;
   var optionElement = orp.util.getTargetFromEvent(eventObject);
   // PENDING: We could replace the lines above with "var optionElement = this;"
@@ -398,7 +436,7 @@ SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject) {
   
   var selectElement = optionElement.parentNode;
   var newChoiceUuid = optionElement.value;
-  var attributeCalledPluginView = this.getWorld().getItemFromUuid(SectionView.UUID_FOR_ATTRIBUTE_PLUGIN_VIEW);
+  var attributeCalledPluginView = this.getWorld().getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_PLUGIN_VIEW);
   var newPluginViewItem = this.getWorld().getItemFromUuid(newChoiceUuid);
  
   if (this._pluginView.getPluginItem() == newPluginViewItem) { 
@@ -411,7 +449,6 @@ SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject) {
     if (oldEntry) {
       this._section.replaceEntry({previousEntry:oldEntry, value:newPluginViewItem});
     } else {
-      // this._section.addEntryForAttribute(attributeCalledPluginView, newPluginViewItem);
       this._section.addEntry({attribute:attributeCalledPluginView, value:newPluginViewItem});
     }
     this.refresh();
@@ -426,7 +463,7 @@ SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
+orp.view.SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
   eventObject = eventObject || window.event;
   var optionElement = orp.util.getTargetFromEvent(eventObject);
   // PENDING: We could replace the lines above with "var optionElement = this;"

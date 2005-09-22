@@ -30,12 +30,21 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.Vote");
+dojo.require("orp.model.Record");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global Record */
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
  * Each instance of the Vote class keeps track of a vote to retain or delete
  * an item or a entry of an item.
@@ -46,15 +55,20 @@
  * @param    contentRecord    The item or entry that this vote is attached to. 
  * @param    retainFlag    True if this is a vote to retain. False if this is a vote to delete. 
  */
-Vote.prototype = new Record();  // makes Vote be a subclass of Record
-function Vote(world, uuid, contentRecord, retainFlag) {
+orp.model.Vote = function(world, uuid, contentRecord, retainFlag) {
   this._Record(world, uuid);
 
   this._contentRecord = contentRecord;
   this._retainFlag = retainFlag;
   this._contentRecord._addVote(this);
-}
+};
 
+dj_inherits(orp.model.Vote, orp.model.Record);  // makes Vote be a subclass of Record
+
+
+// -------------------------------------------------------------------
+// Public methods
+// -------------------------------------------------------------------
 
 /**
  * Returns the item or entry that this vote applies to.
@@ -62,7 +76,7 @@ function Vote(world, uuid, contentRecord, retainFlag) {
  * @scope    public instance method
  * @return   An item or entry.
  */
-Vote.prototype.getContentRecord = function() {
+orp.model.Vote.prototype.getContentRecord = function() {
   return this._contentRecord;
 };
 
@@ -74,7 +88,7 @@ Vote.prototype.getContentRecord = function() {
  * @scope    public instance method
  * @return   A boolean. True if this is a vote to retain, or false if this is a vote to delete.
  */
-Vote.prototype.getRetainFlag = function() {
+orp.model.Vote.prototype.getRetainFlag = function() {
   return this._retainFlag;
 };
 

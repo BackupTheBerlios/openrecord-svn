@@ -138,8 +138,8 @@ if (testCookieCreation) {
   userCookie.store();
 }
 else {
-  Util.assert(userCookie.load());
-  Util.assert(userCookie.username == "chao");
-  Util.assert(userCookie.editMode == "true");
+  orp.util.assert(userCookie.load());
+  orp.util.assert(userCookie.username == "chao");
+  orp.util.assert(userCookie.editMode == "true");
 }
 */

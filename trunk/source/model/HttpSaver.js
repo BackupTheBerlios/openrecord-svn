@@ -29,6 +29,15 @@
 *****************************************************************************/
 
 
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.HttpSaver");
+
+
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
  * The HttpSaver class knows how to save content to a server by using
  * XMLHttpRequest to call a PHP script.
@@ -37,7 +46,7 @@
  * @param    pathToTrunkDirectoryFromWindowLocation // Not needed if window location is at the root of the trunk directory.
  * @scope    public instance constructor
  */
-function HttpSaver(repositoryName, pathToTrunkDirectoryFromWindowLocation) {
+orp.model.HttpSaver = function(repositoryName, pathToTrunkDirectoryFromWindowLocation) {
   this._repositoryName = repositoryName;
   var thisUrl = window.location.pathname; //e.g. /openrecord/trunk/demo_page.html or /openrecord/trunk/source/model/TestRepositoryWriting.html.
   var arrayOfPathComponents = thisUrl.split('/');
@@ -48,15 +57,16 @@ function HttpSaver(repositoryName, pathToTrunkDirectoryFromWindowLocation) {
   } else {
     this._completePathToTrunkDirectory = thisDirectory;
   }
-}
+};
+
+
+// -------------------------------------------------------------------
+// Public methods
+// -------------------------------------------------------------------
 
 /**
- * Returns a newly created XMLHttpRequest object.
- *
- * @scope    public instance method
- * @return   A newly created XMLHttpRequest object.
  */
-HttpSaver.prototype.appendText = function(textToAppend) {
+orp.model.HttpSaver.prototype.appendText = function(textToAppend) {
   var url = this._completePathToTrunkDirectory;
   url += "/source/model/append_to_repository_file.php?file=" + this._repositoryName;
   
@@ -73,7 +83,10 @@ HttpSaver.prototype.appendText = function(textToAppend) {
   newXMLHttpRequestObject.send(textToAppend);
 };
 
-HttpSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
+
+/**
+ */
+orp.model.HttpSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
   var url = this._completePathToTrunkDirectory;
   url += "/source/model/write_to_repository_file.php?file=" + this._repositoryName;
   if (overwriteIfExists) {
@@ -86,13 +99,18 @@ HttpSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
   newXMLHttpRequestObject.send(textToWrite);
 };
 
+
+// -------------------------------------------------------------------
+// Private methods
+// -------------------------------------------------------------------
+
 /**
  * Returns a newly created XMLHttpRequest object.
  *
  * @scope    private instance method
  * @return   A newly created XMLHttpRequest object. 
  */
-HttpSaver.prototype._newXMLHttpRequestObject = function() {
+orp.model.HttpSaver.prototype._newXMLHttpRequestObject = function() {
   var newXMLHttpRequestObject = null;
   if (window.XMLHttpRequest) {
     newXMLHttpRequestObject = new XMLHttpRequest();
@@ -115,7 +133,6 @@ HttpSaver.prototype._newXMLHttpRequestObject = function() {
   }
   return newXMLHttpRequestObject;
 };
-
 
 
 // -------------------------------------------------------------------

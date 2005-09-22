@@ -32,6 +32,13 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.view.LoginView");
+dojo.provide("orp.view.UserSuggestionBox");
+dojo.require("orp.view.View");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global document  */
@@ -42,10 +49,8 @@
 
 
 // -------------------------------------------------------------------
-// LoginView public class constants
+// Constructor
 // -------------------------------------------------------------------
-LoginView.COOKIE_NAME = "useruuid";
-
 
 /**
  * The RootView uses an instance of a LoginView to display a login prompt,
@@ -56,16 +61,22 @@ LoginView.COOKIE_NAME = "useruuid";
  * @param    superview    The view that this LoginView is nested in. 
  * @param    htmlElement    The HTMLElement to display the HTML in. 
  */
-LoginView.prototype = new View();  // makes LoginView be a subclass of View
-function LoginView(superview, htmlElement) {
-  View.call(this, superview, htmlElement, "LoginView");
+orp.view.LoginView = function(superview, htmlElement) {
+  orp.view.View.call(this, superview, htmlElement, "LoginView");
 
+  // -------------------------------------------------------------------
+  // Public constants
+  // -------------------------------------------------------------------
+  orp.view.LoginView.COOKIE_NAME = "useruuid";
+ 
   // instance properties
   this._isCreatingNewAccount = false;
   var tenYearCookieExpiration = 10*365*24;   // PENDING: hardcode expiration to 10yrs
-  this._cookie = new Cookie(document, LoginView.COOKIE_NAME, tenYearCookieExpiration);
+  this._cookie = new Cookie(document, orp.view.LoginView.COOKIE_NAME, tenYearCookieExpiration);
   this._cookie.load();
-}
+};
+
+dj_inherits(orp.view.LoginView, orp.view.View);  // makes LoginView be a subclass of View
 
 
 // -------------------------------------------------------------------
@@ -78,7 +89,7 @@ function LoginView(superview, htmlElement) {
  *
  * @scope    public instance method
  */
-LoginView.prototype.refresh = function() {
+orp.view.LoginView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this._rebuildView();
   }
@@ -95,10 +106,10 @@ LoginView.prototype.refresh = function() {
  *
  * @scope    private instance method
  */
-LoginView.prototype._rebuildView = function() {
+orp.view.LoginView.prototype._rebuildView = function() {
   var mySpan = this.getHtmlElement();
   
-  View.removeChildrenOfElement(mySpan);
+  orp.view.View.removeChildrenOfElement(mySpan);
   
   var currentUser = this.getWorld().getCurrentUser();
   if (!currentUser) {
@@ -121,7 +132,7 @@ LoginView.prototype._rebuildView = function() {
   var editMode = currentUser ? true : false;
   this.getRootView().setEditMode(editMode);
   
-  this.errorNode = View.appendNewElement(mySpan,"span",null,{id:"login_view_error"});
+  this.errorNode = orp.view.View.appendNewElement(mySpan,"span",null,{id:"login_view_error"});
   this.errorNode.style.display = 'None';
   this.errorNode.style.color = '#EE0000';
   if (this._isCreatingNewAccount) {
@@ -129,14 +140,14 @@ LoginView.prototype._rebuildView = function() {
     // Create a line that looks like this:
     //   Enter new name and password:  _username_  _password_  [Create New Account]
     
-    View.appendNewTextNode(mySpan,"Enter new name and password:");
-    this.usernameInput = View.appendNewElement(mySpan,"input",null,{size:20,value:"Albert Einstein"});
-    View.appendNewTextNode(mySpan," ");
-    this.passwordInput = View.appendNewElement(mySpan,"input",null,{size:10,type:"password",value:"randomdots"});
-    this.passwordInput.onkeypress = this._createAccountPasswordKeyPress.bindAsEventListener(this);
-    View.appendNewTextNode(mySpan," ");
-    View.appendNewElement(mySpan,"input",null,{value:"Create New Account",type:"button"}).onclick = 
-      this._clickOnNewAcctButton.bindAsEventListener(this);
+    orp.view.View.appendNewTextNode(mySpan,"Enter new name and password:");
+    this.usernameInput = orp.view.View.appendNewElement(mySpan,"input",null,{size:20,value:"Albert Einstein"});
+    orp.view.View.appendNewTextNode(mySpan," ");
+    this.passwordInput = orp.view.View.appendNewElement(mySpan,"input",null,{size:10,type:"password",value:"randomdots"});
+    this.passwordInput.onkeypress = this._createAccountPasswordKeyPress.orpBindAsEventListener(this);
+    orp.view.View.appendNewTextNode(mySpan," ");
+    orp.view.View.appendNewElement(mySpan,"input",null,{value:"Create New Account",type:"button"}).onclick = 
+      this._clickOnNewAcctButton.orpBindAsEventListener(this);
     this.usernameInput.select();
   }
   else if (currentUser) { 
@@ -144,30 +155,30 @@ LoginView.prototype._rebuildView = function() {
     // Create a line that looks like this:
     //   Hello Jane Doe.  _Sign out_  [Edit]
     
-    View.appendNewTextNode(mySpan,"Hello " + currentUser.getDisplayString() + ". ");
-    View.appendNewElement(mySpan,"a",null,null,"Sign out").onclick = this._clickOnSignoutLink.bindAsEventListener(this);
-    View.appendNewTextNode(mySpan," ");
-    View.appendNewElement(mySpan,"input",null,{type:"button",value:
+    orp.view.View.appendNewTextNode(mySpan,"Hello " + currentUser.getDisplayString() + ". ");
+    orp.view.View.appendNewElement(mySpan,"a",null,null,"Sign out").onclick = this._clickOnSignoutLink.orpBindAsEventListener(this);
+    orp.view.View.appendNewTextNode(mySpan," ");
+    orp.view.View.appendNewElement(mySpan,"input",null,{type:"button",value:
       (this.getRootView().isInShowToolsMode()) ? "Hide Tools" : "Show Tools"}).onclick =
-        this._clickOnShowToolsButton.bindAsEventListener(this);
+        this._clickOnShowToolsButton.orpBindAsEventListener(this);
   }
   else {
     // The user has not yet signed in.
     // Create a line that looks like this:
     //   _Create Account_  or sign in:  _username_  _password_  [Sign in]
     
-    View.appendNewElement(mySpan,"a",null,null,"Create Account").onclick = 
-      this._clickOnCreateAccountLink.bindAsEventListener(this);
-    View.appendNewTextNode(mySpan," or sign in: ");
-    this.usernameInput = View.appendNewElement(mySpan,"input",null,{size:20,value:"Albert Einstein"});
+    orp.view.View.appendNewElement(mySpan,"a",null,null,"Create Account").onclick = 
+      this._clickOnCreateAccountLink.orpBindAsEventListener(this);
+    orp.view.View.appendNewTextNode(mySpan," or sign in: ");
+    this.usernameInput = orp.view.View.appendNewElement(mySpan,"input",null,{size:20,value:"Albert Einstein"});
     mySpan.appendChild(document.createTextNode(" "));
-    this.passwordInput = View.appendNewElement(mySpan,"input",null,{size:10,type:"password",value:"randomdots"});
-    this.passwordInput.onkeypress = this._signinPasswordKeyPress.bindAsEventListener(this);
-    this.passwordInput.onfocus = this._signinPasswordFocus.bindAsEventListener(this);
-    this._myUsernameSuggestionBox = new UserSuggestionBox(this.usernameInput, this.getWorld().getUsers(), this.passwordInput);
+    this.passwordInput = orp.view.View.appendNewElement(mySpan,"input",null,{size:10,type:"password",value:"randomdots"});
+    this.passwordInput.onkeypress = this._signinPasswordKeyPress.orpBindAsEventListener(this);
+    this.passwordInput.onfocus = this._signinPasswordFocus.orpBindAsEventListener(this);
+    this._myUsernameSuggestionBox = new orp.view.UserSuggestionBox(this.usernameInput, this.getWorld().getUsers(), this.passwordInput);
     mySpan.appendChild(document.createTextNode(" "));
-    View.appendNewElement(mySpan,"input",null,{value:"Sign in",type:"button"}).onclick =
-      this._clickOnSignInButton.bindAsEventListener(this);
+    orp.view.View.appendNewElement(mySpan,"input",null,{value:"Sign in",type:"button"}).onclick =
+      this._clickOnSignInButton.orpBindAsEventListener(this);
   }
   
 };
@@ -182,7 +193,7 @@ LoginView.prototype._rebuildView = function() {
  *
  * @scope    private instance method
  */
-LoginView.prototype._clickOnSignoutLink = function(eventObject) {
+orp.view.LoginView.prototype._clickOnSignoutLink = function(eventObject) {
   if (this.isInEditMode()) {
     this.getRootView().setEditMode(false);
   }
@@ -200,7 +211,7 @@ LoginView.prototype._clickOnSignoutLink = function(eventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._signinPasswordFocus = function(eventObject) {
+orp.view.LoginView.prototype._signinPasswordFocus = function(eventObject) {
   this.passwordInput.value = "";
 };
 
@@ -210,7 +221,7 @@ LoginView.prototype._signinPasswordFocus = function(eventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._signinPasswordKeyPress = function(eventObject) {
+orp.view.LoginView.prototype._signinPasswordKeyPress = function(eventObject) {
   // see if <return> is pressed, if so, similate clicking on sign in button
   if (eventObject.keyCode == orp.util.ASCII.RETURN) {
     this._clickOnSignInButton(eventObject);
@@ -223,7 +234,7 @@ LoginView.prototype._signinPasswordKeyPress = function(eventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._createAccountPasswordKeyPress = function(eventObject) {
+orp.view.LoginView.prototype._createAccountPasswordKeyPress = function(eventObject) {
   // see if <return> is pressed, if so, similate clicking on sign in button
   if (eventObject.keyCode == orp.util.ASCII.RETURN) {
     this._clickOnNewAcctButton(eventObject);
@@ -236,7 +247,7 @@ LoginView.prototype._createAccountPasswordKeyPress = function(eventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._clickOnCreateAccountLink = function(eventObject) {
+orp.view.LoginView.prototype._clickOnCreateAccountLink = function(eventObject) {
   this._isCreatingNewAccount = true;
   this._rebuildView();
 };
@@ -247,7 +258,7 @@ LoginView.prototype._clickOnCreateAccountLink = function(eventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._clickOnNewAcctButton = function(eventObject) {
+orp.view.LoginView.prototype._clickOnNewAcctButton = function(eventObject) {
   var username = this.usernameInput.value;
   var password = this.passwordInput.value;
   if (password === null) {
@@ -262,7 +273,7 @@ LoginView.prototype._clickOnNewAcctButton = function(eventObject) {
  *
  * @scope    private instance method
  */
-LoginView.prototype._clickOnSignInButton = function(eventObject) {
+orp.view.LoginView.prototype._clickOnSignInButton = function(eventObject) {
 
   var listOfUsers = this.getWorld().getUsers();
   var userNameEntered = this.usernameInput.value;
@@ -297,7 +308,7 @@ LoginView.prototype._clickOnSignInButton = function(eventObject) {
  * @scope    private instance method
  * @param    eventObject    An event object. 
  */
-LoginView.prototype._clickOnShowToolsButton = function(eventObject) {
+orp.view.LoginView.prototype._clickOnShowToolsButton = function(eventObject) {
   this.getRootView().setShowToolsMode(!this.getRootView().isInShowToolsMode());
   this._rebuildView();
 };
@@ -310,7 +321,7 @@ LoginView.prototype._clickOnShowToolsButton = function(eventObject) {
 /**
  *
  */
-LoginView.prototype._loginUser = function(user, password) {
+orp.view.LoginView.prototype._loginUser = function(user, password) {
   var loginSuccess = this.getWorld().login(user, password); 
   if (loginSuccess) {
     var userUuidString = user.getUuidString();
@@ -328,11 +339,11 @@ LoginView.prototype._loginUser = function(user, password) {
 /**
  *
  */
-LoginView.prototype._reportError = function(errorString) {
+orp.view.LoginView.prototype._reportError = function(errorString) {
   var mySpan = this.getHtmlElement();
   Effect.Shake(mySpan);
-  View.removeChildrenOfElement(this.errorNode);
-  View.appendNewTextNode(this.errorNode,errorString + ' ');
+  orp.view.View.removeChildrenOfElement(this.errorNode);
+  orp.view.View.appendNewTextNode(this.errorNode,errorString + ' ');
   Effect.Appear(this.errorNode, {duration:2.0, transition:Effect.Transitions.wobble});
 };
 
@@ -340,7 +351,7 @@ LoginView.prototype._reportError = function(errorString) {
 /**
  *
  */
-LoginView.prototype._createNewUser = function(username, password) {
+orp.view.LoginView.prototype._createNewUser = function(username, password) {
   function isValidUsername(username) {
     // PENDING: hard coded to validate for alphanumeric usernames of 3 or more characters
     if (!username) {return false;}
@@ -372,9 +383,9 @@ LoginView.prototype._createNewUser = function(username, password) {
  * too.  Instead, we should make SuggestionBox.js generic enough that
  * we can just use it instead of UserSuggestionBox.
  */
-function UserSuggestionBox(htmlInputField, listOfEntries, nextHtmlField) {
+orp.view.UserSuggestionBox = function(htmlInputField, listOfEntries, nextHtmlField) {
   this._inputField = htmlInputField;
-  this._listOfEntries = listOfEntries.sort(UserSuggestionBox.compareEntryDisplayNames);
+  this._listOfEntries = listOfEntries.sort(orp.view.UserSuggestionBox.compareEntryDisplayNames);
   this._nextField = nextHtmlField;
   
   this._userSuggestionBoxDivElement = document.createElement('div');
@@ -383,17 +394,17 @@ function UserSuggestionBox(htmlInputField, listOfEntries, nextHtmlField) {
   this._userSuggestionBoxDivElement.style.display = "none";
   document.body.appendChild(this._userSuggestionBoxDivElement);
   
-  this._inputField.onkeyup = this._keyPressOnInputField.bindAsEventListener(this);
-  this._inputField.onfocus = this._focusOnInputField.bindAsEventListener(this);
-  this._inputField.onblur = this._blurOnInputField.bindAsEventListener(this);
+  this._inputField.onkeyup = this._keyPressOnInputField.orpBindAsEventListener(this);
+  this._inputField.onfocus = this._focusOnInputField.orpBindAsEventListener(this);
+  this._inputField.onblur = this._blurOnInputField.orpBindAsEventListener(this);
   //this._keyPressOnInputField();
-}
+};
 
 
 /**
  *
  */
-UserSuggestionBox.compareEntryDisplayNames = function(entryOne, entryTwo) {
+orp.view.UserSuggestionBox.compareEntryDisplayNames = function(entryOne, entryTwo) {
   var displayNameOne = entryOne.getDisplayName();
   var displayNameTwo = entryTwo.getDisplayName();
   if (displayNameOne == displayNameTwo) {
@@ -407,7 +418,16 @@ UserSuggestionBox.compareEntryDisplayNames = function(entryOne, entryTwo) {
 /**
  *
  */
-UserSuggestionBox.prototype._focusOnInputField = function(eventObject) {
+orp.view.UserSuggestionBox.prototype._focusOnInputField = function(eventObject) {
+  // PENDING:
+  //
+  // I think this first line:
+  //   this._inputField.value = "";
+  // maybe causes an error to appear in the JavaScript Console.
+  // The error reads something like this:
+  //   Error: [Exception... "'Permission denied to get property XULElement.selectedIndex' 
+  //                          when calling method: [nsIAutoCompletePopup::selectedIndex]"  
+  //          nsresult: "0x8057001e (NS_ERROR_XPC_JS_THREW_STRING)"  
   this._inputField.value = "";
   this._redisplayUserSuggestionBox();
 };
@@ -416,7 +436,7 @@ UserSuggestionBox.prototype._focusOnInputField = function(eventObject) {
 /**
  *
  */
-UserSuggestionBox.prototype._keyPressOnInputField = function(eventObject) {
+orp.view.UserSuggestionBox.prototype._keyPressOnInputField = function(eventObject) {
   this._redisplayUserSuggestionBox();
 };
 
@@ -424,7 +444,7 @@ UserSuggestionBox.prototype._keyPressOnInputField = function(eventObject) {
 /**
  *
  */
-UserSuggestionBox.prototype._blurOnInputField = function(eventObject) {
+orp.view.UserSuggestionBox.prototype._blurOnInputField = function(eventObject) {
   // make the suggestion box disappear
   this._userSuggestionBoxDivElement.style.display = "none";
 };
@@ -433,7 +453,7 @@ UserSuggestionBox.prototype._blurOnInputField = function(eventObject) {
 /**
  *
  */
-UserSuggestionBox.prototype._clickOnSelection = function(eventObject, string) {
+orp.view.UserSuggestionBox.prototype._clickOnSelection = function(eventObject, string) {
   this._inputField.value = string;
   this._nextField.select();
 };
@@ -442,7 +462,7 @@ UserSuggestionBox.prototype._clickOnSelection = function(eventObject, string) {
 /**
  *
  */
-UserSuggestionBox.prototype._redisplayUserSuggestionBox = function() {
+orp.view.UserSuggestionBox.prototype._redisplayUserSuggestionBox = function() {
   var partialInputString = this._inputField.value;
   var listOfMatchingStrings = [];
   var key;
@@ -463,17 +483,18 @@ UserSuggestionBox.prototype._redisplayUserSuggestionBox = function() {
     // make the suggestion box disappear
     this._userSuggestionBoxDivElement.style.display = "none";
   } else {
-    View.removeChildrenOfElement(this._userSuggestionBoxDivElement);
+    orp.view.View.removeChildrenOfElement(this._userSuggestionBoxDivElement);
     var table = document.createElement('table');
     var rowNumber = 0;
     var columnNumber = 0;
+    
     for (key in listOfMatchingStrings) {
       var string = listOfMatchingStrings[key];
       var textNode = document.createTextNode(string);
       var row = table.insertRow(rowNumber);
       var cell = row.insertCell(columnNumber);
       cell.appendChild(textNode);
-      cell.onmousedown = this._clickOnSelection.bindAsEventListener(this, string);
+      cell.onmousedown = this._clickOnSelection.orpBindAsEventListener(this, string);
       rowNumber += 1;
     }
     this._userSuggestionBoxDivElement.appendChild(table);

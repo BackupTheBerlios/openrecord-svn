@@ -97,44 +97,8 @@ OpenRecordLoader.loadEverything = function(path) {
     "third_party/scriptaculous/prototype.js",
     "third_party/scriptaculous/effects.js",
     "third_party/scriptaculous/dragdrop.js",
-    "third_party/gtd_tiddlywiki/FileSaver.js",
     // util
-    "source/util/Uuid.js",
-    "source/util/RandomUuid.js",
-    "source/util/TimeBasedUuid.js",
-    "source/util/Util.js",
-    "source/util/Cookie.js",
-    "source/util/DateValue.js",
-    // view
-    "source/view/View.js",
-    "source/view/RootView.js",
-    "source/view/ItemView.js",
-    "source/view/PageView.js",
-    "source/view/SectionView.js",
-    "source/view/LoginView.js",
-    "source/view/MultiEntriesView.js",
-    "source/view/NavbarView.js",
-    "source/view/SuggestionBox.js",
-    "source/view/EntryView.js",
-    "source/view/PluginView.js", 
-    // plugin
-    "source/TablePlugin.js",
-    "source/OutlinePlugin.js",
-    "source/DetailPlugin.js",
-    "source/BarChartPlugin.js",
-    // model
-    "source/model/Record.js",
-    "source/model/Ordinal.js",
-    "source/model/Vote.js",
-    "source/model/ContentRecord.js",
-    "source/model/Item.js",
-    "source/model/Entry.js",
-    "source/model/Transaction.js",
-    "source/model/QueryRunner.js",
-    "source/model/World.js",
-    "source/model/StubVirtualServer.js",
-    "source/model/DeltaVirtualServer.js",
-    "source/model/HttpSaver.js"];
+    "source/util/Cookie.js"];
   for (var i in listOfSourceCodeFiles) {
     var fileName = listOfSourceCodeFiles[i];
     var url = path + fileName;
@@ -146,8 +110,18 @@ OpenRecordLoader.loadEverything = function(path) {
 // -------------------------------------------------------------------
 // This code is immediately executed when this file is first loaded.
 // -------------------------------------------------------------------
+djConfig = {
+  isDebug: true,
+  debugAtAllCosts: true };
+  
+dojo.hostenv.setModulePrefix("dojo", "../../dojo/dojo-0.1.0/src");
 dojo.hostenv.setModulePrefix("orp", "../../../source");
+
 OpenRecordLoader.loadEverything();
+dojo.require("orp.model.World");
+dojo.require("orp.view.RootView");
+dojo.hostenv.writeIncludes(); // needed when using "debugAtAllCosts: true"
+
 window.onload = function() { 
   // figure out if we're running in IE or Firefox
   var firefox = true;  // PENDING: hack!
@@ -160,8 +134,8 @@ window.onload = function() {
   if (firefox) {
     errorMessage = "Loading...";
     // display errorMessage
-    var world = new World();
-    new RootView(world);
+    var world = new orp.model.World();
+    new orp.view.RootView(world);
   }
 };    
 

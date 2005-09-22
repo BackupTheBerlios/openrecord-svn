@@ -28,6 +28,11 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.QueryRunner");
+dojo.require("orp.model.World");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -38,14 +43,8 @@
 
 
 // -------------------------------------------------------------------
-// NavbarView public class constants
+// Constructor
 // -------------------------------------------------------------------
-QueryRunner.JSON_MEMBER_ATTRIBUTE  = "attribute";
-QueryRunner.JSON_MEMBER_VALUES     = "values";
-
-QueryRunner.EXPLICIT_LIST_OF_ITEMS = QueryRunner;
-
-
 /**
  * A QueryRunner is used to run a query.  
  *
@@ -66,8 +65,8 @@ QueryRunner.EXPLICIT_LIST_OF_ITEMS = QueryRunner;
  * @param    querySpec    Optional. A query spec item, or an ad-hoc query. 
  * @param    observer    Optional. An object or method to be registered as an observer of the query. 
  */
-function QueryRunner(world, querySpec, observer) {
-  orp.util.assert(world instanceof World);
+orp.model.QueryRunner = function(world, querySpec, observer) {
+  orp.util.assert(world instanceof orp.model.World);
   
   this._world = world;
   this._querySpec = querySpec;
@@ -78,14 +77,23 @@ function QueryRunner(world, querySpec, observer) {
   this._listOfMatchingValues = null;
   
   if (this._querySpec) {
-    if (this._querySpec instanceof Item) {
+    if (this._querySpec instanceof orp.model.Item) {
       this._querySpec.addObserver(this);
     }
     this._readQuerySpec();
     this._runQuery();
   }
   this.getWorld()._registerQueryRunner(this);
-}
+};
+
+// -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+// orp.model.QueryRunner.EXPLICIT_LIST_OF_ITEMS = QueryRunner;
+orp.model.QueryRunner.EXPLICIT_LIST_OF_ITEMS = "EXPLICIT_LIST_OF_ITEMS";
+orp.model.QueryRunner.QuerySpec = {
+  ATTRIBUTE: "attribute",
+  VALUES:    "values" };
 
 
 // -------------------------------------------------------------------
@@ -98,7 +106,7 @@ function QueryRunner(world, querySpec, observer) {
  * @scope    public instance method
  * @return   A World object. 
  */
-QueryRunner.prototype.getWorld = function() {
+orp.model.QueryRunner.prototype.getWorld = function() {
   return this._world;
 };
 
@@ -109,7 +117,7 @@ QueryRunner.prototype.getWorld = function() {
  * @scope    public instance method
  * @return   An attribute item. 
  */
-QueryRunner.prototype.getMatchingAttribute = function() {
+orp.model.QueryRunner.prototype.getMatchingAttribute = function() {
   return this._matchingAttribute;
 };
 
@@ -120,7 +128,7 @@ QueryRunner.prototype.getMatchingAttribute = function() {
  * @scope    public instance method
  * @return   A list of values. 
  */
-QueryRunner.prototype.getMatchingValues = function() {
+orp.model.QueryRunner.prototype.getMatchingValues = function() {
   return this._listOfMatchingValues;
 };
 
@@ -131,7 +139,7 @@ QueryRunner.prototype.getMatchingValues = function() {
  * @scope    public instance method
  * @return   The list of items in the query result set. 
  */
-QueryRunner.prototype.getResultItems = function() {
+orp.model.QueryRunner.prototype.getResultItems = function() {
   return this._listOfResultItems;
 };
 
@@ -143,14 +151,14 @@ QueryRunner.prototype.getResultItems = function() {
  * @param    item    An item to test. 
  * @return   A boolean value. True if the item matches the query criteria.
  */
-QueryRunner.prototype.doesItemMatch = function(item) {
+orp.model.QueryRunner.prototype.doesItemMatch = function(item) {
   if (item.hasBeenDeleted()) {
     return false;
   }
   
   var matchingAttribute = this.getMatchingAttribute();
   var listOfMatchingValues = this.getMatchingValues();
-  if (matchingAttribute == QueryRunner.EXPLICIT_LIST_OF_ITEMS) {
+  if (matchingAttribute == orp.model.QueryRunner.EXPLICIT_LIST_OF_ITEMS) {
     return orp.util.isObjectInSet(item, listOfMatchingValues);
   } else {
     for (var key in listOfMatchingValues) {
@@ -170,7 +178,7 @@ QueryRunner.prototype.doesItemMatch = function(item) {
  *
  * @scope    public instance method
  */
-QueryRunner.prototype.endOfLife = function() {
+orp.model.QueryRunner.prototype.endOfLife = function() {
   this.getWorld()._unregisterQueryRunner(this);
 };
 
@@ -186,7 +194,7 @@ QueryRunner.prototype.endOfLife = function() {
  * @param    querySpec    The querySpec that was changed. 
  * @param    listOfChangeRecords    A list of the records that impacted the querySpec. 
  */
-QueryRunner.prototype.observedItemHasChanged = function(querySpec, listOfChangeRecords) {
+orp.model.QueryRunner.prototype.observedItemHasChanged = function(querySpec, listOfChangeRecords) {
   orp.util.assert(querySpec == this._querySpec);
   this._readQuerySpec();
   this._runQuery();
@@ -203,7 +211,7 @@ QueryRunner.prototype.observedItemHasChanged = function(querySpec, listOfChangeR
  *
  * @scope    package instance method
  */
-QueryRunner.prototype._resultsHaveChanged = function() {
+orp.model.QueryRunner.prototype._resultsHaveChanged = function() {
   this._runQuery();
 };
 
@@ -218,7 +226,7 @@ QueryRunner.prototype._resultsHaveChanged = function() {
  *
  * @scope    public instance method
  */
-QueryRunner.prototype._readQuerySpec = function() {
+orp.model.QueryRunner.prototype._readQuerySpec = function() {
   this._matchingAttribute = null;
   this._listOfMatchingValues = null;
   
@@ -227,15 +235,14 @@ QueryRunner.prototype._readQuerySpec = function() {
   }
 
   // Handle the case where we have a query spec item
-  if (this._querySpec instanceof Item) {
+  if (this._querySpec instanceof orp.model.Item) {
     // read the matching attribute from the query spec
     var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
     var listOfMatchingAttributeEntries = this._querySpec.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
     if (listOfMatchingAttributeEntries.length === 0) {
       // by default the matching attribute is category
       this._matchingAttribute = this.getWorld().getAttributeCalledCategory();
-    }
-    else {
+    } else {
       orp.util.assert(listOfMatchingAttributeEntries.length == 1, 'There should only be one matching attribute on a Query Spec item.');
       this._matchingAttribute = listOfMatchingAttributeEntries[0].getValue();
     }
@@ -257,7 +264,7 @@ QueryRunner.prototype._readQuerySpec = function() {
   // that just has a list of items.
   if (orp.util.isArray(this._querySpec)) {
     var querySpecArray = this._querySpec;
-    this._matchingAttribute = QueryRunner.EXPLICIT_LIST_OF_ITEMS;
+    this._matchingAttribute = orp.model.QueryRunner.EXPLICIT_LIST_OF_ITEMS;
     this._listOfMatchingValues = querySpecArray;
     
     return;
@@ -267,11 +274,11 @@ QueryRunner.prototype._readQuerySpec = function() {
   // povides a matching attribute and matching values.
   if (orp.util.isObject(this._querySpec)) {
     var querySpecJson = this._querySpec;
-    this._matchingAttribute = querySpecJson[QueryRunner.JSON_MEMBER_ATTRIBUTE];
+    this._matchingAttribute = querySpecJson[orp.model.QueryRunner.QuerySpec.ATTRIBUTE];
     if (!this._matchingAttribute) {
       this._matchingAttribute = this.getWorld().getAttributeCalledCategory();
     }
-    this._listOfMatchingValues = querySpecJson[QueryRunner.JSON_MEMBER_VALUES];
+    this._listOfMatchingValues = querySpecJson[orp.model.QueryRunner.QuerySpec.VALUES];
     
     return;
   }  
@@ -283,8 +290,8 @@ QueryRunner.prototype._readQuerySpec = function() {
  *
  * @scope    public instance method
  */
-QueryRunner.prototype._runQuery = function() {
-  if (this._matchingAttribute == QueryRunner.EXPLICIT_LIST_OF_ITEMS) {
+orp.model.QueryRunner.prototype._runQuery = function() {
+  if (this._matchingAttribute == orp.model.QueryRunner.EXPLICIT_LIST_OF_ITEMS) {
     this._listOfResultItems = this._listOfMatchingValues;
   } else {
     this._listOfResultItems = this.getWorld().getResultItemsForQueryRunner(this);

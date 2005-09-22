@@ -30,7 +30,12 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
-// dojo.require("orp.util.TimeBasedUuid");
+
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.Record");
+dojo.require("orp.util.TimeBasedUuid");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -39,6 +44,9 @@
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
  * The Record class serves as an abstract superclass for the classes Vote,
  * Ordinal, and ContentRecord.  ContentRecord is the abstract superclass
@@ -47,11 +55,11 @@
  * @scope    public instance constructor
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
-function Record() {
+orp.model.Record = function() {
   // Don't create these properties until we know we need them.
   // this._creationTimestamp = null;
   // this._creationUserstamp = null;
-}
+};
 
 
 // -------------------------------------------------------------------
@@ -65,9 +73,7 @@ function Record() {
  * @param    world    The world that this Record is a part of. 
  * @param    uuid    The UUID for this Record. 
  */
-Record.prototype._Record = function(world, uuid) {
-  dojo.require("orp.util.TimeBasedUuid");
-
+orp.model.Record.prototype._Record = function(world, uuid) {
   orp.util.assert(orp.util.isUuidValue(uuid));
   if (orp.util.isString(uuid)) {
     var uuidString = uuid;
@@ -92,7 +98,7 @@ Record.prototype._Record = function(world, uuid) {
  * @scope    public instance method
  * @return   A world object.
  */
-Record.prototype.getWorld = function() {
+orp.model.Record.prototype.getWorld = function() {
   return this._world;
 };
 
@@ -103,7 +109,7 @@ Record.prototype.getWorld = function() {
  * @scope    public instance method
  * @return   A user item.
  */
-Record.prototype.getUserstamp = function() {
+orp.model.Record.prototype.getUserstamp = function() {
   if (this._creationUserstamp) {
     return this._creationUserstamp;
   }
@@ -127,7 +133,7 @@ Record.prototype.getUserstamp = function() {
  * @scope    public instance method
  * @return   ???.
  */
-Record.prototype.getTimestamp = function() {
+orp.model.Record.prototype.getTimestamp = function() {
   if (!this._creationTimestamp) {
     this._creationTimestamp = this.getCreationDate().valueOf();
   }
@@ -141,7 +147,7 @@ Record.prototype.getTimestamp = function() {
  * @scope    public instance method
  * @return   A Date object.
  */
-Record.prototype.getCreationDate = function() {
+orp.model.Record.prototype.getCreationDate = function() {
   /* if (!this._creationDate) {
     this._creationDate = Uuid.getDateFromUuid(this._uuid.toString());
   }
@@ -157,7 +163,7 @@ Record.prototype.getCreationDate = function() {
  * @scope    public instance method
  * @return   The UUID of the record.
  */
-Record.prototype.getUuid = function() {
+orp.model.Record.prototype.getUuid = function() {
   return this._uuid;
 };
 
@@ -168,7 +174,7 @@ Record.prototype.getUuid = function() {
  * @scope    public instance method
  * @return   A string representing the UUID of the record.
  */
-Record.prototype.getUuidString = function() {
+orp.model.Record.prototype.getUuidString = function() {
   return this._uuid.toString();
 };
 
@@ -189,7 +195,7 @@ Record.prototype.getUuidString = function() {
  * @scope    protected instance method
  * @return   The record's UUID, as a string, wrapped in quotes.
  */
-Record.prototype._getUuidInQuotes = function() {
+orp.model.Record.prototype._getUuidInQuotes = function() {
   if (!this._uuidInQuotes) {
     this._uuidInQuotes = '"' + this._uuid.toString() + '"';
   }

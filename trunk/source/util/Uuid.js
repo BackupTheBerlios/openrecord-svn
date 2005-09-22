@@ -78,7 +78,7 @@ orp.util.Uuid = function(uuidString) {
 
 
 // -------------------------------------------------------------------
-// Public class constants
+// Public constants
 // -------------------------------------------------------------------
 orp.util.Uuid.HEX_RADIX = 16;
 orp.util.Uuid.Version = {

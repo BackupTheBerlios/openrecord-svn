@@ -12,8 +12,32 @@
 
   <head>
     <title>openrecord.org - Sandbox Page</title>
+    <link rel="stylesheet" type="text/css" href="source/base_style.css"></link>
+    <script>
+      djConfig = {
+        isDebug: true,
+        debugAtAllCosts: true
+      };
+    </script>
+    <script type="text/javascript" src="third_party/md5/md5.js"></script>
+    <script type="text/javascript" src="third_party/scriptaculous/prototype.js"></script>
+    <script type="text/javascript" src="third_party/scriptaculous/effects.js"></script>
+    <script type="text/javascript" src="third_party/scriptaculous/dragdrop.js"></script>
+    <script type="text/javascript" src="source/util/Cookie.js"></script>
     <script type="text/javascript" src="third_party/dojo/dojo-0.1.0/dojo.js"></script>
-    <script type="text/javascript" src="source/OpenRecordLoader.js"></script>
+    <script>
+      dojo.hostenv.setModulePrefix("dojo", "../../dojo/dojo-0.1.0/src");
+      dojo.hostenv.setModulePrefix("orp", "../../../source");
+      dojo.require("orp.model.World");
+      dojo.require("orp.view.RootView");
+      dojo.hostenv.writeIncludes(); // needed when using "debugAtAllCosts: true"
+    </script>
+    <script>
+      window.onload = function() { 
+        var world = new orp.model.World();
+        new orp.view.RootView(world);
+      };    
+    </script>
   </head>
   
   <body>

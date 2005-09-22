@@ -30,18 +30,20 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.Item");
+dojo.require("orp.model.ContentRecord");
+dojo.require("orp.model.World");
+dojo.require("dojo.lang.*");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global ContentRecord */
 /*global Util */
 /*global World, Entry */
 // -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-// Provides and Requires
-// -------------------------------------------------------------------
-// dojo.provide("orp.util.Item");
-// dojo.require("dojo.lang.*");
 
 
 // -------------------------------------------------------------------
@@ -62,21 +64,23 @@
  * @param    world    The world that this item is a part of. 
  * @param    uuid    The UUID for this item. 
  */
-Item.prototype = new ContentRecord();  // makes Item be a subclass of ContentRecord
-function Item(world, uuid) {
+orp.model.Item = function(world, uuid) {
+  orp.model.ContentRecord.call(this);
   this._ContentRecord(world, uuid);
   
   this._hashTableOfEntryListsKeyedByAttributeUuid = {};
   this._provisionalFlag = false;
 
   this._noteChanges(null);
-}
+};
+
+dj_inherits(orp.model.Item, orp.model.ContentRecord);  // makes Item be a subclass of ContentRecord
 
 
 // -------------------------------------------------------------------
 // Public class constants
 // -------------------------------------------------------------------
-Item.NamedParameters = {
+orp.model.Item.NamedParameters = {
   attribute:      "attribute",
   value:          "value",
   type:           "type",
@@ -85,6 +89,10 @@ Item.NamedParameters = {
   otherItem:      "otherItem",
   otherAttribute: "otherAttribute"};
 
+
+// -------------------------------------------------------------------
+// Private methods
+// -------------------------------------------------------------------
 
 /**
  * Initializes a new item that has just been created by a user action.
@@ -100,7 +108,7 @@ Item.NamedParameters = {
  * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
  * @param    provisionalFlag    True if the item is provisional; false if the item is normal. 
  */
-Item.prototype._initialize = function(observer, provisionalFlag) {
+orp.model.Item.prototype._initialize = function(observer, provisionalFlag) {
   if (provisionalFlag) {
     this._provisionalFlag = true;
   }
@@ -155,9 +163,9 @@ item.replaceEntryWithConnection({previousEntry:
  * @return   An entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.addEntry = function(namedParameters) {
+orp.model.Item.prototype.addEntry = function(namedParameters) {
   orp.util.assert(dojo.lang.isObject(namedParameters));
-  var arg = Item.NamedParameters;
+  var arg = orp.model.Item.NamedParameters;
   var value = namedParameters[arg.value];
   var attribute = namedParameters[arg.attribute];
   var type = namedParameters[arg.type];
@@ -188,12 +196,12 @@ Item.prototype.addEntry = function(namedParameters) {
  * @namedParam    value    The value to initialize the entry to. 
  * @namedParam    type    Optional. An item representing a data type.
  * @namedParam    attribute    Optional.  The attribute to assign the entry to. 
- * @return   An entry object.
+ * @return   The new replacement entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.replaceEntry = function(namedParameters) {
+orp.model.Item.prototype.replaceEntry = function(namedParameters) {
   orp.util.assert(dojo.lang.isObject(namedParameters));
-  var arg = Item.NamedParameters;
+  var arg = orp.model.Item.NamedParameters;
   var value = namedParameters[arg.value];
   var attribute = namedParameters[arg.attribute];
   var type = namedParameters[arg.type];
@@ -210,102 +218,6 @@ Item.prototype.replaceEntry = function(namedParameters) {
 };
 
 
-// -------------------------------------------------------------------
-// DEPRECATED methods
-// -------------------------------------------------------------------
-
-/**
- * DEPRECATED: use addEntry instead.
- * 
- * Creates a new entry object and adds the new entry to the item's 
- * list of entries.
- *
- * @scope    public instance method
- * @param    value    The value to initialize the entry to.
- * @param    type    Optional. An item representing a data type.
- * @return   An entry object.
- * @throws   Throws an Error if no user is logged in.
- */
- /*
-Item.prototype.addEntry = function(value, type) {
-  var attributeCalledUnfiled = this.getWorld().getAttributeCalledUnfiled();
-  return this._createNewEntry(null, attributeCalledUnfiled, value, type);
-};
-*/
-
-/**
- * DEPRECATED: use addEntry instead.
- * 
- * Assigns an entry to an attribute in this item.
- *
- * Given an attribute and value, creates an entry object with the 
- * value, and sets the item's attribute to the new entry.
- * For example, to make Kermit green:
- * <pre>
- *    kermit.addEntryForAttribute(color, "green");
- * </pre>
- * Attributes can always have more than one assigned entry, so
- * you can make Kermit be both blue and green by doing:
- * <pre>
- *    kermit.addEntryForAttribute(color, "green");
- *    kermit.addEntryForAttribute(color, "blue");
- * </pre>
- *
- * @scope    public instance method
- * @param    attribute    The attribute to assign the entry to. 
- * @param    value    The value to initialize the entry with.
- * @param    type    Optional. An item representing a data type.
- * @return   An entry object.
- * @throws   Throws an Error if no user is logged in.
- */
- /*
-Item.prototype.addEntryForAttribute = function(attribute, value, type) {
-  return this._createNewEntry(null, attribute, value, type);
-};
-*/
-
-
-/**
- * DEPRECATED: use replaceEntry instead.
- *
- * Replaces an existing entry with a new entry.
- *
- * @scope    public instance method
- * @param    previousEntry    The old entry to be replaced.
- * @param    value    The value to initialize the new entry to.
- * @param    type    Optional. An item representing a data type.
- * @return   The new replacement entry object.
- * @throws   Throws an Error if no user is logged in.
- */
- /*
-Item.prototype.replaceEntry = function(previousEntry, value, type) {
-  var attribute = previousEntry.getAttributeForItem(this);
-  return this._createNewEntry(previousEntry, attribute, value, type);
-};
-*/
-
-
-/**
- * DEPRECATED: use replaceEntry instead.
- *
- * Replaces an existing entry with a new entry, and assigns the new entry
- * to an attribute.
- *
- * @scope    public instance method
- * @param    previousEntry    The old entry to be replaced.
- * @param    attribute    The attribute to assign the entry to. 
- * @param    value    The value to initialize the new entry to.
- * @param    type    Optional. An item representing a data type.
- * @return   The new replacement entry object.
- * @throws   Throws an Error if no user is logged in.
- */
- /*
-Item.prototype.replaceEntryWithEntryForAttribute = function(previousEntry, attribute, value, type) {
-  return this._createNewEntry(previousEntry, attribute, value, type);
-};
-*/
-
-
 /**
  * Replaces an existing entry with a new entry, and assigns the new entry
  * to an attribute.
@@ -316,7 +228,7 @@ Item.prototype.replaceEntryWithEntryForAttribute = function(previousEntry, attri
  * @param    type    Optional. An item representing a data type.
  * @scope    private instance method
  */
-Item.prototype._createNewEntry = function(previousEntry, attribute, value, type) {
+orp.model.Item.prototype._createNewEntry = function(previousEntry, attribute, value, type) {
 
   // If we've just been asked to replace the string "Foo" with the string "Foo",
   // then don't even bother creating a new entry. 
@@ -360,7 +272,7 @@ Item.prototype._createNewEntry = function(previousEntry, attribute, value, type)
  * @return   The new entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-Item.prototype.addConnectionEntry = function(myAttribute, otherItem, otherAttribute) {
+orp.model.Item.prototype.addConnectionEntry = function(myAttribute, otherItem, otherAttribute) {
   return this.replaceEntryWithConnection(null, myAttribute, otherItem, otherAttribute);
 };
 
@@ -368,9 +280,9 @@ Item.prototype.addConnectionEntry = function(myAttribute, otherItem, otherAttrib
 /**
  *
  */
-Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute, otherItem, otherAttribute) {
-  orp.util.assert(otherItem instanceof Item);
-  orp.util.assert(myAttribute instanceof Item);
+orp.model.Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute, otherItem, otherAttribute) {
+  orp.util.assert(otherItem instanceof orp.model.Item);
+  orp.util.assert(myAttribute instanceof orp.model.Item);
 
   // If we've just been asked to replace the string "Foo" with the string "Foo",
   // then don't even bother creating a new entry. 
@@ -410,7 +322,7 @@ Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute,
   otherItem._noteChanges(null);
   if (previousEntry) {
     var oldItemOrPairOfItems = previousEntry.getItem();
-    if (oldItemOrPairOfItems instanceof Item) {
+    if (oldItemOrPairOfItems instanceof orp.model.Item) {
       oldItemOrPairOfItems._noteChanges(null);
     }
     if (orp.util.isArray(oldItemOrPairOfItems)) {
@@ -428,7 +340,7 @@ Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute,
  * @scope    public instance method
  * @param    category    An item representing a category. 
  */
-Item.prototype.assignToCategory = function(category) {
+orp.model.Item.prototype.assignToCategory = function(category) {
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var attributeCalledItemsInCategory = this.getWorld().getAttributeCalledItemsInCategory();
   this.addConnectionEntry(attributeCalledCategory, category, attributeCalledItemsInCategory);
@@ -463,8 +375,8 @@ for (var i in values) {
  * @param    attribute    An attribute that we want to know the entries of. 
  * @return   A list of entry objects.
  */
-Item.prototype.getEntriesForAttribute = function(attribute) {
-  orp.util.assert(attribute instanceof Item);
+orp.model.Item.prototype.getEntriesForAttribute = function(attribute) {
+  orp.util.assert(attribute instanceof orp.model.Item);
   
   if (this._cachedEntriesKeyedByAttributeUuid !== null) {
     var listOfCachedEntries = this._cachedEntriesKeyedByAttributeUuid[attribute.getUuid()];
@@ -484,7 +396,7 @@ Item.prototype.getEntriesForAttribute = function(attribute) {
   var filteredListOfEntries = [];
   
   switch (filter) {
-    case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
+    case orp.model.World.RetrievalFilter.LAST_EDIT_WINS:
       for (key in listOfEntriesForAttribute) {
         entry = listOfEntriesForAttribute[key];
         if (!entry.hasBeenReplaced() && !entry.hasBeenDeleted()) {
@@ -492,15 +404,15 @@ Item.prototype.getEntriesForAttribute = function(attribute) {
         }
       }
       break;
-    case World.RETRIEVAL_FILTER_SINGLE_USER:
+    case orp.model.World.RetrievalFilter.SINGLE_USER:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
-    case World.RETRIEVAL_FILTER_DEMOCRATIC:
+    case orp.model.World.RetrievalFilter.DEMOCRATIC:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
-    case World.RETRIEVAL_FILTER_UNABRIDGED:
+    case orp.model.World.RetrievalFilter.UNABRIDGED:
       filteredListOfEntries = listOfEntriesForAttribute;
       break;
     default:
@@ -508,7 +420,7 @@ Item.prototype.getEntriesForAttribute = function(attribute) {
       orp.util.assert(false);
       break;
   }
-  filteredListOfEntries.sort(ContentRecord.compareOrdinals);
+  filteredListOfEntries.sort(orp.model.ContentRecord.compareOrdinals);
 
   if (!this._cachedEntriesKeyedByAttributeUuid) {
     this._cachedEntriesKeyedByAttributeUuid = {};
@@ -525,7 +437,7 @@ Item.prototype.getEntriesForAttribute = function(attribute) {
  * @scope    public instance method
  * @return   A list of entry objects.
  */
-Item.prototype.getEntries = function() {
+orp.model.Item.prototype.getEntries = function() {
   var listOfAllEntries = [];
   
   for (var uuid in this._hashTableOfEntryListsKeyedByAttributeUuid) {
@@ -546,7 +458,7 @@ Item.prototype.getEntries = function() {
  * @scope    public instance method
  * @return   A list of attribute items.
  */
-Item.prototype.getAttributes = function() {
+orp.model.Item.prototype.getAttributes = function() {
   var listOfAttributes = [];
   
   for (var uuid in this._hashTableOfEntryListsKeyedByAttributeUuid) {
@@ -560,7 +472,7 @@ Item.prototype.getAttributes = function() {
 /**
  *
  */
-Item.prototype.getFirstCategory = function() {
+orp.model.Item.prototype.getFirstCategory = function() {
   if (this._cachedFirstCategory !== null) {
     return this._cachedFirstCategory;
   } else {
@@ -586,7 +498,7 @@ Item.prototype.getFirstCategory = function() {
  * @scope    public instance method
  * @return   Boolean whether item is provisional
  */
-Item.prototype.isProvisional = function() {
+orp.model.Item.prototype.isProvisional = function() {
   return this._provisionalFlag;
 };
 
@@ -598,7 +510,7 @@ Item.prototype.isProvisional = function() {
  * @param    defaultString    Optional.  This string will be returned if the item has no display name. 
  * @return   A string with a display name for the item.
  */
-Item.prototype.getDisplayName = function(defaultString) {
+orp.model.Item.prototype.getDisplayName = function(defaultString) {
   if (this._cachedDisplayName !== null) {
     return this._cachedDisplayName;
   } else {
@@ -621,7 +533,7 @@ Item.prototype.getDisplayName = function(defaultString) {
  * @param    defaultString    Optional.  This string will be returned if the item has no short name or name. 
  * @return   A string with a name for the item.
  */
-Item.prototype.getDisplayString = function(defaultString) {
+orp.model.Item.prototype.getDisplayString = function(defaultString) {
   if (this._cachedDisplayString !== null) {
     return this._cachedDisplayString;
   } else {
@@ -639,8 +551,8 @@ Item.prototype.getDisplayString = function(defaultString) {
 /**
  *
  */
-Item.prototype.getDisplayStringForEntry = function(entry) {
-  orp.util.assert(entry instanceof Entry);
+orp.model.Item.prototype.getDisplayStringForEntry = function(entry) {
+  orp.util.assert(entry instanceof orp.model.Entry);
   return entry.getDisplayString(this);
 };
 
@@ -651,7 +563,7 @@ Item.prototype.getDisplayStringForEntry = function(entry) {
  * @scope    public instance method
  * @return   A list of the entries assigned to the "name" attribute.
  */
-Item.prototype.getNameEntries = function() {
+orp.model.Item.prototype.getNameEntries = function() {
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   return this.getEntriesForAttribute(attributeCalledName);
 };
@@ -663,7 +575,7 @@ Item.prototype.getNameEntries = function() {
  * @scope    public instance method
  * @return   A list of the entries assigned to the "short name" attribute.
  */
-Item.prototype.getShortNameEntries = function() {
+orp.model.Item.prototype.getShortNameEntries = function() {
   var attributeCalledShortName = this.getWorld().getAttributeCalledShortName();
   return this.getEntriesForAttribute(attributeCalledShortName);
 };
@@ -676,7 +588,7 @@ Item.prototype.getShortNameEntries = function() {
  * @param    attribute    An item representing an attribute. 
  * @return   A string with a description of the item.
  */
-Item.prototype.getSingleEntryFromAttribute = function(attribute) {
+orp.model.Item.prototype.getSingleEntryFromAttribute = function(attribute) {
   var listOfEntries = this.getEntriesForAttribute(attribute);
   if (listOfEntries) {
     return listOfEntries[0];
@@ -692,7 +604,7 @@ Item.prototype.getSingleEntryFromAttribute = function(attribute) {
  * @param    attribute    An item representing an attribute. 
  * @return   A string with a description of the item.
  */
-Item.prototype.getSingleStringValueFromAttribute = function(attribute) {
+orp.model.Item.prototype.getSingleStringValueFromAttribute = function(attribute) {
   var singleEntry = this.getSingleEntryFromAttribute(attribute);
   if (singleEntry) {return singleEntry.getDisplayString();}
   return "";
@@ -705,13 +617,13 @@ Item.prototype.getSingleStringValueFromAttribute = function(attribute) {
  * @scope    public instance method
  * @return   A string with a description of the item.
  */
-Item.prototype.toString = function() {
+orp.model.Item.prototype.toString = function() {
   var returnString = "[Item #" + this.getUuid() + " ";
   var attributeCategory = this.getWorld().getAttributeCalledCategory();
   var listOfCategories = this.getEntriesForAttribute(attributeCategory);
   for (var key in listOfCategories) {
     var category = listOfCategories[key];
-    if (category instanceof Item) {
+    if (category instanceof orp.model.Item) {
       returnString += "(" + category.getDisplayString() + ")";
     }
   }
@@ -731,8 +643,8 @@ Item.prototype.toString = function() {
  * @scope public instance method
  * @return Boolean. True if this item has an attribute with the entry
  */
-Item.prototype.hasAttributeValue = function(attribute, value) {
-  orp.util.assert(attribute instanceof Item);
+orp.model.Item.prototype.hasAttributeValue = function(attribute, value) {
+  orp.util.assert(attribute instanceof orp.model.Item);
   var entryList = this.getEntriesForAttribute(attribute);
 
   // look at all the entries this item's attribute is assigned to, 
@@ -754,8 +666,8 @@ Item.prototype.hasAttributeValue = function(attribute, value) {
  * @scope    public instance method
  * @return   A boolean.  True if the item has been assigned to the category.
  */
-Item.prototype.isInCategory = function(category) {
-  orp.util.assert(category instanceof Item);
+orp.model.Item.prototype.isInCategory = function(category) {
+  orp.util.assert(category instanceof orp.model.Item);
 
   var categoryAttribute = this.getWorld().getAttributeCalledCategory();
   return this.hasAttributeValue(categoryAttribute, category);
@@ -769,7 +681,7 @@ Item.prototype.isInCategory = function(category) {
  * @scope    public instance method
  * @return   A boolean.  True if the string matches the item's name.
  */
-Item.prototype.doesStringMatchName = function(string) {
+orp.model.Item.prototype.doesStringMatchName = function(string) {
   if (string.toLowerCase() == this.getDisplayName().toLowerCase()) {
     return true;
   }
@@ -791,7 +703,7 @@ Item.prototype.doesStringMatchName = function(string) {
  * @scope    public instance method
  * @param    observer    An object or method to be registered as an observer of the item. 
  */
-Item.prototype.addObserver = function(observer) {
+orp.model.Item.prototype.addObserver = function(observer) {
   this.getWorld().addItemObserver(this, observer);
 };
 
@@ -803,7 +715,7 @@ Item.prototype.addObserver = function(observer) {
  * @scope    public instance method
  * @param    observer    The object or method to be removed from the set of observers. 
  */
-Item.prototype.removeObserver = function(observer) {
+orp.model.Item.prototype.removeObserver = function(observer) {
   this.getWorld().removeItemObserver(this, observer);
 };
 
@@ -823,8 +735,8 @@ Item.prototype.removeObserver = function(observer) {
  * @param    entry    The entry to be associated with this item. 
  * @param    attribute    The attribute that this entry is assigned to. 
  */
-Item.prototype._addRehydratedEntry = function(entry, attribute) {
-  this.__addEntryToListOfEntriesForAttribute(entry, attribute);
+orp.model.Item.prototype._addRehydratedEntry = function(entry, attribute) {
+  this._addEntryToListOfEntriesForAttribute(entry, attribute);
 };
   
 
@@ -838,7 +750,7 @@ Item.prototype._addRehydratedEntry = function(entry, attribute) {
  * @scope    protected instance method
  * @param    listOfRecords    A list of the modifications. 
  */
-Item.prototype._noteChanges = function(listOfRecords) {
+orp.model.Item.prototype._noteChanges = function(listOfRecords) {
   this._cachedDisplayName = null;
   this._cachedDisplayString = null;
   this._cachedFirstCategory = null;
@@ -856,7 +768,7 @@ Item.prototype._noteChanges = function(listOfRecords) {
  * @param    entry    The entry to be associated with this item. 
  * @param    attribute    The attribute that this entry is assigned to. 
  */
-Item.prototype.__addEntryToListOfEntriesForAttribute = function(entry, attribute) {
+orp.model.Item.prototype._addEntryToListOfEntriesForAttribute = function(entry, attribute) {
   var attributeUuid = attribute.getUuid();
   var listOfEntries = this._hashTableOfEntryListsKeyedByAttributeUuid[attributeUuid];
   if (!listOfEntries) {

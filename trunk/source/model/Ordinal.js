@@ -30,12 +30,21 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.Ordinal");
+dojo.require("orp.model.Record");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global Record */
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
  * Each instance of the Ordinal class keeps track of the fact that
  * a user set an ordinal number for an item or a entry of an item.
@@ -46,15 +55,20 @@
  * @param    contentRecord    The item or entry that this ordinal is attached to. 
  * @param    inOrdinalNumber    The ordinal number itself. 
  */
-Ordinal.prototype = new Record();  // makes Ordinal be a subclass of Record
-function Ordinal(world, uuid, contentRecord, ordinalNumber) {
+orp.model.Ordinal = function(world, uuid, contentRecord, ordinalNumber) {
   this._Record(world, uuid);
 
   this._contentRecord = contentRecord;
   this._ordinalNumber = ordinalNumber;
   this._contentRecord._addOrdinal(this);
-}
+};
 
+dj_inherits(orp.model.Ordinal, orp.model.Record);  // makes Ordinal be a subclass of Record
+
+
+// -------------------------------------------------------------------
+// Public methods
+// -------------------------------------------------------------------
 
 /**
  * Returns the item or entry that this ordinal applies to.
@@ -62,7 +76,7 @@ function Ordinal(world, uuid, contentRecord, ordinalNumber) {
  * @scope    public instance method
  * @return   An item or entry.
  */
-Ordinal.prototype.getContentRecord = function() {
+orp.model.Ordinal.prototype.getContentRecord = function() {
   return this._contentRecord;
 };
 
@@ -73,7 +87,7 @@ Ordinal.prototype.getContentRecord = function() {
  * @scope    public instance method
  * @return   An ordinal number.
  */
-Ordinal.prototype.getOrdinalNumber = function() {
+orp.model.Ordinal.prototype.getOrdinalNumber = function() {
   return this._ordinalNumber;
 };
 

@@ -30,6 +30,16 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.DeltaVirtualServer");
+dojo.require("orp.model.StubVirtualServer");
+dojo.require("orp.model.World");
+dojo.require("orp.model.Vote");
+dojo.require("orp.model.FileSaver");
+dojo.require("orp.model.HttpSaver");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global window */
@@ -40,11 +50,8 @@
 
 
 // -------------------------------------------------------------------
-// DeltaVirtualServer public class constants
+// Constructor
 // -------------------------------------------------------------------
-DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
-
-
 /**
  * The DeltaVirtualServer is a datastore that loads and saves
  * an entire World of items as a single monolithic JSON string.
@@ -52,17 +59,28 @@ DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
  * @scope    public instance constructor
  * @param    inJsonRepositoryString    A JSON string literal representing the world of items. 
  */
-DeltaVirtualServer.prototype = new StubVirtualServer();  // makes DeltaVirtualServer be a subclass of StubVirtualServer
-function DeltaVirtualServer(repositoryName, pathToTrunkDirectory, optionalDefaultOverrides) {
-  StubVirtualServer.call(this, pathToTrunkDirectory, optionalDefaultOverrides);
+orp.model.DeltaVirtualServer = function(repositoryName, pathToTrunkDirectory, optionalDefaultOverrides) {
+  orp.model.StubVirtualServer.call(this, pathToTrunkDirectory, optionalDefaultOverrides);
   this._repositoryName = repositoryName;
   this._pathToTrunkDirectory = "";
   if (pathToTrunkDirectory) {
     this._pathToTrunkDirectory = pathToTrunkDirectory;
   }
   this._hasEverFailedToSaveFlag = false;
-}
+};
 
+dj_inherits(orp.model.DeltaVirtualServer, orp.model.StubVirtualServer);  // makes DeltaVirtualServer be a subclass of StubVirtualServer
+
+
+// -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+orp.model.DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
+
+
+// -------------------------------------------------------------------
+// Public methods
+// -------------------------------------------------------------------
 
 /**
  * Initializes the instance variables for a newly created DeltaVirtualServer,
@@ -71,9 +89,8 @@ function DeltaVirtualServer(repositoryName, pathToTrunkDirectory, optionalDefaul
  * @scope    public instance method
  * @param    world    The world that we provide data for. 
  */
-DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
+orp.model.DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   this._initialize(world);
-  // this._buildTypeHashTable();
   this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
 
   var repositoryFileName = this._repositoryName + ".json";
@@ -81,7 +98,7 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   if (this._needCompletePath) {
     repositoryUrl = this._completePathToTrunkDirectory + '/';
   }
-  repositoryUrl += DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY + "/" + repositoryFileName;
+  repositoryUrl += orp.model.DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY + "/" + repositoryFileName;
   var repositoryContentString = orp.util.getStringContentsOfFileAtURL(repositoryUrl);
   repositoryContentString += " ] }";
 
@@ -102,16 +119,16 @@ DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
  * @scope    private instance method
  * @param    jsonRepositoryString    A JSON string literal representing the world of items. 
  */
-DeltaVirtualServer.prototype._loadWorldFromJsonString = function(jsonRepositoryString) {
+orp.model.DeltaVirtualServer.prototype._loadWorldFromJsonString = function(jsonRepositoryString) {
 
   // load the list of records
   orp.util.assert(orp.util.isString(jsonRepositoryString));
   var dehydratedRecords = null;
   eval("dehydratedRecords = " + jsonRepositoryString + ";");
   orp.util.assert(orp.util.isObject(dehydratedRecords));
-  var recordFormat = dehydratedRecords[StubVirtualServer.JSON_MEMBER_FORMAT];
-  orp.util.assert(recordFormat == StubVirtualServer.JSON_FORMAT_2005_JUNE_RECORDS);
-  var listOfRecords = dehydratedRecords[StubVirtualServer.JSON_MEMBER_RECORDS];
+  var recordFormat = dehydratedRecords[orp.model.StubVirtualServer.JSON_MEMBER.FORMAT];
+  orp.util.assert(recordFormat == orp.model.StubVirtualServer.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
+  var listOfRecords = dehydratedRecords[orp.model.StubVirtualServer.JSON_MEMBER.RECORDS];
   orp.util.assert(orp.util.isArray(listOfRecords));
   
   var listOfUsers = null;
@@ -128,7 +145,7 @@ DeltaVirtualServer.prototype._loadWorldFromJsonString = function(jsonRepositoryS
  * @param    string    A string that may need truncating.
  * @return   A string that is no longer than 80 characters long.
  */
-DeltaVirtualServer.prototype._truncateString = function(string) {
+orp.model.DeltaVirtualServer.prototype._truncateString = function(string) {
   var maxLength = 80;
   var ellipsis = "...";
   var returnString = "";
@@ -149,7 +166,7 @@ DeltaVirtualServer.prototype._truncateString = function(string) {
  * @param    transaction    A transaction object.
  * @return   A JSON string literal, representing the records in the transaction. 
  */
-DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = function(transaction) {
+orp.model.DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = function(transaction) {
   var indent = "  ";
   var listOfRecords = transaction.getRecords();
   if (!listOfRecords || listOfRecords.length === 0) {
@@ -162,7 +179,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = function(tr
     indent = "    ";
     var listOfStrings = [];
     listOfStrings.push("  // =======================================================================\n");
-    listOfStrings.push('  { "' + StubVirtualServer.JSON_MEMBER_TRANSACTION_CLASS + '": [\n');
+    listOfStrings.push('  { "' + orp.model.StubVirtualServer.JSON_MEMBER.TRANSACTION_CLASS + '": [\n');
     var content = this._getJsonStringRepresentingRecords(transaction.getRecords(), indent);
     listOfStrings.push(content);
     listOfStrings.push('  ]\n');
@@ -177,17 +194,17 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = function(tr
 /**
  *
  */
-DeltaVirtualServer.prototype._getTypedDisplayStringForItem = function(item) {
+orp.model.DeltaVirtualServer.prototype._getTypedDisplayStringForItem = function(item) {
   var returnString = "(";
   if (item) {
-    if (item instanceof Item) {
+    if (item instanceof orp.model.Item) {
       var category = item.getFirstCategory();
       if (category) {
         returnString += this._truncateString(category.getDisplayString("???")) + ": ";
       }
       returnString += this._truncateString(item.getDisplayString("???"));
     }
-    if (item instanceof Entry) {
+    if (item instanceof orp.model.Entry) {
       returnString += "Entry";
     }
   }
@@ -205,7 +222,7 @@ DeltaVirtualServer.prototype._getTypedDisplayStringForItem = function(item) {
  * @param    indent    Optional. A string of spaces to prepend to each line.
  * @return   A JSON string literal, representing the records. 
  */
-DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOfRecords, indent) {
+orp.model.DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOfRecords, indent) {
   indent = indent || "";
   var i;
   var listOfStrings = [];
@@ -215,7 +232,8 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
   var listOfUsers = null;
   var commentString;
   var generateComments = false;
-  
+  var JSON_MEMBER = orp.model.StubVirtualServer.JSON_MEMBER;
+
   if (!generateComments) {
     indent = "";
   }
@@ -231,7 +249,7 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
       listOfStrings.push(indent + '// -----------------------------------------------------------------------\n');
     }
     
-    if (record instanceof Item) {
+    if (record instanceof orp.model.Item) {
       var item = record;
       if (generateComments) {
         listOfStrings.push(indent + '// ' + this._getTypedDisplayStringForItem(item) + '\n');
@@ -239,8 +257,8 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         listOfStrings.push(' on (' + orp.util.DateValue.getStringMonthDayYear(item.getCreationDate()) + ')\n');
       }
       if (!this._jsonFragmentForItemPrefix) {
-        this._jsonFragmentForItemPrefix = indent + '{ "' + StubVirtualServer.JSON_MEMBER_ITEM_CLASS + '": ';
-        this._jsonFragmentForItemPrefix += '{ "' + StubVirtualServer.JSON_MEMBER_UUID + '": ';
+        this._jsonFragmentForItemPrefix = indent + '{ "' + JSON_MEMBER.ITEM_CLASS + '": ';
+        this._jsonFragmentForItemPrefix += '{ "' + JSON_MEMBER.UUID + '": ';
       }
       listOfStrings.push(this._jsonFragmentForItemPrefix);
       listOfStrings.push(item._getUuidInQuotes());
@@ -261,43 +279,43 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
           listOfStrings.push(indent + '// -----------------------------------------------------------------------\n');
           listOfStrings.push(indent + '// ' + this._getTypedDisplayStringForItem(user) + '\n');
         }
-        listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_USER_CLASS + '": ' + '{\n');
-        listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_USER + '": ' + user._getUuidInQuotes() + ',\n');
-        listOfStrings.push(indent + '     "' + StubVirtualServer.JSON_MEMBER_PASSWORD + '": ' + passwordString + ' }\n');
+        listOfStrings.push(indent + '{ "' + JSON_MEMBER.USER_CLASS + '": ' + '{\n');
+        listOfStrings.push(indent + '         "' + JSON_MEMBER.USER + '": ' + user._getUuidInQuotes() + ',\n');
+        listOfStrings.push(indent + '     "' + JSON_MEMBER.PASSWORD + '": ' + passwordString + ' }\n');
         listOfStrings.push(indent + '}');
       }
     }
 
-    if (record instanceof Vote) {
+    if (record instanceof orp.model.Vote) {
       var vote = record;
       entryDisplayNameSubstring = this._getTypedDisplayStringForItem(vote.getContentRecord());
       var deleteVsRetainString = vote.getRetainFlag() ? "RETAIN" : "DELETE";
       if (generateComments) {
         listOfStrings.push(indent + '// vote to ' + deleteVsRetainString + " " + entryDisplayNameSubstring + '\n');
       }
-      listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_VOTE_CLASS + '": ' + '{\n');
-      listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": ' + vote._getUuidInQuotes() + ',\n');
-      listOfStrings.push(indent + '       "' + StubVirtualServer.JSON_MEMBER_RECORD + '": ' + vote.getContentRecord()._getUuidInQuotes() + ',\n');
-      listOfStrings.push(indent + '   "' + StubVirtualServer.JSON_MEMBER_RETAIN_FLAG + '": "' + vote.getRetainFlag() + '"');
+      listOfStrings.push(indent + '{ "' + JSON_MEMBER.VOTE_CLASS + '": ' + '{\n');
+      listOfStrings.push(indent + '         "' + JSON_MEMBER.UUID + '": ' + vote._getUuidInQuotes() + ',\n');
+      listOfStrings.push(indent + '       "' + JSON_MEMBER.RECORD + '": ' + vote.getContentRecord()._getUuidInQuotes() + ',\n');
+      listOfStrings.push(indent + '   "' + JSON_MEMBER.RETAIN_FLAG + '": "' + vote.getRetainFlag() + '"');
       listOfStrings.push('  }\n');
       listOfStrings.push(indent + '}');
     }
 
-    if (record instanceof Ordinal) {
+    if (record instanceof orp.model.Ordinal) {
       var ordinal = record;
       entryDisplayNameSubstring = this._getTypedDisplayStringForItem(ordinal.getContentRecord());
       if (generateComments) {
         listOfStrings.push(indent + '// ordinal # ' + ordinal.getOrdinalNumber() + " for " + entryDisplayNameSubstring + '\n');
       }
-      listOfStrings.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_ORDINAL_CLASS + '": ' + '{' + '\n');
-      listOfStrings.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": ' + ordinal._getUuidInQuotes() + ',\n');
-      listOfStrings.push(indent + '       "' + StubVirtualServer.JSON_MEMBER_RECORD + '": ' + ordinal.getContentRecord()._getUuidInQuotes() + ',\n');
-      listOfStrings.push(indent + '        "' + StubVirtualServer.JSON_MEMBER_ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '"');
+      listOfStrings.push(indent + '{ "' + JSON_MEMBER.ORDINAL_CLASS + '": ' + '{' + '\n');
+      listOfStrings.push(indent + '         "' + JSON_MEMBER.UUID + '": ' + ordinal._getUuidInQuotes() + ',\n');
+      listOfStrings.push(indent + '       "' + JSON_MEMBER.RECORD + '": ' + ordinal.getContentRecord()._getUuidInQuotes() + ',\n');
+      listOfStrings.push(indent + '        "' + JSON_MEMBER.ORDINAL_NUMBER + '": "' + ordinal.getOrdinalNumber() + '"');
       listOfStrings.push('  }\n');
       listOfStrings.push(indent + '}');
     }
 
-    if (record instanceof Entry) {
+    if (record instanceof orp.model.Entry) {
       var entry = record;
       var entryType = entry.getType();
       var typeUuid = entryType.getUuid();
@@ -307,25 +325,25 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
       } else {
         listOfStringsForEntry = listOfStrings;
       }
-      listOfStringsForEntry.push(indent + '{ "' + StubVirtualServer.JSON_MEMBER_ENTRY_CLASS + '": ' + '{\n');
-      listOfStringsForEntry.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_UUID + '": ' + entry._getUuidInQuotes() + ',\n');
+      listOfStringsForEntry.push(indent + '{ "' + JSON_MEMBER.ENTRY_CLASS + '": ' + '{\n');
+      listOfStringsForEntry.push(indent + '         "' + JSON_MEMBER.UUID + '": ' + entry._getUuidInQuotes() + ',\n');
       var previousEntry = entry.getPreviousEntry();
       if (previousEntry) {
-        listOfStringsForEntry.push(indent + '"' + StubVirtualServer.JSON_MEMBER_PREVIOUS_VALUE + '": ' + previousEntry._getUuidInQuotes() + ',\n');
+        listOfStringsForEntry.push(indent + '"' + JSON_MEMBER.PREVIOUS_VALUE + '": ' + previousEntry._getUuidInQuotes() + ',\n');
       }
-      listOfStringsForEntry.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_TYPE + '": "' + typeUuid.toString() + '",\n');
+      listOfStringsForEntry.push(indent + '         "' + JSON_MEMBER.TYPE + '": "' + typeUuid.toString() + '",\n');
       if (generateComments) {
         commentString = "";
       }
-      if (typeUuid.toString() == World.UUID_FOR_TYPE_CONNECTION) {
+      if (typeUuid.toString() == orp.model.World.UUID.TYPE_CONNECTION) {
         var pairOfItems = entry.getItem();
         var firstItem = pairOfItems[0];
         var secondItem = pairOfItems[1];
-        listOfStringsForEntry.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_ITEM + '": [' + firstItem._getUuidInQuotes() + ', ' + secondItem._getUuidInQuotes() + '],\n');
+        listOfStringsForEntry.push(indent + '         "' + JSON_MEMBER.ITEM + '": [' + firstItem._getUuidInQuotes() + ', ' + secondItem._getUuidInQuotes() + '],\n');
         var pairOfAttributes = entry.getAttribute();
         var firstAttribute = pairOfAttributes[0];
         var secondAttribute = pairOfAttributes[1];
-        listOfStringsForEntry.push(indent + '    "' + StubVirtualServer.JSON_MEMBER_ATTRIBUTE + '": [' + firstAttribute._getUuidInQuotes() + ', ' + secondAttribute._getUuidInQuotes() + ']');
+        listOfStringsForEntry.push(indent + '    "' + JSON_MEMBER.ATTRIBUTE + '": [' + firstAttribute._getUuidInQuotes() + ', ' + secondAttribute._getUuidInQuotes() + ']');
         if (generateComments) {
           commentString += indent + '// ' + this._getTypedDisplayStringForItem(firstItem);
           commentString += ".(" + this._truncateString(firstAttribute.getDisplayString("???")) + ")";
@@ -336,36 +354,36 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
         }
       } else {
         var attribute = entry.getAttribute();
-        // if (!(attribute instanceof Item)) {
+        // if (!(attribute instanceof orp.model.Item)) {
         //   alert(entry + "\n" + attribute);
         // }
-        listOfStringsForEntry.push(indent + '    "' + StubVirtualServer.JSON_MEMBER_ATTRIBUTE + '": ' + attribute._getUuidInQuotes() + ',\n');
-        listOfStringsForEntry.push(indent + '         "' + StubVirtualServer.JSON_MEMBER_ITEM + '": ' + entry.getItem()._getUuidInQuotes() + ',\n');
+        listOfStringsForEntry.push(indent + '    "' + JSON_MEMBER.ATTRIBUTE + '": ' + attribute._getUuidInQuotes() + ',\n');
+        listOfStringsForEntry.push(indent + '         "' + JSON_MEMBER.ITEM + '": ' + entry.getItem()._getUuidInQuotes() + ',\n');
         var contentData = entry.getValue();
         
         var valueString = null;
         var valueComment = null;
         switch (typeUuid.toString()) {
-          case World.UUID_FOR_TYPE_NUMBER: 
+          case orp.model.World.UUID.TYPE_NUMBER: 
             valueString = '"' + contentData + '"';
             if (generateComments) {valueComment = contentData;}
             break;
-          case World.UUID_FOR_TYPE_TEXT: 
+          case orp.model.World.UUID.TYPE_TEXT: 
             valueString = '"' + this.encodeText(contentData) + '"';
             if (generateComments) {valueComment = '"' + this._truncateString(contentData) + '"';}
             break;
-          case World.UUID_FOR_TYPE_DATE: 
+          case orp.model.World.UUID.TYPE_DATE: 
             valueString = '"' + contentData.toString() + '"';
             if (generateComments) {valueComment = valueString;}
             break;
-          case World.UUID_FOR_TYPE_ITEM: 
+          case orp.model.World.UUID.TYPE_ITEM: 
             valueString = contentData._getUuidInQuotes();
             if (generateComments) {valueComment = this._getTypedDisplayStringForItem(contentData);}
             break;
           default:
             orp.util.assert(false, "no such type: " + entryType.getDisplayString());
         }
-        listOfStringsForEntry.push(indent + '        "' + StubVirtualServer.JSON_MEMBER_VALUE + '": ' + valueString);
+        listOfStringsForEntry.push(indent + '        "' + JSON_MEMBER.VALUE + '": ' + valueString);
         if (generateComments) {
           commentString += indent + '// ' + this._getTypedDisplayStringForItem(entry.getItem());
           commentString += ".(" + this._truncateString(attribute.getDisplayString("???")) + ")";
@@ -396,17 +414,17 @@ DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOf
  * @param    overwriteIfExists    Optional
  * @return   success
  */
-DeltaVirtualServer.prototype._createNewRepository = function(overwriteIfExists) {
+orp.model.DeltaVirtualServer.prototype._createNewRepository = function(overwriteIfExists) {
   if (this._saverObject) {
     alert("this._saverObject is already initialized.");
     return false;
   }
   if (window.location) {
     if (window.location.protocol == "http:") {
-      this._saverObject = new HttpSaver(this._repositoryName, this._pathToTrunkDirectory);
+      this._saverObject = new orp.model.HttpSaver(this._repositoryName, this._pathToTrunkDirectory);
     }
     if (window.location.protocol == "file:") {
-      this._saverObject = new FileSaver(this._repositoryName, this._pathToTrunkDirectory);
+      this._saverObject = new orp.model.FileSaver(this._repositoryName, this._pathToTrunkDirectory);
     }
   }
   if (!this._saverObject) {
@@ -416,7 +434,7 @@ DeltaVirtualServer.prototype._createNewRepository = function(overwriteIfExists) 
     }
     return false;
   }
-  var text = '{ "format": "2005_JUNE_CHRONOLOGICAL_LIST", \n';
+  var text = '{ "format": "' + orp.model.StubVirtualServer.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST + '", \n';
   text +=    '  "records": [\n';
   text +=    '  // =======================================================================\n';
   text +=    '  { "Transaction": [ ]\n';
@@ -433,7 +451,7 @@ DeltaVirtualServer.prototype._createNewRepository = function(overwriteIfExists) 
  * @param    forceSave    Optional. Forces a save if set to true. 
  * @return   The list of changes made. 
  */
-DeltaVirtualServer.prototype._saveChangesToServer = function(forceSave) {
+orp.model.DeltaVirtualServer.prototype._saveChangesToServer = function(forceSave) {
   var currentTransaction = this.getCurrentTransaction();
   var listOfChangesMade = currentTransaction.getRecords();
   if (!forceSave && listOfChangesMade.length === 0) {
@@ -443,10 +461,10 @@ DeltaVirtualServer.prototype._saveChangesToServer = function(forceSave) {
   if (!this._saverObject) {
     if (window.location) {
       if (window.location.protocol == "http:") {
-        this._saverObject = new HttpSaver(this._repositoryName, this._pathToTrunkDirectory);
+        this._saverObject = new orp.model.HttpSaver(this._repositoryName, this._pathToTrunkDirectory);
       }
       if (window.location.protocol == "file:") {
-        this._saverObject = new FileSaver(this._repositoryName, this._pathToTrunkDirectory);
+        this._saverObject = new orp.model.FileSaver(this._repositoryName, this._pathToTrunkDirectory);
       }
     }
   }

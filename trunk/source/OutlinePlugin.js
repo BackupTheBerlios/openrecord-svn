@@ -30,6 +30,13 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.OutlinePlugin");
+dojo.require("orp.view.PluginView");
+dojo.require("orp.view.SectionView");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global Util  */
@@ -38,13 +45,9 @@
 // -------------------------------------------------------------------
 
 
-
 // -------------------------------------------------------------------
-// Register this plugin in the SectionView registry
+// Constructor
 // -------------------------------------------------------------------
-OutlinePlugin.UUID_FOR_PLUGIN_VIEW_OUTLINE = "00040302-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.registerPlugin(OutlinePlugin);
-
 
 /**
  * An OutlinePlugin displays a set of content items for a SectionView. 
@@ -55,12 +58,21 @@ SectionView.registerPlugin(OutlinePlugin);
  * @param    htmlElement    The HTMLElement to display this view in. 
  * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
  * @param    layoutItem    ???. 
- * @syntax   var outline = new OutlinePlugin()
+ * @syntax   var outline = new orp.OutlinePlugin()
  */
-OutlinePlugin.prototype = new PluginView();  // makes OutlinePlugin be a subclass of PluginView
-function OutlinePlugin(superview, htmlElement, querySpec, layoutItem) {
-  PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "OutlinePlugin");
-}
+orp.OutlinePlugin = function(superview, htmlElement, querySpec, layoutItem) {
+  orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "OutlinePlugin");
+};
+
+dj_inherits(orp.OutlinePlugin, orp.view.PluginView);  // makes OutlinePlugin be a subclass of PluginView
+
+
+// -------------------------------------------------------------------
+// Register this plugin in the SectionView registry
+// -------------------------------------------------------------------
+orp.OutlinePlugin.UUID = { PLUGIN_VIEW_OUTLINE: "00040302-ce7f-11d9-8cd5-0011113ae5d6" };
+// FIXME:
+// orp.view.SectionView.registerPlugin(orp.OutlinePlugin);
 
 
 // -------------------------------------------------------------------
@@ -73,8 +85,8 @@ function OutlinePlugin(superview, htmlElement, querySpec, layoutItem) {
  * @scope    public class method
  * @return   The UUID of the item that represents this class of plugin
  */
-OutlinePlugin.getPluginItemUuid = function() {
-  return OutlinePlugin.UUID_FOR_PLUGIN_VIEW_OUTLINE;
+orp.OutlinePlugin.getPluginItemUuid = function() {
+  return orp.OutlinePlugin.UUID.PLUGIN_VIEW_OUTLINE;
 };
 
 
@@ -88,8 +100,8 @@ OutlinePlugin.getPluginItemUuid = function() {
  * @scope    public instance method
  * @return   A JavaScript class. 
  */
-OutlinePlugin.prototype.getClass = function() {
-  return OutlinePlugin;
+orp.OutlinePlugin.prototype.getClass = function() {
+  return orp.OutlinePlugin;
 };
 
 
@@ -99,26 +111,25 @@ OutlinePlugin.prototype.getClass = function() {
  *
  * @scope    public instance method
  */
-OutlinePlugin.prototype.refresh = function() {
+orp.OutlinePlugin.prototype.refresh = function() {
   var listOfContentItems = this.fetchItems();
   var outlineDiv = this.getHtmlElement();
-  View.removeChildrenOfElement(outlineDiv);
-  var ulElement = View.appendNewElement(outlineDiv, "ul");
+  orp.view.View.removeChildrenOfElement(outlineDiv);
+  var ulElement = orp.view.View.appendNewElement(outlineDiv, "ul");
   for (var contentItemKey in listOfContentItems) {
     var contentItem = listOfContentItems[contentItemKey];
     var liText = contentItem.getDisplayName("{no name}") + " ";
-    var liElement = View.appendNewElement(ulElement, "li", null, null, liText);
-    // View.appendNewTextNode(liElement, contentItem.getDisplayName("{no name}") + " ");
-    var anchorElement = View.appendNewElement(liElement, "a", SectionView.CSS_CLASS_MORE_LINK);
+    var liElement = orp.view.View.appendNewElement(ulElement, "li", null, null, liText);
+    var anchorElement = orp.view.View.appendNewElement(liElement, "a", orp.view.SectionView.cssClass.MORE_LINK);
 
     // PENDING: 
     //  We shouldn't call the private method _getUuid()
     //  We need a better way to get the URL for a content item
-    anchorElement.setAttribute("href", RootView.URL_HASH_ITEM_PREFIX + contentItem.getUuidString());
+    anchorElement.setAttribute("href", orp.view.RootView.URL_HASH_ITEM_PREFIX + contentItem.getUuidString());
 
-    // View.appendNewTextNode(anchorElement, "(more &#8658;)");
+    // orp.view.View.appendNewTextNode(anchorElement, "(more &#8658;)");
     anchorElement.innerHTML = "(more &#8658;)";
-    orp.util.addEventListener(anchorElement, "click", RootView.clickOnLocalLink);
+    orp.util.addEventListener(anchorElement, "click", orp.view.RootView.clickOnLocalLink);
   }
 };
 

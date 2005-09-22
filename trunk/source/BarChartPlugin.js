@@ -30,6 +30,13 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.BarChartPlugin");
+dojo.require("orp.view.PluginView");
+dojo.require("orp.view.SectionView");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global Util  */
@@ -39,11 +46,8 @@
 
 
 // -------------------------------------------------------------------
-// Register this plugin in the SectionView registry
+// Constructor
 // -------------------------------------------------------------------
-BarChartPlugin.UUID_FOR_PLUGIN_VIEW_BAR_CHART = "00040304-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.registerPlugin(BarChartPlugin);
-
 
 /**
  * A BarChartPlugin displays a set of content items for a SectionView. 
@@ -56,10 +60,19 @@ SectionView.registerPlugin(BarChartPlugin);
  * @param    layoutItem    ???. 
  * @syntax   var barChart = new BarChartPlugin()
  */
-BarChartPlugin.prototype = new PluginView();  // makes BarChartPlugin be a subclass of PluginView
-function BarChartPlugin(superview, htmlElement, querySpec, layoutItem) {
-  PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "BarChartPlugin");
-}
+orp.BarChartPlugin = function(superview, htmlElement, querySpec, layoutItem) {
+  orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "BarChartPlugin");
+};
+
+dj_inherits(orp.BarChartPlugin, orp.view.PluginView);  // makes BarChartPlugin be a subclass of PluginView
+
+
+// -------------------------------------------------------------------
+// Register this plugin in the SectionView registry
+// -------------------------------------------------------------------
+orp.BarChartPlugin.UUID = { PLUGIN_VIEW_BAR_CHART: "00040304-ce7f-11d9-8cd5-0011113ae5d6" };
+// FIXME:
+// orp.view.SectionView.registerPlugin(orp.BarChartPlugin);
 
 
 // -------------------------------------------------------------------
@@ -72,8 +85,8 @@ function BarChartPlugin(superview, htmlElement, querySpec, layoutItem) {
  * @scope    public class method
  * @return   The UUID of the item that represents this class of plugin
  */
-BarChartPlugin.getPluginItemUuid = function() {
-  return BarChartPlugin.UUID_FOR_PLUGIN_VIEW_BAR_CHART;
+orp.BarChartPlugin.getPluginItemUuid = function() {
+  return orp.BarChartPlugin.UUID.PLUGIN_VIEW_BAR_CHART;
 };
 
 
@@ -87,8 +100,8 @@ BarChartPlugin.getPluginItemUuid = function() {
  * @scope    public instance method
  * @return   A JavaScript class. 
  */
-BarChartPlugin.prototype.getClass = function() {
-  return BarChartPlugin;
+orp.BarChartPlugin.prototype.getClass = function() {
+  return orp.BarChartPlugin;
 };
 
 
@@ -98,7 +111,7 @@ BarChartPlugin.prototype.getClass = function() {
  *
  * @scope    public instance method
  */
-BarChartPlugin.prototype.refresh = function() {
+orp.BarChartPlugin.prototype.refresh = function() {
   var listOfStrings = [];
 
   var contentItem = null;
@@ -164,7 +177,7 @@ BarChartPlugin.prototype.refresh = function() {
   }
 
   // add the table header row(s)
-  listOfStrings.push("<table class=\"" + SectionView.CSS_CLASS_SIMPLE_TABLE + "\">");
+  listOfStrings.push("<table class=\"" + orp.view.SectionView.cssClass.SIMPLE_TABLE + "\">");
   listOfStrings.push("<tr>");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   listOfStrings.push("<th>" + attributeCalledName.getDisplayName() + "</th>");
@@ -179,7 +192,7 @@ BarChartPlugin.prototype.refresh = function() {
   for (var kKey in listOfContentItems) {
     contentItem = listOfContentItems[kKey];
     listOfStrings.push("<tr>");
-    listOfStrings.push("<td class=\"" + SectionView.CSS_CLASS_PLAIN + "\">" + contentItem.getDisplayName("{no name}") + "</td>");
+    listOfStrings.push("<td class=\"" + orp.view.SectionView.cssClass.PLAIN + "\">" + contentItem.getDisplayName("{no name}") + "</td>");
     var numericValue = 0;
     if (selectedAttribute) {
       listOfEntries = contentItem.getEntriesForAttribute(selectedAttribute);

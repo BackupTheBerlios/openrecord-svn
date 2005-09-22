@@ -610,7 +610,7 @@ orp.util.addEventListener = function(element, eventType, callback, captures) {
  * However, empirically, arguments is not an array in Firefox and cannot be
  * concat'd with an array, hence the mod.
  */
-Function.prototype.bindAsEventListener = function(object) {
+Function.prototype.orpBindAsEventListener = function(object) {
   var method = this;
   var preappliedArguments = arguments;
   return function (event) {

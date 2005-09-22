@@ -34,6 +34,7 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.util.XmlConverter");
 dojo.require("orp.util.Util");
+dojo.require("orp.model.World");
 // dojo.provide("orp.util.XmlTextNodeToAttributeSpecifier");
 // dojo.provide("orp.util.XmlAttributeToAttributeSpecifier");
 
@@ -45,7 +46,7 @@ dojo.require("orp.util.Util");
  */
 orp.util.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) {
   orp.util.assert(tagPath instanceof Array);
-  orp.util.assert(attribute instanceof Item);
+  orp.util.assert(attribute instanceof orp.model.Item);
   this._tagPath = tagPath;
   this._attribute = attribute;
   var attributeCalledExpectedType = attribute.getWorld().getAttributeCalledExpectedType();
@@ -68,7 +69,7 @@ orp.util.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) {
  * @scope    public instance constructor
  */
 orp.util.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, attribute) {
-  orp.util.assert(attribute instanceof Item);
+  orp.util.assert(attribute instanceof orp.model.Item);
   this._xmlAttributeName = xmlAttributeName;
   this._attribute = attribute;
   var attributeCalledExpectedType = attribute.getWorld().getAttributeCalledExpectedType();
@@ -100,7 +101,7 @@ orp.util.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, attribute
  * @param    itemCategory                       If null, a new category is created from 'namespace' and 'itemTagName'.
  */
 orp.util.XmlConverter = function(world, url, nameSpace, itemTagName, itemCategory) {
-  orp.util.assert(world instanceof World);
+  orp.util.assert(world instanceof orp.model.World);
   var urlSeparators = new RegExp("\\.|\\/");
   var urlParts = url.split(urlSeparators);
   var len = urlParts.length;
@@ -176,7 +177,7 @@ orp.util.XmlConverter.prototype.getItemCategory = function() {
  * @return   Returns an array of created items.
  */
 orp.util.XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
-  world.beginTransaction();
+  this._world.beginTransaction();
   var listOfOutputItems = [];
   if (!xmlToAttributeSpecifiers) {
     listOfOutputItems = this._doDefaultConversion(this._world, this._nameSpace, this._itemElements, this._itemCategory);
@@ -185,7 +186,7 @@ orp.util.XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSp
     orp.util.assert(xmlToAttributeSpecifiers instanceof Array);
     orp.util.assert(xmlToAttributeSpecifiers[0] instanceof orp.util.XmlTextNodeToAttributeSpecifier);
     for (var i = 0; i < this._itemElements.length; ++i) {
-      var newItem = world.newItem();
+      var newItem = this._world.newItem();
       newItem.assignToCategory(this._itemCategory);
       for (var j in xmlToAttributeSpecifiers) {
         var tagPath = xmlToAttributeSpecifiers[j]._tagPath;
@@ -203,7 +204,7 @@ orp.util.XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSp
       listOfOutputItems.push(newItem);
     }
   }
-  world.endTransaction();
+  this._world.endTransaction();
   return listOfOutputItems;
 };
 
@@ -227,7 +228,7 @@ orp.util.XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equality
     matchXmlAttribute = false;
     var xmlTagPathToMatch = equalitySpecifier._tagPath;
   }
-  world.beginTransaction();
+  this._world.beginTransaction();
   var itemsInItemCategory = this._world.getItemsInCategory(this._itemCategory);
   var hash = {};
   var matchString;
@@ -249,7 +250,7 @@ orp.util.XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equality
     if (hash[matchString]) {
       item = hash[matchString];
     } else {
-      item = world.newItem();
+      item = this._world.newItem();
       item.assignToCategory(this._itemCategory);
       item.addEntry({attribute:equalitySpecifier._attribute, value:matchString});
     }
@@ -268,7 +269,7 @@ orp.util.XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equality
     }
     listOfOutputItems.push(item);
   }
-  world.endTransaction();
+  this._world.endTransaction();
   return listOfOutputItems;
 };
 
@@ -311,7 +312,7 @@ orp.util.XmlConverter.prototype._doDefaultConversion = function(world, nameSpace
 orp.util.XmlConverter.prototype._processElementTree = function(level, maxLevel, node, newItem, xmlToAttributeSpecifier) {
   if (level == maxLevel) {
     if (node.childNodes && node.childNodes.length > 0 && node.childNodes[0].nodeType == Node.TEXT_NODE) {
-      value = EntryView._transformValueToExpectedType(world, node.childNodes[0].nodeValue, xmlToAttributeSpecifier._listOfTypes);
+      value = this._world.transformValueToExpectedType(node.childNodes[0].nodeValue, xmlToAttributeSpecifier._listOfTypes);
       if (xmlToAttributeSpecifier._inverseAttribute) {
         newItem.addConnectionEntry(xmlToAttributeSpecifier._attribute, value, xmlToAttributeSpecifier._inverseAttribute);
       } else {

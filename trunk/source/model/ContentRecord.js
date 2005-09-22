@@ -32,14 +32,24 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.ContentRecord");
+dojo.require("orp.model.Record");
+dojo.require("orp.model.World");
+
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
-/*global Util  */
 /*global World  */
 /*global Record  */
 // -------------------------------------------------------------------
 
 
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
  * The ContentRecord class serves as an abstract superclass for the class Item
  * and the class Entry.
@@ -47,12 +57,14 @@
  * @scope    public instance constructor
  * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
-ContentRecord.prototype = new Record();  // makes ContentRecord be a subclass of Record
-function ContentRecord() {
+orp.model.ContentRecord = function() {
+  orp.model.Record.call(this);
   // Don't create these properties until we know we need them.
   // this._setOfVotes = null;
   // this._setOfOrdinals = null;
-}
+};
+
+dj_inherits(orp.model.ContentRecord, orp.model.Record);  // makes ContentRecord be a subclass of Record
 
 
 // -------------------------------------------------------------------
@@ -66,7 +78,7 @@ function ContentRecord() {
  * @param    world    The world that this ContentRecord is a part of. 
  * @param    uuid    The UUID for this ContentRecord. 
  */
-ContentRecord.prototype._ContentRecord = function(world, uuid) {
+orp.model.ContentRecord.prototype._ContentRecord = function(world, uuid) {
   this._Record(world, uuid);
 };
 
@@ -77,7 +89,7 @@ ContentRecord.prototype._ContentRecord = function(world, uuid) {
  * @scope    protected instance method
  * @param    vote    A vote to retain or delete this ContentRecord. 
  */
-ContentRecord.prototype._addVote = function(vote) {
+orp.model.ContentRecord.prototype._addVote = function(vote) {
   if (!this._setOfVotes) {
     this._setOfVotes = [];
   }
@@ -91,7 +103,7 @@ ContentRecord.prototype._addVote = function(vote) {
  * @scope    protected instance method
  * @param    ordinal    A vote to retain or delete this ContentRecord. 
  */
-ContentRecord.prototype._addOrdinal = function(ordinal) {
+orp.model.ContentRecord.prototype._addOrdinal = function(ordinal) {
   if (!this._setOfOrdinals) {
     this._setOfOrdinals = [];
   }
@@ -109,7 +121,7 @@ ContentRecord.prototype._addOrdinal = function(ordinal) {
  * @scope    public instance method
  * @return   A number.
  */
-ContentRecord.prototype.getOrdinalNumberAtCreation = function() {
+orp.model.ContentRecord.prototype.getOrdinalNumberAtCreation = function() {
   return this.getUuid().getTimestampAsHexString();
 };
 
@@ -124,7 +136,7 @@ ContentRecord.prototype.getOrdinalNumberAtCreation = function() {
  * @scope    public instance method
  * @return   A number.
  */
-ContentRecord.prototype.getOrdinalNumber = function() {
+orp.model.ContentRecord.prototype.getOrdinalNumber = function() {
   if (!this._setOfOrdinals || this._setOfOrdinals.length === 0) {
     return this.getOrdinalNumberAtCreation();
   }
@@ -135,7 +147,7 @@ ContentRecord.prototype.getOrdinalNumber = function() {
   var filter = this._world.getRetrievalFilter();
   
   switch (filter) {
-    case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
+    case orp.model.World.RetrievalFilter.LAST_EDIT_WINS:
       // APPROACH A: 
       //   I tried this first, but it fails in the unit tests.
       //   It fails because two objects will have identical timestamps if they
@@ -154,21 +166,21 @@ ContentRecord.prototype.getOrdinalNumber = function() {
       */
       
       // APPROACH B: 
-      //   This works, provided __mySetOfOrdinals is always initialized in
+      //   This works, provided _mySetOfOrdinals is always initialized in
       //   chronological order.
       var mostRecentOrdinal = this._setOfOrdinals[this._setOfOrdinals.length - 1];
 
       ordinalNumber = mostRecentOrdinal.getOrdinalNumber();
       break;
-    case World.RETRIEVAL_FILTER_SINGLE_USER:
+    case orp.model.World.RetrievalFilter.SINGLE_USER:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
-    case World.RETRIEVAL_FILTER_DEMOCRATIC:
+    case orp.model.World.RetrievalFilter.DEMOCRATIC:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
-    case World.RETRIEVAL_FILTER_UNABRIDGED:
+    case orp.model.World.RetrievalFilter.UNABRIDGED:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
@@ -187,7 +199,7 @@ ContentRecord.prototype.getOrdinalNumber = function() {
  * @scope    public instance method
  * @return   A boolean.
  */
-ContentRecord.prototype.hasBeenDeleted = function() {
+orp.model.ContentRecord.prototype.hasBeenDeleted = function() {
   if (!this._setOfVotes || this._setOfVotes.length === 0) {
     return false;
   }
@@ -198,7 +210,7 @@ ContentRecord.prototype.hasBeenDeleted = function() {
   var filter = this._world.getRetrievalFilter();
   
   switch (filter) {
-    case World.RETRIEVAL_FILTER_LAST_EDIT_WINS:
+    case orp.model.World.RetrievalFilter.LAST_EDIT_WINS:
       // APPROACH A: 
       //   I tried this first, but it fails in the unit tests.
       //   It fails because two objects will have identical timestamps if they
@@ -217,21 +229,21 @@ ContentRecord.prototype.hasBeenDeleted = function() {
       */
       
       // APPROACH B: 
-      //   This works, provided __mySetOfVotes is always initialized in
+      //   This works, provided _mySetOfVotes is always initialized in
       //   chronological order.
       var mostRecentVote = this._setOfVotes[this._setOfVotes.length - 1];
       
       hasBeenDeleted = !mostRecentVote.getRetainFlag();
       break;
-    case World.RETRIEVAL_FILTER_SINGLE_USER:
+    case orp.model.World.RetrievalFilter.SINGLE_USER:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
-    case World.RETRIEVAL_FILTER_DEMOCRATIC:
+    case orp.model.World.RetrievalFilter.DEMOCRATIC:
       // PENDING: This still needs to be implemented.
       orp.util.assert(false);
       break;
-    case World.RETRIEVAL_FILTER_UNABRIDGED:
+    case orp.model.World.RetrievalFilter.UNABRIDGED:
       hasBeenDeleted = false;
       break;
     default:
@@ -253,7 +265,7 @@ ContentRecord.prototype.hasBeenDeleted = function() {
  * @param    contentRecordFirst    The contentRecord that should come before this one. 
  * @param    contentRecordThird    The contentRecord that should come after this one. 
  */
-ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRecordThird) {
+orp.model.ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRecordThird) {
   var firstOrdinalNumber = null;
   var secondOrdinalNumber = null;
   var thirdOrdinalNumber = null;
@@ -318,7 +330,7 @@ ContentRecord.prototype.reorderBetween = function(contentRecordFirst, contentRec
  *
  * @scope    public instance method
  */
-ContentRecord.prototype.voteToDelete = function() {
+orp.model.ContentRecord.prototype.voteToDelete = function() {
   this.getWorld()._newVote(this, false);
 };
 
@@ -328,7 +340,7 @@ ContentRecord.prototype.voteToDelete = function() {
  *
  * @scope    public instance method
  */
-ContentRecord.prototype.voteToRetain = function() {
+orp.model.ContentRecord.prototype.voteToRetain = function() {
   this.getWorld()._newVote(this, true);
 };
 
@@ -342,7 +354,7 @@ ContentRecord.prototype.voteToRetain = function() {
  *
  * @scope    public class method
  */
-ContentRecord.compareOrdinals = function(contentRecordOne, contentRecordTwo) {
+orp.model.ContentRecord.compareOrdinals = function(contentRecordOne, contentRecordTwo) {
   var ordinalNumberOne = contentRecordOne.getOrdinalNumber();
   var ordinalNumberTwo = contentRecordTwo.getOrdinalNumber();
   if (ordinalNumberOne < ordinalNumberTwo) {

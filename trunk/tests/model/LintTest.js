@@ -55,18 +55,19 @@ function tearDown() {
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
-    "Ordinal.js",
-    "Vote.js",
     "ContentRecord.js",
-    "Record.js",
-    "Item.js",
-    "Entry.js",
-    "Transaction.js",
-    "QueryRunner.js",
-    "World.js",
-    "StubVirtualServer.js",
     "DeltaVirtualServer.js",
-    "HttpSaver.js"];
+    "Entry.js",
+    "FileSaver.js",
+    "HttpSaver.js",
+    "Item.js",
+    "Ordinal.js",
+    "QueryRunner.js",
+    "Record.js",
+    "StubVirtualServer.js",
+    "Transaction.js",
+    "Vote.js",
+    "World.js"];
   var prefix = "../../../source/model/";
   var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
   var message = "Lint check \n" + errorReport;

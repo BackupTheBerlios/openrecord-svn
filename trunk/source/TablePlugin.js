@@ -30,7 +30,18 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
- 
+
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.TablePlugin");
+dojo.require("orp.view.PluginView");
+dojo.require("orp.util.CsvParser");
+dojo.require("orp.view.RootView");
+dojo.require("orp.view.SectionView");
+dojo.require("orp.view.MultiEntriesView");
+dojo.require("orp.model.Item");
+
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
@@ -41,24 +52,11 @@
 /*global CsvParser  */
 /*global View, MultiEntriesView, EntryView, RootView  */
 // -------------------------------------------------------------------
-dojo.require("orp.util.CsvParser");
 
 
 // -------------------------------------------------------------------
-// Register this plugin in the SectionView registry
+// Constructor
 // -------------------------------------------------------------------
-TablePlugin.UUID_FOR_PLUGIN_VIEW_TABLE = "00040301-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.registerPlugin(TablePlugin);
-
-
-// -------------------------------------------------------------------
-// TablePlugin public class constants
-// -------------------------------------------------------------------
-TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS = "0004010a-ce7f-11d9-8cd5-0011113ae5d6";
-TablePlugin.ASCENDING_GIF = "ascending.png";
-TablePlugin.DESCENDING_GIF = "descending.png";
-
-
 /**
  * The TablePlugin class knows how to display a Section of a Page as an
  * HTML table.
@@ -70,16 +68,36 @@ TablePlugin.DESCENDING_GIF = "descending.png";
  * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
  * @param    layoutItem    ???. 
  */
-TablePlugin.prototype = new PluginView();  // makes TablePlugin be a subclass of PluginView
-function TablePlugin(superview, htmlElement, querySpec, layoutItem) {
-  PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "TablePlugin");
+orp.TablePlugin = function(superview, htmlElement, querySpec, layoutItem) {
+  orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "TablePlugin");
 
   // PENDING should probably make this independent of sectionview
-  this._cssClassForTable = SectionView.CSS_CLASS_SIMPLE_TABLE;
+  this._cssClassForTable = orp.view.SectionView.cssClass.SIMPLE_TABLE;
   this._table = null;
   this._sortAttribute = null;
   this._ascendingOrder = true;
-}
+};
+
+dj_inherits(orp.TablePlugin, orp.view.PluginView);  // makes TablePlugin be a subclass of PluginView
+
+
+// -------------------------------------------------------------------
+// Register this plugin in the SectionView registry
+// -------------------------------------------------------------------
+orp.TablePlugin.UUID = { 
+  PLUGIN_VIEW_TABLE: "00040301-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_TABLE_COLUMNS: "0004010a-ce7f-11d9-8cd5-0011113ae5d6" };
+
+// FIXME:
+// orp.view.SectionView.registerPlugin(orp.TablePlugin);
+
+
+// -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+orp.TablePlugin.ICON = {
+  ASCENDING: "ascending.png",
+  DESCENDING: "descending.png" };
 
 
 // -------------------------------------------------------------------
@@ -92,8 +110,8 @@ function TablePlugin(superview, htmlElement, querySpec, layoutItem) {
  * @scope    public class method
  * @return   The UUID of the item that represents this class of plugin
  */
-TablePlugin.getPluginItemUuid = function() {
-  return TablePlugin.UUID_FOR_PLUGIN_VIEW_TABLE;
+orp.TablePlugin.getPluginItemUuid = function() {
+  return orp.TablePlugin.UUID.PLUGIN_VIEW_TABLE;
 };
 
 
@@ -107,8 +125,8 @@ TablePlugin.getPluginItemUuid = function() {
  * @scope    public instance method
  * @return   A JavaScript class. 
  */
-TablePlugin.prototype.getClass = function() {
-  return TablePlugin;
+orp.TablePlugin.prototype.getClass = function() {
+  return orp.TablePlugin;
 };
 
 
@@ -120,7 +138,7 @@ TablePlugin.prototype.getClass = function() {
  * @param    itemB    One of the two items to be compared. 
  * @return   This method returns 0 if the items are comparable. If _ascendingOrder is true, itemA is less than itemB, this method returns -1, otherwise it returns +1. 
  */
-TablePlugin.prototype.compareItemsBySortAttribute = function(itemA, itemB) {
+orp.TablePlugin.prototype.compareItemsBySortAttribute = function(itemA, itemB) {
   orp.util.assert(this._sortAttribute !== null);
   var strA = itemA.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
   var strB = itemB.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
@@ -136,9 +154,9 @@ TablePlugin.prototype.compareItemsBySortAttribute = function(itemA, itemB) {
  *
  * @scope    private instance method
  */
-TablePlugin.prototype._getListOfColumns = function() {
+orp.TablePlugin.prototype._getListOfColumns = function() {
   var world = this.getWorld();
-  var attributeTableColumns = world.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
+  var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
   var listOfTableColumnEntries = this._layout.getEntriesForAttribute(attributeTableColumns);
   var displayAttributes = [];
   var anAttribute;
@@ -147,7 +165,7 @@ TablePlugin.prototype._getListOfColumns = function() {
     // columns, and we just want to use that list.
     for (var i in listOfTableColumnEntries) {
       anAttribute = listOfTableColumnEntries[i].getValue();
-      orp.util.assert(anAttribute instanceof Item);
+      orp.util.assert(anAttribute instanceof orp.model.Item);
       displayAttributes.push(anAttribute);
     }
   } else {
@@ -192,21 +210,21 @@ TablePlugin.prototype._getListOfColumns = function() {
  *
  * @scope    private instance method
  */
-TablePlugin.prototype._buildAttributeEditor = function() {
+orp.TablePlugin.prototype._buildAttributeEditor = function() {
   var htmlElement = this.getHtmlElement();
-  var selectElt = View.appendNewElement(htmlElement, "select", RootView.CSS_CLASS_EDIT_TOOL);
+  var selectElt = orp.view.View.appendNewElement(htmlElement, "select", orp.view.RootView.cssClass.EDIT_TOOL);
   var listOfAttributes = this.getWorld().getAttributes();
-  var optionElt = View.appendNewElement(selectElt, "option");
+  var optionElt = orp.view.View.appendNewElement(selectElt, "option");
   optionElt.text = "Add new attribute:";
   for (var key in listOfAttributes) {
     var attribute = listOfAttributes[key];
-    optionElt = View.appendNewElement(selectElt, "option");
+    optionElt = orp.view.View.appendNewElement(selectElt, "option");
     if (orp.util.isObjectInSet(attribute, this._displayAttributes)) {
       optionElt.text = '* ';
     }
     optionElt.text += attribute.getDisplayString();
     optionElt.value = attribute.getUuidString();
-    optionElt.onclick = this._attributeEditorChanged.bindAsEventListener(this);
+    optionElt.onclick = this._attributeEditorChanged.orpBindAsEventListener(this);
   }
   this._selectElement = selectElt;
   
@@ -217,14 +235,14 @@ TablePlugin.prototype._buildAttributeEditor = function() {
  *
  * @scope    private instance method
  */
-TablePlugin.prototype._buildFileImportTool = function() {
+orp.TablePlugin.prototype._buildFileImportTool = function() {
   var htmlElement = this.getHtmlElement();
   if (window.location.protocol == "file:") {
-    var importDiv = View.appendNewElement(htmlElement, "div", RootView.CSS_CLASS_EDIT_TOOL);
-    View.appendNewTextNode(importDiv, " Import Data:");
-    var importButton = View.appendNewElement(importDiv, "input");
+    var importDiv = orp.view.View.appendNewElement(htmlElement, "div", orp.view.RootView.cssClass.EDIT_TOOL);
+    orp.view.View.appendNewTextNode(importDiv, " Import Data:");
+    var importButton = orp.view.View.appendNewElement(importDiv, "input");
     importButton.type = "file";
-    importButton.onchange = this._importData.bindAsEventListener(this, importButton);
+    importButton.onchange = this._importData.orpBindAsEventListener(this, importButton);
   }
 };
 
@@ -234,7 +252,7 @@ TablePlugin.prototype._buildFileImportTool = function() {
  *
  * @scope    private instance method
  */
-TablePlugin.prototype._insertRow = function(contentItem, rowNum) {
+orp.TablePlugin.prototype._insertRow = function(contentItem, rowNum) {
   var aRow = this._table.insertRow(rowNum); 
   var columnCount = -1;
   for (var i=0;i<this._displayAttributes.length;++i) {
@@ -250,7 +268,7 @@ TablePlugin.prototype._insertRow = function(contentItem, rowNum) {
  *
  * @scope    private instance method
  */
-TablePlugin.prototype._buildTableBody = function() {  
+orp.TablePlugin.prototype._buildTableBody = function() {  
   // add the table body rows from query
   var numRows = 0; // start from 0 to account for header row
   for (var kKey in this._listOfItems) {
@@ -280,7 +298,7 @@ TablePlugin.prototype._buildTableBody = function() {
  * @scope    package instance method
  * @param    item      The Item which just became real. 
  */
-TablePlugin.prototype._provisionalItemJustBecomeReal = function(item) {
+orp.TablePlugin.prototype._provisionalItemJustBecomeReal = function(item) {
   this.getWorld().setItemToBeIncludedInQueryResultList(item, this.getQuerySpec());
 };
 
@@ -302,7 +320,7 @@ TablePlugin.prototype._provisionalItemJustBecomeReal = function(item) {
  * DURING the transaction, whereas observedItemHasChanged() is,
  * in theory, called after the transaction.
  */
-TablePlugin.prototype.observedItemHasChanged = function(item) {
+orp.TablePlugin.prototype.observedItemHasChanged = function(item) {
   // called when a provisional item becomes a real item
   item.removeObserver(this); //now that provisional item is real, we stop observing it
   this._listOfItems.push(item); // moving this line affects code below
@@ -323,7 +341,7 @@ TablePlugin.prototype.observedItemHasChanged = function(item) {
 /**
  *
  */
-TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppableObject) {
+orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppableObject) {
   // First figure out what column header was dropped where
   var world = this.getWorld();
   var draggedUuid = elementThatWasDragged.getAttribute('uuid');
@@ -348,7 +366,7 @@ TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppableObj
   draggable.options.revert = false;
 
   // Now we need to save the new column order to the repository.
-  var attributeTableColumns = world.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
+  var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
   var listOfTableColumnEntries = this._layout.getEntriesForAttribute(attributeTableColumns);
   if (listOfTableColumnEntries.length > 0) {
     // If we get here, it means this table has a saved list of user-selected
@@ -404,20 +422,20 @@ TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppableObj
  *
  * @scope    private instance method
  */
-TablePlugin.prototype._buildHeader = function() {
+orp.TablePlugin.prototype._buildHeader = function() {
   // add header row
   var headerRow = this._table.insertRow(0);
   var numCols = 0;
   for (var i in this._displayAttributes) {
     var attribute = this._displayAttributes[i];
     if (!this._sortAttribute) {this._sortAttribute = attribute;}
-    var headerCell = View.appendNewElement(headerRow, "th", null, {uuid: attribute.getUuidString()});
-    var headerCellContentSpan = View.appendNewElement(headerCell, "span", "headerCellContentSpan", {uuid: attribute.getUuidString()});
-    var textSpan = View.appendNewElement(headerCellContentSpan, "span", null, null, attribute.getDisplayString());
+    var headerCell = orp.view.View.appendNewElement(headerRow, "th", null, {uuid: attribute.getUuidString()});
+    var headerCellContentSpan = orp.view.View.appendNewElement(headerCell, "span", "headerCellContentSpan", {uuid: attribute.getUuidString()});
+    var textSpan = orp.view.View.appendNewElement(headerCellContentSpan, "span", null, null, attribute.getDisplayString());
     if (this._sortAttribute == attribute) {
       headerCellContentSpan.appendChild(this.getSortIcon());
     }
-    Event.observe(headerCell, "click", this.clickOnHeader.bindAsEventListener(this, attribute));
+    Event.observe(headerCell, "click", this.clickOnHeader.orpBindAsEventListener(this, attribute));
     if (this.isInEditMode()) {
       var listener = this;
       var draggable = new Draggable(headerCellContentSpan, {revert:true});
@@ -440,7 +458,7 @@ TablePlugin.prototype._buildHeader = function() {
  * @param    doNotRebuildHash    If true, this method does not refetch query and rebuild attribute hash table
  * @scope    public instance method
  */
-TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
+orp.TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   // get list of items and attributes
   if (!doNotRebuildHash) {
     this.fetchItems();
@@ -449,7 +467,7 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
  
   //create new table, remove old table if already exists
   var viewDivElement = this.getHtmlElement();
-  View.removeChildrenOfElement(viewDivElement);
+  orp.view.View.removeChildrenOfElement(viewDivElement);
   this._buildAttributeEditor();
   
   // We could do use View.appendNewElement() here, but we seem to get a 20%
@@ -459,7 +477,7 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   // browser from trying to re-render the table until we call appendChild()
   // 
   // this._table = View.appendNewElement(viewDivElement, "table", this._cssClassForTable);
-  this._table = View.newElement("table", this._cssClassForTable);
+  this._table = orp.view.View.newElement("table", this._cssClassForTable);
   
   this._buildHeader();
 
@@ -481,7 +499,7 @@ TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
  *
  * @scope    public instance method
  */
-TablePlugin.prototype.refresh = function() {
+orp.TablePlugin.prototype.refresh = function() {
   // PENDING new table is constantly rebuilt currently
   // PENDING new content model with observable queries
   this._buildTable();
@@ -494,8 +512,8 @@ TablePlugin.prototype.refresh = function() {
  * @scope    public instance method
  * @return   An HTML image element
  */
-TablePlugin.prototype.getSortIcon = function() {
-  var imageName = this._ascendingOrder ? TablePlugin.ASCENDING_GIF : TablePlugin.DESCENDING_GIF;
+orp.TablePlugin.prototype.getSortIcon = function() {
+  var imageName = this._ascendingOrder ? orp.TablePlugin.ICON.ASCENDING : orp.TablePlugin.ICON.DESCENDING;
   var image =  orp.util.createImageElement(imageName);
   //image.align = "right";
   return image;
@@ -510,18 +528,18 @@ TablePlugin.prototype.getSortIcon = function() {
  * @scope    private instance method
  * @return   An HTML image element
  */
-TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
-  if (EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
+orp.TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
+  if (orp.view.EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
     if (this._listOfItems.length > 20) {
-      EntryView._PENDING_enableDragging = false;
+      orp.view.EntryView._PENDING_enableDragging = false;
     } else {
       var listOfEntries = item.getEntriesForAttribute(attribute);
-      EntryView._PENDING_enableDragging = (listOfEntries.length < 10);
+      orp.view.EntryView._PENDING_enableDragging = (listOfEntries.length < 10);
     }
   } 
   
   var aCell = row.insertCell(col);
-  var multiEntriesView = new MultiEntriesView(this, aCell, item, attribute);
+  var multiEntriesView = new orp.view.MultiEntriesView(this, aCell, item, attribute);
   aCell.or_entriesView = multiEntriesView;
   multiEntriesView.refresh();
   if (this.isInEditMode()) {
@@ -529,8 +547,8 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
     multiEntriesView.setKeyPressFunction(function (evt, entryView) {return listener.keyPressOnEditField(evt, entryView);});
   }
   
-  if (EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
-    EntryView._PENDING_enableDragging = true;
+  if (orp.view.EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
+    orp.view.EntryView._PENDING_enableDragging = true;
   }
 };
 
@@ -540,7 +558,7 @@ TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
  * 
  * @scope    public instance method
  */
-TablePlugin.prototype.clickOnHeader = function(event, clickAttribute) {
+orp.TablePlugin.prototype.clickOnHeader = function(event, clickAttribute) {
   if (clickAttribute == this._sortAttribute) {
     this._ascendingOrder = !this._ascendingOrder;
   }
@@ -556,7 +574,7 @@ TablePlugin.prototype.clickOnHeader = function(event, clickAttribute) {
  * 
  * @scope    public instance method
  */
-TablePlugin.prototype.selectRow = function(rowElement) {
+orp.TablePlugin.prototype.selectRow = function(rowElement) {
   orp.util.assert(rowElement instanceof HTMLTableRowElement);
   if (rowElement != this._lastSelectedRow) {
     if (this._lastSelectedRow) {
@@ -576,7 +594,7 @@ TablePlugin.prototype.selectRow = function(rowElement) {
  * 
  * @scope    private instance method
  */
-TablePlugin.prototype._importData = function(eventObject, fileButton) {
+orp.TablePlugin.prototype._importData = function(eventObject, fileButton) {
   var listOfAttributes = this._displayAttributes;
   var startTime = new Date();
   
@@ -646,7 +664,8 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
       var value = listOfFields[j];
       if (value !== "") {
         listOfTypes = hashTableOfTypesKeyedByAttributeUuid[attribute.getUuid()];
-        value = EntryView._transformValueToExpectedType(world, value, listOfTypes);
+        // value = orp.view.EntryView._transformValueToExpectedType(world, value, listOfTypes);
+        value = world.transformValueToExpectedType(value, listOfTypes);
         var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
         if (inverseAttributeEntry) {
           var inverseAttribute = inverseAttributeEntry.getValue(attribute);
@@ -684,11 +703,11 @@ TablePlugin.prototype._importData = function(eventObject, fileButton) {
  * 
  * @scope    private class method
  */
-TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
+orp.TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
   var attributeUuid = eventObject.target.value;
   if (attributeUuid) {
     var repository = this.getWorld();
-    var attributeTableColumns = repository.getItemFromUuid(TablePlugin.UUID_FOR_ATTRIBUTE_TABLE_COLUMNS);
+    var attributeTableColumns = repository.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
     var entriesTableColumns = this._layout.getEntriesForAttribute(attributeTableColumns);
     var noStoredColumns = (entriesTableColumns.length === 0);
     var changedAttribute = this.getWorld().getItemFromUuid(attributeUuid);
@@ -723,7 +742,7 @@ TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
 
 /**
  * 
-TablePlugin.prototype._handleClick = function(eventObject, anEntryView) {
+orp.TablePlugin.prototype._handleClick = function(eventObject, anEntryView) {
   var rowElement = anEntryView.getSuperview().getHtmlElement().parentNode; // entryView -> multiEntriesView -> cellElment -> rowElement
   return this.selectRow(rowElement);
 };
@@ -740,7 +759,7 @@ TablePlugin.prototype._handleClick = function(eventObject, anEntryView) {
  * @scope    public class method
  * @return   Returns true if the keyPress is a letter, or false if the keyPress is an arrow key or a key that moves the cursor to another cell. 
  */
-TablePlugin.prototype.keyPressOnEditField = function(eventObject, anEntryView) {
+orp.TablePlugin.prototype.keyPressOnEditField = function(eventObject, anEntryView) {
   var asciiValueOfKey = eventObject.keyCode;
   var shiftKeyPressed = eventObject.shiftKey;
   

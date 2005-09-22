@@ -28,17 +28,30 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
+ 
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.model.Transaction");
 
+
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
  * A Transaction object represents a database transaction.  Each Transaction
  * contains a list of the records that were created during the transaction.
  *
  * @scope    public instance constructor
  */
-function Transaction() {
+orp.model.Transaction = function() {
   this._listOfRecords = [];
-}
+};
 
+
+// -------------------------------------------------------------------
+// Public Methods
+// -------------------------------------------------------------------
 
 /**
  * Records the fact that a record was created during the transaction.
@@ -46,7 +59,7 @@ function Transaction() {
  * @scope    public instance method
  * @param    newRecord    A record created during the transaction. 
  */
-Transaction.prototype.addRecord = function(newRecord) {
+orp.model.Transaction.prototype.addRecord = function(newRecord) {
   this._listOfRecords.push(newRecord);
 };
 
@@ -57,7 +70,7 @@ Transaction.prototype.addRecord = function(newRecord) {
  * @scope    public instance method
  * @return   A list of records. 
  */
-Transaction.prototype.getRecords = function() {
+orp.model.Transaction.prototype.getRecords = function() {
   return this._listOfRecords;
 };
 

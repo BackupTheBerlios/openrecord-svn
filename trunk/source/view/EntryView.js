@@ -32,6 +32,15 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.view.EntryView");
+dojo.require("orp.view.View");
+dojo.require("orp.view.SuggestionBox");
+dojo.require("orp.model.World");
+dojo.require("orp.model.Item");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global document  */
@@ -42,32 +51,8 @@
 
 
 // -------------------------------------------------------------------
-// EntryView public class constants
+// Constructor
 // -------------------------------------------------------------------
-EntryView.CSS_CLASS_SELECTED         = "ItemValueSelected";
-EntryView.CSS_CLASS_PROVISIONAL      = "provisional";
-
-EntryView.CSS_CLASS_TEXT_VALUE       = "TextValue";
-EntryView.CSS_CLASS_NUMBER_VALUE     = "NumberValue";
-EntryView.CSS_CLASS_DATE_VALUE       = "DateValue";
-EntryView.CSS_CLASS_CHECKMARK_VALUE  = "CheckmarkValue";
-EntryView.CSS_CLASS_URL_VALUE        = "UrlValue";
-EntryView.CSS_CLASS_ITEM_VALUE       = "ItemValue";
-EntryView.CSS_CLASS_CONNECTION_VALUE = "ConnectionValue";
-
-EntryView.CSS_CLASS_NEGATIVE_NUMBER  = "NegativeNumber";
-
-EntryView.UUID_FOR_ATTRIBUTE_NOT_LOZENGE = "0004010f-ce7f-11d9-8cd5-0011113ae5d6";
-
-// -------------------------------------------------------------------
-// EntryView private class variables
-// -------------------------------------------------------------------
-EntryView._ourHashTableOfClassNamesKeyedByTypeUuid = null;
-
-EntryView._PENDING_temporaryHackToDecreaseLayoutTime = true;
-EntryView._PENDING_enableDragging = true;
-
-
 /**
  * An instance of EntryView can be placed in any parent container View
  * to display and (if in edit mode) edit multi-lines of text
@@ -81,13 +66,12 @@ EntryView._PENDING_enableDragging = true;
  * @param    entry    The entry that this EntryView displays. 
  * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
-EntryView.prototype = new View();  // makes EntryView be a subclass of View
-function EntryView(superview, htmlElement, item, attribute, entry, isMultiLine) {
-  orp.util.assert((!entry) || entry instanceof Entry);
-  orp.util.assert(item instanceof Item);
-  orp.util.assert(attribute instanceof Item); // PENDING need to check that attribute is an attribute
+orp.view.EntryView = function(superview, htmlElement, item, attribute, entry, isMultiLine) {
+  orp.util.assert((!entry) || entry instanceof orp.model.Entry);
+  orp.util.assert(item instanceof orp.model.Item);
+  orp.util.assert(attribute instanceof orp.model.Item); // PENDING need to check that attribute is an attribute
   
-  View.call(this, superview, htmlElement, "EntryView");
+  orp.view.View.call(this, superview, htmlElement, "EntryView");
 
   this._item = item;
   this._attribute = attribute;
@@ -107,21 +91,57 @@ function EntryView(superview, htmlElement, item, attribute, entry, isMultiLine) 
   if (this._isProvisional) {
     this._provisionalText = attribute.getDisplayString();
   }
-  else if (entry && entry.getValue(this._item) instanceof Item) {
+  else if (entry && entry.getValue(this._item) instanceof orp.model.Item) {
     this._valueIsItem = true;
   }
-}
+};
 
+dj_inherits(orp.view.EntryView, orp.view.View);  // makes EntryView be a subclass of View
+
+
+// -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+orp.view.EntryView.cssClass = {
+  SELECTED:         "ItemValueSelected",
+  PROVISIONAL:      "provisional",
+
+  TEXT_VALUE:       "TextValue",
+  NUMBER_VALUE:     "NumberValue",
+  DATE_VALUE:       "DateValue",
+  CHECKMARK_VALUE:  "CheckmarkValue",
+  URL_VALUE:        "UrlValue",
+  ITEM_VALUE:       "ItemValue",
+  CONNECTION_VALUE: "ConnectionValue",
+  
+  NEGATIVE_NUMBER:  "NegativeNumber" };
+
+orp.view.EntryView.UUID = {
+  ATTRIBUTE_NOT_LOZENGE: "0004010f-ce7f-11d9-8cd5-0011113ae5d6" };
+
+  
+// -------------------------------------------------------------------
+// Private class variables
+// -------------------------------------------------------------------
+orp.view.EntryView._ourHashTableOfClassNamesKeyedByTypeUuid = null;
+
+orp.view.EntryView._PENDING_temporaryHackToDecreaseLayoutTime = true;
+orp.view.EntryView._PENDING_enableDragging = true;
+
+
+// -------------------------------------------------------------------
+// Private instance methods
+// -------------------------------------------------------------------
 
 /**
  *
  */
-EntryView.prototype._isLozengeAttribute = function() {
-  if (!EntryView.attributeCalledNotLozenge) {
-    EntryView.attributeCalledNotLozenge =
-      this.getWorld().getItemFromUuid(EntryView.UUID_FOR_ATTRIBUTE_NOT_LOZENGE);
+orp.view.EntryView.prototype._isLozengeAttribute = function() {
+  if (!orp.view.EntryView._ourAttributeCalledNotLozenge) {
+    orp.view.EntryView._ourAttributeCalledNotLozenge =
+      this.getWorld().getItemFromUuid(orp.view.EntryView.UUID.ATTRIBUTE_NOT_LOZENGE);
   }
-  var entries = this._attribute.getEntriesForAttribute(EntryView.attributeCalledNotLozenge);
+  var entries = this._attribute.getEntriesForAttribute(orp.view.EntryView._ourAttributeCalledNotLozenge);
   return entries.length === 0; //PENDING need to actually check value of entries
 };
 
@@ -129,10 +149,10 @@ EntryView.prototype._isLozengeAttribute = function() {
 /**
  *
  */
-EntryView.prototype._setupSuggestionBox = function() {
+orp.view.EntryView.prototype._setupSuggestionBox = function() {
   var listOfSuggestions = this._suggestions || this.getWorld().getSuggestedItemsForAttribute(this._attribute);
   if (listOfSuggestions && listOfSuggestions.length > 0) {
-    var suggestionBox = new SuggestionBox(this._editField, listOfSuggestions);
+    var suggestionBox = new orp.view.SuggestionBox(this._editField, listOfSuggestions);
     this._suggestionBox = suggestionBox;
     if (this._editField && this._autoWiden) {
       var maxLength = 4;
@@ -149,7 +169,7 @@ EntryView.prototype._setupSuggestionBox = function() {
 /**
  *
  */
-EntryView.prototype.alwaysUseEditField = function() {
+orp.view.EntryView.prototype.alwaysUseEditField = function() {
   this._alwaysUseEditField = true;
   if (this._myHasEverBeenDisplayedFlag) {
     this.startEditing(true);
@@ -160,7 +180,7 @@ EntryView.prototype.alwaysUseEditField = function() {
 /**
  *
  */
-EntryView.prototype.setAutoWiden = function(autoWiden) {
+orp.view.EntryView.prototype.setAutoWiden = function(autoWiden) {
   this._autoWiden = autoWiden;
 };
 
@@ -168,10 +188,10 @@ EntryView.prototype.setAutoWiden = function(autoWiden) {
 /**
  *
  */
-EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntries) {
+orp.view.EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntries) {
   orp.util.assert(orp.util.isArray(expectedTypeEntries));
   for (var key in expectedTypeEntries) {
-    orp.util.assert(expectedTypeEntries[key] instanceof Entry);
+    orp.util.assert(expectedTypeEntries[key] instanceof orp.model.Entry);
   }
   this._expectedTypeEntries = expectedTypeEntries;
 };
@@ -180,7 +200,7 @@ EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntries) {
 /**
  *
  */
-EntryView.prototype.setSuggestions = function(listOfSuggestions) {
+orp.view.EntryView.prototype.setSuggestions = function(listOfSuggestions) {
   if (listOfSuggestions) {orp.util.assert(orp.util.isArray(listOfSuggestions));}
   this._suggestions = listOfSuggestions;
 };
@@ -192,7 +212,7 @@ EntryView.prototype.setSuggestions = function(listOfSuggestions) {
  *
  * @scope    public instance method
 */
-EntryView.prototype.refresh = function() {
+orp.view.EntryView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this._buildView();
   } else {
@@ -207,7 +227,7 @@ EntryView.prototype.refresh = function() {
 /**
  *
  */
-EntryView.prototype._isLozenge = function() {
+orp.view.EntryView.prototype._isLozenge = function() {
   return this._attributeCanBeLozenge && this._valueIsItem && !this._alwaysUseEditField;
 };
 
@@ -218,16 +238,16 @@ EntryView.prototype._isLozenge = function() {
  *
  * @scope    private instance method
  */
-EntryView.prototype._buildView = function() {
+orp.view.EntryView.prototype._buildView = function() {
   var htmlElement = this.getHtmlElement();
-  View.removeChildrenOfElement(htmlElement);
+  orp.view.View.removeChildrenOfElement(htmlElement);
   
   var textString = this._getText(true);
-  var className = (this._isProvisional ? EntryView.CSS_CLASS_PROVISIONAL : '');
-  this._textSpan = View.appendNewElement(htmlElement, "span", className, null);
-  this._textNode = View.appendNewTextNode(this._textSpan, textString);
+  var className = (this._isProvisional ? orp.view.EntryView.cssClass.PROVISIONAL : '');
+  this._textSpan = orp.view.View.appendNewElement(htmlElement, "span", className, null);
+  this._textNode = orp.view.View.appendNewTextNode(this._textSpan, textString);
   // if (this._isProvisional) {
-  //   this._textSpan.className = EntryView.CSS_CLASS_PROVISIONAL;
+  //   this._textSpan.className = orp.view.EntryView.cssClass.PROVISIONAL;
   // }
   // else if (!this._alwaysUseEditField) {
   //   this._setClassName();
@@ -236,7 +256,7 @@ EntryView.prototype._buildView = function() {
     this._setClassName();
   }
   
-  htmlElement.onclick = this.onClick.bindAsEventListener(this);
+  htmlElement.onclick = this.onClick.orpBindAsEventListener(this);
   if (this._alwaysUseEditField) {
     this.startEditing(true);
   }
@@ -248,19 +268,19 @@ EntryView.prototype._buildView = function() {
 /**
  *
  */
-EntryView.prototype._setClassName = function() {
+orp.view.EntryView.prototype._setClassName = function() {
   if (this._entry) {
     var dataType = this._entry.getType();
     var className = this._getClassNameFromType(dataType);
-    var itemType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_ITEM);
-    var connectionType  = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_CONNECTION);
+    var itemType  = this.getWorld().getItemFromUuid(orp.model.World.UUID.TYPE_ITEM);
+    var connectionType  = this.getWorld().getItemFromUuid(orp.model.World.UUID.TYPE_CONNECTION);
     if (dataType == itemType || dataType == connectionType) {
       if (this._isLozenge()) {
-        this.getHtmlElement().ondblclick = this.onDoubleClick.bindAsEventListener(this);
+        this.getHtmlElement().ondblclick = this.onDoubleClick.orpBindAsEventListener(this);
         if (this.isInEditMode() && !this._draggable) {
-          if (EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
+          if (orp.view.EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
             // if (this.getRootView().isInShowToolsMode()) {
-            if (EntryView._PENDING_enableDragging) {
+            if (orp.view.EntryView._PENDING_enableDragging) {
               this._textSpan.or_entryView = this; 
               this._draggable = new Draggable(this._textSpan, {revert:true});
             }
@@ -271,15 +291,15 @@ EntryView.prototype._setClassName = function() {
         }
       }
       else {
-        className = EntryView.CSS_CLASS_TEXT_VALUE;
+        className = orp.view.EntryView.cssClass.TEXT_VALUE;
       }
     }
     this._textSpan.className = className;
     
-    var typeNumber = this.getWorld().getItemFromUuid(World.UUID_FOR_TYPE_NUMBER);
+    var typeNumber = this.getWorld().getItemFromUuid(orp.model.World.UUID.TYPE_NUMBER);
     if (dataType == typeNumber) {
       if (this._entry.getValue() < 0) {
-        orp.util.css_addClass(this._textSpan,EntryView.CSS_CLASS_NEGATIVE_NUMBER);
+        orp.util.css_addClass(this._textSpan,orp.view.EntryView.cssClass.NEGATIVE_NUMBER);
       }
     }
   }
@@ -288,20 +308,20 @@ EntryView.prototype._setClassName = function() {
 
 /**
  *
-EntryView.prototype._canStartEditing = function() {
+orp.view.EntryView.prototype._canStartEditing = function() {
   return (!this._isEditing  && !(this._valueIsItem && !this._alwaysUseEditField));
 }; */
 
-EntryView.prototype.unSelect = function() {
+orp.view.EntryView.prototype.unSelect = function() {
   orp.util.assert(this._isLozenge());
   this._setClassName();
-  //orp.util.css_removeClass(this._textSpan, EntryView.CSS_CLASS_SELECTED);
+  //orp.util.css_removeClass(this._textSpan, orp.view.EntryView.cssClass.SELECTED);
 };
 
 /** Select this Entry
  *
  */
-EntryView.prototype.selectView = function(eventObject) {
+orp.view.EntryView.prototype.selectView = function(eventObject) {
   var rootView = this.getRootView();
   if (this._isLozenge()) {
     var addToSelection = (eventObject) && (eventObject.shiftKey || eventObject.ctrlKey || eventObject.metaKey);
@@ -311,7 +331,7 @@ EntryView.prototype.selectView = function(eventObject) {
     else {
       rootView.setSelection(this);
     }
-    this._textSpan.className = EntryView.CSS_CLASS_SELECTED; // must set this after setting rootView selection
+    this._textSpan.className = orp.view.EntryView.cssClass.SELECTED; // must set this after setting rootView selection
   }
   else {
     rootView.setSelection(null);
@@ -324,7 +344,7 @@ EntryView.prototype.selectView = function(eventObject) {
  *
  * @scope    public instance method
  */
-EntryView.prototype.startEditing = function(dontSelect,initialStr) {
+orp.view.EntryView.prototype.startEditing = function(dontSelect,initialStr) {
   var canStartEditing = !(this._isEditing || this._isLozenge());
   if (canStartEditing) {
     var editField = this._editField;
@@ -337,10 +357,10 @@ EntryView.prototype.startEditing = function(dontSelect,initialStr) {
         editField.type = 'text';
       }
       var listener = this; 
-      editField.onblur = this.onBlur.bindAsEventListener(this);
-      editField.onkeypress = this.onKeyPress.bindAsEventListener(this);
-      editField.onkeyup = this.onKeyUp.bindAsEventListener(this);
-      editField.onfocus = this.onFocus.bindAsEventListener(this);
+      editField.onblur = this.onBlur.orpBindAsEventListener(this);
+      editField.onkeypress = this.onKeyPress.orpBindAsEventListener(this);
+      editField.onkeyup = this.onKeyUp.orpBindAsEventListener(this);
+      editField.onfocus = this.onFocus.orpBindAsEventListener(this);
       editField.value = this._isProvisional ? '' : (initialStr) ? initialStr : this._textNode.data;
       //alert(editField.value)
       if (this.getSuperview().getEntryWidth) {
@@ -369,7 +389,7 @@ EntryView.prototype.startEditing = function(dontSelect,initialStr) {
  *
  * @scope    public instance method
  */
-EntryView.prototype.stopEditing = function() {
+orp.view.EntryView.prototype.stopEditing = function() {
   if (this._isEditing) {
     var newValue;
     if (this._suggestionBox) {
@@ -394,7 +414,7 @@ EntryView.prototype.stopEditing = function() {
       if (orp.util.isString(newValue)) {
         newValueDisplayString = newValue;
       }
-      else if (newValue instanceof Item) {
+      else if (newValue instanceof orp.model.Item) {
         newValueDisplayString = newValue.getDisplayString();
       }
       this._textNode.data = newValueDisplayString;
@@ -421,7 +441,7 @@ EntryView.prototype.stopEditing = function() {
  * @scope    private instance method
  * @param    value    The new value to be saved. 
  */
-EntryView.prototype._transformToExpectedType = function(value) {
+orp.view.EntryView.prototype._transformToExpectedType = function(value) {
   if (value && orp.util.isString(value)) {
     var world = this.getWorld();
     var listOfExpectedTypeEntries;
@@ -437,58 +457,8 @@ EntryView.prototype._transformToExpectedType = function(value) {
       var entry = listOfExpectedTypeEntries[i];
       listOfTypes.push(entry.getValue());
     }
-    return EntryView._transformValueToExpectedType(world, value, listOfTypes);
-  }
-  return value;
-};
-
-
-/**
- * Given a string value and a list of types, this method tries to
- * transform the value to one of the types. 
- *
- * @scope    private instance method
- * @param    world    The new value to be saved. 
- * @param    value    The new value to be saved. 
- * @param    listOfTypes    The new value to be saved. 
- */
-EntryView._transformValueToExpectedType = function(world, value, listOfTypes) {
-  if (value && orp.util.isString(value) && listOfTypes && orp.util.isArray(listOfTypes)) {
-    var categoryCalledCategory = world.getCategoryCalledCategory();
-    var typeCalledText = world.getTypeCalledText();
-    var typeCalledDate = world.getTypeCalledDate();
-    var typeCalledNumber = world.getTypeCalledNumber();
-    for (var i in listOfTypes) {
-      var aType = listOfTypes[i];
-      switch (aType) {
-        case typeCalledText:
-          return value;
-        case typeCalledNumber:
-          var valueWithoutCommas = value.replace(new RegExp(',','g'), '');
-          var floatVal = parseFloat(valueWithoutCommas);
-          if (!isNaN(floatVal)) {return floatVal;}
-          break;
-        case typeCalledDate:
-          var dateValue = new orp.util.DateValue(value);
-          if (dateValue.isValid()) {return dateValue;}
-          break;
-        default:
-          if (aType.isInCategory(categoryCalledCategory)) {
-            var listOfItems = world.getItemsInCategory(aType);
-            var item;
-            for (var j in listOfItems) {
-              item = listOfItems[j];
-              if (item.doesStringMatchName(value)) {
-                return item;
-              }
-            }
-            item = world.newItem(value);
-            item.assignToCategory(aType);
-            return item;
-          }
-          break;
-      }
-    }
+    // return orp.view.EntryView._transformValueToExpectedType(world, value, listOfTypes);
+    return world.transformValueToExpectedType(value, listOfTypes);
   }
   return value;
 };
@@ -500,7 +470,7 @@ EntryView._transformValueToExpectedType = function(world, value, listOfTypes) {
  * @scope    private instance method
  * @param    value    The new value to be saved. 
  */
-EntryView.prototype._writeValue = function(value) {
+orp.view.EntryView.prototype._writeValue = function(value) {
   if (value === 0 || value) {
     this.getWorld().beginTransaction();
     value = this._transformToExpectedType(value);
@@ -521,7 +491,7 @@ EntryView.prototype._writeValue = function(value) {
       if (this._isProvisional && superview._provisionalItemJustBecomeReal) {
         superview._provisionalItemJustBecomeReal(this._item);
       }
-      if (value instanceof Item) {
+      if (value instanceof orp.model.Item) {
         this._valueIsItem = true;
       }
       this._setClassName();
@@ -537,7 +507,7 @@ EntryView.prototype._writeValue = function(value) {
  *
  * @scope    private instance method
  */
-EntryView.prototype._getText = function(useNonBreakingSpaces) {
+orp.view.EntryView.prototype._getText = function(useNonBreakingSpaces) {
   if (this._isProvisional) {
     return this._provisionalText;
   }
@@ -562,7 +532,7 @@ EntryView.prototype._getText = function(useNonBreakingSpaces) {
  *
  * @scope    private instance method
  */
-EntryView.prototype._restoreText = function(dontSelect) {
+orp.view.EntryView.prototype._restoreText = function(dontSelect) {
   var useNonBreakingSpaces = !this._isEditing;
   var oldText = (this._entry) ?  this._getText(useNonBreakingSpaces) : '';
   if (this._isEditing) {
@@ -584,7 +554,7 @@ EntryView.prototype._restoreText = function(dontSelect) {
  * @scope    public instance method
  * @param    onClickFunction    A function to call. 
  */
-EntryView.prototype.setClickFunction = function(onClickFunction) {
+orp.view.EntryView.prototype.setClickFunction = function(onClickFunction) {
   orp.util.assert(onClickFunction instanceof Function);
   this._clickFunction = onClickFunction;
 };
@@ -598,7 +568,7 @@ EntryView.prototype.setClickFunction = function(onClickFunction) {
  * @scope    public instance method
  * @param    eventObject    An event object. 
  */
-EntryView.prototype.onClick = function(eventObject) {
+orp.view.EntryView.prototype.onClick = function(eventObject) {
   if (this._clickFunction && this._clickFunction(eventObject, this)) {
     return true;
   }
@@ -615,10 +585,10 @@ EntryView.prototype.onClick = function(eventObject) {
  * @scope    public instance method
  * @param    eventObject    An event object. 
  */
-EntryView.prototype.onDoubleClick = function(eventObject) {
+orp.view.EntryView.prototype.onDoubleClick = function(eventObject) {
   if (this._valueIsItem) {
     var relatedItem = this._entry.getValue(this._item);
-    var urlOfRelatedItem = RootView.URL_HASH_ITEM_PREFIX + relatedItem.getUuidString();
+    var urlOfRelatedItem = orp.view.RootView.URL_HASH_ITEM_PREFIX + relatedItem.getUuidString();
     window.location = urlOfRelatedItem;
     this.getRootView().setCurrentContentViewFromUrl();
   }
@@ -629,7 +599,7 @@ EntryView.prototype.onDoubleClick = function(eventObject) {
 /**
  *
  */
-EntryView.prototype.onFocus = function(eventObject) {
+orp.view.EntryView.prototype.onFocus = function(eventObject) {
   if (this._suggestionBox) {
     this._suggestionBox._focusOnInputField(eventObject);
   }
@@ -645,7 +615,7 @@ EntryView.prototype.onFocus = function(eventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-EntryView.prototype.onBlur = function(eventObject) {
+orp.view.EntryView.prototype.onBlur = function(eventObject) {
   this.stopEditing();
 };
 
@@ -656,7 +626,7 @@ EntryView.prototype.onBlur = function(eventObject) {
  * @scope    public instance method
  * @param    keyPressFunction    A function. 
  */
-EntryView.prototype.setKeyPressFunction = function(keyPressFunction) {
+orp.view.EntryView.prototype.setKeyPressFunction = function(keyPressFunction) {
   this._keyPressFunction = keyPressFunction;
 };
 
@@ -664,7 +634,7 @@ EntryView.prototype.setKeyPressFunction = function(keyPressFunction) {
 /**
  *
  */
-EntryView.prototype.onKeyUp = function(eventObject) {
+orp.view.EntryView.prototype.onKeyUp = function(eventObject) {
   if (this._suggestionBox) {
     this._suggestionBox._keyUpOnInputField(eventObject);
   }
@@ -677,7 +647,7 @@ EntryView.prototype.onKeyUp = function(eventObject) {
  * @scope    public instance method
  * @param    inEventObject    An event object. 
  */
-EntryView.prototype.onKeyPress = function(eventObject) {
+orp.view.EntryView.prototype.onKeyPress = function(eventObject) {
   if (eventObject.keyCode == orp.util.ASCII.ESCAPE) {
     this._restoreText();
     return true;
@@ -738,7 +708,7 @@ EntryView.prototype.onKeyPress = function(eventObject) {
  * to process the keypress event, if it is a user selected view
  * This is different from EntryView.onKeyPress(), which receives key press events directly from the browser
  */
-EntryView.prototype.handleKeyEventWhenSelected = function(myEvent) {
+orp.view.EntryView.prototype.handleKeyEventWhenSelected = function(myEvent) {
   if (myEvent.ctrlKey || myEvent.metaKey) {
     // ignore keyboard shortcuts
     return false;
@@ -772,7 +742,7 @@ EntryView.prototype.handleKeyEventWhenSelected = function(myEvent) {
 /**
  *
  */
-EntryView.prototype.noLongerProvisional = function() {
+orp.view.EntryView.prototype.noLongerProvisional = function() {
   if (this._isProvisional) {
     this._isProvisional = false;
     this._textSpan.className = "";
@@ -788,15 +758,18 @@ EntryView.prototype.noLongerProvisional = function() {
  *
  * @scope    private instance method
  */
-EntryView.prototype._buildTypeHashTable = function() {
-  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid = {};
-  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_TEXT] = EntryView.CSS_CLASS_TEXT_VALUE;
-  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_NUMBER] = EntryView.CSS_CLASS_NUMBER_VALUE;
-  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_DATE] = EntryView.CSS_CLASS_DATE_VALUE;
-  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_CHECK_MARK] = EntryView.CSS_CLASS_CHECKMARK_VALUE;
-  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_URL] = EntryView.CSS_CLASS_URL_VALUE;
-  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_ITEM] = EntryView.CSS_CLASS_ITEM_VALUE;
-  EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[World.UUID_FOR_TYPE_CONNECTION] = EntryView.CSS_CLASS_CONNECTION_VALUE;
+orp.view.EntryView.prototype._buildTypeHashTable = function() {
+  var UUID = orp.model.World.UUID;
+  orp.view.EntryView._ourHashTableOfClassNamesKeyedByTypeUuid = {};
+  var cssClassNames = orp.view.EntryView._ourHashTableOfClassNamesKeyedByTypeUuid;
+  var cssClass = orp.view.EntryView.cssClass;
+  cssClassNames[UUID.TYPE_TEXT]       = cssClass.TEXT_VALUE;
+  cssClassNames[UUID.TYPE_NUMBER]     = cssClass.NUMBER_VALUE;
+  cssClassNames[UUID.TYPE_DATE]       = cssClass.DATE_VALUE;
+  cssClassNames[UUID.TYPE_CHECK_MARK] = cssClass.CHECKMARK_VALUE;
+  cssClassNames[UUID.TYPE_URL]        = cssClass.URL_VALUE;
+  cssClassNames[UUID.TYPE_ITEM]       = cssClass.ITEM_VALUE;
+  cssClassNames[UUID.TYPE_CONNECTION] = cssClass.CONNECTION_VALUE;
 };
 
 
@@ -808,11 +781,11 @@ EntryView.prototype._buildTypeHashTable = function() {
  * @param    type    An item that represents a basic data type, like Text, Number, or URL. 
  * @return   A string with the CSS className for that type.
  */
-EntryView.prototype._getClassNameFromType = function(type) {
-  if (!EntryView._ourHashTableOfClassNamesKeyedByTypeUuid) {
+orp.view.EntryView.prototype._getClassNameFromType = function(type) {
+  if (!orp.view.EntryView._ourHashTableOfClassNamesKeyedByTypeUuid) {
     this._buildTypeHashTable();
   }
-  return EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[type.getUuid()];
+  return orp.view.EntryView._ourHashTableOfClassNamesKeyedByTypeUuid[type.getUuid()];
 };
 
 

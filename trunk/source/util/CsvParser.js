@@ -52,7 +52,7 @@ dojo.require("orp.util.Util");
  * @scope    public instance constructor
  */
 orp.util.CsvParser = function() {
-}
+};
 
 
 /**

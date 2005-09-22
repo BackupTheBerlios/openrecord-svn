@@ -32,6 +32,14 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.view.MultiEntriesView");
+dojo.require("orp.view.View");
+dojo.require("orp.view.EntryView");
+dojo.require("orp.model.Item");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global document  */
@@ -41,13 +49,9 @@
 // -------------------------------------------------------------------
 
 
-
 // -------------------------------------------------------------------
-// MultiEntriesView public class constants
+// Constructor
 // -------------------------------------------------------------------
-MultiEntriesView.SEPARATOR = " • ";
-MultiEntriesView.SEPARATOR_COLOR = '#999999';
-
 
 /**
  * An instance of MultiEntriesView can be placed in any parent container View
@@ -61,19 +65,31 @@ MultiEntriesView.SEPARATOR_COLOR = '#999999';
  * @param    attribute    The attribute of the item to be displayed.
  * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
-MultiEntriesView.prototype = new View();  // makes MultiEntriesView be a subclass of View
-function MultiEntriesView(superview, htmlElement, item, attribute) {
-  View.call(this, superview, htmlElement, "MultiEntriesView");
+orp.view.MultiEntriesView = function(superview, htmlElement, item, attribute) {
+  orp.view.View.call(this, superview, htmlElement, "MultiEntriesView");
 
-  orp.util.assert(item instanceof Item);
-  orp.util.assert(attribute instanceof Item); // PENDING need to check that attribute is an attribute
+  orp.util.assert(item instanceof orp.model.Item);
+  orp.util.assert(attribute instanceof orp.model.Item); // PENDING need to check that attribute is an attribute
   
   this._item = item;
   this._attribute = attribute;
   this._entryViews = null;
   this._listOfSuggestions = null;
-}
+};
 
+dj_inherits(orp.view.MultiEntriesView, orp.view.View);  // makes MultiEntriesView be a subclass of View
+
+
+// -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+orp.view.MultiEntriesView.SEPARATOR = " • ";
+orp.view.MultiEntriesView.SEPARATOR_COLOR = '#999999';
+
+
+// -------------------------------------------------------------------
+// Public methods
+// -------------------------------------------------------------------
 
 /**
  * Updates the HTML elements in this view to reflect any changes in 
@@ -81,7 +97,7 @@ function MultiEntriesView(superview, htmlElement, item, attribute) {
  *
  * @scope    public instance method
  */
-MultiEntriesView.prototype.refresh = function() {
+orp.view.MultiEntriesView.prototype.refresh = function() {
   if (!this._myHasEverBeenDisplayedFlag) {
     this._buildView();
   } else {
@@ -102,7 +118,7 @@ MultiEntriesView.prototype.refresh = function() {
  * @scope    package instance method
  * @param    item      The Item which just became real. 
  */
-MultiEntriesView.prototype._provisionalItemJustBecomeReal = function(item) {
+orp.view.MultiEntriesView.prototype._provisionalItemJustBecomeReal = function(item) {
   orp.util.assert(item == this._item);
   var superview = this.getSuperview();
   if (superview._provisionalItemJustBecomeReal) {
@@ -113,7 +129,7 @@ MultiEntriesView.prototype._provisionalItemJustBecomeReal = function(item) {
 /**
  *
  */
-MultiEntriesView.prototype.getEntryWidth = function() {
+orp.view.MultiEntriesView.prototype.getEntryWidth = function() {
   if (this._entryViews.length > 1) {
     return -1;
   }
@@ -123,7 +139,7 @@ MultiEntriesView.prototype.getEntryWidth = function() {
 /**
  *
  */
-MultiEntriesView.prototype.noLongerProvisional = function() {
+orp.view.MultiEntriesView.prototype.noLongerProvisional = function() {
   orp.util.assert(this._entryViews.length == 1); // provisional item should only have one entry
   for (var key in this._entryViews) {
     var entry = this._entryViews[key];
@@ -135,18 +151,24 @@ MultiEntriesView.prototype.noLongerProvisional = function() {
 /**
  *
  */
-MultiEntriesView.prototype.select = function(selectFirst) {
+orp.view.MultiEntriesView.prototype.select = function(selectFirst) {
   var index = selectFirst ? 0 : this._entryViews.length - 1;
   this._entryViews[index].selectView();
 };
 
-MultiEntriesView.prototype.entryRemoved = function(anEntryView) {
-  this._buildView();
-};
+
 /**
  *
  */
-MultiEntriesView.prototype.setSuggestions = function(listOfSuggestions) {
+orp.view.MultiEntriesView.prototype.entryRemoved = function(anEntryView) {
+  this._buildView();
+};
+
+
+/**
+ *
+ */
+orp.view.MultiEntriesView.prototype.setSuggestions = function(listOfSuggestions) {
   this._listOfSuggestions = listOfSuggestions;
   for (var key in this._entryViews) {
     var entry = this._entryViews[key];
@@ -158,7 +180,7 @@ MultiEntriesView.prototype.setSuggestions = function(listOfSuggestions) {
 /**
  *
  */
-MultiEntriesView.prototype.setKeyPressFunction = function(keyPressFunction) {
+orp.view.MultiEntriesView.prototype.setKeyPressFunction = function(keyPressFunction) {
   orp.util.assert(keyPressFunction instanceof Function);
   this._keyPressFunction = keyPressFunction;
 };
@@ -170,7 +192,7 @@ MultiEntriesView.prototype.setKeyPressFunction = function(keyPressFunction) {
  * @scope    public instance method
  * @param    onClickFunction    A function to call. 
  */
-MultiEntriesView.prototype.setClickFunction = function(onClickFunction) {
+orp.view.MultiEntriesView.prototype.setClickFunction = function(onClickFunction) {
   orp.util.assert(onClickFunction instanceof Function);
   this._clickFunction = onClickFunction;
 };
@@ -178,7 +200,7 @@ MultiEntriesView.prototype.setClickFunction = function(onClickFunction) {
 /**
  *
  */
-MultiEntriesView.prototype.hasEntry = function(anEntry) {
+orp.view.MultiEntriesView.prototype.hasEntry = function(anEntry) {
   for (var i in this._entryViews) {
     if (this._entryViews[i]._entry == anEntry) {return true;}
   }
@@ -188,7 +210,7 @@ MultiEntriesView.prototype.hasEntry = function(anEntry) {
 /**
  *
  */
-MultiEntriesView.prototype._handleClick = function(eventObject, entryView) {
+orp.view.MultiEntriesView.prototype._handleClick = function(eventObject, entryView) {
   if (this._clickFunction && this._clickFunction(eventObject, entryView)) {
     return true;
   }
@@ -199,7 +221,7 @@ MultiEntriesView.prototype._handleClick = function(eventObject, entryView) {
 /**
  *
  */
-MultiEntriesView.prototype._handleOwnClick = function(eventObject) {
+orp.view.MultiEntriesView.prototype._handleOwnClick = function(eventObject) {
   var lastEntry = this._entryViews[this._entryViews.length-1];
   if (this._handleClick(eventObject, lastEntry)) {return true;}
   if (eventObject.target == this.getHtmlElement()) {lastEntry.selectView();}
@@ -208,7 +230,7 @@ MultiEntriesView.prototype._handleOwnClick = function(eventObject) {
 /**
  *
  */
-MultiEntriesView.prototype._handleDrop = function(element) {
+orp.view.MultiEntriesView.prototype._handleDrop = function(element) {
   var draggedEntryView = element.or_entryView;
   if (!draggedEntryView) {orp.util.assert(false);}
   var droppedEntry = draggedEntryView._entry;
@@ -242,8 +264,8 @@ MultiEntriesView.prototype._handleDrop = function(element) {
 /**
  *
  */
-MultiEntriesView.prototype._keyPressOnEditField = function(eventObject, entryView) {
-  orp.util.assert(entryView instanceof EntryView);
+orp.view.MultiEntriesView.prototype._keyPressOnEditField = function(eventObject, entryView) {
+  orp.util.assert(entryView instanceof orp.view.EntryView);
   var asciiValueOfKey = eventObject.keyCode;
   var move, doCreateNewEntry;
   switch (asciiValueOfKey) {
@@ -285,11 +307,11 @@ MultiEntriesView.prototype._keyPressOnEditField = function(eventObject, entryVie
 /**
  *
  */
-MultiEntriesView.prototype._addEntryView = function(entry) {
+orp.view.MultiEntriesView.prototype._addEntryView = function(entry) {
   if (this._entryViews.length > 0 && this._entryViews[0]._entry) {this._addSeparator();}
   var spanElement = document.createElement("span");
   spanElement.style.width = '100%';
-  var anEntryView = new EntryView(this, spanElement, this._item, this._attribute, entry);
+  var anEntryView = new orp.view.EntryView(this, spanElement, this._item, this._attribute, entry);
   this._entryViews.push(anEntryView);
   this.getHtmlElement().appendChild(spanElement);
   anEntryView.refresh();
@@ -306,10 +328,10 @@ MultiEntriesView.prototype._addEntryView = function(entry) {
 /**
  *
  */
-MultiEntriesView.prototype._addSeparator = function() {
+orp.view.MultiEntriesView.prototype._addSeparator = function() {
   var spanElement = document.createElement("span");
-  spanElement.appendChild(document.createTextNode(MultiEntriesView.SEPARATOR));
-  spanElement.style.color = MultiEntriesView.SEPARATOR_COLOR;
+  spanElement.appendChild(document.createTextNode(orp.view.MultiEntriesView.SEPARATOR));
+  spanElement.style.color = orp.view.MultiEntriesView.SEPARATOR_COLOR;
   this.getHtmlElement().appendChild(spanElement);
   return spanElement;
 };
@@ -321,9 +343,9 @@ MultiEntriesView.prototype._addSeparator = function() {
  *
  * @scope    public instance method
  */
-MultiEntriesView.prototype._buildView = function() {
+orp.view.MultiEntriesView.prototype._buildView = function() {
   var htmlElement = this.getHtmlElement();
-  View.removeChildrenOfElement(htmlElement);
+  orp.view.View.removeChildrenOfElement(htmlElement);
   this._entryViews = [];
   
   var entries = this._item.getEntriesForAttribute(this._attribute);
@@ -338,9 +360,9 @@ MultiEntriesView.prototype._buildView = function() {
   }
   
   if (this.isInEditMode()) {
-    htmlElement.onclick = this._handleOwnClick.bindAsEventListener(this);
+    htmlElement.onclick = this._handleOwnClick.orpBindAsEventListener(this);
     var listener = this;
-    Droppables.add(htmlElement, {accept: [EntryView.CSS_CLASS_CONNECTION_VALUE, EntryView.CSS_ITEM_VALUE, EntryView.CSS_CLASS_SELECTED],
+    Droppables.add(htmlElement, {accept: [orp.view.EntryView.cssClass.CONNECTION_VALUE, orp.view.EntryView.CSS_ITEM_VALUE, orp.view.EntryView.cssClass.SELECTED],
       hoverclass: "test",
       onDrop: function(element) {listener._handleDrop(element);}});
   } 

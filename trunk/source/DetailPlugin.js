@@ -30,6 +30,15 @@
 
 
 // -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.DetailPlugin");
+dojo.require("orp.view.PluginView");
+dojo.require("orp.view.SectionView");
+dojo.require("orp.util.Util");
+dojo.require("orp.model.Item");
+
+// -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global Util  */
@@ -40,11 +49,8 @@
 
 
 // -------------------------------------------------------------------
-// Register this plugin in the SectionView registry
+// Constructor
 // -------------------------------------------------------------------
-DetailPlugin.UUID_FOR_PLUGIN_VIEW_DETAIL = "00040303-ce7f-11d9-8cd5-0011113ae5d6";
-SectionView.registerPlugin(DetailPlugin);
-
 
 /**
  * A DetailPlugin display one or more content items. 
@@ -55,12 +61,21 @@ SectionView.registerPlugin(DetailPlugin);
  * @param    htmlElement    The HTMLElement to display this view in. 
  * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
  * @param    layoutItem    ???. 
- * @syntax   var detailPlugin = new DetailPlugin()
+ * @syntax   var detailPlugin = new orp.DetailPlugin()
  */
-DetailPlugin.prototype = new PluginView();  // makes DetailPlugin be a subclass of PluginView
-function DetailPlugin(superview, htmlElement, querySpec, layoutItem) {
-  PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "DetailPlugin");
-}
+orp.DetailPlugin = function(superview, htmlElement, querySpec, layoutItem) {
+  orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "DetailPlugin");
+};
+
+dj_inherits(orp.DetailPlugin, orp.view.PluginView);  // makes DetailPlugin be a subclass of PluginView
+
+
+// -------------------------------------------------------------------
+// Register this plugin in the SectionView registry
+// -------------------------------------------------------------------
+orp.DetailPlugin.UUID = { PLUGIN_VIEW_DETAIL: "00040303-ce7f-11d9-8cd5-0011113ae5d6" };
+// FIXME:
+// orp.view.SectionView.registerPlugin(orp.DetailPlugin);
 
 
 // -------------------------------------------------------------------
@@ -73,8 +88,8 @@ function DetailPlugin(superview, htmlElement, querySpec, layoutItem) {
  * @scope    public class method
  * @return   The UUID of the item that represents this class of plugin
  */
-DetailPlugin.getPluginItemUuid = function () {
-  return DetailPlugin.UUID_FOR_PLUGIN_VIEW_DETAIL;
+orp.DetailPlugin.getPluginItemUuid = function () {
+  return orp.DetailPlugin.UUID.PLUGIN_VIEW_DETAIL;
 };
 
 
@@ -88,8 +103,8 @@ DetailPlugin.getPluginItemUuid = function () {
  * @scope    public instance method
  * @return   A JavaScript class. 
  */
-DetailPlugin.prototype.getClass = function () {
-  return DetailPlugin;
+orp.DetailPlugin.prototype.getClass = function () {
+  return orp.DetailPlugin;
 };
 
 
@@ -99,13 +114,13 @@ DetailPlugin.prototype.getClass = function () {
  *
  * @scope    public instance method
  */
-DetailPlugin.prototype.refresh = function () {
+orp.DetailPlugin.prototype.refresh = function () {
   // for each content item, create a table for it
   var listOfContentItems = this.fetchItems();
   for (var contentItemKey in listOfContentItems) {
     var contentItem = listOfContentItems[contentItemKey];
     this.createTableForItem(contentItem);
-    View.appendNewElement(this.getHtmlElement(),"p",null,null,'\u00a0'); // unicode for &nbsp;
+    orp.view.View.appendNewElement(this.getHtmlElement(),"p",null,null,'\u00a0'); // unicode for &nbsp;
   }
 };
 
@@ -118,25 +133,25 @@ DetailPlugin.prototype.refresh = function () {
  * @param    inItem    An item to be displayed. 
  * @return   A string containing the XHTML to display the item.
  */
-DetailPlugin.prototype.createTableForItem = function (inItem) {
-  Util.assert(inItem instanceof Item);
+orp.DetailPlugin.prototype.createTableForItem = function (inItem) {
+  orp.util.assert(inItem instanceof orp.model.Item);
   
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   
-  var itemTable = View.appendNewElement(this.getHtmlElement(),"table",SectionView.CSS_CLASS_SIMPLE_TABLE);
-  var headerRow = View.appendNewElement(itemTable,"tr");
-  View.appendNewElement(headerRow,"td",SectionView.CSS_CLASS_LABEL + " " + SectionView.CSS_CLASS_TITLE,null,attributeCalledName.getDisplayName());
-  var aCell = View.appendNewElement(headerRow,"td",SectionView.CSS_CLASS_TITLE,null,inItem.getDisplayName());
-  var multiEntriesView = new MultiEntriesView(this, aCell, inItem, attributeCalledName);
+  var itemTable = orp.view.View.appendNewElement(this.getHtmlElement(),"table", orp.view.SectionView.cssClass.SIMPLE_TABLE);
+  var headerRow = orp.view.View.appendNewElement(itemTable,"tr");
+  orp.view.View.appendNewElement(headerRow,"td", orp.view.SectionView.cssClass.LABEL + " " + orp.view.SectionView.cssClass.TITLE,null,attributeCalledName.getDisplayName());
+  var aCell = orp.view.View.appendNewElement(headerRow,"td", orp.view.SectionView.cssClass.TITLE, null, inItem.getDisplayName());
+  var multiEntriesView = new orp.view.MultiEntriesView(this, aCell, inItem, attributeCalledName);
   multiEntriesView.refresh();
   var listOfAttributes = inItem.getAttributes();
   for (var key in listOfAttributes) { 
     var attribute = listOfAttributes[key];
     if (attribute != attributeCalledName) {
-      var itemRow = View.appendNewElement(itemTable,"tr");
-      View.appendNewElement(itemRow,"td",SectionView.CSS_CLASS_LABEL,null,attribute.getDisplayName());
-      aCell = View.appendNewElement(itemRow,"td",SectionView.CSS_CLASS_PLAIN);
-      multiEntriesView = new MultiEntriesView(this, aCell, inItem, attribute);
+      var itemRow = orp.view.View.appendNewElement(itemTable,"tr");
+      orp.view.View.appendNewElement(itemRow,"td", orp.view.SectionView.cssClass.LABEL,null,attribute.getDisplayName());
+      aCell = orp.view.View.appendNewElement(itemRow,"td", orp.view.SectionView.cssClass.PLAIN);
+      multiEntriesView = new orp.view.MultiEntriesView(this, aCell, inItem, attribute);
       multiEntriesView.refresh();
     }
   }
