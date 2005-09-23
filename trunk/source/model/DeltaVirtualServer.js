@@ -38,6 +38,7 @@ dojo.require("orp.model.World");
 dojo.require("orp.model.Vote");
 dojo.require("orp.model.FileSaver");
 dojo.require("orp.model.HttpSaver");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -122,14 +123,14 @@ orp.model.DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(
 orp.model.DeltaVirtualServer.prototype._loadWorldFromJsonString = function(jsonRepositoryString) {
 
   // load the list of records
-  orp.util.assert(orp.util.isString(jsonRepositoryString));
+  orp.lang.assertType(jsonRepositoryString, String);
   var dehydratedRecords = null;
   eval("dehydratedRecords = " + jsonRepositoryString + ";");
-  orp.util.assert(orp.util.isObject(dehydratedRecords));
+  orp.lang.assertType(dehydratedRecords, Object);
   var recordFormat = dehydratedRecords[orp.model.StubVirtualServer.JSON_MEMBER.FORMAT];
-  orp.util.assert(recordFormat == orp.model.StubVirtualServer.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
+  orp.lang.assert(recordFormat == orp.model.StubVirtualServer.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
   var listOfRecords = dehydratedRecords[orp.model.StubVirtualServer.JSON_MEMBER.RECORDS];
-  orp.util.assert(orp.util.isArray(listOfRecords));
+  orp.lang.assertType(listOfRecords, Array);
   
   var listOfUsers = null;
   
@@ -381,7 +382,7 @@ orp.model.DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = funct
             if (generateComments) {valueComment = this._getTypedDisplayStringForItem(contentData);}
             break;
           default:
-            orp.util.assert(false, "no such type: " + entryType.getDisplayString());
+            orp.lang.assert(false, "no such type: " + entryType.getDisplayString());
         }
         listOfStringsForEntry.push(indent + '        "' + JSON_MEMBER.VALUE + '": ' + valueString);
         if (generateComments) {

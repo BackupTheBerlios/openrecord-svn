@@ -37,6 +37,7 @@ dojo.require("orp.view.View");
 dojo.require("orp.view.RootView");
 dojo.require("orp.model.Item");
 dojo.require("orp.DetailPlugin");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -64,8 +65,8 @@ dojo.require("orp.DetailPlugin");
  * @param    item    The item to be displayed by this view. 
  */
 orp.view.ItemView = function(superview, htmlElement, item) {
-  orp.util.assert(htmlElement instanceof HTMLElement);
-  orp.util.assert(item instanceof orp.model.Item);
+  orp.lang.assert(htmlElement instanceof HTMLElement);
+  orp.lang.assert(item instanceof orp.model.Item);
 
   orp.view.View.call(this, superview, htmlElement, "ItemView");
 
@@ -106,7 +107,7 @@ orp.view.ItemView.prototype.getPageTitle = function() {
  * @scope    public instance method
  */
 orp.view.ItemView.prototype.refresh = function() {
-  orp.util.assert(this._item instanceof orp.model.Item);
+  orp.lang.assert(this._item instanceof orp.model.Item);
   
   // PENDING: this needs to be changed from DOM level 0 to DOM level 2.
   var listOfStrings = [];

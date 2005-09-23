@@ -35,6 +35,7 @@
 dojo.provide("orp.model.Entry");
 dojo.require("orp.model.ContentRecord");
 dojo.require("orp.model.World");
+dojo.require("orp.lang.Lang");
 
 
 // -------------------------------------------------------------------
@@ -125,7 +126,7 @@ orp.model.Entry.prototype._initialize = function(item, previousEntry, attribute,
     else if (value instanceof orp.model.Item) {
       this._type = this.getWorld().getTypeCalledItem();
     }
-    else {orp.util.assert(false, "unknown data type:" + (typeof value) + ' value: ' + value);}
+    else {orp.lang.assert(false, "unknown data type:" + (typeof value) + ' value: ' + value);}
   }
   this._value = value;
 };
@@ -195,10 +196,10 @@ orp.model.Entry.prototype._rehydrate = function(item, attribute, value, previous
   if (this._item instanceof orp.model.Item) {
     this._item._addRehydratedEntry(this, this._attribute);
   } else {
-    orp.util.assert(orp.util.isArray(this._item));
-    orp.util.assert(this._item.length == 2);
-    orp.util.assert(orp.util.isArray(this._attribute));
-    orp.util.assert(this._attribute.length == 2);
+    orp.lang.assertType(this._item, Array);
+    orp.lang.assertType(this._attribute, Array);
+    orp.lang.assert(this._item.length == 2);
+    orp.lang.assert(this._attribute.length == 2);
     
     var firstItem = this._item[0];
     var secondItem = this._item[1];
@@ -290,13 +291,13 @@ orp.model.Entry.prototype.getAttributeForItem = function(item) {
  * @return   The item that is connected to the given item.
  */
 orp.model.Entry.prototype.getConnectedItem = function(item) {
-  orp.util.assert(item instanceof orp.model.Item);
+  orp.lang.assert(item instanceof orp.model.Item);
   if (this._item == item) {
     if (this._type == this.getWorld().getTypeCalledItem()) {
       return this._value;
     }
   }
-  if (orp.util.isArray(this._item)) {
+  if (dojo.lang.isArray(this._item)) {
     if (this._item[0] == item) {
       return this._item[1];
     }
@@ -323,7 +324,7 @@ orp.model.Entry.prototype.getValue = function(item) {
     if (this._item[1] == item) {
       return this._item[0];
     }
-    orp.util.assert(false, "orp.model.Entry.getValue() was called on a connection entry, but was not passed an item as a parameter.");
+    orp.lang.assert(false, "orp.model.Entry.getValue() was called on a connection entry, but was not passed an item as a parameter.");
   }
   return this._value; 
 };
@@ -341,7 +342,7 @@ orp.model.Entry.prototype.getDisplayString = function(callingItem) {
     case this.getWorld().getTypeCalledNumber():
       var originalString = this._value.toString();
       var arrayOfTwoStrings = originalString.split('.');
-      orp.util.assert(arrayOfTwoStrings.length < 3);
+      orp.lang.assert(arrayOfTwoStrings.length < 3);
       wholeNumberString = arrayOfTwoStrings[0];
       fractionalNumberString = null;
       if (arrayOfTwoStrings.length == 2) {
@@ -385,7 +386,7 @@ orp.model.Entry.prototype.getDisplayString = function(callingItem) {
       if (callingItem) {
         if (callingItem == firstItem) {returnString = secondItem.getDisplayString();}
         else if (callingItem == secondItem) {returnString = firstItem.getDisplayString();}
-        else {orp.util.assert(false, "callingItem isn't part of this orp.model.Entry");}
+        else {orp.lang.assert(false, "callingItem isn't part of this orp.model.Entry");}
       }
       else {
         returnString = 'connection between "' + firstItem.getDisplayString() + '" and "' + secondItem.getDisplayString() + '"';
@@ -429,17 +430,17 @@ orp.model.Entry.prototype.hasBeenReplaced = function() {
       return true;
     case orp.model.World.RetrievalFilter.SINGLE_USER:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     case orp.model.World.RetrievalFilter.DEMOCRATIC:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     case orp.model.World.RetrievalFilter.UNABRIDGED:
       return false;
     default:
       // We should never get here.  If we get here, it's an error.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
   }
 };

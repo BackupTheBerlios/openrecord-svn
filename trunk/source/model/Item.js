@@ -35,6 +35,7 @@
 dojo.provide("orp.model.Item");
 dojo.require("orp.model.ContentRecord");
 dojo.require("orp.model.World");
+dojo.require("orp.lang.Lang");
 dojo.require("dojo.lang.*");
 
 // -------------------------------------------------------------------
@@ -163,14 +164,14 @@ item.replaceEntryWithConnection({previousEntry:
  * @throws   Throws an Error if no user is logged in.
  */
 orp.model.Item.prototype.addEntry = function(namedParameters) {
-  orp.util.assert(dojo.lang.isObject(namedParameters));
+  orp.lang.assert(dojo.lang.isObject(namedParameters));
   var arg = orp.model.Item.NamedParameters;
   var value = namedParameters[arg.value];
   var attribute = namedParameters[arg.attribute];
   var type = namedParameters[arg.type];
   
   // Check for typos in parameter names
-  orp.util.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type]));
+  orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type]));
   
   if (!attribute) {
     attribute = this.getWorld().getAttributeCalledUnfiled();
@@ -199,7 +200,7 @@ orp.model.Item.prototype.addEntry = function(namedParameters) {
  * @throws   Throws an Error if no user is logged in.
  */
 orp.model.Item.prototype.replaceEntry = function(namedParameters) {
-  orp.util.assert(dojo.lang.isObject(namedParameters));
+  orp.lang.assert(dojo.lang.isObject(namedParameters));
   var arg = orp.model.Item.NamedParameters;
   var value = namedParameters[arg.value];
   var attribute = namedParameters[arg.attribute];
@@ -207,9 +208,9 @@ orp.model.Item.prototype.replaceEntry = function(namedParameters) {
   var previousEntry = namedParameters[arg.previousEntry];
 
   // Check for typos in parameter names
-  orp.util.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type, arg.previousEntry]));
+  orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type, arg.previousEntry]));
   
-  orp.util.assert(dojo.lang.isObject(previousEntry));
+  orp.lang.assert(dojo.lang.isObject(previousEntry));
   if (!attribute) {
     attribute = previousEntry.getAttributeForItem(this);
   }
@@ -280,8 +281,8 @@ orp.model.Item.prototype.addConnectionEntry = function(myAttribute, otherItem, o
  *
  */
 orp.model.Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute, otherItem, otherAttribute) {
-  orp.util.assert(otherItem instanceof orp.model.Item);
-  orp.util.assert(myAttribute instanceof orp.model.Item);
+  orp.lang.assert(otherItem instanceof orp.model.Item);
+  orp.lang.assert(myAttribute instanceof orp.model.Item);
 
   // If we've just been asked to replace the string "Foo" with the string "Foo",
   // then don't even bother creating a new entry. 
@@ -290,9 +291,9 @@ orp.model.Item.prototype.replaceEntryWithConnection = function(previousEntry, my
     var oldPairOfAttributes = previousEntry.getAttribute();
     var oldPairOfItems = previousEntry.getItem();
     if (orp.util.isArray(oldPairOfAttributes)) {
-      orp.util.assert(orp.util.isArray(oldPairOfAttributes));
-      orp.util.assert(oldPairOfAttributes.length == 2);
-      orp.util.assert(oldPairOfItems.length == 2);
+      orp.lang.assertType(oldPairOfAttributes, Array);
+      orp.lang.assert(oldPairOfAttributes.length == 2);
+      orp.lang.assert(oldPairOfItems.length == 2);
       if (((oldPairOfAttributes[0] == myAttribute) &&  (oldPairOfAttributes[1] == otherAttribute) &&
         oldPairOfItems[0] == this && oldPairOfItems[1] == otherItem) ||
         ((oldPairOfAttributes[1] == myAttribute) &&  (oldPairOfAttributes[0] == otherAttribute) &&
@@ -375,7 +376,7 @@ for (var i in values) {
  * @return   A list of entry objects.
  */
 orp.model.Item.prototype.getEntriesForAttribute = function(attribute) {
-  orp.util.assert(attribute instanceof orp.model.Item);
+  orp.lang.assert(attribute instanceof orp.model.Item);
   
   if (this._cachedEntriesKeyedByAttributeUuid !== null) {
     var listOfCachedEntries = this._cachedEntriesKeyedByAttributeUuid[attribute.getUuid()];
@@ -405,18 +406,18 @@ orp.model.Item.prototype.getEntriesForAttribute = function(attribute) {
       break;
     case orp.model.World.RetrievalFilter.SINGLE_USER:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     case orp.model.World.RetrievalFilter.DEMOCRATIC:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     case orp.model.World.RetrievalFilter.UNABRIDGED:
       filteredListOfEntries = listOfEntriesForAttribute;
       break;
     default:
       // We should never get here.  If we get here, it's an error.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
   }
   filteredListOfEntries.sort(orp.model.ContentRecord.compareOrdinals);
@@ -551,7 +552,7 @@ orp.model.Item.prototype.getDisplayString = function(defaultString) {
  *
  */
 orp.model.Item.prototype.getDisplayStringForEntry = function(entry) {
-  orp.util.assert(entry instanceof orp.model.Entry);
+  orp.lang.assert(entry instanceof orp.model.Entry);
   return entry.getDisplayString(this);
 };
 
@@ -643,7 +644,7 @@ orp.model.Item.prototype.toString = function() {
  * @return Boolean. True if this item has an attribute with the entry
  */
 orp.model.Item.prototype.hasAttributeValue = function(attribute, value) {
-  orp.util.assert(attribute instanceof orp.model.Item);
+  orp.lang.assert(attribute instanceof orp.model.Item);
   var entryList = this.getEntriesForAttribute(attribute);
 
   // look at all the entries this item's attribute is assigned to, 
@@ -666,7 +667,7 @@ orp.model.Item.prototype.hasAttributeValue = function(attribute, value) {
  * @return   A boolean.  True if the item has been assigned to the category.
  */
 orp.model.Item.prototype.isInCategory = function(category) {
-  orp.util.assert(category instanceof orp.model.Item);
+  orp.lang.assert(category instanceof orp.model.Item);
 
   var categoryAttribute = this.getWorld().getAttributeCalledCategory();
   return this.hasAttributeValue(categoryAttribute, category);

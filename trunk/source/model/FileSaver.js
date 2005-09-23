@@ -56,6 +56,7 @@ DAMAGE.
 // -------------------------------------------------------------------
 dojo.provide("orp.model.FileSaver");
 dojo.require("orp.model.DeltaVirtualServer");
+dojo.require("orp.lang.Lang");
 
 /**
  * The FileSaver class knows how to save text to a local file.
@@ -115,7 +116,7 @@ orp.model.FileSaver.prototype.writeText = function(textToWrite, overwriteIfExist
 orp.model.FileSaver.prototype._saveTextToFile = function(text, fileUrl, append) {
   // Make sure we were loaded from a "file:" URL
   if (window.location.protocol != "file:") {
-    orp.util.assert(false, 'FileSaver.js can only be used for pages loaded from a "file:///" location');
+    orp.lang.assert(false, 'FileSaver.js can only be used for pages loaded from a "file:///" location');
   }
 
   var success = this._mozillaSaveToFile(text, fileUrl, append);
@@ -183,7 +184,7 @@ orp.model.FileSaver.prototype._ieSaveToFile = function(text, filePath, append) {
     return false;
   }
   if (append) {
-    orp.util.assert(false, "PENDING: still need to write code for this");
+    orp.lang.assert(false, "PENDING: still need to write code for this");
   } else {
     var file = fileSystemObject.OpenTextFile(filePath, 2, -1, 0);
   }

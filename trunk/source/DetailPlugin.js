@@ -37,6 +37,7 @@ dojo.require("orp.view.PluginView");
 dojo.require("orp.view.SectionView");
 dojo.require("orp.util.Util");
 dojo.require("orp.model.Item");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -134,7 +135,7 @@ orp.DetailPlugin.prototype.refresh = function () {
  * @return   A string containing the XHTML to display the item.
  */
 orp.DetailPlugin.prototype.createTableForItem = function (inItem) {
-  orp.util.assert(inItem instanceof orp.model.Item);
+  orp.lang.assert(inItem instanceof orp.model.Item);
   
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   

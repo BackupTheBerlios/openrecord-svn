@@ -37,6 +37,7 @@ dojo.require("orp.model.DeltaVirtualServer");
 dojo.require("orp.model.QueryRunner");
 dojo.require("orp.model.Vote");
 dojo.require("orp.model.Ordinal");
+//-- dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -297,7 +298,7 @@ orp.model.World.prototype._notifyObserversOfChanges = function(listOfNewlyCreate
           observer.observedItemHasChanged(item, listOfRecordsForItem);
         } else {
           // We should never get here.  If we do, consider it an error.
-          orp.util.assert(false);
+          orp.lang.assert(false);
         }
       }
     }
@@ -332,7 +333,7 @@ orp.model.World.prototype._notifyObserversOfChanges = function(listOfNewlyCreate
             observer.observedListHasChanged(listBeingObserved, listOfItemChangeReports);
           } else {
             // We should never get here.  If we do, consider it an error.
-            orp.util.assert(false);
+            orp.lang.assert(false);
           }
         }
       }
@@ -388,7 +389,7 @@ orp.model.World.prototype.getRetrievalFilter = function() {
  * @param    filter    A string constant representing one of the three supported retrieval filters.
  */
 orp.model.World.prototype.setRetrievalFilter = function(filter) {
-  orp.util.assert(filter == orp.model.World.RetrievalFilter.LAST_EDIT_WINS ||
+  orp.lang.assert(filter == orp.model.World.RetrievalFilter.LAST_EDIT_WINS ||
               filter == orp.model.World.RetrievalFilter.SINGLE_USER ||
               filter == orp.model.World.RetrievalFilter.DEMOCRATIC ||
               filter == orp.model.World.RetrievalFilter.UNABRIDGED);
@@ -419,18 +420,18 @@ orp.model.World.prototype._getFilteredList = function(unfilteredList) {
       break;
     case orp.model.World.RetrievalFilter.SINGLE_USER:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     case orp.model.World.RetrievalFilter.DEMOCRATIC:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     case orp.model.World.RetrievalFilter.UNABRIDGED:
       filteredList = unfilteredList;
       break;
     default:
       // We should never get here.  If we get here, it's an error.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
   }
 
@@ -728,7 +729,7 @@ orp.model.World.prototype.newCategory = function(name, observer) {
  * @return   A newly created item representing a query.
  */
 orp.model.World.prototype.newQuery = function(matchingAttribute, matchingEntryOrListOfEntries) {
-  orp.util.assert(matchingAttribute instanceof orp.model.Item);
+  orp.lang.assert(matchingAttribute instanceof orp.model.Item);
   this.beginTransaction();
   var item = this._virtualServer.newItem("A query");
   var categoryCalledQuery = this.getCategoryCalledQuery();
@@ -794,9 +795,9 @@ orp.model.World.prototype.newQueryRunner = function(querySpec, observer) {
  * @param    queryRunner    A QueryRunner object. 
  */
 orp.model.World.prototype._registerQueryRunner = function(queryRunner) {
-  orp.util.assert(queryRunner instanceof orp.model.QueryRunner);
+  orp.lang.assert(queryRunner instanceof orp.model.QueryRunner);
   var success = orp.util.addObjectToSet(queryRunner, this._registeredQueryRunners);
-  orp.util.assert(success);
+  orp.lang.assert(success);
 };
 
 
@@ -808,9 +809,9 @@ orp.model.World.prototype._registerQueryRunner = function(queryRunner) {
  * @param    queryRunner    A previously registered QueryRunner object. 
  */
 orp.model.World.prototype._unregisterQueryRunner = function(queryRunner) {
-  orp.util.assert(queryRunner instanceof orp.model.QueryRunner);
+  orp.lang.assert(queryRunner instanceof orp.model.QueryRunner);
   var success = orp.util.removeObjectFromSet(queryRunner, this._registeredQueryRunners);
-  orp.util.assert(success);
+  orp.lang.assert(success);
 };
 
 

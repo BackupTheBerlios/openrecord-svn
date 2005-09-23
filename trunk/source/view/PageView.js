@@ -40,6 +40,7 @@ dojo.require("orp.view.RootView");
 dojo.require("orp.view.SectionView");
 dojo.require("orp.view.EntryView");
 dojo.require("orp.model.Item");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -65,8 +66,8 @@ dojo.require("orp.model.Item");
  * @param    pageItem        The page item to be displayed by this view. 
  */
 orp.view.PageView = function(superview, htmlElement, pageItem) {
-  orp.util.assert(htmlElement instanceof HTMLElement);
-  orp.util.assert(pageItem instanceof orp.model.Item);
+  orp.lang.assert(htmlElement instanceof HTMLElement);
+  orp.lang.assert(pageItem instanceof orp.model.Item);
 
   orp.view.View.call(this, superview, htmlElement, "PageView");
 
@@ -166,7 +167,7 @@ orp.view.PageView.prototype.refresh = function() {
  * @scope    public instance method
  */
 orp.view.PageView.prototype.doInitialDisplay = function() {
-  orp.util.assert(this.getHtmlElement() instanceof HTMLElement);
+  orp.lang.assert(this.getHtmlElement() instanceof HTMLElement);
   
   var attributeCalledName = this.getWorld().getAttributeCalledName();
   var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();

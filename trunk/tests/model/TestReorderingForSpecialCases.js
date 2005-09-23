@@ -41,7 +41,6 @@
 
 var world;
 var categoryCalledFood = null;
-var utilAssertReportedError;
 
 
 // -------------------------------------------------------------------
@@ -54,8 +53,6 @@ function setUp() {
   dojo.require("orp.model.StubVirtualServer");
   dojo.require("orp.model.World");
 
-  utilAssertReportedError = false;
-  orp.util.setErrorReportCallback(errorReporter);
   var pathToTrunkDirectory = "../..";
   var virtualServer = new orp.model.StubVirtualServer(pathToTrunkDirectory);
 
@@ -86,7 +83,6 @@ function setUp() {
 }
 
 function tearDown() {
-  assertFalse(utilAssertReportedError);
   world.logout();
 }
 
@@ -115,9 +111,14 @@ function testReorderBetweenTwoItemsWithTheSameOrdinal() {
   orp.model.StubVirtualServer.prototype._generateUuid = realUuidGenerator;
   
   assertTrue(sushi.getOrdinalNumber() == pesto.getOrdinalNumber());
-  guava.reorderBetween(sushi, pesto);
-  assertTrue(utilAssertReportedError);
-  utilAssertReportedError = false;
+  
+  var caughtError = false;
+  try {
+    guava.reorderBetween(sushi, pesto);
+  } catch (e) {
+    caughtError = true;
+  }
+  assertTrue(caughtError);
 }
 
 function testReorderBetweenTwoItemsWithTheSameTimestamp() {
@@ -169,15 +170,6 @@ function testReorderBetweenTwoItemsWithTheSameTimestamp() {
   assertTrue('After 2nd reordering, Sushi is first in the list.', foodItems[0] == sushi);
   assertTrue('After 2nd reordering, Pesto is second in the list.', foodItems[1] == pesto);
   assertTrue('After 2nd reordering, Guava is third in the list.', foodItems[2] == guava);
-}
-
-
-// -------------------------------------------------------------------
-// Helper functions
-// -------------------------------------------------------------------
-
-errorReporter = function() {
-  utilAssertReportedError = true;
 }
 
 

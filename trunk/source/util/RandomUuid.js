@@ -36,6 +36,7 @@
 dojo.provide("orp.util.RandomUuid");
 dojo.require("orp.util.Uuid");
 dojo.require("orp.util.Util");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -75,18 +76,19 @@ orp.util.RandomUuid = function(namedParameters) {
     } else {
       if (dojo.lang.isObject(namedParameters)) {
         uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
-        orp.util.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [orp.util.Uuid.NamedParameters.uuidString]));
+        orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [orp.util.Uuid.NamedParameters.uuidString]));
       } else {
-        orp.util.assert(false);
+        orp.lang.assert(false);
       }
     }
-    orp.util.assert(dojo.lang.isString(uuidString));
-    orp.util.assert(uuidString.length == 36);
+    // orp.lang.assert(dojo.lang.isString(uuidString));
+    orp.lang.assertType(uuidString, String);
+    orp.lang.assert(uuidString.length == 36);
     this._uuidString = uuidString;
   } else {
     this._uuidString = this._generateUuidString();
   }
-  orp.util.assert(this.getVersion() == orp.util.Uuid.Version.RANDOM);
+  orp.lang.assert(this.getVersion() == orp.util.Uuid.Version.RANDOM);
 };
 
 dj_inherits(orp.util.RandomUuid, orp.util.Uuid);  // makes RandomUuid be a subclass of Uuid

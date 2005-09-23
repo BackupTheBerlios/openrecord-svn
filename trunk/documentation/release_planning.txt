@@ -358,7 +358,10 @@ brian  |          | 0.5+    |     convert code to use Dojo Package System
        |          |         |     try to get djConfig.debugAtAllCosts to work (see sandbox.html)
        |          |         |     try to replace /source/util/Cookie.js with dojo.io.cookies
        |          |         |     try to replace Util.js functions with dojo.lang functions
+       |          |         |     try using Ant and the Dojo build system to build OpenRecord into a single-file 
        |          |         |     move isUuid out of Util.js
+       |          |         |     change "endOfLife()" to "destroy()"
+       |          |         |     move XmlConverter.js out of util, because it depends on model code
 brian  |          | 0    IED|     in model, get rid of ._Record() and ._ContentRecord()
        |          |         |     make some sort of assertType() method
 brian  | 0.25 IED | 0    IED|     move scrap_yard contents to the tests_of_external_code directory and delete scrap_yard

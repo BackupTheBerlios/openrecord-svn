@@ -36,6 +36,7 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.model.Record");
 dojo.require("orp.util.TimeBasedUuid");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -57,13 +58,17 @@ dojo.require("orp.util.TimeBasedUuid");
  * @param    uuid    The UUID for this Record. 
  */
 orp.model.Record = function(world, uuid) {
-  orp.util.assert(orp.util.isUuidValue(uuid));
   if (orp.util.isString(uuid)) {
     var uuidString = uuid;
-    orp.util.assert(uuidString.length == 36);
     uuid = new orp.util.TimeBasedUuid(uuidString);
   }
-  orp.util.assert(orp.util.isUuid(uuid));
+  
+  // Unfortunately, we need to treat 'world' and 'uuid' as 'Optional'. 
+  // I think this constructor is invoked by dj_inherits() calls 
+  // (in ContentRecord, Vote, and Ordinal), which do not pass
+  // in any values for world and uuid.
+  orp.lang.assertTypeForOptionalValue(uuid, orp.util.TimeBasedUuid);
+  orp.lang.assertTypeForOptionalValue(world, orp.model.World);
   
   this._world = world;
   this._uuid = uuid;

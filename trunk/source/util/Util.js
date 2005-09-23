@@ -32,6 +32,8 @@
 *****************************************************************************/
 
 dojo.provide("orp.util.Util");
+dojo.require("orp.lang.Lang");
+dojo.require("dojo.lang.*");
 // dojo.require("orp.util.Uuid");
 
 // -------------------------------------------------------------------
@@ -72,7 +74,7 @@ orp.util.ASCII = {
   RIGHT_ARROW: 39, // 124
   DOWN_ARROW: 40,  // 125
   BACKSPACE: 8,
-DELETE: 46 };
+  DELETE: 46 };
 // &#37; = %
 // &#38; = &
 // &#39; = '
@@ -132,6 +134,7 @@ orp.util.handleError = function(message, url, line) {
  * @param    booleanValue    A boolean value, which needs to be true for the assertion to succeed. 
  * @param    message    Optional. A string describing the assertion.
  */
+/*
 orp.util.assert = function(booleanValue, message) {
   if (orp.util.isBoolean(booleanValue)) {
     if (!booleanValue) {    
@@ -155,7 +158,11 @@ orp.util.assert = function(booleanValue, message) {
     orp.util.ourErrorReporter("An assert statement went sour.\nThe method orp.util.assert() was passed a non-boolean argument.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
   }
 };
-
+*/
+orp.util.assert = function(booleanValue, message) {
+  dj_deprecated("orp.util.assert() is deprecated. Use orp.lang.assert().");
+  orp.lang.assert(booleanValue, message);
+};
 
 /**
  * Registers a function to be used to report status messages to the user.
@@ -202,10 +209,15 @@ orp.util.ourStatusReporter = orp.util.defaultStatusReporter;
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a function.
  */
+ /*
 orp.util.isFunction = function(value) {
   return ((typeof value) == "function");
 };
-
+*/
+orp.util.isFunction = function(value) {
+  dj_deprecated("orp.util.isFunction() is deprecated. Use dojo.lang.isFunction().");
+  return dojo.lang.isFunction(value);
+};
 
 /**
  * Returns true if the given value is a string.
@@ -214,8 +226,14 @@ orp.util.isFunction = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a string.
  */
+ /*
 orp.util.isString = function(value) {
   return ((typeof value) == "string");
+};
+*/
+orp.util.isString = function(value) {
+  dj_deprecated("orp.util.isString() is deprecated. Use dojo.lang.isString().");
+  return dojo.lang.isString(value);
 };
 
 
@@ -226,8 +244,14 @@ orp.util.isString = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a number.
  */
+/*
 orp.util.isNumber = function(value) {
   return (((typeof value) == "number") && isFinite(value));
+};
+*/
+orp.util.isNumber = function(value) {
+  dj_deprecated("orp.util.isNumber() is deprecated. Use dojo.lang.isNumber().");
+  return dojo.lang.isNumber(value);
 };
 
 
@@ -240,12 +264,16 @@ orp.util.isNumber = function(value) {
  * @return   A boolean value. True if inValue is a number or a string that represents a number.
  */
 orp.util.isNumeric = function(value) {
-  var isNumber = orp.util.isNumber(value);
+  var isNumber = dojo.lang.isNumber(value);
   if (isNumber) {
     return true;
   }
-  var isNumeric = orp.util.isString(value) && orp.util.isNumber(parseInt(value));
-  return isNumeric;
+  if (dojo.lang.isString(value)) {
+    var asNumber = parseInt(value);
+    var isNumeric = dojo.lang.isNumber(asNumber) && isFinite(asNumber);
+    return isNumeric;
+  }
+  return false;
 };
 
 
@@ -256,10 +284,15 @@ orp.util.isNumeric = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is a boolean.
  */
+/*
 orp.util.isBoolean = function(value) {
   return ((typeof value) == "boolean");
 };
-
+*/
+orp.util.isBoolean = function(value) {
+  dj_deprecated("orp.util.isBoolean() is deprecated. Use dojo.lang.isBoolean().");
+  return dojo.lang.isBoolean(value);
+};
 
 /**
  * Returns true if the given value is an object.
@@ -268,10 +301,15 @@ orp.util.isBoolean = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is an object.
  */
+ /*
 orp.util.isObject = function(value) {
   return (value && ((typeof value) == "object"));
 };
-
+*/
+orp.util.isObject = function(value) {
+  dj_deprecated("orp.util.isObject() is deprecated. Use dojo.lang.isObject().");
+  return dojo.lang.isObject(value);
+};
 
 /**
  * Returns true if the given value is a Date.
@@ -328,13 +366,18 @@ orp.util.isUuidValue = function(value) {
  * @param    value    Any object or literal value. 
  * @return   A boolean value. True if inValue is an array.
  */
+ /*
 orp.util.isArray = function(value) {
   if (!value) {
     return false;
   }
   return (((typeof value) == "object") && (value.constructor == Array));
 };
-
+*/
+orp.util.isArray = function(value) {
+  dj_deprecated("orp.util.isArray() is deprecated. Use dojo.lang.isArray().");
+  return dojo.lang.isArray(value);
+};
 
 /**
  * Returns true if the given value is a hash table.
@@ -416,7 +459,8 @@ orp.util.getArrayIndex = function(array, value) {
  * @return   Returns true if the object was found in the set.
  */
 orp.util.isObjectInSet = function(object, set) {
-  orp.util.assert(orp.util.isArray(set));
+  // orp.util.assert(orp.util.isArray(set));
+  orp.lang.assertType(set, Array);
   
   for (var key in set) {
     if (set[key] == object) {
@@ -436,8 +480,10 @@ orp.util.isObjectInSet = function(object, set) {
  * @return   Returns true if each of the objects was found in the set.
  */
 orp.util.areObjectsInSet = function(array, set) {
-  orp.util.assert(orp.util.isArray(array));
-  orp.util.assert(orp.util.isArray(set));
+  // orp.util.assert(orp.util.isArray(array));
+  // orp.util.assert(orp.util.isArray(set));
+  orp.lang.assertType(array, Array);
+  orp.lang.assertType(set, Array);
   
   for (var key in array) {
     var object = array[key];
@@ -459,7 +505,8 @@ orp.util.areObjectsInSet = function(array, set) {
  * @return   Returns true if the object was removed from the array.
  */
 orp.util.removeObjectFromSet = function(object, set) {
-  orp.util.assert(orp.util.isArray(set));
+  // orp.util.assert(orp.util.isArray(set));
+  orp.lang.assertType(set, Array);
   
   if (!object) {
     return false;
@@ -484,7 +531,8 @@ orp.util.removeObjectFromSet = function(object, set) {
  * @return   Returns true if the object was added to the array.
  */
 orp.util.addObjectToSet = function(object, set) {
-  orp.util.assert(orp.util.isArray(set));
+  // orp.util.assert(orp.util.isArray(set));
+  orp.lang.assertType(set, Array);
 
   if (!object) {
     return false;
@@ -505,7 +553,7 @@ orp.util.addObjectToSet = function(object, set) {
  * @return   The number of values in inHashTable.
  */
 orp.util.lengthOfHashTable = function(hashTable) {
-  orp.util.assert(orp.util.isHashTable(hashTable));
+  orp.lang.assert(orp.util.isHashTable(hashTable));
   var count = 0;
   for (var key in hashTable) {
     count += 1;
@@ -523,7 +571,7 @@ orp.util.lengthOfHashTable = function(hashTable) {
  * @return   An array containing the values that are in inHashTable.
  */
 orp.util.hashTableValues = function(hashTable) {
-  orp.util.assert(orp.util.isHashTable(hashTable));
+  orp.lang.assert(orp.util.isHashTable(hashTable));
   var returnArray = [];
   for (var key in hashTable) {
     returnArray.push(hashTable[key]);

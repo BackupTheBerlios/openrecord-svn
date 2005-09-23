@@ -45,7 +45,6 @@ var sushi;
 var pesto;
 var guava;
 var taffy;
-var utilAssertReportedError;
 
 
 // -------------------------------------------------------------------
@@ -60,8 +59,6 @@ function setUp() {
   
   ContentRecord = orp.model.ContentRecord;
 
-  utilAssertReportedError = false;
-  orp.util.setErrorReportCallback(errorReporter);
   var pathToTrunkDirectory = "../..";
   var virtualServer = new orp.model.StubVirtualServer(pathToTrunkDirectory);
   var realUuidGenerator = orp.model.StubVirtualServer.prototype._generateUuid;
@@ -137,7 +134,6 @@ Note that the tests will run a lot slower if you do.
 }
 
 function tearDown() {
-  assertFalse(utilAssertReportedError);
   world.logout();
 }
 
@@ -192,9 +188,13 @@ function testReorderManyTimes() {
 }
 
 function testReorderBetweenTwoItemsWhichAreTheSame() {
-  pesto.reorderBetween(sushi, sushi);
-  assertTrue(utilAssertReportedError);
-  utilAssertReportedError = false;
+  var caughtError = false;
+  try {
+    pesto.reorderBetween(sushi, sushi);
+  } catch (e) {
+    caughtError = true;
+  }
+  assertTrue(caughtError);
 }
 
 function testReorderBetweenTwoItemsNotInOrder() {
@@ -212,15 +212,6 @@ function testReorderTwoItemsBetweenTheSameTwoItems() {
   assertTrue(ContentRecord.compareOrdinals(sushi, taffy) < 0);
   assertTrue(ContentRecord.compareOrdinals(taffy, pesto) < 0);
   assertTrue(ContentRecord.compareOrdinals(taffy, guava) != 0);
-}
-
-
-// -------------------------------------------------------------------
-// Helper functions
-// -------------------------------------------------------------------
-
-errorReporter = function() {
-  utilAssertReportedError = true;
 }
 
 

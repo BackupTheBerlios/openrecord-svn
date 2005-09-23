@@ -36,11 +36,12 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.TablePlugin");
 dojo.require("orp.view.PluginView");
-dojo.require("orp.util.CsvParser");
 dojo.require("orp.view.RootView");
 dojo.require("orp.view.SectionView");
 dojo.require("orp.view.MultiEntriesView");
 dojo.require("orp.model.Item");
+dojo.require("orp.util.CsvParser");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -139,7 +140,7 @@ orp.TablePlugin.prototype.getClass = function() {
  * @return   This method returns 0 if the items are comparable. If _ascendingOrder is true, itemA is less than itemB, this method returns -1, otherwise it returns +1. 
  */
 orp.TablePlugin.prototype.compareItemsBySortAttribute = function(itemA, itemB) {
-  orp.util.assert(this._sortAttribute !== null);
+  orp.lang.assert(this._sortAttribute !== null);
   var strA = itemA.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
   var strB = itemB.getSingleStringValueFromAttribute(this._sortAttribute).toLowerCase();
   var ascendingInt = this._ascendingOrder ? -1 : 1;
@@ -165,7 +166,7 @@ orp.TablePlugin.prototype._getListOfColumns = function() {
     // columns, and we just want to use that list.
     for (var i in listOfTableColumnEntries) {
       anAttribute = listOfTableColumnEntries[i].getValue();
-      orp.util.assert(anAttribute instanceof orp.model.Item);
+      orp.lang.assert(anAttribute instanceof orp.model.Item);
       displayAttributes.push(anAttribute);
     }
   } else {
@@ -371,7 +372,7 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppabl
   if (listOfTableColumnEntries.length > 0) {
     // If we get here, it means this table has a saved list of user-selected
     // columns, and we just want to re-order that list.
-    orp.util.assert(this._displayAttributes.length == listOfTableColumnEntries.length);
+    orp.lang.assert(this._displayAttributes.length == listOfTableColumnEntries.length);
     var draggedEntry = listOfTableColumnEntries[indexOfDraggedAttribute];
     var droppedOnEntry = listOfTableColumnEntries[indexOfDroppedOnAttribute];
     if (indexOfDraggedAttribute > indexOfDroppedOnAttribute) {
@@ -575,7 +576,7 @@ orp.TablePlugin.prototype.clickOnHeader = function(event, clickAttribute) {
  * @scope    public instance method
  */
 orp.TablePlugin.prototype.selectRow = function(rowElement) {
-  orp.util.assert(rowElement instanceof HTMLTableRowElement);
+  orp.lang.assert(rowElement instanceof HTMLTableRowElement);
   if (rowElement != this._lastSelectedRow) {
     if (this._lastSelectedRow) {
       this._lastSelectedRow.className = "";
@@ -656,7 +657,7 @@ orp.TablePlugin.prototype._importData = function(eventObject, fileButton) {
       world.beginTransaction();
     }
     listOfFields = listOfRecords[i];
-    orp.util.assert(listOfFields.length == listOfAttributes.length);
+    orp.lang.assert(listOfFields.length == listOfAttributes.length);
     var newItem = world.newItem();
     world.setItemToBeIncludedInQueryResultList(newItem, this.getQuerySpec());
     for (j in listOfAttributes) {

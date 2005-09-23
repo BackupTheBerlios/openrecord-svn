@@ -33,6 +33,7 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.model.QueryRunner");
 dojo.require("orp.model.World");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -66,7 +67,7 @@ dojo.require("orp.model.World");
  * @param    observer    Optional. An object or method to be registered as an observer of the query. 
  */
 orp.model.QueryRunner = function(world, querySpec, observer) {
-  orp.util.assert(world instanceof orp.model.World);
+  orp.lang.assert(world instanceof orp.model.World);
   
   this._world = world;
   this._querySpec = querySpec;
@@ -195,7 +196,7 @@ orp.model.QueryRunner.prototype.endOfLife = function() {
  * @param    listOfChangeRecords    A list of the records that impacted the querySpec. 
  */
 orp.model.QueryRunner.prototype.observedItemHasChanged = function(querySpec, listOfChangeRecords) {
-  orp.util.assert(querySpec == this._querySpec);
+  orp.lang.assert(querySpec == this._querySpec);
   this._readQuerySpec();
   this._runQuery();
 };
@@ -243,7 +244,7 @@ orp.model.QueryRunner.prototype._readQuerySpec = function() {
       // by default the matching attribute is category
       this._matchingAttribute = this.getWorld().getAttributeCalledCategory();
     } else {
-      orp.util.assert(listOfMatchingAttributeEntries.length == 1, 'There should only be one matching attribute on a Query Spec item.');
+      orp.lang.assert(listOfMatchingAttributeEntries.length == 1, 'There should only be one matching attribute on a Query Spec item.');
       this._matchingAttribute = listOfMatchingAttributeEntries[0].getValue();
     }
 

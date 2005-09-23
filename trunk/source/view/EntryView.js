@@ -39,6 +39,7 @@ dojo.require("orp.view.View");
 dojo.require("orp.view.SuggestionBox");
 dojo.require("orp.model.World");
 dojo.require("orp.model.Item");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -67,9 +68,10 @@ dojo.require("orp.model.Item");
  * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
 orp.view.EntryView = function(superview, htmlElement, item, attribute, entry, isMultiLine) {
-  orp.util.assert((!entry) || entry instanceof orp.model.Entry);
-  orp.util.assert(item instanceof orp.model.Item);
-  orp.util.assert(attribute instanceof orp.model.Item); // PENDING need to check that attribute is an attribute
+  // orp.util.assert((!entry) || entry instanceof orp.model.Entry);
+  orp.lang.assert(item instanceof orp.model.Item);
+  orp.lang.assert(attribute instanceof orp.model.Item); // PENDING need to check that attribute is an attribute
+  orp.lang.assertTypeForOptionalValue(entry, orp.model.Entry);
   
   orp.view.View.call(this, superview, htmlElement, "EntryView");
 
@@ -189,9 +191,10 @@ orp.view.EntryView.prototype.setAutoWiden = function(autoWiden) {
  *
  */
 orp.view.EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntries) {
-  orp.util.assert(orp.util.isArray(expectedTypeEntries));
+  // orp.util.assert(orp.util.isArray(expectedTypeEntries));
+  orp.lang.assertType(expectedTypeEntries, Array);
   for (var key in expectedTypeEntries) {
-    orp.util.assert(expectedTypeEntries[key] instanceof orp.model.Entry);
+    orp.lang.assert(expectedTypeEntries[key] instanceof orp.model.Entry);
   }
   this._expectedTypeEntries = expectedTypeEntries;
 };
@@ -201,7 +204,8 @@ orp.view.EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntri
  *
  */
 orp.view.EntryView.prototype.setSuggestions = function(listOfSuggestions) {
-  if (listOfSuggestions) {orp.util.assert(orp.util.isArray(listOfSuggestions));}
+  // if (listOfSuggestions) {orp.util.assert(orp.util.isArray(listOfSuggestions));}
+  orp.lang.assertTypeForOptionalValue(listOfSuggestions, Array);
   this._suggestions = listOfSuggestions;
 };
 
@@ -313,7 +317,7 @@ orp.view.EntryView.prototype._canStartEditing = function() {
 }; */
 
 orp.view.EntryView.prototype.unSelect = function() {
-  orp.util.assert(this._isLozenge());
+  orp.lang.assert(this._isLozenge());
   this._setClassName();
   //orp.util.css_removeClass(this._textSpan, orp.view.EntryView.cssClass.SELECTED);
 };
@@ -555,7 +559,7 @@ orp.view.EntryView.prototype._restoreText = function(dontSelect) {
  * @param    onClickFunction    A function to call. 
  */
 orp.view.EntryView.prototype.setClickFunction = function(onClickFunction) {
-  orp.util.assert(onClickFunction instanceof Function);
+  orp.lang.assert(onClickFunction instanceof Function);
   this._clickFunction = onClickFunction;
 };
 
@@ -718,7 +722,7 @@ orp.view.EntryView.prototype.handleKeyEventWhenSelected = function(myEvent) {
   }
   if (myEvent.keyCode ==  orp.util.KEYCODE_FOR_BACKSPACE || myEvent.keyCode == orp.util.KEYCODE_FOR_DELETE ||
       myEvent.keyCode === 0) {
-    orp.util.assert(this._entry !== null);
+    orp.lang.assert(this._entry !== null);
     this._entry.voteToDelete();
     this._entry = null;
     this._valueIsItem = false;

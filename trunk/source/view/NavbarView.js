@@ -37,6 +37,7 @@
 dojo.provide("orp.view.NavbarView");
 dojo.require("orp.view.View");
 dojo.require("orp.view.RootView");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -137,7 +138,7 @@ orp.view.NavbarView.prototype._mouseDownOnMenuItem = function(event, liElement) 
  * @param    ulElement    The "ul" HTMLElement for the menu of menu items. 
  */
 orp.view.NavbarView.prototype._sortOrderUpdate = function(ulElement) {
-  orp.util.assert(this._liElementBeingTouched !== null);
+  orp.lang.assert(this._liElementBeingTouched !== null);
   
   var liElementPrefixString = orp.view.NavbarView.elementId.MENU + '_';
   var menuItemElementId = this._liElementBeingTouched.id;
@@ -147,7 +148,7 @@ orp.view.NavbarView.prototype._sortOrderUpdate = function(ulElement) {
   var listOfPages = this._getNewOrderingForPageList(ulElement);
   
   var arrayIndex = orp.util.getArrayIndex(listOfPages, pageToReorder);
-  orp.util.assert(arrayIndex != -1);
+  orp.lang.assert(arrayIndex != -1);
   var pageAbove = (arrayIndex === 0) ? null : listOfPages[arrayIndex-1];
   var pageBelow = (arrayIndex > listOfPages.length) ? null : listOfPages[arrayIndex+1];
   pageToReorder.reorderBetween(pageAbove, pageBelow);

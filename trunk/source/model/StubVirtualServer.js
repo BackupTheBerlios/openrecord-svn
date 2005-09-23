@@ -38,6 +38,7 @@ dojo.require("orp.model.Entry");
 dojo.require("orp.model.Transaction");
 dojo.require("orp.util.TimeBasedUuid");
 dojo.require("orp.util.DateValue");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -193,7 +194,8 @@ orp.model.StubVirtualServer.prototype.getWorld = function() {
  * @return   A copy of the rawText string, with the special characters escaped. 
  */
 orp.model.StubVirtualServer.prototype.encodeText = function(rawText) {
-  orp.util.assert(orp.util.isString(rawText));
+  // orp.util.assert(orp.util.isString(rawText));
+  orp.lang.assertType(rawText, String);
 
   var returnString = rawText;
   // Note: it's important that we do '&' first, otherwise we'll accidentally
@@ -227,8 +229,9 @@ orp.model.StubVirtualServer.prototype.encodeText = function(rawText) {
  * @return   A copy of the encodedText string, with the escaped characters replaced by the original special characters. 
  */
 orp.model.StubVirtualServer.prototype.decodeText = function(encodedText) {
-  orp.util.assert(orp.util.isString(encodedText));
-
+  // orp.util.assert(orp.util.isString(encodedText));
+  orp.lang.assertType(encodedText, String);
+  
   var returnString = encodedText;
   returnString = returnString.replace(new RegExp('&#13;','g'), "\r");
   returnString = returnString.replace(new RegExp('&#10;','g'), "\n");
@@ -272,7 +275,7 @@ orp.model.StubVirtualServer.prototype.beginTransaction = function() {
  */
 orp.model.StubVirtualServer.prototype.endTransaction = function() {
   this._countOfNestedTransactions -= 1;
-  orp.util.assert(this._countOfNestedTransactions >= 0);
+  orp.lang.assert(this._countOfNestedTransactions >= 0);
 
   if (this._countOfNestedTransactions === 0) {
     var listOfChangesMade = this._saveChangesToServer();
@@ -541,7 +544,7 @@ orp.model.StubVirtualServer.prototype.login = function(user, password) {
   // Only one user can be logged in at once.  We consider it an error
   // if you try to log in a new user before logging out the old one.
   if (this._currentUser) {
-    orp.util.assert(false);
+    orp.lang.assert(false);
   }
   
   var isKnownUser = orp.util.isObjectInSet(user, this._listOfUsers);
@@ -604,7 +607,7 @@ orp.model.StubVirtualServer.prototype.logout = function() {
  * @return   The item identified by the given UUID.
  */
 orp.model.StubVirtualServer.prototype.getItemFromUuid = function(uuid, observer) {
-  orp.util.assert(orp.util.isUuidValue(uuid));
+  orp.lang.assert(orp.util.isUuidValue(uuid));
   
   var item = this._hashTableOfItemsKeyedByUuid[uuid];
   if (item && observer) {
@@ -692,8 +695,8 @@ orp.model.StubVirtualServer.prototype.getResultItemsForQueryRunner = function(qu
  * @param    query    A query item. 
  */
 orp.model.StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function(item, query) {
-  orp.util.assert(item instanceof orp.model.Item);
-  orp.util.assert(query instanceof orp.model.Item);
+  orp.lang.assert(item instanceof orp.model.Item);
+  orp.lang.assert(query instanceof orp.model.Item);
   
   var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
@@ -709,7 +712,7 @@ orp.model.StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = fun
     matchingAttribute = attributeCalledCategory;
   }
   else {
-    orp.util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
+    orp.lang.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
     matchingAttribute = listOfMatchingAttrs[0].getValue();
   }
 
@@ -737,7 +740,7 @@ orp.model.StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = fun
  * @return   A list of items.
  */
 orp.model.StubVirtualServer.prototype.getItemsInCategory = function(category) {
-  orp.util.assert(category instanceof orp.model.Item);
+  orp.lang.assert(category instanceof orp.model.Item);
 
   var attributeCalledItemsInCategory = this.getWorld().getAttributeCalledItemsInCategory();
   var listOfEntries = category.getEntriesForAttribute(attributeCalledItemsInCategory);
@@ -862,17 +865,19 @@ orp.model.StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function
  */
 orp.model.StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = function(url) {
   var fileContentString = orp.util.getStringContentsOfFileAtURL(url);
-  orp.util.assert(orp.util.isString(fileContentString));
+  // orp.util.assert(orp.util.isString(fileContentString));
+  orp.lang.assertType(fileContentString, String);
   fileContentString += " ] }";
 
-  orp.util.assert(orp.util.isString(fileContentString));
   var dehydratedRecords = null;
   eval("dehydratedRecords = " + fileContentString + ";");
-  orp.util.assert(orp.util.isObject(dehydratedRecords));
+  // orp.util.assert(orp.util.isObject(dehydratedRecords));
+  orp.lang.assertType(dehydratedRecords, Object);
   var recordFormat = dehydratedRecords[orp.model.StubVirtualServer.JSON_MEMBER.FORMAT];
-  orp.util.assert(recordFormat == orp.model.StubVirtualServer.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
+  orp.lang.assert(recordFormat == orp.model.StubVirtualServer.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
   var listOfRecords = dehydratedRecords[orp.model.StubVirtualServer.JSON_MEMBER.RECORDS];
-  orp.util.assert(orp.util.isArray(listOfRecords));
+  // orp.util.assert(orp.util.isArray(listOfRecords));
+  orp.lang.assertType(listOfRecords, Array);
   
   this._rehydrateRecords(listOfRecords);
 };
@@ -976,7 +981,7 @@ orp.model.StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydra
         if (retainFlagString == "false") {
           retainFlag = false;
         }
-        orp.util.assert(retainFlag !== null);
+        orp.lang.assert(retainFlag !== null);
         contentRecordUuid = dehydratedVote[JSON_MEMBER.RECORD];
         contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
         var vote = new orp.model.Vote(this.getWorld(), voteUuid, contentRecord, retainFlag);
@@ -1002,7 +1007,7 @@ orp.model.StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydra
         }
  
         var dataTypeUuid = dehydratedEntry[JSON_MEMBER.TYPE];
-        orp.util.assert(orp.util.isUuidValue(dataTypeUuid));
+        orp.lang.assert(orp.util.isUuidValue(dataTypeUuid));
         var dataType = this._getItemFromUuidOrBootstrapItem(dataTypeUuid);
         
         if (dataTypeUuid == orp.model.World.UUID.TYPE_CONNECTION) {
@@ -1029,7 +1034,7 @@ orp.model.StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydra
           if (attributeUuid) {
             attribute = this._getItemFromUuidOrBootstrapItem(attributeUuid);
           } else {
-            orp.util.assert(false); // the attributeUuid should always be there
+            orp.lang.assert(false); // the attributeUuid should always be there
           }
           var rawData = dehydratedEntry[JSON_MEMBER.VALUE];
           var finalData = null;
@@ -1048,10 +1053,10 @@ orp.model.StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydra
               // if (!finalData.isValid()) {
               //   alert(rawData + " " + finalData);
               // }
-              orp.util.assert(finalData.isValid());
+              orp.lang.assert(finalData.isValid());
               break;
             default:
-              orp.util.assert(false, 'Unknown data type while _rehydrating()');
+              orp.lang.assert(false, 'Unknown data type while _rehydrating()');
           }
           entry._rehydrate(item, attribute, finalData, previousEntry, dataType);
         }

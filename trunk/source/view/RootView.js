@@ -41,6 +41,7 @@ dojo.require("orp.view.LoginView");
 dojo.require("orp.view.NavbarView");
 dojo.require("orp.view.ItemView");
 dojo.require("orp.model.World");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -72,7 +73,7 @@ orp.view.RootView = function(world) {
   
   orp.view.RootView._ourSingleInstance = this;
    
-  orp.util.assert(world instanceof orp.model.World);
+  orp.lang.assert(world instanceof orp.model.World);
 
   // instance properties
   this._world = world;
@@ -310,7 +311,7 @@ orp.view.RootView.prototype.setCurrentPage = function(newPage) {
  * @param    item    Any item.
  */
 orp.view.RootView.prototype.getUrlForItem = function(item) {
-  orp.util.assert(item instanceof orp.model.Item);
+  orp.lang.assert(item instanceof orp.model.Item);
   var categoryCalledPage = this.getWorld().getItemFromUuid(orp.view.RootView.UUID.CATEGORY_PAGE);
   var prefix;
   if (item.isInCategory(categoryCalledPage)) {
@@ -406,7 +407,7 @@ orp.view.RootView.prototype.display = function() {
     this._displayNavbar();
     this._displayDebugArea();
     if (this._currentContentView) {
-      orp.util.assert(this._currentContentView instanceof Object);
+      orp.lang.assert(this._currentContentView instanceof Object);
       document.title = this._currentContentView.getPageTitle() + " - openrecord.org";
       this._currentContentView.includeOnScreen(true);
     }
@@ -487,7 +488,7 @@ orp.view.RootView.prototype._displayNavbar = function() {
  * @scope    private instance method
  */
 orp.view.RootView.prototype._displayDebugArea = function() {
-  orp.util.assert(this._debugDivElement instanceof HTMLDivElement);
+  orp.lang.assert(this._debugDivElement instanceof HTMLDivElement);
 
   var listOfStrings = [];
   listOfStrings.push("<textarea readonly id=\"" + orp.view.RootView.elementId.DEBUG_TEXTAREA + "\" rows=\"20\" cols=\"100\" wrap=\"virtual\"></textarea>");
@@ -584,7 +585,7 @@ orp.view.RootView.prototype.setSelection = function(aView) {
     this._selections[i].unSelect();
   }
   if (aView) {
-    orp.util.assert(aView instanceof orp.view.View);
+    orp.lang.assert(aView instanceof orp.view.View);
     this._selections = [aView];
   }
   else {this._selections = [];}
@@ -596,7 +597,7 @@ orp.view.RootView.prototype.setSelection = function(aView) {
  * @param    aView    A selectable object
  */
 orp.view.RootView.prototype.addToSelection = function(aView) {
-  orp.util.assert(aView instanceof orp.view.View);
+  orp.lang.assert(aView instanceof orp.view.View);
   orp.util.addObjectToSet(aView,this._selections);
 };
 
@@ -606,8 +607,8 @@ orp.view.RootView.prototype.addToSelection = function(aView) {
  * @param    aView    A selectable object
  */
 orp.view.RootView.prototype.removeFromSelection = function(aView) {
-  orp.util.assert(aView instanceof orp.view.View);
-  orp.util.assert(orp.util.removeObjectFromSet(aView,this._selections));
+  orp.lang.assert(aView instanceof orp.view.View);
+  orp.lang.assert(orp.util.removeObjectFromSet(aView,this._selections));
 };
   
 // -------------------------------------------------------------------

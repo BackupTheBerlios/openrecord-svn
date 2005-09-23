@@ -41,6 +41,7 @@ function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.require("orp.util.Util");
+  dojo.require("dojo.lang.*");
   UtilTestVars = {};
   UtilTestVars.theHobbit = "The Hobbit";
 }
@@ -59,12 +60,12 @@ function testSimplestCase() {
 }
 
 function testTypeCheckingMethods() {
-  assertTrue('"The Hobbit" is a string', orp.util.isString("The Hobbit"));
-  assertFalse('"The Hobbit" is not a number', orp.util.isNumber("The Hobbit"));
+  assertTrue('"The Hobbit" is a string', dojo.lang.isString("The Hobbit"));
+  assertFalse('"The Hobbit" is not a number', dojo.lang.isNumber("The Hobbit"));
   assertFalse('"The Hobbit" is not numeric', orp.util.isNumeric("The Hobbit"));
-  assertFalse('"The Hobbit" is not a boolean', orp.util.isBoolean("The Hobbit"));
-  assertFalse('"The Hobbit" is not an object', orp.util.isObject("The Hobbit"));
-  assertFalse('"The Hobbit" is not an array', orp.util.isArray("The Hobbit"));
+  assertFalse('"The Hobbit" is not a boolean', dojo.lang.isBoolean("The Hobbit"));
+  assertFalse('"The Hobbit" is not an object', dojo.lang.isObject("The Hobbit"));
+  assertFalse('"The Hobbit" is not an array', dojo.lang.isArray("The Hobbit"));
   assertFalse('"The Hobbit" is not a hash table', orp.util.isHashTable("The Hobbit"));
 }
 

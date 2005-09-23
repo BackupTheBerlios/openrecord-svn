@@ -37,6 +37,7 @@
 dojo.provide("orp.model.ContentRecord");
 dojo.require("orp.model.Record");
 dojo.require("orp.model.World");
+dojo.require("orp.lang.Lang");
 
 
 // -------------------------------------------------------------------
@@ -164,19 +165,19 @@ orp.model.ContentRecord.prototype.getOrdinalNumber = function() {
       break;
     case orp.model.World.RetrievalFilter.SINGLE_USER:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     case orp.model.World.RetrievalFilter.DEMOCRATIC:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     case orp.model.World.RetrievalFilter.UNABRIDGED:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     default:
       // We should never get here.  If we get here, it's an error.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
   }
   return ordinalNumber;
@@ -227,18 +228,18 @@ orp.model.ContentRecord.prototype.hasBeenDeleted = function() {
       break;
     case orp.model.World.RetrievalFilter.SINGLE_USER:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     case orp.model.World.RetrievalFilter.DEMOCRATIC:
       // PENDING: This still needs to be implemented.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
     case orp.model.World.RetrievalFilter.UNABRIDGED:
       hasBeenDeleted = false;
       break;
     default:
       // We should never get here.  If we get here, it's an error.
-      orp.util.assert(false);
+      orp.lang.assert(false);
       break;
   }
   return hasBeenDeleted;
@@ -272,7 +273,7 @@ orp.model.ContentRecord.prototype.reorderBetween = function(contentRecordFirst, 
   
   if (firstOrdinalNumber && thirdOrdinalNumber) {
     if (firstOrdinalNumber == thirdOrdinalNumber) {
-      orp.util.assert(false, "Tried to reorder between two items with the same ordinal.");
+      orp.lang.assert(false, "Tried to reorder between two items with the same ordinal.");
     }
     else {
       if (firstOrdinalNumber > thirdOrdinalNumber) {

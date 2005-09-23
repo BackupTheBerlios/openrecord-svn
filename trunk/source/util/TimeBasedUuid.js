@@ -37,6 +37,7 @@
 dojo.provide("orp.util.TimeBasedUuid");
 dojo.require("orp.util.Uuid");
 dojo.require("orp.util.Util");
+dojo.require("orp.lang.Lang");
 
 
 // -------------------------------------------------------------------
@@ -85,7 +86,7 @@ orp.util.TimeBasedUuid = function(namedParameters) {
   if (namedParameters) {
     if (dojo.lang.isString(namedParameters)) {
       uuidString = namedParameters;
-      orp.util.assert(uuidString.length == 36);
+      orp.lang.assert(uuidString.length == 36);
       this._uuidString = uuidString;
     } else {
       if (dojo.lang.isObject(namedParameters)) {
@@ -94,34 +95,34 @@ orp.util.TimeBasedUuid = function(namedParameters) {
         var pseudoNode = namedParameters["pseudoNode"];
         var hardwareNode = namedParameters["hardwareNode"];
         var atLeastOneParameter = (uuidString || node || pseudoNode || hardwareNode) ? true : false;
-        orp.util.assert(atLeastOneParameter);
-        orp.util.assert(orp.util.hasNoUnexpectedProperties(namedParameters, ["uuidString", "node", "pseudoNode", "hardwareNode"]));
+        orp.lang.assert(atLeastOneParameter);
+        orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, ["uuidString", "node", "pseudoNode", "hardwareNode"]));
         if (uuidString) {
-          orp.util.assert(!node && !pseudoNode && !hardwareNode);
-          orp.util.assert(uuidString.length == 36);
+          orp.lang.assert(!node && !pseudoNode && !hardwareNode);
+          orp.lang.assert(uuidString.length == 36);
           this._uuidString = uuidString;
         }
         if (node || pseudoNode || hardwareNode) {
-          orp.util.assert((node || pseudoNode).length == 12);
+          orp.lang.assert((node || pseudoNode).length == 12);
           var firstCharacter = (node || pseudoNode).charAt(0);
           var firstDigit = parseInt(firstCharacter, orp.util.Uuid.HEX_RADIX);
           if (hardwareNode) { 
-            orp.util.assert((firstDigit >= 0x0) && (firstDigit <= 0x7)); 
+            orp.lang.assert((firstDigit >= 0x0) && (firstDigit <= 0x7)); 
           }
           if (pseudoNode) { 
-            orp.util.assert((firstDigit >= 0x8) && (firstDigit <= 0xF)); 
+            orp.lang.assert((firstDigit >= 0x8) && (firstDigit <= 0xF)); 
           }
           this._uuidString = this._generateUuidString(node || pseudoNode || hardwareNode);
         }
       } else {
-        orp.util.assert(false);
+        orp.lang.assert(false);
       }
     }
   } else {
     this._uuidString = this._generateUuidString();
   }
     
-  orp.util.assert(this.getVersion() == orp.util.Uuid.Version.TIME_BASED);
+  orp.lang.assert(this.getVersion() == orp.util.Uuid.Version.TIME_BASED);
 };
 
 dj_inherits(orp.util.TimeBasedUuid, orp.util.Uuid);  // makes TimeBasedUuid be a subclass of Uuid
@@ -213,9 +214,10 @@ orp.util.TimeBasedUuid.prototype._generateUuidString = function(pseudoNode) {
   var Uuid          = orp.util.Uuid;
   var TimeBasedUuid = orp.util.TimeBasedUuid;
   
-  orp.util.assert(!pseudoNode || orp.util.isString(pseudoNode));  
+  // orp.util.assert(!pseudoNode || orp.util.isString(pseudoNode));
+  orp.lang.assertTypeForOptionalValue(pseudoNode, String);
   if (pseudoNode) {
-    orp.util.assert(pseudoNode.length == 12);  
+    orp.lang.assert(pseudoNode.length == 12);  
   } else {
     var pseudoNodeIndicatorBit = 0x8000;
     var random15bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 15) );
@@ -366,7 +368,7 @@ orp.util.TimeBasedUuid._getTimestampAsHexString = function(uuidString) {
   
   var returnString = hexTimeHigh + hexTimeMid + hexTimeLow;
   
-  orp.util.assert(returnString.length == 15);
+  orp.lang.assert(returnString.length == 15);
   return returnString;
 };
 
@@ -386,7 +388,7 @@ orp.util.TimeBasedUuid._carry = function(arrayA) {
   arrayA[2] &= 0xFFFF;
   arrayA[0] += arrayA[1] >>> 16;
   arrayA[1] &= 0xFFFF;
-  orp.util.assert((arrayA[0] >>> 16) === 0);
+  orp.lang.assert((arrayA[0] >>> 16) === 0);
 };
 
 
@@ -425,10 +427,15 @@ orp.util.TimeBasedUuid._get64bitArrayFromFloat = function(x) {
  * @return   An array with 4 elements, each of which is a 16-bit number.
  */
 orp.util.TimeBasedUuid._addTwo64bitArrays = function(arrayA, arrayB) {
-  orp.util.assert(orp.util.isArray(arrayA));
-  orp.util.assert(arrayA.length == 4);
-  orp.util.assert(orp.util.isArray(arrayB));
-  orp.util.assert(arrayB.length == 4);
+  // orp.util.assert(orp.util.isArray(arrayA));
+  // orp.util.assert(arrayA.length == 4);
+  // orp.util.assert(orp.util.isArray(arrayB));
+  // orp.util.assert(arrayB.length == 4);
+  orp.lang.assertType(arrayA, Array);
+  orp.lang.assertType(arrayB, Array);
+  orp.lang.assert(arrayA.length == 4);
+  orp.lang.assert(arrayB.length == 4);
+
   var result = new Array(0, 0, 0, 0);
   result[3] = arrayA[3] + arrayB[3];
   result[2] = arrayA[2] + arrayB[2];
@@ -452,10 +459,15 @@ orp.util.TimeBasedUuid._addTwo64bitArrays = function(arrayA, arrayB) {
 orp.util.TimeBasedUuid._multiplyTwo64bitArrays = function(arrayA, arrayB) {
   var TimeBasedUuid = orp.util.TimeBasedUuid;
 
-  orp.util.assert(orp.util.isArray(arrayA));
-  orp.util.assert(arrayA.length == 4);
-  orp.util.assert(orp.util.isArray(arrayB));
-  orp.util.assert(arrayB.length == 4);
+  //orp.util.assert(orp.util.isArray(arrayA));
+  //orp.util.assert(arrayA.length == 4);
+  //orp.util.assert(orp.util.isArray(arrayB));
+  //orp.util.assert(arrayB.length == 4);
+  orp.lang.assertType(arrayA, Array);
+  orp.lang.assertType(arrayB, Array);
+  orp.lang.assert(arrayA.length == 4);
+  orp.lang.assert(arrayB.length == 4);
+
   var overflow = false;
   if (arrayA[0] * arrayB[0] !== 0) { overflow = true; }
   if (arrayA[0] * arrayB[1] !== 0) { overflow = true; }
@@ -463,7 +475,7 @@ orp.util.TimeBasedUuid._multiplyTwo64bitArrays = function(arrayA, arrayB) {
   if (arrayA[1] * arrayB[0] !== 0) { overflow = true; }
   if (arrayA[1] * arrayB[1] !== 0) { overflow = true; }
   if (arrayA[2] * arrayB[0] !== 0) { overflow = true; }
-  orp.util.assert(!overflow);
+  orp.lang.assert(!overflow);
   
   var result = new Array(0, 0, 0, 0);
   result[0] += arrayA[0] * arrayB[3];
@@ -495,7 +507,7 @@ orp.util.TimeBasedUuid._multiplyTwo64bitArrays = function(arrayA, arrayB) {
  * For example:
  * <pre>
  *   result = TimeBasedUuid._padWithLeadingZeros("abc", 6);
- *   orp.util.assert(result == "000abc");
+ *   orp.lang.assert(result == "000abc");
  * </pre>
  * 
  * @scope    private class method

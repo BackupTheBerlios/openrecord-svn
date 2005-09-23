@@ -34,6 +34,7 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.view.View");
 dojo.require("orp.util.Util");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -175,7 +176,8 @@ orp.view.View.prototype.refresh = function() {
  * @param    visibleFlag    True if the view should be visible on screen. False if the view should be hidden off screen.
  */
 orp.view.View.prototype.includeOnScreen = function(visibleFlag) {
-  orp.util.assert(orp.util.isBoolean(visibleFlag));
+  // orp.util.assert(orp.util.isBoolean(visibleFlag));
+  orp.lang.assertType(visibleFlag, Boolean);
 
   if (visibleFlag) {
     this.refresh();
@@ -198,7 +200,7 @@ orp.view.View.prototype.includeOnScreen = function(visibleFlag) {
  * @param    element    An HTML element. 
  */
 orp.view.View.removeChildrenOfElement = function(element) {
-  orp.util.assert(element instanceof HTMLElement);
+  orp.lang.assert(element instanceof HTMLElement);
   element.innerHTML = '';
 };
 
@@ -215,10 +217,14 @@ orp.view.View.removeChildrenOfElement = function(element) {
  * @return   The newly created HTML element.
  */
 orp.view.View.newElement = function(tagName, cssClassName, attributesInJson, text) {
-  orp.util.assert(orp.util.isString(tagName));
-  orp.util.assert(!cssClassName || orp.util.isString(cssClassName));
-  orp.util.assert(!attributesInJson || orp.util.isObject(attributesInJson));
-  orp.util.assert(!text|| orp.util.isString(text));
+  // orp.util.assert(orp.util.isString(tagName));
+  // orp.util.assert(!cssClassName || orp.util.isString(cssClassName));
+  // orp.util.assert(!attributesInJson || orp.util.isObject(attributesInJson));
+  // orp.util.assert(!text|| orp.util.isString(text));
+  orp.lang.assertType(tagName, String);
+  orp.lang.assertTypeForOptionalValue(cssClassName, String);
+  orp.lang.assertTypeForOptionalValue(attributesInJson, Object);
+  orp.lang.assertTypeForOptionalValue(text, String);
 
   var newElement = window.document.createElement(tagName);
   if (cssClassName) {
@@ -262,7 +268,7 @@ orp.view.View.newElement = function(tagName, cssClassName, attributesInJson, tex
  * @return   The newly created HTML element.
  */
 orp.view.View.appendNewElement = function(parentElement, tagName, cssClassName, attributesInJson, text) {
-  orp.util.assert(parentElement instanceof HTMLElement);
+  orp.lang.assert(parentElement instanceof HTMLElement);
   
   var newElement = orp.view.View.newElement(tagName, cssClassName, attributesInJson, text);
   parentElement.appendChild(newElement);
@@ -281,8 +287,9 @@ orp.view.View.appendNewElement = function(parentElement, tagName, cssClassName, 
  * @return   The newly created text node.
  */
 orp.view.View.appendNewTextNode = function(parentElement, textString) {
-  orp.util.assert(parentElement instanceof HTMLElement);
-  orp.util.assert(orp.util.isString(textString));
+  orp.lang.assert(parentElement instanceof HTMLElement);
+  // orp.util.assert(orp.util.isString(textString));
+  orp.lang.assertType(textString, String);
 
   var newTextNode = window.document.createTextNode(textString);
   parentElement.appendChild(newTextNode);

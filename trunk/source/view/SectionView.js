@@ -35,11 +35,12 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
+dojo.require("orp.TablePlugin");
 dojo.provide("orp.view.SectionView");
 dojo.require("orp.view.View");
 dojo.require("orp.view.RootView");
-dojo.require("orp.TablePlugin");
 dojo.require("orp.model.Item");
+dojo.require("orp.lang.Lang");
 
 // FIXME: We shouldn't need to include these three lines:
 dojo.require("orp.DetailPlugin");
@@ -74,7 +75,7 @@ orp.view.SectionView = function(superview, htmlElement, sectionItem) {
   orp.view.View.call(this, superview, htmlElement, "SectionView");
 
   // instance properties
-  orp.util.assert(sectionItem instanceof orp.model.Item);
+  orp.lang.assert(sectionItem instanceof orp.model.Item);
   this._section = sectionItem;
 
   this._pluginView = null;
@@ -185,7 +186,7 @@ orp.view.SectionView.registerPlugin = function(pluginClass, pluginItemUuid) {
  * @return   A newly created plugin object, initialized to be the plugin for this section.
  */
 orp.view.SectionView.prototype.getPluginInstanceFromPluginItem = function(pluginItem, pluginDiv) {
-  orp.util.assert(pluginItem instanceof orp.model.Item);
+  orp.lang.assert(pluginItem instanceof orp.model.Item);
   
   var newPlugin = null;
   var pluginClass;
@@ -308,7 +309,7 @@ orp.view.SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem
     for (var i=0; i < entriesLayoutData.length; ++i) {
       var layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
       var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attributeAppliesToPlugin);
-      orp.util.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
+      orp.lang.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
       if (entriesAppliesToPlugin[0].getValue() == pluginTypeItem) {
         return layoutItem;
       }
@@ -345,9 +346,8 @@ orp.view.SectionView.prototype._refreshQueryEditSpan = function() {
   if (listOfMatchingAttrs.length === 0) {
     // by default matching attribute is category
     matchingAttribute = this.getWorld().getAttributeCalledCategory();
-  }
-  else {
-    orp.util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
+  } else {
+    orp.lang.assert(listOfMatchingAttrs.length == 1, 'more than one matching attributes');
     matchingAttribute = listOfMatchingAttrs[0].getValue();
   }
   var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
@@ -413,7 +413,7 @@ orp.view.SectionView.prototype.keyPressOnMatchingValueField = function(event, an
 orp.view.SectionView.prototype.observedItemHasChanged = function(item) {
   item.removeObserver(this); //item no longer needs to be observed as query editor span is rebuilt
   var myQuery = this.getQuerySpec();
-  orp.util.assert(item == myQuery);
+  orp.lang.assert(item == myQuery);
   var pluginItem = this._pluginView.getPluginItem();
   this._pluginView.endOfLife();
   this._pluginView = this.getPluginInstanceFromPluginItem(pluginItem, this._pluginDiv);
@@ -483,7 +483,7 @@ orp.view.SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
     matchingAttribute = this.getWorld().getAttributeCalledCategory();
   }
   else {
-    orp.util.assert(listOfMatchingAttrs.length==1, 'more than one matching attributes');
+    orp.lang.assert(listOfMatchingAttrs.length == 1, 'more than one matching attributes');
     matchingAttribute = listOfMatchingAttrs[0].getValue();
   }
   if (matchingAttribute.getDisplayString() != newChoiceName) {
@@ -501,10 +501,10 @@ orp.view.SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
     for (var i in listOfMatchingEntries) {
       var anEntry = listOfMatchingEntries[i];
       anEntry.voteToDelete();
-      orp.util.assert(anEntry.hasBeenDeleted());
+      orp.lang.assert(anEntry.hasBeenDeleted());
     }
     listOfMatchingEntries = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
-    orp.util.assert(listOfMatchingEntries.length === 0);
+    orp.lang.assert(listOfMatchingEntries.length === 0);
     
     // I think we need these next 3 lines in to make sure the view gets updated  
     // to reflect the new query.  When we get a chance we should probably do 
