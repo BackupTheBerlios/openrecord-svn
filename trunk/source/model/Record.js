@@ -58,7 +58,7 @@ dojo.require("orp.lang.Lang");
  * @param    uuid    The UUID for this Record. 
  */
 orp.model.Record = function(world, uuid) {
-  if (orp.util.isString(uuid)) {
+  if (dojo.lang.isString(uuid)) {
     var uuidString = uuid;
     uuid = new orp.util.TimeBasedUuid(uuidString);
   }

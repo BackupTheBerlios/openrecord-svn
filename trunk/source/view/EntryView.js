@@ -415,7 +415,7 @@ orp.view.EntryView.prototype.stopEditing = function() {
         newValue = this._provisionalText;
       }
       var newValueDisplayString = "";
-      if (orp.util.isString(newValue)) {
+      if (dojo.lang.isString(newValue)) {
         newValueDisplayString = newValue;
       }
       else if (newValue instanceof orp.model.Item) {
@@ -446,7 +446,7 @@ orp.view.EntryView.prototype.stopEditing = function() {
  * @param    value    The new value to be saved. 
  */
 orp.view.EntryView.prototype._transformToExpectedType = function(value) {
-  if (value && orp.util.isString(value)) {
+  if (value && dojo.lang.isString(value)) {
     var world = this.getWorld();
     var listOfExpectedTypeEntries;
     if (this._expectedTypeEntries) {

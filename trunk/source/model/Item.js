@@ -290,7 +290,7 @@ orp.model.Item.prototype.replaceEntryWithConnection = function(previousEntry, my
     // var oldValue = previousEntry.getValue(this);
     var oldPairOfAttributes = previousEntry.getAttribute();
     var oldPairOfItems = previousEntry.getItem();
-    if (orp.util.isArray(oldPairOfAttributes)) {
+    if (dojo.lang.isArray(oldPairOfAttributes)) {
       orp.lang.assertType(oldPairOfAttributes, Array);
       orp.lang.assert(oldPairOfAttributes.length == 2);
       orp.lang.assert(oldPairOfItems.length == 2);
@@ -325,7 +325,7 @@ orp.model.Item.prototype.replaceEntryWithConnection = function(previousEntry, my
     if (oldItemOrPairOfItems instanceof orp.model.Item) {
       oldItemOrPairOfItems._noteChanges(null);
     }
-    if (orp.util.isArray(oldItemOrPairOfItems)) {
+    if (dojo.lang.isArray(oldItemOrPairOfItems)) {
       oldItemOrPairOfItems[0]._noteChanges(null);
       oldItemOrPairOfItems[1]._noteChanges(null);
     }

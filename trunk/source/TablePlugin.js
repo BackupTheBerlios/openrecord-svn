@@ -795,8 +795,8 @@ orp.TablePlugin.prototype.keyPressOnEditField = function(eventObject, anEntryVie
   }
   
   if (move) {
-    orp.util.isNumber(this._numberOfColumns);
-    orp.util.isArray(this._listOfItems);
+    orp.lang.assertType(this._numberOfColumns, Number);
+    orp.lang.assertType(this._listOfItems, Array);
     
     // line below needs to be called here i.e. early because stopping an edit may change a provisional item
     // to become a "real" one thereby  creating new row for the next provisional item, e.g. this._listOfItems changes

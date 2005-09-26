@@ -36,6 +36,7 @@ dojo.provide("orp.model.Entry");
 dojo.require("orp.model.ContentRecord");
 dojo.require("orp.model.World");
 dojo.require("orp.lang.Lang");
+dojo.require("dojo.lang.*");
 
 
 // -------------------------------------------------------------------
@@ -114,10 +115,10 @@ orp.model.Entry.prototype._initialize = function(item, previousEntry, attribute,
   if (type) {
     this._type = type;
   } else {
-    if (orp.util.isNumber(value)) {
+    if (dojo.lang.isNumber(value)) {
       this._type = this.getWorld().getTypeCalledNumber();
     }
-    else if (orp.util.isString(value)) {
+    else if (dojo.lang.isString(value)) {
       this._type = this.getWorld().getTypeCalledText();
     }
     else if (orp.util.isDate(value)) {
@@ -270,7 +271,7 @@ orp.model.Entry.prototype.getAttributeForItem = function(item) {
   if (this._item == item) {
     return this._attribute;
   }
-  if (orp.util.isArray(this._item)) {
+  if (dojo.lang.isArray(this._item)) {
     if (this._item[0] == item) {
       return this._attribute[0];
     }
@@ -317,7 +318,7 @@ orp.model.Entry.prototype.getConnectedItem = function(item) {
  * @return   The value this entry was initialized to hold.
  */
 orp.model.Entry.prototype.getValue = function(item) {
-  if (orp.util.isArray(this._item)) {
+  if (dojo.lang.isArray(this._item)) {
     if (this._item[0] == item) {
       return this._item[1];
     }

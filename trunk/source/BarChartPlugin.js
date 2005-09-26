@@ -35,6 +35,7 @@
 dojo.provide("orp.BarChartPlugin");
 dojo.require("orp.view.PluginView");
 dojo.require("orp.view.SectionView");
+dojo.require("dojo.lang.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -136,7 +137,7 @@ orp.BarChartPlugin.prototype.refresh = function() {
         firstEntry = listOfEntries[0];
         if (firstEntry) {
           var value = firstEntry.getValue(contentItem);
-          if (orp.util.isNumber(value)) {
+          if (dojo.lang.isNumber(value)) {
             var count = hashTableOfNumericValueIncidenceKeyedByUuid[attributeUuid];
             if (!count) {
               count = 0;
@@ -169,7 +170,7 @@ orp.BarChartPlugin.prototype.refresh = function() {
       if (listOfEntries && listOfEntries[0]) {
         var nextEntry = listOfEntries[0];
         var nextValue = nextEntry.getValue();
-        if (orp.util.isNumber(nextValue)) {
+        if (dojo.lang.isNumber(nextValue)) {
           maxValue = Math.max(maxValue, nextValue);
         }     
       }
@@ -199,7 +200,7 @@ orp.BarChartPlugin.prototype.refresh = function() {
       if (listOfEntries && listOfEntries[0]) {
         firstEntry = listOfEntries[0];
         var firstValue = firstEntry.getValue();
-        if (orp.util.isNumber(firstValue)) {
+        if (dojo.lang.isNumber(firstValue)) {
           numericValue = firstValue;
         }
       }

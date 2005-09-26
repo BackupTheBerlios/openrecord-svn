@@ -37,6 +37,7 @@ dojo.require("orp.model.DeltaVirtualServer");
 dojo.require("orp.model.QueryRunner");
 dojo.require("orp.model.Vote");
 dojo.require("orp.model.Ordinal");
+dojo.require("dojo.lang.*");
 //-- dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
@@ -259,7 +260,7 @@ orp.model.World.prototype._notifyObserversOfChanges = function(listOfNewlyCreate
       if (itemOrPairOfItems instanceof orp.model.Item) {
         listOfItems.push(itemOrPairOfItems); 
       }
-      if (orp.util.isArray(itemOrPairOfItems)) {
+      if (dojo.lang.isArray(itemOrPairOfItems)) {
         listOfItems.push(itemOrPairOfItems[0]);
         listOfItems.push(itemOrPairOfItems[1]);
       }
@@ -291,10 +292,10 @@ orp.model.World.prototype._notifyObserversOfChanges = function(listOfNewlyCreate
     var listOfObserversForItem = this._hashTableOfObserverListsKeyedByItemUuid[uuid];
     for (key in listOfObserversForItem) {
       observer = listOfObserversForItem[key];
-      if (orp.util.isFunction(observer)) {
+      if (dojo.lang.isFunction(observer)) {
         observer.call(null, item, listOfRecordsForItem);
       } else {
-        if (orp.util.isObject(observer)) {
+        if (dojo.lang.isObject(observer)) {
           observer.observedItemHasChanged(item, listOfRecordsForItem);
         } else {
           // We should never get here.  If we do, consider it an error.
@@ -326,10 +327,10 @@ orp.model.World.prototype._notifyObserversOfChanges = function(listOfNewlyCreate
     if (listOfItemChangeReports) {
       for (key in setOfObservers) {
         observer = setOfObservers[key];
-        if (orp.util.isFunction(observer)) {
+        if (dojo.lang.isFunction(observer)) {
           observer.call(null, listBeingObserved, listOfItemChangeReports);
         } else {
-          if (orp.util.isObject(observer)) {
+          if (dojo.lang.isObject(observer)) {
             observer.observedListHasChanged(listBeingObserved, listOfItemChangeReports);
           } else {
             // We should never get here.  If we do, consider it an error.
@@ -741,7 +742,7 @@ orp.model.World.prototype.newQuery = function(matchingAttribute, matchingEntryOr
   // item.addEntryForAttribute(attributeCalledQueryMatchingAttribute, matchingAttribute);
   item.addEntry({attribute:attributeCalledQueryMatchingAttribute, value:matchingAttribute});
   if (matchingEntryOrListOfEntries) {
-    if (orp.util.isArray(matchingEntryOrListOfEntries)) {
+    if (dojo.lang.isArray(matchingEntryOrListOfEntries)) {
       for (var key in matchingEntryOrListOfEntries) {
         matchingEntry = matchingEntryOrListOfEntries[key];
         // item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
@@ -1026,7 +1027,7 @@ orp.model.World.prototype.getSuggestedItemsForAttribute = function(attribute, ob
  * @return   A number, a DateValue, an item, or the original string value.
  */
 orp.model.World.prototype.transformValueToExpectedType = function(value, listOfTypes) {
-  if (value && orp.util.isString(value) && listOfTypes && orp.util.isArray(listOfTypes)) {
+  if (value && dojo.lang.isString(value) && listOfTypes && dojo.lang.isArray(listOfTypes)) {
     var categoryCalledCategory = this.getCategoryCalledCategory();
     var typeCalledText = this.getTypeCalledText();
     var typeCalledDate = this.getTypeCalledDate();

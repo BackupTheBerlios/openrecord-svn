@@ -263,7 +263,7 @@ orp.model.QueryRunner.prototype._readQuerySpec = function() {
   
   // Handle the case where we have an ad-hoc query 
   // that just has a list of items.
-  if (orp.util.isArray(this._querySpec)) {
+  if (dojo.lang.isArray(this._querySpec)) {
     var querySpecArray = this._querySpec;
     this._matchingAttribute = orp.model.QueryRunner.EXPLICIT_LIST_OF_ITEMS;
     this._listOfMatchingValues = querySpecArray;
@@ -273,7 +273,7 @@ orp.model.QueryRunner.prototype._readQuerySpec = function() {
   
   // Handle the case where we have an ad-hoc query that
   // povides a matching attribute and matching values.
-  if (orp.util.isObject(this._querySpec)) {
+  if (dojo.lang.isObject(this._querySpec)) {
     var querySpecJson = this._querySpec;
     this._matchingAttribute = querySpecJson[orp.model.QueryRunner.QuerySpec.ATTRIBUTE];
     if (!this._matchingAttribute) {
