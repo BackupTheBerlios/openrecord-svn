@@ -61,8 +61,9 @@ orp.model.Record = function(world, uuid) {
   if (dojo.lang.isString(uuid)) {
     var uuidString = uuid;
     uuid = new orp.util.TimeBasedUuid(uuidString);
+    orp.lang.assert(uuid instanceof orp.util.TimeBasedUuid);
   }
-  
+
   // Unfortunately, we need to treat 'world' and 'uuid' as 'Optional'. 
   // I think this constructor is invoked by dj_inherits() calls 
   // (in ContentRecord, Vote, and Ordinal), which do not pass

@@ -81,10 +81,9 @@ orp.util.RandomUuid = function(namedParameters) {
         orp.lang.assert(false);
       }
     }
-    // orp.lang.assert(dojo.lang.isString(uuidString));
     orp.lang.assertType(uuidString, String);
-    orp.lang.assert(uuidString.length == 36);
     this._uuidString = uuidString;
+    orp.lang.assert(this.isValid());
   } else {
     this._uuidString = this._generateUuidString();
   }
@@ -92,6 +91,28 @@ orp.util.RandomUuid = function(namedParameters) {
 };
 
 dj_inherits(orp.util.RandomUuid, orp.util.Uuid);  // makes RandomUuid be a subclass of Uuid
+
+
+// -------------------------------------------------------------------
+// Public instance methods
+// -------------------------------------------------------------------
+
+/**
+ * Returns true if the UUID was initialized with a valid value. 
+ *
+ * @scope    public instance method
+ * @return   True if the UUID is valid, or false if it is not.
+ */
+orp.util.RandomUuid.prototype.isValid = function() {
+  try {
+    orp.lang.assert(orp.util.Uuid.prototype.isValid.call(this));
+    orp.lang.assert(this.getVersion() == orp.util.Uuid.Version.RANDOM);
+    orp.lang.assert(this.getVariant() == orp.util.Uuid.Variant.DCE);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
 
 
 // -------------------------------------------------------------------

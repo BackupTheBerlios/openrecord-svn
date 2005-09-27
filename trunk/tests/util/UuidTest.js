@@ -283,6 +283,41 @@ function testGenericUuids() {
   checkUuidValidity(uuid4);
 }
 
+function testInvalidUuids() {
+  var uuidStrings = [];
+  uuidStrings.push("Hello world!");    // not a UUID
+  uuidStrings.push("3B12F1DF-5232-1804-897E-917BF39761");    // too short
+  uuidStrings.push("3B12F1DF-5232-1804-897E-917BF39761-8A"); // extra '-'
+  uuidStrings.push("3B12F1DF-5232-1804-897E917BF39761-8A");  // last '-' in wrong place
+  uuidStrings.push("HB12F1DF-5232-1804-897E-917BF397618A");  // "HB12F1DF" is not a hex string
+  
+  var numberOfFailures = 0;
+  for (var i in uuidStrings) {
+    var uuidString = uuidStrings[i];
+    try {
+      new Uuid(uuidString);
+    } catch (e) {
+      ++numberOfFailures;
+    }
+  }
+  assertTrue('All of the "new Uuid()" calls failed', (numberOfFailures == uuidStrings.length));  
+
+  
+  uuidStrings.push("3B12F1DF-5232-4804-897E-917BF397618A");  // valid UUID, but not a time based UUID
+  uuidStrings.push("3B12F1DF-5232-1804-F97E-917BF397618A");  // valid UUID, but not a DCE variant
+  numberOfFailures = 0;
+  for (i in uuidStrings) {
+    uuidString = uuidStrings[i];
+    try {
+      new TimeBasedUuid(uuidString);
+    } catch (e) {
+      ++numberOfFailures;
+    }
+  }
+  assertTrue('All of the "new TimeBasedUuid()" calls failed', (numberOfFailures == uuidStrings.length));  
+}
+
+
 function testUuidFactory() {
   // Time-based UUIDs
   var uuid1 = Uuid.newUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
@@ -336,6 +371,7 @@ function checkUuidValidity(uuid) {
   assertTrue('Section 3 has 4 characters', (arrayOfParts[3].length == 4));
   assertTrue('Section 4 has 8 characters', (arrayOfParts[4].length == 12));
   
+  // check to see that the "UUID variant code" starts with the binary bits '10'
   var section3 = arrayOfParts[3];
   var hex3 = parseInt(section3, orp.util.Uuid.HEX_RADIX);
   var binaryString = hex3.toString(2);

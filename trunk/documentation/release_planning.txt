@@ -353,20 +353,20 @@ chao   | 		      | 0.1  IED|     Show current active page on sidebar
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
 brian  |          | 0.5  IED|  1. look into using the Dojo Package System
-brian  |          | done (0.5+)   convert code to use Dojo Package System
-       |          |         |     try removing all the lines: dojo.hostenv.setModulePrefix("dojo", ... 
-       |          |         |     try to get djConfig.debugAtAllCosts to work (see sandbox.html)
-       |          |         |     try to replace /source/util/Cookie.js with dojo.io.cookies
-brian  |          |part done|     try to replace orpBindAsEventListener() with dojo.event.connect()
-brian  |          | 0    IED|     try to replace orp.util.getStringContentsOfFileAtURL() with a Dojo method
-       |          |         |     try to replace View.appendNewElement() with Dojo methods
-       |          |         |     move isUuid out of Util.js
+brian  |          | 2    IED|     convert code to use Dojo Package System
+brian  |          | 0    IED|     try removing all the lines: dojo.hostenv.setModulePrefix("dojo", ... 
+brian  |          | 0    IED|     replace orp.util.getStringContentsOfFileAtURL() with a Dojo method
+brian  |          | 0.5  IED|     move isUuid out of Util.js, and add more error checking code
+brian  |          | (0.25+) |     replace orpBindAsEventListener() with dojo.event.connect()
+       |          | (0.25+) |     try to get djConfig.debugAtAllCosts to work (see sandbox.html)
+       |          |         |     try to replace orp.util.css_xxx functions with dojo.xml.htmlUtil.xxxClass functions
+       |          |         |     try to replace View.appendNewElement() with dojo.xml.domUtil methods
        |          |         |     try to replace remaining Util.js functions with dojo.lang functions
        |          |         |     try using Ant and the Dojo build system to build OpenRecord into a single-file 
        |          |         |     change "endOfLife()" to "destroy()"
        |          |         |     move XmlConverter.js out of util, because it depends on model code
 brian  |          | 0    IED|     in model, get rid of ._Record() and ._ContentRecord()
-brian  |          | done    |     make some sort of assertType() method
+brian  |          | 0.75 IED|     make some sort of assertType() method
 brian  | 0.25 IED | 0    IED|     move scrap_yard contents to the tests_of_external_code directory and delete scrap_yard
 brian  | 0.25 IED | 0.25 IED|     refactor UUID constructor API, and other UUID improvements
        |          |         |  2. create a FakeStorage class, + rename FileSaver + HttpSaver
@@ -375,7 +375,7 @@ brian  | 0.25 IED | 0.25 IED|     refactor UUID constructor API, and other UUID 
        |          |         |  5. research standard text representations for DateValues
        |          |         |  6. make ordinal value strings not grow long so quickly
        |          |         |  7. Do lazy creation of layout data items
-brian  | 0.5  IED |         |     Make Item.js use namedParameter based API
+brian  | 0.5  IED | (0.5+)  |     Make Item.js use namedParameter based API
 brian  |          |         |     Decide whether or not to replace bi-directional connection entries with twin-entries
        |          |         |  8. Document the Data model public API
        |          |         |  9. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
@@ -446,6 +446,7 @@ chao   | 0.25 IED |         | 38. Resolve: How should table cells deal with <ent
        |          |         | 66. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
        |          |         | 67. Have different documents use different style-sheets
 -------+----------+---------+----------------------------------------------
+       |          |         |     replace /source/util/Cookie.js with dojo.io.cookies
                               
 
 

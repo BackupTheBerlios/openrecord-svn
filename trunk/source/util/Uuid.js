@@ -71,9 +71,10 @@ orp.util.Uuid = function(uuidString) {
         // Check for typos in parameter names
         orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, ["uuidString"]));
       } else {
-        orp.lang.assert(false);
+        orp.lang.assert(false, "The orp.util.Uuid() constructor must be initializated with a UUID string.");
       }
     }
+    orp.lang.assert(this.isValid());
   }
 };
 
@@ -117,10 +118,8 @@ orp.util.Uuid.newUuid = function(namedParameters) {
   if (dojo.lang.isString(namedParameters)) {
     uuidString = namedParameters;
   } else {
-    // orp.util.assert(dojo.lang.isObject(namedParameters));
     orp.lang.assertType(namedParameters, Object);
     uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
-    // orp.util.assert(dojo.lang.isString(uuidString));
     orp.lang.assertType(uuidString, String);
     
     // Check for typos in parameter names
@@ -159,6 +158,35 @@ orp.util.Uuid._ourVariantLookupTable = null;
  */
 orp.util.Uuid.prototype.toString = function() {
   return this._uuidString;
+};
+
+
+/**
+ * Returns true if the UUID was initialized with a valid value. 
+ *
+ * @scope    public instance method
+ * @return   True if the UUID is valid, or false if it is not.
+ */
+orp.util.Uuid.prototype.isValid = function() {
+  try {
+    orp.lang.assertType(this._uuidString, String);
+    orp.lang.assert(this._uuidString.length == 36);
+    var arrayOfParts = this._uuidString.split("-");
+    orp.lang.assert(arrayOfParts.length == 5);   
+    orp.lang.assert(arrayOfParts[0].length == 8);
+    orp.lang.assert(arrayOfParts[1].length == 4);
+    orp.lang.assert(arrayOfParts[2].length == 4);
+    orp.lang.assert(arrayOfParts[3].length == 4);
+    orp.lang.assert(arrayOfParts[4].length == 12);
+    for (var i in arrayOfParts) {
+      var part = arrayOfParts[i];
+      var integer = parseInt(part, orp.util.Uuid.HEX_RADIX);
+      orp.lang.assert(isFinite(integer));
+    }
+    return true;
+  } catch (e) {
+    return false;
+  }
 };
 
 

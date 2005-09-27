@@ -607,7 +607,7 @@ orp.model.StubVirtualServer.prototype.logout = function() {
  * @return   The item identified by the given UUID.
  */
 orp.model.StubVirtualServer.prototype.getItemFromUuid = function(uuid, observer) {
-  orp.lang.assert(orp.util.isUuidValue(uuid));
+  orp.lang.assert(dojo.lang.isString(uuid) || uuid instanceof orp.util.Uuid);
   
   var item = this._hashTableOfItemsKeyedByUuid[uuid];
   if (item && observer) {
@@ -1008,7 +1008,6 @@ orp.model.StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydra
         }
  
         var dataTypeUuid = dehydratedEntry[JSON_MEMBER.TYPE];
-        orp.lang.assert(orp.util.isUuidValue(dataTypeUuid));
         var dataType = this._getItemFromUuidOrBootstrapItem(dataTypeUuid);
         
         if (dataTypeUuid == orp.model.World.UUID.TYPE_CONNECTION) {

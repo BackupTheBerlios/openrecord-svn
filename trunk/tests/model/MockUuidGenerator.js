@@ -39,7 +39,8 @@ function mockUuidGenerator() {
     return "00000000-0000-0000-0000-000000000000";
   }
   var uuidString = mockUuidGenerator.queueOfUuids.shift();
-  var uuid = new orp.util.TimeBasedUuid(uuidString);
+  var uuid = new orp.util.TimeBasedUuid();
+  uuid._uuidString = uuidString;
   return uuid;
 }
 

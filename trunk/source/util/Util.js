@@ -331,6 +331,7 @@ orp.util.isDate = function(value) {
  * @return   A boolean value. True if value is a UUID object.
  */
 orp.util.isUuid = function(value) {
+  dj_deprecated("orp.util.isUuid() is deprecated. Use orp.util.Uuid.prototype.isValid().");
   // return (value instanceof orp.util.Uuid);
   return true; // PENDING: FIXME.
 };
@@ -346,6 +347,7 @@ orp.util.isUuid = function(value) {
  * @return   A boolean value. True if value is a UUID.
  */
 orp.util.isUuidValue = function(value) {
+  dj_deprecated("orp.util.isUuidValue() is deprecated. Use orp.util.Uuid.prototype.isValid().");
   if (orp.util.isUuid(value)) {
     return true;
   }

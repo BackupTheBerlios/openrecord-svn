@@ -136,8 +136,12 @@ window.onload = function() {
   if (firefox) {
     errorMessage = "Loading...";
     // display errorMessage
-    var world = new orp.model.World();
-    new orp.view.RootView(world);
+    try {
+      var world = new orp.model.World();
+      new orp.view.RootView(world);
+    } catch (e) {
+      alert(e);
+    }
   }
 };    
 

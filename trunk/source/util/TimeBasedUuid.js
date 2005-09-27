@@ -86,7 +86,7 @@ orp.util.TimeBasedUuid = function(namedParameters) {
   if (namedParameters) {
     if (dojo.lang.isString(namedParameters)) {
       uuidString = namedParameters;
-      orp.lang.assert(uuidString.length == 36);
+      // orp.lang.assert(uuidString.length == 36);
       this._uuidString = uuidString;
     } else {
       if (dojo.lang.isObject(namedParameters)) {
@@ -99,7 +99,7 @@ orp.util.TimeBasedUuid = function(namedParameters) {
         orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, ["uuidString", "node", "pseudoNode", "hardwareNode"]));
         if (uuidString) {
           orp.lang.assert(!node && !pseudoNode && !hardwareNode);
-          orp.lang.assert(uuidString.length == 36);
+          // orp.lang.assert(uuidString.length == 36);
           this._uuidString = uuidString;
         }
         if (node || pseudoNode || hardwareNode) {
@@ -118,6 +118,7 @@ orp.util.TimeBasedUuid = function(namedParameters) {
         orp.lang.assert(false);
       }
     }
+    orp.lang.assert(this.isValid());
   } else {
     this._uuidString = this._generateUuidString();
   }
@@ -152,6 +153,24 @@ orp.util.TimeBasedUuid._ourCachedHundredNanosecondIntervalsPerMillisecond = null
 // -------------------------------------------------------------------
 // Public instance methods
 // -------------------------------------------------------------------
+
+/**
+ * Returns true if the UUID was initialized with a valid value. 
+ *
+ * @scope    public instance method
+ * @return   True if the UUID is valid, or false if it is not.
+ */
+orp.util.TimeBasedUuid.prototype.isValid = function() {
+  try {
+    orp.lang.assert(orp.util.Uuid.prototype.isValid.call(this));
+    orp.lang.assert(this.getVersion() == orp.util.Uuid.Version.TIME_BASED);
+    orp.lang.assert(this.getVariant() == orp.util.Uuid.Variant.DCE);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 
 /**
  * Returns a 12-character string with the "node" or "pseudonode" portion of 
