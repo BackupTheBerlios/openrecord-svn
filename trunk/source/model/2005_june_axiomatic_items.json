@@ -63,6 +63,10 @@
              "uuid": "0000100e-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Item": {                                               // Attribute: Class Name
+             "uuid": "0000100f-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
     { "Item": {                                               // Type: Text
              "uuid": "00001020-ce7f-11d9-8cd5-0011113ae5d6" }
     },
@@ -501,6 +505,31 @@
              "item": "0000100e-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Tagged Items
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001030-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // "Class Name"
+             "uuid": "000100fa-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "0000100f-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Class Name
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Class Name" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Class Name) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Class Name)
+             "uuid": "000100fb-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0000100f-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },  
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // "Class Name"
+             "uuid": "000100fc-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "0000100f-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Class Name
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
+            "value": "00001020-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // "Text"

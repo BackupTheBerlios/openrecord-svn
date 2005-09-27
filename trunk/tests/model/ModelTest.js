@@ -193,11 +193,13 @@ function testAccessorsForAxiomaticItems() {
   var listOfAssignedNames;
   var nameEntry;
   
+  var categoryCalledAttribute = world.getCategoryCalledAttribute();
   var listOfAttributes = [];
   listOfAttributes.push(world.getAttributeCalledName());
   listOfAttributes.push(world.getAttributeCalledShortName());
   listOfAttributes.push(world.getAttributeCalledSummary());
   listOfAttributes.push(world.getAttributeCalledCategory());
+  listOfAttributes.push(world.getAttributeCalledClassName());
   for (key in listOfAttributes) {
     item = listOfAttributes[key];
     listOfAssignedNames = item.getNameEntries();
@@ -206,6 +208,7 @@ function testAccessorsForAxiomaticItems() {
     nameEntry = listOfAssignedNames[0];
     assertTrue('Every axiomatic attribute has a name which is an entry', (nameEntry instanceof orp.model.Entry));
     assertTrue('Every entry can be displayed as a string', orp.util.isString(nameEntry.getDisplayString()));
+    assertTrue('Every axiomatic attribute is in the category "Attribute"', item.isInCategory(categoryCalledAttribute));
   }
   
   var listOfCategories = [];

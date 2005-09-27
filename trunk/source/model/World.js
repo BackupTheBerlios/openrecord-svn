@@ -118,6 +118,7 @@ orp.model.World.UUID = {
   ATTRIBUTE_ITEMS_IN_CATEGORY:        "0000100c-ce7f-11d9-8cd5-0011113ae5d6",
   ATTRIBUTE_TAG:                      "0000100d-ce7f-11d9-8cd5-0011113ae5d6",
   ATTRIBUTE_TAGGED_ITEMS:             "0000100e-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_CLASS_NAME:               "0000100f-ce7f-11d9-8cd5-0011113ae5d6",
 
   TYPE_TEXT:               "00001020-ce7f-11d9-8cd5-0011113ae5d6",
   TYPE_NUMBER:             "00001021-ce7f-11d9-8cd5-0011113ae5d6",
@@ -167,6 +168,7 @@ orp.model.World.prototype._loadAxiomaticItems = function() {
   this._attributeCalledItemsInCategory        = server.getItemFromUuid(UUID.ATTRIBUTE_ITEMS_IN_CATEGORY);
   this._attributeCalledTag                    = server.getItemFromUuid(UUID.ATTRIBUTE_TAG);
   this._attributeCalledTaggedItems            = server.getItemFromUuid(UUID.ATTRIBUTE_TAGGED_ITEMS);
+  this._attributeCalledClassName              = server.getItemFromUuid(UUID.ATTRIBUTE_CLASS_NAME);
 
   // load the axiomatic types
   this._typeCalledText       = server.getItemFromUuid(UUID.TYPE_TEXT);
@@ -495,6 +497,11 @@ orp.model.World.prototype.getAttributeCalledTag = function() {
 orp.model.World.prototype.getAttributeCalledTaggedItems = function() {
   return this._attributeCalledTaggedItems;
 };
+
+orp.model.World.prototype.getAttributeCalledClassName = function() {
+  return this._attributeCalledClassName;
+};
+
 
 
 // -------------------------------------------------------------------
