@@ -42,6 +42,7 @@ dojo.require("orp.view.NavbarView");
 dojo.require("orp.view.ItemView");
 dojo.require("orp.model.World");
 dojo.require("orp.lang.Lang");
+dojo.require("dojo.event.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -91,7 +92,8 @@ orp.view.RootView = function(world) {
   
   this._currentlyInDisplayMethod = false;
   
-  document.addEventListener("keypress", this._onKeyPress.orpBindAsEventListener(this),false);
+  // document.addEventListener("keypress", this._onKeyPress.orpBindAsEventListener(this),false);
+  dojo.event.connect(document, "onkeypress", this, "_onKeyPress");
   
   // window.document.body.innerHTML = "";
   // var rootDiv = orp.view.View.appendNewElement(window.document.body, "div");
@@ -591,6 +593,7 @@ orp.view.RootView.prototype.setSelection = function(aView) {
   else {this._selections = [];}
 };
 
+
 /**
  * Adds the selection with the given selectable object (current View) 
  * @scope    public instance method
@@ -598,8 +601,9 @@ orp.view.RootView.prototype.setSelection = function(aView) {
  */
 orp.view.RootView.prototype.addToSelection = function(aView) {
   orp.lang.assert(aView instanceof orp.view.View);
-  orp.util.addObjectToSet(aView,this._selections);
+  orp.util.addObjectToSet(aView, this._selections);
 };
+
 
 /**
  * Removes the given selectable object (current View) from selection
@@ -608,9 +612,10 @@ orp.view.RootView.prototype.addToSelection = function(aView) {
  */
 orp.view.RootView.prototype.removeFromSelection = function(aView) {
   orp.lang.assert(aView instanceof orp.view.View);
-  orp.lang.assert(orp.util.removeObjectFromSet(aView,this._selections));
+  orp.lang.assert(orp.util.removeObjectFromSet(aView, this._selections));
 };
   
+
 // -------------------------------------------------------------------
 // Event handler methods
 // -------------------------------------------------------------------

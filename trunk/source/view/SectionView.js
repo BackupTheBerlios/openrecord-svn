@@ -41,6 +41,7 @@ dojo.require("orp.view.View");
 dojo.require("orp.view.RootView");
 dojo.require("orp.model.Item");
 dojo.require("orp.lang.Lang");
+dojo.require("dojo.event.*");
 
 // FIXME: We shouldn't need to include these three lines:
 dojo.require("orp.DetailPlugin");
@@ -362,7 +363,8 @@ orp.view.SectionView.prototype._refreshQueryEditSpan = function() {
     var optionElement = orp.view.View.appendNewElement(selectElement, "option");
     optionElement.selected = (matchingAttribute.getDisplayString() == anAttribute.getDisplayString());
     optionElement.value = anAttribute.getUuidString();
-    optionElement.onclick = this.clickOnAttributeMenu.orpBindAsEventListener(this);
+    // optionElement.onclick = this.clickOnAttributeMenu.orpBindAsEventListener(this);
+    dojo.event.connect(optionElement, "onclick", this, "clickOnAttributeMenu");
     optionElement.text = anAttribute.getDisplayString();
   }
   

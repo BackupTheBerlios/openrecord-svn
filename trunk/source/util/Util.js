@@ -683,11 +683,16 @@ Function.prototype.orpBindAsEventListener = function(object) {
  * @return   A string containing the contents of the file.
  */
 orp.util.getStringContentsOfFileAtURL = function(url) {
+  dj_deprecated("orp.util.getStringContentsOfFileAtURL() is deprecated. Use dojo.hostenv.getText().");
+  return dojo.hostenv.getText(url);
+
+  /* 
   var anXMLHttpRequestObject = new window.XMLHttpRequest();
   anXMLHttpRequestObject.open("GET", url, false);
   anXMLHttpRequestObject.send(null);
   var fileContents = anXMLHttpRequestObject.responseText;
   return fileContents;
+  */
 };
 
 

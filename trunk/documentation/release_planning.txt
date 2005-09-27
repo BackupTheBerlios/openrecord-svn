@@ -357,8 +357,8 @@ brian  |          | done (0.5+)   convert code to use Dojo Package System
        |          |         |     try removing all the lines: dojo.hostenv.setModulePrefix("dojo", ... 
        |          |         |     try to get djConfig.debugAtAllCosts to work (see sandbox.html)
        |          |         |     try to replace /source/util/Cookie.js with dojo.io.cookies
-       |          |         |     try to replace orpBindAsEventListener() with dojo.event.connect()
-       |          |         |     try to replace orp.util.getStringContentsOfFileAtURL() with a Dojo method
+brian  |          |part done|     try to replace orpBindAsEventListener() with dojo.event.connect()
+brian  |          | 0    IED|     try to replace orp.util.getStringContentsOfFileAtURL() with a Dojo method
        |          |         |     try to replace View.appendNewElement() with Dojo methods
        |          |         |     move isUuid out of Util.js
        |          |         |     try to replace remaining Util.js functions with dojo.lang functions

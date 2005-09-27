@@ -100,7 +100,8 @@ orp.model.DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(
     repositoryUrl = this._completePathToTrunkDirectory + '/';
   }
   repositoryUrl += orp.model.DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY + "/" + repositoryFileName;
-  var repositoryContentString = orp.util.getStringContentsOfFileAtURL(repositoryUrl);
+  // var repositoryContentString = orp.util.getStringContentsOfFileAtURL(repositoryUrl);
+  var repositoryContentString = dojo.hostenv.getText(repositoryUrl);
   repositoryContentString += " ] }";
 
   this._loadWorldFromJsonString(repositoryContentString);

@@ -188,7 +188,8 @@ orp.model.Item.prototype.addEntry = function(namedParameters) {
  *    var entry = item.addEntry({value: "green"});
  *    entry = item.replaceEntry({previousEntry: entry, value: "green"});
  *    entry = item.replaceEntry({previousEntry: entry, attribute: color, value: "green"});
- *    entry = item.replaceEntry({previousEntry: entry, attribute: color, value: "green", type: string});
+ *    var textType = world.getTypeCalledText();
+ *    entry = item.replaceEntry({previousEntry: entry, attribute: color, value: "green", type: textType});
  * </pre>
  * 
  * @scope    public instance method

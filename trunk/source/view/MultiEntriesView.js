@@ -39,6 +39,7 @@ dojo.require("orp.view.View");
 dojo.require("orp.view.EntryView");
 dojo.require("orp.model.Item");
 dojo.require("orp.lang.Lang");
+dojo.require("dojo.event.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -361,7 +362,8 @@ orp.view.MultiEntriesView.prototype._buildView = function() {
   }
   
   if (this.isInEditMode()) {
-    htmlElement.onclick = this._handleOwnClick.orpBindAsEventListener(this);
+    // htmlElement.onclick = this._handleOwnClick.orpBindAsEventListener(this);
+    dojo.event.connect(htmlElement, "onclick", this, "_handleOwnClick");
     var listener = this;
     Droppables.add(htmlElement, {accept: [orp.view.EntryView.cssClass.CONNECTION_VALUE, orp.view.EntryView.CSS_ITEM_VALUE, orp.view.EntryView.cssClass.SELECTED],
       hoverclass: "test",

@@ -864,7 +864,8 @@ orp.model.StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function
  * @scope    private instance method
  */
 orp.model.StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = function(url) {
-  var fileContentString = orp.util.getStringContentsOfFileAtURL(url);
+  // var fileContentString = orp.util.getStringContentsOfFileAtURL(url);
+  var fileContentString = dojo.hostenv.getText(url);
   // orp.util.assert(orp.util.isString(fileContentString));
   orp.lang.assertType(fileContentString, String);
   fileContentString += " ] }";

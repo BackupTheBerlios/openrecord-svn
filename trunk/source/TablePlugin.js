@@ -42,6 +42,7 @@ dojo.require("orp.view.MultiEntriesView");
 dojo.require("orp.model.Item");
 dojo.require("orp.util.CsvParser");
 dojo.require("orp.lang.Lang");
+dojo.require("dojo.event.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -225,7 +226,8 @@ orp.TablePlugin.prototype._buildAttributeEditor = function() {
     }
     optionElt.text += attribute.getDisplayString();
     optionElt.value = attribute.getUuidString();
-    optionElt.onclick = this._attributeEditorChanged.orpBindAsEventListener(this);
+    // optionElt.onclick = this._attributeEditorChanged.orpBindAsEventListener(this);
+    dojo.event.connect(optionElt, "onclick", this, "_attributeEditorChanged");
   }
   this._selectElement = selectElt;
   
@@ -241,9 +243,11 @@ orp.TablePlugin.prototype._buildFileImportTool = function() {
   if (window.location.protocol == "file:") {
     var importDiv = orp.view.View.appendNewElement(htmlElement, "div", orp.view.RootView.cssClass.EDIT_TOOL);
     orp.view.View.appendNewTextNode(importDiv, " Import Data:");
-    var importButton = orp.view.View.appendNewElement(importDiv, "input");
-    importButton.type = "file";
-    importButton.onchange = this._importData.orpBindAsEventListener(this, importButton);
+    this._fileImportButton = orp.view.View.appendNewElement(importDiv, "input");
+    this._fileImportButton.type = "file";
+    
+    // this._fileImportButton.onchange = this._importData.orpBindAsEventListener(this);
+    dojo.event.connect(this._fileImportButton, "onchange", this, "_importData");
   }
 };
 
@@ -436,7 +440,11 @@ orp.TablePlugin.prototype._buildHeader = function() {
     if (this._sortAttribute == attribute) {
       headerCellContentSpan.appendChild(this.getSortIcon());
     }
+    
+    // FIXME: need to figure out how to pass "attribute" via dojo.event.connect()
     Event.observe(headerCell, "click", this.clickOnHeader.orpBindAsEventListener(this, attribute));
+    // dojo.event.connect(headerCell, "onclick", this, "clickOnHeader");
+    
     if (this.isInEditMode()) {
       var listener = this;
       var draggable = new Draggable(headerCellContentSpan, {revert:true});
@@ -595,11 +603,12 @@ orp.TablePlugin.prototype.selectRow = function(rowElement) {
  * 
  * @scope    private instance method
  */
-orp.TablePlugin.prototype._importData = function(eventObject, fileButton) {
+orp.TablePlugin.prototype._importData = function(eventObject) {
   var listOfAttributes = this._displayAttributes;
   var startTime = new Date();
   
-  var fileContents = orp.util.getStringContentsOfFileAtURL('file://' + fileButton.value);
+  // var fileContents = orp.util.getStringContentsOfFileAtURL('file://' + this._fileImportButton.value);
+  var fileContents = dojo.hostenv.getText('file://' + this._fileImportButton.value);
   var csvParser = new orp.util.CsvParser();
   var listOfRecords = csvParser.getStringValuesFromCsvData(fileContents);
   if (!listOfRecords) {

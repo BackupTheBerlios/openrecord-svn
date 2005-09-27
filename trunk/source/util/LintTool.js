@@ -142,7 +142,8 @@ orp.util.LintTool.checkForString = function(codeString, memberString, errorMessa
  * @return   Returns an error message string, or returns an empty string if there are no errors (according to jslint).
  */
 orp.util.LintTool.getErrorReportForCodeAtUrl = function(url) {
-  var fileContents = orp.util.getStringContentsOfFileAtURL(url);
+  // var fileContents = orp.util.getStringContentsOfFileAtURL(url);
+  var fileContents = dojo.hostenv.getText(url);
   return orp.util.LintTool.getErrorReportForCodeInString(fileContents);
 };
 

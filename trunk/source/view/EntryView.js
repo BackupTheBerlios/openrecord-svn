@@ -40,6 +40,7 @@ dojo.require("orp.view.SuggestionBox");
 dojo.require("orp.model.World");
 dojo.require("orp.model.Item");
 dojo.require("orp.lang.Lang");
+dojo.require("dojo.event.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -260,7 +261,8 @@ orp.view.EntryView.prototype._buildView = function() {
     this._setClassName();
   }
   
-  htmlElement.onclick = this.onClick.orpBindAsEventListener(this);
+  // htmlElement.onclick = this.onClick.orpBindAsEventListener(this);
+  dojo.event.connect(htmlElement, "onclick", this, "onClick");
   if (this._alwaysUseEditField) {
     this.startEditing(true);
   }
@@ -280,7 +282,9 @@ orp.view.EntryView.prototype._setClassName = function() {
     var connectionType  = this.getWorld().getItemFromUuid(orp.model.World.UUID.TYPE_CONNECTION);
     if (dataType == itemType || dataType == connectionType) {
       if (this._isLozenge()) {
-        this.getHtmlElement().ondblclick = this.onDoubleClick.orpBindAsEventListener(this);
+        // this.getHtmlElement().ondblclick = this.onDoubleClick.orpBindAsEventListener(this);
+        var htmlElement = this.getHtmlElement();
+        dojo.event.connect(htmlElement, "ondblclick", this, "onDoubleClick");
         if (this.isInEditMode() && !this._draggable) {
           if (orp.view.EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
             // if (this.getRootView().isInShowToolsMode()) {
@@ -361,10 +365,16 @@ orp.view.EntryView.prototype.startEditing = function(dontSelect,initialStr) {
         editField.type = 'text';
       }
       var listener = this; 
-      editField.onblur = this.onBlur.orpBindAsEventListener(this);
-      editField.onkeypress = this.onKeyPress.orpBindAsEventListener(this);
-      editField.onkeyup = this.onKeyUp.orpBindAsEventListener(this);
-      editField.onfocus = this.onFocus.orpBindAsEventListener(this);
+      // editField.onblur = this.onBlur.orpBindAsEventListener(this);
+      // editField.onkeypress = this.onKeyPress.orpBindAsEventListener(this);
+      // editField.onkeyup = this.onKeyUp.orpBindAsEventListener(this);
+      // editField.onfocus = this.onFocus.orpBindAsEventListener(this);
+      dojo.event.connect(editField, "onblur", this, "onBlur");
+      dojo.event.connect(editField, "onkeypress", this, "onKeyPress");
+      dojo.event.connect(editField, "onkeyup", this, "onKeyUp");
+      dojo.event.connect(editField, "onfocus", this, "onFocus");
+      
+      
       editField.value = this._isProvisional ? '' : (initialStr) ? initialStr : this._textNode.data;
       //alert(editField.value)
       if (this.getSuperview().getEntryWidth) {

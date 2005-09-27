@@ -38,6 +38,7 @@ dojo.provide("orp.view.NavbarView");
 dojo.require("orp.view.View");
 dojo.require("orp.view.RootView");
 dojo.require("orp.lang.Lang");
+dojo.require("dojo.event.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -121,10 +122,12 @@ orp.view.NavbarView.prototype.refresh = function() {
  *
  * @scope    public instance method
  * @param    event    The mousedown event object. 
- * @param    liElement    The HTMLElement for this menu item. 
  */
-orp.view.NavbarView.prototype._mouseDownOnMenuItem = function(event, liElement) {
-  this._liElementBeingTouched = liElement;
+orp.view.NavbarView.prototype._mouseDownOnMenuItem = function(event) {
+  // FIXME: 
+  // Should we be using "event.target" instead of "event.currentTarget"?
+  // Or should we be using orp.util.getTargetFromEvent(event)?
+  this._liElementBeingTouched = event.currentTarget;
 };
 
 
@@ -218,8 +221,9 @@ orp.view.NavbarView.prototype._rebuildView = function() {
     var liElement = orp.view.View.appendNewElement(ulElement, "li", orp.view.NavbarView.cssClass.MENU_ITEM, {id: menuItemId});
     if (page == this.getRootView().getCurrentPage()) {orp.util.css_addClass(liElement, orp.view.NavbarView.cssClass.SELECTED);}
     var anchorElement = orp.view.View.appendNewElement(liElement, "a", null, {href: menuUrl}, menuText);
-    Event.observe(anchorElement, "click", orp.view.RootView.clickOnLocalLink.orpBindAsEventListener());
-    Event.observe(liElement, "mousedown", this._mouseDownOnMenuItem.orpBindAsEventListener(this, liElement));
+    
+    dojo.event.connect(anchorElement, "onclick", orp.view.RootView.clickOnLocalLink);
+    dojo.event.connect(liElement, "onmousedown", this, "_mouseDownOnMenuItem");
   }
   var listener = this;
   this._builtForEditMode = this.isInEditMode();
@@ -232,7 +236,8 @@ orp.view.NavbarView.prototype._rebuildView = function() {
   var newPageButton = orp.view.View.appendNewElement(divElement, "input", orp.view.RootView.cssClass.EDIT_TOOL);
   newPageButton.type = "button";
   newPageButton.value = "New Page";
-  newPageButton.onclick = this._clickOnNewPageButton.orpBindAsEventListener(this);
+  // newPageButton.onclick = this._clickOnNewPageButton.orpBindAsEventListener(this);
+  dojo.event.connect(newPageButton, "onclick", this, "_clickOnNewPageButton");
 };
 
 
