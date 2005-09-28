@@ -37,6 +37,7 @@
 dojo.provide("orp.view.LoginView");
 dojo.provide("orp.view.UserSuggestionBox");
 dojo.require("orp.view.View");
+dojo.require("orp.util.Cookie");
 dojo.require("dojo.event.*");
 
 // -------------------------------------------------------------------
@@ -73,7 +74,7 @@ orp.view.LoginView = function(superview, htmlElement) {
   // instance properties
   this._isCreatingNewAccount = false;
   var tenYearCookieExpiration = 10*365*24;   // PENDING: hardcode expiration to 10yrs
-  this._cookie = new Cookie(document, orp.view.LoginView.COOKIE_NAME, tenYearCookieExpiration);
+  this._cookie = new orp.util.Cookie(document, orp.view.LoginView.COOKIE_NAME, tenYearCookieExpiration);
   this._cookie.load();
 };
 

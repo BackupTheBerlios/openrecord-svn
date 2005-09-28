@@ -120,8 +120,24 @@ Cookie.prototype.remove = function(  ) {
 
 
 // -------------------------------------------------------------------
-// Code below this line was written by Chih-Chao Lam, not David Flanagan...
+// Code below this line was not written by David Flanagan.
 // -------------------------------------------------------------------
+/*****************************************************************************
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
+    Chih-Chao Lam <chao@cs.stanford.edu>
+
+ Copyright rights relinquished under the Creative Commons  
+ Public Domain Dedication:
+    http://creativecommons.org/licenses/publicdomain/
+*****************************************************************************/
+
+// -------------------------------------------------------------------
+// Provides and Requires
+// -------------------------------------------------------------------
+dojo.provide("orp.util.Cookie");
+
+orp.util.Cookie = Cookie;
 
 // -------------------------------------------------------------------
 // Dependencies:
@@ -143,3 +159,7 @@ else {
   orp.lang.assert(userCookie.editMode == "true");
 }
 */
+
+// -------------------------------------------------------------------
+// End of file
+// -------------------------------------------------------------------

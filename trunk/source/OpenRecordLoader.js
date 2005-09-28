@@ -96,9 +96,7 @@ OpenRecordLoader.loadEverything = function(path) {
     /* "third_party/dojo/dojo-0.1.0/dojo.js", */
     "third_party/scriptaculous/prototype.js",
     "third_party/scriptaculous/effects.js",
-    "third_party/scriptaculous/dragdrop.js",
-    // util
-    "source/util/Cookie.js"];
+    "third_party/scriptaculous/dragdrop.js"];
   for (var i in listOfSourceCodeFiles) {
     var fileName = listOfSourceCodeFiles[i];
     var url = path + fileName;
