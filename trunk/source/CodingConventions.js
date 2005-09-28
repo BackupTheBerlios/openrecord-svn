@@ -9,20 +9,54 @@ Dojo Conventions
 
 Differences
 
-  Here's a list of the OpenRecord conventions that differ from the Dojo conventions:
+  Here's a list of the six OpenRecord conventions that differ from the Dojo conventions:
   
   + constants
      + Dojo uses either UpperLower or UPPER_UPPER capitalization
      + OpenRecord always uses UPPER_UPPER capitalization
-     + for an example, in DateValue.js see orp.util.DateValue.Month
+     + for an example, see orp.util.DateValue.Month in DateValue.js 
   
   + private class variables (instance variables)
      + Dojo says private class variables (instance variables) MAY have a leading underscore
-     + OpenRecord 
+     + OpenRecord always uses a leading underscore.  For example: this._foo = 3;
+  
+  + class-per-file
+     + Dojo says "Class or object-per-file guidelines are not yet determined"
+     + OpenRecord strives to have a one-to-one mapping between classes and files
+     
+  + tabs and spaces
+     + Dojo uses tab characters for indentation, with tabs set to four spaces
+     + OpenRecord uses spaces for indentation, with two spaces per indentation level.
+     + In OpenRecord, tabs are forbidden, and files with tabs will not pass the unit tests.
+     
+  + incomplete lines
+     + Dojo offers these examples:
+       var someExpression = Expression1
+           + Expression2
+           + Expression3 ;
+       var o = someObject.get(
+               Expression1,
+               Expression2,
+               Expression3
+           );
+     + OpenRecord does it slightly differently, so as to pass the JSLint tests:
+       var someExpression = Expression1 + 
+           Expression2 + 
+           Expression3 ;
+       var o = someObject.get(
+               Expression1,
+               Expression2,
+               Expression3 );
+     
+  + for loops
+     + Dojo tends to use this style:  for (var i=0; i < bar.length; i++)
+     + OpenRecord tends to do this:   for (var i in bar)
+     
+Additions
 
+  OpenRecord has a number of additional conventions.  See below...
+   
 
-   
-   
 
 -----------------------------------------------------------------------------
 OpenRecord Conventions
@@ -51,14 +85,9 @@ OpenRecord Conventions
       + example: Book.js has unit test files BookTest.html and BookTest.js
    + variable scoping prefixes
       + class variables are prefixed with "our"
-      + [DEPRECATED: instance variables are prefixed with "my"]
       + global variables are prefixed with "window.global"
       + locally scoped variables are not prefixed
       + non-public variables and methods are prefixed with "_" (use "_" for private, protected, or package)
-      + [DEPRECATED: function input parameters are prefixed with "in"]
-      + [DEPRECATED: private variables and methods are prefixed with "__"]
-      + [DEPRECATED: protected variables and methods are prefixed with "_"]
-   + class constants are prefixed with the type of the constant -- see LAYOUT_PORTRAIT
    + array variables are prefixed with "listOf" or "hashTableOf" or "arrayOf"
       + var listOfBooks = []; <-- a "List" has only values, no keys ["Apple", "Orange", "Banana"]
       + var hashTableOfBooksKeyedByTitle = {}; <-- a "HashTable" is an associative array with key-value pairs
@@ -70,7 +99,7 @@ OpenRecord Conventions
 
 + compatiblity with other browsers and other JavaScript libraries 
    + use "get" and "set" accessors -- do *not* assign Mozilla "getter" and "setter" methods
-   + [DEPRECATED: add methods in your own namespace -- do *not* extend built-in objects: String.prototype.toEsperanto = function ...]
+   + add methods in your own namespace -- do *not* extend built-in objects: String.prototype.toEsperanto = function ...
    + do *not* extend Object.prototype
      (see http://erik.eae.net/archives/2005/06/06/22.13.54/)
      (see http://sourceforge.net/forum/forum.php?thread_id=1315559&forum_id=379297)
