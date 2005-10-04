@@ -40,7 +40,7 @@ function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.require("orp.util.XmlConverter");
   dojo.require("orp.util.Util");
-  dojo.require("orp.model.StubVirtualServer");
+  dojo.require("orp.archive.StubArchive");
   dojo.require("orp.model.World");
 
   XmlTextNodeToAttributeSpecifier = orp.util.XmlTextNodeToAttributeSpecifier;
@@ -50,7 +50,7 @@ function setUp() {
   // var pathToTrunkDirectoryFromThisFile = "../../../";
   pathToTrunkDirectoryFromThisFile = "../..";
   
-  var virtualServer = new orp.model.StubVirtualServer(pathToTrunkDirectoryFromThisFile);  
+  var virtualServer = new orp.archive.StubArchive(pathToTrunkDirectoryFromThisFile);  
   world = new orp.model.World(virtualServer);
   var annsPassword = "Ann's password";
   var userAnn = world.newUser("Ann Doe", annsPassword);

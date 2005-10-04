@@ -35,7 +35,7 @@
 // 
 /*global Util */
 /*global World, Item, Entry */
-/*global StubVirtualServer */
+/*global StubArchive */
 /*global assertTrue, assertFalse, setUp, tearDown */
 // -------------------------------------------------------------------
 
@@ -54,23 +54,23 @@ var taffy;
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.model.StubVirtualServer");
+  dojo.require("orp.archive.StubArchive");
   dojo.require("orp.model.World");
   
   ContentRecord = orp.model.ContentRecord;
 
   var pathToTrunkDirectory = "../..";
-  var virtualServer = new orp.model.StubVirtualServer(pathToTrunkDirectory);
-  var realUuidGenerator = orp.model.StubVirtualServer.prototype._generateUuid;
-  orp.model.StubVirtualServer.prototype._generateUuid = mockUuidGenerator;
+  var archive = new orp.archive.StubArchive(pathToTrunkDirectory);
+  var realUuidGenerator = orp.archive.StubArchive.prototype._generateUuid;
+  orp.archive.StubArchive.prototype._generateUuid = mockUuidGenerator;
 /*
-You can use DeltaVirtualServer instead if you want to append all transactions to a file for debugging purposes.
+You can use DeltaArchive instead if you want to append all transactions to a file for debugging purposes.
 Note that the tests will run a lot slower if you do.
 
-  var virtualServer = new orp.model.DeltaVirtualServer("OrdinalsTest", pathToTrunkDirectory, {"_generateUuid":mockUuidGenerator});
+  var archive = new orp.archive.DeltaArchive("OrdinalsTest", pathToTrunkDirectory, {"_generateUuid":mockUuidGenerator});
 */
 
-  world = new orp.model.World(virtualServer);
+  world = new orp.model.World(archive);
 
   annUuid1 = "10000000-2222-1333-F444-555555555555";
   annUuid2 = "10000001-2222-1333-F444-555555555555";
@@ -130,7 +130,7 @@ Note that the tests will run a lot slower if you do.
   mockUuidGenerator.queueOfUuids.push(taffyLinkUuid);
   taffy.assignToCategory(categoryCalledFood);
 
-  orp.model.StubVirtualServer.prototype._generateUuid = realUuidGenerator;
+  orp.archive.StubArchive.prototype._generateUuid = realUuidGenerator;
 }
 
 function tearDown() {

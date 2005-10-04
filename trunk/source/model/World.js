@@ -33,7 +33,7 @@
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.model.World");
-dojo.require("orp.model.DeltaVirtualServer");
+dojo.require("orp.archive.DeltaArchive");
 dojo.require("orp.model.QueryRunner");
 dojo.require("orp.model.Vote");
 dojo.require("orp.model.Ordinal");
@@ -47,7 +47,7 @@ dojo.require("dojo.lang.*");
 /*global Util  */
 /*global Item, Entry, Ordinal, Vote, ContentRecord  */
 /*global QueryRunner  */ 
-/*global DeltaVirtualServer  */
+/*global DeltaArchive  */
 // -------------------------------------------------------------------
 
 
@@ -81,7 +81,7 @@ orp.model.World = function(virtualServer) {
     var arrayWithFilenameAndExtension = lastSegment.split('.');
     var filename = arrayWithFilenameAndExtension[0];
     var repositoryName = filename;
-    server = new orp.model.DeltaVirtualServer(repositoryName);
+    server = new orp.archive.DeltaArchive(repositoryName);
   }
   this._virtualServer = server;
   server.setWorldAndLoadAxiomaticItems(this);

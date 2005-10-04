@@ -1,5 +1,5 @@
 /*****************************************************************************
- StubVirtualServer.js
+ StubArchive.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -31,7 +31,7 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.model.StubVirtualServer");
+dojo.provide("orp.archive.StubArchive");
 dojo.require("orp.model.World");
 dojo.require("orp.model.Item");
 dojo.require("orp.model.Entry");
@@ -52,12 +52,12 @@ dojo.require("orp.lang.Lang");
 // Constructor
 // -------------------------------------------------------------------
 /**
- * The StubVirtualServer is a dummy place-holder datastore that does
+ * The StubArchive is a dummy place-holder datastore that does
  * a bare-minimum job of providing data to a World.
  *
  * @scope    public instance constructor
  */
-orp.model.StubVirtualServer = function(pathToTrunkDirectory) {
+orp.archive.StubArchive = function(pathToTrunkDirectory) {
   var fileName = "2005_june_axiomatic_items.json";
   var relUrlForAxiomaticFile = "source/model/" + fileName;
   if (pathToTrunkDirectory) {
@@ -84,10 +84,10 @@ orp.model.StubVirtualServer = function(pathToTrunkDirectory) {
 // -------------------------------------------------------------------
 // Public constants
 // -------------------------------------------------------------------
-orp.model.StubVirtualServer.JSON_FORMAT = {
+orp.archive.StubArchive.JSON_FORMAT = {
   FORMAT_2005_JUNE_CHRONOLOGICAL_LIST: "2005_JUNE_CHRONOLOGICAL_LIST" };
 
-orp.model.StubVirtualServer.JSON_MEMBER = {
+orp.archive.StubArchive.JSON_MEMBER = {
   FORMAT: "format",
   RECORDS: "records",
   TYPE: "type",
@@ -111,13 +111,13 @@ orp.model.StubVirtualServer.JSON_MEMBER = {
 
 /*
 OLD?
-StubVirtualServer.JSON_TYPE_TEXT_VALUE = "TextValue";
-StubVirtualServer.JSON_TYPE_RELATED_UUID = "RelatedUuid";
-StubVirtualServer.JSON_TYPE_NUMBER_VALUE = "NumberValue";
-StubVirtualServer.JSON_TYPE_DATE_VALUE = "DateValue";
-StubVirtualServer.JSON_TYPE_CHECKMARK_VALUE = "CheckMarkValue";
-StubVirtualServer.JSON_TYPE_URL_VALUE = "UrlValue";
-StubVirtualServer.JSON_TYPE_CONNECTION = "Connection";
+StubArchive.JSON_TYPE_TEXT_VALUE = "TextValue";
+StubArchive.JSON_TYPE_RELATED_UUID = "RelatedUuid";
+StubArchive.JSON_TYPE_NUMBER_VALUE = "NumberValue";
+StubArchive.JSON_TYPE_DATE_VALUE = "DateValue";
+StubArchive.JSON_TYPE_CHECKMARK_VALUE = "CheckMarkValue";
+StubArchive.JSON_TYPE_URL_VALUE = "UrlValue";
+StubArchive.JSON_TYPE_CONNECTION = "Connection";
 */
 
 
@@ -126,12 +126,12 @@ StubVirtualServer.JSON_TYPE_CONNECTION = "Connection";
 // -------------------------------------------------------------------
 
 /**
- * Initializes the instance variables for a newly created StubVirtualServer.
+ * Initializes the instance variables for a newly created StubArchive.
  *
  * @scope    private instance method
  * @param    world    The world that we provide data for. 
  */
-orp.model.StubVirtualServer.prototype._initialize = function(world) {
+orp.archive.StubArchive.prototype._initialize = function(world) {
   this._world = world;
   
   this._countOfNestedTransactions = 0;
@@ -152,13 +152,13 @@ orp.model.StubVirtualServer.prototype._initialize = function(world) {
 // -------------------------------------------------------------------
 
 /**
- * Initializes the instance variables for a newly created StubVirtualServer,
+ * Initializes the instance variables for a newly created StubArchive,
  * and does the initial loading of at least the axiomatic items.
  *
  * @scope    public instance method
  * @param    world    The world that we provide data for. 
  */
-orp.model.StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
+orp.archive.StubArchive.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   this._initialize(world);
   // this._buildTypeHashTable();
   this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
@@ -171,7 +171,7 @@ orp.model.StubVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(w
  * @scope    public instance method
  * @return   A World object. 
  */
-orp.model.StubVirtualServer.prototype.getWorld = function() {
+orp.archive.StubArchive.prototype.getWorld = function() {
   return this._world;
 };
 
@@ -193,7 +193,7 @@ orp.model.StubVirtualServer.prototype.getWorld = function() {
  * @param    rawText    A text string to encode. 
  * @return   A copy of the rawText string, with the special characters escaped. 
  */
-orp.model.StubVirtualServer.prototype.encodeText = function(rawText) {
+orp.archive.StubArchive.prototype.encodeText = function(rawText) {
   // orp.util.assert(orp.util.isString(rawText));
   orp.lang.assertType(rawText, String);
 
@@ -228,7 +228,7 @@ orp.model.StubVirtualServer.prototype.encodeText = function(rawText) {
  * @param    encodedText    A text string to decode. 
  * @return   A copy of the encodedText string, with the escaped characters replaced by the original special characters. 
  */
-orp.model.StubVirtualServer.prototype.decodeText = function(encodedText) {
+orp.archive.StubArchive.prototype.decodeText = function(encodedText) {
   // orp.util.assert(orp.util.isString(encodedText));
   orp.lang.assertType(encodedText, String);
   
@@ -260,7 +260,7 @@ orp.model.StubVirtualServer.prototype.decodeText = function(encodedText) {
  *
  * @scope    public instance method
  */
-orp.model.StubVirtualServer.prototype.beginTransaction = function() {
+orp.archive.StubArchive.prototype.beginTransaction = function() {
   if (this._countOfNestedTransactions === 0) {
     this._currentTransaction = new orp.model.Transaction();
   }
@@ -273,7 +273,7 @@ orp.model.StubVirtualServer.prototype.beginTransaction = function() {
  *
  * @scope    public instance method
  */
-orp.model.StubVirtualServer.prototype.endTransaction = function() {
+orp.archive.StubArchive.prototype.endTransaction = function() {
   this._countOfNestedTransactions -= 1;
   orp.lang.assert(this._countOfNestedTransactions >= 0);
 
@@ -295,7 +295,7 @@ orp.model.StubVirtualServer.prototype.endTransaction = function() {
  * @scope    public instance method
  * @return   A Transaction object, or null if there is no transaction in progress. 
  */
-orp.model.StubVirtualServer.prototype.getCurrentTransaction = function() {
+orp.archive.StubArchive.prototype.getCurrentTransaction = function() {
   return this._currentTransaction;
 };
 
@@ -313,7 +313,7 @@ orp.model.StubVirtualServer.prototype.getCurrentTransaction = function() {
  * @return   A newly created item.
  * @throws   Throws an Error if no user is logged in.
  */
-orp.model.StubVirtualServer.prototype.newItem = function(name, observer) {
+orp.archive.StubArchive.prototype.newItem = function(name, observer) {
   this._throwErrorIfNoUserIsLoggedIn();
   var item = this._createNewItem(observer, false);
   if (name) { 
@@ -337,7 +337,7 @@ orp.model.StubVirtualServer.prototype.newItem = function(name, observer) {
  * @return   A newly created provisional item.
  * @throws   Throws an Error if no user is logged in.
  */
-orp.model.StubVirtualServer.prototype.newProvisionalItem = function(observer) {
+orp.archive.StubArchive.prototype.newProvisionalItem = function(observer) {
   this._throwErrorIfNoUserIsLoggedIn();
   var item = this._createNewItem(observer, true);
   return item;
@@ -352,7 +352,7 @@ orp.model.StubVirtualServer.prototype.newProvisionalItem = function(observer) {
  * @param    provisionalFlag    True if the item is provisional; false if the item is normal. 
  * @return   A newly created item.
  */
-orp.model.StubVirtualServer.prototype._createNewItem = function(observer, provisionalFlag) {
+orp.archive.StubArchive.prototype._createNewItem = function(observer, provisionalFlag) {
   var uuid = this._getNewUuid();
   var item = new orp.model.Item(this._world, uuid);
   item._initialize(observer, provisionalFlag);
@@ -370,7 +370,7 @@ orp.model.StubVirtualServer.prototype._createNewItem = function(observer, provis
  * @scope    package instance method
  * @param    item    The item that was provisional and just became real. 
  */
-orp.model.StubVirtualServer.prototype._provisionalItemJustBecameReal = function(item) {
+orp.archive.StubArchive.prototype._provisionalItemJustBecameReal = function(item) {
   this._currentTransaction.addRecord(item);
 };
 
@@ -387,7 +387,7 @@ orp.model.StubVirtualServer.prototype._provisionalItemJustBecameReal = function(
  * @return   A newly created entry.
  * @throws   Throws an Error if no user is logged in.
  */
-orp.model.StubVirtualServer.prototype.newEntry = function(item, previousEntry, attribute, value, type) {
+orp.archive.StubArchive.prototype.newEntry = function(item, previousEntry, attribute, value, type) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
   var entry = new orp.model.Entry(this._world, uuid);
@@ -412,7 +412,7 @@ orp.model.StubVirtualServer.prototype.newEntry = function(item, previousEntry, a
  * @return   A newly created entry.
  * @throws   Throws an Error if no user is logged in.
  */
-orp.model.StubVirtualServer.prototype.newConnectionEntry = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
+orp.archive.StubArchive.prototype.newConnectionEntry = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
   var entry = new orp.model.Entry(this._world, uuid);
@@ -436,7 +436,7 @@ orp.model.StubVirtualServer.prototype.newConnectionEntry = function(previousEntr
  * @return   A newly created ordinal.
  * @throws   Throws an Error if no user is logged in.
  */
-orp.model.StubVirtualServer.prototype.newOrdinal = function(contentRecord, ordinalNumber) {
+orp.archive.StubArchive.prototype.newOrdinal = function(contentRecord, ordinalNumber) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
   var ordinal = new orp.model.Ordinal(this._world, uuid, contentRecord, ordinalNumber);
@@ -454,7 +454,7 @@ orp.model.StubVirtualServer.prototype.newOrdinal = function(contentRecord, ordin
  * @return   A newly created vote.
  * @throws   Throws an Error if no user is logged in.
  */
-orp.model.StubVirtualServer.prototype.newVote = function(contentRecord, retainFlag) {
+orp.archive.StubArchive.prototype.newVote = function(contentRecord, retainFlag) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
   var vote = new orp.model.Vote(this._world, uuid, contentRecord, retainFlag);
@@ -477,7 +477,7 @@ orp.model.StubVirtualServer.prototype.newVote = function(contentRecord, retainFl
  * @return   A newly created item representing a user.
  * @throws   Throws an Error if a user is logged in.
  */
-orp.model.StubVirtualServer.prototype.newUser = function(name, authentication, observer) {
+orp.archive.StubArchive.prototype.newUser = function(name, authentication, observer) {
   if (this._currentUser) {
     var error = new Error("A user is logged in.  You can't create a new user when somebody is already logged in.");
     throw error;
@@ -511,7 +511,7 @@ orp.model.StubVirtualServer.prototype.newUser = function(name, authentication, o
  * @scope    public instance method
  * @return   A list of items.
  */
-orp.model.StubVirtualServer.prototype.getUsers = function() {
+orp.archive.StubArchive.prototype.getUsers = function() {
   return this._listOfUsers;
 };
 
@@ -522,7 +522,7 @@ orp.model.StubVirtualServer.prototype.getUsers = function() {
  * @scope    public instance method
  * @return   An item representing the user who is currently logged in.
  */
-orp.model.StubVirtualServer.prototype.getCurrentUser = function() {
+orp.archive.StubArchive.prototype.getCurrentUser = function() {
   return this._currentUser;
 };
 
@@ -539,7 +539,7 @@ orp.model.StubVirtualServer.prototype.getCurrentUser = function() {
  * @param    inPassword    Password supplied at login. 
  * @return   True if we were able to log in the user. False if the login failed.
  */
-orp.model.StubVirtualServer.prototype.login = function(user, password) {
+orp.archive.StubArchive.prototype.login = function(user, password) {
   
   // Only one user can be logged in at once.  We consider it an error
   // if you try to log in a new user before logging out the old one.
@@ -584,7 +584,7 @@ orp.model.StubVirtualServer.prototype.login = function(user, password) {
  * @scope    public instance method
  * @return   True if the current user was logged out. False if there was no current user logged in.
  */
-orp.model.StubVirtualServer.prototype.logout = function() {
+orp.archive.StubArchive.prototype.logout = function() {
   if (this._currentUser) {
     this._currentUser = null;
     return true;
@@ -606,7 +606,7 @@ orp.model.StubVirtualServer.prototype.logout = function() {
  * @param    observer    Optional. An object to be registered as an observer of the returned item. 
  * @return   The item identified by the given UUID.
  */
-orp.model.StubVirtualServer.prototype.getItemFromUuid = function(uuid, observer) {
+orp.archive.StubArchive.prototype.getItemFromUuid = function(uuid, observer) {
   orp.lang.assert(dojo.lang.isString(uuid) || uuid instanceof orp.util.Uuid);
   
   var item = this._hashTableOfItemsKeyedByUuid[uuid];
@@ -623,8 +623,8 @@ orp.model.StubVirtualServer.prototype.getItemFromUuid = function(uuid, observer)
  *
  * @scope    private instance method
  */
-orp.model.StubVirtualServer.prototype._saveChangesToServer = function () {
-  // The StubVirtualServer doesn't ever actually talk to a server.
+orp.archive.StubArchive.prototype._saveChangesToServer = function () {
+  // The StubArchive doesn't ever actually talk to a server.
   // Other VirtualServer implementations would be expected to actually
   // implement this method such that it saves changes to the server
   var listOfChangesMade = this._currentTransaction.getRecords();
@@ -645,7 +645,7 @@ orp.model.StubVirtualServer.prototype._saveChangesToServer = function () {
  * @param    queryRunner    A QueryRunner object. 
  * @return   A list of items.
  */
-orp.model.StubVirtualServer.prototype.getResultItemsForQueryRunner = function(queryRunner) {
+orp.archive.StubArchive.prototype.getResultItemsForQueryRunner = function(queryRunner) {
   var matchingAttribute = queryRunner.getMatchingAttribute();
   var listOfMatchingValues = queryRunner.getMatchingValues();
   var listOfQueryResultItems = [];
@@ -694,7 +694,7 @@ orp.model.StubVirtualServer.prototype.getResultItemsForQueryRunner = function(qu
  * @param    item    An item, which will be modified so that it matches the query. 
  * @param    query    A query item. 
  */
-orp.model.StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = function(item, query) {
+orp.archive.StubArchive.prototype.setItemToBeIncludedInQueryResultList = function(item, query) {
   orp.lang.assert(item instanceof orp.model.Item);
   orp.lang.assert(query instanceof orp.model.Item);
   
@@ -739,7 +739,7 @@ orp.model.StubVirtualServer.prototype.setItemToBeIncludedInQueryResultList = fun
  * @param    inCategory    A category item. 
  * @return   A list of items.
  */
-orp.model.StubVirtualServer.prototype.getItemsInCategory = function(category) {
+orp.archive.StubArchive.prototype.getItemsInCategory = function(category) {
   orp.lang.assert(category instanceof orp.model.Item);
 
   var attributeCalledItemsInCategory = this.getWorld().getAttributeCalledItemsInCategory();
@@ -765,7 +765,7 @@ orp.model.StubVirtualServer.prototype.getItemsInCategory = function(category) {
  * @scope    private instance method
  * @throws   Throws an Error if no user is logged in.
  */
-orp.model.StubVirtualServer.prototype._throwErrorIfNoUserIsLoggedIn = function() {
+orp.archive.StubArchive.prototype._throwErrorIfNoUserIsLoggedIn = function() {
   if (!this._currentUser) {
     var error = new Error("No user is logged in.  You can't write to the repository when nobody is logged in.");
     throw error;
@@ -780,7 +780,7 @@ orp.model.StubVirtualServer.prototype._throwErrorIfNoUserIsLoggedIn = function()
  * @param    uuid    The UUID of the item or entry to be returned. 
  * @return   The item or entry identified by the given UUID.
  */
-orp.model.StubVirtualServer.prototype._getContentRecordFromUuid = function(uuid) {
+orp.archive.StubArchive.prototype._getContentRecordFromUuid = function(uuid) {
   var item = this.getItemFromUuid(uuid);
   if (item) {
     return item;
@@ -796,7 +796,7 @@ orp.model.StubVirtualServer.prototype._getContentRecordFromUuid = function(uuid)
  * @scope    private instance method
  * @param    node    The node value that the new UUID should have. 
  */
-orp.model.StubVirtualServer.prototype._generateUuid = function(node) {
+orp.archive.StubArchive.prototype._generateUuid = function(node) {
   if (node) {
     return new orp.util.TimeBasedUuid({'node': node});
   } else {
@@ -811,7 +811,7 @@ orp.model.StubVirtualServer.prototype._generateUuid = function(node) {
  * @scope    private instance method
  * @return   A newly created UUID.
  */
-orp.model.StubVirtualServer.prototype._getNewUuid = function() {
+orp.archive.StubArchive.prototype._getNewUuid = function() {
   var newUuid;
   if (this._currentUser) {
     var uuidOfCurrentUser = this._currentUser.getUuid();
@@ -832,7 +832,7 @@ orp.model.StubVirtualServer.prototype._getNewUuid = function() {
  * @param    user    An item representing a user. 
  * @return   The authentication info for the user.
  */
-orp.model.StubVirtualServer.prototype._getAuthenticationInfoForUser = function(user) {
+orp.archive.StubArchive.prototype._getAuthenticationInfoForUser = function(user) {
   return this._hashTableOfUserAuthenticationInfo[user.getUuid()];
 };
 
@@ -845,7 +845,7 @@ orp.model.StubVirtualServer.prototype._getAuthenticationInfoForUser = function(u
  * @param    uuid    The UUID of the item to be returned. 
  * @return   The item identified by the given UUID.
  */
-orp.model.StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function(uuid) {
+orp.archive.StubArchive.prototype._getItemFromUuidOrCreateNewItem = function(uuid) {
   var item = this.getItemFromUuid(uuid);
   if (!item) {
     item = new orp.model.Item(this._world, uuid);
@@ -863,7 +863,7 @@ orp.model.StubVirtualServer.prototype._getItemFromUuidOrCreateNewItem = function
  *
  * @scope    private instance method
  */
-orp.model.StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = function(url) {
+orp.archive.StubArchive.prototype._loadAxiomaticItemsFromFileAtURL = function(url) {
   // var fileContentString = orp.util.getStringContentsOfFileAtURL(url);
   var fileContentString = dojo.hostenv.getText(url);
   // orp.util.assert(orp.util.isString(fileContentString));
@@ -874,9 +874,9 @@ orp.model.StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = functio
   eval("dehydratedRecords = " + fileContentString + ";");
   // orp.util.assert(orp.util.isObject(dehydratedRecords));
   orp.lang.assertType(dehydratedRecords, Object);
-  var recordFormat = dehydratedRecords[orp.model.StubVirtualServer.JSON_MEMBER.FORMAT];
-  orp.lang.assert(recordFormat == orp.model.StubVirtualServer.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
-  var listOfRecords = dehydratedRecords[orp.model.StubVirtualServer.JSON_MEMBER.RECORDS];
+  var recordFormat = dehydratedRecords[orp.archive.StubArchive.JSON_MEMBER.FORMAT];
+  orp.lang.assert(recordFormat == orp.archive.StubArchive.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
+  var listOfRecords = dehydratedRecords[orp.archive.StubArchive.JSON_MEMBER.RECORDS];
   // orp.util.assert(orp.util.isArray(listOfRecords));
   orp.lang.assertType(listOfRecords, Array);
   
@@ -892,7 +892,7 @@ orp.model.StubVirtualServer.prototype._loadAxiomaticItemsFromFileAtURL = functio
  * @param    inUuid    The UUID of the item to be returned. 
  * @return   The item identified by the given UUID.
  */
-orp.model.StubVirtualServer.prototype._getItemFromUuidOrBootstrapItem = function(uuid) {
+orp.archive.StubArchive.prototype._getItemFromUuidOrBootstrapItem = function(uuid) {
   var item = this.getItemFromUuid(uuid);
   if (!item) {
     item = new orp.model.Item(this.getWorld(), uuid);
@@ -908,7 +908,7 @@ orp.model.StubVirtualServer.prototype._getItemFromUuidOrBootstrapItem = function
  * @param    uuid    The UUID of the entry to be returned. 
  * @return   The entry identified by the given UUID.
  */
-orp.model.StubVirtualServer.prototype._getEntryFromUuid = function(uuid) {
+orp.archive.StubArchive.prototype._getEntryFromUuid = function(uuid) {
   return this._hashTableOfEntriesKeyedByUuid[uuid];
 };
 
@@ -920,7 +920,7 @@ orp.model.StubVirtualServer.prototype._getEntryFromUuid = function(uuid) {
  * @param    uuid    The UUID of the entry to be returned. 
  * @return   The entry identified by the given UUID.
  */
-orp.model.StubVirtualServer.prototype._getEntryFromUuidOrBootstrapEntry = function(uuid) {
+orp.archive.StubArchive.prototype._getEntryFromUuidOrBootstrapEntry = function(uuid) {
   var entry = this._hashTableOfEntriesKeyedByUuid[uuid];
   if (!entry) {
     entry = new orp.model.Entry(this.getWorld(), uuid);
@@ -936,13 +936,13 @@ orp.model.StubVirtualServer.prototype._getEntryFromUuidOrBootstrapEntry = functi
  * @scope    private instance method
  * @param    listOfDehydratedRecords    A list of dehydrated records. 
  */
-orp.model.StubVirtualServer.prototype._rehydrateRecords = function(listOfDehydratedRecords) {
+orp.archive.StubArchive.prototype._rehydrateRecords = function(listOfDehydratedRecords) {
   var key;
   var itemUuid;
   var item;
   var contentRecordUuid;
   var contentRecord;
-  var JSON_MEMBER = orp.model.StubVirtualServer.JSON_MEMBER;
+  var JSON_MEMBER = orp.archive.StubArchive.JSON_MEMBER;
 
   for (key in listOfDehydratedRecords) {
     var dehydratedRecord = listOfDehydratedRecords[key];

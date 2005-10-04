@@ -1,5 +1,5 @@
 /*****************************************************************************
- HttpSaver.js
+ HttpStorage.js
   
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -32,21 +32,21 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.model.HttpSaver");
+dojo.provide("orp.storage.HttpStorage");
 
 
 // -------------------------------------------------------------------
 // Constructor
 // -------------------------------------------------------------------
 /**
- * The HttpSaver class knows how to save content to a server by using
+ * The HttpStorage class knows how to save content to a server by using
  * XMLHttpRequest to call a PHP script.
  *
  * @param    repositoryName                         // e.g. demo_page
  * @param    pathToTrunkDirectoryFromWindowLocation // Not needed if window location is at the root of the trunk directory.
  * @scope    public instance constructor
  */
-orp.model.HttpSaver = function(repositoryName, pathToTrunkDirectoryFromWindowLocation) {
+orp.storage.HttpStorage = function(repositoryName, pathToTrunkDirectoryFromWindowLocation) {
   this._repositoryName = repositoryName;
   var thisUrl = window.location.pathname; //e.g. /openrecord/trunk/demo_page.html or /openrecord/trunk/source/model/TestRepositoryWriting.html.
   var arrayOfPathComponents = thisUrl.split('/');
@@ -66,7 +66,7 @@ orp.model.HttpSaver = function(repositoryName, pathToTrunkDirectoryFromWindowLoc
 
 /**
  */
-orp.model.HttpSaver.prototype.appendText = function(textToAppend) {
+orp.storage.HttpStorage.prototype.appendText = function(textToAppend) {
   var url = this._completePathToTrunkDirectory;
   url += "/source/model/append_to_repository_file.php?file=" + this._repositoryName;
   
@@ -86,7 +86,7 @@ orp.model.HttpSaver.prototype.appendText = function(textToAppend) {
 
 /**
  */
-orp.model.HttpSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
+orp.storage.HttpStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
   var url = this._completePathToTrunkDirectory;
   url += "/source/model/write_to_repository_file.php?file=" + this._repositoryName;
   if (overwriteIfExists) {
@@ -110,7 +110,7 @@ orp.model.HttpSaver.prototype.writeText = function(textToWrite, overwriteIfExist
  * @scope    private instance method
  * @return   A newly created XMLHttpRequest object. 
  */
-orp.model.HttpSaver.prototype._newXMLHttpRequestObject = function() {
+orp.storage.HttpStorage.prototype._newXMLHttpRequestObject = function() {
   var newXMLHttpRequestObject = null;
   if (window.XMLHttpRequest) {
     newXMLHttpRequestObject = new XMLHttpRequest();

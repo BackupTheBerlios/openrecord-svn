@@ -33,7 +33,7 @@
 // 
 /*global Util */
 /*global World, Item, Entry */
-/*global StubVirtualServer */
+/*global StubArchive */
 /*global assertTrue, assertFalse, setUp, tearDown */
 // -------------------------------------------------------------------
 
@@ -49,14 +49,14 @@ function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.require("orp.model.World");
-  dojo.require("orp.model.StubVirtualServer");
+  dojo.require("orp.archive.StubArchive");
   dojo.require("orp.util.DateValue");
 
   ModelTestVars = {};
 
   var pathToTrunkDirectory = "../..";
-  var stubVirtualServer = new orp.model.StubVirtualServer(pathToTrunkDirectory);
-  world = new orp.model.World(stubVirtualServer);
+  var stubArchive = new orp.archive.StubArchive(pathToTrunkDirectory);
+  world = new orp.model.World(stubArchive);
 }
 
 function tearDown() {

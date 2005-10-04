@@ -1,5 +1,5 @@
 /*****************************************************************************
- DeltaVirtualServer.js
+ DeltaArchive.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -32,12 +32,12 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.model.DeltaVirtualServer");
-dojo.require("orp.model.StubVirtualServer");
+dojo.provide("orp.archive.DeltaArchive");
+dojo.require("orp.archive.StubArchive");
 dojo.require("orp.model.World");
 dojo.require("orp.model.Vote");
-dojo.require("orp.model.FileSaver");
-dojo.require("orp.model.HttpSaver");
+dojo.require("orp.storage.FileStorage");
+dojo.require("orp.storage.HttpStorage");
 dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
@@ -54,14 +54,14 @@ dojo.require("orp.lang.Lang");
 // Constructor
 // -------------------------------------------------------------------
 /**
- * The DeltaVirtualServer is a datastore that loads and saves
+ * The DeltaArchive is a datastore that loads and saves
  * an entire World of items as a single monolithic JSON string.
  *
  * @scope    public instance constructor
  * @param    inJsonRepositoryString    A JSON string literal representing the world of items. 
  */
-orp.model.DeltaVirtualServer = function(repositoryName, pathToTrunkDirectory, optionalDefaultOverrides) {
-  orp.model.StubVirtualServer.call(this, pathToTrunkDirectory, optionalDefaultOverrides);
+orp.archive.DeltaArchive = function(repositoryName, pathToTrunkDirectory, optionalDefaultOverrides) {
+  orp.archive.StubArchive.call(this, pathToTrunkDirectory, optionalDefaultOverrides);
   this._repositoryName = repositoryName;
   this._pathToTrunkDirectory = "";
   if (pathToTrunkDirectory) {
@@ -70,13 +70,13 @@ orp.model.DeltaVirtualServer = function(repositoryName, pathToTrunkDirectory, op
   this._hasEverFailedToSaveFlag = false;
 };
 
-dj_inherits(orp.model.DeltaVirtualServer, orp.model.StubVirtualServer);  // makes DeltaVirtualServer be a subclass of StubVirtualServer
+dj_inherits(orp.archive.DeltaArchive, orp.archive.StubArchive);  // makes DeltaArchive be a subclass of StubArchive
 
 
 // -------------------------------------------------------------------
 // Public constants
 // -------------------------------------------------------------------
-orp.model.DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
+orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
 
 
 // -------------------------------------------------------------------
@@ -84,13 +84,13 @@ orp.model.DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
 // -------------------------------------------------------------------
 
 /**
- * Initializes the instance variables for a newly created DeltaVirtualServer,
+ * Initializes the instance variables for a newly created DeltaArchive,
  * and does the initial loading of at least the axiomatic items.
  *
  * @scope    public instance method
  * @param    world    The world that we provide data for. 
  */
-orp.model.DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(world) {
+orp.archive.DeltaArchive.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   this._initialize(world);
   this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
 
@@ -99,7 +99,7 @@ orp.model.DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(
   if (this._needCompletePath) {
     repositoryUrl = this._completePathToTrunkDirectory + '/';
   }
-  repositoryUrl += orp.model.DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY + "/" + repositoryFileName;
+  repositoryUrl += orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY + "/" + repositoryFileName;
   // var repositoryContentString = orp.util.getStringContentsOfFileAtURL(repositoryUrl);
   var repositoryContentString = dojo.hostenv.getText(repositoryUrl);
   repositoryContentString += " ] }";
@@ -121,16 +121,16 @@ orp.model.DeltaVirtualServer.prototype.setWorldAndLoadAxiomaticItems = function(
  * @scope    private instance method
  * @param    jsonRepositoryString    A JSON string literal representing the world of items. 
  */
-orp.model.DeltaVirtualServer.prototype._loadWorldFromJsonString = function(jsonRepositoryString) {
+orp.archive.DeltaArchive.prototype._loadWorldFromJsonString = function(jsonRepositoryString) {
 
   // load the list of records
   orp.lang.assertType(jsonRepositoryString, String);
   var dehydratedRecords = null;
   eval("dehydratedRecords = " + jsonRepositoryString + ";");
   orp.lang.assertType(dehydratedRecords, Object);
-  var recordFormat = dehydratedRecords[orp.model.StubVirtualServer.JSON_MEMBER.FORMAT];
-  orp.lang.assert(recordFormat == orp.model.StubVirtualServer.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
-  var listOfRecords = dehydratedRecords[orp.model.StubVirtualServer.JSON_MEMBER.RECORDS];
+  var recordFormat = dehydratedRecords[orp.archive.StubArchive.JSON_MEMBER.FORMAT];
+  orp.lang.assert(recordFormat == orp.archive.StubArchive.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
+  var listOfRecords = dehydratedRecords[orp.archive.StubArchive.JSON_MEMBER.RECORDS];
   orp.lang.assertType(listOfRecords, Array);
   
   var listOfUsers = null;
@@ -147,7 +147,7 @@ orp.model.DeltaVirtualServer.prototype._loadWorldFromJsonString = function(jsonR
  * @param    string    A string that may need truncating.
  * @return   A string that is no longer than 80 characters long.
  */
-orp.model.DeltaVirtualServer.prototype._truncateString = function(string) {
+orp.archive.DeltaArchive.prototype._truncateString = function(string) {
   var maxLength = 80;
   var ellipsis = "...";
   var returnString = "";
@@ -168,7 +168,7 @@ orp.model.DeltaVirtualServer.prototype._truncateString = function(string) {
  * @param    transaction    A transaction object.
  * @return   A JSON string literal, representing the records in the transaction. 
  */
-orp.model.DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = function(transaction) {
+orp.archive.DeltaArchive.prototype._getJsonStringRepresentingTransaction = function(transaction) {
   var indent = "  ";
   var listOfRecords = transaction.getRecords();
   if (!listOfRecords || listOfRecords.length === 0) {
@@ -181,7 +181,7 @@ orp.model.DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = f
     indent = "    ";
     var listOfStrings = [];
     listOfStrings.push("  // =======================================================================\n");
-    listOfStrings.push('  { "' + orp.model.StubVirtualServer.JSON_MEMBER.TRANSACTION_CLASS + '": [\n');
+    listOfStrings.push('  { "' + orp.archive.StubArchive.JSON_MEMBER.TRANSACTION_CLASS + '": [\n');
     var content = this._getJsonStringRepresentingRecords(transaction.getRecords(), indent);
     listOfStrings.push(content);
     listOfStrings.push('  ]\n');
@@ -196,7 +196,7 @@ orp.model.DeltaVirtualServer.prototype._getJsonStringRepresentingTransaction = f
 /**
  *
  */
-orp.model.DeltaVirtualServer.prototype._getTypedDisplayStringForItem = function(item) {
+orp.archive.DeltaArchive.prototype._getTypedDisplayStringForItem = function(item) {
   var returnString = "(";
   if (item) {
     if (item instanceof orp.model.Item) {
@@ -224,7 +224,7 @@ orp.model.DeltaVirtualServer.prototype._getTypedDisplayStringForItem = function(
  * @param    indent    Optional. A string of spaces to prepend to each line.
  * @return   A JSON string literal, representing the records. 
  */
-orp.model.DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = function(listOfRecords, indent) {
+orp.archive.DeltaArchive.prototype._getJsonStringRepresentingRecords = function(listOfRecords, indent) {
   indent = indent || "";
   var i;
   var listOfStrings = [];
@@ -234,7 +234,7 @@ orp.model.DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = funct
   var listOfUsers = null;
   var commentString;
   var generateComments = false;
-  var JSON_MEMBER = orp.model.StubVirtualServer.JSON_MEMBER;
+  var JSON_MEMBER = orp.archive.StubArchive.JSON_MEMBER;
 
   if (!generateComments) {
     indent = "";
@@ -416,17 +416,17 @@ orp.model.DeltaVirtualServer.prototype._getJsonStringRepresentingRecords = funct
  * @param    overwriteIfExists    Optional
  * @return   success
  */
-orp.model.DeltaVirtualServer.prototype._createNewRepository = function(overwriteIfExists) {
+orp.archive.DeltaArchive.prototype._createNewRepository = function(overwriteIfExists) {
   if (this._saverObject) {
     alert("this._saverObject is already initialized.");
     return false;
   }
   if (window.location) {
     if (window.location.protocol == "http:") {
-      this._saverObject = new orp.model.HttpSaver(this._repositoryName, this._pathToTrunkDirectory);
+      this._saverObject = new orp.storage.HttpStorage(this._repositoryName, this._pathToTrunkDirectory);
     }
     if (window.location.protocol == "file:") {
-      this._saverObject = new orp.model.FileSaver(this._repositoryName, this._pathToTrunkDirectory);
+      this._saverObject = new orp.storage.FileStorage(this._repositoryName, this._pathToTrunkDirectory);
     }
   }
   if (!this._saverObject) {
@@ -436,7 +436,7 @@ orp.model.DeltaVirtualServer.prototype._createNewRepository = function(overwrite
     }
     return false;
   }
-  var text = '{ "format": "' + orp.model.StubVirtualServer.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST + '", \n';
+  var text = '{ "format": "' + orp.archive.StubArchive.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST + '", \n';
   text +=    '  "records": [\n';
   text +=    '  // =======================================================================\n';
   text +=    '  { "Transaction": [ ]\n';
@@ -453,7 +453,7 @@ orp.model.DeltaVirtualServer.prototype._createNewRepository = function(overwrite
  * @param    forceSave    Optional. Forces a save if set to true. 
  * @return   The list of changes made. 
  */
-orp.model.DeltaVirtualServer.prototype._saveChangesToServer = function(forceSave) {
+orp.archive.DeltaArchive.prototype._saveChangesToServer = function(forceSave) {
   var currentTransaction = this.getCurrentTransaction();
   var listOfChangesMade = currentTransaction.getRecords();
   if (!forceSave && listOfChangesMade.length === 0) {
@@ -463,10 +463,10 @@ orp.model.DeltaVirtualServer.prototype._saveChangesToServer = function(forceSave
   if (!this._saverObject) {
     if (window.location) {
       if (window.location.protocol == "http:") {
-        this._saverObject = new orp.model.HttpSaver(this._repositoryName, this._pathToTrunkDirectory);
+        this._saverObject = new orp.storage.HttpStorage(this._repositoryName, this._pathToTrunkDirectory);
       }
       if (window.location.protocol == "file:") {
-        this._saverObject = new orp.model.FileSaver(this._repositoryName, this._pathToTrunkDirectory);
+        this._saverObject = new orp.storage.FileStorage(this._repositoryName, this._pathToTrunkDirectory);
       }
     }
   }

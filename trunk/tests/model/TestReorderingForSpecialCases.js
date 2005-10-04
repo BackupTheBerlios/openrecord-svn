@@ -35,7 +35,7 @@
 // 
 /*global Util */
 /*global World, Item, Entry */
-/*global StubVirtualServer */
+/*global StubArchive */
 /*global assertTrue, assertFalse, setUp, tearDown */
 // -------------------------------------------------------------------
 
@@ -50,16 +50,16 @@ var categoryCalledFood = null;
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.model.StubVirtualServer");
+  dojo.require("orp.archive.StubArchive");
   dojo.require("orp.model.World");
 
   var pathToTrunkDirectory = "../..";
-  var virtualServer = new orp.model.StubVirtualServer(pathToTrunkDirectory);
+  var archive = new orp.archive.StubArchive(pathToTrunkDirectory);
 
-  realUuidGenerator = orp.model.StubVirtualServer.prototype._generateUuid;
-  orp.model.StubVirtualServer.prototype._generateUuid = mockUuidGenerator;
+  realUuidGenerator = orp.archive.StubArchive.prototype._generateUuid;
+  orp.archive.StubArchive.prototype._generateUuid = mockUuidGenerator;
 
-  world = new orp.model.World(virtualServer);
+  world = new orp.model.World(archive);
 
   annUuid1 = "10000000-2222-1333-F444-555555555555";
   annUuid2 = "10000001-2222-1333-F444-555555555555";
@@ -108,7 +108,7 @@ function testReorderBetweenTwoItemsWithTheSameOrdinal() {
   var pesto = world.newItem("Pesto");
   var guava = world.newItem("Guava");
 
-  orp.model.StubVirtualServer.prototype._generateUuid = realUuidGenerator;
+  orp.archive.StubArchive.prototype._generateUuid = realUuidGenerator;
   
   assertTrue(sushi.getOrdinalNumber() == pesto.getOrdinalNumber());
   
@@ -140,11 +140,11 @@ function testReorderBetweenTwoItemsWithTheSameTimestamp() {
   assertTrue('Sushi and Pesto have same timestamp', sushi.getTimestamp() == pesto.getTimestamp());
   assertTrue('Sushi and Guava have same timestamp', sushi.getTimestamp() == guava.getTimestamp());
 
-  orp.model.StubVirtualServer.prototype._generateUuid = realUuidGenerator;
+  orp.archive.StubArchive.prototype._generateUuid = realUuidGenerator;
 
   guava.reorderBetween(sushi, pesto);
 
-  orp.model.StubVirtualServer.prototype._generateUuid = mockUuidGenerator;
+  orp.archive.StubArchive.prototype._generateUuid = mockUuidGenerator;
 
   sushiLinkUuid    = "60000000-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(sushiLinkUuid);
@@ -155,7 +155,7 @@ function testReorderBetweenTwoItemsWithTheSameTimestamp() {
   guavaLinkUuid    = "60000002-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(guavaLinkUuid);
   
-  orp.model.StubVirtualServer.prototype._generateUuid = realUuidGenerator;
+  orp.archive.StubArchive.prototype._generateUuid = realUuidGenerator;
 
   guava.assignToCategory(categoryCalledFood);
 

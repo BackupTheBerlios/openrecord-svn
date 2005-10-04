@@ -1,5 +1,5 @@
 /*****************************************************************************
- FileSaver.js
+ FileStorage.js
  
 ******************************************************************************
  The code in this file is a heavily modified version of code that was copied
@@ -54,18 +54,18 @@ DAMAGE.
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.model.FileSaver");
-dojo.require("orp.model.DeltaVirtualServer");
+dojo.provide("orp.storage.FileStorage");
+dojo.require("orp.archive.DeltaArchive");
 dojo.require("orp.lang.Lang");
 
 /**
- * The FileSaver class knows how to save text to a local file.
+ * The FileStorage class knows how to save text to a local file.
  *
  * @param    repositoryName                 // e.g. demo_page
  * @param    pathToTrunkDirectory           // Not needed if window.location.pathname is in the trunk directory.
  * @scope    public instance constructor
  */
-orp.model.FileSaver = function(repositoryName, pathToTrunkDirectory) {
+orp.storage.FileStorage = function(repositoryName, pathToTrunkDirectory) {
   this._repositoryName = repositoryName;
   
   // Step 1: Build the fileUrl
@@ -86,7 +86,7 @@ orp.model.FileSaver = function(repositoryName, pathToTrunkDirectory) {
   if (pathToTrunkDirectory && pathToTrunkDirectory !== "") {
     listOfAdditions.push(pathToTrunkDirectory);
   }
-  listOfAdditions.push(orp.model.DeltaVirtualServer.PATH_TO_REPOSITORY_DIRECTORY);
+  listOfAdditions.push(orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY);
   listOfAdditions.push(this._repositoryName + ".json");
   this._fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
 };
@@ -97,12 +97,12 @@ orp.model.FileSaver = function(repositoryName, pathToTrunkDirectory) {
  *
  * @scope    public instance method
  */
-orp.model.FileSaver.prototype.appendText = function(textToAppend) {
+orp.storage.FileStorage.prototype.appendText = function(textToAppend) {
   var append = true;
   this._saveTextToFile(textToAppend, this._fileUrl, append);
 };
 
-orp.model.FileSaver.prototype.writeText = function(textToWrite, overwriteIfExists) {
+orp.storage.FileStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
   var append = false;
   this._saveTextToFile(textToWrite, this._fileUrl, append);
 };
@@ -113,10 +113,10 @@ orp.model.FileSaver.prototype.writeText = function(textToWrite, overwriteIfExist
  * @scope    private instance method
  * @return   Returns true if the text was saved.
  */
-orp.model.FileSaver.prototype._saveTextToFile = function(text, fileUrl, append) {
+orp.storage.FileStorage.prototype._saveTextToFile = function(text, fileUrl, append) {
   // Make sure we were loaded from a "file:" URL
   if (window.location.protocol != "file:") {
-    orp.lang.assert(false, 'FileSaver.js can only be used for pages loaded from a "file:///" location');
+    orp.lang.assert(false, 'FileStorage.js can only be used for pages loaded from a "file:///" location');
   }
 
   var success = this._mozillaSaveToFile(text, fileUrl, append);
@@ -133,7 +133,7 @@ orp.model.FileSaver.prototype._saveTextToFile = function(text, fileUrl, append) 
  * @scope    private instance method
  * @return   Returns true if the text was saved, false if there was an error, or null if we couldn't even try.
  */
-orp.model.FileSaver.prototype._mozillaSaveToFile = function(text, filePath, append) {
+orp.storage.FileStorage.prototype._mozillaSaveToFile = function(text, filePath, append) {
   if (window.Components) {
     try {
       netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
@@ -175,7 +175,7 @@ orp.model.FileSaver.prototype._mozillaSaveToFile = function(text, filePath, appe
  * @scope    private instance method
  * @return   Returns true if the text was saved, or false if there was an error.
  */
-orp.model.FileSaver.prototype._ieSaveToFile = function(text, filePath, append) {
+orp.storage.FileStorage.prototype._ieSaveToFile = function(text, filePath, append) {
   try {
     var fileSystemObject = new ActiveXObject("Scripting.FileSystemObject");
   }
@@ -203,7 +203,7 @@ orp.model.FileSaver.prototype._ieSaveToFile = function(text, filePath, append) {
  * @scope    private instance method
  * @return   Returns a full local pathname.
  */
-orp.model.FileSaver.prototype._getLocalPathFromWindowLocation = function(listOfAdditions) {
+orp.storage.FileStorage.prototype._getLocalPathFromWindowLocation = function(listOfAdditions) {
   // Example location:
   //   location.href     == file:///D:/amy/openrecord/foo.html#bar
   //   location.protocol == file:
