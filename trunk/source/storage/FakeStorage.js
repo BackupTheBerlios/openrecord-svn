@@ -1,6 +1,6 @@
 /*****************************************************************************
- LintTest.js
- 
+ Storage.js
+  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
   
@@ -27,43 +27,73 @@
  liability, or tort (including negligence), arising in any way out of or in 
  connection with the use or distribution of the work.
 *****************************************************************************/
- 
-// -------------------------------------------------------------------
-// Dependencies, expressed in the syntax that JSLint understands:
-// 
-/*global LintTool, assertTrue, setUp, tearDown */
-// -------------------------------------------------------------------
 
 
 // -------------------------------------------------------------------
-// setUp and tearDown
+// Provides and Requires
 // -------------------------------------------------------------------
-
-function setUp() {
-  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
-  dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.util.LintTool");
-}
-
-function tearDown() {
-}
+dojo.provide("orp.storage.FakeStorage");
+dojo.require("orp.storage.Storage");
 
 
 // -------------------------------------------------------------------
-// Test functions
+// Constructor
+// -------------------------------------------------------------------
+/**
+ * The Storage class is the abstract superclass for the other storage 
+ * classes, including FileStorage and HttpStorage.
+ *
+ * @param    repositoryName                         // e.g. demo_page
+ * @param    pathToTrunkDirectoryFromWindowLocation // Not needed if window location is at the root of the trunk directory.
+ * @scope    public instance constructor
+ */
+orp.storage.FakeStorage = function(repositoryName, pathToTrunkDirectoryFromWindowLocation) {
+  orp.storage.Storage.call(this, repositoryName, pathToTrunkDirectoryFromWindowLocation);
+  
+  this._fakeFileContents = "";
+};
+
+dj_inherits(orp.storage.FakeStorage, orp.storage.Storage);  // makes FakeStorage be a subclass of Storage
+
+
+// -------------------------------------------------------------------
+// Public methods
 // -------------------------------------------------------------------
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "Storage.js",
-    "FakeStorage.js",
-    "FileStorage.js",
-    "HttpStorage.js"];
-  var prefix = "../../../source/storage/";
-  var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
-}
+/**
+ * Appends text to a file.
+ *
+ * @param    textToWrite      A string with the text to append to the file.
+ * @scope    public instance method
+ */
+orp.storage.FakeStorage.prototype.appendText = function(textToAppend) {
+  this._fakeFileContents += textToAppend;
+};
+
+
+/**
+ * Writes text to a file, completely replacing the contents of the file.
+ *
+ * @param    textToWrite      A string with the text to write to the file.
+ * @param    overwriteIfExists      A boolean.  True to overwrite any existing file, or false to exit if there's an existing file.  
+ * @scope    public instance method
+ */
+orp.storage.FakeStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
+  if (overwriteIfExists || !this._fakeFileContents) {
+    this._fakeFileContents = textToWrite;
+  }
+};
+
+
+/**
+ * Returns any text that was added using appendText() or writeText().
+ *
+ * @scope    public instance method
+ * @return   Returns any text that was added using appendText() or writeText().
+ */
+orp.storage.FakeStorage.prototype.getFileContents = function() {
+  return this._fakeFileContents;
+};
 
 
 // -------------------------------------------------------------------

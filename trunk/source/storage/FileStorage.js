@@ -55,9 +55,14 @@ DAMAGE.
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.storage.FileStorage");
+dojo.require("orp.storage.Storage");
 dojo.require("orp.archive.DeltaArchive");
 dojo.require("orp.lang.Lang");
 
+
+// -------------------------------------------------------------------
+// Constructor
+// -------------------------------------------------------------------
 /**
  * The FileStorage class knows how to save text to a local file.
  *
@@ -66,15 +71,15 @@ dojo.require("orp.lang.Lang");
  * @scope    public instance constructor
  */
 orp.storage.FileStorage = function(repositoryName, pathToTrunkDirectory) {
-  this._repositoryName = repositoryName;
+  orp.storage.Storage.call(this, repositoryName, pathToTrunkDirectory);
   
   // Step 1: Build the fileUrl
   // 
   // Our saveTextToFile() method needs a fileUrl that looks like this:
   //   fileUrl = "K:\\www\\htdocs\\openrecord\\demo\\current\\trunk\\repositories\\demo_page.json";
   // 
-  // We start with a value in this._repositoryName that looks like this:
-  //   this._repositoryName == "demo_page"
+  // We start with a value in this.getRepositoryName() that looks like this:
+  //   this.getRepositoryName() == "demo_page"
 
   // URLs like these don't work:
   //   fileUrl = "repositories/demo_page.json";
@@ -87,10 +92,16 @@ orp.storage.FileStorage = function(repositoryName, pathToTrunkDirectory) {
     listOfAdditions.push(pathToTrunkDirectory);
   }
   listOfAdditions.push(orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY);
-  listOfAdditions.push(this._repositoryName + ".json");
+  listOfAdditions.push(this.getRepositoryName() + ".json");
   this._fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
 };
 
+dj_inherits(orp.storage.FileStorage, orp.storage.Storage);  // makes FileStorage be a subclass of Storage
+
+
+// -------------------------------------------------------------------
+// Public methods
+// -------------------------------------------------------------------
 
 /**
  * Appends text to a file.
@@ -102,10 +113,21 @@ orp.storage.FileStorage.prototype.appendText = function(textToAppend) {
   this._saveTextToFile(textToAppend, this._fileUrl, append);
 };
 
+
+/**
+ * Writes text to a file, completely replacing the contents of the file.
+ *
+ * @scope    public instance method
+ */
 orp.storage.FileStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
   var append = false;
   this._saveTextToFile(textToWrite, this._fileUrl, append);
 };
+
+
+// -------------------------------------------------------------------
+// Private methods
+// -------------------------------------------------------------------
 
 /**
  * Save the text to the file at the given URL.
