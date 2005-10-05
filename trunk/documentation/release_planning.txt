@@ -406,10 +406,11 @@ Who    | Estimate | Actual  | Task
 brian  |          | (0.25+) |  2. replace orpBindAsEventListener() with dojo.event.connect()
        |          |         |  3. move UUID files from source/util to source/uuid
 brian  | 0.5  IED | (0.5+)  |  4. Make Item.js use namedParameter based API
-       |          |         |  5. split half the code in source/model off into source/_____
-       |          |         |  6. use terms Serialize and Deserialize for that code (replace some Dehydrate and Rehydrate) 
-       |          |         |  7. merge StubVirtualServer + DeltaVirtualServer, and re-name
-       |          |         |  8. create a FakeStorage class, + rename FileSaver + HttpSaver
+brian  |          | 0.5  IED|  5. split half the code in source/model off into source/_____
+brian  |          | (0.25+) |  6. use terms Serialize and Deserialize for that code (replace some Dehydrate and Rehydrate) 
+       |          |         |  7. merge StubArchive + DeltaArchive, and re-name the result
+brian  |          | 0.25 IED|  8. create a FakeStorage class, + rename FileSaver + HttpSaver
+       |          |         |     update unit tests to use the FakeStorage instead of StubArchive
        |          |         |  9. change "endOfLife()" to "destroy()"
        |          |         | 10. Rationalize the View API and document public API
 mignon | 1    IED |         | 11. Rationalize the ViewPlugin API
