@@ -32,6 +32,7 @@
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.archive.StubArchive");
+dojo.provide("orp.archive.Bootstrapper");
 dojo.require("orp.model.World");
 dojo.require("orp.model.Item");
 dojo.require("orp.model.Entry");
@@ -39,6 +40,8 @@ dojo.require("orp.model.Transaction");
 dojo.require("orp.util.TimeBasedUuid");
 dojo.require("orp.util.DateValue");
 dojo.require("orp.lang.Lang");
+dojo.require("orp.archive.TextEncoding");
+dojo.require("orp.archive.JsonDeserializer");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -72,12 +75,6 @@ orp.archive.StubArchive = function(pathToTrunkDirectory) {
     this._needCompletePath = false;
     this._dehydratedAxiomFileURL = relUrlForAxiomaticFile;    
   }
-  
-  /*
-  if (optionalDefaultOverrides) {
-    this._processOptionalDefaultOverrides(optionalDefaultOverrides, "Stub");
-  }
-  */
 };
 
 
@@ -107,18 +104,6 @@ orp.archive.StubArchive.JSON_MEMBER = {
   ITEM: "item",
   RETAIN_FLAG: "retainFlag",
   ORDINAL_NUMBER: "value" };
-
-
-/*
-OLD?
-StubArchive.JSON_TYPE_TEXT_VALUE = "TextValue";
-StubArchive.JSON_TYPE_RELATED_UUID = "RelatedUuid";
-StubArchive.JSON_TYPE_NUMBER_VALUE = "NumberValue";
-StubArchive.JSON_TYPE_DATE_VALUE = "DateValue";
-StubArchive.JSON_TYPE_CHECKMARK_VALUE = "CheckMarkValue";
-StubArchive.JSON_TYPE_URL_VALUE = "UrlValue";
-StubArchive.JSON_TYPE_CONNECTION = "Connection";
-*/
 
 
 // -------------------------------------------------------------------
@@ -160,7 +145,6 @@ orp.archive.StubArchive.prototype._initialize = function(world) {
  */
 orp.archive.StubArchive.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   this._initialize(world);
-  // this._buildTypeHashTable();
   this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
 };
 
@@ -176,74 +160,6 @@ orp.archive.StubArchive.prototype.getWorld = function() {
 };
 
 
-/**
- * Given a text string, this method returns a copy of the text string, 
- * with certain special characters replaced by escape sequences.
- * 
- * For example, given a string like this:
- * <pre>
- *    this.encodeText('The quick <brown> fox & the "lazy" hare.\n');
- * </pre>
- * The return value will be:
- * <pre>
- *    'The quick &lt;brown&gt; fox &amp; the &quot;lazy&quot; hare.&#10;'
- * </pre>
- * 
- * @scope    public instance method
- * @param    rawText    A text string to encode. 
- * @return   A copy of the rawText string, with the special characters escaped. 
- */
-orp.archive.StubArchive.prototype.encodeText = function(rawText) {
-  // orp.util.assert(orp.util.isString(rawText));
-  orp.lang.assertType(rawText, String);
-
-  var returnString = rawText;
-  // Note: it's important that we do '&' first, otherwise we'll accidentally
-  // replace all the & characters that we add in the following lines.
-  returnString = returnString.replace(new RegExp('&','g'), "&amp;");
-  returnString = returnString.replace(new RegExp('<','g'), "&lt;");
-  returnString = returnString.replace(new RegExp('>','g'), "&gt;");
-  returnString = returnString.replace(new RegExp('"','g'), "&quot;");
-  returnString = returnString.replace(new RegExp('\n','g'), "&#10;");
-  returnString = returnString.replace(new RegExp('\r','g'), "&#13;");
-  return returnString;
-};
-
-
-/**
- * Given a text string that was encoded using encodeText(), this method 
- * returns a decoded copy of the text string, with the encoded escape 
- * sequences now replaced by the original special characters.
- *
- * For example, given a string like this:
- * <pre>
- *    this.decodeText('The quick &lt;brown&gt; fox &amp; the &quot;lazy&quot; hare.&#10;');
- * </pre>
- * The return value will be:
- * <pre>
- *    'The quick <brown> fox & the "lazy" hare.\n'
- * </pre>
- *
- * @scope    public instance method
- * @param    encodedText    A text string to decode. 
- * @return   A copy of the encodedText string, with the escaped characters replaced by the original special characters. 
- */
-orp.archive.StubArchive.prototype.decodeText = function(encodedText) {
-  // orp.util.assert(orp.util.isString(encodedText));
-  orp.lang.assertType(encodedText, String);
-  
-  var returnString = encodedText;
-  returnString = returnString.replace(new RegExp('&#13;','g'), "\r");
-  returnString = returnString.replace(new RegExp('&#10;','g'), "\n");
-  returnString = returnString.replace(new RegExp('&quot;','g'), '"');
-  returnString = returnString.replace(new RegExp('&gt;','g'), ">");
-  returnString = returnString.replace(new RegExp('&lt;','g'), "<");
-  returnString = returnString.replace(new RegExp('&amp;','g'), "&");
-  // Note: it's important that we do '&amp;' last, otherwise we won't correctly
-  // handle a case like this:
-  //   text = this.decodeText(this.encodeText('&lt;'));
-  return returnString;
-};
 
 
 // -------------------------------------------------------------------
@@ -318,7 +234,6 @@ orp.archive.StubArchive.prototype.newItem = function(name, observer) {
   var item = this._createNewItem(observer, false);
   if (name) { 
     var attributeCalledName = this._world.getAttributeCalledName();
-    // item.addEntryForAttribute(attributeCalledName, name);
     item.addEntry({attribute:attributeCalledName, value:name});
   }
   return item;
@@ -561,7 +476,7 @@ orp.archive.StubArchive.prototype.login = function(user, password) {
   if (password) {
     md5hashOfPassword = orp.util.hex_md5(password);
   }
-  var realAuthentication = this._getAuthenticationInfoForUser(user);
+  var realAuthentication = this.getAuthenticationInfoForUser(user);
   var successfulAuthentication = ((realAuthentication == md5hashOfPassword) || !realAuthentication);
   
   // PENDING: temporary hack
@@ -723,7 +638,6 @@ orp.archive.StubArchive.prototype.setItemToBeIncludedInQueryResultList = functio
       if ((matchingAttribute == attributeCalledCategory) && (match instanceof orp.model.Item) && (match.isInCategory(categoryCalledCategory))) {
         item.assignToCategory(match);
       } else {
-        // item.addEntryForAttribute(matchingAttribute, match);
         item.addEntry({attribute:matchingAttribute, value:match});
       }
     }
@@ -774,23 +688,6 @@ orp.archive.StubArchive.prototype._throwErrorIfNoUserIsLoggedIn = function() {
 
 
 /**
- * Given a UUID, returns the item or entry identified by that UUID.
- *
- * @scope    private instance method
- * @param    uuid    The UUID of the item or entry to be returned. 
- * @return   The item or entry identified by the given UUID.
- */
-orp.archive.StubArchive.prototype._getContentRecordFromUuid = function(uuid) {
-  var item = this.getItemFromUuid(uuid);
-  if (item) {
-    return item;
-  } else {
-    return this._hashTableOfEntriesKeyedByUuid[uuid];
-  }
-};
-
-
-/**
  * Returns a newly created UUID.
  *
  * @scope    private instance method
@@ -828,11 +725,11 @@ orp.archive.StubArchive.prototype._getNewUuid = function() {
  * Given an item representing a user, return the authentication info
  * associated with that user.
  *
- * @scope    private instance method
+ * @scope    public instance method
  * @param    user    An item representing a user. 
  * @return   The authentication info for the user.
  */
-orp.archive.StubArchive.prototype._getAuthenticationInfoForUser = function(user) {
+orp.archive.StubArchive.prototype.getAuthenticationInfoForUser = function(user) {
   return this._hashTableOfUserAuthenticationInfo[user.getUuid()];
 };
 
@@ -864,42 +761,16 @@ orp.archive.StubArchive.prototype._getItemFromUuidOrCreateNewItem = function(uui
  * @scope    private instance method
  */
 orp.archive.StubArchive.prototype._loadAxiomaticItemsFromFileAtURL = function(url) {
-  // var fileContentString = orp.util.getStringContentsOfFileAtURL(url);
   var fileContentString = dojo.hostenv.getText(url);
-  // orp.util.assert(orp.util.isString(fileContentString));
   orp.lang.assertType(fileContentString, String);
   fileContentString += " ] }";
-
-  var dehydratedRecords = null;
-  eval("dehydratedRecords = " + fileContentString + ";");
-  // orp.util.assert(orp.util.isObject(dehydratedRecords));
-  orp.lang.assertType(dehydratedRecords, Object);
-  var recordFormat = dehydratedRecords[orp.archive.StubArchive.JSON_MEMBER.FORMAT];
-  orp.lang.assert(recordFormat == orp.archive.StubArchive.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
-  var listOfRecords = dehydratedRecords[orp.archive.StubArchive.JSON_MEMBER.RECORDS];
-  // orp.util.assert(orp.util.isArray(listOfRecords));
-  orp.lang.assertType(listOfRecords, Array);
   
-  this._rehydrateRecords(listOfRecords);
+  var bootstrapper = new orp.archive.Bootstrapper(this);
+  
+  var deserializer = new orp.archive.JsonDeserializer(bootstrapper);
+  deserializer.deserializeFromString(fileContentString);
 };
 
-
-/**
- * Given a UUID, either (a) returns the existing item identified by that UUID, 
- * or (b) creates an new item object, set its UUID, and returns that object.
- *
- * @scope    private instance method
- * @param    inUuid    The UUID of the item to be returned. 
- * @return   The item identified by the given UUID.
- */
-orp.archive.StubArchive.prototype._getItemFromUuidOrBootstrapItem = function(uuid) {
-  var item = this.getItemFromUuid(uuid);
-  if (!item) {
-    item = new orp.model.Item(this.getWorld(), uuid);
-    this._hashTableOfItemsKeyedByUuid[uuid] = item;
-  }
-  return item;
-};
 
 /**
  * Given a UUID, returns the existing entry identified by that UUID. 
@@ -912,158 +783,134 @@ orp.archive.StubArchive.prototype._getEntryFromUuid = function(uuid) {
   return this._hashTableOfEntriesKeyedByUuid[uuid];
 };
 
+
+// -------------------------------------------------------------------
+// Bootstrapper helper class
+// -------------------------------------------------------------------
+
+/**
+ * The Bootstrapper class...
+ *
+ * @scope    public instance constructor
+ * @param    archive    The orp.archive.StubArchive instance that this bootstrapper is working for.
+ */
+orp.archive.Bootstrapper = function(archive) {
+  this._archive = archive;
+};
+
+
+// -------------------------------------------------------------------
+// Bootstrapper private methods 
+// -------------------------------------------------------------------
+
+/**
+ * Returns the instance of orp.archive.StubArchive that this Bootstrapper is working for.
+ *
+ * @scope    private instance method
+ * @return   An instance of orp.archive.StubArchive.
+ */
+orp.archive.Bootstrapper.prototype._getArchive = function() {
+  return this._archive;
+};
+
+
+// -------------------------------------------------------------------
+// Bootstrapper public methods
+// -------------------------------------------------------------------
+
+/**
+ * Returns the World instance that this virtual server is using.
+ *
+ * @scope    public instance method
+ * @return   A World object. 
+ */
+orp.archive.Bootstrapper.prototype.getWorld = function() {
+  return this._getArchive().getWorld();
+};
+
+
+
+/**
+ * Given a UUID, either (a) returns the existing item identified by that UUID, 
+ * or (b) creates an new item object, set its UUID, and returns that object.
+ *
+ * @scope    public instance method
+ * @param    inUuid    The UUID of the item to be returned. 
+ * @return   The item identified by the given UUID.
+ */
+orp.archive.Bootstrapper.prototype.getItemFromUuidOrBootstrapItem = function(uuid) {
+  var archive = this._getArchive();
+  
+  var item = archive.getItemFromUuid(uuid);
+  if (!item) {
+    item = new orp.model.Item(archive.getWorld(), uuid);
+    archive._hashTableOfItemsKeyedByUuid[uuid] = item;
+  }
+  return item;
+};
+
+
 /**
  * Given a UUID, either (a) returns the existing entry identified by that UUID, 
  * or (b) creates an new entry object, set its UUID, and returns that object.
  *
- * @scope    private instance method
+ * @scope    public instance method
  * @param    uuid    The UUID of the entry to be returned. 
  * @return   The entry identified by the given UUID.
  */
-orp.archive.StubArchive.prototype._getEntryFromUuidOrBootstrapEntry = function(uuid) {
-  var entry = this._hashTableOfEntriesKeyedByUuid[uuid];
+orp.archive.Bootstrapper.prototype.getEntryFromUuidOrBootstrapEntry = function(uuid) {
+  var archive = this._getArchive();
+
+  var entry = archive._hashTableOfEntriesKeyedByUuid[uuid];
   if (!entry) {
-    entry = new orp.model.Entry(this.getWorld(), uuid);
-    this._hashTableOfEntriesKeyedByUuid[uuid] = entry;
+    entry = new orp.model.Entry(archive.getWorld(), uuid);
+    archive._hashTableOfEntriesKeyedByUuid[uuid] = entry;
   }
   return entry;
 };
 
 
 /**
- * Given a dehydrated list of records, rehydrates each of the records.
+ * Adds a record to the archive's _chronologicalListOfRecords.
  *
- * @scope    private instance method
- * @param    listOfDehydratedRecords    A list of dehydrated records. 
+ * @scope    public instance method
+ * @param    record    An orp.model.Record object. 
  */
-orp.archive.StubArchive.prototype._rehydrateRecords = function(listOfDehydratedRecords) {
-  var key;
-  var itemUuid;
-  var item;
-  var contentRecordUuid;
-  var contentRecord;
-  var JSON_MEMBER = orp.archive.StubArchive.JSON_MEMBER;
+orp.archive.Bootstrapper.prototype.addRecordToChronologicalList = function(record) {
+  var archive = this._getArchive();
+  archive._chronologicalListOfRecords.push(record);
+};
 
-  for (key in listOfDehydratedRecords) {
-    var dehydratedRecord = listOfDehydratedRecords[key];
 
-    var dehydratedTransaction = dehydratedRecord[JSON_MEMBER.TRANSACTION_CLASS];
-    if (dehydratedTransaction) {
-      var listOfRecordsInTransaction = dehydratedTransaction;
-      this._rehydrateRecords(listOfRecordsInTransaction);
-    } else {
-      var dehydratedItem = dehydratedRecord[JSON_MEMBER.ITEM_CLASS];
-      var dehydratedUser = dehydratedRecord[JSON_MEMBER.USER_CLASS];
-      var dehydratedVote = dehydratedRecord[JSON_MEMBER.VOTE_CLASS];
-      var dehydratedOrdinal = dehydratedRecord[JSON_MEMBER.ORDINAL_CLASS];
-      var dehydratedEntry = dehydratedRecord[JSON_MEMBER.ENTRY_CLASS];
-        
-      if (dehydratedItem) {
-        itemUuid = dehydratedItem[JSON_MEMBER.UUID];
-        item = this._getItemFromUuidOrBootstrapItem(itemUuid);
-        this._chronologicalListOfRecords.push(item);
-      }
-      
-      if (dehydratedUser) {
-        var userUuid = dehydratedUser[JSON_MEMBER.USER];
-        var userPasswordHash = dehydratedUser[JSON_MEMBER.PASSWORD];
-        var user = this._getItemFromUuidOrBootstrapItem(userUuid);
-        this._listOfUsers.push(user);
-        this._hashTableOfUserAuthenticationInfo[user.getUuid()] = userPasswordHash;
-      }
-      
-      if (dehydratedVote) {
-        var voteUuid = dehydratedVote[JSON_MEMBER.UUID];
-        var retainFlagString = dehydratedVote[JSON_MEMBER.RETAIN_FLAG];
-        var retainFlag = null;
-        if (retainFlagString == "true") {
-          retainFlag = true;
-        }
-        if (retainFlagString == "false") {
-          retainFlag = false;
-        }
-        orp.lang.assert(retainFlag !== null);
-        contentRecordUuid = dehydratedVote[JSON_MEMBER.RECORD];
-        contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
-        var vote = new orp.model.Vote(this.getWorld(), voteUuid, contentRecord, retainFlag);
-        this._chronologicalListOfRecords.push(vote);
-      }
-      
-      if (dehydratedOrdinal) {
-        var ordinalUuid = dehydratedOrdinal[JSON_MEMBER.UUID];
-        var ordinalNumber = dehydratedOrdinal[JSON_MEMBER.ORDINAL_NUMBER];
-        contentRecordUuid = dehydratedOrdinal[JSON_MEMBER.RECORD];
-        contentRecord = this._getContentRecordFromUuid(contentRecordUuid);
-        var ordinal = new orp.model.Ordinal(this.getWorld(), ordinalUuid, contentRecord, ordinalNumber);
-        this._chronologicalListOfRecords.push(ordinal);
-      }
-      
-      if (dehydratedEntry) {
-        var entryUuid = dehydratedEntry[JSON_MEMBER.UUID];
-        var entry = this._getEntryFromUuidOrBootstrapEntry(entryUuid);
-        var previousEntryUuid = dehydratedEntry[JSON_MEMBER.PREVIOUS_VALUE];
-        var previousEntry = null;
-        if (previousEntryUuid) {
-          previousEntry = this._getEntryFromUuidOrBootstrapEntry(previousEntryUuid);
-        }
- 
-        var dataTypeUuid = dehydratedEntry[JSON_MEMBER.TYPE];
-        var dataType = this._getItemFromUuidOrBootstrapItem(dataTypeUuid);
-        
-        if (dataTypeUuid == orp.model.World.UUID.TYPE_CONNECTION) {
-          var listOfItemUuids = dehydratedEntry[JSON_MEMBER.ITEM];
-          var firstItemUuid = listOfItemUuids[0];
-          var secondItemUuid = listOfItemUuids[1];
-          var firstItem = this._getItemFromUuidOrBootstrapItem(firstItemUuid);
-          var secondItem = this._getItemFromUuidOrBootstrapItem(secondItemUuid);
+/**
+ * Adds a user to the archive's _listOfUsers.
+ *
+ * @scope    public instance method
+ * @param    user    An orp.model.Item object. 
+ * @param    userPasswordHash    A string with the user's password hash. 
+ */
+orp.archive.Bootstrapper.prototype.addUserToListOfUsers = function(user, userPasswordHash) {
+  var archive = this._getArchive();
+  archive._listOfUsers.push(user);
+  archive._hashTableOfUserAuthenticationInfo[user.getUuid()] = userPasswordHash;
+};
 
-          var listOfAttributeUuids = dehydratedEntry[JSON_MEMBER.ATTRIBUTE];
-          var firstAttributeUuid = listOfAttributeUuids[0];
-          var secondAttributeUuid = listOfAttributeUuids[1];
-          var firstAttribute = this._getItemFromUuidOrBootstrapItem(firstAttributeUuid);
-          var secondAttribute = this._getItemFromUuidOrBootstrapItem(secondAttributeUuid);
-          
-          var pairOfItems = [firstItem, secondItem];
-          var pairOfAttributes = [firstAttribute, secondAttribute];
-          entry._rehydrate(pairOfItems, pairOfAttributes, null, previousEntry, dataType);
-        } else {
-          itemUuid = dehydratedEntry[JSON_MEMBER.ITEM];
-          item = this._getItemFromUuidOrBootstrapItem(itemUuid);
-          var attributeUuid = dehydratedEntry[JSON_MEMBER.ATTRIBUTE];
-          var attribute = null;
-          if (attributeUuid) {
-            attribute = this._getItemFromUuidOrBootstrapItem(attributeUuid);
-          } else {
-            orp.lang.assert(false); // the attributeUuid should always be there
-          }
-          var rawData = dehydratedEntry[JSON_MEMBER.VALUE];
-          var finalData = null;
-          switch (dataTypeUuid) {
-            case orp.model.World.UUID.TYPE_ITEM:
-              finalData = this._getItemFromUuidOrBootstrapItem(rawData);
-              break;
-            case orp.model.World.UUID.TYPE_TEXT:
-              finalData = this.decodeText(rawData);
-              break;
-            case orp.model.World.UUID.TYPE_NUMBER:
-              finalData = parseFloat(rawData);
-              break;
-            case orp.model.World.UUID.TYPE_DATE:
-              finalData = new orp.util.DateValue(rawData);
-              // if (!finalData.isValid()) {
-              //   alert(rawData + " " + finalData);
-              // }
-              orp.lang.assert(finalData.isValid());
-              break;
-            default:
-              orp.lang.assert(false, 'Unknown data type while _rehydrating()');
-          }
-          entry._rehydrate(item, attribute, finalData, previousEntry, dataType);
-        }
-        this._chronologicalListOfRecords.push(entry);
-      }
-      
-    }
+
+/**
+ * Given a UUID, returns the item or entry identified by that UUID.
+ *
+ * @scope    public instance method
+ * @param    uuid    The UUID of the item or entry to be returned. 
+ * @return   The item or entry identified by the given UUID.
+ */
+orp.archive.Bootstrapper.prototype.getContentRecordFromUuid = function(uuid) {
+  var archive = this._getArchive();
+
+  var item = archive.getItemFromUuid(uuid);
+  if (item) {
+    return item;
+  } else {
+    return archive._hashTableOfEntriesKeyedByUuid[uuid];
   }
 };
 

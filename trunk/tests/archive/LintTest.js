@@ -55,8 +55,11 @@ function tearDown() {
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
+    "StubArchive.js",
     "DeltaArchive.js",
-    "StubArchive.js"];
+    "TextEncoding.js",
+    "JsonSerializer.js",
+    "JsonDeserializer.js"];
   var prefix = "../../../source/archive/";
   var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
   var message = "Lint check \n" + errorReport;

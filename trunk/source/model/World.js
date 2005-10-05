@@ -84,6 +84,7 @@ orp.model.World = function(virtualServer) {
     server = new orp.archive.DeltaArchive(repositoryName);
   }
   this._virtualServer = server;
+
   server.setWorldAndLoadAxiomaticItems(this);
   this._loadAxiomaticItems();
 };

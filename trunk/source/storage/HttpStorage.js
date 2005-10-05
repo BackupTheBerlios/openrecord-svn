@@ -75,7 +75,7 @@ dj_inherits(orp.storage.HttpStorage, orp.storage.Storage);  // makes HttpStorage
  */
 orp.storage.HttpStorage.prototype.appendText = function(textToAppend) {
   var url = this._completePathToTrunkDirectory;
-  url += "/source/model/append_to_repository_file.php?file=" + this.getRepositoryName();
+  url += "/source/storage/append_to_repository_file.php?file=" + this.getRepositoryName();
   
   // PENDING: 
   // It might be more efficient to re-use the XMLHttpRequestObject,
@@ -98,7 +98,7 @@ orp.storage.HttpStorage.prototype.appendText = function(textToAppend) {
  */
 orp.storage.HttpStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
   var url = this._completePathToTrunkDirectory;
-  url += "/source/model/write_to_repository_file.php?file=" + this.getRepositoryName();
+  url += "/source/storage/write_to_repository_file.php?file=" + this.getRepositoryName();
   if (overwriteIfExists) {
     url += "&overwrite=T";
   }
