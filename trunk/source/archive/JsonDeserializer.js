@@ -32,9 +32,9 @@
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.archive.JsonDeserializer");
+dojo.require("orp.archive.JsonFormat");
 dojo.require("orp.archive.TextEncoding");
-dojo.require("orp.archive.StubArchive");      // FIXME: we should try to remove this dependency
-dojo.require("orp.archive.Bootstrapper");
+dojo.require("orp.archive.ArchiveLoader");
 dojo.require("orp.util.DateValue");
 dojo.require("orp.lang.Lang");
 
@@ -50,11 +50,14 @@ dojo.require("orp.lang.Lang");
  * JsonSerializer class provides.
  *
  * @scope    public instance constructor
- * @param    bootstrapper    The orp.archive.StubArchive instance that this serializer is working for.
+ * @param    archiveLoader    The orp.archive.ArchiveLoader instance that this serializer is working for.
  */
-orp.archive.JsonDeserializer = function(bootstrapper) {
-  this._bootstrapper = bootstrapper;
+orp.archive.JsonDeserializer = function(archiveLoader) {
+  orp.archive.JsonFormat.call(this);
+  this._archiveLoader = archiveLoader;
 };
+
+dj_inherits(orp.archive.JsonDeserializer, orp.archive.JsonFormat);  // makes JsonDeserializer be a subclass of JsonFormat
 
 
 // -------------------------------------------------------------------
@@ -74,9 +77,9 @@ orp.archive.JsonDeserializer.prototype.deserializeFromString = function(jsonStri
   dehydratedRecords = eval("(" + jsonString + ")");
   
   orp.lang.assertType(dehydratedRecords, Object);
-  var recordFormat = dehydratedRecords[orp.archive.StubArchive.JSON_MEMBER.FORMAT];
-  orp.lang.assert(recordFormat == orp.archive.StubArchive.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
-  var listOfRecords = dehydratedRecords[orp.archive.StubArchive.JSON_MEMBER.RECORDS];
+  var recordFormat = dehydratedRecords[orp.archive.JsonFormat.JSON_MEMBER.FORMAT];
+  orp.lang.assert(recordFormat == orp.archive.JsonFormat.FILE_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
+  var listOfRecords = dehydratedRecords[orp.archive.JsonFormat.JSON_MEMBER.RECORDS];
   orp.lang.assertType(listOfRecords, Array);
   
   this._rehydrateRecords(listOfRecords);
@@ -88,13 +91,13 @@ orp.archive.JsonDeserializer.prototype.deserializeFromString = function(jsonStri
 // -------------------------------------------------------------------
 
 /**
- * Returns the bootstrapper object we were provided with in our constructor.
+ * Returns the archiveLoader object we were provided with in our constructor.
  *
  * @scope    private instance method
- * @return   The bootstrapper object we were given in our constructor.
+ * @return   The archiveLoader object we were given in our constructor.
  */
-orp.archive.JsonDeserializer.prototype._getBootstrapper = function() {
-  return this._bootstrapper;
+orp.archive.JsonDeserializer.prototype._getArchiveLoader = function() {
+  return this._archiveLoader;
 };
 
 
@@ -110,9 +113,9 @@ orp.archive.JsonDeserializer.prototype._rehydrateRecords = function(listOfDehydr
   var item;
   var contentRecordUuid;
   var contentRecord;
-  var JSON_MEMBER = orp.archive.StubArchive.JSON_MEMBER;
-  var bootstrapper = this._getBootstrapper();
-  var world = bootstrapper.getWorld();
+  var JSON_MEMBER = orp.archive.JsonFormat.JSON_MEMBER;
+  var archiveLoader = this._getArchiveLoader();
+  var world = archiveLoader.getWorld();
 
   for (key in listOfDehydratedRecords) {
     var dehydratedRecord = listOfDehydratedRecords[key];
@@ -130,15 +133,15 @@ orp.archive.JsonDeserializer.prototype._rehydrateRecords = function(listOfDehydr
         
       if (dehydratedItem) {
         itemUuid = dehydratedItem[JSON_MEMBER.UUID];
-        item = bootstrapper.getItemFromUuidOrBootstrapItem(itemUuid);
-        bootstrapper.addRecordToChronologicalList(item);
+        item = archiveLoader.getItemFromUuidOrBootstrapItem(itemUuid);
+        archiveLoader.addRecordToChronologicalList(item);
       }
       
       if (dehydratedUser) {
         var userUuid = dehydratedUser[JSON_MEMBER.USER];
         var userPasswordHash = dehydratedUser[JSON_MEMBER.PASSWORD];
-        var user = bootstrapper.getItemFromUuidOrBootstrapItem(userUuid);
-        bootstrapper.addUserToListOfUsers(user, userPasswordHash);
+        var user = archiveLoader.getItemFromUuidOrBootstrapItem(userUuid);
+        archiveLoader.addUserToListOfUsers(user, userPasswordHash);
       }
       
       if (dehydratedVote) {
@@ -153,55 +156,55 @@ orp.archive.JsonDeserializer.prototype._rehydrateRecords = function(listOfDehydr
         }
         orp.lang.assert(retainFlag !== null);
         contentRecordUuid = dehydratedVote[JSON_MEMBER.RECORD];
-        contentRecord = bootstrapper.getContentRecordFromUuid(contentRecordUuid);
+        contentRecord = archiveLoader.getContentRecordFromUuid(contentRecordUuid);
         var vote = new orp.model.Vote(world, voteUuid, contentRecord, retainFlag);
-        bootstrapper.addRecordToChronologicalList(vote);
+        archiveLoader.addRecordToChronologicalList(vote);
       }
       
       if (dehydratedOrdinal) {
         var ordinalUuid = dehydratedOrdinal[JSON_MEMBER.UUID];
         var ordinalNumber = dehydratedOrdinal[JSON_MEMBER.ORDINAL_NUMBER];
         contentRecordUuid = dehydratedOrdinal[JSON_MEMBER.RECORD];
-        contentRecord = bootstrapper.getContentRecordFromUuid(contentRecordUuid);
+        contentRecord = archiveLoader.getContentRecordFromUuid(contentRecordUuid);
         var ordinal = new orp.model.Ordinal(world, ordinalUuid, contentRecord, ordinalNumber);
-        bootstrapper.addRecordToChronologicalList(ordinal);
+        archiveLoader.addRecordToChronologicalList(ordinal);
       }
       
       if (dehydratedEntry) {
         var entryUuid = dehydratedEntry[JSON_MEMBER.UUID];
-        var entry = bootstrapper.getEntryFromUuidOrBootstrapEntry(entryUuid);
+        var entry = archiveLoader.getEntryFromUuidOrBootstrapEntry(entryUuid);
         var previousEntryUuid = dehydratedEntry[JSON_MEMBER.PREVIOUS_VALUE];
         var previousEntry = null;
         if (previousEntryUuid) {
-          previousEntry = bootstrapper.getEntryFromUuidOrBootstrapEntry(previousEntryUuid);
+          previousEntry = archiveLoader.getEntryFromUuidOrBootstrapEntry(previousEntryUuid);
         }
  
         var dataTypeUuid = dehydratedEntry[JSON_MEMBER.TYPE];
-        var dataType = bootstrapper.getItemFromUuidOrBootstrapItem(dataTypeUuid);
+        var dataType = archiveLoader.getItemFromUuidOrBootstrapItem(dataTypeUuid);
         
         if (dataTypeUuid == orp.model.World.UUID.TYPE_CONNECTION) {
           var listOfItemUuids = dehydratedEntry[JSON_MEMBER.ITEM];
           var firstItemUuid = listOfItemUuids[0];
           var secondItemUuid = listOfItemUuids[1];
-          var firstItem = bootstrapper.getItemFromUuidOrBootstrapItem(firstItemUuid);
-          var secondItem = bootstrapper.getItemFromUuidOrBootstrapItem(secondItemUuid);
+          var firstItem = archiveLoader.getItemFromUuidOrBootstrapItem(firstItemUuid);
+          var secondItem = archiveLoader.getItemFromUuidOrBootstrapItem(secondItemUuid);
 
           var listOfAttributeUuids = dehydratedEntry[JSON_MEMBER.ATTRIBUTE];
           var firstAttributeUuid = listOfAttributeUuids[0];
           var secondAttributeUuid = listOfAttributeUuids[1];
-          var firstAttribute = bootstrapper.getItemFromUuidOrBootstrapItem(firstAttributeUuid);
-          var secondAttribute = bootstrapper.getItemFromUuidOrBootstrapItem(secondAttributeUuid);
+          var firstAttribute = archiveLoader.getItemFromUuidOrBootstrapItem(firstAttributeUuid);
+          var secondAttribute = archiveLoader.getItemFromUuidOrBootstrapItem(secondAttributeUuid);
           
           var pairOfItems = [firstItem, secondItem];
           var pairOfAttributes = [firstAttribute, secondAttribute];
           entry._rehydrate(pairOfItems, pairOfAttributes, null, previousEntry, dataType);
         } else {
           itemUuid = dehydratedEntry[JSON_MEMBER.ITEM];
-          item = bootstrapper.getItemFromUuidOrBootstrapItem(itemUuid);
+          item = archiveLoader.getItemFromUuidOrBootstrapItem(itemUuid);
           var attributeUuid = dehydratedEntry[JSON_MEMBER.ATTRIBUTE];
           var attribute = null;
           if (attributeUuid) {
-            attribute = bootstrapper.getItemFromUuidOrBootstrapItem(attributeUuid);
+            attribute = archiveLoader.getItemFromUuidOrBootstrapItem(attributeUuid);
           } else {
             orp.lang.assert(false); // the attributeUuid should always be there
           }
@@ -209,7 +212,7 @@ orp.archive.JsonDeserializer.prototype._rehydrateRecords = function(listOfDehydr
           var finalData = null;
           switch (dataTypeUuid) {
             case orp.model.World.UUID.TYPE_ITEM:
-              finalData = bootstrapper.getItemFromUuidOrBootstrapItem(rawData);
+              finalData = archiveLoader.getItemFromUuidOrBootstrapItem(rawData);
               break;
             case orp.model.World.UUID.TYPE_TEXT:
               finalData = orp.archive.TextEncoding.decodeText(rawData);
@@ -229,7 +232,7 @@ orp.archive.JsonDeserializer.prototype._rehydrateRecords = function(listOfDehydr
           }
           entry._rehydrate(item, attribute, finalData, previousEntry, dataType);
         }
-        bootstrapper.addRecordToChronologicalList(entry);
+        archiveLoader.addRecordToChronologicalList(entry);
       }
       
     }

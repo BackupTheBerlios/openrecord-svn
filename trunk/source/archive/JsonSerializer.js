@@ -32,6 +32,7 @@
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.archive.JsonSerializer");
+dojo.require("orp.archive.JsonFormat");
 dojo.require("orp.archive.TextEncoding");
 dojo.require("orp.archive.StubArchive");    // FIXME: we should try to remove this dependency
 dojo.require("orp.model.Transaction");
@@ -51,8 +52,11 @@ dojo.require("orp.util.DateValue");
  * @param    archive    The orp.archive.StubArchive instance that this serializer is working for.
  */
 orp.archive.JsonSerializer = function(archive) {
+  orp.archive.JsonFormat.call(this);
   this._archive = archive;  // FIXME: we should try to remove this dependency on orp.archive.StubArchive
 };
+
+dj_inherits(orp.archive.JsonSerializer, orp.archive.JsonFormat);  // makes JsonSerializer be a subclass of JsonFormat
 
 
 // -------------------------------------------------------------------
@@ -82,7 +86,7 @@ orp.archive.JsonSerializer.prototype.serializeToString = function(transaction) {
     indent = "    ";
     var listOfStrings = [];
     listOfStrings.push("  // =======================================================================\n");
-    listOfStrings.push('  { "' + orp.archive.StubArchive.JSON_MEMBER.TRANSACTION_CLASS + '": [\n');
+    listOfStrings.push('  { "' + orp.archive.JsonFormat.JSON_MEMBER.TRANSACTION_CLASS + '": [\n');
     var content = this._getJsonStringRepresentingRecords(transaction.getRecords(), indent);
     listOfStrings.push(content);
     listOfStrings.push('  ]\n');
@@ -117,7 +121,7 @@ orp.archive.JsonSerializer.prototype._getJsonStringRepresentingRecords = functio
   var listOfUsers = null;
   var commentString;
   var generateComments = false;
-  var JSON_MEMBER = orp.archive.StubArchive.JSON_MEMBER;
+  var JSON_MEMBER = orp.archive.JsonFormat.JSON_MEMBER;
 
   if (!generateComments) {
     indent = "";

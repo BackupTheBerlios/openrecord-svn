@@ -41,7 +41,7 @@ dojo.require("orp.storage.HttpStorage");
 dojo.require("orp.lang.Lang");
 dojo.require("orp.archive.JsonSerializer");
 dojo.require("orp.archive.JsonDeserializer");
-dojo.require("orp.archive.Bootstrapper");
+dojo.require("orp.archive.ArchiveLoader");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -103,9 +103,9 @@ orp.archive.DeltaArchive.prototype.setWorldAndLoadAxiomaticItems = function(worl
     repositoryUrl = this._completePathToTrunkDirectory + '/';
   }
   repositoryUrl += orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY + "/" + repositoryFileName;
-  // var repositoryContentString = orp.util.getStringContentsOfFileAtURL(repositoryUrl);
   var repositoryContentString = dojo.hostenv.getText(repositoryUrl);
-  repositoryContentString += " ] }";
+  var jsonFormat = new orp.archive.JsonFormat();
+  repositoryContentString += jsonFormat.getRepositoryFooter();
 
   this._loadWorldFromJsonString(repositoryContentString);
 };
@@ -125,25 +125,9 @@ orp.archive.DeltaArchive.prototype.setWorldAndLoadAxiomaticItems = function(worl
  * @param    jsonRepositoryString    A JSON string literal representing the world of items. 
  */
 orp.archive.DeltaArchive.prototype._loadWorldFromJsonString = function(jsonRepositoryString) {
-  var bootstrapper = new orp.archive.Bootstrapper(this);
-  var deserializer = new orp.archive.JsonDeserializer(bootstrapper);
+  var archiveLoader = new orp.archive.ArchiveLoader(this);
+  var deserializer = new orp.archive.JsonDeserializer(archiveLoader);
   deserializer.deserializeFromString(jsonRepositoryString);
-  
-  /*
-  // load the list of records
-  orp.lang.assertType(jsonRepositoryString, String);
-  var dehydratedRecords = null;
-  eval("dehydratedRecords = " + jsonRepositoryString + ";");
-  orp.lang.assertType(dehydratedRecords, Object);
-  var recordFormat = dehydratedRecords[orp.archive.StubArchive.JSON_MEMBER.FORMAT];
-  orp.lang.assert(recordFormat == orp.archive.StubArchive.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST);
-  var listOfRecords = dehydratedRecords[orp.archive.StubArchive.JSON_MEMBER.RECORDS];
-  orp.lang.assertType(listOfRecords, Array);
-  
-  var listOfUsers = null;
-  
-  this._rehydrateRecords(listOfRecords);
-  */
 };
 
 
@@ -172,11 +156,8 @@ orp.archive.DeltaArchive.prototype._createNewRepository = function(overwriteIfEx
     }
     return false;
   }
-  var text = '{ "format": "' + orp.archive.StubArchive.JSON_FORMAT.FORMAT_2005_JUNE_CHRONOLOGICAL_LIST + '", \n';
-  text +=    '  "records": [\n';
-  text +=    '  // =======================================================================\n';
-  text +=    '  { "Transaction": [ ]\n';
-  text +=    '  }';
+  var jsonSerializer = new orp.archive.JsonSerializer(this);
+  var text = jsonSerializer.getRepositoryHeader();
   return this._saverObject.writeText(text, overwriteIfExists);
 };
 

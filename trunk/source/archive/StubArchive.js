@@ -32,7 +32,7 @@
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.archive.StubArchive");
-dojo.provide("orp.archive.Bootstrapper");
+dojo.provide("orp.archive.ArchiveLoader");
 dojo.require("orp.model.World");
 dojo.require("orp.model.Item");
 dojo.require("orp.model.Entry");
@@ -76,34 +76,6 @@ orp.archive.StubArchive = function(pathToTrunkDirectory) {
     this._dehydratedAxiomFileURL = relUrlForAxiomaticFile;    
   }
 };
-
-
-// -------------------------------------------------------------------
-// Public constants
-// -------------------------------------------------------------------
-orp.archive.StubArchive.JSON_FORMAT = {
-  FORMAT_2005_JUNE_CHRONOLOGICAL_LIST: "2005_JUNE_CHRONOLOGICAL_LIST" };
-
-orp.archive.StubArchive.JSON_MEMBER = {
-  FORMAT: "format",
-  RECORDS: "records",
-  TYPE: "type",
-  VALUE: "value",
-  UUID: "uuid",
-  USER: "user",
-  PASSWORD: "password",
-  ITEM_CLASS: "Item",
-  ENTRY_CLASS: "Entry",
-  VOTE_CLASS: "Vote",
-  ORDINAL_CLASS: "Ordinal",
-  USER_CLASS: "User",
-  TRANSACTION_CLASS: "Transaction",
-  ATTRIBUTE: "attribute",
-  PREVIOUS_VALUE: "previousEntry",
-  RECORD: "record",
-  ITEM: "item",
-  RETAIN_FLAG: "retainFlag",
-  ORDINAL_NUMBER: "value" };
 
 
 // -------------------------------------------------------------------
@@ -763,11 +735,10 @@ orp.archive.StubArchive.prototype._getItemFromUuidOrCreateNewItem = function(uui
 orp.archive.StubArchive.prototype._loadAxiomaticItemsFromFileAtURL = function(url) {
   var fileContentString = dojo.hostenv.getText(url);
   orp.lang.assertType(fileContentString, String);
-  fileContentString += " ] }";
   
-  var bootstrapper = new orp.archive.Bootstrapper(this);
-  
-  var deserializer = new orp.archive.JsonDeserializer(bootstrapper);
+  var archiveLoader = new orp.archive.ArchiveLoader(this);
+  var deserializer = new orp.archive.JsonDeserializer(archiveLoader);
+  fileContentString += deserializer.getRepositoryFooter();
   deserializer.deserializeFromString(fileContentString);
 };
 
@@ -785,37 +756,39 @@ orp.archive.StubArchive.prototype._getEntryFromUuid = function(uuid) {
 
 
 // -------------------------------------------------------------------
-// Bootstrapper helper class
+// ArchiveLoader helper class
 // -------------------------------------------------------------------
 
 /**
- * The Bootstrapper class...
+ * The ArchiveLoader class provides a "package-level" interface to the 
+ * StubArchive class, which the deserialization code can use to load
+ * serialized records from disk or from over a network.
  *
  * @scope    public instance constructor
- * @param    archive    The orp.archive.StubArchive instance that this bootstrapper is working for.
+ * @param    archive    The orp.archive.StubArchive instance that this ArchiveLoader is working for.
  */
-orp.archive.Bootstrapper = function(archive) {
+orp.archive.ArchiveLoader = function(archive) {
   this._archive = archive;
 };
 
 
 // -------------------------------------------------------------------
-// Bootstrapper private methods 
+// ArchiveLoader private methods 
 // -------------------------------------------------------------------
 
 /**
- * Returns the instance of orp.archive.StubArchive that this Bootstrapper is working for.
+ * Returns the instance of orp.archive.StubArchive that this ArchiveLoader is working for.
  *
  * @scope    private instance method
  * @return   An instance of orp.archive.StubArchive.
  */
-orp.archive.Bootstrapper.prototype._getArchive = function() {
+orp.archive.ArchiveLoader.prototype._getArchive = function() {
   return this._archive;
 };
 
 
 // -------------------------------------------------------------------
-// Bootstrapper public methods
+// ArchiveLoader public methods
 // -------------------------------------------------------------------
 
 /**
@@ -824,7 +797,7 @@ orp.archive.Bootstrapper.prototype._getArchive = function() {
  * @scope    public instance method
  * @return   A World object. 
  */
-orp.archive.Bootstrapper.prototype.getWorld = function() {
+orp.archive.ArchiveLoader.prototype.getWorld = function() {
   return this._getArchive().getWorld();
 };
 
@@ -838,7 +811,7 @@ orp.archive.Bootstrapper.prototype.getWorld = function() {
  * @param    inUuid    The UUID of the item to be returned. 
  * @return   The item identified by the given UUID.
  */
-orp.archive.Bootstrapper.prototype.getItemFromUuidOrBootstrapItem = function(uuid) {
+orp.archive.ArchiveLoader.prototype.getItemFromUuidOrBootstrapItem = function(uuid) {
   var archive = this._getArchive();
   
   var item = archive.getItemFromUuid(uuid);
@@ -858,7 +831,7 @@ orp.archive.Bootstrapper.prototype.getItemFromUuidOrBootstrapItem = function(uui
  * @param    uuid    The UUID of the entry to be returned. 
  * @return   The entry identified by the given UUID.
  */
-orp.archive.Bootstrapper.prototype.getEntryFromUuidOrBootstrapEntry = function(uuid) {
+orp.archive.ArchiveLoader.prototype.getEntryFromUuidOrBootstrapEntry = function(uuid) {
   var archive = this._getArchive();
 
   var entry = archive._hashTableOfEntriesKeyedByUuid[uuid];
@@ -876,7 +849,7 @@ orp.archive.Bootstrapper.prototype.getEntryFromUuidOrBootstrapEntry = function(u
  * @scope    public instance method
  * @param    record    An orp.model.Record object. 
  */
-orp.archive.Bootstrapper.prototype.addRecordToChronologicalList = function(record) {
+orp.archive.ArchiveLoader.prototype.addRecordToChronologicalList = function(record) {
   var archive = this._getArchive();
   archive._chronologicalListOfRecords.push(record);
 };
@@ -889,7 +862,7 @@ orp.archive.Bootstrapper.prototype.addRecordToChronologicalList = function(recor
  * @param    user    An orp.model.Item object. 
  * @param    userPasswordHash    A string with the user's password hash. 
  */
-orp.archive.Bootstrapper.prototype.addUserToListOfUsers = function(user, userPasswordHash) {
+orp.archive.ArchiveLoader.prototype.addUserToListOfUsers = function(user, userPasswordHash) {
   var archive = this._getArchive();
   archive._listOfUsers.push(user);
   archive._hashTableOfUserAuthenticationInfo[user.getUuid()] = userPasswordHash;
@@ -903,7 +876,7 @@ orp.archive.Bootstrapper.prototype.addUserToListOfUsers = function(user, userPas
  * @param    uuid    The UUID of the item or entry to be returned. 
  * @return   The item or entry identified by the given UUID.
  */
-orp.archive.Bootstrapper.prototype.getContentRecordFromUuid = function(uuid) {
+orp.archive.ArchiveLoader.prototype.getContentRecordFromUuid = function(uuid) {
   var archive = this._getArchive();
 
   var item = archive.getItemFromUuid(uuid);
