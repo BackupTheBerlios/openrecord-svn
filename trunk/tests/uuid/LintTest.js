@@ -55,12 +55,10 @@ function tearDown() {
 
 function testJsLintOnOpenRecordCode() {
   var listOfSourceCodeFiles = [
-    "CsvParser.js",
-    "DateValue.js",
-    "LintTool.js",
-    "Util.js",
-    "XmlConverter.js"];
-  var prefix = "../../../source/util/";
+    "Uuid.js",
+    "RandomUuid.js",
+    "TimeBasedUuid.js"];
+  var prefix = "../../../source/uuid/";
   var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
   var message = "Lint check \n" + errorReport;
   assertTrue(message, !errorReport);

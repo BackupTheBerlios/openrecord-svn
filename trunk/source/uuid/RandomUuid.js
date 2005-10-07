@@ -33,8 +33,8 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.util.RandomUuid");
-dojo.require("orp.util.Uuid");
+dojo.provide("orp.uuid.RandomUuid");
+dojo.require("orp.uuid.Uuid");
 dojo.require("orp.util.Util");
 dojo.require("orp.lang.Lang");
 
@@ -58,25 +58,25 @@ dojo.require("orp.lang.Lang");
  *
  * Examples:
  * <pre>
- *   var uuid = new orp.util.RandomUuid();
- *   var uuid = new orp.util.RandomUuid("3B12F1DF-5232-4804-897E-917BF397618A");
- *   var uuid = new orp.util.RandomUuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
+ *   var uuid = new orp.uuid.RandomUuid();
+ *   var uuid = new orp.uuid.RandomUuid("3B12F1DF-5232-4804-897E-917BF397618A");
+ *   var uuid = new orp.uuid.RandomUuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
  * </pre>
  *
  * @scope    public instance constructor
  * @param    uuidString    A 36-character string that conforms to the UUID spec. 
  * @namedParam    uuidString    A 36-character string that conforms to the UUID spec. 
  */
-orp.util.RandomUuid = function(namedParameters) {
-  orp.util.Uuid.call(this);
+orp.uuid.RandomUuid = function(namedParameters) {
+  orp.uuid.Uuid.call(this);
   var uuidString;
   if (namedParameters) {
     if (dojo.lang.isString(namedParameters)) {
       uuidString = namedParameters;
     } else {
       if (dojo.lang.isObject(namedParameters)) {
-        uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
-        orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [orp.util.Uuid.NamedParameters.uuidString]));
+        uuidString = namedParameters[orp.uuid.Uuid.NamedParameters.uuidString];
+        orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [orp.uuid.Uuid.NamedParameters.uuidString]));
       } else {
         orp.lang.assert(false);
       }
@@ -87,10 +87,10 @@ orp.util.RandomUuid = function(namedParameters) {
   } else {
     this._uuidString = this._generateUuidString();
   }
-  orp.lang.assert(this.getVersion() == orp.util.Uuid.Version.RANDOM);
+  orp.lang.assert(this.getVersion() == orp.uuid.Uuid.Version.RANDOM);
 };
 
-dj_inherits(orp.util.RandomUuid, orp.util.Uuid);  // makes RandomUuid be a subclass of Uuid
+dj_inherits(orp.uuid.RandomUuid, orp.uuid.Uuid);  // makes RandomUuid be a subclass of Uuid
 
 
 // -------------------------------------------------------------------
@@ -103,11 +103,11 @@ dj_inherits(orp.util.RandomUuid, orp.util.Uuid);  // makes RandomUuid be a subcl
  * @scope    public instance method
  * @return   True if the UUID is valid, or false if it is not.
  */
-orp.util.RandomUuid.prototype.isValid = function() {
+orp.uuid.RandomUuid.prototype.isValid = function() {
   try {
-    orp.lang.assert(orp.util.Uuid.prototype.isValid.call(this));
-    orp.lang.assert(this.getVersion() == orp.util.Uuid.Version.RANDOM);
-    orp.lang.assert(this.getVariant() == orp.util.Uuid.Variant.DCE);
+    orp.lang.assert(orp.uuid.Uuid.prototype.isValid.call(this));
+    orp.lang.assert(this.getVersion() == orp.uuid.Uuid.Version.RANDOM);
+    orp.lang.assert(this.getVariant() == orp.uuid.Uuid.Variant.DCE);
     return true;
   } catch (e) {
     return false;
@@ -126,7 +126,7 @@ orp.util.RandomUuid.prototype.isValid = function() {
  * @scope    public instance method
  * @return   Returns a 36-character string, which will look something like "3B12F1DF-5232-4804-897E-917BF397618A".
  */
-orp.util.RandomUuid.prototype._generateUuidString = function() {
+orp.uuid.RandomUuid.prototype._generateUuidString = function() {
   var hyphen = "-";
   var versionCodeForRandomlyGeneratedUuids = "4"; // 8 == binary2hex("0100")
   var variantCodeForDCEUuids = "8"; // 8 == binary2hex("1000")

@@ -404,7 +404,7 @@ Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
        |          | (0.25+) |  1. try to get djConfig.debugAtAllCosts to work (see sandbox.html)
 brian  |          | (0.25+) |  2. replace orpBindAsEventListener() with dojo.event.connect()
-       |          |         |  3. move UUID files from source/util to source/uuid
+brian  |          | 0.1  IED|  3. move UUID files from source/util to source/uuid
 brian  | 0.5  IED | (0.5+)  |  4. Make Item.js use namedParameter based API
 brian  |          | 0.5  IED|  5. split half the code in source/model off into source/_____
 brian  |          | (0.25+) |  6. use terms Serialize and Deserialize for that code (replace some Dehydrate and Rehydrate) 

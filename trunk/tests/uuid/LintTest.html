@@ -11,31 +11,16 @@
 -->
 
   <head>
-    <title>Util Test Suite</title>
+    <title>Unit tests using jslint</title>
 
     <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
-    <script type="text/javascript">
-      function suite() {
-        var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestSuite(utilTestSuite());
-        return testSuite;
-      }
-      
-      function utilTestSuite() {
-        var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestPage("../../../tests/util/CsvParserTest.html");
-        testSuite.addTestPage("../../../tests/util/DateValueTest.html");
-        testSuite.addTestPage("../../../tests/util/LintTest.html");
-        testSuite.addTestPage("../../../tests/util/UtilTest.html");
-        testSuite.addTestPage("../../../tests/util/XmlConverterTest.html");
-        testSuite.addTestPage("../../../tests/util/XmlConverterMultiplePassesTest.html");
-        return testSuite;
-      }
-    </script>
+    <script type="text/javascript" src="../../third_party/dojo/dojo-0.1.0/dojo.js"></script>
+    <script type="text/javascript" src="../../third_party/jslint/fulljslint.js"></script>
+    <script type="text/javascript" src="LintTest.js"></script>
   </head>
   
   <body>
-    <h1>Util Test Suite</h1>
+    <h1>Unit tests using jslint</h1>
 
     <p>This page is used to run unit tests for the JavaScript code in the 
     OpenRecord project.</p>

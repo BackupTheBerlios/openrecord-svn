@@ -11,7 +11,7 @@
 -->
 
   <head>
-    <title>Util Test Suite</title>
+    <title>UUID Test Suite</title>
 
     <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
     <script type="text/javascript">
@@ -23,19 +23,15 @@
       
       function utilTestSuite() {
         var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestPage("../../../tests/util/CsvParserTest.html");
-        testSuite.addTestPage("../../../tests/util/DateValueTest.html");
-        testSuite.addTestPage("../../../tests/util/LintTest.html");
-        testSuite.addTestPage("../../../tests/util/UtilTest.html");
-        testSuite.addTestPage("../../../tests/util/XmlConverterTest.html");
-        testSuite.addTestPage("../../../tests/util/XmlConverterMultiplePassesTest.html");
+        testSuite.addTestPage("../../../tests/uuid/LintTest.html");
+        testSuite.addTestPage("../../../tests/uuid/UuidTest.html");
         return testSuite;
       }
     </script>
   </head>
   
   <body>
-    <h1>Util Test Suite</h1>
+    <h1>UUID Test Suite</h1>
 
     <p>This page is used to run unit tests for the JavaScript code in the 
     OpenRecord project.</p>

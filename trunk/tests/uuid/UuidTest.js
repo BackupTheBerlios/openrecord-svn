@@ -41,14 +41,15 @@ var TimeBasedUuid = null;
 function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
-  dojo.require("orp.util.Uuid");
-  dojo.require("orp.util.RandomUuid");
-  dojo.require("orp.util.TimeBasedUuid");
+  dojo.require("orp.uuid.factory");
+  dojo.require("orp.uuid.Uuid");
+  dojo.require("orp.uuid.RandomUuid");
+  dojo.require("orp.uuid.TimeBasedUuid");
   dojo.require("dojo.lang.*");
 
-  Uuid = orp.util.Uuid;
-  RandomUuid = orp.util.RandomUuid;
-  TimeBasedUuid = orp.util.TimeBasedUuid;
+  Uuid = orp.uuid.Uuid;
+  RandomUuid = orp.uuid.RandomUuid;
+  TimeBasedUuid = orp.uuid.TimeBasedUuid;
 }
 
 function tearDown() {
@@ -189,7 +190,7 @@ function testTimeBasedUuids() {
   var arrayOfParts = uuid1.split("-");
   var section4 = arrayOfParts[4];
   var firstChar = section4.charAt(0);
-  var hexFirstChar = parseInt(firstChar, orp.util.Uuid.HEX_RADIX);
+  var hexFirstChar = parseInt(firstChar, orp.uuid.Uuid.HEX_RADIX);
   binaryString = hexFirstChar.toString(2);
   var firstBit;
   if (binaryString.length == 4) {
@@ -320,12 +321,12 @@ function testInvalidUuids() {
 
 function testUuidFactory() {
   // Time-based UUIDs
-  var uuid1 = Uuid.newUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
-  var uuid2 = Uuid.newUuid("3B12F1DF-5232-1804-897E-917BF397618A");
+  var uuid1 = orp.uuid.newUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
+  var uuid2 = orp.uuid.newUuid("3B12F1DF-5232-1804-897E-917BF397618A");
 
   // Random UUIDs
-  var uuid3 = Uuid.newUuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
-  var uuid4 = Uuid.newUuid("3B12F1DF-5232-4804-897E-917BF397618A");
+  var uuid3 = orp.uuid.newUuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
+  var uuid4 = orp.uuid.newUuid("3B12F1DF-5232-4804-897E-917BF397618A");
   
   assertTrue('Time-based UUIDs return Uuid.Version.TIME_BASED', (uuid1.getVersion() == Uuid.Version.TIME_BASED));    
   assertTrue('Time-based UUIDs return Uuid.Version.TIME_BASED', (uuid2.getVersion() == Uuid.Version.TIME_BASED));    
@@ -373,7 +374,7 @@ function checkUuidValidity(uuid) {
   
   // check to see that the "UUID variant code" starts with the binary bits '10'
   var section3 = arrayOfParts[3];
-  var hex3 = parseInt(section3, orp.util.Uuid.HEX_RADIX);
+  var hex3 = parseInt(section3, orp.uuid.Uuid.HEX_RADIX);
   var binaryString = hex3.toString(2);
   // alert("section3 = " + section3 + "\n binaryString = " + binaryString);
   assertTrue('section 3 has 16 bits', binaryString.length == 16);

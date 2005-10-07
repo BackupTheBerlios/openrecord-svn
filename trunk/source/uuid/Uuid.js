@@ -34,7 +34,7 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.util.Uuid");
+dojo.provide("orp.uuid.Uuid");
 dojo.require("orp.util.Util");
 dojo.require("orp.lang.Lang");
 dojo.require("dojo.lang.*");
@@ -50,15 +50,15 @@ dojo.require("dojo.lang.*");
  *
  * Examples:
  * <pre>
- *   var uuid = new orp.util.Uuid("3B12F1DF-5232-4804-897E-917BF397618A");
- *   var uuid = new orp.util.Uuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
+ *   var uuid = new orp.uuid.Uuid("3B12F1DF-5232-4804-897E-917BF397618A");
+ *   var uuid = new orp.uuid.Uuid({uuidString: "3B12F1DF-5232-4804-897E-917BF397618A"});
  * </pre>
  *
  * @scope    public instance constructor
  * @param    uuidString    A 36-character string that conforms to the UUID spec. 
  * @namedParam    uuidString    A 36-character string that conforms to the UUID spec. 
  */
-orp.util.Uuid = function(uuidString) {
+orp.uuid.Uuid = function(uuidString) {
   this._uuidString = null;
   if (uuidString) {
     if (dojo.lang.isString(uuidString)) {
@@ -71,7 +71,7 @@ orp.util.Uuid = function(uuidString) {
         // Check for typos in parameter names
         orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, ["uuidString"]));
       } else {
-        orp.lang.assert(false, "The orp.util.Uuid() constructor must be initializated with a UUID string.");
+        orp.lang.assert(false, "The orp.uuid.Uuid() constructor must be initializated with a UUID string.");
       }
     }
     orp.lang.assert(this.isValid());
@@ -82,65 +82,26 @@ orp.util.Uuid = function(uuidString) {
 // -------------------------------------------------------------------
 // Public constants
 // -------------------------------------------------------------------
-orp.util.Uuid.HEX_RADIX = 16;
-orp.util.Uuid.Version = {
+orp.uuid.Uuid.HEX_RADIX = 16;
+orp.uuid.Uuid.Version = {
   UNKNOWN: 0,
   TIME_BASED: 1,
   DCE_SECURITY: 2,
   NAME_BASED_MD5: 3,
   RANDOM: 4,
   NAME_BASED_SHA1: 5 };
-orp.util.Uuid.Variant = {
+orp.uuid.Uuid.Variant = {
   NCS: "0",
   DCE: "10",
   MICROSOFT: "110",
   UNKNOWN: "111" };
-orp.util.Uuid.NamedParameters = {
+orp.uuid.Uuid.NamedParameters = {
   uuidString: "uuidString" };
-
-// -------------------------------------------------------------------
-// Public class methods
-// -------------------------------------------------------------------
-
-/**
- * Given a 36-character string representing a UUID, returns a new UUID object.
- *
- * @scope    public class method
- * @param    uuidString    A 36-character string that conforms to the UUID spec. 
- * @namedParam    uuidString    A 36-character string that conforms to the UUID spec. 
- * @return   A new instance of Uuid, TimeBasedUuid, or RandomUuid.
- */
-orp.util.Uuid.newUuid = function(namedParameters) {
-  dojo.require("orp.util.RandomUuid");
-  dojo.require("orp.util.TimeBasedUuid");
-  
-  var uuidString;
-  if (dojo.lang.isString(namedParameters)) {
-    uuidString = namedParameters;
-  } else {
-    orp.lang.assertType(namedParameters, Object);
-    uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
-    orp.lang.assertType(uuidString, String);
-    
-    // Check for typos in parameter names
-    orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [orp.util.Uuid.NamedParameters.uuidString]));
-  }
-
-  var uuid = new orp.util.Uuid(uuidString);
-  if (uuid.getVersion() == orp.util.Uuid.Version.TIME_BASED) {
-    uuid = new orp.util.TimeBasedUuid(uuidString);
-  }
-  if (uuid.getVersion() == orp.util.Uuid.Version.RANDOM) {
-    uuid = new orp.util.RandomUuid(uuidString);
-  }
-  return uuid;
-};
-
 
 // -------------------------------------------------------------------
 // Private class constants
 // -------------------------------------------------------------------
-orp.util.Uuid._ourVariantLookupTable = null;
+orp.uuid.Uuid._ourVariantLookupTable = null;
 
 
 // -------------------------------------------------------------------
@@ -156,7 +117,7 @@ orp.util.Uuid._ourVariantLookupTable = null;
  * @scope    public instance method
  * @return   Returns a 36-character UUID string.
  */
-orp.util.Uuid.prototype.toString = function() {
+orp.uuid.Uuid.prototype.toString = function() {
   return this._uuidString;
 };
 
@@ -167,7 +128,7 @@ orp.util.Uuid.prototype.toString = function() {
  * @scope    public instance method
  * @return   True if the UUID is valid, or false if it is not.
  */
-orp.util.Uuid.prototype.isValid = function() {
+orp.uuid.Uuid.prototype.isValid = function() {
   try {
     orp.lang.assertType(this._uuidString, String);
     orp.lang.assert(this._uuidString.length == 36);
@@ -180,7 +141,7 @@ orp.util.Uuid.prototype.isValid = function() {
     orp.lang.assert(arrayOfParts[4].length == 12);
     for (var i in arrayOfParts) {
       var part = arrayOfParts[i];
-      var integer = parseInt(part, orp.util.Uuid.HEX_RADIX);
+      var integer = parseInt(part, orp.uuid.Uuid.HEX_RADIX);
       orp.lang.assert(isFinite(integer));
     }
     return true;
@@ -194,21 +155,21 @@ orp.util.Uuid.prototype.isValid = function() {
  * Returns a version number that indicates what type of UUID this is. 
  * For example:
  * <pre>
- *   var uuid = new orp.util.Uuid("3B12F1DF-5232-4804-897E-917BF397618A");
+ *   var uuid = new orp.uuid.Uuid("3B12F1DF-5232-4804-897E-917BF397618A");
  *   var version = uuid.getVersion();
- *   orp.lang.assert(version == orp.util.Uuid.Version.TIME_BASED);
+ *   orp.lang.assert(version == orp.uuid.Uuid.Version.TIME_BASED);
  * </pre>
  *
  * @scope    public instance method
- * @return   Returns one of the enumarted orp.util.Uuid.Version values.
+ * @return   Returns one of the enumarted orp.uuid.Uuid.Version values.
  */
-orp.util.Uuid.prototype.getVersion = function() {
+orp.uuid.Uuid.prototype.getVersion = function() {
   // "3B12F1DF-5232-1804-897E-917BF397618A"
   //                ^
   //                |
   //       (version 1 == TIME_BASED)
   var versionCharacter = this._uuidString.charAt(14);
-  var versionNumber = parseInt(versionCharacter, orp.util.Uuid.HEX_RADIX);
+  var versionNumber = parseInt(versionCharacter, orp.uuid.Uuid.HEX_RADIX);
   return versionNumber;
 };
 
@@ -217,27 +178,27 @@ orp.util.Uuid.prototype.getVersion = function() {
  * Returns a variant code that indicates what type of UUID this is. 
  * For example:
  * <pre>
- *   var uuid = new orp.util.Uuid("3B12F1DF-5232-4804-897E-917BF397618A");
+ *   var uuid = new orp.uuid.Uuid("3B12F1DF-5232-4804-897E-917BF397618A");
  *   var variant = uuid.getVariant();
- *   orp.lang.assert(variant == orp.util.Uuid.Variant.DCE);
+ *   orp.lang.assert(variant == orp.uuid.Uuid.Variant.DCE);
  * </pre>
  *
  * @scope    public instance method
- * @return   Returns one of the enumarted orp.util.Uuid.Variant values.
+ * @return   Returns one of the enumarted orp.uuid.Uuid.Variant values.
  */
-orp.util.Uuid.prototype.getVariant = function() {
+orp.uuid.Uuid.prototype.getVariant = function() {
   // "3B12F1DF-5232-1804-897E-917BF397618A"
   //                     ^
   //                     |
   //         (variant "10__" == DCE)
   var variantCharacter = this._uuidString.charAt(19);
-  var variantNumber = parseInt(variantCharacter, orp.util.Uuid.HEX_RADIX);
+  var variantNumber = parseInt(variantCharacter, orp.uuid.Uuid.HEX_RADIX);
   orp.lang.assert((variantNumber >= 0) && (variantNumber <= 16));
   
-  if (!orp.util.Uuid._ourVariantLookupTable) {
-    var Variant = orp.util.Uuid.Variant;
+  if (!orp.uuid.Uuid._ourVariantLookupTable) {
+    var Variant = orp.uuid.Uuid.Variant;
     var lookupTable = [];
-    orp.util.Uuid._ourVariantLookupTable = lookupTable;
+    orp.uuid.Uuid._ourVariantLookupTable = lookupTable;
     
     lookupTable[0x0] = Variant.NCS;       // 0000
     lookupTable[0x1] = Variant.NCS;       // 0001
@@ -260,7 +221,7 @@ orp.util.Uuid.prototype.getVariant = function() {
     lookupTable[0xF] = Variant.UNKNOWN;   // 1111
   }
   
-  return orp.util.Uuid._ourVariantLookupTable[variantNumber];
+  return orp.uuid.Uuid._ourVariantLookupTable[variantNumber];
 };
 
 
@@ -273,7 +234,7 @@ orp.util.Uuid.prototype.getVariant = function() {
  *
  * @scope    private instance method
  */
-orp.util.Uuid.prototype._generateRandomEightCharacterHexString = function() {
+orp.uuid.Uuid.prototype._generateRandomEightCharacterHexString = function() {
   // PENDING: 
   // This isn't really random.  We should find some source of real 
   // randomness, and feed it to an MD5 hash algorithm.
@@ -283,13 +244,12 @@ orp.util.Uuid.prototype._generateRandomEightCharacterHexString = function() {
   // between 0 and (4,294,967,296 - 1), inclusive.
   var random32bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 32) );
   
-  var eightCharacterString = random32bitNumber.toString(orp.util.Uuid.HEX_RADIX);
+  var eightCharacterString = random32bitNumber.toString(orp.uuid.Uuid.HEX_RADIX);
   while (eightCharacterString.length < 8) {
     eightCharacterString = "0" + eightCharacterString;
   }
   return eightCharacterString;
 };
-
 
 
 // -------------------------------------------------------------------

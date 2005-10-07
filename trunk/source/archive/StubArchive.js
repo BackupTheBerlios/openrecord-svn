@@ -37,8 +37,9 @@ dojo.require("orp.model.World");
 dojo.require("orp.model.Item");
 dojo.require("orp.model.Entry");
 dojo.require("orp.model.Transaction");
-dojo.require("orp.util.TimeBasedUuid");
 dojo.require("orp.util.DateValue");
+// dojo.require("orp.uuid.Uuid");
+dojo.require("orp.uuid.TimeBasedUuid");
 dojo.require("orp.lang.Lang");
 dojo.require("orp.archive.TextEncoding");
 dojo.require("orp.archive.JsonDeserializer");
@@ -494,7 +495,7 @@ orp.archive.StubArchive.prototype.logout = function() {
  * @return   The item identified by the given UUID.
  */
 orp.archive.StubArchive.prototype.getItemFromUuid = function(uuid, observer) {
-  orp.lang.assert(dojo.lang.isString(uuid) || uuid instanceof orp.util.Uuid);
+  orp.lang.assert(dojo.lang.isString(uuid) || uuid instanceof orp.uuid.Uuid);
   
   var item = this._hashTableOfItemsKeyedByUuid[uuid];
   if (item && observer) {
@@ -667,9 +668,9 @@ orp.archive.StubArchive.prototype._throwErrorIfNoUserIsLoggedIn = function() {
  */
 orp.archive.StubArchive.prototype._generateUuid = function(node) {
   if (node) {
-    return new orp.util.TimeBasedUuid({'node': node});
+    return new orp.uuid.TimeBasedUuid({'node': node});
   } else {
-    return new orp.util.TimeBasedUuid();
+    return new orp.uuid.TimeBasedUuid();
   }
 };
 

@@ -34,7 +34,7 @@
 dojo.provide("orp.util.Util");
 dojo.require("orp.lang.Lang");
 dojo.require("dojo.lang.*");
-// dojo.require("orp.util.Uuid");
+// dojo.require("orp.uuid.Uuid");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -331,8 +331,8 @@ orp.util.isDate = function(value) {
  * @return   A boolean value. True if value is a UUID object.
  */
 orp.util.isUuid = function(value) {
-  dj_deprecated("orp.util.isUuid() is deprecated. Use orp.util.Uuid.prototype.isValid().");
-  // return (value instanceof orp.util.Uuid);
+  dj_deprecated("orp.util.isUuid() is deprecated. Use orp.uuid.Uuid.prototype.isValid().");
+  // return (value instanceof orp.uuid.Uuid);
   return true; // PENDING: FIXME.
 };
 
@@ -347,7 +347,7 @@ orp.util.isUuid = function(value) {
  * @return   A boolean value. True if value is a UUID.
  */
 orp.util.isUuidValue = function(value) {
-  dj_deprecated("orp.util.isUuidValue() is deprecated. Use orp.util.Uuid.prototype.isValid().");
+  dj_deprecated("orp.util.isUuidValue() is deprecated. Use orp.uuid.Uuid.prototype.isValid().");
   if (orp.util.isUuid(value)) {
     return true;
   }

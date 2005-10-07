@@ -34,8 +34,8 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.util.TimeBasedUuid");
-dojo.require("orp.util.Uuid");
+dojo.provide("orp.uuid.TimeBasedUuid");
+dojo.require("orp.uuid.Uuid");
 dojo.require("orp.util.Util");
 dojo.require("orp.lang.Lang");
 
@@ -64,13 +64,13 @@ dojo.require("orp.lang.Lang");
  *
  * Examples:
  * <pre>
- *   var uuid = new orp.util.TimeBasedUuid();
- *   var uuid = new orp.util.TimeBasedUuid("3B12F1DF-5232-1804-897E-917BF397618A");
- *   var uuid = new orp.util.TimeBasedUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
- *   var uuid = new orp.util.TimeBasedUuid({node: "017BF397618A"});
- *   var uuid = new orp.util.TimeBasedUuid({node: "F17BF397618A"});
- *   var uuid = new orp.util.TimeBasedUuid({hardwareNode: "017BF397618A"});
- *   var uuid = new orp.util.TimeBasedUuid({pseudoNode:   "F17BF397618A"});
+ *   var uuid = new orp.uuid.TimeBasedUuid();
+ *   var uuid = new orp.uuid.TimeBasedUuid("3B12F1DF-5232-1804-897E-917BF397618A");
+ *   var uuid = new orp.uuid.TimeBasedUuid({uuidString: "3B12F1DF-5232-1804-897E-917BF397618A"});
+ *   var uuid = new orp.uuid.TimeBasedUuid({node: "017BF397618A"});
+ *   var uuid = new orp.uuid.TimeBasedUuid({node: "F17BF397618A"});
+ *   var uuid = new orp.uuid.TimeBasedUuid({hardwareNode: "017BF397618A"});
+ *   var uuid = new orp.uuid.TimeBasedUuid({pseudoNode:   "F17BF397618A"});
  * </pre>
  *
  * @scope    public instance constructor
@@ -80,8 +80,8 @@ dojo.require("orp.lang.Lang");
  * @namedParam    hardwareNode    A 12-character hex string containing an IEEE 802.3 network node identificator. 
  * @namedParam    pseudoNode    A 12-character hex string representing a pseudoNode. 
  */
-orp.util.TimeBasedUuid = function(namedParameters) {
-  orp.util.Uuid.call(this);
+orp.uuid.TimeBasedUuid = function(namedParameters) {
+  orp.uuid.Uuid.call(this);
   var uuidString;
   if (namedParameters) {
     if (dojo.lang.isString(namedParameters)) {
@@ -90,7 +90,7 @@ orp.util.TimeBasedUuid = function(namedParameters) {
       this._uuidString = uuidString;
     } else {
       if (dojo.lang.isObject(namedParameters)) {
-        uuidString = namedParameters[orp.util.Uuid.NamedParameters.uuidString];
+        uuidString = namedParameters[orp.uuid.Uuid.NamedParameters.uuidString];
         var node = namedParameters["node"];
         var pseudoNode = namedParameters["pseudoNode"];
         var hardwareNode = namedParameters["hardwareNode"];
@@ -105,7 +105,7 @@ orp.util.TimeBasedUuid = function(namedParameters) {
         if (node || pseudoNode || hardwareNode) {
           orp.lang.assert((node || pseudoNode).length == 12);
           var firstCharacter = (node || pseudoNode).charAt(0);
-          var firstDigit = parseInt(firstCharacter, orp.util.Uuid.HEX_RADIX);
+          var firstDigit = parseInt(firstCharacter, orp.uuid.Uuid.HEX_RADIX);
           if (hardwareNode) { 
             orp.lang.assert((firstDigit >= 0x0) && (firstDigit <= 0x7)); 
           }
@@ -123,31 +123,31 @@ orp.util.TimeBasedUuid = function(namedParameters) {
     this._uuidString = this._generateUuidString();
   }
     
-  orp.lang.assert(this.getVersion() == orp.util.Uuid.Version.TIME_BASED);
+  orp.lang.assert(this.getVersion() == orp.uuid.Uuid.Version.TIME_BASED);
 };
 
-dj_inherits(orp.util.TimeBasedUuid, orp.util.Uuid);  // makes TimeBasedUuid be a subclass of Uuid
+dj_inherits(orp.uuid.TimeBasedUuid, orp.uuid.Uuid);  // makes TimeBasedUuid be a subclass of Uuid
 
 
 // -------------------------------------------------------------------
 // Public class constants
 // -------------------------------------------------------------------
 // Number of seconds between October 15, 1582 and January 1, 1970:
-// orp.util.TimeBasedUuid.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800;
+// orp.uuid.TimeBasedUuid.GREGORIAN_CHANGE_OFFSET_IN_SECONDS = 12219292800;
 //
 // Number of hours between October 15, 1582 and January 1, 1970:
-orp.util.TimeBasedUuid.GREGORIAN_CHANGE_OFFSET_IN_HOURS = 3394248;
+orp.uuid.TimeBasedUuid.GREGORIAN_CHANGE_OFFSET_IN_HOURS = 3394248;
 
 
 // -------------------------------------------------------------------
 // Private class variables
 // -------------------------------------------------------------------
-orp.util.TimeBasedUuid._ourUuidClockSeqString = null;
-orp.util.TimeBasedUuid._ourDateValueOfPreviousUuid = null;
-orp.util.TimeBasedUuid._ourNextIntraMillisecondIncrement = 0;
+orp.uuid.TimeBasedUuid._ourUuidClockSeqString = null;
+orp.uuid.TimeBasedUuid._ourDateValueOfPreviousUuid = null;
+orp.uuid.TimeBasedUuid._ourNextIntraMillisecondIncrement = 0;
 
-orp.util.TimeBasedUuid._ourCachedMillisecondsBetween1582and1970 = null;
-orp.util.TimeBasedUuid._ourCachedHundredNanosecondIntervalsPerMillisecond = null;
+orp.uuid.TimeBasedUuid._ourCachedMillisecondsBetween1582and1970 = null;
+orp.uuid.TimeBasedUuid._ourCachedHundredNanosecondIntervalsPerMillisecond = null;
 
 
 // -------------------------------------------------------------------
@@ -160,11 +160,11 @@ orp.util.TimeBasedUuid._ourCachedHundredNanosecondIntervalsPerMillisecond = null
  * @scope    public instance method
  * @return   True if the UUID is valid, or false if it is not.
  */
-orp.util.TimeBasedUuid.prototype.isValid = function() {
+orp.uuid.TimeBasedUuid.prototype.isValid = function() {
   try {
-    orp.lang.assert(orp.util.Uuid.prototype.isValid.call(this));
-    orp.lang.assert(this.getVersion() == orp.util.Uuid.Version.TIME_BASED);
-    orp.lang.assert(this.getVariant() == orp.util.Uuid.Variant.DCE);
+    orp.lang.assert(orp.uuid.Uuid.prototype.isValid.call(this));
+    orp.lang.assert(this.getVersion() == orp.uuid.Uuid.Version.TIME_BASED);
+    orp.lang.assert(this.getVariant() == orp.uuid.Uuid.Variant.DCE);
     return true;
   } catch (e) {
     return false;
@@ -179,8 +179,8 @@ orp.util.TimeBasedUuid.prototype.isValid = function() {
  * @scope    public instance method
  * @return   Returns a 12-character string, which will look something like "917BF397618A".
  */
-orp.util.TimeBasedUuid.prototype.getNode = function() {
-  return orp.util.TimeBasedUuid._getNodeFromUuidString(this._uuidString);
+orp.uuid.TimeBasedUuid.prototype.getNode = function() {
+  return orp.uuid.TimeBasedUuid._getNodeFromUuidString(this._uuidString);
 };
 
 
@@ -191,9 +191,9 @@ orp.util.TimeBasedUuid.prototype.getNode = function() {
  * @scope    public instance method
  * @return   Returns a JavaScript Date object.
  */
-orp.util.TimeBasedUuid.prototype.getDate = function() {
+orp.uuid.TimeBasedUuid.prototype.getDate = function() {
   if (!this._date) {
-    this._date = orp.util.TimeBasedUuid._getDateFromUuidString(this._uuidString);
+    this._date = orp.uuid.TimeBasedUuid._getDateFromUuidString(this._uuidString);
   } 
   return this._date;
 };
@@ -206,9 +206,9 @@ orp.util.TimeBasedUuid.prototype.getDate = function() {
  * @scope    public instance method
  * @return   A 15-character string of hex digits.
  */
-orp.util.TimeBasedUuid.prototype.getTimestampAsHexString = function() {
+orp.uuid.TimeBasedUuid.prototype.getTimestampAsHexString = function() {
   if (!this._timestampAsHexString) {
-    this._timestampAsHexString = orp.util.TimeBasedUuid._getTimestampAsHexString(this.toString());
+    this._timestampAsHexString = orp.uuid.TimeBasedUuid._getTimestampAsHexString(this.toString());
   }
   return this._timestampAsHexString;
 };
@@ -229,11 +229,10 @@ orp.util.TimeBasedUuid.prototype.getTimestampAsHexString = function() {
  * @param    pseudoNode    Optional. A 12-character string to use as the node in the new UUID.
  * @return   Returns a 36 character string, which will look something like "3B12F1DF-5232-1804-897E-917BF397618A".
  */
-orp.util.TimeBasedUuid.prototype._generateUuidString = function(pseudoNode) {
-  var Uuid          = orp.util.Uuid;
-  var TimeBasedUuid = orp.util.TimeBasedUuid;
+orp.uuid.TimeBasedUuid.prototype._generateUuidString = function(pseudoNode) {
+  var Uuid          = orp.uuid.Uuid;
+  var TimeBasedUuid = orp.uuid.TimeBasedUuid;
   
-  // orp.util.assert(!pseudoNode || orp.util.isString(pseudoNode));
   orp.lang.assertTypeForOptionalValue(pseudoNode, String);
   if (pseudoNode) {
     orp.lang.assert(pseudoNode.length == 12);  
@@ -320,7 +319,7 @@ orp.util.TimeBasedUuid.prototype._generateUuidString = function(pseudoNode) {
  * @param    uuidString    A 36-character UUID string.
  * @return   Returns a 12-character string, which will look something like "917BF397618A".
  */
-orp.util.TimeBasedUuid._getNodeFromUuidString = function(uuidString) {
+orp.uuid.TimeBasedUuid._getNodeFromUuidString = function(uuidString) {
   var arrayOfStrings = uuidString.split('-');
   var nodeString = arrayOfStrings[4];
   return nodeString;
@@ -335,9 +334,9 @@ orp.util.TimeBasedUuid._getNodeFromUuidString = function(uuidString) {
  * @param    uuidString    A 36-character UUID string for a time-based UUID.
  * @return   Returns a JavaScript Date objects
  */
-orp.util.TimeBasedUuid._getDateFromUuidString = function(uuidString) {
-  var Uuid          = orp.util.Uuid;
-  var TimeBasedUuid = orp.util.TimeBasedUuid;
+orp.uuid.TimeBasedUuid._getDateFromUuidString = function(uuidString) {
+  var Uuid          = orp.uuid.Uuid;
+  var TimeBasedUuid = orp.uuid.TimeBasedUuid;
   
   var hexTimeLow = uuidString.split('-')[0];
   var hexTimeMid = uuidString.split('-')[1];
@@ -375,7 +374,7 @@ orp.util.TimeBasedUuid._getDateFromUuidString = function(uuidString) {
  * @scope    private class method
  * @return   A 15-character string of hex digits.
  */
-orp.util.TimeBasedUuid._getTimestampAsHexString = function(uuidString) {
+orp.uuid.TimeBasedUuid._getTimestampAsHexString = function(uuidString) {
   var arrayOfParts = uuidString.split('-');
   var hexTimeLow = arrayOfParts[0];
   var hexTimeMid = arrayOfParts[1];
@@ -400,7 +399,7 @@ orp.util.TimeBasedUuid._getTimestampAsHexString = function(uuidString) {
  * @scope    private class method
  * @param    arrayA    An array with 4 elements, each of which is a 16-bit number.
  */
-orp.util.TimeBasedUuid._carry = function(arrayA) {
+orp.uuid.TimeBasedUuid._carry = function(arrayA) {
   arrayA[2] += arrayA[3] >>> 16;
   arrayA[3] &= 0xFFFF;
   arrayA[1] += arrayA[2] >>> 16;
@@ -419,7 +418,7 @@ orp.util.TimeBasedUuid._carry = function(arrayA) {
  * @param    x    A floating point number.
  * @return   An array with 4 elements, each of which is a 16-bit number.
  */
-orp.util.TimeBasedUuid._get64bitArrayFromFloat = function(x) {
+orp.uuid.TimeBasedUuid._get64bitArrayFromFloat = function(x) {
   var result = new Array(0, 0, 0, 0);
   result[3] = x % 0x10000;
   x -= result[3];
@@ -445,11 +444,7 @@ orp.util.TimeBasedUuid._get64bitArrayFromFloat = function(x) {
  * @param    arrayB    An array with 4 elements, each of which is a 16-bit number.
  * @return   An array with 4 elements, each of which is a 16-bit number.
  */
-orp.util.TimeBasedUuid._addTwo64bitArrays = function(arrayA, arrayB) {
-  // orp.util.assert(orp.util.isArray(arrayA));
-  // orp.util.assert(arrayA.length == 4);
-  // orp.util.assert(orp.util.isArray(arrayB));
-  // orp.util.assert(arrayB.length == 4);
+orp.uuid.TimeBasedUuid._addTwo64bitArrays = function(arrayA, arrayB) {
   orp.lang.assertType(arrayA, Array);
   orp.lang.assertType(arrayB, Array);
   orp.lang.assert(arrayA.length == 4);
@@ -460,7 +455,7 @@ orp.util.TimeBasedUuid._addTwo64bitArrays = function(arrayA, arrayB) {
   result[2] = arrayA[2] + arrayB[2];
   result[1] = arrayA[1] + arrayB[1];
   result[0] = arrayA[0] + arrayB[0];
-  orp.util.TimeBasedUuid._carry(result);
+  orp.uuid.TimeBasedUuid._carry(result);
   return result;
 };
 
@@ -475,13 +470,9 @@ orp.util.TimeBasedUuid._addTwo64bitArrays = function(arrayA, arrayB) {
  * @param    arrayB    An array with 4 elements, each of which is a 16-bit number.
  * @return   An array with 4 elements, each of which is a 16-bit number.
  */
-orp.util.TimeBasedUuid._multiplyTwo64bitArrays = function(arrayA, arrayB) {
-  var TimeBasedUuid = orp.util.TimeBasedUuid;
+orp.uuid.TimeBasedUuid._multiplyTwo64bitArrays = function(arrayA, arrayB) {
+  var TimeBasedUuid = orp.uuid.TimeBasedUuid;
 
-  //orp.util.assert(orp.util.isArray(arrayA));
-  //orp.util.assert(arrayA.length == 4);
-  //orp.util.assert(orp.util.isArray(arrayB));
-  //orp.util.assert(arrayB.length == 4);
   orp.lang.assertType(arrayA, Array);
   orp.lang.assertType(arrayB, Array);
   orp.lang.assert(arrayA.length == 4);
@@ -534,7 +525,7 @@ orp.util.TimeBasedUuid._multiplyTwo64bitArrays = function(arrayA, arrayB) {
  * @param    desiredLength    The number of characters the return string should have.
  * @return   A string.
  */
-orp.util.TimeBasedUuid._padWithLeadingZeros = function(string, desiredLength) {
+orp.uuid.TimeBasedUuid._padWithLeadingZeros = function(string, desiredLength) {
   while (string.length < desiredLength) {
     string = "0" + string;
   }

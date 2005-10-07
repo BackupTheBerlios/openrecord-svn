@@ -63,8 +63,8 @@ dojo.require("orp.archive.ArchiveLoader");
  * @scope    public instance constructor
  * @param    inJsonRepositoryString    A JSON string literal representing the world of items. 
  */
-orp.archive.DeltaArchive = function(repositoryName, pathToTrunkDirectory, optionalDefaultOverrides) {
-  orp.archive.StubArchive.call(this, pathToTrunkDirectory, optionalDefaultOverrides);
+orp.archive.DeltaArchive = function(repositoryName, pathToTrunkDirectory) {
+  orp.archive.StubArchive.call(this, pathToTrunkDirectory);
   this._repositoryName = repositoryName;
   this._pathToTrunkDirectory = "";
   if (pathToTrunkDirectory) {

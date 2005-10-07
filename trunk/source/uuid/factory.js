@@ -1,8 +1,9 @@
 /*****************************************************************************
- LintTest.js
+ factory.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -27,46 +28,57 @@
  liability, or tort (including negligence), arising in any way out of or in 
  connection with the use or distribution of the work.
 *****************************************************************************/
- 
-// -------------------------------------------------------------------
-// Dependencies, expressed in the syntax that JSLint understands:
-// 
-/*global LintTool, assertTrue, setUp, tearDown */
-// -------------------------------------------------------------------
 
 
 // -------------------------------------------------------------------
-// setUp and tearDown
+// Provides and Requires
 // -------------------------------------------------------------------
-
-function setUp() {
-  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
-  dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.util.LintTool");
-}
-
-function tearDown() {
-}
+dojo.provide("orp.uuid.factory");
+dojo.require("orp.uuid.Uuid");
+dojo.require("orp.uuid.RandomUuid");
+dojo.require("orp.uuid.TimeBasedUuid");
+dojo.require("orp.util.Util");
+dojo.require("orp.lang.Lang");
+dojo.require("dojo.lang.*");
 
 
 // -------------------------------------------------------------------
-// Test functions
+// Public functions
 // -------------------------------------------------------------------
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "CsvParser.js",
-    "DateValue.js",
-    "LintTool.js",
-    "Util.js",
-    "XmlConverter.js"];
-  var prefix = "../../../source/util/";
-  var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
-}
+/**
+ * Given a 36-character string representing a UUID, returns a new UUID object.
+ *
+ * @scope    public class method
+ * @param    uuidString    A 36-character string that conforms to the UUID spec. 
+ * @namedParam    uuidString    A 36-character string that conforms to the UUID spec. 
+ * @return   A new instance of Uuid, TimeBasedUuid, or RandomUuid.
+ */
+orp.uuid.newUuid = function(namedParameters) {
+  dojo.require("orp.uuid.RandomUuid");
+  dojo.require("orp.uuid.TimeBasedUuid");
+  
+  var uuidString;
+  if (dojo.lang.isString(namedParameters)) {
+    uuidString = namedParameters;
+  } else {
+    orp.lang.assertType(namedParameters, Object);
+    uuidString = namedParameters[orp.uuid.Uuid.NamedParameters.uuidString];
+    orp.lang.assertType(uuidString, String);
+    
+    // Check for typos in parameter names
+    orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [orp.uuid.Uuid.NamedParameters.uuidString]));
+  }
 
-
+  var uuid = new orp.uuid.Uuid(uuidString);
+  if (uuid.getVersion() == orp.uuid.Uuid.Version.TIME_BASED) {
+    uuid = new orp.uuid.TimeBasedUuid(uuidString);
+  }
+  if (uuid.getVersion() == orp.uuid.Uuid.Version.RANDOM) {
+    uuid = new orp.uuid.RandomUuid(uuidString);
+  }
+  return uuid;
+};
 
 // -------------------------------------------------------------------
 // End of file

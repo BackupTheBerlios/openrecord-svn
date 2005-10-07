@@ -35,7 +35,7 @@
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.model.Record");
-dojo.require("orp.util.TimeBasedUuid");
+dojo.require("orp.uuid.TimeBasedUuid");
 dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
@@ -60,15 +60,15 @@ dojo.require("orp.lang.Lang");
 orp.model.Record = function(world, uuid) {
   if (dojo.lang.isString(uuid)) {
     var uuidString = uuid;
-    uuid = new orp.util.TimeBasedUuid(uuidString);
-    orp.lang.assert(uuid instanceof orp.util.TimeBasedUuid);
+    uuid = new orp.uuid.TimeBasedUuid(uuidString);
+    orp.lang.assert(uuid instanceof orp.uuid.TimeBasedUuid);
   }
 
   // Unfortunately, we need to treat 'world' and 'uuid' as 'Optional'. 
   // I think this constructor is invoked by dj_inherits() calls 
   // (in ContentRecord, Vote, and Ordinal), which do not pass
   // in any values for world and uuid.
-  orp.lang.assertTypeForOptionalValue(uuid, orp.util.TimeBasedUuid);
+  orp.lang.assertTypeForOptionalValue(uuid, orp.uuid.TimeBasedUuid);
   orp.lang.assertTypeForOptionalValue(world, orp.model.World);
   
   this._world = world;
