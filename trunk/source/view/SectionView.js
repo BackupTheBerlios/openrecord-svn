@@ -417,7 +417,7 @@ orp.view.SectionView.prototype.observedItemHasChanged = function(item) {
   var myQuery = this.getQuerySpec();
   orp.lang.assert(item == myQuery);
   var pluginItem = this._pluginView.getPluginItem();
-  this._pluginView.endOfLife();
+  this._pluginView.destroy();
   this._pluginView = this.getPluginInstanceFromPluginItem(pluginItem, this._pluginDiv);
   this.refresh();
 };
@@ -444,7 +444,7 @@ orp.view.SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject
   if (this._pluginView.getPluginItem() == newPluginViewItem) { 
     return;
   } else {
-    this._pluginView.endOfLife();
+    this._pluginView.destroy();
     this._pluginView = this.getPluginInstanceFromPluginItem(newPluginViewItem, this._pluginDiv);
 
     var oldEntry = this._section.getSingleEntryFromAttribute(attributeCalledPluginView);
@@ -514,7 +514,7 @@ orp.view.SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
     // query item, and then the plugin itself can know what to do when the
     // query item changes.  
     var pluginItem = this._pluginView.getPluginItem();
-    this._pluginView.endOfLife();
+    this._pluginView.destroy();
     this._pluginView = this.getPluginInstanceFromPluginItem(pluginItem, this._pluginDiv);
 
     this.refresh();

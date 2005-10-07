@@ -119,7 +119,7 @@ orp.view.PluginView.prototype.getQuerySpec = function() {
  *
  * @scope    public instance method
  */
-orp.view.PluginView.prototype.endOfLife = function() {
+orp.view.PluginView.prototype.destroy = function() {
   orp.view.View.removeChildrenOfElement(this.getHtmlElement());
 };
 

@@ -411,7 +411,7 @@ brian  |          | 0.35 IED|  6. use terms Serialize and Deserialize for that c
        |          |         |  7. merge StubArchive + DeltaArchive, and re-name the result
 brian  |          | 0.25 IED|  8. create a FakeStorage class, + rename FileSaver + HttpSaver
        |          |         |     update unit tests to use the FakeStorage instead of StubArchive
-       |          |         |  9. change "endOfLife()" to "destroy()"
+brian  |          | 0    IED|  9. change "endOfLife()" to "destroy()"
        |          |         | 10. Rationalize the View API and document public API
 mignon | 1    IED |         | 11. Rationalize the ViewPlugin API
 mignon | 0.25 IED |         | 12. Create a "view_plugins" directory & change "TablePlugin" to "TableView", etc. 

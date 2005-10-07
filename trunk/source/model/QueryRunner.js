@@ -179,7 +179,7 @@ orp.model.QueryRunner.prototype.doesItemMatch = function(item) {
  *
  * @scope    public instance method
  */
-orp.model.QueryRunner.prototype.endOfLife = function() {
+orp.model.QueryRunner.prototype.destroy = function() {
   this.getWorld()._unregisterQueryRunner(this);
 };
 
