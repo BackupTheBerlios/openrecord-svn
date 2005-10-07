@@ -95,7 +95,7 @@ orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
  */
 orp.archive.DeltaArchive.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   this._initialize(world);
-  this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
+  this._loadAxiomaticItemsFromFileAtURL(this._axiomaticJsonFileURL);
 
   var repositoryFileName = this._repositoryName + ".json";
   var repositoryUrl = "";
@@ -116,10 +116,10 @@ orp.archive.DeltaArchive.prototype.setWorldAndLoadAxiomaticItems = function(worl
 // -------------------------------------------------------------------
 
 /**
- * Loads a world of items from a dehydrated JSON string.
+ * Loads a world of items from a serialized JSON string.
  *
  * Given a world of items in JSON format, bootstraps new 
- * instances of items corresponding to the dehydrated data.
+ * instances of items corresponding to the serialized data.
  * 
  * @scope    private instance method
  * @param    jsonRepositoryString    A JSON string literal representing the world of items. 

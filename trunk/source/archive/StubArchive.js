@@ -63,7 +63,7 @@ dojo.require("orp.archive.JsonDeserializer");
  */
 orp.archive.StubArchive = function(pathToTrunkDirectory) {
   var fileName = "2005_june_axiomatic_items.json";
-  var relUrlForAxiomaticFile = "source/model/" + fileName;
+  var relativeUrlForAxiomaticFile = "source/model/" + fileName;
   if (pathToTrunkDirectory) {
     this._needCompletePath = true;
     var thisUrl = window.location.pathname; //e.g. /openrecord/trunk/source/model/TestRepositoryWriting.html.
@@ -71,10 +71,10 @@ orp.archive.StubArchive = function(pathToTrunkDirectory) {
     arrayOfPathComponents.pop();
     var thisDirectory = arrayOfPathComponents.join('/'); //e.g. /openrecord/trunk/source/model
     this._completePathToTrunkDirectory = thisDirectory + '/' + pathToTrunkDirectory;
-    this._dehydratedAxiomFileURL = this._completePathToTrunkDirectory + '/' + relUrlForAxiomaticFile;
+    this._axiomaticJsonFileURL = this._completePathToTrunkDirectory + '/' + relativeUrlForAxiomaticFile;
   } else {
     this._needCompletePath = false;
-    this._dehydratedAxiomFileURL = relUrlForAxiomaticFile;    
+    this._axiomaticJsonFileURL = relativeUrlForAxiomaticFile;    
   }
 };
 
@@ -118,7 +118,7 @@ orp.archive.StubArchive.prototype._initialize = function(world) {
  */
 orp.archive.StubArchive.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   this._initialize(world);
-  this._loadAxiomaticItemsFromFileAtURL(this._dehydratedAxiomFileURL);
+  this._loadAxiomaticItemsFromFileAtURL(this._axiomaticJsonFileURL);
 };
 
 
@@ -513,8 +513,8 @@ orp.archive.StubArchive.prototype.getItemFromUuid = function(uuid, observer) {
  */
 orp.archive.StubArchive.prototype._saveChangesToServer = function () {
   // The StubArchive doesn't ever actually talk to a server.
-  // Other VirtualServer implementations would be expected to actually
-  // implement this method such that it saves changes to the server
+  // Other orp.archive implementations would be expected to actually
+  // implement this method such that it saves changes to the server.
   var listOfChangesMade = this._currentTransaction.getRecords();
   this._currentTransaction = null;
   return listOfChangesMade;

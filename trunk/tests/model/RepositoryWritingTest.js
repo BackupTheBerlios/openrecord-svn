@@ -109,17 +109,17 @@ function testAppendToFile() {
 }
 
 function testCreateNewRepository() {
-  var virtualServer = new orp.archive.DeltaArchive(fileName, pathToTrunkDirectoryFromThisDirectory);
+  var archive = new orp.archive.DeltaArchive(fileName, pathToTrunkDirectoryFromThisDirectory);
   var overwriteIfExists = true;
-  virtualServer._createNewRepository(overwriteIfExists);
+  archive._createNewRepository(overwriteIfExists);
   assertTrue("Contents should be '{ \"format\": \"2005_JUNE_CHRONOLOGICAL_LIST\", ...'.", fileHasExpectedContents(expectedRepositoryHeader));
 }
 
 function testAppendToRepository() {
-  var virtualServer = new orp.archive.DeltaArchive(fileName, pathToTrunkDirectoryFromThisDirectory);
+  var archive = new orp.archive.DeltaArchive(fileName, pathToTrunkDirectoryFromThisDirectory);
   var overwriteIfExists = true;
-  virtualServer._createNewRepository(overwriteIfExists);
-  var world = new orp.model.World(virtualServer);
+  archive._createNewRepository(overwriteIfExists);
+  var world = new orp.model.World(archive);
   var listOfUsers = world.getUsers();
   var mignon = null;
   for (var key in listOfUsers) {

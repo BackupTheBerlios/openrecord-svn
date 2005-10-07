@@ -54,8 +54,8 @@ dojo.require("dojo.lang.*");
  * Instances of the Entry class hold literal values (like strings
  * and numbers), or reference values (pointers to Items).
  *
- * WARNING: This constructor method should be called ONLY from a 
- * VirtualServer implementation.
+ * WARNING: This constructor method should be called ONLY from an 
+ * orp.archive implementation.
  *
  * If you're writing code in a view class, instead of calling this
  * constructor, call a method on Item, like item.addAttributeEntry()
@@ -85,12 +85,12 @@ dj_inherits(orp.model.Entry, orp.model.ContentRecord);  // makes Entry be a subc
 /**
  * Initializes a new entry that has just been created by a user action.
  *
- * WARNING: This method should be called ONLY from a 
- * VirtualServer implementation.
+ * WARNING: This method should be called ONLY from an orp.archive
+ * implementation.
  *
- * This method is NOT used for setting the properties of entrys that
- * are being rehydrated from a dehydrated JSON string.  For that, you
- * need to call entry.rehydrate();
+ * This method is NOT used for setting the properties of Entries that
+ * are being revived from a serialized JSON string.  For that, you
+ * need to call entry._revive();
  *
  * @scope    protected instance method
  * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry replaces. 
@@ -136,12 +136,12 @@ orp.model.Entry.prototype._initialize = function(item, previousEntry, attribute,
 /**
  * Initializes a new entry that has just been created by a user action.
  *
- * WARNING: This method should be called ONLY from a 
- * VirtualServer implementation.
+ * WARNING: This method should be called ONLY from an orp.archive 
+ * implementation.
  *
  * This method is NOT used for setting the properties of entrys that
- * are being rehydrated from a dehydrated JSON string.  For that, you
- * need to call entry.rehydrate();
+ * are being revived from a serialized JSON string.  For that, you
+ * need to call entry._revive();
  *
  * @scope    protected instance method
  * @param    previousEntry    The entry that this entry will replace. Can be null.
@@ -165,13 +165,11 @@ orp.model.Entry.prototype._initializeConnection = function(previousEntry, itemOn
 
 
 /**
- * Sets the properties of a newly rehydrated entry object.
+ * Sets the properties of a newly deserialized Entry object.
  *
- * WARNING: This method should be called ONLY from a 
- * VirtualServer implementation.
- *
- * This method should only be called from VirtualServer code that is
- * rehydrating dehydrated entry objects. 
+ * WARNING: This method should be called ONLY from an orp.archive
+ * implementation. This method should only be called from orp.archive
+ * code that is reviving serialized Entry objects. 
  *
  * @scope    protected instance method
  * @param    item    The item that this is an entry of. 
@@ -180,7 +178,7 @@ orp.model.Entry.prototype._initializeConnection = function(previousEntry, itemOn
  * @param    previousEntry    Optional. An old entry that this entry replaces. 
  * @param    type    Optional. An item representing a data type. 
  */
-orp.model.Entry.prototype._rehydrate = function(item, attribute, value, previousEntry, type) {
+orp.model.Entry.prototype._revive = function(item, attribute, value, previousEntry, type) {
   this._item = item;
   if (previousEntry) {
     this._previousEntry = previousEntry;
@@ -195,7 +193,7 @@ orp.model.Entry.prototype._rehydrate = function(item, attribute, value, previous
   this._type = type;
 
   if (this._item instanceof orp.model.Item) {
-    this._item._addRehydratedEntry(this, this._attribute);
+    this._item._addRevivedEntry(this, this._attribute);
   } else {
     orp.lang.assertType(this._item, Array);
     orp.lang.assertType(this._attribute, Array);
@@ -204,8 +202,8 @@ orp.model.Entry.prototype._rehydrate = function(item, attribute, value, previous
     
     var firstItem = this._item[0];
     var secondItem = this._item[1];
-    firstItem._addRehydratedEntry(this, this._attribute[0]);
-    secondItem._addRehydratedEntry(this, this._attribute[1]);
+    firstItem._addRevivedEntry(this, this._attribute[0]);
+    secondItem._addRevivedEntry(this, this._attribute[1]);
   }
 };
 

@@ -62,18 +62,17 @@ dojo.require("dojo.lang.*");
  * a world to edit the items there.
  *
  * @scope    public instance constructor
- * @param    virtualServer    Optional. The datastore that this world gets its data from. 
+ * @param    archive    Optional. The orp.archive that this world gets its data from. 
  */
-orp.model.World = function(virtualServer) {
+orp.model.World = function(archive) {
   this._hashTableOfObserverListsKeyedByItemUuid = {};
   this._listOfListObserverTuples = [];
   
   this._registeredQueryRunners = [];
   this._currentRetrievalFilter = "RETRIEVAL_FILTER_LAST_EDIT_WINS";
 
-  var server;
-  if (virtualServer) {
-    server = virtualServer;
+  if (archive) {
+    this._archive = archive;
   } else {
     var filepath = window.location.pathname;
     var arrayOfSegments = filepath.split('/');
@@ -81,11 +80,10 @@ orp.model.World = function(virtualServer) {
     var arrayWithFilenameAndExtension = lastSegment.split('.');
     var filename = arrayWithFilenameAndExtension[0];
     var repositoryName = filename;
-    server = new orp.archive.DeltaArchive(repositoryName);
+    this._archive = new orp.archive.DeltaArchive(repositoryName);
   }
-  this._virtualServer = server;
 
-  server.setWorldAndLoadAxiomaticItems(this);
+  this._archive.setWorldAndLoadAxiomaticItems(this);
   this._loadAxiomaticItems();
 };
 
@@ -153,7 +151,7 @@ orp.model.World._TUPLE_KEY_OBSERVERS = "observers";
  */
 orp.model.World.prototype._loadAxiomaticItems = function() {
   var UUID = orp.model.World.UUID;
-  var server = this._virtualServer;
+  var server = this._archive;
 
   // load the axiomatic attributes
   this._attributeCalledName                   = server.getItemFromUuid(UUID.ATTRIBUTE_NAME);
@@ -206,7 +204,7 @@ orp.model.World.prototype._loadAxiomaticItems = function() {
  * @scope    public instance method
  */
 orp.model.World.prototype.beginTransaction = function() {
-  this._virtualServer.beginTransaction();
+  this._archive.beginTransaction();
 };
  
 
@@ -216,7 +214,7 @@ orp.model.World.prototype.beginTransaction = function() {
  * @scope    public instance method
  */
 orp.model.World.prototype.endTransaction = function() {
-  this._virtualServer.endTransaction();
+  this._archive.endTransaction();
 };
 
 
@@ -582,7 +580,7 @@ orp.model.World.prototype.getCategoryCalledTag = function() {
  * @return   True if we were able to log in the user. False if the login failed.
  */
 orp.model.World.prototype.login = function(user, authentication) {
-  return this._virtualServer.login(user, authentication);
+  return this._archive.login(user, authentication);
 };
 
 
@@ -593,7 +591,7 @@ orp.model.World.prototype.login = function(user, authentication) {
  * @return   True if the current user was logged out. False if there was no current user logged in.
  */
 orp.model.World.prototype.logout = function() {
-  return this._virtualServer.logout();
+  return this._archive.logout();
 };
 
 
@@ -608,7 +606,7 @@ orp.model.World.prototype.logout = function() {
  * @return   A list of items that represent users.
  */
 orp.model.World.prototype.getUsers = function() {
-  var listOfUsers = this._virtualServer.getUsers();
+  var listOfUsers = this._archive.getUsers();
   return this._getFilteredList(listOfUsers);
 };
 
@@ -620,7 +618,7 @@ orp.model.World.prototype.getUsers = function() {
  * @return   An item representing the user who is currently logged in.
  */
 orp.model.World.prototype.getCurrentUser = function() {
-  return this._virtualServer.getCurrentUser();
+  return this._archive.getCurrentUser();
 };
 
 
@@ -636,7 +634,7 @@ orp.model.World.prototype.getCurrentUser = function() {
  */
 orp.model.World.prototype.newUser = function(name, authentication, observer) {
   this.beginTransaction();
-  var newUser = this._virtualServer.newUser(name, authentication, observer);
+  var newUser = this._archive.newUser(name, authentication, observer);
   this.endTransaction();
   return newUser;
 };
@@ -657,7 +655,7 @@ orp.model.World.prototype.newUser = function(name, authentication, observer) {
  */
 orp.model.World.prototype.newItem = function(name, observer) {
   this.beginTransaction();
-  var item = this._virtualServer.newItem(name, observer);
+  var item = this._archive.newItem(name, observer);
   this.endTransaction();
   return item;
 };
@@ -676,7 +674,7 @@ orp.model.World.prototype.newItem = function(name, observer) {
  * @throws   Throws an Error if no user is logged in.
  */
 orp.model.World.prototype.newProvisionalItem = function(observer) {
-  return this._virtualServer.newProvisionalItem(observer);
+  return this._archive.newProvisionalItem(observer);
 };
 
 
@@ -687,7 +685,7 @@ orp.model.World.prototype.newProvisionalItem = function(observer) {
  * @param    item    The item that was provisional and just became real. 
  */
 orp.model.World.prototype._provisionalItemJustBecameReal = function(item) {
-  this._virtualServer._provisionalItemJustBecameReal(item);
+  this._archive._provisionalItemJustBecameReal(item);
 };
 
 
@@ -702,7 +700,7 @@ orp.model.World.prototype._provisionalItemJustBecameReal = function(item) {
  */
 orp.model.World.prototype.newAttribute = function(name, observer) {
   this.beginTransaction();
-  var item = this._virtualServer.newItem(name, observer);
+  var item = this._archive.newItem(name, observer);
   var categoryCalledAttribute = this.getCategoryCalledAttribute();
   item.assignToCategory(categoryCalledAttribute);
   this.endTransaction();
@@ -721,7 +719,7 @@ orp.model.World.prototype.newAttribute = function(name, observer) {
  */
 orp.model.World.prototype.newCategory = function(name, observer) {
   this.beginTransaction();
-  var item = this._virtualServer.newItem(name, observer);
+  var item = this._archive.newItem(name, observer);
   var categoryCalledCategory = this.getCategoryCalledCategory();
   item.assignToCategory(categoryCalledCategory);
   this.endTransaction();
@@ -740,7 +738,7 @@ orp.model.World.prototype.newCategory = function(name, observer) {
 orp.model.World.prototype.newQuery = function(matchingAttribute, matchingEntryOrListOfEntries) {
   orp.lang.assert(matchingAttribute instanceof orp.model.Item);
   this.beginTransaction();
-  var item = this._virtualServer.newItem("A query");
+  var item = this._archive.newItem("A query");
   var categoryCalledQuery = this.getCategoryCalledQuery();
   item.assignToCategory(categoryCalledQuery);
 
@@ -837,7 +835,7 @@ orp.model.World.prototype._unregisterQueryRunner = function(queryRunner) {
  */
 orp.model.World.prototype._newEntry = function(item, previousEntry, attribute, value, type) {
   this.beginTransaction();
-  var entry = this._virtualServer.newEntry(item, previousEntry, attribute, value, type);
+  var entry = this._archive.newEntry(item, previousEntry, attribute, value, type);
   this.endTransaction();
   return entry;
 };
@@ -856,7 +854,7 @@ orp.model.World.prototype._newEntry = function(item, previousEntry, attribute, v
  */
 orp.model.World.prototype._newConnectionEntry = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
   this.beginTransaction();
-  var entry = this._virtualServer.newConnectionEntry(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
+  var entry = this._archive.newConnectionEntry(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
   this.endTransaction();
   return entry;
 };
@@ -872,7 +870,7 @@ orp.model.World.prototype._newConnectionEntry = function(previousEntry, itemOne,
  */
 orp.model.World.prototype._newOrdinal = function(contentRecord, ordinalNumber) {
   this.beginTransaction();
-  var ordinal = this._virtualServer.newOrdinal(contentRecord, ordinalNumber);
+  var ordinal = this._archive.newOrdinal(contentRecord, ordinalNumber);
   this.endTransaction();
   return ordinal;
 };
@@ -888,7 +886,7 @@ orp.model.World.prototype._newOrdinal = function(contentRecord, ordinalNumber) {
  */
 orp.model.World.prototype._newVote = function(contentRecord, retainFlag) {
   this.beginTransaction();
-  var vote = this._virtualServer.newVote(contentRecord, retainFlag);
+  var vote = this._archive.newVote(contentRecord, retainFlag);
   this.endTransaction();
   return vote;
 };
@@ -903,7 +901,7 @@ orp.model.World.prototype._newVote = function(contentRecord, retainFlag) {
  * @return   The item identified by the given UUID.
  */
 orp.model.World.prototype.getItemFromUuid = function(uuid, observer) {
-  return (this._virtualServer.getItemFromUuid(uuid, observer));
+  return (this._archive.getItemFromUuid(uuid, observer));
 };
 
 
@@ -915,7 +913,7 @@ orp.model.World.prototype.getItemFromUuid = function(uuid, observer) {
  * @return   The entry identified by the given UUID.
  */
 orp.model.World.prototype.getEntryFromUuid = function(uuid) {
-  return (this._virtualServer._getEntryFromUuid(uuid));
+  return (this._archive._getEntryFromUuid(uuid));
 };
 
 
@@ -932,7 +930,7 @@ orp.model.World.prototype.getEntryFromUuid = function(uuid) {
  * @return   A list of items.
  */
 orp.model.World.prototype.getResultItemsForQueryRunner = function(queryRunner) {
-  var listOfItems = this._virtualServer.getResultItemsForQueryRunner(queryRunner);
+  var listOfItems = this._archive.getResultItemsForQueryRunner(queryRunner);
   return listOfItems;
 };
 
@@ -948,7 +946,7 @@ orp.model.World.prototype.getResultItemsForQueryRunner = function(queryRunner) {
  * @throws   Throws an Error if no user is logged in.
  */
 orp.model.World.prototype.setItemToBeIncludedInQueryResultList = function(item, query) {
-  this._virtualServer.setItemToBeIncludedInQueryResultList(item, query);
+  this._archive.setItemToBeIncludedInQueryResultList(item, query);
 };
 
 
@@ -962,7 +960,7 @@ orp.model.World.prototype.setItemToBeIncludedInQueryResultList = function(item, 
  * @return   A list of items.
  */
 orp.model.World.prototype.getItemsInCategory = function(category, observer) {
-  var listOfItems = this._virtualServer.getItemsInCategory(category);
+  var listOfItems = this._archive.getItemsInCategory(category);
   // listOfItems = this._getFilteredList(listOfItems); PENDING: not sure if I should call this?
   this._addListObserver(listOfItems, observer);
   return (listOfItems);

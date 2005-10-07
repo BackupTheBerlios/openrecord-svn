@@ -73,6 +73,8 @@ dj_inherits(orp.archive.JsonDeserializer, orp.archive.JsonFormat);  // makes Jso
  * @param    jsonString    A JSON string containing serialized records. 
  */
 orp.archive.JsonDeserializer.prototype.deserializeFromString = function(jsonString) {
+  
+  // See the _rehydrateRecords() method for a note on what "dehydratedRecords" means.
   var dehydratedRecords = null;
   dehydratedRecords = eval("(" + jsonString + ")");
   
@@ -103,6 +105,23 @@ orp.archive.JsonDeserializer.prototype._getArchiveLoader = function() {
 
 /**
  * Given a dehydrated list of records, rehydrates each of the records.
+ *
+ * A note on terminology: For the time being, we're using the term "dehydrated" 
+ * to refer to records in an itermediate stage of the deserialization process.
+ * When the records are represented as a text string, either in memory or
+ * in a file, we say that the records have been "serialized".  When the
+ * records are represented as instances of orp.model.Record (and its 
+ * subclasses, like orp.model.Item and orp.model.Entry), we say that the
+ * records have been completely "deserialized" or "revived".  Between the two 
+ * stages, the records pass through a "dehydrated" state, where they are 
+ * represented as "anonymous JavaScript objects".  
+ * 
+ * For example:
+ * <pre>
+ *   serializedBox = "({length: 4, width: 5})";
+ *   dehydratedBox = eval(serializedBox);
+ *   revivedBox = new orp.model.Box(dehydratedBox.length, dehydratedBox.width);
+ * </pre>
  *
  * @scope    private instance method
  * @param    listOfDehydratedRecords    A list of dehydrated records. 
@@ -197,7 +216,7 @@ orp.archive.JsonDeserializer.prototype._rehydrateRecords = function(listOfDehydr
           
           var pairOfItems = [firstItem, secondItem];
           var pairOfAttributes = [firstAttribute, secondAttribute];
-          entry._rehydrate(pairOfItems, pairOfAttributes, null, previousEntry, dataType);
+          entry._revive(pairOfItems, pairOfAttributes, null, previousEntry, dataType);
         } else {
           itemUuid = dehydratedEntry[JSON_MEMBER.ITEM];
           item = archiveLoader.getItemFromUuidOrBootstrapItem(itemUuid);
@@ -230,7 +249,7 @@ orp.archive.JsonDeserializer.prototype._rehydrateRecords = function(listOfDehydr
             default:
               orp.lang.assert(false, 'Unknown data type while _rehydrating()');
           }
-          entry._rehydrate(item, attribute, finalData, previousEntry, dataType);
+          entry._revive(item, attribute, finalData, previousEntry, dataType);
         }
         archiveLoader.addRecordToChronologicalList(entry);
       }

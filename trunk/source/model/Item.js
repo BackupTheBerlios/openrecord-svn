@@ -55,8 +55,8 @@ dojo.require("dojo.lang.*");
  * Instances of the Item class know how to store and retrieve their
  * attribute entries.
  *
- * WARNING: This constructor method should be called ONLY from a 
- * VirtualServer implementation.
+ * WARNING: This constructor method should be called ONLY from an 
+ * orp.archive implementation.
  *
  * If you're writing code in a view class, instead of calling this
  * constructor, call the newItem() method on World: world.newItem()
@@ -97,12 +97,11 @@ orp.model.Item.NamedParameters = {
 /**
  * Initializes a new item that has just been created by a user action.
  *
- * WARNING: This method should be called ONLY from a 
- * VirtualServer implementation.
+ * WARNING: This method should be called ONLY from an 
+ * orp.archive implementation.
  *
  * This method is NOT used for setting the properties of entries that
- * are being rehydrated from a dehydrated JSON string.  For that, you
- * need to call item.rehydrate();
+ * are being revived from a serialized JSON string.  
  *
  * @scope    protected instance method
  * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
@@ -727,16 +726,16 @@ orp.model.Item.prototype.removeObserver = function(observer) {
 
 /**
  * Adds a new entry to the item when the items and entries are first
- * being loaded by the backing store.
+ * being loaded from storage.
  *
  * WARNING: This method should be called ONLY from the  
- * entry._rehydrate() method.
+ * entry._revive() method.
  * 
  * @scope    protected instance method
  * @param    entry    The entry to be associated with this item. 
  * @param    attribute    The attribute that this entry is assigned to. 
  */
-orp.model.Item.prototype._addRehydratedEntry = function(entry, attribute) {
+orp.model.Item.prototype._addRevivedEntry = function(entry, attribute) {
   this._addEntryToListOfEntriesForAttribute(entry, attribute);
 };
   

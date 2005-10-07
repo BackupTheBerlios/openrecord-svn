@@ -407,7 +407,7 @@ brian  |          | (0.25+) |  2. replace orpBindAsEventListener() with dojo.eve
 brian  |          | 0.1  IED|  3. move UUID files from source/util to source/uuid
 brian  | 0.5  IED | (0.5+)  |  4. Make Item.js use namedParameter based API
 brian  |          | 0.5  IED|  5. split half the code in source/model off into source/_____
-brian  |          | (0.25+) |  6. use terms Serialize and Deserialize for that code (replace some Dehydrate and Rehydrate) 
+brian  |          | 0.35 IED|  6. use terms Serialize and Deserialize for that code (replace some Dehydrate and Rehydrate) 
        |          |         |  7. merge StubArchive + DeltaArchive, and re-name the result
 brian  |          | 0.25 IED|  8. create a FakeStorage class, + rename FileSaver + HttpSaver
        |          |         |     update unit tests to use the FakeStorage instead of StubArchive
@@ -695,7 +695,6 @@ Tasks we want to defer until after release 0.1
 ===========================       
 Issues for post iteration#2
 ===========================       
- + How should we rename "VirtualServer"?
  + How should we interoperate with other repositories(openrecord + other sources of data)?
  + Should we rename "World"?
  + BUG: Can't really create own plugins yet (e.g. UUID need to be assigned, plugin item created)

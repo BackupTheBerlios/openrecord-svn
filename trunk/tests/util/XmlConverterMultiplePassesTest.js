@@ -52,8 +52,8 @@ function setUp() {
   // var pathToTrunkDirectoryFromThisFile = "../../../";
   var pathToTrunkDirectoryFromThisFile = "../..";
   
-  var virtualServer = new orp.archive.StubArchive(pathToTrunkDirectoryFromThisFile);  
-  world = new orp.model.World(virtualServer);
+  var archive = new orp.archive.StubArchive(pathToTrunkDirectoryFromThisFile);  
+  world = new orp.model.World(archive);
   var annsPassword = "Ann's password";
   var userAnn = world.newUser("Ann Doe", annsPassword);
   world.login(userAnn, annsPassword);
