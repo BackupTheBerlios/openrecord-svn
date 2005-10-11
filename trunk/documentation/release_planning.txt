@@ -417,7 +417,7 @@ mignon | 1    IED |         | 11. Rationalize the ViewPlugin API
 mignon | 0.25 IED |         | 12. Create a "view_plugins" directory & change "TablePlugin" to "TableView", etc. 
 mignon | 2    IED |         | 13. Automatically load ViewPlugins found in the view_plugins directory 
        |          |         | 14. Make RootView subclass from View, or add comments explaining why it doesn't
-       |          |         | 15. Make DateValue subclass from Date, or wrap an internal Date object
+       |          |         | 15. Make DateValue wrap an internal Date object
 -------+----------+---------+----------------------------------------------
        |          |         | 16. Document the Data model public API
        |          |         | 17. research standard text representations for DateValues
