@@ -251,7 +251,8 @@ orp.view.MultiEntriesView.prototype._handleDrop = function(element) {
         newEntry = this._item.replaceEntryWithConnection(droppedEntry, this._attribute, otherItem, otherAttribute);
       }
     } else {
-      newEntry = this._item.replaceEntry(droppedEntry, droppedEntry.getValue(), droppedEntry.getType());
+      // newEntry = this._item.replaceEntry(droppedEntry, droppedEntry.getValue(), droppedEntry.getType());
+      newEntry = this._item.replaceEntry({previousEntry:droppedEntry, attribute:this._attribute, value:droppedEntry.getValue(), type:droppedEntry.getType()});
     }
     this._addEntryView(newEntry);
 
