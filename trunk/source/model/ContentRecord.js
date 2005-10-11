@@ -125,7 +125,7 @@ orp.model.ContentRecord.prototype.getOrdinalNumberAtCreation = function() {
  * Returns the ordinal number for this contentRecord. 
  *
  * @scope    public instance method
- * @return   A number.
+ * @return   A hex string.
  */
 orp.model.ContentRecord.prototype.getOrdinalNumber = function() {
   if (!this._setOfOrdinals || this._setOfOrdinals.length === 0) {

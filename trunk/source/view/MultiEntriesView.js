@@ -240,12 +240,17 @@ orp.view.MultiEntriesView.prototype._handleDrop = function(element) {
   if (!this.hasEntry(droppedEntry)) {
     var newEntry;
     if (droppedEntry.getType() == this.getWorld().getTypeCalledConnection()) {
-      var otherItem = droppedEntry.getConnectedItem(draggedEntryView._item);
-      var otherAttribute = droppedEntry.getAttributeForItem(otherItem);
-      // newEntry = this._item.addConnectionEntry(this._attribute,otherItem,otherAttribute);
-      newEntry = this._item.replaceEntryWithConnection(droppedEntry, this._attribute, otherItem, otherAttribute);
+      var FIXME_OCT_7_2005_EXPERIMENT = true;
+      if (FIXME_OCT_7_2005_EXPERIMENT) {
+        var inverseItem = droppedEntry.getValue();
+        var inverseAttribute = droppedEntry.getInverseAttribute();
+        newEntry = this._item.replaceEntryWithConnection(droppedEntry, this._attribute, inverseItem, inverseAttribute);
+      } else {
+        var otherItem = droppedEntry.getConnectedItem(draggedEntryView._item);
+        var otherAttribute = droppedEntry.getAttributeForItem(otherItem);
+        newEntry = this._item.replaceEntryWithConnection(droppedEntry, this._attribute, otherItem, otherAttribute);
+      }
     } else {
-      // newEntry = this._item.addNewEntryForAttribute(this._attribute,droppedEntry.getValue(),droppedEntry.getType());
       newEntry = this._item.replaceEntry(droppedEntry, droppedEntry.getValue(), droppedEntry.getType());
     }
     this._addEntryView(newEntry);

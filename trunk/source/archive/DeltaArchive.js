@@ -88,7 +88,7 @@ orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
 
 /**
  * Initializes the instance variables for a newly created DeltaArchive,
- * and does the initial loading of at least the axiomatic items.
+ * and does the initial loading of the axiomatic items.
  *
  * @scope    public instance method
  * @param    world    The world that we provide data for. 
@@ -96,7 +96,17 @@ orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY = "repositories";
 orp.archive.DeltaArchive.prototype.setWorldAndLoadAxiomaticItems = function(world) {
   this._initialize(world);
   this._loadAxiomaticItemsFromFileAtURL(this._axiomaticJsonFileURL);
+};
 
+
+/**
+ * Loads all the items in a repository. This method should only be called 
+ * after _loadAxiomaticItemsFromFileAtURL has been called, and after the 
+ * world has completely initialized itself. 
+ *
+ * @scope    public instance method
+ */
+orp.archive.DeltaArchive.prototype.loadRepository = function() {
   var repositoryFileName = this._repositoryName + ".json";
   var repositoryUrl = "";
   if (this._needCompletePath) {

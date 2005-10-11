@@ -85,6 +85,11 @@ orp.model.World = function(archive) {
 
   this._archive.setWorldAndLoadAxiomaticItems(this);
   this._loadAxiomaticItems();
+  
+  // FIXME: this is a hack
+  if (this._archive.loadRepository) {
+    this._archive.loadRepository();
+  }
 };
 
 
@@ -745,19 +750,16 @@ orp.model.World.prototype.newQuery = function(matchingAttribute, matchingEntryOr
   var attributeCalledQueryMatchingAttribute = this.getAttributeCalledQueryMatchingAttribute();
   var attributeCalledQueryMatchingValue = this.getAttributeCalledQueryMatchingValue();
   var matchingEntry;
-  // item.addEntryForAttribute(attributeCalledQueryMatchingAttribute, matchingAttribute);
   item.addEntry({attribute:attributeCalledQueryMatchingAttribute, value:matchingAttribute});
   if (matchingEntryOrListOfEntries) {
     if (dojo.lang.isArray(matchingEntryOrListOfEntries)) {
       for (var key in matchingEntryOrListOfEntries) {
         matchingEntry = matchingEntryOrListOfEntries[key];
-        // item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
         item.addEntry({attribute:attributeCalledQueryMatchingValue, value:matchingEntry});
       }
     }
     else {
       matchingEntry = matchingEntryOrListOfEntries;
-      // item.addEntryForAttribute(attributeCalledQueryMatchingValue, matchingEntry);
       item.addEntry({attribute:attributeCalledQueryMatchingValue, value:matchingEntry});
     }
   }

@@ -160,7 +160,6 @@ orp.util.LintTool.getErrorReportForCodeAtUrl = function(url) {
 orp.util.LintTool.getErrorReportFromListOfFilesnames = function(listOfFilenames, path) {
   orp.lang.assertType(listOfFilenames, Array);
   if (path) {
-    // orp.util.assert(dojo.lang.isString(path));
     orp.lang.assertType(path, String);
   } else {
     path = "";

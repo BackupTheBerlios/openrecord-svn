@@ -33,6 +33,7 @@
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.model.Entry");
+dojo.require("orp.model.ProxyEntry");
 dojo.require("orp.model.ContentRecord");
 dojo.require("orp.model.World");
 dojo.require("orp.lang.Lang");
@@ -208,6 +209,43 @@ orp.model.Entry.prototype._revive = function(item, attribute, value, previousEnt
 };
 
 
+/**
+ * Sets the properties of a newly deserialized Entry object.
+ *
+ * WARNING: This method should be called ONLY from an orp.archive
+ * implementation. This method should only be called from orp.archive
+ * code that is reviving serialized Entry objects. 
+ *
+ * @scope    protected instance method
+ * @param    firstItem    One of the two item connected by this entry.
+ * @param    firstAttribute    The attribute on firstItem to assign the entry to. 
+ * @param    secondItem    The item connected to firstItem by this entry.
+ * @param    secondAttribute    An attribute on secondItem to assign the entry to.
+ * @param    previousEntry    Optional. An old entry that this entry replaces. 
+ */
+orp.model.Entry.prototype._reviveConnection = function(firstItem, firstAttribute, secondItem, secondAttribute, previousEntry) {
+  var FIXME_OCT_7_2005_EXPERIMENT = true;
+  if (FIXME_OCT_7_2005_EXPERIMENT) {
+    if (previousEntry) {
+      this._previousEntry = previousEntry;
+      this._previousEntry._addSubsequentEntry(this);
+    } else {
+      this._previousEntry = null;
+    }
+    this._item = [firstItem, secondItem];
+    this._attribute = [firstAttribute, secondAttribute];
+    this._value = null;
+    this._type = this.getWorld().getTypeCalledConnection();
+    
+    var firstProxy = new orp.model.ProxyEntry(this, firstItem, firstAttribute, secondItem, secondAttribute);
+    var secondProxy = new orp.model.ProxyEntry(this, secondItem, secondAttribute, firstItem, firstAttribute);
+    firstItem._addRevivedEntry(firstProxy, firstAttribute);
+    secondItem._addRevivedEntry(secondProxy, secondAttribute);
+  }
+};
+
+
+
 // -------------------------------------------------------------------
 // Accessor methods
 // -------------------------------------------------------------------
@@ -266,18 +304,23 @@ orp.model.Entry.prototype.getAttribute = function() {
  * @return   An attribute item.
  */
 orp.model.Entry.prototype.getAttributeForItem = function(item) {
-  if (this._item == item) {
-    return this._attribute;
-  }
-  if (dojo.lang.isArray(this._item)) {
-    if (this._item[0] == item) {
-      return this._attribute[0];
+  var FIXME_OCT_7_2005_EXPERIMENT = true;
+  if (FIXME_OCT_7_2005_EXPERIMENT) {
+    orp.util.assert(false);  // we should never get called
+  } else {
+    if (this._item == item) {
+      return this._attribute;
     }
-    if (this._item[1] == item) {
-      return this._attribute[1];
+    if (dojo.lang.isArray(this._item)) {
+      if (this._item[0] == item) {
+        return this._attribute[0];
+      }
+      if (this._item[1] == item) {
+        return this._attribute[1];
+      }
     }
+    return null;
   }
-  return null;
 };
 
 
@@ -290,21 +333,26 @@ orp.model.Entry.prototype.getAttributeForItem = function(item) {
  * @return   The item that is connected to the given item.
  */
 orp.model.Entry.prototype.getConnectedItem = function(item) {
-  orp.lang.assert(item instanceof orp.model.Item);
-  if (this._item == item) {
-    if (this._type == this.getWorld().getTypeCalledItem()) {
-      return this._value;
+  var FIXME_OCT_7_2005_EXPERIMENT = true;
+  if (FIXME_OCT_7_2005_EXPERIMENT) {
+    orp.util.assert(false);  // we should never get called
+  } else {
+    orp.lang.assert(item instanceof orp.model.Item);
+    if (this._item == item) {
+      if (this._type == this.getWorld().getTypeCalledItem()) {
+        return this._value;
+      }
     }
+    if (dojo.lang.isArray(this._item)) {
+      if (this._item[0] == item) {
+        return this._item[1];
+      }
+      if (this._item[1] == item) {
+        return this._item[0];
+      }
+    }
+    return null;
   }
-  if (dojo.lang.isArray(this._item)) {
-    if (this._item[0] == item) {
-      return this._item[1];
-    }
-    if (this._item[1] == item) {
-      return this._item[0];
-    }
-  }
-  return null;
 };
 
 
@@ -373,7 +421,6 @@ orp.model.Entry.prototype.getDisplayString = function(callingItem) {
       break;
     case this.getWorld().getTypeCalledDate():
       var aDate = this._value;
-      // returnString = orp.util.getStringMonthDayYear(aDate);
       returnString = aDate.toShortLocaleDateString();
       break;
     case this.getWorld().getTypeCalledItem():
@@ -390,6 +437,10 @@ orp.model.Entry.prototype.getDisplayString = function(callingItem) {
       else {
         returnString = 'connection between "' + firstItem.getDisplayString() + '" and "' + secondItem.getDisplayString() + '"';
       }
+      break;
+    default:
+      // alert("this is a bad sign");
+      orp.lang.assert(false); // we should never get here
       break;
   }
   return returnString;

@@ -72,7 +72,12 @@ orp.view.EntryView = function(superview, htmlElement, item, attribute, entry, is
   // orp.util.assert((!entry) || entry instanceof orp.model.Entry);
   orp.lang.assert(item instanceof orp.model.Item);
   orp.lang.assert(attribute instanceof orp.model.Item); // PENDING need to check that attribute is an attribute
-  orp.lang.assertTypeForOptionalValue(entry, orp.model.Entry);
+  var FIXME_OCT_7_2005_EXPERIMENT = true;
+  if (FIXME_OCT_7_2005_EXPERIMENT) {
+    // could be an orp.model.Entry or an orp.model.ProxyEntry
+  } else {
+    orp.lang.assertTypeForOptionalValue(entry, orp.model.Entry);
+  }
   
   orp.view.View.call(this, superview, htmlElement, "EntryView");
 
@@ -365,10 +370,6 @@ orp.view.EntryView.prototype.startEditing = function(dontSelect,initialStr) {
         editField.type = 'text';
       }
       var listener = this; 
-      // editField.onblur = this.onBlur.orpBindAsEventListener(this);
-      // editField.onkeypress = this.onKeyPress.orpBindAsEventListener(this);
-      // editField.onkeyup = this.onKeyUp.orpBindAsEventListener(this);
-      // editField.onfocus = this.onFocus.orpBindAsEventListener(this);
       dojo.event.connect(editField, "onblur", this, "onBlur");
       dojo.event.connect(editField, "onkeypress", this, "onKeyPress");
       dojo.event.connect(editField, "onkeyup", this, "onKeyUp");
@@ -471,7 +472,6 @@ orp.view.EntryView.prototype._transformToExpectedType = function(value) {
       var entry = listOfExpectedTypeEntries[i];
       listOfTypes.push(entry.getValue());
     }
-    // return orp.view.EntryView._transformValueToExpectedType(world, value, listOfTypes);
     return world.transformValueToExpectedType(value, listOfTypes);
   }
   return value;
@@ -498,7 +498,6 @@ orp.view.EntryView.prototype._writeValue = function(value) {
         var inverseAttr = inverseAttributeEntry.getValue(this._attribute);
         this._entry = this._item.replaceEntryWithConnection(this._entry, this._attribute, value, inverseAttr);
       } else {
-        // this._entry = this._item.replaceEntryWithEntryForAttribute(this._entry, this._attribute, value);
         this._entry = this._item.replaceEntry({previousEntry:this._entry, attribute:this._attribute, value:value});
       }
       var superview = this.getSuperview();
@@ -526,7 +525,13 @@ orp.view.EntryView.prototype._getText = function(useNonBreakingSpaces) {
     return this._provisionalText;
   }
   if (this._entry) {
-    var text = this._item.getDisplayStringForEntry(this._entry);
+    var FIXME_OCT_7_2005_EXPERIMENT = true;
+    if (FIXME_OCT_7_2005_EXPERIMENT) {
+      var text = this._entry.getDisplayString();
+    } else {
+      // var text = this._item.getDisplayStringForEntry(this._entry);
+      text = this._item.getDisplayStringForEntry(this._entry);
+    }
     if (useNonBreakingSpaces) {
       var dataType = this._entry.getType();
       if (dataType != this.getWorld().getTypeCalledText()) {

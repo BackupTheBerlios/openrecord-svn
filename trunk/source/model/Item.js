@@ -212,7 +212,12 @@ orp.model.Item.prototype.replaceEntry = function(namedParameters) {
   
   orp.lang.assert(dojo.lang.isObject(previousEntry));
   if (!attribute) {
-    attribute = previousEntry.getAttributeForItem(this);
+    var FIXME_OCT_7_2005_EXPERIMENT = true;
+    if (FIXME_OCT_7_2005_EXPERIMENT) {
+      attribute = previousEntry.getAttribute();
+    } else {
+      attribute = previousEntry.getAttributeForItem(this);
+    }
   }
   return this._createNewEntry(previousEntry, attribute, value, type);
 };
@@ -287,18 +292,33 @@ orp.model.Item.prototype.replaceEntryWithConnection = function(previousEntry, my
   // If we've just been asked to replace the string "Foo" with the string "Foo",
   // then don't even bother creating a new entry. 
   if (previousEntry) {
-    // var oldValue = previousEntry.getValue(this);
-    var oldPairOfAttributes = previousEntry.getAttribute();
-    var oldPairOfItems = previousEntry.getItem();
-    if (dojo.lang.isArray(oldPairOfAttributes)) {
-      orp.lang.assertType(oldPairOfAttributes, Array);
-      orp.lang.assert(oldPairOfAttributes.length == 2);
-      orp.lang.assert(oldPairOfItems.length == 2);
-      if (((oldPairOfAttributes[0] == myAttribute) &&  (oldPairOfAttributes[1] == otherAttribute) &&
-        oldPairOfItems[0] == this && oldPairOfItems[1] == otherItem) ||
-        ((oldPairOfAttributes[1] == myAttribute) &&  (oldPairOfAttributes[0] == otherAttribute) &&
-        oldPairOfItems[1] == this && oldPairOfItems[0] == otherItem)) {
-        return null;
+    var FIXME_OCT_7_2005_EXPERIMENT = true;
+    if (FIXME_OCT_7_2005_EXPERIMENT) {
+      if (previousEntry.getType() == this.getWorld().getTypeCalledConnection()) {
+        var oldItem = previousEntry.getItem();
+        var oldAttribute = previousEntry.getAttribute();
+        var oldValue = previousEntry.getValue();
+        var oldInverseAttribute = previousEntry.getInverseAttribute();
+        if (((oldAttribute == myAttribute) &&  (oldInverseAttribute == otherAttribute) &&
+          oldItem == this && oldValue == otherItem) ||
+          ((oldInverseAttribute == myAttribute) &&  (oldAttribute == otherAttribute) &&
+          oldValue == this && oldItem == otherItem)) {
+          return null;
+        }
+      }
+    } else {
+      // var oldValue = previousEntry.getValue(this);
+      var oldPairOfAttributes = previousEntry.getAttribute();
+      var oldPairOfItems = previousEntry.getItem();
+      if (dojo.lang.isArray(oldPairOfAttributes)) {
+        orp.lang.assert(oldPairOfAttributes.length == 2);
+        orp.lang.assert(oldPairOfItems.length == 2);
+        if (((oldPairOfAttributes[0] == myAttribute) &&  (oldPairOfAttributes[1] == otherAttribute) &&
+          oldPairOfItems[0] == this && oldPairOfItems[1] == otherItem) ||
+          ((oldPairOfAttributes[1] == myAttribute) &&  (oldPairOfAttributes[0] == otherAttribute) &&
+          oldPairOfItems[1] == this && oldPairOfItems[0] == otherItem)) {
+          return null;
+        }
       }
     }
   }
@@ -321,13 +341,21 @@ orp.model.Item.prototype.replaceEntryWithConnection = function(previousEntry, my
   this._noteChanges(null);
   otherItem._noteChanges(null);
   if (previousEntry) {
-    var oldItemOrPairOfItems = previousEntry.getItem();
-    if (oldItemOrPairOfItems instanceof orp.model.Item) {
-      oldItemOrPairOfItems._noteChanges(null);
-    }
-    if (dojo.lang.isArray(oldItemOrPairOfItems)) {
-      oldItemOrPairOfItems[0]._noteChanges(null);
-      oldItemOrPairOfItems[1]._noteChanges(null);
+    FIXME_OCT_7_2005_EXPERIMENT = true;
+    if (FIXME_OCT_7_2005_EXPERIMENT) {
+      previousEntry.getItem()._noteChanges(null);
+      if (previousEntry.getType() == this.getWorld().getTypeCalledConnection()) {
+        previousEntry.getValue()._noteChanges(null);
+      }
+    } else {
+      var oldItemOrPairOfItems = previousEntry.getItem();
+      if (oldItemOrPairOfItems instanceof orp.model.Item) {
+        oldItemOrPairOfItems._noteChanges(null);
+      }
+      if (dojo.lang.isArray(oldItemOrPairOfItems)) {
+        oldItemOrPairOfItems[0]._noteChanges(null);
+        oldItemOrPairOfItems[1]._noteChanges(null);
+      }
     }
   }
   return entry;  

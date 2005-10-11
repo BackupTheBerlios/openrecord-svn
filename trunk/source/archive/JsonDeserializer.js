@@ -214,9 +214,20 @@ orp.archive.JsonDeserializer.prototype._rehydrateRecords = function(listOfDehydr
           var firstAttribute = archiveLoader.getItemFromUuidOrBootstrapItem(firstAttributeUuid);
           var secondAttribute = archiveLoader.getItemFromUuidOrBootstrapItem(secondAttributeUuid);
           
-          var pairOfItems = [firstItem, secondItem];
-          var pairOfAttributes = [firstAttribute, secondAttribute];
-          entry._revive(pairOfItems, pairOfAttributes, null, previousEntry, dataType);
+          var FIXME_OCT_7_2005_EXPERIMENT = true;
+          if (FIXME_OCT_7_2005_EXPERIMENT) {
+            /* 
+            if (entryUuid == "e3320eb0-0c70-11da-beea-000c414ce854") {
+              alert("rehydrating Entry e3320eb0-0c70-11da-beea-000c414ce854");
+              // alert("dataType: " + dataType.getDisplayString());
+            }
+            */
+            entry._reviveConnection(firstItem, firstAttribute, secondItem, secondAttribute, previousEntry);
+          } else {
+            var pairOfItems = [firstItem, secondItem];
+            var pairOfAttributes = [firstAttribute, secondAttribute];
+            entry._revive(pairOfItems, pairOfAttributes, null, previousEntry, dataType);
+          }
         } else {
           itemUuid = dehydratedEntry[JSON_MEMBER.ITEM];
           item = archiveLoader.getItemFromUuidOrBootstrapItem(itemUuid);

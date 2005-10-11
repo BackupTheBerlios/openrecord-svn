@@ -85,7 +85,7 @@ orp.model.Record = function(world, uuid) {
 // -------------------------------------------------------------------
 
 /**
- * Returns the world that this item was created in.
+ * Returns the world that this record was created in.
  *
  * @scope    public instance method
  * @return   A world object.
@@ -96,7 +96,7 @@ orp.model.Record.prototype.getWorld = function() {
 
 
 /**
- * Returns the item representing the user who created this item.
+ * Returns the item representing the user who created this record.
  *
  * @scope    public instance method
  * @return   A user item.
@@ -140,11 +140,6 @@ orp.model.Record.prototype.getTimestamp = function() {
  * @return   A Date object.
  */
 orp.model.Record.prototype.getCreationDate = function() {
-  /* if (!this._creationDate) {
-    this._creationDate = Uuid.getDateFromUuid(this._uuid.toString());
-  }
-  return this._creationDate;
-  */
   return this.getUuid().getDate();
 };
 

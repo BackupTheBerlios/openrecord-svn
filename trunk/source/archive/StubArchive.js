@@ -36,6 +36,7 @@ dojo.provide("orp.archive.ArchiveLoader");
 dojo.require("orp.model.World");
 dojo.require("orp.model.Item");
 dojo.require("orp.model.Entry");
+dojo.require("orp.model.ProxyEntry");
 dojo.require("orp.model.Transaction");
 dojo.require("orp.util.DateValue");
 // dojo.require("orp.uuid.Uuid");
@@ -306,11 +307,23 @@ orp.archive.StubArchive.prototype.newConnectionEntry = function(previousEntry, i
   var entry = new orp.model.Entry(this._world, uuid);
   entry._initializeConnection(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
 
-  itemOne._addEntryToListOfEntriesForAttribute(entry, attributeOne);
-  itemTwo._addEntryToListOfEntriesForAttribute(entry, attributeTwo);
+  var FIXME_OCT_7_2005_EXPERIMENT = true;
+  if (FIXME_OCT_7_2005_EXPERIMENT) {
+    var proxyOne = new orp.model.ProxyEntry(entry, itemOne, attributeOne, itemTwo, attributeTwo);
+    var proxyTwo = new orp.model.ProxyEntry(entry, itemTwo, attributeTwo, itemOne, attributeOne);
+    itemOne._addEntryToListOfEntriesForAttribute(proxyOne, attributeOne);
+    itemTwo._addEntryToListOfEntriesForAttribute(proxyTwo, attributeTwo);
+  } else {
+    itemOne._addEntryToListOfEntriesForAttribute(entry, attributeOne);
+    itemTwo._addEntryToListOfEntriesForAttribute(entry, attributeTwo);
+  }
 
   this._hashTableOfEntriesKeyedByUuid[uuid] = entry;
   this._currentTransaction.addRecord(entry);
+  
+  if (FIXME_OCT_7_2005_EXPERIMENT) {
+    entry = proxyOne;
+  }
   return entry;
 };
 

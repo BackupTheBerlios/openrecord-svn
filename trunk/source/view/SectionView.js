@@ -211,7 +211,12 @@ orp.view.SectionView.prototype.getQuerySpec = function() {
   var attributeCalledQuerySpec = this.getWorld().getAttributeCalledQuerySpec();
   var queryEntry = this._section.getSingleEntryFromAttribute(attributeCalledQuerySpec);
   if (queryEntry) {
-    return queryEntry.getConnectedItem(this._section);
+    var FIXME_OCT_7_2005_EXPERIMENT = true;
+    if (FIXME_OCT_7_2005_EXPERIMENT) {
+      return queryEntry.getValue();
+    } else {
+      return queryEntry.getConnectedItem(this._section);
+    }
   }
   return null;
 };
@@ -308,7 +313,13 @@ orp.view.SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem
   var attributeAppliesToPlugin = repository.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_APPLIES_TO_PLUGIN);
   if (entriesLayoutData) {
     for (var i=0; i < entriesLayoutData.length; ++i) {
-      var layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
+      var FIXME_OCT_7_2005_EXPERIMENT = true;
+      if (FIXME_OCT_7_2005_EXPERIMENT) {
+        var layoutItem = entriesLayoutData[i].getValue();
+      } else {
+        // var layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
+        layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
+      }
       var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attributeAppliesToPlugin);
       orp.lang.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
       if (entriesAppliesToPlugin[0].getValue() == pluginTypeItem) {

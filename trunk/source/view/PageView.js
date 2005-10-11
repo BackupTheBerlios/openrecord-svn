@@ -203,7 +203,13 @@ orp.view.PageView.prototype.doInitialDisplay = function() {
    
   for (var key in listOfEntriesForSections) {
     var entryForSection = listOfEntriesForSections[key];
-    var section = entryForSection.getConnectedItem(this._pageItem);
+    var FIXME_OCT_7_2005_EXPERIMENT = true;
+    if (FIXME_OCT_7_2005_EXPERIMENT) {
+      var section = entryForSection.getValue();
+    } else {
+      // var section = entryForSection.getConnectedItem(this._pageItem);
+      section = entryForSection.getConnectedItem(this._pageItem);
+    }
     if (section) {
       if (PENDING_include_links_to_sections && sectionNavigatorDiv) {
         orp.view.View.appendNewElement(sectionNavigatorDiv, "a", null, {'href' : '#' + section.getUuidString()}, section.getDisplayName());
