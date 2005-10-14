@@ -34,7 +34,6 @@
 dojo.provide("orp.util.Util");
 dojo.require("orp.lang.Lang");
 dojo.require("dojo.lang.*");
-// dojo.require("orp.uuid.Uuid");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -44,26 +43,12 @@ dojo.require("dojo.lang.*");
 
 
 /**
- * The Util class offers general utility methods that might
+ * The Util file offers general utility functions that might
  * be useful in a wide variety of applications.
- *
- * There is no need to ever call this constructor.  All the Util
- * methods are class methods, not instance methods, and the only 
- * reason this constructor exists is to cause the name "Util"
- * to be a globally-scoped class name, which the class methods 
- * can then be attached to.
- *
- * @scope    public instance constructor
- * @syntax   DO NOT CALL THIS CONSTRUCTOR
  */
- /*
-function Util() {
-  throw new Error("Util is a static class. You can't create instances of it.");
-}
-*/
 
 // -------------------------------------------------------------------
-// Public class constants
+// Public constants
 // -------------------------------------------------------------------
 orp.util.ASCII = {
   RETURN: 13,
@@ -118,52 +103,9 @@ orp.util.ourErrorReporter = orp.util.defaultErrorReporter;
  * @param    line    The line number where the error was found.
  */
 orp.util.handleError = function(message, url, line) {
-  // orp.lang.assert(false);
   orp.util.ourErrorReporter("orp.util.handleError()\n" + message + "\nline: " + line + "\nURL: " + url);
 };
 
-
-/**
- * Pops up an alert box if the assertion fails.
- *
- * If the asserted condition is true, this method does nothing. If the condition
- * is false, this method pops up an alert box.  The alert box explains that an
- * assertion failed, and it gives a stack trace showing the file name and line
- * number where the assertion failed.
- *
- * @scope    public class method
- * @param    booleanValue    A boolean value, which needs to be true for the assertion to succeed. 
- * @param    message    Optional. A string describing the assertion.
- */
-/*
-orp.util.assert = function(booleanValue, message) {
-  if (orp.util.isBoolean(booleanValue)) {
-    if (!booleanValue) {    
-      var exception = new Error();  // create an exception, just to get a stack trace
-      var stackString = exception.stack;
-      var stackList = stackString.split("\n");
-      stackList.shift(); // get rid of the "ReferenceError()@:0" at the start of the list
-      stackList.shift(); // get rid of the "(false)@file ... util.js:67" at the start of the list
-      stackList.pop();   // get rid of the trailing "\n"
-      stackList.pop();   // get rid of the "@:0" at the end of the list
-      for (var key in stackList) {
-        var string = stackList[key];
-        var result = string.match(/[^\/]*$/);
-        stackList[key] = result[0];
-      }
-      stackString = stackList.join("\n");
-
-      orp.util.ourErrorReporter("An assert statement failed with message: \n" + message + " \nThe method orp.util.assert() was called with a 'false' value.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
-    }
-  } else {
-    orp.util.ourErrorReporter("An assert statement went sour.\nThe method orp.util.assert() was passed a non-boolean argument.\nHere's the stack trace, with the line number where the assert statement failed:\n" + (stackString || ""));
-  }
-};
-*/
-orp.util.assert = function(booleanValue, message) {
-  dj_deprecated("orp.util.assert() is deprecated. Use orp.lang.assert().");
-  orp.lang.assert(booleanValue, message);
-};
 
 /**
  * Registers a function to be used to report status messages to the user.
@@ -203,58 +145,6 @@ orp.util.ourStatusReporter = orp.util.defaultStatusReporter;
 // Type checking methods
 // -------------------------------------------------------------------
 
-/**
- * Returns true if the given value is a function.
- *
- * @scope    public class method
- * @param    value    Any object or literal value. 
- * @return   A boolean value. True if inValue is a function.
- */
- /*
-orp.util.isFunction = function(value) {
-  return ((typeof value) == "function");
-};
-*/
-orp.util.isFunction = function(value) {
-  dj_deprecated("orp.util.isFunction() is deprecated. Use dojo.lang.isFunction().");
-  return dojo.lang.isFunction(value);
-};
-
-/**
- * Returns true if the given value is a string.
- *
- * @scope    public class method
- * @param    value    Any object or literal value. 
- * @return   A boolean value. True if inValue is a string.
- */
- /*
-orp.util.isString = function(value) {
-  return ((typeof value) == "string");
-};
-*/
-orp.util.isString = function(value) {
-  dj_deprecated("orp.util.isString() is deprecated. Use dojo.lang.isString().");
-  return dojo.lang.isString(value);
-};
-
-
-/**
- * Returns true if the given value is a number (and is finite number).
- *
- * @scope    public class method
- * @param    value    Any object or literal value. 
- * @return   A boolean value. True if inValue is a number.
- */
-/*
-orp.util.isNumber = function(value) {
-  return (((typeof value) == "number") && isFinite(value));
-};
-*/
-orp.util.isNumber = function(value) {
-  dj_deprecated("orp.util.isNumber() is deprecated. Use dojo.lang.isNumber().");
-  return dojo.lang.isNumber(value);
-};
-
 
 /**
  * Returns true if the given value is a number or a string that 
@@ -279,40 +169,6 @@ orp.util.isNumeric = function(value) {
 
 
 /**
- * Returns true if the given value is a boolean.
- *
- * @scope    public class method
- * @param    value    Any object or literal value. 
- * @return   A boolean value. True if inValue is a boolean.
- */
-/*
-orp.util.isBoolean = function(value) {
-  return ((typeof value) == "boolean");
-};
-*/
-orp.util.isBoolean = function(value) {
-  dj_deprecated("orp.util.isBoolean() is deprecated. Use dojo.lang.isBoolean().");
-  return dojo.lang.isBoolean(value);
-};
-
-/**
- * Returns true if the given value is an object.
- *
- * @scope    public class method
- * @param    value    Any object or literal value. 
- * @return   A boolean value. True if inValue is an object.
- */
- /*
-orp.util.isObject = function(value) {
-  return (value && ((typeof value) == "object"));
-};
-*/
-orp.util.isObject = function(value) {
-  dj_deprecated("orp.util.isObject() is deprecated. Use dojo.lang.isObject().");
-  return dojo.lang.isObject(value);
-};
-
-/**
  * Returns true if the given value is a Date.
  *
  * @scope    public class method
@@ -323,64 +179,6 @@ orp.util.isDate = function(value) {
   return (value instanceof Date);
 };
 
-
-/**
- * Returns true if the given value is a UUID object. 
- *
- * @scope    public class method
- * @param    value    Any object or literal value. 
- * @return   A boolean value. True if value is a UUID object.
- */
-orp.util.isUuid = function(value) {
-  dj_deprecated("orp.util.isUuid() is deprecated. Use orp.uuid.Uuid.prototype.isValid().");
-  // return (value instanceof orp.uuid.Uuid);
-  return true; // PENDING: FIXME.
-};
-
-
-/**
- * Returns true if the given value is a UUID object or a string
- * that represents a UUID. Here's an example of a string that
- * represents a UUID: "e3bf3e14-e8f4-43e2-866c-121c5ab70c0b".
- *
- * @scope    public class method
- * @param    value    Any object or literal value. 
- * @return   A boolean value. True if value is a UUID.
- */
-orp.util.isUuidValue = function(value) {
-  dj_deprecated("orp.util.isUuidValue() is deprecated. Use orp.uuid.Uuid.prototype.isValid().");
-  if (orp.util.isUuid(value)) {
-    return true;
-  }
-  if ((typeof value) == "string") {
-    // PENDING: 
-    // We should include more rigorous tests, to make sure this
-    // is really a UUID, not just a string with 36 characters.
-    return (value.length == 36);
-  }
-  return false;
-};
-
-
-/**
- * Returns true if the given value is an array.
- *
- * @scope    public class method
- * @param    value    Any object or literal value. 
- * @return   A boolean value. True if inValue is an array.
- */
- /*
-orp.util.isArray = function(value) {
-  if (!value) {
-    return false;
-  }
-  return (((typeof value) == "object") && (value.constructor == Array));
-};
-*/
-orp.util.isArray = function(value) {
-  dj_deprecated("orp.util.isArray() is deprecated. Use dojo.lang.isArray().");
-  return dojo.lang.isArray(value);
-};
 
 /**
  * Returns true if the given value is a hash table.
@@ -462,7 +260,6 @@ orp.util.getArrayIndex = function(array, value) {
  * @return   Returns true if the object was found in the set.
  */
 orp.util.isObjectInSet = function(object, set) {
-  // orp.util.assert(orp.util.isArray(set));
   orp.lang.assertType(set, Array);
   
   for (var key in set) {
@@ -483,8 +280,6 @@ orp.util.isObjectInSet = function(object, set) {
  * @return   Returns true if each of the objects was found in the set.
  */
 orp.util.areObjectsInSet = function(array, set) {
-  // orp.util.assert(orp.util.isArray(array));
-  // orp.util.assert(orp.util.isArray(set));
   orp.lang.assertType(array, Array);
   orp.lang.assertType(set, Array);
   
@@ -508,7 +303,6 @@ orp.util.areObjectsInSet = function(array, set) {
  * @return   Returns true if the object was removed from the array.
  */
 orp.util.removeObjectFromSet = function(object, set) {
-  // orp.util.assert(orp.util.isArray(set));
   orp.lang.assertType(set, Array);
   
   if (!object) {
@@ -534,7 +328,6 @@ orp.util.removeObjectFromSet = function(object, set) {
  * @return   Returns true if the object was added to the array.
  */
 orp.util.addObjectToSet = function(object, set) {
-  // orp.util.assert(orp.util.isArray(set));
   orp.lang.assertType(set, Array);
 
   if (!object) {
@@ -629,28 +422,6 @@ orp.util.getTargetFromEvent = function(eventObject) {
 
 
 /**
- * A cross-browser compatibility method for registering event listeners. 
- *
- * @scope public class method
- * @param element    An HTMLElement.
- * @param eventType    The type of event (e.g. "mousedown", "click").
- * @param callback    The function to call when the event happens.
- * @param captures    True if the event should be captured by this function.
- */
-orp.util.addEventListener = function(element, eventType, callback, captures) {
-  if (element.addEventListener) {
-    // for DOM Level 2 browsers, like Firefox
-    element.addEventListener(eventType, callback, captures);
-  } else {
-    if (element.attachEvent) {
-      // for Internet Explorer
-      element.attachEvent("on"+eventType, callback, captures);
-    }
-  } 
-};
-
-
-/**
  * When passing an EventListener (e.g. onclick) a function, it is often useful to
  * 1) have the function be called by an instance of an object
  * 2) have additional arguments passed as parameters to the function
@@ -671,31 +442,6 @@ Function.prototype.orpBindAsEventListener = function(object) {
     }
     method.apply(object, args);
   };
-};
-
-
-// -------------------------------------------------------------------
-// File I/O methods
-// -------------------------------------------------------------------
-
-/**
- * Given the URL of a file, returns the contents of the file as a text string.
- *
- * @scope    public class method
- * @param    url    A string with the URL of a file containing JavaScript code. 
- * @return   A string containing the contents of the file.
- */
-orp.util.getStringContentsOfFileAtURL = function(url) {
-  dj_deprecated("orp.util.getStringContentsOfFileAtURL() is deprecated. Use dojo.hostenv.getText().");
-  return dojo.hostenv.getText(url);
-
-  /* 
-  var anXMLHttpRequestObject = new window.XMLHttpRequest();
-  anXMLHttpRequestObject.open("GET", url, false);
-  anXMLHttpRequestObject.send(null);
-  var fileContents = anXMLHttpRequestObject.responseText;
-  return fileContents;
-  */
 };
 
 
@@ -732,7 +478,7 @@ orp.util.setTargetsForExternalLinks = function() {
  * @return   An HTML "img" element.
  */
 orp.util.createImageElement = function(imageFileName) {
-  var imagesDirectory = "images/"; // PENDING: this shouldn't be hard-coded in Util
+  var imagesDirectory = "images/"; // FIXME: this shouldn't be hard-coded in Util
   var imageElement = document.createElement("img");
   imageElement.src = imagesDirectory + imageFileName;
   return imageElement;

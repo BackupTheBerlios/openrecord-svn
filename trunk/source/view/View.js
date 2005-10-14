@@ -176,7 +176,6 @@ orp.view.View.prototype.refresh = function() {
  * @param    visibleFlag    True if the view should be visible on screen. False if the view should be hidden off screen.
  */
 orp.view.View.prototype.includeOnScreen = function(visibleFlag) {
-  // orp.util.assert(orp.util.isBoolean(visibleFlag));
   orp.lang.assertType(visibleFlag, Boolean);
 
   if (visibleFlag) {
@@ -217,10 +216,6 @@ orp.view.View.removeChildrenOfElement = function(element) {
  * @return   The newly created HTML element.
  */
 orp.view.View.newElement = function(tagName, cssClassName, attributesInJson, text) {
-  // orp.util.assert(orp.util.isString(tagName));
-  // orp.util.assert(!cssClassName || orp.util.isString(cssClassName));
-  // orp.util.assert(!attributesInJson || orp.util.isObject(attributesInJson));
-  // orp.util.assert(!text|| orp.util.isString(text));
   orp.lang.assertType(tagName, String);
   orp.lang.assertTypeForOptionalValue(cssClassName, String);
   orp.lang.assertTypeForOptionalValue(attributesInJson, Object);
@@ -288,7 +283,6 @@ orp.view.View.appendNewElement = function(parentElement, tagName, cssClassName, 
  */
 orp.view.View.appendNewTextNode = function(parentElement, textString) {
   orp.lang.assert(parentElement instanceof HTMLElement);
-  // orp.util.assert(orp.util.isString(textString));
   orp.lang.assertType(textString, String);
 
   var newTextNode = window.document.createTextNode(textString);

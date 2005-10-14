@@ -46,7 +46,6 @@ dojo.require("orp.lang.Lang");
  * @scope    public instance constructor
  */
 orp.util.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) {
-  // orp.util.assert(tagPath instanceof Array);
   orp.lang.assertType(tagPath, Array);
   orp.lang.assert(attribute instanceof orp.model.Item);
   this._tagPath = tagPath;

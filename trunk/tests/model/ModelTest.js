@@ -203,11 +203,11 @@ function testAccessorsForAxiomaticItems() {
   for (key in listOfAttributes) {
     item = listOfAttributes[key];
     listOfAssignedNames = item.getNameEntries();
-    assertTrue('Every axiomatic attribute has an array of names', orp.util.isArray(listOfAssignedNames));
+    assertTrue('Every axiomatic attribute has an array of names', dojo.lang.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic attribute has one name assigned', listOfAssignedNames.length == 1);
     nameEntry = listOfAssignedNames[0];
     assertTrue('Every axiomatic attribute has a name which is an entry', (nameEntry instanceof orp.model.Entry));
-    assertTrue('Every entry can be displayed as a string', orp.util.isString(nameEntry.getDisplayString()));
+    assertTrue('Every entry can be displayed as a string', dojo.lang.isString(nameEntry.getDisplayString()));
     assertTrue('Every axiomatic attribute is in the category "Attribute"', item.isInCategory(categoryCalledAttribute));
   }
   
@@ -217,11 +217,11 @@ function testAccessorsForAxiomaticItems() {
   for (key in listOfCategories) {
     item = listOfCategories[key];
     listOfAssignedNames = item.getNameEntries();
-    assertTrue('Every axiomatic category has an array of names', orp.util.isArray(listOfAssignedNames));
+    assertTrue('Every axiomatic category has an array of names', dojo.lang.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic category has one name assigned', listOfAssignedNames.length == 1);
     nameEntry = listOfAssignedNames[0];
     assertTrue('Every axiomatic category has a name which is entry', (nameEntry instanceof orp.model.Entry));
-    assertTrue('Every entry can be displayed as a string', orp.util.isString(nameEntry.getDisplayString()));
+    assertTrue('Every entry can be displayed as a string', dojo.lang.isString(nameEntry.getDisplayString()));
   }
 }
 

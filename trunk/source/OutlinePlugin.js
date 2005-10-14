@@ -129,7 +129,11 @@ orp.OutlinePlugin.prototype.refresh = function() {
 
     // orp.view.View.appendNewTextNode(anchorElement, "(more &#8658;)");
     anchorElement.innerHTML = "(more &#8658;)";
-    orp.util.addEventListener(anchorElement, "click", orp.view.RootView.clickOnLocalLink);
+    // orp.util.addEventListener(anchorElement, "click", orp.view.RootView.clickOnLocalLink);
+
+    // orp.util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
+    // optionElement.onclick = this.clickOnAttributeMenu.orpBindAsEventListener(this);    
+    dojo.event.connect(anchorElement, "onclick", orp.view.RootView.clickOnLocalLink);
   }
 };
 

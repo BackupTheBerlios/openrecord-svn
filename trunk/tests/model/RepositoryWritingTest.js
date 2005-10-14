@@ -154,19 +154,23 @@ function waitASecond() {
 }
 
 function fileHasExpectedContents(expectedContents) {
-  var contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
+  // var contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
+  var contents = dojo.hostenv.getText(fileUrl);
   for (var i = 0; contents != expectedContents && i < 5; ++i) {
     waitASecond();
-    contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
+    // contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
+    contents = dojo.hostenv.getText(fileUrl);
   }
   return (contents == expectedContents);
 }
 
 function fileHasExpectedSubstring(expectedSubstring) {
-  var contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
+  // var contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
+  var contents = dojo.hostenv.getText(fileUrl);
   for (var i = 0; contents.indexOf(expectedSubstring) == -1 && i < 5; ++i) {
     waitASecond();
-    contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
+    // contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
+    contents = dojo.hostenv.getText(fileUrl);
   }
   return (contents.indexOf(expectedSubstring) != -1);
 }

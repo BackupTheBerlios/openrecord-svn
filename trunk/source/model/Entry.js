@@ -306,7 +306,7 @@ orp.model.Entry.prototype.getAttribute = function() {
 orp.model.Entry.prototype.getAttributeForItem = function(item) {
   var FIXME_OCT_7_2005_EXPERIMENT = true;
   if (FIXME_OCT_7_2005_EXPERIMENT) {
-    orp.util.assert(false);  // we should never get called
+    orp.lang.assert(false);  // we should never get called
   } else {
     if (this._item == item) {
       return this._attribute;
@@ -335,7 +335,7 @@ orp.model.Entry.prototype.getAttributeForItem = function(item) {
 orp.model.Entry.prototype.getConnectedItem = function(item) {
   var FIXME_OCT_7_2005_EXPERIMENT = true;
   if (FIXME_OCT_7_2005_EXPERIMENT) {
-    orp.util.assert(false);  // we should never get called
+    orp.lang.assert(false);  // we should never get called
   } else {
     orp.lang.assert(item instanceof orp.model.Item);
     if (this._item == item) {

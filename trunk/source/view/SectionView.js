@@ -284,8 +284,7 @@ orp.view.SectionView.prototype.doInitialDisplay = function() {
     optionElement.value = pluginClass.getPluginItemUuid();
     var pluginItem = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
     optionElement.text = pluginItem.getDisplayString();
-    listener = this; 
-    orp.util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
+    dojo.event.connect(optionElement, "onclick", this, "clickOnPluginSelectionMenu");
   }
   orp.view.View.appendNewTextNode(controlArea," of items whose ");
   this._queryEditSpan = orp.view.View.appendNewElement(controlArea, "span");
@@ -317,7 +316,6 @@ orp.view.SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem
       if (FIXME_OCT_7_2005_EXPERIMENT) {
         var layoutItem = entriesLayoutData[i].getValue();
       } else {
-        // var layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
         layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
       }
       var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attributeAppliesToPlugin);
@@ -334,9 +332,7 @@ orp.view.SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem
   repository.beginTransaction();
   layoutItem = repository.newItem("Layout data for " + pluginTypeItem.getDisplayString() + " of " + this._section.getDisplayString());
   layoutItem.assignToCategory(categoryCalledLayoutData);
-  // layoutItem.addEntryForAttribute(attributeAppliesToPlugin, pluginTypeItem);
   layoutItem.addEntry({attribute:attributeAppliesToPlugin, value:pluginTypeItem});
-  // this._section.addEntryForAttribute(attributeLayoutData, layoutItem, repository.getTypeCalledItem());
   this._section.addConnectionEntry(attributeLayoutData, layoutItem, attributeCalledSectionThisLayoutDataBelongsTo);
   repository.endTransaction();
   return layoutItem;
@@ -374,7 +370,6 @@ orp.view.SectionView.prototype._refreshQueryEditSpan = function() {
     var optionElement = orp.view.View.appendNewElement(selectElement, "option");
     optionElement.selected = (matchingAttribute.getDisplayString() == anAttribute.getDisplayString());
     optionElement.value = anAttribute.getUuidString();
-    // optionElement.onclick = this.clickOnAttributeMenu.orpBindAsEventListener(this);
     dojo.event.connect(optionElement, "onclick", this, "clickOnAttributeMenu");
     optionElement.text = anAttribute.getDisplayString();
   }

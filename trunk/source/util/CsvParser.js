@@ -79,7 +79,6 @@ orp.util.CsvParser = function() {
  * @return   Returns an array containing sub-arrays containing strings.
  */
 orp.util.CsvParser.prototype.getStringValuesFromCsvData = function(csvData) {
-  // orp.util.assert(dojo.lang.isString(csvData));
   orp.lang.assertType(csvData, String);
   
   var lineEndingCharacters = new RegExp("\r\n|\n|\r");

@@ -425,6 +425,7 @@ mignon | 2    IED |         | 13. Automatically load ViewPlugins found in the vi
        |          |         | 19. Do lazy creation of layout data items
        |          |         | 20. try to replace orp.util.css_xxx functions with dojo.xml.htmlUtil.xxxClass functions
        |          |         | 21. try to replace View.appendNewElement() with dojo.xml.domUtil methods
+       |          |         |     try to replace md5.js with dojo.crypto.MD5 methods
        |          |         | 22. try to replace remaining Util.js functions with dojo.lang functions
        |          |         | 23. try using Ant and the Dojo build system to build OpenRecord into a single-file 
        |          |         | 24. move XmlConverter.js out of util, because it depends on model code
