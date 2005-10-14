@@ -69,7 +69,7 @@ orp.view.NavbarView = function(superview, htmlElement, htmlElementForAnchors) {
   this._builtForEditMode = false;
 };
 
-dj_inherits(orp.view.NavbarView, orp.view.View);  // makes NavbarView be a subclass of View
+dojo.inherits(orp.view.NavbarView, orp.view.View);  // makes NavbarView be a subclass of View
 
 
 // -------------------------------------------------------------------

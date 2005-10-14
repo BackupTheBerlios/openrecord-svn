@@ -80,7 +80,7 @@ orp.TablePlugin = function(superview, htmlElement, querySpec, layoutItem) {
   this._ascendingOrder = true;
 };
 
-dj_inherits(orp.TablePlugin, orp.view.PluginView);  // makes TablePlugin be a subclass of PluginView
+dojo.inherits(orp.TablePlugin, orp.view.PluginView);  // makes TablePlugin be a subclass of PluginView
 
 
 // -------------------------------------------------------------------

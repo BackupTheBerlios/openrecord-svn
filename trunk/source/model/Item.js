@@ -74,7 +74,7 @@ orp.model.Item = function(world, uuid) {
   this._noteChanges(null);
 };
 
-dj_inherits(orp.model.Item, orp.model.ContentRecord);  // makes Item be a subclass of ContentRecord
+dojo.inherits(orp.model.Item, orp.model.ContentRecord);  // makes Item be a subclass of ContentRecord
 
 
 // -------------------------------------------------------------------

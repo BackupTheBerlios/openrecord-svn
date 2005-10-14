@@ -64,7 +64,7 @@ orp.OutlinePlugin = function(superview, htmlElement, querySpec, layoutItem) {
   orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "OutlinePlugin");
 };
 
-dj_inherits(orp.OutlinePlugin, orp.view.PluginView);  // makes OutlinePlugin be a subclass of PluginView
+dojo.inherits(orp.OutlinePlugin, orp.view.PluginView);  // makes OutlinePlugin be a subclass of PluginView
 
 
 // -------------------------------------------------------------------

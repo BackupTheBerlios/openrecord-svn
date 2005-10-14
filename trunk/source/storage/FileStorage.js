@@ -96,7 +96,7 @@ orp.storage.FileStorage = function(repositoryName, pathToTrunkDirectory) {
   this._fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
 };
 
-dj_inherits(orp.storage.FileStorage, orp.storage.Storage);  // makes FileStorage be a subclass of Storage
+dojo.inherits(orp.storage.FileStorage, orp.storage.Storage);  // makes FileStorage be a subclass of Storage
 
 
 // -------------------------------------------------------------------

@@ -73,7 +73,7 @@ orp.archive.DeltaArchive = function(repositoryName, pathToTrunkDirectory) {
   this._hasEverFailedToSaveFlag = false;
 };
 
-dj_inherits(orp.archive.DeltaArchive, orp.archive.StubArchive);  // makes DeltaArchive be a subclass of StubArchive
+dojo.inherits(orp.archive.DeltaArchive, orp.archive.StubArchive);  // makes DeltaArchive be a subclass of StubArchive
 
 
 // -------------------------------------------------------------------

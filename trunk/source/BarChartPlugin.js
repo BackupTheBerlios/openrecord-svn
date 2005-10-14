@@ -65,7 +65,7 @@ orp.BarChartPlugin = function(superview, htmlElement, querySpec, layoutItem) {
   orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "BarChartPlugin");
 };
 
-dj_inherits(orp.BarChartPlugin, orp.view.PluginView);  // makes BarChartPlugin be a subclass of PluginView
+dojo.inherits(orp.BarChartPlugin, orp.view.PluginView);  // makes BarChartPlugin be a subclass of PluginView
 
 
 // -------------------------------------------------------------------

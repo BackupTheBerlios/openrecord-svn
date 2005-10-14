@@ -112,7 +112,7 @@ orp.view.SectionView = function(superview, htmlElement, sectionItem) {
   }
 };
 
-dj_inherits(orp.view.SectionView, orp.view.View);  // makes SectionView be a subclass of View
+dojo.inherits(orp.view.SectionView, orp.view.View);  // makes SectionView be a subclass of View
 
 
 // -------------------------------------------------------------------
@@ -501,10 +501,8 @@ orp.view.SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
   }
   if (matchingAttribute.getDisplayString() != newChoiceName) {
     if (listOfMatchingAttrs.length === 0) {
-      // myQuery.addEntryForAttribute(attributeCalledQueryMatchingAttribute, newQueryMatchingAttribute);
       myQuery.addEntry({attribute:attributeCalledQueryMatchingAttribute, value:newQueryMatchingAttribute});
     } else {
-      // myQuery.replaceEntry(listOfMatchingAttrs[0], newQueryMatchingAttribute);
       myQuery.replaceEntry({previousEntry:listOfMatchingAttrs[0], value:newQueryMatchingAttribute});
     }
 

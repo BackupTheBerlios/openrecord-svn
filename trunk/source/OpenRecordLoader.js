@@ -28,120 +28,79 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
-
 /**
- * The OpenRecordLoader class bootstraps the OpenRecord by loading all the
- * other files in the OpenRecord app.
+ * OpenRecordLoader bootstraps OpenRecord by loading all the files required
+ * by the OpenRecord app: all the OpenRecord JavaScript files, plus third
+ * party libraries, plus the OpenRecord stylesheet file.  
  *
- * There is no need to ever call this constructor.  All the OpenRecordLoader
- * methods are class methods, not instance methods, and the only reason
- * this constructor exists is to cause the name "OpenRecordLoader" to be a 
- * globally-scoped class name, which the class methods can then be 
- * attached to.
- *
- * @scope    public instance constructor
- * @syntax   DO NOT CALL THIS CONSTRUCTOR
+ * OpenRecordLoader.js relies on two follow-up files, OpenRecordLoaderStepTwo.js
+ * and OpenRecordLoaderStepThree.js.  It would be nice if we could merge these
+ * all into one file, but unfortunately they need to be loaded separately
+ * so that we get all the files evaluated in the right order -- first 
+ * OpenRecordLoader.js and then dojo.js, and only after dojo is loaded, then 
+ * OpenRecordLoaderStepThree.js, which uses dojo to load orp.model.World
+ * and orp.model.RootView.
  */
-function OpenRecordLoader() {
-  throw new Error("OpenRecord is a static class. You can't create instances of it.");
-}
+var orp = {};
+orp.loader = {};
 
 
 /**
- * Given the URL of a stylesheet file, this method loads the stylesheet
- * by creating a new link element that points to the stylesheet. 
- *
- * @scope    public class method
- * @param    stylesheetUrl    A string with the URL of a file containing the stylesheet. 
- */
-OpenRecordLoader.loadStylesheet = function(stylesheetUrl) {
-  var stylesheetElement = document.createElement('link');
-  stylesheetElement.setAttribute('rel', 'stylesheet');
-  stylesheetElement.type = 'text/css';
-  stylesheetElement.href = stylesheetUrl;
-  document.getElementsByTagName('head')[0].appendChild(stylesheetElement);  
-};
-
-
-/**
- * Given the URL of a JavaScript file, this method loads the JavaScript file
+ * Given the URL of a JavaScript file, this function loads the JavaScript file
  * by creating a new script element that points to the file. 
  *
- * @scope    public class method
  * @param    sourceUrl    A string with the URL of a file containing the JavaScript code. 
  */
-OpenRecordLoader.loadSingleScript = function(sourceUrl) {
-  var scriptElement = document.createElement('script');
-  document.getElementsByTagName('head')[0].appendChild(scriptElement);
-  scriptElement.language = 'javascript';
-  scriptElement.type = 'text/javascript';
-  scriptElement.src = sourceUrl;
-};
-
-
-/**
- * Given the path to the trunk directory of the OpenRecord code base,
- * this method loads the OpenRecord stylesheet and all of the OpenRecord
- * JavaScript files.
- *
- * @scope    public class method
- * @param    path    A string with the path to the trunk directory of the OpenRecord code base. 
- */
-OpenRecordLoader.loadEverything = function(path) {
-  path = path || "";
-  OpenRecordLoader.loadStylesheet(path + "source/base_style.css"); 
-  var listOfSourceCodeFiles = [
-    // third_party
-    "third_party/md5/md5.js",
-    /* "third_party/dojo/dojo-0.1.0/dojo.js", */
-    "third_party/scriptaculous/prototype.js",
-    "third_party/scriptaculous/effects.js",
-    "third_party/scriptaculous/dragdrop.js"];
-  for (var i in listOfSourceCodeFiles) {
-    var fileName = listOfSourceCodeFiles[i];
-    var url = path + fileName;
-    OpenRecordLoader.loadSingleScript(url);
+orp.loader.loadScript = function(sourceUrl) {
+  try {
+		document.write("<script type='text/javascript' src='" + sourceUrl + "'></script>");
+  } catch(e) {
+    var scriptElement = document.createElement('script');
+    scriptElement.language = 'javascript';
+    scriptElement.type = 'text/javascript';
+    scriptElement.src = sourceUrl;
+    var headElement = document.getElementsByTagName("head")[0];
+    headElement.appendChild(scriptElement);
   }
 };
 
+
+/**
+ * Given the URL of a stylesheet file, this function loads the stylesheet
+ * by creating a new link element that points to the stylesheet. 
+ *
+ * @param    stylesheetUrl    A string with the URL of a file containing the stylesheet. 
+ */
+orp.loader.loadStylesheet = function(stylesheetUrl) {
+  try {
+    document.write("<link rel='stylesheet' type='text/css' href='" + stylesheetUrl + "'></link>");
+  } catch(e) {
+    var stylesheetElement = document.createElement('link');
+    stylesheetElement.setAttribute('rel', 'stylesheet');
+    stylesheetElement.type = 'text/css';
+    stylesheetElement.href = stylesheetUrl;
+    var headElement = document.getElementsByTagName("head")[0];
+    headElement.appendChild(stylesheetElement);
+  }
+};
 
 // -------------------------------------------------------------------
 // This code is immediately executed when this file is first loaded.
 // -------------------------------------------------------------------
-djConfig = {
-  isDebug: true,
-  debugAtAllCosts: true };
-  
-dojo.hostenv.setModulePrefix("dojo", "../../dojo/dojo-0.1.0/src");
-dojo.hostenv.setModulePrefix("orp", "../../../source");
+var djConfig = {
+  isDebug: true, 
+  debugAtAllCosts: true
+};
 
-OpenRecordLoader.loadEverything();
+orp.loader.loadStylesheet("source/base_style.css");
 
-dojo.require("orp.model.World");
-dojo.require("orp.view.RootView");
+orp.loader.loadScript("third_party/dojo/dojo-rev1759/dojo.js");
+orp.loader.loadScript("third_party/md5/md5.js");
+orp.loader.loadScript("third_party/scriptaculous/prototype.js");
+orp.loader.loadScript("third_party/scriptaculous/effects.js");
+orp.loader.loadScript("third_party/scriptaculous/dragdrop.js");
 
-dojo.hostenv.writeIncludes(); // needed when using "debugAtAllCosts: true"
-
-window.onload = function() { 
-  // figure out if we're running in IE or Firefox
-  var firefox = true;  // PENDING: hack!
-  var errorMessage;
-  if (!firefox) {
-    errorMessage = "IE error message";
-    // display errorMessage
-    return;
-  }
-  if (firefox) {
-    errorMessage = "Loading...";
-    // display errorMessage
-    try {
-      var world = new orp.model.World();
-      new orp.view.RootView(world);
-    } catch (e) {
-      alert(e);
-    }
-  }
-};    
+orp.loader.loadScript("source/OpenRecordLoaderStepTwo.js");
 
 
 // -------------------------------------------------------------------

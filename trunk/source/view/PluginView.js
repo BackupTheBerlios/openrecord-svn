@@ -68,7 +68,7 @@ orp.view.PluginView = function(superview, htmlElement, querySpec, layoutItem, cs
   this._pluginItem = null;
 };
 
-dj_inherits(orp.view.PluginView, orp.view.View);  // makes PluginView be a subclass of View
+dojo.inherits(orp.view.PluginView, orp.view.View);  // makes PluginView be a subclass of View
 
 
 // -------------------------------------------------------------------

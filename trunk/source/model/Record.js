@@ -65,7 +65,7 @@ orp.model.Record = function(world, uuid) {
   }
 
   // Unfortunately, we need to treat 'world' and 'uuid' as 'Optional'. 
-  // I think this constructor is invoked by dj_inherits() calls 
+  // I think this constructor is invoked by dojo.inherits() calls 
   // (in ContentRecord, Vote, and Ordinal), which do not pass
   // in any values for world and uuid.
   orp.lang.assertTypeForOptionalValue(uuid, orp.uuid.TimeBasedUuid);

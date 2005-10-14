@@ -78,7 +78,7 @@ orp.view.LoginView = function(superview, htmlElement) {
   this._cookie.load();
 };
 
-dj_inherits(orp.view.LoginView, orp.view.View);  // makes LoginView be a subclass of View
+dojo.inherits(orp.view.LoginView, orp.view.View);  // makes LoginView be a subclass of View
 
 
 // -------------------------------------------------------------------

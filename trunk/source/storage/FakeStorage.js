@@ -53,7 +53,7 @@ orp.storage.FakeStorage = function(repositoryName, pathToTrunkDirectoryFromWindo
   this._fakeFileContents = "";
 };
 
-dj_inherits(orp.storage.FakeStorage, orp.storage.Storage);  // makes FakeStorage be a subclass of Storage
+dojo.inherits(orp.storage.FakeStorage, orp.storage.Storage);  // makes FakeStorage be a subclass of Storage
 
 
 // -------------------------------------------------------------------

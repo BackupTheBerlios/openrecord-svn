@@ -80,7 +80,7 @@ orp.view.PageView = function(superview, htmlElement, pageItem) {
   this._listOfSectionViews = [];
 };
 
-dj_inherits(orp.view.PageView, orp.view.View);  // makes PageView be a subclass of View
+dojo.inherits(orp.view.PageView, orp.view.View);  // makes PageView be a subclass of View
 
 
 // -------------------------------------------------------------------

@@ -63,7 +63,7 @@ orp.model.Ordinal = function(world, uuid, contentRecord, ordinalNumber) {
   this._contentRecord._addOrdinal(this);
 };
 
-dj_inherits(orp.model.Ordinal, orp.model.Record);  // makes Ordinal be a subclass of Record
+dojo.inherits(orp.model.Ordinal, orp.model.Record);  // makes Ordinal be a subclass of Record
 
 
 // -------------------------------------------------------------------

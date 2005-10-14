@@ -61,7 +61,7 @@ orp.storage.HttpStorage = function(repositoryName, pathToTrunkDirectoryFromWindo
   }
 };
 
-dj_inherits(orp.storage.HttpStorage, orp.storage.Storage);  // makes HttpStorage be a subclass of Storage
+dojo.inherits(orp.storage.HttpStorage, orp.storage.Storage);  // makes HttpStorage be a subclass of Storage
 
 
 // -------------------------------------------------------------------

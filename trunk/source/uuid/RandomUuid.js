@@ -90,7 +90,7 @@ orp.uuid.RandomUuid = function(namedParameters) {
   orp.lang.assert(this.getVersion() == orp.uuid.Uuid.Version.RANDOM);
 };
 
-dj_inherits(orp.uuid.RandomUuid, orp.uuid.Uuid);  // makes RandomUuid be a subclass of Uuid
+dojo.inherits(orp.uuid.RandomUuid, orp.uuid.Uuid);  // makes RandomUuid be a subclass of Uuid
 
 
 // -------------------------------------------------------------------

@@ -68,7 +68,7 @@ orp.DetailPlugin = function(superview, htmlElement, querySpec, layoutItem) {
   orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "DetailPlugin");
 };
 
-dj_inherits(orp.DetailPlugin, orp.view.PluginView);  // makes DetailPlugin be a subclass of PluginView
+dojo.inherits(orp.DetailPlugin, orp.view.PluginView);  // makes DetailPlugin be a subclass of PluginView
 
 
 // -------------------------------------------------------------------

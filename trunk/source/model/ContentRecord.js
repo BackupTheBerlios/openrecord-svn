@@ -67,7 +67,7 @@ orp.model.ContentRecord = function(world, uuid) {
   // this._setOfOrdinals = null;
 };
 
-dj_inherits(orp.model.ContentRecord, orp.model.Record);  // makes ContentRecord be a subclass of Record
+dojo.inherits(orp.model.ContentRecord, orp.model.Record);  // makes ContentRecord be a subclass of Record
 
 
 // -------------------------------------------------------------------

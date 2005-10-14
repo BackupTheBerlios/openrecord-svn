@@ -32,7 +32,7 @@
 // Provides and Requires
 // -------------------------------------------------------------------
 dojo.provide("orp.lang.Lang");
-dojo.require("dojo.lang.Lang");
+dojo.require("dojo.lang.*");
 
 
 // -------------------------------------------------------------------
@@ -164,7 +164,7 @@ orp.lang.assertType = function(value, type) {
  * @param    type    A class of object, or a literal type.
  */
 orp.lang.assertTypeForOptionalValue = function(value, type) {
-  if (!dojo.lang.isUndefined(value)) {
+  if (!dojo.lang.isUndefined(value) && (value !== null)) {
     orp.lang.assertType(value, type);
   }
 };

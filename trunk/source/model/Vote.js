@@ -63,7 +63,7 @@ orp.model.Vote = function(world, uuid, contentRecord, retainFlag) {
   this._contentRecord._addVote(this);
 };
 
-dj_inherits(orp.model.Vote, orp.model.Record);  // makes Vote be a subclass of Record
+dojo.inherits(orp.model.Vote, orp.model.Record);  // makes Vote be a subclass of Record
 
 
 // -------------------------------------------------------------------

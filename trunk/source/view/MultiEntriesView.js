@@ -79,7 +79,7 @@ orp.view.MultiEntriesView = function(superview, htmlElement, item, attribute) {
   this._listOfSuggestions = null;
 };
 
-dj_inherits(orp.view.MultiEntriesView, orp.view.View);  // makes MultiEntriesView be a subclass of View
+dojo.inherits(orp.view.MultiEntriesView, orp.view.View);  // makes MultiEntriesView be a subclass of View
 
 
 // -------------------------------------------------------------------

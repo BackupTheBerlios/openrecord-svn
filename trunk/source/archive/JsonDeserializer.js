@@ -57,7 +57,7 @@ orp.archive.JsonDeserializer = function(archiveLoader) {
   this._archiveLoader = archiveLoader;
 };
 
-dj_inherits(orp.archive.JsonDeserializer, orp.archive.JsonFormat);  // makes JsonDeserializer be a subclass of JsonFormat
+dojo.inherits(orp.archive.JsonDeserializer, orp.archive.JsonFormat);  // makes JsonDeserializer be a subclass of JsonFormat
 
 
 // -------------------------------------------------------------------

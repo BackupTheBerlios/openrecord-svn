@@ -118,6 +118,7 @@ orp.util.ourErrorReporter = orp.util.defaultErrorReporter;
  * @param    line    The line number where the error was found.
  */
 orp.util.handleError = function(message, url, line) {
+  // orp.lang.assert(false);
   orp.util.ourErrorReporter("orp.util.handleError()\n" + message + "\nline: " + line + "\nURL: " + url);
 };
 

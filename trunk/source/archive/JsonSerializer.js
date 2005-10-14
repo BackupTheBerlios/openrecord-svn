@@ -56,7 +56,7 @@ orp.archive.JsonSerializer = function(archive) {
   this._archive = archive;  // FIXME: we should try to remove this dependency on orp.archive.StubArchive
 };
 
-dj_inherits(orp.archive.JsonSerializer, orp.archive.JsonFormat);  // makes JsonSerializer be a subclass of JsonFormat
+dojo.inherits(orp.archive.JsonSerializer, orp.archive.JsonFormat);  // makes JsonSerializer be a subclass of JsonFormat
 
 
 // -------------------------------------------------------------------

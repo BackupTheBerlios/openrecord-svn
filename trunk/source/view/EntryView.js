@@ -104,7 +104,7 @@ orp.view.EntryView = function(superview, htmlElement, item, attribute, entry, is
   }
 };
 
-dj_inherits(orp.view.EntryView, orp.view.View);  // makes EntryView be a subclass of View
+dojo.inherits(orp.view.EntryView, orp.view.View);  // makes EntryView be a subclass of View
 
 
 // -------------------------------------------------------------------
@@ -801,6 +801,9 @@ orp.view.EntryView.prototype._buildTypeHashTable = function() {
  * @return   A string with the CSS className for that type.
  */
 orp.view.EntryView.prototype._getClassNameFromType = function(type) {
+  // if (!type) {
+  //   orp.lang.assert(false);
+  // }
   if (!orp.view.EntryView._ourHashTableOfClassNamesKeyedByTypeUuid) {
     this._buildTypeHashTable();
   }

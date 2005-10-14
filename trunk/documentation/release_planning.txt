@@ -428,7 +428,8 @@ mignon | 2    IED |         | 13. Automatically load ViewPlugins found in the vi
        |          |         | 22. try to replace remaining Util.js functions with dojo.lang functions
        |          |         | 23. try using Ant and the Dojo build system to build OpenRecord into a single-file 
        |          |         | 24. move XmlConverter.js out of util, because it depends on model code
-brian  |          |         | 25. Decide whether or not to replace bi-directional connection entries with twin-entries
+brian  |          | 0.75 IED| 25. Decide whether or not to replace bi-directional connection entries with twin-entries
+brian  |          | 0.5  IED|     Write initial code to augment bi-directional connection entries with twin ProxyEntries
        |          |         | 26. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
        |          |         | 27. Pick one file, and do a group code review on it
        |          |         | 28. Implement a good URL-to-content mapping, so that URLs won't go bad in future releases

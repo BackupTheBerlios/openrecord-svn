@@ -75,7 +75,7 @@ orp.view.ItemView = function(superview, htmlElement, item) {
   this._pluginView = null;
 };
 
-dj_inherits(orp.view.ItemView, orp.view.View);  // makes ItemView be a subclass of View
+dojo.inherits(orp.view.ItemView, orp.view.View);  // makes ItemView be a subclass of View
 
 
 // -------------------------------------------------------------------

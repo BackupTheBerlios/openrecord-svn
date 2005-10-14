@@ -540,6 +540,9 @@ orp.model.World.prototype.getTypeCalledAnything = function() {
 };
 
 orp.model.World.prototype.getTypeCalledConnection = function() {
+  if (!this._typeCalledConnection) {
+    this._typeCalledConnection = this._archive.getItemFromUuid(orp.model.World.UUID.TYPE_CONNECTION);
+  }
   return this._typeCalledConnection;
 };
 

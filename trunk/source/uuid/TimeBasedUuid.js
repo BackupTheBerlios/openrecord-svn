@@ -126,7 +126,7 @@ orp.uuid.TimeBasedUuid = function(namedParameters) {
   orp.lang.assert(this.getVersion() == orp.uuid.Uuid.Version.TIME_BASED);
 };
 
-dj_inherits(orp.uuid.TimeBasedUuid, orp.uuid.Uuid);  // makes TimeBasedUuid be a subclass of Uuid
+dojo.inherits(orp.uuid.TimeBasedUuid, orp.uuid.Uuid);  // makes TimeBasedUuid be a subclass of Uuid
 
 
 // -------------------------------------------------------------------
