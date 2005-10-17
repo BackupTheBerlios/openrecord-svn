@@ -49,6 +49,16 @@ function testSimplestCase() {
   assertTrue("Two and two is four", (2 + 2) == 4);
 }
 
+function testErrorCatching() {
+  var caughtError = false;
+  try {
+    var foo = bar;  // syntax error: bar is undefined
+  } catch (e) {
+    caughtError = true;
+  }
+  assertTrue('There was an error in "var foo = bar"', caughtError);
+}
+
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------
