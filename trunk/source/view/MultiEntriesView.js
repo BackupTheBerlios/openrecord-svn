@@ -233,7 +233,7 @@ orp.view.MultiEntriesView.prototype._handleOwnClick = function(eventObject) {
  *
  */
 orp.view.MultiEntriesView.prototype._handleDrop = function(element) {
-  var draggedEntryView = element.or_entryView;
+  var draggedEntryView = element.orp_entryView;
   if (!draggedEntryView) {orp.lang.assert(false);}
   var droppedEntry = draggedEntryView._entry;
   if (!droppedEntry) {orp.lang.assert(false);}

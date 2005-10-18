@@ -332,7 +332,7 @@ orp.TablePlugin.prototype.observedItemHasChanged = function(item) {
   var oldProvisionalRow = this._table.rows[this._listOfItems.length];
   for (var i=0; i < oldProvisionalRow.cells.length; ++i) {
     var aCell = oldProvisionalRow.cells[i];
-    aCell.or_entriesView.noLongerProvisional();
+    aCell.orp_entriesView.noLongerProvisional();
   }
 
   // create new provisional item now that old one has become real
@@ -365,7 +365,7 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppabl
   // object in the script.aculo.us dragdrop.js library.
   // We set "revert" to false to prevent the UI animation where the dragged 
   // column header goes "flying" home again
-  var draggable = elementThatWasDragged.or_draggable;
+  var draggable = elementThatWasDragged.orp_draggable;
   draggable.options.revert = false;
 
   // Now we need to save the new column order to the repository.
@@ -444,7 +444,7 @@ orp.TablePlugin.prototype._buildHeader = function() {
     if (this.isInEditMode()) {
       var listener = this;
       var draggable = new Draggable(headerCellContentSpan, {revert:true});
-      headerCellContentSpan.or_draggable = draggable;
+      headerCellContentSpan.orp_draggable = draggable;
       Droppables.add(headerCell, {
         accept: "headerCellContentSpan",
         hoverclass: 'drophover',
@@ -528,7 +528,7 @@ orp.TablePlugin.prototype.getSortIcon = function() {
 /**
  * Inserts a table cell into table's row & col, with data from a given item and
  * attribute. Each table cell is displayed with a EntryView object.  The HTML 
- * table cell links to the EntryView object with the attribute "or_entryView"
+ * table cell links to the EntryView object with the attribute "orp_entryView"
  *
  * @scope    private instance method
  * @return   An HTML image element
@@ -545,7 +545,7 @@ orp.TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
   
   var aCell = row.insertCell(col);
   var multiEntriesView = new orp.view.MultiEntriesView(this, aCell, item, attribute);
-  aCell.or_entriesView = multiEntriesView;
+  aCell.orp_entriesView = multiEntriesView;
   multiEntriesView.refresh();
   if (this.isInEditMode()) {
     var listener = this;
@@ -845,7 +845,7 @@ orp.TablePlugin.prototype.keyPressOnEditField = function(eventObject, anEntryVie
       nextCell = nextRow.cells[cellElement.cellIndex];
     }
     
-    var nextMultiEntryView = nextCell.or_entriesView;
+    var nextMultiEntryView = nextCell.orp_entriesView;
     nextMultiEntryView.select(move != MOVE_LEFT);
   }
   return move;

@@ -79,12 +79,6 @@ dojo.inherits(orp.view.ItemView, orp.view.View);  // makes ItemView be a subclas
 
 
 // -------------------------------------------------------------------
-// Public constants
-// -------------------------------------------------------------------
-orp.view.ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX = "detail_plugin_div_for_item_";
-
-
-// -------------------------------------------------------------------
 // Public methods
 // -------------------------------------------------------------------
 
@@ -108,23 +102,14 @@ orp.view.ItemView.prototype.getPageTitle = function() {
  */
 orp.view.ItemView.prototype.refresh = function() {
   orp.lang.assert(this._item instanceof orp.model.Item);
+  orp.lang.assert(this.getHtmlElement() instanceof HTMLElement);
+
   
-  // PENDING: this needs to be changed from DOM level 0 to DOM level 2.
-  var listOfStrings = [];
-
-  // add an <h1> heading with the name of the page
-  listOfStrings.push("<h1 id=\"" + orp.view.RootView.URL_ITEM_PREFIX + this._item.getUuidString() + "\">" + this._item.getDisplayName() + "</h1>");
-
-  // add a <div> element for the detail plugin
-  var detailDivId = orp.view.ItemView.ELEMENT_ID_DETAIL_DIV_PREFIX + this._item.getUuidString();
-  listOfStrings.push("<div id=\"" + detailDivId + "\"></div>");
-
-  // write out all the new content 
-  var finalString = listOfStrings.join("");
-  this.getHtmlElement().innerHTML = finalString;
-
-  // let the detailPlugin add its own content
-  var detailPluginElement = document.getElementById(detailDivId);
+  var itemDivElement = this.getHtmlElement();
+  orp.view.View.removeChildrenOfElement(itemDivElement);
+  var headerElement = orp.view.View.appendNewElement(itemDivElement, "h1", null, null, this._item.getDisplayName());
+  var detailPluginElement = orp.view.View.appendNewElement(itemDivElement, "div");
+  
   this._pluginView = new orp.DetailPlugin(this, detailPluginElement, [this._item]);
   this._pluginView.refresh();
 };

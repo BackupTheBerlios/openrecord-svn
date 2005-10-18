@@ -283,11 +283,11 @@ orp.view.EntryView.prototype._setClassName = function() {
           if (orp.view.EntryView._PENDING_temporaryHackToDecreaseLayoutTime) {
             // if (this.getRootView().isInShowToolsMode()) {
             if (orp.view.EntryView._PENDING_enableDragging) {
-              this._textSpan.or_entryView = this; 
+              this._textSpan.orp_entryView = this; 
               this._draggable = new Draggable(this._textSpan, {revert:true});
             }
           } else {
-            this._textSpan.or_entryView = this; 
+            this._textSpan.orp_entryView = this; 
             this._draggable = new Draggable(this._textSpan, {revert:true});
           }
         }
