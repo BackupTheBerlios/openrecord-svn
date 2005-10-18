@@ -1,5 +1,5 @@
 /*****************************************************************************
- LintTest.js
+ dom.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -27,61 +27,70 @@
  liability, or tort (including negligence), arising in any way out of or in 
  connection with the use or distribution of the work.
 *****************************************************************************/
- 
 
 // -------------------------------------------------------------------
-// setUp and tearDown
+// Provides and Requires
 // -------------------------------------------------------------------
-
-function setUp() {
-  dojo.hostenv.setModulePrefix("dojo", "../../../../dojo/dojo-0.1.0/src");
-  dojo.hostenv.setModulePrefix("orp", "../../../../../source");
-  dojo.require("orp.util.LintTool");
-}
-
-function tearDown() {
-}
+dojo.provide("orp.dom");
+dojo.require("dojo.dom");
+dojo.require("orp.lang.Lang");
 
 
 // -------------------------------------------------------------------
-// Test functions
+// Public functions
 // -------------------------------------------------------------------
 
-function testJsLintOnGoodCodeFragment() {
-  var textToRunLintOn = "function iggy() { var pop = 'no fun'; }";
-  assertTrue("jslint says clean code is clean", !orp.util.LintTool.getErrorReportForCodeInString(textToRunLintOn));
-}
-
-function testJsLintOnBadCodeFragment() {
-  // badFragmentOne has THIS_SYMBOL_IS_BAD, which JSLint should catch
-  var badFragmentOne = "function iggy() { var pop = 'no fun'; } THIS_SYMBOL_IS_BAD";
-
-  // badFragmentTwo has tab characters in it, which our own isCodeCleanInString()
-  // method should catch
-  var badFragmentTwo = "function iggy()		{ var pop = 'no fun'; } ";
+/**
+ * Given an HTMLElement, and a keyword-value pair, this method associates
+ * the value with the keyword for the given element.  To get the value
+ * back again, use the orp.dom.getKeywordValueForElement() function.
+ * 
+ * @scope    public function
+ * @param    element    Any HTMLElement.
+ * @param    keyword    A unique key string.
+ * @param    value    Any value.
+ */
+orp.dom.setKeywordValueForElement = function(element, keyword, value) {
+  orp.lang.assert(element instanceof HTMLElement);
+  orp.lang.assertType(keyword, String);
   
-  // badFragmentThree has a carriage return character in it, which our own 
-  // isCodeCleanInString() method should catch
-  var badFragmentThree = "function iggy() \r { var pop = 'no fun'; } ";
-  
-  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentOne));
-  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentTwo));
-  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentThree));
-}
+  if (!element.id) {
+    element.id = dojo.dom.getUniqueId();
+  }
+  if (!orp.dom._ourHashTableOfAssociationsKeyedByElementId) {
+    orp.dom._ourHashTableOfAssociationsKeyedByElementId = {};
+  }
+  if (!orp.dom._ourHashTableOfAssociationsKeyedByElementId[element.id]) {
+    orp.dom._ourHashTableOfAssociationsKeyedByElementId[element.id] = {};
+  }
+  var keyValueTable = orp.dom._ourHashTableOfAssociationsKeyedByElementId[element.id];
+  keyValueTable[keyword] = value;
+};
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "dom.js",
-    "OpenRecordLoaderStepThree.js",
-    "TablePlugin.js",
-    "OutlinePlugin.js",
-    "DetailPlugin.js",
-    "BarChartPlugin.js"];
-  var prefix = "../../../source/";
-  var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
-}
+  
+/**
+ * Given an HTMLElement and a keyword, this method returns the value
+ * that was associated with the keyword for the element using the
+ * orp.dom.setKeywordValueForElement() function.
+ * 
+ * @scope    public function
+ * @param    element    Any HTMLElement.
+ * @param    keyword    A unique key string.
+ * @return   The value associated with the element and keyword.
+ */
+orp.dom.getKeywordValueForElement = function(element, keyword) {
+  orp.lang.assert(element instanceof HTMLElement);
+  orp.lang.assertType(keyword, String);
+  
+  if (!orp.dom._ourHashTableOfAssociationsKeyedByElementId || !element.id) {
+    return null;
+  }
+  var keyValueTable = orp.dom._ourHashTableOfAssociationsKeyedByElementId[element.id];
+  if (!keyValueTable) {
+    return null;
+  }
+  return keyValueTable[keyword];
+};
 
 
 // -------------------------------------------------------------------

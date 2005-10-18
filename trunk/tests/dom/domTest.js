@@ -1,5 +1,5 @@
 /*****************************************************************************
- LintTest.js
+ domTest.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -34,9 +34,9 @@
 // -------------------------------------------------------------------
 
 function setUp() {
-  dojo.hostenv.setModulePrefix("dojo", "../../../../dojo/dojo-0.1.0/src");
-  dojo.hostenv.setModulePrefix("orp", "../../../../../source");
-  dojo.require("orp.util.LintTool");
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
+  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.require("orp.dom");
 }
 
 function tearDown() {
@@ -47,42 +47,32 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
-function testJsLintOnGoodCodeFragment() {
-  var textToRunLintOn = "function iggy() { var pop = 'no fun'; }";
-  assertTrue("jslint says clean code is clean", !orp.util.LintTool.getErrorReportForCodeInString(textToRunLintOn));
-}
-
-function testJsLintOnBadCodeFragment() {
-  // badFragmentOne has THIS_SYMBOL_IS_BAD, which JSLint should catch
-  var badFragmentOne = "function iggy() { var pop = 'no fun'; } THIS_SYMBOL_IS_BAD";
-
-  // badFragmentTwo has tab characters in it, which our own isCodeCleanInString()
-  // method should catch
-  var badFragmentTwo = "function iggy()		{ var pop = 'no fun'; } ";
+function testSimpleErrorCatching() {
+  divElementOne = window.document.createElement('div');
+  divElementTwo = window.document.createElement('div');
   
-  // badFragmentThree has a carriage return character in it, which our own 
-  // isCodeCleanInString() method should catch
-  var badFragmentThree = "function iggy() \r { var pop = 'no fun'; } ";
+  document.body.appendChild(divElementOne);
+  document.body.appendChild(divElementTwo);
   
-  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentOne));
-  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentTwo));
-  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentThree));
-}
+  orp.dom.setKeywordValueForElement(divElementOne, "foo", 34);
+  var fooValueOne = orp.dom.getKeywordValueForElement(divElementOne, "foo");
+  var fooValueTwo = orp.dom.getKeywordValueForElement(divElementTwo, "foo");
+ 
+  assertTrue('divElementOne has a "foo" value of 34', (fooValueOne === 34));
+  assertTrue('divElementTwo does not have a "foo" value', (fooValueTwo === null));
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "dom.js",
-    "OpenRecordLoaderStepThree.js",
-    "TablePlugin.js",
-    "OutlinePlugin.js",
-    "DetailPlugin.js",
-    "BarChartPlugin.js"];
-  var prefix = "../../../source/";
-  var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
-}
+  var barValueOne = {a: 1, b: 2};
+  var barValueTwo = "Kermit the Frog";
+  orp.dom.setKeywordValueForElement(divElementOne, "bar", barValueOne);
+  orp.dom.setKeywordValueForElement(divElementTwo, "bar", barValueTwo);
+  
+  var barOneToo = orp.dom.getKeywordValueForElement(divElementOne, "bar");
+  var barTwoToo = orp.dom.getKeywordValueForElement(divElementTwo, "bar");
+  
+  assertTrue('divElementOne has a "foo" value of 34', (barValueOne === barOneToo));
+  assertTrue('divElementTwo does not have a "foo" value', (barValueTwo === barTwoToo));
 
+}
 
 // -------------------------------------------------------------------
 // End of file

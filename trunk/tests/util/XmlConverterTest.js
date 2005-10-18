@@ -37,7 +37,7 @@ var xmlConverter;
 
 function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.require("orp.util.XmlConverter");
   dojo.require("orp.util.Util");
   dojo.require("orp.archive.StubArchive");

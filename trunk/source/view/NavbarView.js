@@ -236,10 +236,61 @@ orp.view.NavbarView.prototype._rebuildView = function() {
   var newPageButton = orp.view.View.appendNewElement(divElement, "input", orp.view.RootView.cssClass.EDIT_TOOL);
   newPageButton.type = "button";
   newPageButton.value = "New Page";
-  // newPageButton.onclick = this._clickOnNewPageButton.orpBindAsEventListener(this);
   dojo.event.connect(newPageButton, "onclick", this, "_clickOnNewPageButton");
+
+  var FIXME_OCT_14_2005_EXPERIMENT = false;
+  if (FIXME_OCT_14_2005_EXPERIMENT) {
+    var stage = this;
+    
+    var kermitButton = orp.view.View.appendNewElement(divElement, "input");
+    kermitButton.type = "button";
+    kermitButton.value = "Kermit";
+    // dojo.event.connect(kermitButton, "onclick", function(evt){stage.addMuppet("Kermit was added");});
+    dojo.event.connect(kermitButton, "onclick", this, "plusMuppet");
+
+    var elmoButton = orp.view.View.appendNewElement(divElement, "input");
+    elmoButton.type = "button";
+    elmoButton.value = "Elmo";
+    // dojo.event.connect(elmoButton, "onclick", function(evt){stage.addMuppet("Elmo was added");});
+    dojo.event.connect(elmoButton, "onclick", this, "plusMuppet");
+
+    kermitButton.muppetName = "Kermit the Frog";
+    elmoButton.muppetName = "Elmo the Red";
+    window.kermitButton = kermitButton;
+    window.elmoButton = elmoButton;
+
+    var nobodyButton = orp.view.View.appendNewElement(divElement, "input");
+    nobodyButton.type = "button";
+    nobodyButton.value = "nobody";
+    nobodyButton.orp_name = "nobody :-(";
+    dojo.event.kwConnect({
+      srcObj:     nobodyButton, 
+      srcFunc:    "onclick", 
+      targetObj:  stage,
+      targetFunc: "addMuppetEvent" });
+  }
+
 };
 
+var FIXME_OCT_14_2005_EXPERIMENT = false;
+if (FIXME_OCT_14_2005_EXPERIMENT) {
+orp.view.NavbarView.prototype.plusMuppet = function(event) {
+  alert(event.target.muppetName);
+  delete event.target.muppetName;
+  dojo.event.disconnect(window.kermitButton, "onclick", this, "plusMuppet");
+};
+
+orp.view.NavbarView.prototype.addMuppet = function(muppetName) {
+  muppetName = muppetName || "nobody :-(";
+  alert(muppetName);
+};
+
+orp.view.NavbarView.prototype.addMuppetEvent = function(event, muppetName) {
+  
+  muppetName = muppetName || "nobody :-(";
+  alert(event.target.orp_name);
+};
+}
 
 // -------------------------------------------------------------------
 // Event handler methods

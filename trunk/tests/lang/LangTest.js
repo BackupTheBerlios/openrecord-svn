@@ -34,7 +34,7 @@
 // -------------------------------------------------------------------
 
 function setUp() {
-  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.require("orp.lang.Lang");
 }
@@ -181,7 +181,50 @@ function nop_testFoo() {
   orp.lang.assert(false, "This is an example of an assert that fails.");
 }
 
+function testBind() {
+  function Box(boxName) {
+    this._boxName = boxName;
+  }
+  Box.prototype.setDimensions = function(x, y, z, etc) {
+    this._dimensions = [];
+    for (var i = 0; i < arguments.length; ++i) {
+      this._dimensions[i] = arguments[i];
+    }
+  };
+  Box.prototype.getVolume = function() {
+    var volume = 1;
+    for (var i in this._dimensions) {
+      volume = volume * this._dimensions[i];
+    }
+    return volume;
+  };
+  
+  var box = new Box();
+  
+  // make the box be a two-dimensional square
+  var square = orp.lang.bind(box, "setDimensions", 2, 3);
+  square();
+  assertTrue("Bind works with 2 arguments.", (box.getVolume() == (2 * 3)) );
+  
+  // make the box be a three-dimensional cube
+  var cube = orp.lang.bind(box, "setDimensions", 2, 3, 4);
+  cube();
+  assertTrue("Bind works with 3 arguments.", (box.getVolume() == (2 * 3 * 4)) );
+  
+  // make the box be a one-dimensional line
+  var line = orp.lang.bind(box, "setDimensions", 2);
+  line();
+  assertTrue("Bind works with 1 argument.", (box.getVolume() == (2)) );
+  
+  // make the box be a zero-dimensional point
+  var point = orp.lang.bind(box, "setDimensions");
+  point();
+  assertTrue("Bind works with 1 argument.", (box.getVolume() == (1)) );  
+}
 
+// -------------------------------------------------------------------
+// Helper functions
+// -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
 // End of file

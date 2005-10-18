@@ -146,11 +146,9 @@ orp.view.LoginView.prototype._rebuildView = function() {
     this.usernameInput = orp.view.View.appendNewElement(mySpan, "input", null, {size:20, value:"Albert Einstein"});
     orp.view.View.appendNewTextNode(mySpan," ");
     this.passwordInput = orp.view.View.appendNewElement(mySpan, "input", null, {size:10, type:"password", value:"randomdots"});
-    // this.passwordInput.onkeypress = this._createAccountPasswordKeyPress.orpBindAsEventListener(this);
     dojo.event.connect(this.passwordInput, "onkeypress", this, "_createAccountPasswordKeyPress");
     orp.view.View.appendNewTextNode(mySpan, " ");
     var newAccountButton = orp.view.View.appendNewElement(mySpan ,"input", null, {value:"Create New Account", type:"button"});
-    // newAccountButton.onclick = this._clickOnNewAcctButton.orpBindAsEventListener(this);
     dojo.event.connect(newAccountButton, "onclick", this, "_clickOnNewAcctButton");
     this.usernameInput.select();
   } else if (currentUser) { 
@@ -160,12 +158,10 @@ orp.view.LoginView.prototype._rebuildView = function() {
     
     orp.view.View.appendNewTextNode(mySpan, "Hello " + currentUser.getDisplayString() + ". ");
     var signOutLink = orp.view.View.appendNewElement(mySpan, "a", null, null, "Sign out");
-    // signOutLink.onclick = this._clickOnSignoutLink.orpBindAsEventListener(this);
     dojo.event.connect(signOutLink, "onclick", this, "_clickOnSignoutLink");
     orp.view.View.appendNewTextNode(mySpan, " ");
     var showToolsButton = orp.view.View.appendNewElement(mySpan, "input", null, {type:"button", value:
       (this.getRootView().isInShowToolsMode()) ? "Hide Tools" : "Show Tools"});
-    // showToolsButton.onclick = this._clickOnShowToolsButton.orpBindAsEventListener(this);
     dojo.event.connect(showToolsButton, "onclick", this, "_clickOnShowToolsButton");
   }
   else {
@@ -174,20 +170,16 @@ orp.view.LoginView.prototype._rebuildView = function() {
     //   _Create Account_  or sign in:  _username_  _password_  [Sign in]
     
     var createAccountLink = orp.view.View.appendNewElement(mySpan, "a", null, null, "Create Account");
-    // createAccountLink.onclick = this._clickOnCreateAccountLink.orpBindAsEventListener(this);
     dojo.event.connect(createAccountLink, "onclick", this, "_clickOnCreateAccountLink");
     orp.view.View.appendNewTextNode(mySpan, " or sign in: ");
     this.usernameInput = orp.view.View.appendNewElement(mySpan, "input", null, {size:20,value:"Albert Einstein"});
     mySpan.appendChild(document.createTextNode(" "));
     this.passwordInput = orp.view.View.appendNewElement(mySpan, "input", null, {size:10,type:"password",value:"randomdots"});
-    // this.passwordInput.onkeypress = this._signinPasswordKeyPress.orpBindAsEventListener(this);
-    // this.passwordInput.onfocus = this._signinPasswordFocus.orpBindAsEventListener(this);
     dojo.event.connect(this.passwordInput, "onkeypress", this, "_signinPasswordKeyPress");
     dojo.event.connect(this.passwordInput, "onfocus", this, "_signinPasswordFocus");
     this._myUsernameSuggestionBox = new orp.view.UserSuggestionBox(this.usernameInput, this.getWorld().getUsers(), this.passwordInput);
     mySpan.appendChild(document.createTextNode(" "));
     var signInButton = orp.view.View.appendNewElement(mySpan, "input", null, {value:"Sign in",type:"button"});
-    // signInButton.onclick = this._clickOnSignInButton.orpBindAsEventListener(this);
     dojo.event.connect(signInButton, "onclick", this, "_clickOnSignInButton");
   }
   
@@ -404,9 +396,6 @@ orp.view.UserSuggestionBox = function(htmlInputField, listOfEntries, nextHtmlFie
   this._userSuggestionBoxDivElement.style.display = "none";
   document.body.appendChild(this._userSuggestionBoxDivElement);
   
-  // this._inputField.onkeyup = this._keyPressOnInputField.orpBindAsEventListener(this);
-  // this._inputField.onfocus = this._focusOnInputField.orpBindAsEventListener(this);
-  // this._inputField.onblur = this._blurOnInputField.orpBindAsEventListener(this);
   dojo.event.connect(this._inputField, "onkeyup", this, "_keyPressOnInputField");
   dojo.event.connect(this._inputField, "onfocus", this, "_focusOnInputField");
   dojo.event.connect(this._inputField, "onblur", this, "_blurOnInputField");
@@ -466,7 +455,7 @@ orp.view.UserSuggestionBox.prototype._blurOnInputField = function(eventObject) {
 /**
  *
  */
-orp.view.UserSuggestionBox.prototype._clickOnSelection = function(eventObject, string) {
+orp.view.UserSuggestionBox.prototype._clickOnSelection = function(string) {
   this._inputField.value = string;
   this._nextField.select();
 };
@@ -507,7 +496,7 @@ orp.view.UserSuggestionBox.prototype._redisplayUserSuggestionBox = function() {
       var row = table.insertRow(rowNumber);
       var cell = row.insertCell(columnNumber);
       cell.appendChild(textNode);
-      cell.onmousedown = this._clickOnSelection.orpBindAsEventListener(this, string);
+      dojo.event.connect(cell, "onmousedown", orp.lang.bind(this, "_clickOnSelection", string));
       rowNumber += 1;
     }
     this._userSuggestionBoxDivElement.appendChild(table);

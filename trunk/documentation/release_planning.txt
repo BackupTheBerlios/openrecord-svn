@@ -403,7 +403,7 @@ brian  | 0.25 IED | 0.25 IED|     refactor UUID constructor API, and other UUID 
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
 brian  |          | 1    IED|  1. get djConfig.debugAtAllCosts to work
-brian  |          | (0.25+) |  2. replace orpBindAsEventListener() with dojo.event.connect()
+brian  |          | done (0.25+) |  2. replace orpBindAsEventListener() with dojo.event.connect()
 brian  |          | 0.1  IED|  3. move UUID files from source/util to source/uuid
 brian  | 0.5  IED | (0.5+)  |  4. Make Item.js use namedParameter based API
 brian  |          | 0.5  IED|  5. split half the code in source/model off into source/_____
@@ -411,6 +411,8 @@ brian  |          | 0.35 IED|  6. use terms Serialize and Deserialize for that c
        |          |         |  7. merge StubArchive + DeltaArchive, and re-name the result
 brian  |          | 0.25 IED|  8. create a FakeStorage class, + rename FileSaver + HttpSaver
        |          |         |     update unit tests to use the FakeStorage instead of StubArchive
+       |          |         |     try to convert one unit test over to the dojo jum framework
+       |          |         |     move DOM methods from orp.view.View.xxx to orp.dom.xxx
 brian  |          | 0    IED|  9. change "endOfLife()" to "destroy()"
        |          |         | 10. Rationalize the View API and document public API
 mignon | 1    IED |         | 11. Rationalize the ViewPlugin API

@@ -368,7 +368,6 @@ orp.view.MultiEntriesView.prototype._buildView = function() {
   }
   
   if (this.isInEditMode()) {
-    // htmlElement.onclick = this._handleOwnClick.orpBindAsEventListener(this);
     dojo.event.connect(htmlElement, "onclick", this, "_handleOwnClick");
     var listener = this;
     Droppables.add(htmlElement, {accept: [orp.view.EntryView.cssClass.CONNECTION_VALUE, orp.view.EntryView.CSS_ITEM_VALUE, orp.view.EntryView.cssClass.SELECTED],

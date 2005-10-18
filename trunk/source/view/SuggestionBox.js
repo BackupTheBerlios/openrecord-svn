@@ -37,6 +37,7 @@
 dojo.provide("orp.view.SuggestionBox");
 dojo.require("orp.util.Util");
 dojo.require("dojo.event.*");
+dojo.require("orp.dom");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -195,7 +196,7 @@ orp.view.SuggestionBox.prototype._blurOnInputField = function() {
 /**
  *
  */
-orp.view.SuggestionBox.prototype._clickOnSelection = function(eventObject, item) {
+orp.view.SuggestionBox.prototype._clickOnSelection = function(item) {
   this._selectedItem = item;
 };
 
@@ -254,12 +255,8 @@ orp.view.SuggestionBox.prototype._redisplaySuggestionBox = function() {
       var row = table.insertRow(rowNumber);
       var cell = row.insertCell(columnNumber);
       row.className = (this._selectedItem == item) ? "selected":"";
-      cell.appendChild(textNode);
-      
-      // FIXME: need to figure out how to pass "item" as a parameter via dojo.event.connect()
-      cell.onmousedown = this._clickOnSelection.orpBindAsEventListener(this, item);
-      // dojo.event.connect(cell, "onmousedown", this, "_clickOnSelection");
-      
+      cell.appendChild(textNode);    
+      dojo.event.connect(cell, "onmousedown", orp.lang.bind(this, "_clickOnSelection", item));
       rowNumber += 1;
     }
     this._suggestionBoxDivElement.appendChild(table);

@@ -421,30 +421,6 @@ orp.util.getTargetFromEvent = function(eventObject) {
 };
 
 
-/**
- * When passing an EventListener (e.g. onclick) a function, it is often useful to
- * 1) have the function be called by an instance of an object
- * 2) have additional arguments passed as parameters to the function
- * 3) some of these additional parameters in (2) are known only when the
- *    EventListener function is bound, not when the function is called
- * This utility function returns  a function that satisfies the above 3 reqs.
- * For more details see, http://www.deepwood.net/writing/method-references.html.utf8
- * However, empirically, arguments is not an array in Firefox and cannot be
- * concat'd with an array, hence the mod.
- */
-Function.prototype.orpBindAsEventListener = function(object) {
-  var method = this;
-  var preappliedArguments = arguments;
-  return function (event) {
-    var args = [event || window.event];
-    for (var i = 1; i < preappliedArguments.length; ++i) {
-      args.push(preappliedArguments[i]);
-    }
-    method.apply(object, args);
-  };
-};
-
-
 // -------------------------------------------------------------------
 // HTML document manipulation
 // -------------------------------------------------------------------

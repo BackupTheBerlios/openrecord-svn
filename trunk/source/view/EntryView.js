@@ -69,7 +69,6 @@ dojo.require("dojo.event.*");
  * @param    isMultiLine     a boolean indicating if text view is single line or multi-line
  */
 orp.view.EntryView = function(superview, htmlElement, item, attribute, entry, isMultiLine) {
-  // orp.util.assert((!entry) || entry instanceof orp.model.Entry);
   orp.lang.assert(item instanceof orp.model.Item);
   orp.lang.assert(attribute instanceof orp.model.Item); // PENDING need to check that attribute is an attribute
   var FIXME_OCT_7_2005_EXPERIMENT = true;
@@ -197,7 +196,6 @@ orp.view.EntryView.prototype.setAutoWiden = function(autoWiden) {
  *
  */
 orp.view.EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntries) {
-  // orp.util.assert(orp.util.isArray(expectedTypeEntries));
   orp.lang.assertType(expectedTypeEntries, Array);
   for (var key in expectedTypeEntries) {
     orp.lang.assert(expectedTypeEntries[key] instanceof orp.model.Entry);
@@ -210,7 +208,6 @@ orp.view.EntryView.prototype.setExpectedTypeEntries = function(expectedTypeEntri
  *
  */
 orp.view.EntryView.prototype.setSuggestions = function(listOfSuggestions) {
-  // if (listOfSuggestions) {orp.util.assert(orp.util.isArray(listOfSuggestions));}
   orp.lang.assertTypeForOptionalValue(listOfSuggestions, Array);
   this._suggestions = listOfSuggestions;
 };
@@ -256,17 +253,10 @@ orp.view.EntryView.prototype._buildView = function() {
   var className = (this._isProvisional ? orp.view.EntryView.cssClass.PROVISIONAL : '');
   this._textSpan = orp.view.View.appendNewElement(htmlElement, "span", className, null);
   this._textNode = orp.view.View.appendNewTextNode(this._textSpan, textString);
-  // if (this._isProvisional) {
-  //   this._textSpan.className = orp.view.EntryView.cssClass.PROVISIONAL;
-  // }
-  // else if (!this._alwaysUseEditField) {
-  //   this._setClassName();
-  // }
   if (!this._isProvisional && !this._alwaysUseEditField) {
     this._setClassName();
   }
   
-  // htmlElement.onclick = this.onClick.orpBindAsEventListener(this);
   dojo.event.connect(htmlElement, "onclick", this, "onClick");
   if (this._alwaysUseEditField) {
     this.startEditing(true);
@@ -287,7 +277,6 @@ orp.view.EntryView.prototype._setClassName = function() {
     var connectionType  = this.getWorld().getItemFromUuid(orp.model.World.UUID.TYPE_CONNECTION);
     if (dataType == itemType || dataType == connectionType) {
       if (this._isLozenge()) {
-        // this.getHtmlElement().ondblclick = this.onDoubleClick.orpBindAsEventListener(this);
         var htmlElement = this.getHtmlElement();
         dojo.event.connect(htmlElement, "ondblclick", this, "onDoubleClick");
         if (this.isInEditMode() && !this._draggable) {

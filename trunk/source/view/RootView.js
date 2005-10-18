@@ -92,11 +92,8 @@ orp.view.RootView = function(world) {
   
   this._currentlyInDisplayMethod = false;
   
-  // document.addEventListener("keypress", this._onKeyPress.orpBindAsEventListener(this),false);
   dojo.event.connect(document, "onkeypress", this, "_onKeyPress");
   
-  // window.document.body.innerHTML = "";
-  // var rootDiv = orp.view.View.appendNewElement(window.document.body, "div");
   var rootDiv = document.getElementById('OpenRecord');
   if (!rootDiv) {
     alert('Sorry, I could not find my <div id="OpenRecord"> element');

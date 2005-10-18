@@ -272,7 +272,6 @@ orp.view.PageView.prototype._buildEditControls = function() {
     var editButton = orp.view.View.appendNewElement(this._editModeDiv, "input");
     editButton.type = "Button";
     editButton.value = "New Section";
-    // editButton.onclick = this._addNewSection.orpBindAsEventListener(this);
     dojo.event.connect(editButton, "onclick", this, "_addNewSection");
   }
 };

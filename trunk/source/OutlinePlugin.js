@@ -123,16 +123,12 @@ orp.OutlinePlugin.prototype.refresh = function() {
     var anchorElement = orp.view.View.appendNewElement(liElement, "a", orp.view.SectionView.cssClass.MORE_LINK);
 
     // PENDING: 
-    //  We shouldn't call the private method _getUuid()
     //  We need a better way to get the URL for a content item
     anchorElement.setAttribute("href", orp.view.RootView.URL_HASH_ITEM_PREFIX + contentItem.getUuidString());
 
     // orp.view.View.appendNewTextNode(anchorElement, "(more &#8658;)");
     anchorElement.innerHTML = "(more &#8658;)";
-    // orp.util.addEventListener(anchorElement, "click", orp.view.RootView.clickOnLocalLink);
 
-    // orp.util.addEventListener(optionElement, "click", function(event) {listener.clickOnPluginSelectionMenu(event);});
-    // optionElement.onclick = this.clickOnAttributeMenu.orpBindAsEventListener(this);    
     dojo.event.connect(anchorElement, "onclick", orp.view.RootView.clickOnLocalLink);
   }
 };

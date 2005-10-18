@@ -42,7 +42,7 @@ expectedRepositoryHeader +=    '  }';
 // -------------------------------------------------------------------
 
 function setUp() {
-  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-0.1.0/src");
+  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.require("orp.archive.DeltaArchive");
   dojo.require("orp.model.World");

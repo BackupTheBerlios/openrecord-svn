@@ -39,6 +39,21 @@ dojo.require("dojo.lang.*");
 // Public Functions
 // -------------------------------------------------------------------
 
+/**
+ * Throws an exception (actually throws a "new Error()").
+ *
+ * Calling "orp.lang.throwError('foo')" is essentially identical
+ * to doing "throw new Error('foo')", except that the Error object
+ * thrown by orp.lang.throwError() will include a copy of the stack
+ * trace in the message body, where the lines of text in that copy 
+ * of the stack trace have been abridged so that the stack trace
+ * is more likely to be readable in an alert window that only shows
+ * 40 or 50 characters per line. 
+ *
+ * @scope    public function
+ * @param    message    Optional. A string describing the assertion.
+ * @throws    Always throws an Error.
+ */
 orp.lang.throwError = function(message) {
   var extendedMessage = "";
   var exception = new Error(message);  // create an exception, just to get a stack trace
@@ -76,6 +91,7 @@ orp.lang.throwError = function(message) {
  * @scope    public function
  * @param    booleanValue    A boolean value, which needs to be true for the assertion to succeed. 
  * @param    message    Optional. A string describing the assertion.
+ * @throws    Throws an Error if 'booleanValue' is false.
  */
 orp.lang.assert = function(booleanValue, message) {
   if (dojo.lang.isBoolean(booleanValue)) {
@@ -113,6 +129,7 @@ orp.lang.assert = function(booleanValue, message) {
  * @scope    public function
  * @param    value    Any literal value or object instance. 
  * @param    type    A class of object, or a literal type.
+ * @throws    Throws an Error if 'value' is not of type 'type'.
  */
 orp.lang.assertType = function(value, type) {
   if (!orp.lang.assertType._errorMessage) {
@@ -162,12 +179,55 @@ orp.lang.assertType = function(value, type) {
  * @scope    public function
  * @param    value    Optional.  Any literal value, or any object instance, or the value 'undefined'. 
  * @param    type    A class of object, or a literal type.
+ * @throws    Throws an Error if there is a 'value' AND it is not of type 'type'.
  */
 orp.lang.assertTypeForOptionalValue = function(value, type) {
   if (!dojo.lang.isUndefined(value) && (value !== null)) {
     orp.lang.assertType(value, type);
   }
 };
+
+
+/**
+ * Given an object, and the name of a method on that object, this
+ * function returns an anonymous function that, when called, will
+ * call the given method of the given object.
+ * 
+ * For example, doing:
+ * <pre>
+ *   foo.bar(a, b, c);
+ * </pre>
+ * should be the same as doing:
+ * <pre>
+ *   var func = orp.lang.bind(foo, "bar", a, b, c);
+ *   func();
+ * </pre>
+ *
+ * For some background about what's going on here, see:
+ * http://www.deepwood.net/writing/method-references.html.utf8
+ *
+ * @scope    public function
+ * @param    object    An object. 
+ * @param    methodName    A string with the name of a method that 'object' implements.
+ * @param    moreParameters    Optional.  As many additional arguments as you like.
+ */
+orp.lang.bind = function(object, methodName, moreParameters) {
+  var suppliedArguments = arguments;
+  if (suppliedArguments.length > 2) {
+    var argumentArray = [];
+    for (var i = 2; i < suppliedArguments.length; ++i) {
+      argumentArray.push(suppliedArguments[i]);
+    }
+    return function() {
+      object[methodName].apply(object, argumentArray);
+    }
+  } else {
+    return function() {
+      object[methodName].apply(object);
+    }
+  }
+};
+
 
 // -------------------------------------------------------------------
 // End of file

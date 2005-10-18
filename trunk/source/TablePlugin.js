@@ -226,7 +226,6 @@ orp.TablePlugin.prototype._buildAttributeEditor = function() {
     }
     optionElt.text += attribute.getDisplayString();
     optionElt.value = attribute.getUuidString();
-    // optionElt.onclick = this._attributeEditorChanged.orpBindAsEventListener(this);
     dojo.event.connect(optionElt, "onclick", this, "_attributeEditorChanged");
   }
   this._selectElement = selectElt;
@@ -246,7 +245,6 @@ orp.TablePlugin.prototype._buildFileImportTool = function() {
     this._fileImportButton = orp.view.View.appendNewElement(importDiv, "input");
     this._fileImportButton.type = "file";
     
-    // this._fileImportButton.onchange = this._importData.orpBindAsEventListener(this);
     dojo.event.connect(this._fileImportButton, "onchange", this, "_importData");
   }
 };
@@ -441,9 +439,7 @@ orp.TablePlugin.prototype._buildHeader = function() {
       headerCellContentSpan.appendChild(this.getSortIcon());
     }
     
-    // FIXME: need to figure out how to pass "attribute" via dojo.event.connect()
-    Event.observe(headerCell, "click", this.clickOnHeader.orpBindAsEventListener(this, attribute));
-    // dojo.event.connect(headerCell, "onclick", this, "clickOnHeader");
+    dojo.event.connect(headerCell, "onclick", orp.lang.bind(this, "clickOnHeader", attribute));
     
     if (this.isInEditMode()) {
       var listener = this;
@@ -567,7 +563,7 @@ orp.TablePlugin.prototype._insertCell = function(row, col, item, attribute) {
  * 
  * @scope    public instance method
  */
-orp.TablePlugin.prototype.clickOnHeader = function(event, clickAttribute) {
+orp.TablePlugin.prototype.clickOnHeader = function(clickAttribute) {
   if (clickAttribute == this._sortAttribute) {
     this._ascendingOrder = !this._ascendingOrder;
   }
