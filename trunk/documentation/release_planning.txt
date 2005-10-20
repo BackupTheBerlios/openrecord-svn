@@ -403,7 +403,7 @@ brian  | 0.25 IED | 0.25 IED|     refactor UUID constructor API, and other UUID 
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
 brian  |          | 1    IED|  1. get djConfig.debugAtAllCosts to work
-brian  |          | done (0.25+) |  2. replace orpBindAsEventListener() with dojo.event.connect()
+brian  |          | 0.75 IED|  2. replace orpBindAsEventListener() with dojo.event.connect()
 brian  |          | 0.1  IED|  3. move UUID files from source/util to source/uuid
 brian  | 0.5  IED | (0.5+)  |  4. Make Item.js use namedParameter based API
 brian  |          | 0.5  IED|  5. split half the code in source/model off into source/_____
