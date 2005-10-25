@@ -153,10 +153,14 @@ orp.archive.DeltaArchive.prototype._createNewRepository = function(overwriteIfEx
   }
   if (window.location) {
     if (window.location.protocol == "http:") {
-      this._saverObject = new orp.storage.HttpStorage(this._repositoryName, this._pathToTrunkDirectory);
+      this._saverObject = new orp.storage.HttpStorage(this._repositoryName,
+                                                      orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY,
+                                                      this._pathToTrunkDirectory);
     }
     if (window.location.protocol == "file:") {
-      this._saverObject = new orp.storage.FileStorage(this._repositoryName, this._pathToTrunkDirectory);
+      this._saverObject = new orp.storage.FileStorage(this._repositoryName,
+                                                      orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY,
+                                                      this._pathToTrunkDirectory);
     }
   }
   if (!this._saverObject) {
@@ -190,10 +194,14 @@ orp.archive.DeltaArchive.prototype._saveChangesToServer = function(forceSave) {
   if (!this._saverObject) {
     if (window.location) {
       if (window.location.protocol == "http:") {
-        this._saverObject = new orp.storage.HttpStorage(this._repositoryName, this._pathToTrunkDirectory);
+        this._saverObject = new orp.storage.HttpStorage(this._repositoryName,
+                                                        orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY,
+                                                        this._pathToTrunkDirectory);
       }
       if (window.location.protocol == "file:") {
-        this._saverObject = new orp.storage.FileStorage(this._repositoryName, this._pathToTrunkDirectory);
+        this._saverObject = new orp.storage.FileStorage(this._repositoryName,
+                                                        orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY,
+                                                        this._pathToTrunkDirectory);
       }
     }
   }

@@ -56,7 +56,6 @@ DAMAGE.
 // -------------------------------------------------------------------
 dojo.provide("orp.storage.FileStorage");
 dojo.require("orp.storage.Storage");
-dojo.require("orp.archive.DeltaArchive");
 dojo.require("orp.lang.Lang");
 
 
@@ -70,8 +69,8 @@ dojo.require("orp.lang.Lang");
  * @param    pathToTrunkDirectory           // Not needed if window.location.pathname is in the trunk directory.
  * @scope    public instance constructor
  */
-orp.storage.FileStorage = function(repositoryName, pathToTrunkDirectory) {
-  orp.storage.Storage.call(this, repositoryName, pathToTrunkDirectory);
+orp.storage.FileStorage = function(repositoryName, repositoryDirectoryName, pathToTrunkDirectory) {
+  orp.storage.Storage.call(this, repositoryName, repositoryDirectoryName, pathToTrunkDirectory);
   
   // Step 1: Build the fileUrl
   // 
@@ -91,7 +90,7 @@ orp.storage.FileStorage = function(repositoryName, pathToTrunkDirectory) {
   if (pathToTrunkDirectory && pathToTrunkDirectory !== "") {
     listOfAdditions.push(pathToTrunkDirectory);
   }
-  listOfAdditions.push(orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY);
+  listOfAdditions.push(this._repositoryDirectoryName);
   listOfAdditions.push(this.getRepositoryName() + ".json");
   this._fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
 };

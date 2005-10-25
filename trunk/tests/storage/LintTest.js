@@ -58,7 +58,8 @@ function testJsLintOnOpenRecordCode() {
     "Storage.js",
     "FakeStorage.js",
     "FileStorage.js",
-    "HttpStorage.js"];
+    "HttpStorage.js",
+    "FileSystem.js"];
   var prefix = "../../../source/storage/";
   var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
   var message = "Lint check \n" + errorReport;

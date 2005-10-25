@@ -46,11 +46,16 @@ dojo.provide("orp.storage.Storage");
  * @param    pathToTrunkDirectoryFromWindowLocation // Not needed if window location is at the root of the trunk directory.
  * @scope    public instance constructor
  */
-orp.storage.Storage = function(repositoryName, pathToTrunkDirectoryFromWindowLocation) {
+orp.storage.Storage = function(repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromWindowLocation) {
   this._repositoryName = repositoryName;
+  this._repositoryDirectoryName = repositoryDirectoryName;
   this._pathToTrunkDirectory = pathToTrunkDirectoryFromWindowLocation;
 };
 
+// -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+orp.storage.PATH_TO_PHP_FILES_FROM_TRUNK = "source/storage";
 
 // -------------------------------------------------------------------
 // Public methods

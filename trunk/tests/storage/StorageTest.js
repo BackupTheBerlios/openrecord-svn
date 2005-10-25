@@ -1,5 +1,5 @@
 /*****************************************************************************
- RepositoryWritingTest.js
+ StorageTest.js
  
 ******************************************************************************
  Copyright rights relinquished under the Creative Commons  
@@ -28,13 +28,10 @@
 
 var utilAssertReportedError;
 var pathToTrunkDirectoryFromThisDirectory   = "../..";
-var fileName = "FakeRepository";
+var repositoryName = "FakeRepository";
+var repositoryDirectoryName = "repositories";
 var fileUrl;
-var expectedRepositoryHeader = '{ "format": "2005_JUNE_CHRONOLOGICAL_LIST", \n';
-expectedRepositoryHeader +=    '  "records": [\n';
-expectedRepositoryHeader +=    '  // =======================================================================\n';
-expectedRepositoryHeader +=    '  { "Transaction": [ ]\n';
-expectedRepositoryHeader +=    '  }';
+var saver;
 
 // -------------------------------------------------------------------
 // setUp and tearDown
@@ -43,11 +40,16 @@ expectedRepositoryHeader +=    '  }';
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.archive.DeltaArchive");
-  dojo.require("orp.model.World");
+  dojo.require("orp.util.Util");
+  dojo.require("orp.storage.FileStorage");
+  dojo.require("orp.storage.HttpStorage");
 
   utilAssertReportedError = false;
   orp.util.setErrorReportCallback(errorReporter)
+
+  var isHttp = window.location.protocol == "http:";
+  saver = isHttp? new orp.storage.HttpStorage(repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromThisDirectory) 
+                : new orp.storage.FileStorage(repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromThisDirectory);
 
   // Examples of what window.location.pathname should look like:
   // for http: protocol: /openrecord/trunk/source/model/TestRepositoryWriting.html
@@ -61,8 +63,8 @@ function setUp() {
   // fileUrl must specify a file /repositories/*.json relative to the trunk directory, because
   // that's where FileSaver and HttpSaver will write
   fileUrl = thisDirectory + '/' + pathToTrunkDirectoryFromThisDirectory
-                          + '/' + orp.archive.DeltaArchive.PATH_TO_REPOSITORY_DIRECTORY
-                          + '/' + fileName + ".json";
+                          + '/' + repositoryDirectoryName
+                          + '/' + repositoryName + ".json";
 }
 
 function tearDown() {
@@ -74,34 +76,36 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
-function testCreateNewRepository() {
-  var archive = new orp.archive.DeltaArchive(fileName, pathToTrunkDirectoryFromThisDirectory);
+function testCreateNewFile() {
+  var now = new Date();
+  var timestamp = now.toString() + " " + now.valueOf();
   var overwriteIfExists = true;
-  archive._createNewRepository(overwriteIfExists);
-  assertTrue("Contents should be '{ \"format\": \"2005_JUNE_CHRONOLOGICAL_LIST\", ...'.", fileHasExpectedContents(expectedRepositoryHeader));
+  saver.writeText(timestamp, overwriteIfExists);
+  assertTrue("Contents should be timestamp.", fileHasExpectedContents(timestamp));
 }
 
-function testAppendToRepository() {
-  var archive = new orp.archive.DeltaArchive(fileName, pathToTrunkDirectoryFromThisDirectory);
+function testOverwriteFile() {
   var overwriteIfExists = true;
-  archive._createNewRepository(overwriteIfExists);
-  var world = new orp.model.World(archive);
-  var listOfUsers = world.getUsers();
-  var mignon = null;
-  for (var key in listOfUsers) {
-    if (listOfUsers[key].getDisplayName() == "Mignon Belongie") {
-      mignon = listOfUsers[key];
-    }
-  }
-  assertTrue("mignon should not be null", mignon != null);
-  world.login(mignon, "");
-  world.beginTransaction();
-  var apple = world.newItem("Apple");
-  world.endTransaction();
-  assertTrue("Contents should include expectedRepositoryHeader.", fileHasExpectedSubstring(expectedRepositoryHeader));
-  assertTrue("Contents should include '\"value\": \"Apple\"'.", fileHasExpectedSubstring('"value": "Apple"'));
+  saver.writeText("123", overwriteIfExists);
+  assertTrue("Contents should be '123'.", fileHasExpectedContents('123'));
+  var now = new Date();
+  var timestamp = now.toString() + " " + now.valueOf();
+  saver.writeText(timestamp, overwriteIfExists);
+  assertTrue("Contents should be timestamp.", fileHasExpectedContents(timestamp));
 }
 
+function testAppendToFile() {
+  var now = new Date();
+  var timestamp1 = now.toString() + " " + now.valueOf();
+  var overwriteIfExists = true;
+  saver.writeText(timestamp1, overwriteIfExists);
+  assertTrue("Contents should be timestamp1.", fileHasExpectedContents(timestamp1));
+  now = new Date();
+  var timestamp2 = now.toString() + " " + now.valueOf();
+  saver.appendText("\n" + timestamp2);
+  var expectedContents = timestamp1 + "\n" + timestamp2;
+  assertTrue("Contents should be timestamp1 & timestamp2.", fileHasExpectedContents(expectedContents));
+}
 
 // -------------------------------------------------------------------
 // Helper functions

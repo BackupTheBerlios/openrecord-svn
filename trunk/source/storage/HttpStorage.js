@@ -47,8 +47,8 @@ dojo.require("orp.storage.Storage");
  * @param    pathToTrunkDirectoryFromWindowLocation // Not needed if window location is at the root of the trunk directory.
  * @scope    public instance constructor
  */
-orp.storage.HttpStorage = function(repositoryName, pathToTrunkDirectoryFromWindowLocation) {
-  orp.storage.Storage.call(this, repositoryName, pathToTrunkDirectoryFromWindowLocation);
+orp.storage.HttpStorage = function(repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromWindowLocation) {
+  orp.storage.Storage.call(this, repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromWindowLocation);
 
   var thisUrl = window.location.pathname; //e.g. /openrecord/trunk/demo_page.html or /openrecord/trunk/source/model/TestRepositoryWriting.html.
   var arrayOfPathComponents = thisUrl.split('/');
@@ -75,7 +75,9 @@ dojo.inherits(orp.storage.HttpStorage, orp.storage.Storage);  // makes HttpStora
  */
 orp.storage.HttpStorage.prototype.appendText = function(textToAppend) {
   var url = this._completePathToTrunkDirectory;
-  url += "/source/storage/append_to_repository_file.php?file=" + this.getRepositoryName();
+  url += '/' + orp.storage.PATH_TO_PHP_FILES_FROM_TRUNK;
+  // FIXME: Should also pass in this._repositoryDirectoryName, rather than having "repositories" hardcoded in append_to_repository_file.php.
+  url += "/append_to_repository_file.php?file=" + this.getRepositoryName();
   
   // PENDING: 
   // It might be more efficient to re-use the XMLHttpRequestObject,
@@ -98,7 +100,9 @@ orp.storage.HttpStorage.prototype.appendText = function(textToAppend) {
  */
 orp.storage.HttpStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
   var url = this._completePathToTrunkDirectory;
-  url += "/source/storage/write_to_repository_file.php?file=" + this.getRepositoryName();
+  url += '/' + orp.storage.PATH_TO_PHP_FILES_FROM_TRUNK;
+  // FIXME: Should also pass in this._repositoryDirectoryName, rather than having "repositories" hardcoded in write_to_repository_file.php.
+  url += "/write_to_repository_file.php?file=" + this.getRepositoryName();
   if (overwriteIfExists) {
     url += "&overwrite=T";
   }

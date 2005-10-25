@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
 
 <!-- 
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by Mignon Belongie
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -11,36 +11,28 @@
 -->
 
   <head>
-    <title>OpenRecord Test Suite</title>
+    <title>Storage Test Suite</title>
 
-    <script type="text/javascript" src="../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
+    <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
     <script type="text/javascript">
       function suite() {
-        var testSuite = new top.jsUnitTestSuite();
-        testSuite.addTestSuite(openRecordTestSuite());
+        var testSuite = new window.top.jsUnitTestSuite();
+        testSuite.addTestSuite(storageTestSuite());
         return testSuite;
       }
       
-      function openRecordTestSuite() {
+      function storageTestSuite() {
         var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestPage("../../../tests/SimpleTest.html");
-        testSuite.addTestPage("../../../tests/dojo/SimpleDojoTest.html");
-        testSuite.addTestPage("../../../tests/dom/domTest.html");
-        testSuite.addTestPage("../../../tests/lang/LangTest.html");
-        testSuite.addTestPage("../../../tests/util/TestSuite.html");
-        testSuite.addTestPage("../../../tests/uuid/TestSuite.html");
-        testSuite.addTestPage("../../../tests/model/TestSuite.html");
-        testSuite.addTestPage("../../../tests/archive/LintTest.html");
-        testSuite.addTestPage("../../../tests/storage/TestSuite.html");
-        testSuite.addTestPage("../../../tests/view/LintTest.html");
-        testSuite.addTestPage("../../../tests/LintTest.html");
+        testSuite.addTestPage("../../../tests/storage/StorageTest.html");
+        testSuite.addTestPage("../../../tests/storage/DirectoryReadingTest.html");
+        testSuite.addTestPage("../../../tests/storage/LintTest.html");
         return testSuite;
       }
     </script>
   </head>
   
   <body>
-    <h1>OpenRecord Test Suite</h1>
+    <h1>Storage Test Suite</h1>
 
     <p>This page is used to run unit tests for the JavaScript code in the 
     OpenRecord project.</p>
@@ -48,7 +40,7 @@
     <p>&nbsp;</p>
     <hr/>
     <p>You should be able to run these unit tests by going to
-    <a href="../third_party/jsunit/jsunit2_1/testRunner.html?testpage=" 
+    <a href="../../third_party/jsunit/jsunit2_1/testRunner.html?testpage=" 
     onclick="href+=window.location.href;" rel="external">the local testRunner 
     page</a>, and hitting the <b>Run</b> button.</p>
 
@@ -94,4 +86,3 @@
 -->
   </body>
 </html>
-
