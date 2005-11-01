@@ -1,8 +1,9 @@
 /*****************************************************************************
- LintTest.js
+ test_dependencies.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -28,12 +29,6 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
-// -------------------------------------------------------------------
-// Dependencies, expressed in the syntax that JSLint understands:
-// 
-/*global LintTool, assertTrue, setUp, tearDown */
-// -------------------------------------------------------------------
-
 
 // -------------------------------------------------------------------
 // setUp and tearDown
@@ -42,7 +37,12 @@
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.util.LintTool");
+  dojo.require("orp.archive.JsonFormat");
+  dojo.require("orp.archive.JsonSerializer");
+  dojo.require("orp.archive.JsonDeserializer");
+  dojo.require("orp.archive.StubArchive");
+  dojo.require("orp.archive.DeltaArchive");
+  dojo.require("orp.archive.TextEncoding");
 }
 
 function tearDown() {
@@ -53,20 +53,9 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "Storage.js",
-    "FakeStorage.js",
-    "FileProtocolStorage.js",
-    "HttpProtocolStorage.js",
-    "directoryList.js",
-    "fileProtocolUtil.js"];
-  var prefix = "../../../source/storage/";
-  var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
+function testDependencies() {
+  assertTrue("orp.archive depends only on lang, util, uuid, model, and storage", orp.util.hasExactlyTheseProperties(orp, ["archive", "lang", "util", "uuid", "model", "storage"]));
 }
-
 
 // -------------------------------------------------------------------
 // End of file

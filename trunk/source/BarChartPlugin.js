@@ -117,8 +117,8 @@ orp.BarChartPlugin.prototype.refresh = function() {
 
   var contentItem = null;
   var attribute = null;
-  var listOfEntries;
-  var firstEntry;
+  var listOfValues;
+  var firstValue;
   var attributeUuid;
   var hashTableOfNumericValueIncidenceKeyedByUuid = {};
   var hashTableOfAttributesKeyedByUuid = {};
@@ -132,19 +132,16 @@ orp.BarChartPlugin.prototype.refresh = function() {
       attribute = listOfAttributesForItem[i];
       attributeUuid = attribute.getUuid();
       hashTableOfAttributesKeyedByUuid[attributeUuid] = attribute;
-      listOfEntries = contentItem.getEntriesForAttribute(attribute);
-      if (listOfEntries) {
-        firstEntry = listOfEntries[0];
-        if (firstEntry) {
-          var value = firstEntry.getValue(contentItem);
-          if (dojo.lang.isNumber(value)) {
-            var count = hashTableOfNumericValueIncidenceKeyedByUuid[attributeUuid];
-            if (!count) {
-              count = 0;
-            }
-            count += 1;
-            hashTableOfNumericValueIncidenceKeyedByUuid[attributeUuid] = count;
+      listOfValues = contentItem.getValuesForAttribute(attribute);
+      if (listOfValues.length > 0) {
+        firstValue = listOfValues[0];
+        if (dojo.lang.isNumber(firstValue)) {
+          var count = hashTableOfNumericValueIncidenceKeyedByUuid[attributeUuid];
+          if (!count) {
+            count = 0;
           }
+          count += 1;
+          hashTableOfNumericValueIncidenceKeyedByUuid[attributeUuid] = count;
         }
       }
     }
@@ -166,13 +163,12 @@ orp.BarChartPlugin.prototype.refresh = function() {
     var maxValue = 0;
     for (var jkey in listOfContentItems) {
       contentItem = listOfContentItems[jkey];
-      listOfEntries = contentItem.getEntriesForAttribute(selectedAttribute);
-      if (listOfEntries && listOfEntries[0]) {
-        var nextEntry = listOfEntries[0];
-        var nextValue = nextEntry.getValue();
+      listOfValues = contentItem.getValuesForAttribute(selectedAttribute);
+      if (listOfValues.length > 0) {
+        var nextValue = listOfValues[0];
         if (dojo.lang.isNumber(nextValue)) {
           maxValue = Math.max(maxValue, nextValue);
-        }     
+        }
       }
     }
   }
@@ -196,10 +192,9 @@ orp.BarChartPlugin.prototype.refresh = function() {
     listOfStrings.push("<td class=\"" + orp.view.SectionView.cssClass.PLAIN + "\">" + contentItem.getDisplayName("{no name}") + "</td>");
     var numericValue = 0;
     if (selectedAttribute) {
-      listOfEntries = contentItem.getEntriesForAttribute(selectedAttribute);
-      if (listOfEntries && listOfEntries[0]) {
-        firstEntry = listOfEntries[0];
-        var firstValue = firstEntry.getValue();
+      listOfValues = contentItem.getValuesForAttribute(selectedAttribute);
+      if (listOfValues.length > 0) {
+        firstValue = listOfValues[0];
         if (dojo.lang.isNumber(firstValue)) {
           numericValue = firstValue;
         }

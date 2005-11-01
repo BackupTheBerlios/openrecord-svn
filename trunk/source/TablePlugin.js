@@ -409,7 +409,6 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppabl
     // alertString = "";
     for (var i in this._displayAttributes) {
       var attribute = this._displayAttributes[i];
-      // this._layout.addEntryForAttribute(attributeTableColumns, attribute);
       this._layout.addEntry({attribute:attributeTableColumns, value:attribute});
       // alertString += attribute.getDisplayString() + '\n';
     }
@@ -670,16 +669,21 @@ orp.TablePlugin.prototype._importData = function(eventObject) {
       var value = listOfFields[j];
       if (value !== "") {
         listOfTypes = hashTableOfTypesKeyedByAttributeUuid[attribute.getUuid()];
-        // value = orp.view.EntryView._transformValueToExpectedType(world, value, listOfTypes);
         value = world.transformValueToExpectedType(value, listOfTypes);
+        var inverseAttribute = attribute.getSingleValueFromAttribute(attributeCalledInverseAttribute);
+        newItem.addEntry({
+          attribute:attribute, 
+          value:value, 
+          inverseAttribute:inverseAttribute });
+/*
         var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
         if (inverseAttributeEntry) {
           var inverseAttribute = inverseAttributeEntry.getValue(attribute);
           newItem.addConnectionEntry(attribute, value, inverseAttribute);
         } else {
-          // newItem.addEntryForAttribute(attribute, value);
           newItem.addEntry({attribute:attribute, value:value});
         }
+*/
       }
     }
   }
@@ -732,12 +736,10 @@ orp.TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
     if (noStoredColumns) {
       for (i in this._displayAttributes) {
         var anAttribute = this._displayAttributes[i];
-        // this._layout.addEntryForAttribute(attributeTableColumns,anAttribute,typeCalledItem);
         this._layout.addEntry({attribute:attributeTableColumns, value:anAttribute, type:typeCalledItem});
       }
     } else {
       if (!removeAttribute) {
-        // this._layout.addEntryForAttribute(attributeTableColumns,changedAttribute,typeCalledItem);
         this._layout.addEntry({attribute:attributeTableColumns, value:changedAttribute, type:typeCalledItem});
       }
     }

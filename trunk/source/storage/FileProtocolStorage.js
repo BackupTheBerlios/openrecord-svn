@@ -1,5 +1,5 @@
 /*****************************************************************************
- FileStorage.js
+ FileProtocolStorage.js
  
 ******************************************************************************
  The code in this file is a heavily modified version of code that was copied
@@ -54,8 +54,9 @@ DAMAGE.
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.storage.FileStorage");
+dojo.provide("orp.storage.FileProtocolStorage");
 dojo.require("orp.storage.Storage");
+dojo.require("orp.storage.fileProtocolUtil");
 dojo.require("orp.lang.Lang");
 
 
@@ -63,13 +64,13 @@ dojo.require("orp.lang.Lang");
 // Constructor
 // -------------------------------------------------------------------
 /**
- * The FileStorage class knows how to save text to a local file.
+ * The FileProtocolStorage class knows how to save text to a local file.
  *
  * @param    repositoryName                 // e.g. demo_page
  * @param    pathToTrunkDirectory           // Not needed if window.location.pathname is in the trunk directory.
  * @scope    public instance constructor
  */
-orp.storage.FileStorage = function(repositoryName, repositoryDirectoryName, pathToTrunkDirectory) {
+orp.storage.FileProtocolStorage = function(repositoryName, repositoryDirectoryName, pathToTrunkDirectory) {
   orp.storage.Storage.call(this, repositoryName, repositoryDirectoryName, pathToTrunkDirectory);
   
   // Step 1: Build the fileUrl
@@ -92,10 +93,10 @@ orp.storage.FileStorage = function(repositoryName, repositoryDirectoryName, path
   }
   listOfAdditions.push(this._repositoryDirectoryName);
   listOfAdditions.push(this.getRepositoryName() + ".json");
-  this._fileUrl = this._getLocalPathFromWindowLocation(listOfAdditions);
+  this._fileUrl = orp.storage.getLocalPathFromWindowLocation(listOfAdditions);
 };
 
-dojo.inherits(orp.storage.FileStorage, orp.storage.Storage);  // makes FileStorage be a subclass of Storage
+dojo.inherits(orp.storage.FileProtocolStorage, orp.storage.Storage);  // makes FileProtocolStorage be a subclass of Storage
 
 
 // -------------------------------------------------------------------
@@ -107,7 +108,7 @@ dojo.inherits(orp.storage.FileStorage, orp.storage.Storage);  // makes FileStora
  *
  * @scope    public instance method
  */
-orp.storage.FileStorage.prototype.appendText = function(textToAppend) {
+orp.storage.FileProtocolStorage.prototype.appendText = function(textToAppend) {
   var append = true;
   this._saveTextToFile(textToAppend, this._fileUrl, append);
 };
@@ -118,7 +119,7 @@ orp.storage.FileStorage.prototype.appendText = function(textToAppend) {
  *
  * @scope    public instance method
  */
-orp.storage.FileStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
+orp.storage.FileProtocolStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
   var append = false;
   this._saveTextToFile(textToWrite, this._fileUrl, append);
 };
@@ -134,10 +135,10 @@ orp.storage.FileStorage.prototype.writeText = function(textToWrite, overwriteIfE
  * @scope    private instance method
  * @return   Returns true if the text was saved.
  */
-orp.storage.FileStorage.prototype._saveTextToFile = function(text, fileUrl, append) {
+orp.storage.FileProtocolStorage.prototype._saveTextToFile = function(text, fileUrl, append) {
   // Make sure we were loaded from a "file:" URL
   if (window.location.protocol != "file:") {
-    orp.lang.assert(false, 'FileStorage.js can only be used for pages loaded from a "file:///" location');
+    orp.lang.assert(false, 'FileProtocolStorage.js can only be used for pages loaded from a "file:///" location');
   }
 
   var success = this._mozillaSaveToFile(text, fileUrl, append);
@@ -154,7 +155,7 @@ orp.storage.FileStorage.prototype._saveTextToFile = function(text, fileUrl, appe
  * @scope    private instance method
  * @return   Returns true if the text was saved, false if there was an error, or null if we couldn't even try.
  */
-orp.storage.FileStorage.prototype._mozillaSaveToFile = function(text, filePath, append) {
+orp.storage.FileProtocolStorage.prototype._mozillaSaveToFile = function(text, filePath, append) {
   if (window.Components) {
     try {
       netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
@@ -178,8 +179,7 @@ orp.storage.FileStorage.prototype._mozillaSaveToFile = function(text, filePath, 
       outputStream.flush();
       outputStream.close();
       return true;
-    }
-    catch(exception) {
+    } catch(exception) {
       alert("Exception while attempting to save\n\n" + exception);
       return false;
     }
@@ -196,112 +196,21 @@ orp.storage.FileStorage.prototype._mozillaSaveToFile = function(text, filePath, 
  * @scope    private instance method
  * @return   Returns true if the text was saved, or false if there was an error.
  */
-orp.storage.FileStorage.prototype._ieSaveToFile = function(text, filePath, append) {
+orp.storage.FileProtocolStorage.prototype._ieSaveToFile = function(text, filePath, append) {
   try {
     var fileSystemObject = new ActiveXObject("Scripting.FileSystemObject");
-  }
-  catch(exception) {
+  } catch(exception) {
     alert("Exception while attempting to save\n\n" + exception.toString());
     return false;
   }
   if (append) {
-    orp.lang.assert(false, "PENDING: still need to write code for this");
+    orp.lang.assert(false, "FIXME: still need to write code for this");
   } else {
     var file = fileSystemObject.OpenTextFile(filePath, 2, -1, 0);
   }
   file.Write(text);
   file.Close();
   return true;
-};
-
-
-/**
- * This method looks at the URL value in the window.location property,
- * strips the filename off the end, appends any given path elements,
- * converts the whole thing to a format that is compatible with the 
- * local file system, and returns the new local path.
- *
- * @scope    private instance method
- * @return   Returns a full local pathname.
- */
-orp.storage.FileStorage.prototype._getLocalPathFromWindowLocation = function(listOfAdditions) {
-  // Example location:
-  //   location.href     == file:///D:/amy/openrecord/foo.html#bar
-  //   location.protocol == file:
-  //   location.pathname ==        /D:/amy/openrecord/foo.html
-  //   location.hash     ==                                   #bar
-
-  // Get the URL of the document
-  var pathname = window.location.pathname;
-  
-  
-  // Step 1: Make the requested additions to the pathname
-  var arrayOfParts = pathname.split('/');
-  arrayOfParts.pop();  // get rid of the final "/foo.html" part
-  for (var i in listOfAdditions) {
-    var additionalPart = listOfAdditions[i];
-    arrayOfParts.push(additionalPart);
-  }
-  pathname = arrayOfParts.join('/');
-
-  
-  // Step 2: Figure out what type of URL we're working with
-  // Constants
-  var PathType = {
-    LOCAL_PC:        "LOCAL_PC",          // "file:///x:/path/path..." 
-    LOCAL_UNIX_MAC:  "LOCAL_UNIX_MAC",    // "file:///path/path..."
-    NETWORK_PC:      "NETWORK_PC",        // "file://server/share/path/path..."
-    NETWORK_FIREFOX: "NETWORK_FIREFOX" }; // "file://///server/share/path/path..."
-  // "file:///x:/path/path..."             == PathType.LOCAL_PC        --> "x:\path\path..."
-  // "file:///path/path..."                == PathType.LOCAL_UNIX_MAC  --> "/path/path..."
-  // "file://server/share/path/path..."    == PathType.NETWORK_PC      --> "\\server\share\path\path..."
-  // "file://///server/share/path/path..." == PathType.NETWORK_FIREFOX --> "\\server\share\path\path..."
-
-  var pathType = null;
-  if (pathname.charAt(2) == ":") {
-    pathType = PathType.LOCAL_PC;
-  } else if (pathname.indexOf("///") === 0) {
-    pathType = PathType.NETWORK_FIREFOX;
-  } else if (pathname.indexOf("/") === 0) {
-    pathType = PathType.LOCAL_UNIX_MAC;
-  } else {
-    pathType = PathType.NETWORK_PC;
-  }
-
-
-  // Step 3: Convert the URL to a file path
-  var localPath = pathname;
-  switch (pathType) {
-    case PathType.LOCAL_PC:
-      // example: "/x:/path/path..."
-      localPath = localPath.substring(1);  // get rid of initial '/'
-      localPath = unescape(localPath);
-      localPath = localPath.replace(new RegExp("/","g"),"\\");
-      // result: "x:\path\path..."
-      break;
-    case PathType.LOCAL_UNIX_MAC:         
-    // example: "/path/path..."
-      localPath = unescape(localPath);
-      // result: "/path/path..."
-      break;
-    case PathType.NETWORK_FIREFOX:
-      // example: "///server/share/path/path..."
-      localPath = localPath.substring(3);  // get rid of initial '///'
-      localPath = unescape(localPath);
-      localPath = localPath.replace(new RegExp("/","g"),"\\");
-      localPath = "\\\\" + localPath;      
-      // result: "\\server\share\path\path..."
-      break;
-    case PathType.NETWORK_PC:
-      // example: "server/share/path/path..."
-      localPath = unescape(localPath);
-      localPath = localPath.replace(new RegExp("/","g"),"\\");
-      localPath = "\\\\" + localPath;      
-      // result: "\\server\share\path\path..."
-      break;
-  }
-
-  return localPath;
 };
 
 

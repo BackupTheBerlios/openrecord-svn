@@ -11,32 +11,16 @@
 -->
 
   <head>
-    <title>Util Test Suite</title>
+    <title>Dependency tests for the orp.model package</title>
 
     <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
-    <script type="text/javascript">
-      function suite() {
-        var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestSuite(utilTestSuite());
-        return testSuite;
-      }
-      
-      function utilTestSuite() {
-        var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestPage("../../../tests/util/CsvParserTest.html");
-        testSuite.addTestPage("../../../tests/util/DateValueTest.html");
-        testSuite.addTestPage("../../../tests/util/LintTest.html");
-        testSuite.addTestPage("../../../tests/util/UtilTest.html");
-        testSuite.addTestPage("../../../tests/util/XmlConverterTest.html");
-        testSuite.addTestPage("../../../tests/util/XmlConverterMultiplePassesTest.html");
-        testSuite.addTestPage("../../../tests/util/test_dependencies.html");
-        return testSuite;
-      }
-    </script>
+    <script type="text/javascript" src="../../third_party/dojo/dojo-rev1759/dojo.js"></script>
+    <script type="text/javascript" src="../../third_party/md5/md5.js"></script>
+    <script type="text/javascript" src="test_dependencies.js"></script>
   </head>
   
   <body>
-    <h1>Util Test Suite</h1>
+    <h1>Dependency tests for the orp.model package</h1>
 
     <p>This page is used to run unit tests for the JavaScript code in the 
     OpenRecord project.</p>
@@ -46,7 +30,7 @@
     <p>You should be able to run these unit tests by going to
     <a href="../../third_party/jsunit/jsunit2_1/testRunner.html?testpage=" 
     onclick="href+=window.location.href;" rel="external">the local testRunner 
-    page</a>, and hitting the <b>Run</b> button.</p>
+    page</a>, and hitting the <b>Run</b> button. </p>
 
     <p>To see the tests, open this .html file in a text editor. Or, within a  
     web browser, you should be able see the source for this file by using 

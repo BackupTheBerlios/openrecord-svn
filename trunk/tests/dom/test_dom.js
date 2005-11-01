@@ -1,5 +1,5 @@
 /*****************************************************************************
- LintTest.js
+ test_dom.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -28,12 +28,6 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
-// -------------------------------------------------------------------
-// Dependencies, expressed in the syntax that JSLint understands:
-// 
-/*global LintTool, assertTrue, setUp, tearDown */
-// -------------------------------------------------------------------
-
 
 // -------------------------------------------------------------------
 // setUp and tearDown
@@ -42,7 +36,7 @@
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.util.LintTool");
+  dojo.require("orp.dom");
 }
 
 function tearDown() {
@@ -53,20 +47,42 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "Storage.js",
-    "FakeStorage.js",
-    "FileProtocolStorage.js",
-    "HttpProtocolStorage.js",
-    "directoryList.js",
-    "fileProtocolUtil.js"];
-  var prefix = "../../../source/storage/";
-  var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
+function testDependencies() {
+  assertTrue("orp.lang is defined", ((typeof orp.lang) === 'object'));
+  assertTrue("orp.dom is defined", ((typeof orp.dom) === 'object'));
+  var i = 0;  
+  for (var key in orp) {
+    ++i;
+  }
+  assertTrue("Only orp.lang and orp.dom are defined", (i === 2));
 }
 
+function testKeywordValueAccessors() {
+  divElementOne = window.document.createElement('div');
+  divElementTwo = window.document.createElement('div');
+  
+  document.body.appendChild(divElementOne);
+  document.body.appendChild(divElementTwo);
+  
+  orp.dom.setKeywordValueForElement(divElementOne, "foo", 34);
+  var fooValueOne = orp.dom.getKeywordValueForElement(divElementOne, "foo");
+  var fooValueTwo = orp.dom.getKeywordValueForElement(divElementTwo, "foo");
+ 
+  assertTrue('divElementOne has a "foo" value of 34', (fooValueOne === 34));
+  assertTrue('divElementTwo does not have a "foo" value', (fooValueTwo === null));
+
+  var barValueOne = {a: 1, b: 2};
+  var barValueTwo = "Kermit the Frog";
+  orp.dom.setKeywordValueForElement(divElementOne, "bar", barValueOne);
+  orp.dom.setKeywordValueForElement(divElementTwo, "bar", barValueTwo);
+  
+  var barOneToo = orp.dom.getKeywordValueForElement(divElementOne, "bar");
+  var barTwoToo = orp.dom.getKeywordValueForElement(divElementTwo, "bar");
+  
+  assertTrue('divElementOne has a "foo" value of 34', (barValueOne === barOneToo));
+  assertTrue('divElementTwo does not have a "foo" value', (barValueTwo === barTwoToo));
+
+}
 
 // -------------------------------------------------------------------
 // End of file

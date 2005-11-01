@@ -35,7 +35,7 @@
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.storage.FileSystem");
+  dojo.require("orp.storage.directoryList");
   dojo.require("orp.util.Util");
   orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION = "../..";
   orp.storage.PATH_TO_WINDOW_LOCATION_FROM_TRUNK_DIRECTORY = "tests/storage";
@@ -60,7 +60,11 @@ function testGetDirListWithoutSuffix() {
   assertTrue("List should include 'suffixless_file_1'.", orp.util.isObjectInSet("suffixless_file_1", dirList));
   assertTrue("List should include 'javascript_file_2.js'.", orp.util.isObjectInSet("javascript_file_2.js", dirList));
   assertTrue("List should include 'text_file_1.txt'.", orp.util.isObjectInSet("text_file_1.txt", dirList));
-  assertTrue("List should include exactly six files.", dirList.length == 6);
+  var expectedNumberOfFiles = 6;
+  if (orp.util.isObjectInSet(".svn", dirList)) {
+    expectedNumberOfFiles += 1;
+  }
+  assertTrue("List should include the expected number of files.", dirList.length == expectedNumberOfFiles);
 }
 
 function testGetDirListForMissingDir() {

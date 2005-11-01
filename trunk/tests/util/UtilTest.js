@@ -106,6 +106,8 @@ function testIsEmpty() {
 }
 
 function testHasProperty() {
+  var expectedProperties = {name: "name", provinces: "provinces" };
+  var unexpectedProperties = {foo: "foo", bar: "bar" };
   var canada = {name:"Canada", provinces:8};
   var atlantis = {};
 
@@ -115,17 +117,24 @@ function testHasProperty() {
   assertTrue('Atlantis does not have a name', !orp.util.hasProperty(atlantis, "name"));
 
   assertTrue('Atlantis has []', orp.util.hasProperties(atlantis, []));
+  assertTrue('Atlantis has {}', orp.util.hasProperties(atlantis, {}));
   assertTrue('Canada has ["name", "provinces"]', orp.util.hasProperties(canada, ["name", "provinces"]));
+  assertTrue('Canada has expectedProperties', orp.util.hasProperties(canada, expectedProperties));
   assertTrue('Canada has ["name"]', orp.util.hasProperties(canada, ["name"]));
   assertTrue('Canada has []', orp.util.hasProperties(canada, []));
+  assertTrue('Canada has {}', orp.util.hasProperties(canada, {}));
   assertTrue('Canada does not have ["foo", "bar"]', !orp.util.hasProperties(canada, ["foo", "bar"]));
+  assertTrue('Canada does not have unexpectedProperties', !orp.util.hasProperties(canada, unexpectedProperties));
 
   assertTrue('Canada has only ["name", "provinces"]', orp.util.hasNoUnexpectedProperties(canada, ["name", "provinces"]));
+  assertTrue('Canada has only expectedProperties', orp.util.hasNoUnexpectedProperties(canada, expectedProperties));
   assertTrue('Canada does not have just ["name"]', !orp.util.hasNoUnexpectedProperties(canada, ["name"]));
   
   assertTrue('Canada does not have just ["name"]', !orp.util.hasExactlyTheseProperties(canada, ["name"]));
   assertTrue('Canada has ["name", "provinces"]', orp.util.hasExactlyTheseProperties(canada, ["name", "provinces"]));
+  assertTrue('Canada has expectedProperties', orp.util.hasExactlyTheseProperties(canada, expectedProperties));
   assertTrue('Canada does not have ["name", "provinces", "foo"]', !orp.util.hasExactlyTheseProperties(canada, ["name", "provinces", "foo"]));
+  assertTrue('Canada does not have unexpectedProperties', !orp.util.hasExactlyTheseProperties(canada, unexpectedProperties));
 }
 
 // -------------------------------------------------------------------

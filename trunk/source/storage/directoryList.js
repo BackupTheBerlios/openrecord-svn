@@ -1,5 +1,5 @@
 /*****************************************************************************
- FileSystem.js
+ directoryList.js
  
 ******************************************************************************
  Written in 2005 by Mignon Belongie
@@ -28,8 +28,9 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
-dojo.provide("orp.storage.FileSystem");
-dojo.require("orp.storage.Storage");
+dojo.provide("orp.storage.directoryList");
+dojo.require("orp.storage.fileProtocolUtil");
+dojo.require("orp.storage.httpProtocolUtil");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -56,11 +57,12 @@ orp.storage.getDirList = function(dirNameRelativeToWindowLocation, suffix) {
     }
     eval("dirList = " + response);
   }
-  else {
+  if (window.location.protocol == "file:") {
     if (window.Components) {
-      dirList = this._getDirListFromMozillaComponent(thisDirectory, dirNameRelativeToWindowLocation, suffix);
-    }
-    else {
+      var arrayOfAdditions = dirNameRelativeToWindowLocation.split('/');
+      var pathToDirectory = orp.storage.getLocalPathFromWindowLocation(arrayOfAdditions);
+      dirList = this._getDirListFromMozillaComponent(pathToDirectory, suffix);
+    } else {
       throw new Error("window.Components == null");
     }
   }
@@ -85,10 +87,11 @@ orp.storage._getDirListFromPhp = function(thisDirectory, dirNameRelativeToWindow
   if (orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION) {
     pathToPhpDirectoryFromWindowLocation += orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION + '/';
   }
-  pathToPhpDirectoryFromWindowLocation += orp.storage.PATH_TO_PHP_FILES_FROM_TRUNK + '/';
+  pathToPhpDirectoryFromWindowLocation += orp.storage.httpProtocolUtil.PATH_TO_PHP_FILES_FROM_TRUNK + '/';
 
   var pathToPhpFileFromWindowLocation = pathToPhpDirectoryFromWindowLocation + "get_list_of_files_in_dir.php";
-  var url = thisDirectory + '/' + pathToPhpFileFromWindowLocation + 
+  var url = "";
+  url += thisDirectory + '/' + pathToPhpFileFromWindowLocation + 
             "?dir=" + dirNameRelativeToPhpFile;
   if (suffix) {
     url += "&suffix=" + suffix;
@@ -98,11 +101,11 @@ orp.storage._getDirListFromPhp = function(thisDirectory, dirNameRelativeToWindow
   return newXMLHttpRequestObject.responseText;
 };
 
-orp.storage._getDirListFromMozillaComponent = function(thisDirectory, dirNameRelativeToWindowLocation, suffix) {
+orp.storage._getDirListFromMozillaComponent = function(pathToDirectory, suffix) {
   var dirList = [];
+  var dirPath = pathToDirectory;
   netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
   var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
-  var dirPath = thisDirectory + "/" + dirNameRelativeToWindowLocation;
   file.initWithPath(dirPath);
   if (!file.exists()) {
     throw new Error(dirPath + " not found.");

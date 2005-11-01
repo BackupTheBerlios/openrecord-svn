@@ -11,32 +11,16 @@
 -->
 
   <head>
-    <title>Util Test Suite</title>
+    <title>Unit tests for the data model</title>
 
     <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
-    <script type="text/javascript">
-      function suite() {
-        var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestSuite(utilTestSuite());
-        return testSuite;
-      }
-      
-      function utilTestSuite() {
-        var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestPage("../../../tests/util/CsvParserTest.html");
-        testSuite.addTestPage("../../../tests/util/DateValueTest.html");
-        testSuite.addTestPage("../../../tests/util/LintTest.html");
-        testSuite.addTestPage("../../../tests/util/UtilTest.html");
-        testSuite.addTestPage("../../../tests/util/XmlConverterTest.html");
-        testSuite.addTestPage("../../../tests/util/XmlConverterMultiplePassesTest.html");
-        testSuite.addTestPage("../../../tests/util/test_dependencies.html");
-        return testSuite;
-      }
-    </script>
+    <script type="text/javascript" src="../../third_party/dojo/dojo-rev1759/dojo.js"></script>
+    <script type="text/javascript" src="../../third_party/md5/md5.js"></script>
+    <script type="text/javascript" src="test_AfterLogin.js"></script>
   </head>
   
   <body>
-    <h1>Util Test Suite</h1>
+    <h1>Unit tests for the data model</h1>
 
     <p>This page is used to run unit tests for the JavaScript code in the 
     OpenRecord project.</p>

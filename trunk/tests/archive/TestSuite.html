@@ -11,15 +11,27 @@
 -->
 
   <head>
-    <title>Unit tests for orp.dom</title>
+    <title>orp.archive Test Suite</title>
 
     <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
-    <script type="text/javascript" src="../../third_party/dojo/dojo-rev1759/dojo.js"></script>
-    <script type="text/javascript" src="domTest.js"></script>
+    <script type="text/javascript">
+      function suite() {
+        var testSuite = new window.top.jsUnitTestSuite();
+        testSuite.addTestSuite(utilTestSuite());
+        return testSuite;
+      }
+      
+      function utilTestSuite() {
+        var testSuite = new window.top.jsUnitTestSuite();
+        testSuite.addTestPage("../../../tests/archive/LintTest.html");
+        testSuite.addTestPage("../../../tests/archive/test_dependencies.html");
+        return testSuite;
+      }
+    </script>
   </head>
   
   <body>
-    <h1>Unit tests for orp.dom</h1>
+    <h1>UUID Test Suite</h1>
 
     <p>This page is used to run unit tests for the JavaScript code in the 
     OpenRecord project.</p>
@@ -29,7 +41,7 @@
     <p>You should be able to run these unit tests by going to
     <a href="../../third_party/jsunit/jsunit2_1/testRunner.html?testpage=" 
     onclick="href+=window.location.href;" rel="external">the local testRunner 
-    page</a>, and hitting the <b>Run</b> button. </p>
+    page</a>, and hitting the <b>Run</b> button.</p>
 
     <p>To see the tests, open this .html file in a text editor. Or, within a  
     web browser, you should be able see the source for this file by using 

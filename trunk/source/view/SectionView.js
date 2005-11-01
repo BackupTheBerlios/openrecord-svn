@@ -454,11 +454,16 @@ orp.view.SectionView.prototype.clickOnPluginSelectionMenu = function(eventObject
     this._pluginView = this.getPluginInstanceFromPluginItem(newPluginViewItem, this._pluginDiv);
 
     var oldEntry = this._section.getSingleEntryFromAttribute(attributeCalledPluginView);
-    if (oldEntry) {
+    this._section.addEntry({
+      previousEntry:oldEntry, 
+      attribute:attributeCalledPluginView, 
+      value:newPluginViewItem});
+/*  if (oldEntry) {
       this._section.replaceEntry({previousEntry:oldEntry, value:newPluginViewItem});
     } else {
       this._section.addEntry({attribute:attributeCalledPluginView, value:newPluginViewItem});
     }
+*/
     this.refresh();
   }
 };
@@ -486,20 +491,26 @@ orp.view.SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
   var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
   var listOfMatchingAttrs = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
   var matchingAttribute;
+  var entryToBeReplaced = null;
   if (listOfMatchingAttrs.length === 0) {
     // by default matching attribute is category
     matchingAttribute = this.getWorld().getAttributeCalledCategory();
-  }
-  else {
+  } else {
     orp.lang.assert(listOfMatchingAttrs.length == 1, 'more than one matching attributes');
+    entryToBeReplaced = listOfMatchingAttrs[0];
     matchingAttribute = listOfMatchingAttrs[0].getValue();
   }
   if (matchingAttribute.getDisplayString() != newChoiceName) {
-    if (listOfMatchingAttrs.length === 0) {
+      myQuery.addEntry({
+        previousEntry:entryToBeReplaced, 
+        attribute:attributeCalledQueryMatchingAttribute, 
+        value:newQueryMatchingAttribute});
+/*  if (listOfMatchingAttrs.length === 0) {
       myQuery.addEntry({attribute:attributeCalledQueryMatchingAttribute, value:newQueryMatchingAttribute});
     } else {
-      myQuery.replaceEntry({previousEntry:listOfMatchingAttrs[0], value:newQueryMatchingAttribute});
+      myQuery.replaceEntry({previousEntry:entryToBeReplaced, value:newQueryMatchingAttribute});
     }
+*/
 
     /* PENDING, PROBLEM to check Can't delete entries already created by previous matching attribute */
     var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();

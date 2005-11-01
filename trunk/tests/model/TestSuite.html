@@ -24,10 +24,13 @@
       function dataModelTestSuite() {
         var testSuite = new window.top.jsUnitTestSuite();
         testSuite.addTestPage("../../../tests/model/LintTest.html");
-        testSuite.addTestPage("../../../tests/model/ModelTest.html");
+        testSuite.addTestPage("../../../tests/model/test_BeforeLogin.html");
+        testSuite.addTestPage("../../../tests/model/test_AfterLogin.html");
+        testSuite.addTestPage("../../../tests/model/test_SequentialUsers.html");
         testSuite.addTestPage("../../../tests/model/RepositoryWritingTest.html");
         testSuite.addTestPage("../../../tests/model/TestReorderingForTypicalOrdinals.html");
         testSuite.addTestPage("../../../tests/model/TestReorderingForSpecialCases.html");
+        testSuite.addTestPage("../../../tests/model/test_dependencies.html");
         return testSuite;
       }
     </script>

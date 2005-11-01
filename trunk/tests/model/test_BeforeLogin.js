@@ -64,10 +64,31 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
   
+function testIllegalAttemptToCreateItem() {
+  var caughtError = false;
+  try {
+    var newItem = world.newItem("The Great Wall of China");
+  } catch (error) {
+    caughtError = true;
+  }
+  assertTrue("We can't create a new item without being logged in", caughtError);
+}
+
+function testIllegalAttemptToCreateEntry() {
+  var caughtError = false;
+  var attributeCalledName = world.getAttributeCalledName();
+  try {
+    var newEntry = attributeCalledName.addEntry({value: "Name Too"});
+  } catch (error) {
+    caughtError = true;
+  }
+  assertTrue("We can't create a new entry without being logged in", caughtError);
+}
 
 function testAccessorsForAxiomaticItems() {
-  var key;
+  var i;
   var item;
+  var uuid;
   var listOfAssignedNames;
   var nameEntry;
   
@@ -77,9 +98,10 @@ function testAccessorsForAxiomaticItems() {
   listOfAttributes.push(world.getAttributeCalledShortName());
   listOfAttributes.push(world.getAttributeCalledSummary());
   listOfAttributes.push(world.getAttributeCalledCategory());
-  listOfAttributes.push(world.getAttributeCalledClassName());
-  for (key in listOfAttributes) {
-    item = listOfAttributes[key];
+  listOfAttributes.push(world.getAttributeCalledUnfiled());
+  listOfAttributes.push(world.getAttributeCalledTag());
+  for (i in listOfAttributes) {
+    item = listOfAttributes[i];
     listOfAssignedNames = item.getNameEntries();
     assertTrue('Every axiomatic attribute has an array of names', dojo.lang.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic attribute has one name assigned', listOfAssignedNames.length == 1);
@@ -87,18 +109,40 @@ function testAccessorsForAxiomaticItems() {
     assertTrue('Every axiomatic attribute has a name which is an entry', (nameEntry instanceof orp.model.Entry));
     assertTrue('Every entry can be displayed as a string', dojo.lang.isString(nameEntry.getDisplayString()));
     assertTrue('Every axiomatic attribute is in the category "Attribute"', item.isInCategory(categoryCalledAttribute));
+    var uuid = item.getUuid();
+    assertTrue('Every axiomatic attribute has a UUID', (uuid instanceof orp.uuid.Uuid));
+    assertTrue('getItemFromUuid() returns the right attribute', (world.getItemFromUuid(uuid) == item));
   }
   
   var listOfCategories = [];
   listOfCategories.push(world.getCategoryCalledAttribute());
   listOfCategories.push(world.getCategoryCalledCategory());
-  for (key in listOfCategories) {
-    item = listOfCategories[key];
+  listOfCategories.push(world.getCategoryCalledType());
+  for (i in listOfCategories) {
+    item = listOfCategories[i];
     listOfAssignedNames = item.getNameEntries();
     assertTrue('Every axiomatic category has an array of names', dojo.lang.isArray(listOfAssignedNames));
     assertTrue('Every axiomatic category has one name assigned', listOfAssignedNames.length == 1);
     nameEntry = listOfAssignedNames[0];
     assertTrue('Every axiomatic category has a name which is entry', (nameEntry instanceof orp.model.Entry));
+    assertTrue('Every entry can be displayed as a string', dojo.lang.isString(nameEntry.getDisplayString()));
+  }
+  
+  var listOfTypes = [];
+  listOfTypes.push(world.getTypeCalledText());
+  listOfTypes.push(world.getTypeCalledNumber());
+  listOfTypes.push(world.getTypeCalledDate());
+  listOfTypes.push(world.getTypeCalledCheckMark());
+  listOfTypes.push(world.getTypeCalledUrl());
+  listOfTypes.push(world.getTypeCalledItem());
+  listOfTypes.push(world.getTypeCalledConnection());
+  for (i in listOfTypes) {
+    item = listOfTypes[i];
+    listOfAssignedNames = item.getNameEntries();
+    assertTrue('Every axiomatic type has an array of names', dojo.lang.isArray(listOfAssignedNames));
+    assertTrue('Every axiomatic type has one name assigned', listOfAssignedNames.length == 1);
+    nameEntry = listOfAssignedNames[0];
+    assertTrue('Every axiomatic type has a name which is entry', (nameEntry instanceof orp.model.Entry));
     assertTrue('Every entry can be displayed as a string', dojo.lang.isString(nameEntry.getDisplayString()));
   }
 }

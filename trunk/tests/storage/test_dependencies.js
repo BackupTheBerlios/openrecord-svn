@@ -1,8 +1,9 @@
 /*****************************************************************************
- LintTest.js
+ test_dependencies.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -28,12 +29,6 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
-// -------------------------------------------------------------------
-// Dependencies, expressed in the syntax that JSLint understands:
-// 
-/*global LintTool, assertTrue, setUp, tearDown */
-// -------------------------------------------------------------------
-
 
 // -------------------------------------------------------------------
 // setUp and tearDown
@@ -42,7 +37,12 @@
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.util.LintTool");
+  dojo.require("orp.storage.Storage");
+  dojo.require("orp.storage.FakeStorage");
+  dojo.require("orp.storage.FileProtocolStorage");
+  dojo.require("orp.storage.HttpProtocolStorage");
+  dojo.require("orp.storage.directoryList");
+  dojo.require("orp.storage.fileProtocolUtil");
 }
 
 function tearDown() {
@@ -53,20 +53,15 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "Storage.js",
-    "FakeStorage.js",
-    "FileProtocolStorage.js",
-    "HttpProtocolStorage.js",
-    "directoryList.js",
-    "fileProtocolUtil.js"];
-  var prefix = "../../../source/storage/";
-  var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
+function testDependencies() {
+  assertTrue("orp.lang is defined", ((typeof orp.lang) === 'object'));
+  assertTrue("orp.storage is defined", ((typeof orp.storage) === 'object'));
+  var i = 0;  
+  for (var key in orp) {
+    ++i;
+  }
+  assertTrue("Only orp.lang and orp.storage are defined", (i === 2));
 }
-
 
 // -------------------------------------------------------------------
 // End of file

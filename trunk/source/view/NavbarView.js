@@ -238,6 +238,14 @@ orp.view.NavbarView.prototype._rebuildView = function() {
   newPageButton.value = "New Page";
   dojo.event.connect(newPageButton, "onclick", this, "_clickOnNewPageButton");
 
+  var FIXME_OCT_19_2005_EXPERIMENT = false;
+  if (FIXME_OCT_19_2005_EXPERIMENT) {
+    var getTrunkButton = orp.view.View.appendNewElement(divElement, "input");
+    getTrunkButton.type = "button";
+    getTrunkButton.value = "getBaseScriptUri()";
+    dojo.event.connect(getTrunkButton, "onclick", this, "getBaseScriptUri");
+  }
+
   var FIXME_OCT_14_2005_EXPERIMENT = false;
   if (FIXME_OCT_14_2005_EXPERIMENT) {
     var stage = this;
@@ -272,24 +280,31 @@ orp.view.NavbarView.prototype._rebuildView = function() {
 
 };
 
+var FIXME_OCT_19_2005_EXPERIMENT = false;
+if (FIXME_OCT_19_2005_EXPERIMENT) {
+  orp.view.NavbarView.prototype.getBaseScriptUri = function(event) {
+    alert(window.location.pathname + "\n" + dojo.hostenv.getBaseScriptUri());
+  };
+}
+
 var FIXME_OCT_14_2005_EXPERIMENT = false;
 if (FIXME_OCT_14_2005_EXPERIMENT) {
-orp.view.NavbarView.prototype.plusMuppet = function(event) {
-  alert(event.target.muppetName);
-  delete event.target.muppetName;
-  dojo.event.disconnect(window.kermitButton, "onclick", this, "plusMuppet");
-};
-
-orp.view.NavbarView.prototype.addMuppet = function(muppetName) {
-  muppetName = muppetName || "nobody :-(";
-  alert(muppetName);
-};
-
-orp.view.NavbarView.prototype.addMuppetEvent = function(event, muppetName) {
+  orp.view.NavbarView.prototype.plusMuppet = function(event) {
+    alert(event.target.muppetName);
+    delete event.target.muppetName;
+    dojo.event.disconnect(window.kermitButton, "onclick", this, "plusMuppet");
+  };
   
-  muppetName = muppetName || "nobody :-(";
-  alert(event.target.orp_name);
-};
+  orp.view.NavbarView.prototype.addMuppet = function(muppetName) {
+    muppetName = muppetName || "nobody :-(";
+    alert(muppetName);
+  };
+  
+  orp.view.NavbarView.prototype.addMuppetEvent = function(event, muppetName) {
+    
+    muppetName = muppetName || "nobody :-(";
+    alert(event.target.orp_name);
+  };
 }
 
 // -------------------------------------------------------------------

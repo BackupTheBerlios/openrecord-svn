@@ -81,14 +81,11 @@ dojo.inherits(orp.model.Item, orp.model.ContentRecord);  // makes Item be a subc
 // Public class constants
 // -------------------------------------------------------------------
 orp.model.Item.NamedParameters = {
-  attribute:      "attribute",
-  value:          "value",
-  type:           "type",
-  previousEntry:  "previousEntry",
-  myAttribute:    "myAttribute",
-  otherItem:      "otherItem",
-  otherAttribute: "otherAttribute"};
-
+  attribute:        "attribute",
+  value:            "value",
+  type:             "type",
+  previousEntry:    "previousEntry",
+  inverseAttribute: "inverseAttribute"};
 
 // -------------------------------------------------------------------
 // Private methods
@@ -121,22 +118,6 @@ orp.model.Item.prototype._initialize = function(observer, provisionalFlag) {
 // Entry adding methods
 // -------------------------------------------------------------------
 
-/* PENDING: refactor these methods as per Sept 12 plan:
-// OLD
-item.addConnectionEntry(myAttribute, otherItem, otherAttribute)
-Item.replaceEntryWithConnection(previousEntry, myAttribute, otherItem, otherAttribute)
-
-// NEW
-item.addConnectionEntry({myAttribute:
-                        otherItem:
-                        otherAttribute: })
-
-item.replaceEntryWithConnection({previousEntry: 
-                        myAttribute:
-                        otherItem:
-                        otherAttribute: })
-*/
-
 /**
  * Creates a new entry object and adds the new entry to the item's 
  * list of entries.
@@ -156,26 +137,40 @@ item.replaceEntryWithConnection({previousEntry:
  * </pre>
  * 
  * @scope    public instance method
- * @namedParam    value    The value to initialize the entry to. 
+ * @namedParam    value    The value to initialize the entry to. (Optional if previousEntry is provided.)
  * @namedParam    type    Optional. An item representing a data type.
- * @namedParam    attribute    Optional.  The attribute to assign the entry to. 
+ * @namedParam    attribute    Optional. The attribute to assign the entry to. 
+ * @namedParam    previousEntry    Optional. The old entry to be replaced.
+ * @namedParam    inverseAttribute    Optional. The attribute to use as the inverseAttribute of 'attribute'.
  * @return   An entry object.
  * @throws   Throws an Error if no user is logged in.
  */
 orp.model.Item.prototype.addEntry = function(namedParameters) {
   orp.lang.assert(dojo.lang.isObject(namedParameters));
-  var arg = orp.model.Item.NamedParameters;
-  var value = namedParameters[arg.value];
-  var attribute = namedParameters[arg.attribute];
-  var type = namedParameters[arg.type];
+  var parameters = orp.model.Item.NamedParameters;
+  var value = namedParameters[parameters.value];
+  var attribute = namedParameters[parameters.attribute];
+  var type = namedParameters[parameters.type];
+  var previousEntry = namedParameters[parameters.previousEntry];
+  var inverseAttribute = namedParameters[parameters.inverseAttribute];
   
   // Check for typos in parameter names
-  orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type]));
+  orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, parameters));
   
-  if (!attribute) {
-    attribute = this.getWorld().getAttributeCalledUnfiled();
+  if (previousEntry) {
+    if (!attribute) {
+      attribute = previousEntry.getAttribute();
+    }
+    if (dojo.lang.isUndefined(value)) {
+      value = previousEntry.getValue();
+    }
+  } else {
+    if (!attribute) {
+      attribute = this.getWorld().getAttributeCalledUnfiled();
+    }
   }
-  return this._createNewEntry(null, attribute, value, type);
+
+  return this._createNewEntry(previousEntry, attribute, value, type, inverseAttribute);
 };
  
 
@@ -185,15 +180,15 @@ orp.model.Item.prototype.addEntry = function(namedParameters) {
  * Examples:
  * <pre>
  *    var entry = item.addEntry({value: "green"});
- *    entry = item.replaceEntry({previousEntry: entry, value: "green"});
- *    entry = item.replaceEntry({previousEntry: entry, attribute: color, value: "green"});
+ *    entry = item.replaceEntry({previousEntry: entry, value: "blue"});
+ *    entry = item.replaceEntry({previousEntry: entry, attribute: color, value: "blue"});
  *    var textType = world.getTypeCalledText();
- *    entry = item.replaceEntry({previousEntry: entry, attribute: color, value: "green", type: textType});
+ *    entry = item.replaceEntry({previousEntry: entry, attribute: color, value: "blue", type: textType});
  * </pre>
  * 
  * @scope    public instance method
  * @namedParam    previousEntry    The old entry to be replaced.
- * @namedParam    value    The value to initialize the entry to. 
+ * @namedParam    value    Optional. The value to initialize the entry to. 
  * @namedParam    type    Optional. An item representing a data type.
  * @namedParam    attribute    Optional.  The attribute to assign the entry to. 
  * @return   The new replacement entry object.
@@ -201,25 +196,10 @@ orp.model.Item.prototype.addEntry = function(namedParameters) {
  */
 orp.model.Item.prototype.replaceEntry = function(namedParameters) {
   orp.lang.assert(dojo.lang.isObject(namedParameters));
-  var arg = orp.model.Item.NamedParameters;
-  var value = namedParameters[arg.value];
-  var attribute = namedParameters[arg.attribute];
-  var type = namedParameters[arg.type];
-  var previousEntry = namedParameters[arg.previousEntry];
+  var previousEntry = namedParameters[orp.model.Item.NamedParameters.previousEntry];
 
-  // Check for typos in parameter names
-  orp.lang.assert(orp.util.hasNoUnexpectedProperties(namedParameters, [arg.value, arg.attribute, arg.type, arg.previousEntry]));
-  
   orp.lang.assert(dojo.lang.isObject(previousEntry));
-  if (!attribute) {
-    var FIXME_OCT_7_2005_EXPERIMENT = true;
-    if (FIXME_OCT_7_2005_EXPERIMENT) {
-      attribute = previousEntry.getAttribute();
-    } else {
-      attribute = previousEntry.getAttributeForItem(this);
-    }
-  }
-  return this._createNewEntry(previousEntry, attribute, value, type);
+  return this.addEntry(namedParameters);
 };
 
 
@@ -231,17 +211,45 @@ orp.model.Item.prototype.replaceEntry = function(namedParameters) {
  * @param    attribute    The attribute to assign the entry to. 
  * @param    value    The value to initialize the new entry to.
  * @param    type    Optional. An item representing a data type.
+ * @param    inverseAttribute    Optional. The attribute to use as the inverseAttribute of 'attribute'.
  * @scope    private instance method
  */
-orp.model.Item.prototype._createNewEntry = function(previousEntry, attribute, value, type) {
-
-  // If we've just been asked to replace the string "Foo" with the string "Foo",
-  // then don't even bother creating a new entry. 
-  if (previousEntry) {
-    var oldValue = previousEntry.getValue();
-    var oldAttribute = previousEntry.getAttribute();
-    if ((oldValue == value) && (oldAttribute == attribute)) {
-      return null;
+orp.model.Item.prototype._createNewEntry = function(previousEntry, attribute, value, type, inverseAttribute) {
+  var newEntry;
+  
+  if (inverseAttribute) {
+    var otherItem = value;
+    var myAttribute = attribute;
+    var otherAttribute = inverseAttribute;
+    
+    orp.lang.assert(otherItem instanceof orp.model.Item);
+    orp.lang.assert(myAttribute instanceof orp.model.Item);
+  
+    // If we've just been asked to replace the string "Foo" with the string "Foo",
+    // then don't even bother creating a new entry. 
+    if (previousEntry) {
+      if (previousEntry.getType() == this.getWorld().getTypeCalledConnection()) {
+        var oldItem = previousEntry.getItem();
+        var oldAttribute = previousEntry.getAttribute();
+        var oldValue = previousEntry.getValue();
+        var oldInverseAttribute = previousEntry.getInverseAttribute();
+        if (((oldAttribute == myAttribute) &&  (oldInverseAttribute == otherAttribute) &&
+          oldItem == this && oldValue == otherItem) ||
+          ((oldInverseAttribute == myAttribute) &&  (oldAttribute == otherAttribute) &&
+          oldValue == this && oldItem == otherItem)) {
+          return null;
+        }
+      }
+    }
+  } else {
+    // If we've just been asked to replace the string "Foo" with the string "Foo",
+    // then don't even bother creating a new entry. 
+    if (previousEntry) {
+      oldValue = previousEntry.getValue();
+      oldAttribute = previousEntry.getAttribute();
+      if ((oldValue == value) && (oldAttribute == attribute)) {
+        return null;
+      }
     }
   }
   
@@ -250,11 +258,31 @@ orp.model.Item.prototype._createNewEntry = function(previousEntry, attribute, va
     this._provisionalFlag = false;
     this.getWorld()._provisionalItemJustBecameReal(this);
   }
-  
-  var entry = this.getWorld()._newEntry(this, previousEntry, attribute, value, type);
+  if (inverseAttribute) {
+    if (otherItem._provisionalFlag) {
+      otherItem._provisionalFlag = false;
+      this.getWorld()._provisionalItemJustBecameReal(otherItem);
+    }
+    if (!otherAttribute) {
+      otherAttribute = this.getWorld().getAttributeCalledUnfiled();
+    }
+    newEntry = this.getWorld()._newConnectionEntry(previousEntry, this, myAttribute, otherItem, otherAttribute);
+  } else {
+    newEntry = this.getWorld()._newEntry(this, previousEntry, attribute, value, type);
+  }
   this.getWorld().endTransaction();
   this._noteChanges(null);
-  return entry;
+  if (inverseAttribute) {
+    otherItem._noteChanges(null);
+    if (previousEntry) {
+      previousEntry.getItem()._noteChanges(null);
+      if (previousEntry.getType() == this.getWorld().getTypeCalledConnection()) {
+        previousEntry.getValue()._noteChanges(null);
+      }
+    }
+  }
+  
+  return newEntry;
 };
 
 
@@ -278,7 +306,8 @@ orp.model.Item.prototype._createNewEntry = function(previousEntry, attribute, va
  * @throws   Throws an Error if no user is logged in.
  */
 orp.model.Item.prototype.addConnectionEntry = function(myAttribute, otherItem, otherAttribute) {
-  return this.replaceEntryWithConnection(null, myAttribute, otherItem, otherAttribute);
+  var typeCalledConnection = this.getWorld().getTypeCalledConnection();
+  return this._createNewEntry(null, myAttribute, otherItem, typeCalledConnection, otherAttribute);
 };
 
 
@@ -286,79 +315,8 @@ orp.model.Item.prototype.addConnectionEntry = function(myAttribute, otherItem, o
  *
  */
 orp.model.Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute, otherItem, otherAttribute) {
-  orp.lang.assert(otherItem instanceof orp.model.Item);
-  orp.lang.assert(myAttribute instanceof orp.model.Item);
-
-  // If we've just been asked to replace the string "Foo" with the string "Foo",
-  // then don't even bother creating a new entry. 
-  if (previousEntry) {
-    var FIXME_OCT_7_2005_EXPERIMENT = true;
-    if (FIXME_OCT_7_2005_EXPERIMENT) {
-      if (previousEntry.getType() == this.getWorld().getTypeCalledConnection()) {
-        var oldItem = previousEntry.getItem();
-        var oldAttribute = previousEntry.getAttribute();
-        var oldValue = previousEntry.getValue();
-        var oldInverseAttribute = previousEntry.getInverseAttribute();
-        if (((oldAttribute == myAttribute) &&  (oldInverseAttribute == otherAttribute) &&
-          oldItem == this && oldValue == otherItem) ||
-          ((oldInverseAttribute == myAttribute) &&  (oldAttribute == otherAttribute) &&
-          oldValue == this && oldItem == otherItem)) {
-          return null;
-        }
-      }
-    } else {
-      // var oldValue = previousEntry.getValue(this);
-      var oldPairOfAttributes = previousEntry.getAttribute();
-      var oldPairOfItems = previousEntry.getItem();
-      if (dojo.lang.isArray(oldPairOfAttributes)) {
-        orp.lang.assert(oldPairOfAttributes.length == 2);
-        orp.lang.assert(oldPairOfItems.length == 2);
-        if (((oldPairOfAttributes[0] == myAttribute) &&  (oldPairOfAttributes[1] == otherAttribute) &&
-          oldPairOfItems[0] == this && oldPairOfItems[1] == otherItem) ||
-          ((oldPairOfAttributes[1] == myAttribute) &&  (oldPairOfAttributes[0] == otherAttribute) &&
-          oldPairOfItems[1] == this && oldPairOfItems[0] == otherItem)) {
-          return null;
-        }
-      }
-    }
-  }
-
-  this.getWorld().beginTransaction();
-  if (this._provisionalFlag) {
-    this._provisionalFlag = false;
-    this.getWorld()._provisionalItemJustBecameReal(this);
-  }
-  if (otherItem._provisionalFlag) {
-    otherItem._provisionalFlag = false;
-    this.getWorld()._provisionalItemJustBecameReal(otherItem);
-  }
-  if (!otherAttribute) {
-    otherAttribute = this.getWorld().getAttributeCalledUnfiled();
-  }
-
-  var entry = this.getWorld()._newConnectionEntry(previousEntry, this, myAttribute, otherItem, otherAttribute);
-  this.getWorld().endTransaction();
-  this._noteChanges(null);
-  otherItem._noteChanges(null);
-  if (previousEntry) {
-    FIXME_OCT_7_2005_EXPERIMENT = true;
-    if (FIXME_OCT_7_2005_EXPERIMENT) {
-      previousEntry.getItem()._noteChanges(null);
-      if (previousEntry.getType() == this.getWorld().getTypeCalledConnection()) {
-        previousEntry.getValue()._noteChanges(null);
-      }
-    } else {
-      var oldItemOrPairOfItems = previousEntry.getItem();
-      if (oldItemOrPairOfItems instanceof orp.model.Item) {
-        oldItemOrPairOfItems._noteChanges(null);
-      }
-      if (dojo.lang.isArray(oldItemOrPairOfItems)) {
-        oldItemOrPairOfItems[0]._noteChanges(null);
-        oldItemOrPairOfItems[1]._noteChanges(null);
-      }
-    }
-  }
-  return entry;  
+  var typeCalledConnection = this.getWorld().getTypeCalledConnection();
+  return this._createNewEntry(previousEntry, myAttribute, otherItem, typeCalledConnection, otherAttribute);
 };
 
 
@@ -378,14 +336,34 @@ orp.model.Item.prototype.assignToCategory = function(category) {
 // -------------------------------------------------------------------
 // Accessor methods where the answer depends on the retrieval filter
 // -------------------------------------------------------------------
-/* PENDING: add this API
 
-var entries = item.getValuesForAttribute(height);
-for (var i in values) {
-  var value = value[i];
-  // display value on screen
-}
+/**
+ * Given an attribute, this method returns the list of all the values that 
+ * have been assigned to that attribute for this item.
+ *
+ * For example, to find out what color Kermit is: 
+ * <pre>
+ * var listOfValues = kermit.getValuesForAttribute(color);
+ * for (var i in listOfValues) {
+ *   var value = listOfValues[i];
+ *   alert("Kermit is " + value);
+ * }
+ * </pre>
+ *
+ * @scope    public instance method
+ * @param    attribute    An attribute that we want to know the value of. 
+ * @return   A list of value objects (may include strings, numbers, Items, Dates, etc.)
 */
+orp.model.Item.prototype.getValuesForAttribute = function(attribute) {
+  var listOfEntries = this.getEntriesForAttribute(attribute);
+  var listOfValues = [];
+  for (var i in listOfEntries) {
+    var entry = listOfEntries[i];
+    listOfValues.push(entry.getValue());
+  }
+  return listOfValues;
+};
+
 
 /**
  * Given an attribute, this method returns the list of all the entries that 
@@ -393,9 +371,9 @@ for (var i in values) {
  *
  * For example, to find out what color Kermit is: 
  * <pre>
- *    var entryList = kermit.getEntriesForAttribute(color);
- *    for (var i = 0; i < entryList.length; ++i) {
- *      alert("Kermit is " + entryList[i].getDisplayString());
+ *    var listOfEntries = kermit.getEntriesForAttribute(color);
+ *    for (var i in listOfEntries) {
+ *      alert("Kermit is " + listOfEntries[i].getDisplayString());
  *    }
  * </pre>
  *
@@ -500,20 +478,12 @@ orp.model.Item.prototype.getAttributes = function() {
 /**
  *
  */
-orp.model.Item.prototype.getFirstCategory = function() {
-  if (this._cachedFirstCategory !== null) {
-    return this._cachedFirstCategory;
-  } else {
+orp.model.Item.prototype.getFirstCategory = function() { 
+  if (!this._cachedFirstCategory) {
     var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
-    var listOfCategoryEntries = this.getEntriesForAttribute(attributeCalledCategory);
-    var returnEntry = null;
-    if (listOfCategoryEntries && listOfCategoryEntries.length > 0) {
-      var firstEntry = listOfCategoryEntries[0];
-      var returnCategory = firstEntry.getValue(this);
-    }
-    this._cachedFirstCategory = returnCategory;
-    return returnCategory;
+    this._cachedFirstCategory = this.getSingleValueFromAttribute(attributeCalledCategory);
   }
+  return this._cachedFirstCategory;
 };
 
 // -------------------------------------------------------------------
@@ -626,6 +596,22 @@ orp.model.Item.prototype.getSingleEntryFromAttribute = function(attribute) {
 
 
 /**
+ * Returns just the first entry of an item's attribute.
+ *
+ * @scope    public instance method
+ * @param    attribute    An item representing an attribute. 
+ * @return   A string with a description of the item.
+ */
+orp.model.Item.prototype.getSingleValueFromAttribute = function(attribute) {
+  var listOfEntries = this.getEntriesForAttribute(attribute);
+  if (listOfEntries[0]) {
+    return listOfEntries[0].getValue();
+  }
+  return null;
+};
+
+
+/**
  * Returns just the first entry's display string of an item's attribute.
  *
  * @scope    public instance method
@@ -648,9 +634,9 @@ orp.model.Item.prototype.getSingleStringValueFromAttribute = function(attribute)
 orp.model.Item.prototype.toString = function() {
   var returnString = "[Item #" + this.getUuid() + " ";
   var attributeCategory = this.getWorld().getAttributeCalledCategory();
-  var listOfCategories = this.getEntriesForAttribute(attributeCategory);
-  for (var key in listOfCategories) {
-    var category = listOfCategories[key];
+  var listOfCategories = this.getValuesForAttribute(attributeCategory);
+  for (var i in listOfCategories) {
+    var category = listOfCategories[i];
     if (category instanceof orp.model.Item) {
       returnString += "(" + category.getDisplayString() + ")";
     }
@@ -668,18 +654,14 @@ orp.model.Item.prototype.toString = function() {
  * Does this item have an attribute with a particular entry?
  * Used in getting query results
  *
- * @scope public instance method
- * @return Boolean. True if this item has an attribute with the entry
+ * @scope   public instance method
+ * @return   Boolean. True if this item has an attribute with the entry
  */
 orp.model.Item.prototype.hasAttributeValue = function(attribute, value) {
   orp.lang.assert(attribute instanceof orp.model.Item);
-  var entryList = this.getEntriesForAttribute(attribute);
-
-  // look at all the entries this item's attribute is assigned to, 
-  // and see if one of them is "inEntry"
-  for (var i in entryList) {
-    var entry = entryList[i];
-    if (entry.getValue(this) == value) {
+  var listOfValues = this.getValuesForAttribute(attribute);
+  for (var i in listOfValues) {
+    if (listOfValues[i] == value) {
       return true;
     }
   }

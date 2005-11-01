@@ -315,11 +315,17 @@ orp.util.XmlConverter.prototype._processElementTree = function(level, maxLevel, 
   if (level == maxLevel) {
     if (node.childNodes && node.childNodes.length > 0 && node.childNodes[0].nodeType == Node.TEXT_NODE) {
       value = this._world.transformValueToExpectedType(node.childNodes[0].nodeValue, xmlToAttributeSpecifier._listOfTypes);
+      newItem.addEntry({
+        attribute: xmlToAttributeSpecifier._attribute, 
+        value: value,
+        inverseAttribute: xmlToAttributeSpecifier._inverseAttribute });
+/*
       if (xmlToAttributeSpecifier._inverseAttribute) {
         newItem.addConnectionEntry(xmlToAttributeSpecifier._attribute, value, xmlToAttributeSpecifier._inverseAttribute);
       } else {
         newItem.addEntry({attribute:xmlToAttributeSpecifier._attribute, value:value});
       }
+*/
     }
     return;
   }

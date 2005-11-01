@@ -41,15 +41,15 @@ function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.require("orp.util.Util");
-  dojo.require("orp.storage.FileStorage");
-  dojo.require("orp.storage.HttpStorage");
+  dojo.require("orp.storage.FileProtocolStorage");
+  dojo.require("orp.storage.HttpProtocolStorage");
 
   utilAssertReportedError = false;
   orp.util.setErrorReportCallback(errorReporter)
 
-  var isHttp = window.location.protocol == "http:";
-  saver = isHttp? new orp.storage.HttpStorage(repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromThisDirectory) 
-                : new orp.storage.FileStorage(repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromThisDirectory);
+  var isHttp = (window.location.protocol == "http:");
+  saver = isHttp? new orp.storage.HttpProtocolStorage(repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromThisDirectory) 
+                : new orp.storage.FileProtocolStorage(repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromThisDirectory);
 
   // Examples of what window.location.pathname should look like:
   // for http: protocol: /openrecord/trunk/source/model/TestRepositoryWriting.html
@@ -124,22 +124,18 @@ function waitASecond() {
 }
 
 function fileHasExpectedContents(expectedContents) {
-  // var contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
   var contents = dojo.hostenv.getText(fileUrl);
   for (var i = 0; contents != expectedContents && i < 5; ++i) {
     waitASecond();
-    // contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
     contents = dojo.hostenv.getText(fileUrl);
   }
   return (contents == expectedContents);
 }
 
 function fileHasExpectedSubstring(expectedSubstring) {
-  // var contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
   var contents = dojo.hostenv.getText(fileUrl);
   for (var i = 0; contents.indexOf(expectedSubstring) == -1 && i < 5; ++i) {
     waitASecond();
-    // contents = orp.util.getStringContentsOfFileAtURL(fileUrl);
     contents = dojo.hostenv.getText(fileUrl);
   }
   return (contents.indexOf(expectedSubstring) != -1);

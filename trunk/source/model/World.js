@@ -760,8 +760,7 @@ orp.model.World.prototype.newQuery = function(matchingAttribute, matchingEntryOr
         matchingEntry = matchingEntryOrListOfEntries[key];
         item.addEntry({attribute:attributeCalledQueryMatchingValue, value:matchingEntry});
       }
-    }
-    else {
+    } else {
       matchingEntry = matchingEntryOrListOfEntries;
       item.addEntry({attribute:attributeCalledQueryMatchingValue, value:matchingEntry});
     }
@@ -1002,7 +1001,6 @@ orp.model.World.prototype.getSuggestedItemsForAttribute = function(attribute, ob
   var listOfSuggestedItems = [];
   var key;
   var categoryCalledCategory = this.getCategoryCalledCategory();
-  // var attributeCalledCategory = this.getAttributeCalledCategory();
   var attributeCalledExpectedType = this.getAttributeCalledExpectedType();
   var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
   var listOfCategories = [];

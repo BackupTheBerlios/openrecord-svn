@@ -47,6 +47,16 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
+
+function testDependencies() {
+  assertTrue("orp.lang is defined", ((typeof orp.lang) === 'object'));
+  var i = 0;  
+  for (var key in orp) {
+    ++i;
+  }
+  assertTrue("Only orp.lang is defined", (i === 1));
+}
+
 function testSimpleErrorCatching() {
   var caughtError = false;
   try {
@@ -221,6 +231,7 @@ function testBind() {
   point();
   assertTrue("Bind works with 1 argument.", (box.getVolume() == (1)) );  
 }
+
 
 // -------------------------------------------------------------------
 // Helper functions

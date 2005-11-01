@@ -1,8 +1,9 @@
 /*****************************************************************************
- domTest.js
+ test_dependencies.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -36,7 +37,16 @@
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.dom");
+  dojo.require("orp.model.ContentRecord");
+  dojo.require("orp.model.Entry");
+  dojo.require("orp.model.Item");
+  dojo.require("orp.model.Ordinal");
+  dojo.require("orp.model.ProxyEntry");
+  dojo.require("orp.model.QueryRunner");
+  dojo.require("orp.model.Record");
+  dojo.require("orp.model.Transaction");
+  dojo.require("orp.model.Vote");
+  dojo.require("orp.model.World");
 }
 
 function tearDown() {
@@ -47,31 +57,8 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
-function testSimpleErrorCatching() {
-  divElementOne = window.document.createElement('div');
-  divElementTwo = window.document.createElement('div');
-  
-  document.body.appendChild(divElementOne);
-  document.body.appendChild(divElementTwo);
-  
-  orp.dom.setKeywordValueForElement(divElementOne, "foo", 34);
-  var fooValueOne = orp.dom.getKeywordValueForElement(divElementOne, "foo");
-  var fooValueTwo = orp.dom.getKeywordValueForElement(divElementTwo, "foo");
- 
-  assertTrue('divElementOne has a "foo" value of 34', (fooValueOne === 34));
-  assertTrue('divElementTwo does not have a "foo" value', (fooValueTwo === null));
-
-  var barValueOne = {a: 1, b: 2};
-  var barValueTwo = "Kermit the Frog";
-  orp.dom.setKeywordValueForElement(divElementOne, "bar", barValueOne);
-  orp.dom.setKeywordValueForElement(divElementTwo, "bar", barValueTwo);
-  
-  var barOneToo = orp.dom.getKeywordValueForElement(divElementOne, "bar");
-  var barTwoToo = orp.dom.getKeywordValueForElement(divElementTwo, "bar");
-  
-  assertTrue('divElementOne has a "foo" value of 34', (barValueOne === barOneToo));
-  assertTrue('divElementTwo does not have a "foo" value', (barValueTwo === barTwoToo));
-
+function testDependencies() {
+  assertTrue("orp.model depends only on lang, util, uuid, archive, and storage", orp.util.hasExactlyTheseProperties(orp, ["model", "lang", "util", "uuid", "archive", "storage"]));
 }
 
 // -------------------------------------------------------------------

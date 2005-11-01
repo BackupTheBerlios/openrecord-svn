@@ -1,5 +1,5 @@
 /*****************************************************************************
- HttpStorage.js
+ HttpProtocolStorage.js
   
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -32,22 +32,23 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.storage.HttpStorage");
+dojo.provide("orp.storage.HttpProtocolStorage");
 dojo.require("orp.storage.Storage");
+dojo.require("orp.storage.httpProtocolUtil");
 
 
 // -------------------------------------------------------------------
 // Constructor
 // -------------------------------------------------------------------
 /**
- * The HttpStorage class knows how to save content to a server by using
+ * The HttpProtocolStorage class knows how to save content to a server by using
  * XMLHttpRequest to call a PHP script.
  *
  * @param    repositoryName                         // e.g. demo_page
  * @param    pathToTrunkDirectoryFromWindowLocation // Not needed if window location is at the root of the trunk directory.
  * @scope    public instance constructor
  */
-orp.storage.HttpStorage = function(repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromWindowLocation) {
+orp.storage.HttpProtocolStorage = function(repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromWindowLocation) {
   orp.storage.Storage.call(this, repositoryName, repositoryDirectoryName, pathToTrunkDirectoryFromWindowLocation);
 
   var thisUrl = window.location.pathname; //e.g. /openrecord/trunk/demo_page.html or /openrecord/trunk/source/model/TestRepositoryWriting.html.
@@ -61,7 +62,7 @@ orp.storage.HttpStorage = function(repositoryName, repositoryDirectoryName, path
   }
 };
 
-dojo.inherits(orp.storage.HttpStorage, orp.storage.Storage);  // makes HttpStorage be a subclass of Storage
+dojo.inherits(orp.storage.HttpProtocolStorage, orp.storage.Storage);  // makes HttpProtocolStorage be a subclass of Storage
 
 
 // -------------------------------------------------------------------
@@ -73,9 +74,9 @@ dojo.inherits(orp.storage.HttpStorage, orp.storage.Storage);  // makes HttpStora
  *
  * @scope    public instance method
  */
-orp.storage.HttpStorage.prototype.appendText = function(textToAppend) {
+orp.storage.HttpProtocolStorage.prototype.appendText = function(textToAppend) {
   var url = this._completePathToTrunkDirectory;
-  url += '/' + orp.storage.PATH_TO_PHP_FILES_FROM_TRUNK;
+  url += '/' + orp.storage.httpProtocolUtil.PATH_TO_PHP_FILES_FROM_TRUNK;
   // FIXME: Should also pass in this._repositoryDirectoryName, rather than having "repositories" hardcoded in append_to_repository_file.php.
   url += "/append_to_repository_file.php?file=" + this.getRepositoryName();
   
@@ -98,9 +99,9 @@ orp.storage.HttpStorage.prototype.appendText = function(textToAppend) {
  *
  * @scope    public instance method
  */
-orp.storage.HttpStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
+orp.storage.HttpProtocolStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
   var url = this._completePathToTrunkDirectory;
-  url += '/' + orp.storage.PATH_TO_PHP_FILES_FROM_TRUNK;
+  url += '/' + orp.storage.httpProtocolUtil.PATH_TO_PHP_FILES_FROM_TRUNK;
   // FIXME: Should also pass in this._repositoryDirectoryName, rather than having "repositories" hardcoded in write_to_repository_file.php.
   url += "/write_to_repository_file.php?file=" + this.getRepositoryName();
   if (overwriteIfExists) {
@@ -124,7 +125,7 @@ orp.storage.HttpStorage.prototype.writeText = function(textToWrite, overwriteIfE
  * @scope    private instance method
  * @return   A newly created XMLHttpRequest object. 
  */
-orp.storage.HttpStorage.prototype._newXMLHttpRequestObject = function() {
+orp.storage.HttpProtocolStorage.prototype._newXMLHttpRequestObject = function() {
   var newXMLHttpRequestObject = null;
   if (window.XMLHttpRequest) {
     newXMLHttpRequestObject = new XMLHttpRequest();

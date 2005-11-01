@@ -40,7 +40,7 @@ dojo.provide("orp.storage.Storage");
 // -------------------------------------------------------------------
 /**
  * The Storage class is the abstract superclass for the other storage 
- * classes, including FileStorage and HttpStorage.
+ * classes, including FileProtocolStorage and HttpProtocolStorage.
  *
  * @param    repositoryName                         // e.g. demo_page
  * @param    pathToTrunkDirectoryFromWindowLocation // Not needed if window location is at the root of the trunk directory.
@@ -52,10 +52,6 @@ orp.storage.Storage = function(repositoryName, repositoryDirectoryName, pathToTr
   this._pathToTrunkDirectory = pathToTrunkDirectoryFromWindowLocation;
 };
 
-// -------------------------------------------------------------------
-// Public constants
-// -------------------------------------------------------------------
-orp.storage.PATH_TO_PHP_FILES_FROM_TRUNK = "source/storage";
 
 // -------------------------------------------------------------------
 // Public methods

@@ -212,8 +212,15 @@ orp.util.hasProperties = function(object, properties) {
 };
 
 orp.util.hasNoUnexpectedProperties = function(object, expectedProperties) {
-  for (var key in object) {
-    if (!orp.util.isObjectInSet(key, expectedProperties)) { return false; }
+  var key;
+  if (dojo.lang.isArray(expectedProperties)) {
+    for (key in object) {
+      if (!orp.util.isObjectInSet(key, expectedProperties)) { return false; }
+    }
+  } else {
+    for (key in object) {
+      if (!orp.util.hasProperty(expectedProperties, key)) { return false; }
+    }
   }
   return true;
 };
