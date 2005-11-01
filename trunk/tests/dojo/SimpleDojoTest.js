@@ -64,6 +64,20 @@ function testDojoLang() {
   assertTrue("'Iggy Pop' is a string.", dojo.lang.isString("Iggy Pop"));
 }
 
+function testDojoInherits() {
+  classA = function() {
+    _a = 3;
+  };
+  classB = function() {
+    classA.call(this);
+    _b = 4;
+  };
+  dojo.inherits(classB, classA);  
+  var b = new classB();
+  assertTrue("b should be an instance of classB.", b instanceof classB);
+  assertTrue("b should be an instance of classA.", b instanceof classA);
+}
+
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------
