@@ -1,0 +1,108 @@
+================================================================
+Old Release Planning doc for release 0.1 of OpenRecord
+================================================================
+ Copyright rights relinquished under the Creative Commons  
+ Public Domain Dedication:
+    http://creativecommons.org/licenses/publicdomain/
+----------------------------------------------------------------
+    
+    
+
+===================================================
+Iterations
+===================================================
+Three iterations that last 1-month each?
+  1. May iteration
+  2. June iteration
+  3. July iteration
+  
+Release 0.1 at the start of August?
+
+
+
+
+=======================================================
+"User Stories" we want to include in release 0.1
+=======================================================
+ + A user can see a list of user stories, sorted by the "priority" attribute.
+ + A user can see a list of tasks planned for an iteration
+ + A user can see a list of tasks finished in an iteration.
+
+ + A user can see a list of all known tasks.
+ + A user can see a list of all completed tasks.
+ + A user can see a list of the tasks that they have signed up for.
+ + A user can see the measured velocity for previous iterations.
+
+ + A user can log into the web site, and log out.
+ + A logged-in user can create items to track:
+    tasks, stories, bugs, iterations, and releases.
+ + A logged-in user can delete items (tasks, stories, bugs, etc.).
+ + A logged-in user can edit the attributes of a task, story, bug, etc.
+ + A logged-in user can assign a task to a user story.
+ + A logged-in user can assign a story to a release.
+ + A logged-in user can assign a task to an iteration.
+ + A logged-in user can sign up to do a task.
+ + A logged-in user can report a bug.
+ + A logged-in user can assign a number to the "priority" attribute of a story.
+ + Different users can each have their own "priority" attribute; each user can prioritize a story differently.
+ 
+ + The data store is reliable. Users can trust that data won't be lost.
+ 
+ 
+ 
+=======================================================
+"User Stories" we want to defer until after release 0.1
+=======================================================
+ + A user can see everything that was ever saved.
+ + A user can see past versions of an item.
+ + We can move all the content on the current "static" openrecord.org 
+   site to a new replacement openrecord.org site built using the 
+   OpenRecord software.
+ + A logged-in user can write up weekly status reports.
+                               
+
+
+=======================================================
+Categories and Attributes we might use for release 0.1
+=======================================================
+(*) == reference to another item
+
+User Story
+  name
+  summary
+  priority
+  release this story is assigned to (*)
+  
+Iteration
+  name
+  date completed
+  tasks we plan to do in this iteration (*)
+  release (*)
+  
+Release
+  name
+  date completed
+  iterations leading up to this release (*)
+  user stories assigned to this release (*)
+  
+User
+  name
+  tasks this person is signed-up for (*)
+  
+Task
+  name
+  summary
+  user story (or category) this task falls into (*)
+  person who has signed-up to do this task (*)
+  estimate of how long this task will take
+  iteration in which we plan to do this task (*)
+  iteration in which this task was started (*)
+  iteration in which this task was finished (*)
+  status text
+  
+Bug
+  name
+  summary
+  (most Bug items will also be categorized as Task items, so each Bug will also 
+  have all the attributes of a Task)
+  

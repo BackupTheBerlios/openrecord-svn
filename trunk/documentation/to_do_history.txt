@@ -1,69 +1,26 @@
 ================================================================
-Release Planning
-   for release 0.1 of OpenRecord
+To-do History for old OpenRecord development iterations #1 to #6
 ================================================================
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
     http://creativecommons.org/licenses/publicdomain/
 ----------------------------------------------------------------
-    
-    
-
-===================================================
-Iterations
-===================================================
-Three iterations that last 1-month each?
-  1. May iteration
-  2. June iteration
-  3. July iteration
-  
-Release 0.1 at the start of August?
 
 
+----------------------------------------------------------------
+WHAT IS THIS FILE?
+
+This is an archive that records all the to-do list tasks that 
+we've marked as finished.  This archive is organized into
+monthly iterations, starting at "Iteration #1" in May 2005.
+The current to-do list is in the to_do_list.txt file.
+
+Key:
+  IED == an "ideal engineering day", with just coding, and no distractions
+----------------------------------------------------------------
 
 
-=======================================================
-"User Stories" we want to include in release 0.1
-=======================================================
- + A user can see a list of user stories, sorted by the "priority" attribute.
- + A user can see a list of tasks planned for an iteration
- + A user can see a list of tasks finished in an iteration.
 
- + A user can see a list of all known tasks.
- + A user can see a list of all completed tasks.
- + A user can see a list of the tasks that they have signed up for.
- + A user can see the measured velocity for previous iterations.
-
- + A user can log into the web site, and log out.
- + A logged-in user can create items to track:
-    tasks, stories, bugs, iterations, and releases.
- + A logged-in user can delete items (tasks, stories, bugs, etc.).
- + A logged-in user can edit the attributes of a task, story, bug, etc.
- + A logged-in user can assign a task to a user story.
- + A logged-in user can assign a story to a release.
- + A logged-in user can assign a task to an iteration.
- + A logged-in user can sign up to do a task.
- + A logged-in user can report a bug.
- + A logged-in user can assign a number to the "priority" attribute of a story.
- + Different users can each have their own "priority" attribute; each user can prioritize a story differently.
- 
- + The data store is reliable. Users can trust that data won't be lost.
- 
- 
- 
- 
-=======================================================
-"User Stories" we want to defer until after release 0.1
-=======================================================
- + A user can see everything that was ever saved.
- + A user can see past versions of an item.
- + We can move all the content on the current "static" openrecord.org 
-   site to a new replacement openrecord.org site built using the 
-   OpenRecord software.
- + A logged-in user can write up weekly status reports.
- 
- 
- 
 ################################################################################
 ################################################################################
 ##                                                                            ##
@@ -73,12 +30,6 @@ Release 0.1 at the start of August?
 ################################################################################
 ################################################################################
  
-
-=======================================================
-Tasks we need to do for the release 0.1 user stories
-=======================================================
-
-IED == an "ideal engineering day", with just coding, and no distractions
 
 ---------------------------------------------------------------------------
    Tasks we originally identified for release 0.1, back on May 2, 2005
@@ -405,303 +356,49 @@ Who    | Estimate | Actual  | Task
 brian  |          | 1    IED|  1. get djConfig.debugAtAllCosts to work
 brian  |          | 0.75 IED|  2. replace orpBindAsEventListener() with dojo.event.connect()
 brian  |          | 0.1  IED|  3. move UUID files from source/util to source/uuid
-brian  | 0.5  IED | (0.5+)  |  4. Make Item.js use namedParameter based API
+brian  | 0.5  IED | 0.75 IED|  4. Make Item.js use namedParameter based API
 brian  |          | 0.5  IED|  5. split half the code in source/model off into source/_____
 brian  |          | 0.35 IED|  6. use terms Serialize and Deserialize for that code (replace some Dehydrate and Rehydrate) 
-       |          |         |  7. merge StubArchive + DeltaArchive, and re-name the result
 brian  |          | 0.25 IED|  8. create a FakeStorage class, + rename FileSaver + HttpSaver
-       |          |         |     update unit tests to use the FakeStorage instead of StubArchive
-       |          |         |     try to convert one unit test over to the dojo jum framework
-       |          |         |     move DOM methods from orp.view.View.xxx to orp.dom.xxx
 brian  |          | 0    IED|  9. change "endOfLife()" to "destroy()"
-       |          |         | 10. Rationalize the View API and document public API
-mignon | 1    IED |         | 11. Rationalize the ViewPlugin API
-mignon | 0.25 IED |         | 12. Create a "view_plugins" directory & change "TablePlugin" to "TableView", etc. 
-mignon | 2    IED |         | 13. Automatically load ViewPlugins found in the view_plugins directory 
-       |          |         | 14. Make RootView subclass from View, or add comments explaining why it doesn't
-       |          |         | 15. Make DateValue wrap an internal Date object
--------+----------+---------+----------------------------------------------
-       |          |         | 16. Document the Data model public API
-       |          |         | 17. research standard text representations for DateValues
-       |          |         | 18. make ordinal value strings not grow long so quickly
-       |          |         | 19. Do lazy creation of layout data items
-       |          |         | 20. try to replace orp.util.css_xxx functions with dojo.xml.htmlUtil.xxxClass functions
-       |          |         | 21. try to replace View.appendNewElement() with dojo.xml.domUtil methods
-       |          |         |     try to replace md5.js with dojo.crypto.MD5 methods
-       |          |         | 22. try to replace remaining Util.js functions with dojo.lang functions
-       |          |         | 23. try using Ant and the Dojo build system to build OpenRecord into a single-file 
-       |          |         | 24. move XmlConverter.js out of util, because it depends on model code
 brian  |          | 0.75 IED| 25. Decide whether or not to replace bi-directional connection entries with twin-entries
+brian  |          | 0.15 IED| 67. (Write unit tests to) Check for incorrect dependencies (e.g. a util dependency on model)
+-------+----------+---------+----------------------------------------------
+
+
+---------------------------------------------------------------------------
+   New tasks that we decided to take on for Iteration #6, in October 2005
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
 brian  |          | 0.5  IED|     Write initial code to augment bi-directional connection entries with twin ProxyEntries
-       |          |         | 26. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
-       |          |         | 27. Pick one file, and do a group code review on it
-       |          |         | 28. Implement a good URL-to-content mapping, so that URLs won't go bad in future releases
-brian  | 1    IED |         | 29. Rationalize our CSS style sheet approach
-       |          |         | 30. Fix the message that says "Sorry, for some reason OpenRecord was not able to launch."
+mignon |          |         |     write function to return the list of files in a directory (via file:// and http://)
 -------+----------+---------+----------------------------------------------
-       |          |         | 31. Assign system attributes & categories to a "System" category
-       |          |         | 32. Hide "System" items most of the time
-       |          |         | 33. improve UI for creating a new category
-       |          |         | 34. Deal with \n in page name or summary fields
-       |          |         | 35. be able to select a table row 
-       |          |         | 36. be able to delete a selected table row 
-       |          |         | 37. drag-and-drop to re-order table rows
-       |          |         | 38. improve UI for "add new attribute" in Table View 
-       |          |         | 39. improve UI for setting the expected data type of an attribute
-       |          |         | 40. have Detail View use textarea instead of text input, for long strings
-       |          |         | 41. make it possible to add a new attribute in Detail View 
-       |          |         | 42. improve UI for initial "out of the box" experience
-       |          |         | 43. improve UI for creating a new page
-       |          |         | 44. improve UI for adding a new section to a page
-       |          |         | 45. UI to move/delete sections?
--------+----------+---------+----------------------------------------------
-       |          |         | 46. Better time parsing e.g. 3pm
-       |          |         | 47. Refactor our observer notification API (and implementation)
-       |          |         | 48. Wire up observers & keep views in sync
-       |          |         | 49. Attempt to embed an OpenRecord view in a MediaWiki page
-       |          |         | 50. Data model: boolean, URL, entries that apply to timespan (e.g. annual population)
-       |          |         | 51. Make currently sorted column have a special CSS class so that it can look different
-       |          |         | 52. Resolve: How should table cells deal with <enter>, move down a cell or to the right?
-       |          |         | 53. be able to select a non-lozenge literal entry
-       |          |         | 54. be able to select the text within an entry
-       |          |         | 55. Reach consensus on (colors, padding, and borders) and then implement
-       |          |         | 56. Make sure view code uses transactions
-       |          |         | 57. UI and data model design to support collaboration
-       |          |         | 58. config option so that only logged-in users have read-access
-       |          |         | 59. have an "icon" attribute, and use icons in suggestion box and in EntryView
-       |          |         | 60. run in IE as well as Firefox
--------+----------+---------+----------------------------------------------
-       |          |         | 61. Write one unit test that tests GUI code
-       |          |         | 62. Write one performance test that measures the time some code takes
-       |          |         | 63. Provide GUI feedback about what's editable
-       |          |         | 64. Convert UI code from DOM level 0 to DOM level 2
-       |          |         | 65. improve UI for entering references to categories or to other items
-       |          |         | 66. improve UI for creating a new user
-       |          |         | 67. Check for incorrect dependencies (e.g. a Util dependency on model code)
-       |          |         | 68. Add support for repository merging
-       |          |         | 69. BUG: back button is broken
-       |          |         | 70. BUG: "Waiting for localhost..." (may be related to how we load images)
-       |          |         | 71. BUG: "Node was not found" exception in EntryView/LoginView?
-       |          |         | 72. Do some testing to find other existing bugs
-       |          |         | 73. Have explicit save instead of (or in addition to) autosave
-       |          |         | 74. Be able to cancel out of creating a new account
-       |          |         | 75. Save view layout choice and user preferences
--------+----------+---------+----------------------------------------------
-       |          |         | 76. Do code reviews
-       |          |         | 77. Write concurrency tests 
-       |          |         | 78. Write scalability tests 
-       |          |         | 79. Ensure that PHP scripts and file I/O works for concurrent multi-user access
-       |          |         | 80. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
-       |          |         | 81. Have different documents use different style-sheets
-       |          |         | 82. replace /source/util/Cookie.js with dojo.io.cookies
--------+----------+---------+----------------------------------------------
-                              
 
 
-=======================================================
-Categories and Attributes we might use for release 0.1
-=======================================================
-(*) == reference to another item
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Summary of Iteration #6
+          October 2005
+  October 3 to November 7, 2005
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  10    = number of PLANNED tasks that were finished 
+   2    = number of ADDITIONAL tasks that were finished 
+  ~5.1  = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
+   5    = number of weeks in October iteration
+ ~ 1    = Velocity (in estimated IEDs per week)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-User Story
-  name
-  summary
-  priority
-  release this story is assigned to (*)
-  
-Iteration
-  name
-  date completed
-  tasks we plan to do in this iteration (*)
-  release (*)
-  
-Release
-  name
-  date completed
-  iterations leading up to this release (*)
-  user stories assigned to this release (*)
-  
-User
-  name
-  tasks this person is signed-up for (*)
-  
-Task
-  name
-  summary
-  user story (or category) this task falls into (*)
-  person who has signed-up to do this task (*)
-  estimate of how long this task will take
-  iteration in which we plan to do this task (*)
-  iteration in which this task was started (*)
-  iteration in which this task was finished (*)
-  status text
-  
-Bug
-  name
-  summary
-  (most Bug items will also be categorized as Task items, so each Bug will also 
-  have all the attributes of a Task)
-  
 
-   
-  
-=======================================================
-Tasks we want to defer until after release 0.1
-=======================================================
----------------------------------------------------
- + Figure out how to write unit tests for GUI code
----------------------------------------------------
- + BUG: Back button is broken
-    The browser's back button doesn't work after you click from 
-    page to page in the navbar.
----------------------------------------------------
- + BUG: problems with HTML in text strings
-    We still have some problems with handling text strings that 
-    have HTML in them. If an item has an attribute value with some 
-    HTML in it, like '<cite>', we incorrectly render it like 
-    '& lt;cite& gt;' instead of '<cite>'
----------------------------------------------------
- + Editable Detail Plugin
-    Make a new version of the current DetailPlugin.js.  The 
-    current one just lets the user view the attribute values, 
-    but we should make a better one that lets the user change 
-    the values, and add new values, and add new ad-hoc attributes.
----------------------------------------------------
- + List/Detail Combo Plugin
-    We could make a plugin that takes a list of items and
-    displays them in a format like what you see in a mail
-    reader or a news reader.  So you'd have some sort of
-    table-view on top, with one item per row, and then a
-    detail view below, to show more info about a single
-    item.  We could copy a lot of code from the current
-    TablePlugin.js and DetailPlugin.js, so it shouldn't be
-    too hard to make a simple read-only version.
----------------------------------------------------
- + Table Plugin with ad-hoc attributes
-    We should change the TablePlugin.js so that the user is
-    able to add new columns on the fly, where each new
-    column is for some new ad-hoc attribute.
----------------------------------------------------
- + Be able to edit in outline mode
-    In the outline plugin, add code to handle editing. The
-    user should be able to add new items to an outline,
-    chagne existing items, indent existing items, etc.
----------------------------------------------------
- + Have Table plugin group by category
-    Make the Table plugin be about to to show groupings by
-    category. For example, in a table that shows a list of
-    cities, you might want to see them grouped by country.
----------------------------------------------------
- + Have Outline plugin group by category
-    Make the Outline plugin be able to show groupings by
-    category. For example, in an outline that shows a list of
-    cities, you might want to see them grouped by country.
----------------------------------------------------
- + In Outline plugin, show detail locally
-    When you click on the "more" link in an outline, the
-    detail information should show up on the current page,
-    within the current list item, rather than whisking you
-    away to a completely separate item detail page.
----------------------------------------------------
- + Draft a Contributor Agreement
-     We need to draft some sort of Contributor Agreement, like the Apache 
-     Contributor Agreement or the Python Contributor Agreement.
-     See:
-       http://www.apache.org/licenses/icla.txt
-       http://www.python.org/psf/contrib-form.html
----------------------------------------------------
- + Move this task list from here into OpenRecord!
----------------------------------------------------
- + Consider having a build system
-    A build system could:
-      * run unit tests
-      * run JSLint on the code
-      * compress the code by removing white space and comments
-      * compress the code by copying everything into a single file
-      * generate documentation
-      * remove Util.assert() statements from the code
----------------------------------------------------
- + Skins/Themes/Chrome
-    Make it possible for different web sites to each of their own
-    logos, color-schemes, and branding.
----------------------------------------------------
- + search engine indexing
-    Figure out how to make sure that search engines like
-    Google are able to index all the "virtual" pages that 
-    OpenRecord serves.
-    I don't know just what's involved in making sure the search
-    engines can index a page.  That's something I'll have to
-    learn more about.  If I had to guess, I think we're going to
-    have to do two thing: (1) make each page have it's own real
-    URL, rather than using the #anchor tag scheme that
-    OpenRecord is using now, and (2) have the server generate
-    html pages that have all the content elements already in
-    place, rather than relying on client JavaScript to do all
-    the work.
----------------------------------------------------
- + Rationalize CSS style sheets
-    Need to figure out a consistent "style" for using style sheets applicable
-    to the way we architect our view widgets
----------------------------------------------------
- + Need to rationalize View api and document public api
-    - wire up superview/subview after creation of subview
-    - get rid of display()
-    - rename refersh()
-    - settle on standard constructor parameters
- Q: Should getListofContentItems() in superview be replaced by an argument into plugin's constructor
-   Also, should plugin get a CSS class?
- Q: Should we decouple plugins from SectionView? in general, should we make objects less tightly coupled?
-     Parent objects can know about children objects, but not vice versa.
----------------------------------------------------
- + UI design/improvement for:
-    - toggle for "edit"/"view" or "editable"/"locked"
-    - adding a row to a table
-    - deleting a row from a table
-    - dragging rows up and down to re-order (conflict with sort columns?)
-    - adding an entry to a table cell
-    - replacing an entry with new text
-    - adding a new column to a table
-    - creating a new attribute
-    - setting the expected data type of an attribute
-    - doing data type validation on a new entry
-    - adding a cell entry which is a reference to another item
-    - creating a new category & putting things in categories
-    - creating a new user account for yourself
-    - logging in and logging out
-    - creating a new page
-    - creating a new section on a page
-    - editing the query for a section
-    - GUI feedback to show what text is editable?
----------------------------------------------------
- + talk about different designs for:
-    - doing authentication (e.g. where to store passwords?)
-    - representing queries (hold query matching criteria in normal attributes?)
-    - ad-hoc queries as well as persistant queries?
-    - bi-directional references as a type of entry?
----------------------------------------------------
- + Bug: "Waiting for localhost..."
-    Load the demo_page.html page from http://localhost:...
-    Go into Edit mode and change some entry.  The Firefox status 
-    bar (bottom left) sometimes gets stuck saying 
-    "Waiting for localhost...", even though it doesn't seem to
-    be waiting
----------------------------------------------------
- + Bug: "Node was not found" exception
-    Load the demo_page.html page from file:///...
-    Go into Edit mode and change some entry.  
-    You get an exception in EntryView.js:
-      Util.handleError()
-      uncaught exception: [Exception... "Node was not found"  
-      code: "8" nsresult: "0x80530008 (NS_ERROR_DOM_NOT_FOUND_ERR)"  
-      location: "file:///K:/www/htdocs/openrecord/demo/current/trunk/source/EntryView.js Line: 221"]
-      line: 0
-    
-===========================       
-Issues for post iteration#2
-===========================       
- + How should we interoperate with other repositories(openrecord + other sources of data)?
- + Should we rename "World"?
- + BUG: Can't really create own plugins yet (e.g. UUID need to be assigned, plugin item created)
- + Q: Do we (and how) need a concept of focus for Views? Currently, only Text input 
-    and Textarea gets keyboard focus. We need it for table selections and possibly 
-    selecting "lozenges" (item references stored in the EntryView)
+
+################################################################################
+################################################################################
+##                                                                            ##
+##                                Iteration #7                                ##
+##                                November 2005                               ##
+##                                                                            ##
+################################################################################
+################################################################################
+
+
+...FIXME...
+
