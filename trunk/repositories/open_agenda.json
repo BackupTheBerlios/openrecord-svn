@@ -3051,4 +3051,84 @@
          "uuid": "99bbf350-1a48-11da-8163-000c414ce854",
        "record": "7b5e3b80-0c6e-11da-beea-000c414ce854",
         "value": "11da0c6e295652f0809241c4c94a9e4b91b99370"  }
+},
+{ "Vote": {
+         "uuid": "3ad820c0-4b3a-11da-87ec-000c414ce854",
+       "record": "50c72f40-0c7c-11da-9290-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Vote": {
+         "uuid": "3d9e93c0-4b3a-11da-87ec-000c414ce854",
+       "record": "4e9470c0-0c7c-11da-9290-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Vote": {
+         "uuid": "40604bd0-4b3a-11da-87ec-000c414ce854",
+       "record": "4bac9310-0c7c-11da-9290-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Vote": {
+         "uuid": "43568160-4b3a-11da-87ec-000c414ce854",
+       "record": "f49d4830-0c7b-11da-9290-000c414ce854",
+   "retainFlag": "false"  }
+},
+{ "Entry": {
+         "uuid": "7bc44e60-4b3a-11da-87ec-000c414ce854",
+"previousEntry": "0a153be0-0c7d-11da-9290-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "2a165120-0c7a-11da-9290-000c414ce854",
+        "value": "Jan 2002"  }
+},
+{ "Entry": {
+         "uuid": "98e60a10-4b3a-11da-87ec-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "23d66ed0-0c7a-11da-9290-000c414ce854",
+        "value": "1999"  }
+},
+{ "Entry": {
+         "uuid": "9acc5640-4b3a-11da-87ec-000c414ce854",
+"previousEntry": "89a76d20-0c7c-11da-9290-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "0fb64d80-0c7a-11da-9290-000c414ce854",
+        "value": "1957"  }
+},
+{ "Entry": {
+         "uuid": "9f091590-4b3a-11da-87ec-000c414ce854",
+"previousEntry": "c7cd00b0-0c7c-11da-9290-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "08bedb00-0c7a-11da-9290-000c414ce854",
+        "value": "Aug 1974"  }
+},
+{ "Entry": {
+         "uuid": "a6991e90-4b3a-11da-87ec-000c414ce854",
+"previousEntry": "98e60a10-4b3a-11da-87ec-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "23d66ed0-0c7a-11da-9290-000c414ce854",
+        "value": "Thursday, August 12, 1999"  }
+},
+{ "Entry": {
+         "uuid": "b0cbbee0-4b3a-11da-87ec-000c414ce854",
+"previousEntry": "9acc5640-4b3a-11da-87ec-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "0fb64d80-0c7a-11da-9290-000c414ce854",
+        "value": "Mon Aug 12 1957 11:02:00 GMT-0800 (Pacific Standard Time)"  }
+},
+{ "Entry": {
+         "uuid": "b2c78ee0-4b3a-11da-87ec-000c414ce854",
+"previousEntry": "9438ebc0-0c7b-11da-9290-000c414ce854",
+         "type": "00001022-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "7da5a790-0c7b-11da-9290-000c414ce854",
+         "item": "cacb53f0-0c79-11da-9290-000c414ce854",
+        "value": "1987"  }
+},
+{ "Ordinal": {
+         "uuid": "bfd3dc10-4b3a-11da-87ec-000c414ce854",
+       "record": "f1598550-0c6f-11da-beea-000c414ce854",
+        "value": "11da0c6ff159855049dfc611cb5c6294"  }
 }
