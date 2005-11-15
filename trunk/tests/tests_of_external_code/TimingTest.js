@@ -338,9 +338,10 @@ shapes = {
     this._height = height;
     
     this.getArea = function() {
-      // do some busy work
-      var foo = [10];
-      for (var i in foo) {
+      // Here's some code that does some busy work, just so the  
+      // definition of the getArea method has more code in it,
+      // to eat up more memory.
+      for (var i = 0; i < 10; i++) {
         var area = (this._width * this._height);
       }
       return area;
@@ -354,9 +355,10 @@ shapes.TypeTwoBox = function(width, height) {
 };
 
 shapes.TypeTwoBox.prototype.getArea = function() {
-  // do some busy work
-  var foo = [10];
-  for (var i in foo) {
+  // Here's some code that does some busy work, just so the  
+  // definition of the getArea method has more code in it,
+  // to eat up more memory.
+  for (var i = 0; i < 10; i++) {
     var area = (this._width * this._height);
   }
   return area;
