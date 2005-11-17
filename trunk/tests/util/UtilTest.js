@@ -86,13 +86,6 @@ function testMethodsThatOperateOnSets() {
   assertTrue('All members of setNumber2 are in setNumber2', orp.util.areObjectsInSet(setNumber2, setNumber2));
 }
 
-function testEncryptionMethods() {
-  var longString = "When in the course of human events: d41d8cd98f00b204e9800998ecf8427e";
-  assertTrue('md5 of "" is correct', (orp.util.hex_md5("") == "d41d8cd98f00b204e9800998ecf8427e"));
-  assertTrue('md5 of "iggy" is correct', (orp.util.hex_md5("iggy") == "0e026f55a72c0861a93e750c2a5427b1"));
-  assertTrue('md5 of longString is correct', (orp.util.hex_md5(longString) == "4d694e03af399831c6f0c1f1bcc2fc93"));
-}
-
 function testIsEmpty() {
   var canada = {name:"Canada", provinces:8};
   var atlantis = {};

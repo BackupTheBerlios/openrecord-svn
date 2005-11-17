@@ -22,8 +22,19 @@ dojo.crypto.MD5=new function(){
 	}
 	function roll(num,cnt) { return (num<<cnt)|(num>>>(32-cnt)); }
 	this.compute=function(x,len) {
+  // -------------------------------------------------------
+  // FIXME
+  // 
+  // Brian Skinner changed these lines on 2005/11/16 to apply
+  // the fix supplied in the bug report created by wey@slupet.com 
+  // for this bug:
+  //    http://dojotoolkit.org/trac/ticket/183
+  //
+    if (!len) var len=x.length*chrsz;
 		if (typeof(x)=="string") x=dojo.crypto.toByteArray(x);
-		if (!len) var len=x.length;
+	//	if (typeof(x)=="string") x=dojo.crypto.toByteArray(x);
+  //	if (!len) var len=x.length;
+  // -------------------------------------------------------
 		x[len>>5]|=0x80<<((len)%32);
 		x[(((len+64)>>>9)<<4)+14]=len;
 		var a= 1732584193;

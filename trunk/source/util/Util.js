@@ -388,17 +388,6 @@ orp.util.trimString = function(str) {
 
 
 // -------------------------------------------------------------------
-// Methods for doing encryption
-// -------------------------------------------------------------------
-
-orp.util.hex_md5 = function(string) {
-  // Calls the hex_md5() function in .../trunk/third_party/md5/md5.js
-  return hex_md5(string);
-};
-
-
-
-// -------------------------------------------------------------------
 // Methods that deal with event handling
 // -------------------------------------------------------------------
 

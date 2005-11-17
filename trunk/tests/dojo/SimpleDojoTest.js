@@ -78,6 +78,29 @@ function testDojoInherits() {
   assertTrue("b should be an instance of classA.", b instanceof classA);
 }
 
+function testMD5() {
+  dojo.require("dojo.crypto.*");
+
+  var whenInTheCourse = "When in the course of human events: d41d8cd98f00b204e9800998ecf8427e";
+  var theQuickBrownFox = "The quick brown fox jumps over the lazy dog";
+  var theRainInSpain = "The rain in Spain falls mainly on the plain.";
+  assertTrue('md5 of "" is correct', (getHexMD5("") == "d41d8cd98f00b204e9800998ecf8427e"));
+  assertTrue('md5 of "abc" is correct', (getHexMD5("abc") == "900150983cd24fb0d6963f7d28e17f72"));
+  assertTrue('md5 of "iggy" is correct', (getHexMD5("iggy") == "0e026f55a72c0861a93e750c2a5427b1"));
+  assertTrue('md5 of "The quick brown fox..." is correct', (getHexMD5(theQuickBrownFox) == "9e107d9d372bb6826bd81d3542a419d6"));
+  assertTrue('md5 of "When in the course..." is correct', (getHexMD5(whenInTheCourse) == "4d694e03af399831c6f0c1f1bcc2fc93"));
+  assertTrue('md5 of "The rain in Spain..." is correct', (getHexMD5(theRainInSpain) == "3948716d567532d9aee33c7d2f34b970"));
+}
+
+// -------------------------------------------------------------------
+// Helper functions
+// -------------------------------------------------------------------
+
+function getHexMD5(string) {
+  return dojo.crypto.toBinHex(dojo.crypto.MD5.compute(string));
+}
+
+
 // -------------------------------------------------------------------
 // End of file
 // -------------------------------------------------------------------
