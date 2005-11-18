@@ -1,5 +1,116 @@
 <h1>Bookmarks</h1>
 <div>
+  <h2 id="similar">Apps with some similarities to OpenRecord</h2>
+  <blockquote>
+  <dl class="faq">
+    <di>
+      <dt><a href="http://base.google.com/base/about.html" rel="external">Google Base</a></dt>
+      <dd>Google Base has a data model that's vaguely similar to the OpenRecord
+      data model.  For example, in Google Base any item can have any number of 
+      ad-hoc attributes, any attribute can be multi-valued, any date
+      value can have an end-date as well as a start-date, and numbers can
+      have units (like "meters" or "meters/second").  However, I think the 
+      similarities end there.  Google Base seems to be oriented toward 
+      "monolithic" items, rather than big structures of small items -- for example
+      Google Base does not seem to be designed to support any type of references 
+      between items, or multi-item transactions.
+      </dd>
+    </di>
+    <di>
+      <dt><a href="http://developerdocumentation.ning.com/post.php?Post:slug=ContentStore" rel="external">The Ning Content Store</a></dt>
+      <dd>The ning.com site uses a custom Content Store that has a data model
+      which is similar in many ways to the OpenRecord data model.  A Ning "Content
+      Object" is like an OpenRecord "Item".  The most significant similarity is
+      that both Ning and OpenRecord lack any notion of pre-defined schema --
+      any items (content objects) can have any attributes.  Ning and OpenRecord
+      are also similar in that they both support bi-directional references.
+      However, there are a number of differences.  In Ning, each Object can be 
+      of only one type, and the type
+      of an Object cannot change once the Object is created -- OpenRecord has no
+      similar notion.  In Ning, an attribute is identified by its name (a string)
+      -- in OpenRecord attributes are identified by UUID, an attribute can have
+      different names in different languages, and each attribute is itself an
+      item, so it can have not only a 'name', but also a 'summary' description, 
+      and other descriptive attributes.  Like OpenRecord, Ning allows any attribute 
+      to be multi-valued, but in Ning all the values of a multi-valued attribute
+      must be of the same type.   Ning has a notion of public vs. private content, 
+      whereas OpenRecord treats all content as public.  OpenRecord includes some
+      support for transactions, whereas Ning generally doesn't.
+      </dd>
+    </di>
+    <di>
+      <dt><a href="http://dabbledb.com/about/" rel="external">Dabble DB</a></dt>
+      <dd>The Dabble web site currently (Nov 2005) only has a few screenshots,
+      and doesn't have much written documentation.  So, it's hard to know quite
+      what Dabble is, but judging by what is posted it certainly looks like
+      Dabble and OpenRecord are both trying to solve the same problems.  For 
+      more insight into Dabble, check out their weblog: 
+      <a href="http://smallthought.com/blog/" rel="external">Dabble weblog</a>
+      </dd>
+    </di>
+    <di>
+      <dt><a href="http://danbricklin.com/log/aboutwikicalc01.htm" rel="external">Dan Bricklin's wikiCalc</a></dt>
+      <dd>"The wikiCalc program is a web authoring tool for pages that include 
+      data that is more than just unformatted prose. It combines some of the 
+      ease of authoring and multi-person editing of a wiki with the familiar 
+      visual formatting and data organizing metaphor of a spreadsheet."
+      </dd>
+    </di>
+    <di>
+      <dt><a href="http://sproutliner.com/" rel="external">Sproutliner</a></dt>
+      <dd>Sproutliner is a web-based app that's good at outlines and tables of items.
+      It has a crisp UI.  I think that it does not support concurrent editing of 
+      pages, and it looks to be page-centric (like Sparrow) rather than database-centric
+      (like Dabble?).  
+      </dd>
+    </di>
+    <di>
+      <dt><a href="http://www2.parc.com/istl/projects/sparrow/" rel="external">Sparrow Web</a></dt>
+      <dd>Sparrow Web is a structured wiki tool that seems geared toward the 
+      same sort of uses as OpenRecord.  Unlike most of the other projects on this
+      list, Sparrow Web was written in the 1990s and has been in use for years and
+      years.  Sparrow Web has a forms-based UI where OpenRecord has an AJAX UI,
+      and Sparrow Web has page-centric content, rather than database-centric 
+      content that appears on pages as the result of queries.
+      </dd>
+    </di>
+    <di>
+      <dt><a href="http://meta.wikimedia.org/wiki/Semantic_MediaWiki" rel="external">Semantic MediaWiki</a></dt>
+      <dd>"The overall objective of the project is to develop a single solution for 
+      semantic annotation that fits the needs of most Wikimedia projects and still 
+      meets the Wiki-specific requirements of usability and performance." 
+      </dd>
+    </di>
+    <di>
+      <dt><a href="http://meta.wikimedia.org/wiki/Wikidata" rel="external">Wikidata</a></dt>
+      <dd>A MediaWiki project. "Wikidata is a proposed wiki-like database for 
+      various types of content." 
+      </dd>
+    </di>
+    <di>
+      <dt><a href="http://cocoondev.org/daisy/features.html" rel="external">Daisy CMS</a></dt>
+      <dd>An open source CMS that has at least a few similarities to OpenRecord.
+      For example: multi-value fields, documents identified by unique IDs (and
+      documents names need not be unique), and there's no intrinsic notion of 
+      file-system directories.
+      </dd>
+    </di>
+    <di>
+      <dt><a href="http://www.quickbase.com/p/CWG_features.asp?ps=CW" rel="external">Intuit QuickBase</a></dt>
+      <dd>Intuit QuickBase is an expensive, proprietary service geared toward 
+      corporate workgroups.  Seems to have lots of good features for charts,
+      timelines, etc.
+      </dd>
+    </di>
+    <di>
+      <dt><a href="http://km.aifb.uni-karlsruhe.de/services/xam/Wiki.jsp?page=RelatedWork" rel="external">"Semantic Wiki" projects</a></dt>
+      <dd>Links to a half dozen "Semantic Wiki" projects like Platypus, Rhizome, 
+      and Gnowsis, as well as links to desktop-app projects like Chandler and Haystack.
+      </dd>
+    </di>
+  </dl>
+  </blockquote>
+
   <h2>JavaScript UI examples</h2>
   <blockquote>
   <dl class="faq">
@@ -157,6 +268,7 @@
     </li>
     <li class="detail">JavaScript Articles
       <ul>
+        <li class="detail"><a href="http://mir.aculo.us/articles/2005/07/28/automatic-testing-of-your-web-pages-with-javascript" rel="external">Automatic Testing of JavaScript UI</a></li>
         <li class="detail"><a href="http://www.sitepoint.com/article/structural-markup-javascript" rel="external">sitepoint.com: Enhancing Structural Markup with JavaScript</a></li>
         <li class="detail"><a href="http://www.sitepoint.com/blog-post-view.php?id=249759" rel="external">sitepoint.com: Cross-browser event registration</a></li>
         <li class="detail"><a href="http://www.quirksmode.org/index.html?/dom/innerhtml.html" rel="external">quirksmode.org: innerHTML</a> </li>
@@ -176,7 +288,9 @@
     </li>
     <li class="detail">JavaScript Tools
       <ul>
+        <li class="detail"><a href="http://selenium.thoughtworks.com/index.html" rel="external">Selenium</a> -- UI unit tests </li>
         <li class="detail"><a href="http://www.crockford.com/javascript/lint.html" rel="external">JSLint</a> </li>
+        <li class="detail"><a href="http://www.javascriptlint.com/" rel="external">JavaScript Lint</a> </li>
         <li class="detail"><a href="http://www.mozilla.org/projects/venkman/" rel="external">venkman</a> </li>
         <li class="detail"><a href="http://www.edwardh.com/jsunit/" rel="external">jsunit</a> </li>
         <li class="detail"><a href="http://www.mozilla.org/docs/dom/domref/dom_shortIX.html" rel="external">mozilla.org: DOM reference</a> </li>
