@@ -92,7 +92,7 @@ Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
        |          |         |  1. try to replace View.appendNewElement() with dojo.xml.domUtil methods
        |          |         |  2. try to replace orp.util.css_xxx functions with dojo.xml.htmlUtil.xxxClass functions
-       |          |         |  3. try to replace md5.js with dojo.crypto.MD5 methods
+brian  |          | (0.4+)  |  3. try to replace md5.js with dojo.crypto.MD5 methods
        |          |         |  4. try to replace /source/util/Cookie.js with dojo.io.cookies
        |          |         |  5. try to replace remaining Util.js functions with dojo.lang functions
        |          |         |  6. Make DateValue wrap an internal Date object
@@ -131,7 +131,7 @@ Who    | Estimate | Actual  | Task
        |          |         | 23. improve UI for creating a new page
        |          |         | 24. improve UI for adding a new section to a page
        |          |         | 25. UI to move/delete sections?
-       |          |         | 26. Better time parsing e.g. 3pm
+brian  |          | 0.1  IED| 26. Better time parsing e.g. 3pm
        |          |         | 27. Have different documents use different style-sheets
        |          |         | 28. Wire up observers & keep views in sync
        |          |         | 29. Provide GUI feedback about what's editable
