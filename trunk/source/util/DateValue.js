@@ -223,10 +223,10 @@ orp.util.DateValue = function(year, month, day, hours, minutes, seconds, ms) {
       var todayInDays = Math.floor((Date.now()-timezoneOffsetMS)/DateValue.MILLISECS_IN_A_DAY);
       var dateInDays = Math.floor((this.getTime()-timezoneOffsetMS)/DateValue.MILLISECS_IN_A_DAY);
       var returnStr;
-      if (dateInDays == todayInDays) {
+      if (dateInDays == todayInDays && !this._hasTime) {
         returnStr = 'Today';
       }
-      else if (dateInDays == (todayInDays + 1)) {
+      else if (dateInDays == (todayInDays + 1) && !this._hasTime) {
         returnStr = 'Tomorrow';
       }
       else {
@@ -239,9 +239,7 @@ orp.util.DateValue = function(year, month, day, hours, minutes, seconds, ms) {
         var hours = date.getHours();
         if (minutes !== 0 || hours !== 0) {
           returnStr += ' ' + (hours % 12);
-          if (minutes !== 0) { 
-            returnStr += ':' + (minutes < 10 ? '0' + minutes : minutes);
-          }
+          returnStr += ':' + (minutes < 10 ? '0' + minutes : minutes);
           returnStr += ' ' + (hours > 12 ? 'pm' : 'am');
         }
       }
