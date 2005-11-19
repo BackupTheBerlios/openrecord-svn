@@ -66,16 +66,17 @@ function testDojoLang() {
 
 function testDojoInherits() {
   classA = function() {
-    _a = 3;
+    this._a = 3;
   };
   classB = function() {
     classA.call(this);
-    _b = 4;
+    this._b = 4;
   };
   dojo.inherits(classB, classA);  
   var b = new classB();
   assertTrue("b should be an instance of classB.", b instanceof classB);
   assertTrue("b should be an instance of classA.", b instanceof classA);
+  assertTrue("b._a == 3", b._a == 3);
 }
 
 function testMD5() {
