@@ -147,7 +147,35 @@ function testAccessorsForAxiomaticItems() {
   }
 }
 
+function testImportMethodsWithDuplicateUuid() {
+  var caughtError = false;
+  try {
+    var item = world.importItem("00001000-ce7f-11d9-8cd5-0011113ae5d6");
+  } catch (error) {
+    caughtError = true;
+  }
+  assertTrue("We can't import an item with a duplicate UUID", caughtError);
+}
 
+function testImportMethods() {
+  var attributeCalledName = world.getAttributeCalledName();
+  
+  var caughtError = false;
+  try {
+    world.beginTransaction();
+    var item = world.importItem("00000001-ce7f-11d9-8888-0011113ae5d6");
+    var entry = world.importEntry({
+      uuid: "00000002-ce7f-11d9-8888-0011113ae5d6",
+      item: item,
+      attribute: attributeCalledName,
+      value: "My new item!" });
+    world.endTransaction();
+  } catch (error) {
+    throw error;
+    caughtError = true;
+  }
+  assertTrue("We can import an item with a unique UUID", !caughtError);
+}
 
 // -------------------------------------------------------------------
 // End of file

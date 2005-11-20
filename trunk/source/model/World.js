@@ -38,7 +38,7 @@ dojo.require("orp.model.QueryRunner");
 dojo.require("orp.model.Vote");
 dojo.require("orp.model.Ordinal");
 dojo.require("dojo.lang.*");
-//-- dojo.require("orp.lang.Lang");
+dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -902,7 +902,7 @@ orp.model.World.prototype._newVote = function(contentRecord, retainFlag) {
  * @scope    public instance method
  * @param    uuid    The UUID of the item to be returned. 
  * @param    observer    Optional. An object to be registered as an observer of the returned item. 
- * @return   The item identified by the given UUID.
+ * @return   Returns he item identified by the given UUID, or returns undefined if there is no item for that UUID.
  */
 orp.model.World.prototype.getItemFromUuid = function(uuid, observer) {
   return (this._archive.getItemFromUuid(uuid, observer));
@@ -914,7 +914,7 @@ orp.model.World.prototype.getItemFromUuid = function(uuid, observer) {
  *
  * @scope    public instance method
  * @param    uuid    The UUID of the item to be returned. 
- * @return   The entry identified by the given UUID.
+ * @return   Returns the entry identified by the given UUID, or returns undefined if there is no item for that UUID.
  */
 orp.model.World.prototype.getEntryFromUuid = function(uuid) {
   return (this._archive._getEntryFromUuid(uuid));
@@ -1175,6 +1175,74 @@ orp.model.World.prototype.removeItemObserver = function(item, observer) {
     observerWasRemoved = orp.util.removeObjectFromSet(observer, observerList);
   } 
   return observerWasRemoved;
+};
+
+
+// -------------------------------------------------------------------
+// Methods for importing content from other worlds/repositories
+// -------------------------------------------------------------------
+
+/**
+ * Creates a new item in this repository that corresponds to an existing
+ * item from somewhere else.  The new item in this repository will have
+ * the same UUID as the corresponding item in other repositories.
+ *
+ * @scope    public instance method
+ * @param    uuid    The UUID of the item.
+ * @return   The new item.
+ * @throws   Throws an Error if the UUID is already in use.
+ */
+orp.model.World.prototype.importItem = function(uuid) {
+  this.beginTransaction();
+  var item = this._archive.importItem(uuid);
+  this.endTransaction();
+  return item;
+};
+
+
+/**
+ * Creates a new entry in this repository that corresponds to an existing
+ * entry from somewhere else.  The new entry in this repository will have
+ * the same UUID as the corresponding entries in other repositories.
+ *
+ * @scope    public instance method
+ * @namedParam    uuid    The UUID of the entry.
+ * @namedParam    item    The item this is an entry of.
+ * @namedParam    value    The value to initialize the entry to. (Optional if previousEntry is provided.)
+ * @namedParam    type    Optional. An item representing a data type.
+ * @namedParam    attribute    Optional. The attribute to assign the entry to. 
+ * @namedParam    previousEntry    Optional. The old entry to be replaced.
+ * @namedParam    inverseAttribute    Optional. The attribute to use as the inverseAttribute of 'attribute'.
+ * @return   An entry object.
+ * @throws   Throws an Error if the UUID is already in use.
+ */
+orp.model.World.prototype.importEntry = function(namedParameters) {
+  orp.lang.assert(dojo.lang.isObject(namedParameters));
+
+  var parameters = orp.model.Item.NamedParameters;
+  var uuidParameter = "uuid";
+  var itemParameter = "item";
+
+  var value = namedParameters[parameters.value];
+  var attribute = namedParameters[parameters.attribute];
+  var type = namedParameters[parameters.type];
+  var previousEntry = namedParameters[parameters.previousEntry];
+  var inverseAttribute = namedParameters[parameters.inverseAttribute];
+  var uuid = namedParameters[uuidParameter];
+  var item = namedParameters[itemParameter];
+
+  this.beginTransaction();
+  var entry;
+  if (inverseAttribute) {
+    var attributeOne = attribute;
+    var itemTwo = value;
+    var attributeTwo = inverseAttribute;
+    entry = this._archive.importConnectionEntry(uuid, previousEntry, item, attributeOne, itemTwo, attributeTwo);
+  } else {
+    entry = this._archive.importEntry(uuid, item, previousEntry, attribute, value, type);
+  }
+  this.endTransaction();
+  return entry;
 };
 
 

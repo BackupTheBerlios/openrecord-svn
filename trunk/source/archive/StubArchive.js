@@ -206,7 +206,7 @@ orp.archive.StubArchive.prototype.getCurrentTransaction = function() {
  */
 orp.archive.StubArchive.prototype.newItem = function(name, observer) {
   this._throwErrorIfNoUserIsLoggedIn();
-  var item = this._createNewItem(observer, false);
+  var item = this._createNewItem(observer);
   if (name) { 
     var attributeCalledName = this._world.getAttributeCalledName();
     item.addEntry({attribute:attributeCalledName, value:name});
@@ -235,15 +235,32 @@ orp.archive.StubArchive.prototype.newProvisionalItem = function(observer) {
 
 
 /**
+ * Records the fact that a provisional item just became real.
+ *
+ * @scope    package instance method
+ * @param    item    The item that was provisional and just became real. 
+ */
+orp.archive.StubArchive.prototype._provisionalItemJustBecameReal = function(item) {
+  this._currentTransaction.addRecord(item);
+};
+
+
+/**
  * Returns a newly created item: either a provisional item or a normal item.
  *
  * @scope    private instance method
  * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
- * @param    provisionalFlag    True if the item is provisional; false if the item is normal. 
+ * @param    provisionalFlag    Optional. True if the item is provisional; false if the item is normal. Default is false.
+ * @param    uuid    Optional. If no UUID is supplied, a new one will be generated.
  * @return   A newly created item.
  */
-orp.archive.StubArchive.prototype._createNewItem = function(observer, provisionalFlag) {
-  var uuid = this._getNewUuid();
+orp.archive.StubArchive.prototype._createNewItem = function(observer, provisionalFlag, uuid) {
+  if (!uuid) {
+    uuid = this._getNewUuid();
+  }
+  if (!provisionalFlag) {
+    provisionalFlag = false;
+  }
   var item = new orp.model.Item(this._world, uuid);
   item._initialize(observer, provisionalFlag);
   this._hashTableOfItemsKeyedByUuid[uuid] = item;
@@ -255,13 +272,62 @@ orp.archive.StubArchive.prototype._createNewItem = function(observer, provisiona
 
 
 /**
- * Records the fact that a provisional item just became real.
- *
- * @scope    package instance method
- * @param    item    The item that was provisional and just became real. 
+ * Creates a new item in this repository that corresponds to an existing
+ * item from somewhere else.  The new item in this repository will have
+ * the same UUID as the corresponding item in other repositories.
+ * 
+ * @scope    public instance method
+ * @param    uuid    The UUID of the item.
+ * @return   The new item.
+ * @throws   Throws an Error if the UUID is already in use.
  */
-orp.archive.StubArchive.prototype._provisionalItemJustBecameReal = function(item) {
-  this._currentTransaction.addRecord(item);
+orp.archive.StubArchive.prototype.importItem = function(uuid) {
+  if (this.getItemFromUuid(uuid)) {
+    var error = new Error("You attempted to import an item that has a UUID which is already in use.");
+    throw error;
+  }
+  return this._createNewItem(null, null, uuid);
+};
+
+
+/**
+ * Creates a new entry in this repository that corresponds to an existing
+ * entry from somewhere else.  The new entry in this repository will have
+ * the same UUID as the corresponding entries in other repositories.
+ *
+ * @scope    public instance method
+ * @return   An entry object.
+ * @throws   Throws an Error if the UUID is already in use.
+ */
+orp.archive.StubArchive.prototype.importEntry = function(uuid, item, previousEntry, attribute, value, type) {
+  if (this._getEntryFromUuid(uuid)) {
+    var error = new Error("You attempted to import an entry that has a UUID which is already in use.");
+    throw error;
+  }
+  return this._createNewEntry(uuid, item, previousEntry, attribute, value, type);
+};
+
+
+/**
+ * Returns a newly created entry.
+ *
+ * @scope    public instance method
+ * @param    uuid    The uuid for the new entry. 
+ * @param    item    The item that this is an entry of. 
+ * @param    previousEntry    Optional. The old entry that this entry is replacing. 
+ * @param    attribute    The attribute that this entry is assigned to. May be null. 
+ * @param    value    The value to initialize the entry with. 
+ * @param    type    Optional. An item representing the data type of the value. 
+ * @return   A newly created entry.
+ */
+orp.archive.StubArchive.prototype._createNewEntry = function(uuid, item, previousEntry, attribute, value, type) {
+  var entry = new orp.model.Entry(this._world, uuid);
+  entry._initialize(item, previousEntry, attribute, value, type);
+  item._addEntryToListOfEntriesForAttribute(entry, attribute);
+  
+  this._hashTableOfEntriesKeyedByUuid[uuid] = entry;
+  this._currentTransaction.addRecord(entry);
+  return entry;
 };
 
 
@@ -280,13 +346,7 @@ orp.archive.StubArchive.prototype._provisionalItemJustBecameReal = function(item
 orp.archive.StubArchive.prototype.newEntry = function(item, previousEntry, attribute, value, type) {
   this._throwErrorIfNoUserIsLoggedIn();
   var uuid = this._getNewUuid();
-  var entry = new orp.model.Entry(this._world, uuid);
-  entry._initialize(item, previousEntry, attribute, value, type);
-  item._addEntryToListOfEntriesForAttribute(entry, attribute);
-  
-  this._hashTableOfEntriesKeyedByUuid[uuid] = entry;
-  this._currentTransaction.addRecord(entry);
-  return entry;
+  return this._createNewEntry(uuid, item, previousEntry, attribute, value, type);
 };
  
 
@@ -294,17 +354,24 @@ orp.archive.StubArchive.prototype.newEntry = function(item, previousEntry, attri
  * Returns a newly created entry.
  *
  * @scope    public instance method
- * @param    previousEntry    The entry that this entry will replace. Can be null.
- * @param    itemOne    One of the two items that this entry will connect. 
- * @param    attributeOne    The attribute of itemOne that this entry will be assigned to. 
- * @param    itemTwo    One of the two items that this entry will connect. 
- * @param    attributeTwo    The attribute of itemTwo that this entry will be assigned to.  
  * @return   A newly created entry.
- * @throws   Throws an Error if no user is logged in.
  */
-orp.archive.StubArchive.prototype.newConnectionEntry = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
-  this._throwErrorIfNoUserIsLoggedIn();
-  var uuid = this._getNewUuid();
+orp.archive.StubArchive.prototype.importConnectionEntry = function(uuid, previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
+  if (this._getEntryFromUuid(uuid)) {
+    var error = new Error("You attempted to import an entry that has a UUID which is already in use.");
+    throw error;
+  }
+  return this._createNewConnectionEntry(uuid, previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
+};
+
+
+/**
+ * Returns a newly created entry.
+ *
+ * @scope    public instance method
+ * @return   A newly created entry.
+ */
+orp.archive.StubArchive.prototype._createNewConnectionEntry = function(uuid, previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
   var entry = new orp.model.Entry(this._world, uuid);
   entry._initializeConnection(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
 
@@ -326,6 +393,25 @@ orp.archive.StubArchive.prototype.newConnectionEntry = function(previousEntry, i
     entry = proxyOne;
   }
   return entry;
+};
+
+
+/**
+ * Returns a newly created entry.
+ *
+ * @scope    public instance method
+ * @param    previousEntry    The entry that this entry will replace. Can be null.
+ * @param    itemOne    One of the two items that this entry will connect. 
+ * @param    attributeOne    The attribute of itemOne that this entry will be assigned to. 
+ * @param    itemTwo    One of the two items that this entry will connect. 
+ * @param    attributeTwo    The attribute of itemTwo that this entry will be assigned to.  
+ * @return   A newly created entry.
+ * @throws   Throws an Error if no user is logged in.
+ */
+orp.archive.StubArchive.prototype.newConnectionEntry = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
+  this._throwErrorIfNoUserIsLoggedIn();
+  var uuid = this._getNewUuid();
+  return this._createNewConnectionEntry(uuid, previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
 };
 
 
@@ -385,7 +471,7 @@ orp.archive.StubArchive.prototype.newUser = function(name, authentication, obser
     throw error;
   }
 
-  var newUser = this._createNewItem(observer, false);
+  var newUser = this._createNewItem(observer);
   this._listOfUsers.push(newUser);
   
   var md5Authentication = null;
@@ -508,7 +594,7 @@ orp.archive.StubArchive.prototype.logout = function() {
  * @scope    public instance method
  * @param    uuid    The UUID of the item to be returned. 
  * @param    observer    Optional. An object to be registered as an observer of the returned item. 
- * @return   The item identified by the given UUID.
+ * @return   Returns the item identified by the given UUID, or returns undefined if there is no item for that UUID.
  */
 orp.archive.StubArchive.prototype.getItemFromUuid = function(uuid, observer) {
   orp.lang.assert(dojo.lang.isString(uuid) || uuid instanceof orp.uuid.Uuid);
@@ -765,7 +851,7 @@ orp.archive.StubArchive.prototype._loadAxiomaticItemsFromFileAtURL = function(ur
  * 
  * @scope    private instance method
  * @param    uuid    The UUID of the entry to be returned. 
- * @return   The entry identified by the given UUID.
+ * @return   Returns the entry identified by the given UUID, or returns undefined if there is no item for that UUID.
  */
 orp.archive.StubArchive.prototype._getEntryFromUuid = function(uuid) {
   return this._hashTableOfEntriesKeyedByUuid[uuid];
