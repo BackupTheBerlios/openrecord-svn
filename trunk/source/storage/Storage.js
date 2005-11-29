@@ -103,6 +103,12 @@ orp.storage.Storage.prototype.writeText = function(textToWrite, overwriteIfExist
   dj_unimplemented("writeText");
 };
 
+orp.storage.Storage.prototype.getCurrentLocationDirectory = function() {
+  var thisUrl = window.location.pathname; //e.g. /openrecord/trunk/demo_page.html or /openrecord/trunk/source/model/TestRepositoryWriting.html.
+  var arrayOfPathComponents = thisUrl.split('/');
+  arrayOfPathComponents.pop();
+  return arrayOfPathComponents.join('/'); //e.g. /openrecord/trunk or /openrecord/trunk/source/model
+};
 
 // -------------------------------------------------------------------
 // End of file

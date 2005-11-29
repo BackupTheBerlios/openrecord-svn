@@ -6,12 +6,12 @@ if ($suffix_specified) {
   $suffix = $_GET['suffix'];
 }
 if (!file_exists($dir)) {
-  exit("$dir not found."); 
+  exit("$dir not found.");
 }
-;
 if (!($dh = opendir($dir))) {
-  exit("Could not open $dir."); 
+  exit("Could not open $dir.");
 }
+$num_files = 0;
 while (false !== ($filename = readdir($dh))) {
   if ($filename == "." || $filename == "..") {
     continue;
@@ -19,7 +19,13 @@ while (false !== ($filename = readdir($dh))) {
   $array_of_file_name_parts = explode(".", $filename);
   if (!$suffix_specified || $array_of_file_name_parts[1] == $suffix) {
     $array_js[] = "\"" . $filename . "\"";
+    $num_files++;
   }
 }
-echo "[" . implode(',', $array_js) . "]";
+if ($num_files == 0) {
+  echo "[]";
+}
+else {
+  echo "[" . implode(',', $array_js) . "]";
+}
 ?>

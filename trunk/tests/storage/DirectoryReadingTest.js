@@ -78,6 +78,11 @@ function testGetDirListForMissingDir() {
   assertTrue("Exception should have been caught.", exceptionCaught);    
 }
 
+function testGetDirListForEmptyDir() {
+  var dirList = orp.storage.getDirList("directory_1/emptyDirectory", "js");
+  assertTrue("List should have length zero.", dirList.length == 0);
+}
+
 // -------------------------------------------------------------------
 // Helper functions
 // -------------------------------------------------------------------

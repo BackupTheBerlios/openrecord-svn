@@ -41,12 +41,8 @@ dojo.require("orp.view.View");
 dojo.require("orp.view.RootView");
 dojo.require("orp.model.Item");
 dojo.require("orp.lang.Lang");
+dojo.require("orp.storage.directoryList");
 dojo.require("dojo.event.*");
-
-// FIXME: We shouldn't need to include these three lines:
-dojo.require("orp.DetailPlugin");
-dojo.require("orp.OutlinePlugin");
-dojo.require("orp.BarChartPlugin");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -62,14 +58,14 @@ dojo.require("orp.BarChartPlugin");
 // Constructor
 // -------------------------------------------------------------------
 /**
- * A PageView uses instances of a SectionViews to display the Sections 
+ * A PageView uses instances of SectionViews to display the Sections 
  * of a page. 
  *
  * @scope    public instance constructor
  * @extends  View
  * @param    superview    The view that serves as the superview for this view. 
  * @param    htmlElement    The HTMLElement to display the HTML in. 
- * @param    sectionItem    The Section item to be displayed in by this view. 
+ * @param    sectionItem    The Section item to be displayed by this view. 
  * @syntax   var sectionView = new orp.view.SectionView()
  */
 orp.view.SectionView = function(superview, htmlElement, sectionItem) {
@@ -85,29 +81,74 @@ orp.view.SectionView = function(superview, htmlElement, sectionItem) {
   this._headerView = null;
   this._queryEditSpan = null;
   
-  // -----------------------------------------------------------------------
-  // FIXME: temporary hack
-  // 
-  // Brian inserted this hack on 2005/09/21 as part of converting everything  
-  // to use the Dojo package system.  Now that we explicitly control the order 
-  // in which files are loaded, the old calls to "SectionView.registerPlugin()" 
-  // in (TablePlugin.js, OutlinePlugin.js etc.) no longer work, I think because 
-  // SectionView.registerPlugin doesn't exist at the time the calls are made.
   if (orp.view.SectionView._ourListOfRegisteredPluginClasses.length === 0) {
-    orp.view.SectionView.registerPlugin(orp.TablePlugin);
-    orp.view.SectionView.registerPlugin(orp.OutlinePlugin);
-    orp.view.SectionView.registerPlugin(orp.DetailPlugin);
-    orp.view.SectionView.registerPlugin(orp.BarChartPlugin);
-  }
-  // 
-  // -----------------------------------------------------------------------
-  
-  if (!orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
+    var categoryCalledPlugin = this.getWorld().getItemFromUuid(orp.view.SectionView.UUID.CATEGORY_PLUGIN_VIEW);
+    var listOfItems = this.getWorld().getItemsInCategory(categoryCalledPlugin);
+    var attributeCalledClassName = this.getWorld().getAttributeCalledClassName();
+    for (var key in listOfItems) {
+      var item = listOfItems[key];
+      var entry = item.getSingleEntryFromAttribute(attributeCalledClassName);
+      if (!entry) {
+        alert("Item '" + item.getDisplayName() + "' in category PluginView has no entry for attribute 'Class Name', and will be skipped.");
+        continue;
+      }
+      var className = entry.getValue();
+      
+      // This deals with any plugins which are already loaded.  Such pre-loaded plugins could not 
+      // self-register when they loaded, because of the order in which files are loaded, so we register them here.
+      // Currently, TableView and DetailView are the only plugins which should already be loaded.
+      if (orp[className]) {
+        orp.view.SectionView.registerPlugin(orp[className]);
+        continue;
+      }
+      
+      var sourceUrl = orp.storage.Storage.prototype.getCurrentLocationDirectory() + '/';
+      if (orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION) {
+        sourceUrl += orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION + '/';
+      }
+      sourceUrl += orp.view.PluginView.PATH_TO_CORE_PLUGIN_DIRECTORY_FROM_TRUNK +
+                    "/" + className + ".js";
+      var success = orp.view.SectionView._loadUri(sourceUrl);
+      if (!success) {
+        sourceUrl = orp.storage.Storage.prototype.getCurrentLocationDirectory() + '/';
+        if (orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION) {
+          sourceUrl += orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION + '/';
+        }
+        sourceUrl += orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK +
+                     "/" + className + ".js";
+        success = orp.view.SectionView._loadUri(sourceUrl);
+        if (!success) {
+          throw new Error(sourceUrl + " not found.");
+        }
+      }
+    }
+
     orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = {};
-    for (var key in orp.view.SectionView._ourListOfRegisteredPluginClasses) {
+    for (key in orp.view.SectionView._ourListOfRegisteredPluginClasses) {
       var pluginClass = orp.view.SectionView._ourListOfRegisteredPluginClasses[key];
       var pluginItemUuid = pluginClass.getPluginItemUuid();
       orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[pluginItemUuid] = pluginClass;
+    }
+  
+    var pathToPluginDirectoryFromWindowLocation = "";
+    if (orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION) {
+      pathToPluginDirectoryFromWindowLocation += orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION + '/';
+    }
+    pathToPluginDirectoryFromWindowLocation += orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK;
+    
+    var dirList = orp.storage.getDirList(pathToPluginDirectoryFromWindowLocation, "js");
+    for (var i = 0; i < dirList.length; ++i) {
+      var filenameWithoutExtension = (dirList[i].split('.'))[0];
+      var correspondingClassDefined = orp.plugins && orp.plugins[filenameWithoutExtension];
+      if (!correspondingClassDefined) {
+        sourceUrl = orp.storage.Storage.prototype.getCurrentLocationDirectory() + '/';
+        if (orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION) {
+          sourceUrl += orp.storage.PATH_TO_TRUNK_DIRECTORY_FROM_WINDOW_LOCATION + '/';
+        }
+        sourceUrl += orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK +
+                     '/' + dirList[i];
+        this._installPlugin(sourceUrl);
+      }
     }
   }
 };
@@ -159,18 +200,20 @@ orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid = null;
 // -------------------------------------------------------------------
 
 /**
- * Given the name of a plugin ("Table", "Outline", etc.), returns a newly
- * created plugin object of that type, initialized to be the plugin for this 
- * SectionView.
- *
  * @scope    public class method
- * @param    pluginClass    A JavaScript class, such as TablePlugin. 
- * @param    pluginItemUuid    The UUID of the item representing that class of plugin. 
+ * @param    pluginClass    A JavaScript class, such as TablePlugin.
  */
-orp.view.SectionView.registerPlugin = function(pluginClass, pluginItemUuid) {
+orp.view.SectionView.registerPlugin = function(pluginClass) {
   orp.view.SectionView._ourListOfRegisteredPluginClasses.push(pluginClass);
 };
 
+/**
+ * @scope    public class method
+ * @return   number of plugins
+ */
+orp.view.SectionView.getNumPlugins = function() {
+  return orp.view.SectionView._ourListOfRegisteredPluginClasses.length;
+};
 
 // -------------------------------------------------------------------
 // Public instance methods
@@ -194,6 +237,9 @@ orp.view.SectionView.prototype.getPluginInstanceFromPluginItem = function(plugin
   pluginClass = orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[pluginItem.getUuid()];
   if (pluginClass) {
     var pluginType = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
+
+orp.lang.assert(pluginItem == pluginType); // This seems to be true, so why not just use pluginItem?
+
     var layoutData = this._getLayoutDataForPlugin(pluginType);
     newPlugin = new pluginClass(this, pluginDiv, this.getQuerySpec(), layoutData);
   }
@@ -259,7 +305,9 @@ orp.view.SectionView.prototype.doInitialDisplay = function() {
     selectedPluginItem = selectedPluginViewEntry.getValue();
     selectedPluginClass = orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[selectedPluginItem.getUuid()];
   } else {
-    selectedPluginClass = orp.TablePlugin; 
+    selectedPluginClass = orp.TablePlugin;
+    //  This will result in an error when calling this.getPluginInstanceFromPluginItem(selectedPluginItem, this._pluginDiv) 
+    //  below, because selectedPluginItem will be undefined.
   }
   
   var sectionDiv = this.getHtmlElement();
@@ -392,6 +440,43 @@ orp.view.SectionView.prototype._refreshQueryEditSpan = function() {
   myQuery.addObserver(this);
 };
 
+/**
+ * Stores a new item representing a plugin class, with associated entries, as 
+ * specified in the source code for the plugin.
+ * 
+ * @scope    private instance method
+ * @param    world             An object of class World.
+ * @param    newPluginClass    A JavaScript class, such as TablePlugin.
+ */    
+orp.view.SectionView.prototype._addNewItemForNewPluginClass = function(world, newPluginClass) {
+  world.beginTransaction();
+  var newItem = world.importItem(newPluginClass.getPluginItemUuid());
+  var entries = newPluginClass.getEntriesForItemRepresentingPluginClass(newItem, world);
+  for (var i in entries) {
+    world.importEntry(entries[i]);
+  }
+  world.endTransaction();
+  return newItem;
+};
+
+/* FIXME: This is a hack.  Undoubtedly there is a more elegant way to accomplish
+   this using dojo, but I don't understand dojo well enough yet to find it.
+*/
+orp.view.SectionView._loadUri = function(sourceUrl) {
+  var success = false;
+  try {
+    if (dojo.hostenv.oldLoadUri) {
+      success = dojo.hostenv.oldLoadUri(sourceUrl, null, true);
+    }
+    else {
+      success = dojo.hostenv.loadUri(sourceUrl, null, true);
+    }
+  }
+  catch (e) {
+    success = false;
+  }
+  return success;
+};
 
 // -------------------------------------------------------------------
 // Event handler methods
@@ -414,7 +499,7 @@ orp.view.SectionView.prototype.keyPressOnMatchingValueField = function(event, an
 
 
 /**
- * Called when the query belong to this section has changed
+ * Called when the query belonging to this section has changed
  *
  * @scope    public instance method
  */
@@ -501,10 +586,10 @@ orp.view.SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
     matchingAttribute = listOfMatchingAttrs[0].getValue();
   }
   if (matchingAttribute.getDisplayString() != newChoiceName) {
-      myQuery.addEntry({
-        previousEntry:entryToBeReplaced, 
-        attribute:attributeCalledQueryMatchingAttribute, 
-        value:newQueryMatchingAttribute});
+    myQuery.addEntry({
+      previousEntry:entryToBeReplaced, 
+      attribute:attributeCalledQueryMatchingAttribute, 
+      value:newQueryMatchingAttribute});
 /*  if (listOfMatchingAttrs.length === 0) {
       myQuery.addEntry({attribute:attributeCalledQueryMatchingAttribute, value:newQueryMatchingAttribute});
     } else {
@@ -534,6 +619,26 @@ orp.view.SectionView.prototype.clickOnAttributeMenu = function(eventObject) {
 
     this.refresh();
   }
+};
+
+/**
+ * Loads the JavaScript code for a plugin.
+ * 
+ * @scope    private instance method
+ * @param    pluginUrl    Location of JavaScript file defining a plugin.
+ */
+orp.view.SectionView.prototype._installPlugin = function(pluginUrl) {
+  var numPluginsRegisteredBefore = orp.view.SectionView._ourListOfRegisteredPluginClasses.length;
+  var success = orp.view.SectionView._loadUri(pluginUrl);
+  if (!success) {
+    throw new Error("Error loading " + pluginUrl);
+  }
+  var numPluginsRegistered = orp.view.SectionView._ourListOfRegisteredPluginClasses.length;
+  orp.lang.assert(numPluginsRegistered == numPluginsRegisteredBefore + 1);
+  var newestPluginClass = orp.view.SectionView._ourListOfRegisteredPluginClasses[numPluginsRegistered - 1];
+  var newPluginViewItem = this._addNewItemForNewPluginClass(this.getWorld(), newestPluginClass);
+  var uuidOfNewPlugin = newPluginViewItem.getUuid();
+  orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid[uuidOfNewPlugin] = newestPluginClass;
 };
 
 // -------------------------------------------------------------------

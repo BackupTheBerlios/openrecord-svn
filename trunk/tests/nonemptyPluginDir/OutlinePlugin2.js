@@ -1,5 +1,5 @@
 /*****************************************************************************
- OutlinePlugin.js
+ OutlinePlugin2.js
  
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
@@ -32,7 +32,7 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.OutlinePlugin");
+dojo.provide("orp.plugins.OutlinePlugin2");
 dojo.require("orp.view.PluginView");
 dojo.require("orp.view.SectionView");
 
@@ -44,13 +44,8 @@ dojo.require("orp.view.SectionView");
 /*global RootView  */
 // -------------------------------------------------------------------
 
-
-// -------------------------------------------------------------------
-// Constructor
-// -------------------------------------------------------------------
-
 /**
- * An OutlinePlugin displays a set of content items for a SectionView. 
+ * An OutlinePlugin2 displays a set of content items for a SectionView. 
  *
  * @scope    public instance constructor
  * @extends  PluginView
@@ -58,22 +53,22 @@ dojo.require("orp.view.SectionView");
  * @param    htmlElement    The HTMLElement to display this view in. 
  * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
  * @param    layoutItem    ???. 
- * @syntax   var outline = new orp.OutlinePlugin()
+ * @syntax   var plugin = new orp.plugins.OutlinePlugin2()
  */
-orp.OutlinePlugin = function(superview, htmlElement, querySpec, layoutItem) {
-  orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "OutlinePlugin");
+orp.plugins.OutlinePlugin2 = function(superview, htmlElement, querySpec, layoutItem) {
+  orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "OutlinePlugin2");
 };
 
-dojo.inherits(orp.OutlinePlugin, orp.view.PluginView);  // makes OutlinePlugin be a subclass of PluginView
+dojo.inherits(orp.plugins.OutlinePlugin2, orp.view.PluginView);  // makes OutlinePlugin2 be a subclass of PluginView
 
 
 // -------------------------------------------------------------------
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
 
-orp.OutlinePlugin.UUID = { PLUGIN_VIEW_OUTLINE: "00040302-ce7f-11d9-8cd5-0011113ae5d6" };
+orp.plugins.OutlinePlugin2.UUID = "99a09d90-598a-11da-87ac-c103016080e1";
 
-orp.view.SectionView.registerPlugin(orp.OutlinePlugin);
+orp.view.SectionView.registerPlugin(orp.plugins.OutlinePlugin2);
 
 // -------------------------------------------------------------------
 // Public class methods
@@ -85,10 +80,31 @@ orp.view.SectionView.registerPlugin(orp.OutlinePlugin);
  * @scope    public class method
  * @return   The UUID of the item that represents this class of plugin
  */
-orp.OutlinePlugin.getPluginItemUuid = function() {
-  return orp.OutlinePlugin.UUID.PLUGIN_VIEW_OUTLINE;
+orp.plugins.OutlinePlugin2.getPluginItemUuid = function() {
+  return orp.plugins.OutlinePlugin2.UUID;
 };
 
+orp.plugins.OutlinePlugin2.getEntriesForItemRepresentingPluginClass = function(pluginItem, world) {
+  return [
+    { uuid: "99a187f0-598a-11da-87ac-c103016080e1",
+      item: pluginItem,
+      attribute: world.getAttributeCalledName(),
+      value: "Outline2 View" },
+    { uuid: "99a24b40-598a-11da-87ac-c103016080e1",
+      item: pluginItem,
+      attribute: world.getAttributeCalledShortName(),
+      value: "Outline2" },
+    { uuid: "99a335a0-598a-11da-87ac-c103016080e1",
+      item: pluginItem,
+      attribute: world.getAttributeCalledClassName(),
+      value: "OutlinePlugin2" },
+    { uuid: "99a3f8f0-598a-11da-87ac-c103016080e1",
+      item: pluginItem,
+      attribute: world.getAttributeCalledCategory(),
+      inverseAttribute: world.getAttributeCalledItemsInCategory(),
+      value: world.getItemFromUuid(orp.view.SectionView.UUID.CATEGORY_PLUGIN_VIEW) }
+  ];
+};
 
 // -------------------------------------------------------------------
 // Public instance methods
@@ -100,18 +116,17 @@ orp.OutlinePlugin.getPluginItemUuid = function() {
  * @scope    public instance method
  * @return   A JavaScript class. 
  */
-orp.OutlinePlugin.prototype.getClass = function() {
-  return orp.OutlinePlugin;
+orp.plugins.OutlinePlugin2.prototype.getClass = function() {
+  return orp.plugins.OutlinePlugin2;
 };
 
-
 /**
- * Re-creates all the HTML for the OutlinePlugin, and hands the HTML to the 
+ * Re-creates all the HTML for the OutlinePlugin2, and hands the HTML to the 
  * browser to be re-drawn.
  *
  * @scope    public instance method
  */
-orp.OutlinePlugin.prototype.refresh = function() {
+orp.plugins.OutlinePlugin2.prototype.refresh = function() {
   var listOfContentItems = this.fetchItems();
   var outlineDiv = this.getHtmlElement();
   orp.view.View.removeChildrenOfElement(outlineDiv);
@@ -132,7 +147,6 @@ orp.OutlinePlugin.prototype.refresh = function() {
     dojo.event.connect(anchorElement, "onclick", orp.view.RootView.clickOnLocalLink);
   }
 };
-
 
 // -------------------------------------------------------------------
 // End of file

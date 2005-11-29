@@ -70,13 +70,19 @@ orp.view.PluginView = function(superview, htmlElement, querySpec, layoutItem, cs
 
 dojo.inherits(orp.view.PluginView, orp.view.View);  // makes PluginView be a subclass of View
 
+// -------------------------------------------------------------------
+// Public class constants
+// -------------------------------------------------------------------
+
+orp.view.PluginView.PATH_TO_CORE_PLUGIN_DIRECTORY_FROM_TRUNK = "source";
+orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK = "source/plugins";
 
 // -------------------------------------------------------------------
 // Public instance methods
 // -------------------------------------------------------------------
 
 /**
- * Returns the registered name of this PluginView.
+ * Returns the item of this PluginView.
  *
  * @scope    public instance method
  * @return   A string.

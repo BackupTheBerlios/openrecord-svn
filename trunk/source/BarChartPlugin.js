@@ -71,10 +71,10 @@ dojo.inherits(orp.BarChartPlugin, orp.view.PluginView);  // makes BarChartPlugin
 // -------------------------------------------------------------------
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
-orp.BarChartPlugin.UUID = { PLUGIN_VIEW_BAR_CHART: "00040304-ce7f-11d9-8cd5-0011113ae5d6" };
-// FIXME:
-// orp.view.SectionView.registerPlugin(orp.BarChartPlugin);
 
+orp.BarChartPlugin.UUID = { PLUGIN_VIEW_BAR_CHART: "00040304-ce7f-11d9-8cd5-0011113ae5d6" };
+
+orp.view.SectionView.registerPlugin(orp.BarChartPlugin);
 
 // -------------------------------------------------------------------
 // Public class methods

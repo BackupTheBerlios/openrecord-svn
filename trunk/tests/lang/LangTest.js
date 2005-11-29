@@ -229,7 +229,7 @@ function testBind() {
   // make the box be a zero-dimensional point
   var point = orp.lang.bind(box, "setDimensions");
   point();
-  assertTrue("Bind works with 1 argument.", (box.getVolume() == (1)) );  
+  assertTrue("Bind works with 0 arguments.", (box.getVolume() == (1)) );  
 }
 
 
