@@ -347,25 +347,19 @@ orp.view.SectionView.prototype.doInitialDisplay = function() {
 
 
 /**
- * Returns layout data of this section for a particular plugin
- * Creates a the layout data item if doesn't exist
+ * Returns a layout item for this section for a particular plugin.
  *
  * @param    pluginTypeItem    An item representing a class of plugin
  * @return    layout data of this section for a particular plugin
  */
 orp.view.SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem) {
-  var repository = this.getWorld();
-  var attributeLayoutData = repository.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_LAYOUT_DATA);
+  var world = this.getWorld();
+  var attributeLayoutData = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_LAYOUT_DATA);
   var entriesLayoutData = this._section.getEntriesForAttribute(attributeLayoutData);
-  var attributeAppliesToPlugin = repository.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_APPLIES_TO_PLUGIN);
+  var attributeAppliesToPlugin = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_APPLIES_TO_PLUGIN);
   if (entriesLayoutData) {
     for (var i=0; i < entriesLayoutData.length; ++i) {
-      var FIXME_OCT_7_2005_EXPERIMENT = true;
-      if (FIXME_OCT_7_2005_EXPERIMENT) {
-        var layoutItem = entriesLayoutData[i].getValue();
-      } else {
-        layoutItem = entriesLayoutData[i].getConnectedItem(this._section);
-      }
+      var layoutItem = entriesLayoutData[i].getValue();
       var entriesAppliesToPlugin = layoutItem.getEntriesForAttribute(attributeAppliesToPlugin);
       orp.lang.assert(entriesAppliesToPlugin && entriesAppliesToPlugin.length == 1);
       if (entriesAppliesToPlugin[0].getValue() == pluginTypeItem) {
@@ -373,16 +367,28 @@ orp.view.SectionView.prototype._getLayoutDataForPlugin = function(pluginTypeItem
       }
     }
   }
+  return null;
+};
+
+
+/**
+ * Creates a layout item for this section for a particular plugin.
+ *
+ */
+orp.view.SectionView.prototype.createLayoutItemForPluginView = function(pluginView) {
+  var world = this.getWorld();
+  var pluginTypeItem = pluginView.getPluginItem();
   
-  // layoutData not found, so create the item
-  var categoryCalledLayoutData = repository.getItemFromUuid(orp.view.SectionView.UUID.CATEGORY_LAYOUT_DATA);
-  var attributeCalledSectionThisLayoutDataBelongsTo = repository.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO);
-  repository.beginTransaction();
-  layoutItem = repository.newItem("Layout data for " + pluginTypeItem.getDisplayString() + " of " + this._section.getDisplayString());
+  var categoryCalledLayoutData = world.getItemFromUuid(orp.view.SectionView.UUID.CATEGORY_LAYOUT_DATA);
+  var attributeCalledSectionThisLayoutDataBelongsTo = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO);
+  var attributeAppliesToPlugin = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_APPLIES_TO_PLUGIN);
+  var attributeLayoutData = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_LAYOUT_DATA);
+  world.beginTransaction();
+  layoutItem = world.newItem("Layout data for " + pluginTypeItem.getDisplayString() + " of " + this._section.getDisplayString());
   layoutItem.assignToCategory(categoryCalledLayoutData);
   layoutItem.addEntry({attribute:attributeAppliesToPlugin, value:pluginTypeItem});
   this._section.addConnectionEntry(attributeLayoutData, layoutItem, attributeCalledSectionThisLayoutDataBelongsTo);
-  repository.endTransaction();
+  world.endTransaction();
   return layoutItem;
 };
 

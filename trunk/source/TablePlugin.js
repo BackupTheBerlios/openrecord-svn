@@ -158,11 +158,19 @@ orp.TablePlugin.prototype.compareItemsBySortAttribute = function(itemA, itemB) {
  */
 orp.TablePlugin.prototype._getListOfColumns = function() {
   var world = this.getWorld();
-  var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
-  var listOfTableColumnEntries = this._layout.getEntriesForAttribute(attributeTableColumns);
+  var useSavedListOfColumns = false;
   var displayAttributes = [];
   var anAttribute;
-  if (listOfTableColumnEntries.length > 0) {
+  
+  var layoutItem = this.getLayoutItem();
+  if (layoutItem) {
+    var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
+    var listOfTableColumnEntries = layoutItem.getEntriesForAttribute(attributeTableColumns);
+    if (listOfTableColumnEntries.length > 0) {
+      useSavedListOfColumns = true;
+    }
+  }
+  if (useSavedListOfColumns) {
     // If we get here, it means this table has a saved list of user-selected
     // columns, and we just want to use that list.
     for (var i in listOfTableColumnEntries) {
@@ -175,7 +183,7 @@ orp.TablePlugin.prototype._getListOfColumns = function() {
     // user-selected columns, so we need to come up with a list.
     // We will build a list of display attributes by looking at all the items in 
     // the table and finding the union of all the attributes of those items.
-    var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
+    var attributeCalledCategory = world.getAttributeCalledCategory();
     var hashTableOfAttributesKeyedByUuid = {};
     var attributeUuid;
     for (var j in this._listOfItems) {
@@ -194,7 +202,7 @@ orp.TablePlugin.prototype._getListOfColumns = function() {
       // If we have not yet identified any display attributes to use as
       // column headers, then we'll just use the "Name" attribute so that
       // our table will have at least one column.
-      var attributeCalledName = this.getWorld().getAttributeCalledName();
+      var attributeCalledName = world.getAttributeCalledName();
       attributeUuid = attributeCalledName.getUuid();
       hashTableOfAttributesKeyedByUuid[attributeUuid] = attributeCalledName;
     }
@@ -370,7 +378,10 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppabl
 
   // Now we need to save the new column order to the repository.
   var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
-  var listOfTableColumnEntries = this._layout.getEntriesForAttribute(attributeTableColumns);
+  world.beginTransaction();
+  var createNewLayoutItemIfNecessary;
+  var layoutItem = this.getLayoutItem(createNewLayoutItemIfNecessary = true);
+  var listOfTableColumnEntries = layoutItem.getEntriesForAttribute(attributeTableColumns);
   if (listOfTableColumnEntries.length > 0) {
     // If we get here, it means this table has a saved list of user-selected
     // columns, and we just want to re-order that list.
@@ -405,16 +416,15 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppabl
       // the user dragged the column to the right
       this._displayAttributes.splice(indexOfDroppedOnAttribute, 0, draggedAttribute);
     }
-    world.beginTransaction();
     // alertString = "";
     for (var i in this._displayAttributes) {
       var attribute = this._displayAttributes[i];
-      this._layout.addEntry({attribute:attributeTableColumns, value:attribute});
+      layoutItem.addEntry({attribute:attributeTableColumns, value:attribute});
       // alertString += attribute.getDisplayString() + '\n';
     }
     // alert(alertString);
-    world.endTransaction();
   }
+  world.endTransaction();
   this.refresh();
 };
 
@@ -675,15 +685,6 @@ orp.TablePlugin.prototype._importData = function(eventObject) {
           attribute:attribute, 
           value:value, 
           inverseAttribute:inverseAttribute });
-/*
-        var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
-        if (inverseAttributeEntry) {
-          var inverseAttribute = inverseAttributeEntry.getValue(attribute);
-          newItem.addConnectionEntry(attribute, value, inverseAttribute);
-        } else {
-          newItem.addEntry({attribute:attribute, value:value});
-        }
-*/
       }
     }
   }
@@ -715,14 +716,20 @@ orp.TablePlugin.prototype._importData = function(eventObject) {
  */
 orp.TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
   var attributeUuid = eventObject.target.value;
+  
   if (attributeUuid) {
-    var repository = this.getWorld();
-    var attributeTableColumns = repository.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
-    var entriesTableColumns = this._layout.getEntriesForAttribute(attributeTableColumns);
+    var world = this.getWorld();
+    world.beginTransaction();
+    
+    var createNewLayoutItemIfNecessary;
+    var layoutItem = this.getLayoutItem(createNewLayoutItemIfNecessary = true);
+    
+    var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
+    var entriesTableColumns = layoutItem.getEntriesForAttribute(attributeTableColumns);
     var noStoredColumns = (entriesTableColumns.length === 0);
     var changedAttribute = this.getWorld().getItemFromUuid(attributeUuid);
-    var removeAttribute = orp.util.removeObjectFromSet(changedAttribute,this._displayAttributes);
-    var typeCalledItem = repository.getTypeCalledItem();
+    var removeAttribute = orp.util.removeObjectFromSet(changedAttribute, this._displayAttributes);
+    var typeCalledItem = world.getTypeCalledItem();
     if (removeAttribute) {
       for (var i in entriesTableColumns) {
         if (changedAttribute == entriesTableColumns[i].getValue()) {
@@ -736,13 +743,15 @@ orp.TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
     if (noStoredColumns) {
       for (i in this._displayAttributes) {
         var anAttribute = this._displayAttributes[i];
-        this._layout.addEntry({attribute:attributeTableColumns, value:anAttribute, type:typeCalledItem});
+        layoutItem.addEntry({attribute:attributeTableColumns, value:anAttribute, type:typeCalledItem});
       }
     } else {
       if (!removeAttribute) {
-        this._layout.addEntry({attribute:attributeTableColumns, value:changedAttribute, type:typeCalledItem});
+        layoutItem.addEntry({attribute:attributeTableColumns, value:changedAttribute, type:typeCalledItem});
       }
     }
+    world.endTransaction();
+    
     this._buildTable(true);
   }
 };

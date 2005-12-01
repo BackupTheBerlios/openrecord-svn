@@ -65,7 +65,7 @@ Who    | Estimate | Actual  | Task
        |          |         |  1. Research standard text representations for DateValues
        |          |         |  2. Make DateValue support date ranges
        |          |         |  3. Make ordinal value strings not grow long so quickly
-       |          |         |  4. Do lazy creation of layout data items
+brian  |          | 0.2  IED|  4. Do lazy creation of layout data items
        |          |         |  5. Make sure view code uses transactions
        |          |         |  6. Write concurrency tests 
        |          |         |  7. Ensure that PHP scripts and file I/O works for concurrent multi-user access

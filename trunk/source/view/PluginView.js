@@ -54,7 +54,7 @@ dojo.require("orp.view.View");
  * @param    superview    The superview for this view. 
  * @param    htmlElement    The HTMLElement to display this view in. 
  * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
- * @param    layoutItem    ???. 
+ * @param    layoutItem    An item that this plugin view can use to store and retrieve any layout information, such as what columns to include in a chart. 
  * @syntax   var PluginView = new PluginView()
  */
 orp.view.PluginView = function(superview, htmlElement, querySpec, layoutItem, cssClassName) {
@@ -64,7 +64,7 @@ orp.view.PluginView = function(superview, htmlElement, querySpec, layoutItem, cs
 
   this._querySpec = querySpec;
   this._queryRunner = this.getWorld().newQueryRunner(this._querySpec, this);
-  this._layout = layoutItem;
+  this._layoutItem = layoutItem;
   this._pluginItem = null;
 };
 
@@ -117,6 +117,27 @@ orp.view.PluginView.prototype.fetchItems = function() {
  */
 orp.view.PluginView.prototype.getQuerySpec = function() {
   return this._querySpec;
+};
+
+
+/**
+ * Returns the layout item that this plugin view can use to store
+ * and retrieve any layout information the view wants to keep.  For
+ * example, a TableView might want to keep a list of the columns to
+ * be included in the table.
+ *
+ * @scope    public instance method
+ * @param    createFlag    Optional. Defaults to false. If true, and if there is no existing layout item, this method will try to create a new layout item for the plugin. 
+ * @return   A layout item.
+ */
+orp.view.PluginView.prototype.getLayoutItem = function(createFlag) {
+  if (createFlag && !this._layoutItem) {
+    var superview = this.getSuperview();
+    if (superview.createLayoutItemForPluginView) {
+      this._layoutItem = superview.createLayoutItemForPluginView(this);
+    }
+  }
+  return this._layoutItem;
 };
 
 
