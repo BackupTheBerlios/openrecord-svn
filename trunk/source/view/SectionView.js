@@ -170,9 +170,6 @@ orp.view.SectionView.cssClass = {
   TEXT_FIELD_IN_TABLE_CELL: "text_field_in_table_cell",
   SELECTED: "selected",
   MORE_LINK: "more" };
-
-// orp.view.SectionView.elementId = {
-//  SELECT_MENU_PREFIX: "select_menu_" };
   
 // TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS  = "0004010a-ce7f-11d9-8cd5-0011113ae5d6";
 // orp.view.EntryView.UUID.ATTRIBUTE_NOT_LOZENGE      = "0004010f-ce7f-11d9-8cd5-0011113ae5d6";
@@ -255,16 +252,7 @@ orp.lang.assert(pluginItem == pluginType); // This seems to be true, so why not 
  */
 orp.view.SectionView.prototype.getQuerySpec = function() {
   var attributeCalledQuerySpec = this.getWorld().getAttributeCalledQuerySpec();
-  var queryEntry = this._section.getSingleEntryFromAttribute(attributeCalledQuerySpec);
-  if (queryEntry) {
-    var FIXME_OCT_7_2005_EXPERIMENT = true;
-    if (FIXME_OCT_7_2005_EXPERIMENT) {
-      return queryEntry.getValue();
-    } else {
-      return queryEntry.getConnectedItem(this._section);
-    }
-  }
-  return null;
+  return this._section.getSingleValueFromAttribute(attributeCalledQuerySpec);
 };
 
 
@@ -387,7 +375,10 @@ orp.view.SectionView.prototype.createLayoutItemForPluginView = function(pluginVi
   layoutItem = world.newItem("Layout data for " + pluginTypeItem.getDisplayString() + " of " + this._section.getDisplayString());
   layoutItem.assignToCategory(categoryCalledLayoutData);
   layoutItem.addEntry({attribute:attributeAppliesToPlugin, value:pluginTypeItem});
-  this._section.addConnectionEntry(attributeLayoutData, layoutItem, attributeCalledSectionThisLayoutDataBelongsTo);
+  this._section.addEntry({
+    attribute: attributeLayoutData, 
+    value: layoutItem,
+    inverseAttribute: attributeCalledSectionThisLayoutDataBelongsTo });
   world.endTransaction();
   return layoutItem;
 };

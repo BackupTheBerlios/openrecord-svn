@@ -96,31 +96,39 @@ orp.view.PageView.UUID = {
 // -------------------------------------------------------------------
 
 /**
- * Creates a new section in the repository
+ * Creates a new section in a page
  *
  * @scope    public class method
  * @param    inPage    The Page Item to insert the new section into
  */
-orp.view.PageView.newSection = function(repository, inPage) {
-  var attributeCalledQuerySpec = repository.getAttributeCalledQuerySpec();
-  var categoryCalledQuery = repository.getCategoryCalledQuery();
-  var attributeCalledPluginView = repository.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_PLUGIN_VIEW);
-  var attributeCalledSectionsInPage = repository.getItemFromUuid(orp.view.PageView.UUID.ATTRIBUTE_SECTIONS_IN_PAGE);
-  var attributeCalledPageThisSectionAppearsOn = repository.getItemFromUuid(orp.view.PageView.UUID.ATTRIBUTE_PAGE_THIS_SECTION_APPEARS_ON);
-  var attributeCalledSectionThisQueryBelongsTo = repository.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_SECTION_THIS_QUERY_BELONGS_TO);
-  var categoryCalledSection = repository.getItemFromUuid(orp.view.RootView.UUID.CATEGORY_SECTION);
-  var tablePluginView = repository.getItemFromUuid(orp.TablePlugin.UUID.PLUGIN_VIEW_TABLE);
+orp.view.PageView.newSection = function(world, inPage) {
+  var attributeCalledQuerySpec = world.getAttributeCalledQuerySpec();
+  var categoryCalledQuery = world.getCategoryCalledQuery();
+  var attributeCalledPluginView = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_PLUGIN_VIEW);
+  var attributeCalledSectionsInPage = world.getItemFromUuid(orp.view.PageView.UUID.ATTRIBUTE_SECTIONS_IN_PAGE);
+  var attributeCalledPageThisSectionAppearsOn = world.getItemFromUuid(orp.view.PageView.UUID.ATTRIBUTE_PAGE_THIS_SECTION_APPEARS_ON);
+  var attributeCalledSectionThisQueryBelongsTo = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_SECTION_THIS_QUERY_BELONGS_TO);
+  var categoryCalledSection = world.getItemFromUuid(orp.view.RootView.UUID.CATEGORY_SECTION);
+  var tablePluginView = world.getItemFromUuid(orp.TablePlugin.UUID.PLUGIN_VIEW_TABLE);
   
-  repository.beginTransaction();
-  var newSection = repository.newItem("New Section");
+  world.beginTransaction();
+  var newSection = world.newItem("New Section");
   newSection.assignToCategory(categoryCalledSection);
-  inPage.addConnectionEntry(attributeCalledSectionsInPage, newSection, attributeCalledPageThisSectionAppearsOn);
+  inPage.addEntry({
+    attribute: attributeCalledSectionsInPage, 
+    value: newSection,
+    inverseAttribute: attributeCalledPageThisSectionAppearsOn });
+  // inPage.addConnectionEntry(attributeCalledSectionsInPage, newSection, attributeCalledPageThisSectionAppearsOn);
   newSection.addEntry({attribute:attributeCalledPluginView, value:tablePluginView});
 
-  var newQuery = repository.newItem("New Query");
+  var newQuery = world.newItem("New Query");
   newQuery.assignToCategory(categoryCalledQuery);
-  newSection.addConnectionEntry(attributeCalledQuerySpec, newQuery, attributeCalledSectionThisQueryBelongsTo);
-  repository.endTransaction();
+  newSection.addEntry({
+    attribute: attributeCalledQuerySpec, 
+    value: newQuery,
+    inverseAttribute: attributeCalledSectionThisQueryBelongsTo });
+  // newSection.addConnectionEntry(attributeCalledQuerySpec, newQuery, attributeCalledSectionThisQueryBelongsTo);
+  world.endTransaction();
   return newSection;
 };
 
@@ -203,13 +211,7 @@ orp.view.PageView.prototype.doInitialDisplay = function() {
    
   for (var key in listOfEntriesForSections) {
     var entryForSection = listOfEntriesForSections[key];
-    var FIXME_OCT_7_2005_EXPERIMENT = true;
-    if (FIXME_OCT_7_2005_EXPERIMENT) {
-      var section = entryForSection.getValue();
-    } else {
-      // var section = entryForSection.getConnectedItem(this._pageItem);
-      section = entryForSection.getConnectedItem(this._pageItem);
-    }
+    var section = entryForSection.getValue();
     if (section) {
       if (PENDING_include_links_to_sections && sectionNavigatorDiv) {
         orp.view.View.appendNewElement(sectionNavigatorDiv, "a", null, {'href' : '#' + section.getUuidString()}, section.getDisplayName());

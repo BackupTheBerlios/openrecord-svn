@@ -71,12 +71,6 @@ dojo.require("dojo.event.*");
 orp.view.EntryView = function(superview, htmlElement, item, attribute, entry, isMultiLine) {
   orp.lang.assert(item instanceof orp.model.Item);
   orp.lang.assert(attribute instanceof orp.model.Item); // PENDING need to check that attribute is an attribute
-  var FIXME_OCT_7_2005_EXPERIMENT = true;
-  if (FIXME_OCT_7_2005_EXPERIMENT) {
-    // could be an orp.model.Entry or an orp.model.ProxyEntry
-  } else {
-    orp.lang.assertTypeForOptionalValue(entry, orp.model.Entry);
-  }
   
   orp.view.View.call(this, superview, htmlElement, "EntryView");
 
@@ -478,17 +472,15 @@ orp.view.EntryView.prototype._writeValue = function(value) {
     this.getWorld().beginTransaction();
     value = this._transformToExpectedType(value);
 
-    var oldValue = null;
-    if (this._entry) {oldValue = this._entry.getValue(this._item);}
-    if (oldValue != value) {
-      var attributeCalledInverseAttribute = this.getWorld().getAttributeCalledInverseAttribute();
-      var inverseAttributeEntry = this._attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
-      if (inverseAttributeEntry) {
-        var inverseAttr = inverseAttributeEntry.getValue(this._attribute);
-        this._entry = this._item.replaceEntryWithConnection(this._entry, this._attribute, value, inverseAttr);
-      } else {
-        this._entry = this._item.replaceEntry({previousEntry:this._entry, attribute:this._attribute, value:value});
-      }
+    var attributeCalledInverseAttribute = this.getWorld().getAttributeCalledInverseAttribute();
+    var inverseAttribute = this._attribute.getSingleValueFromAttribute(attributeCalledInverseAttribute);
+    var newEntry = this._item.replaceEntry({
+      previousEntry: this._entry, 
+      attribute: this._attribute, 
+      value: value,
+      inverseAttribute: inverseAttribute });
+    if (newEntry) {
+      this._entry = newEntry;
       var superview = this.getSuperview();
       if (this._isProvisional && superview._provisionalItemJustBecomeReal) {
         superview._provisionalItemJustBecomeReal(this._item);
@@ -498,6 +490,7 @@ orp.view.EntryView.prototype._writeValue = function(value) {
       }
       this._setClassName();
     }
+
     this.getWorld().endTransaction();
   }
   this._restoreText(true); // call restore text in case item is transformed (e.g. Dates will be normalized)
@@ -514,13 +507,7 @@ orp.view.EntryView.prototype._getText = function(useNonBreakingSpaces) {
     return this._provisionalText;
   }
   if (this._entry) {
-    var FIXME_OCT_7_2005_EXPERIMENT = true;
-    if (FIXME_OCT_7_2005_EXPERIMENT) {
-      var text = this._entry.getDisplayString();
-    } else {
-      // var text = this._item.getDisplayStringForEntry(this._entry);
-      text = this._item.getDisplayStringForEntry(this._entry);
-    }
+    var text = this._entry.getDisplayString();
     if (useNonBreakingSpaces) {
       var dataType = this._entry.getType();
       if (dataType != this.getWorld().getTypeCalledText()) {

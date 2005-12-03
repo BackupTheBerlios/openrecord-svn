@@ -106,6 +106,8 @@ brian  | 1    IED |         | 10. Rationalize our CSS style sheet approach
        |          |         | 14. Write one performance test that measures the time some code takes
        |          |         | 15. Convert UI code from DOM level 0 to DOM level 2
        |          |         | 16. Start process for doing ongoing code reviews
+       |          |         |     grep for ".getEntriesForAttribute(" and refactor to use ".getValuesForAttribute("
+       |          |         |     Maybe change all our indenting from spaces to tabs, to be in sync with dojo
 -------+----------+---------+----------------------------------------------
 
 

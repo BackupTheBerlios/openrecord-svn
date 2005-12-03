@@ -375,24 +375,15 @@ orp.archive.StubArchive.prototype._createNewConnectionEntry = function(uuid, pre
   var entry = new orp.model.Entry(this._world, uuid);
   entry._initializeConnection(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo);
 
-  var FIXME_OCT_7_2005_EXPERIMENT = true;
-  if (FIXME_OCT_7_2005_EXPERIMENT) {
-    var proxyOne = new orp.model.ProxyEntry(entry, itemOne, attributeOne, itemTwo, attributeTwo);
-    var proxyTwo = new orp.model.ProxyEntry(entry, itemTwo, attributeTwo, itemOne, attributeOne);
-    itemOne._addEntryToListOfEntriesForAttribute(proxyOne, attributeOne);
-    itemTwo._addEntryToListOfEntriesForAttribute(proxyTwo, attributeTwo);
-  } else {
-    itemOne._addEntryToListOfEntriesForAttribute(entry, attributeOne);
-    itemTwo._addEntryToListOfEntriesForAttribute(entry, attributeTwo);
-  }
+  var proxyOne = new orp.model.ProxyEntry(entry, itemOne, attributeOne, itemTwo, attributeTwo);
+  var proxyTwo = new orp.model.ProxyEntry(entry, itemTwo, attributeTwo, itemOne, attributeOne);
+  itemOne._addEntryToListOfEntriesForAttribute(proxyOne, attributeOne);
+  itemTwo._addEntryToListOfEntriesForAttribute(proxyTwo, attributeTwo);
 
   this._hashTableOfEntriesKeyedByUuid[uuid] = entry;
   this._currentTransaction.addRecord(entry);
   
-  if (FIXME_OCT_7_2005_EXPERIMENT) {
-    entry = proxyOne;
-  }
-  return entry;
+  return proxyOne;
 };
 
 

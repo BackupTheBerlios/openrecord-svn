@@ -319,13 +319,6 @@ orp.util.XmlConverter.prototype._processElementTree = function(level, maxLevel, 
         attribute: xmlToAttributeSpecifier._attribute, 
         value: value,
         inverseAttribute: xmlToAttributeSpecifier._inverseAttribute });
-/*
-      if (xmlToAttributeSpecifier._inverseAttribute) {
-        newItem.addConnectionEntry(xmlToAttributeSpecifier._attribute, value, xmlToAttributeSpecifier._inverseAttribute);
-      } else {
-        newItem.addEntry({attribute:xmlToAttributeSpecifier._attribute, value:value});
-      }
-*/
     }
     return;
   }

@@ -216,6 +216,7 @@ orp.model.Item.prototype.replaceEntry = function(namedParameters) {
  */
 orp.model.Item.prototype._createNewEntry = function(previousEntry, attribute, value, type, inverseAttribute) {
   var newEntry;
+  var world = this.getWorld();
   
   if (inverseAttribute) {
     var otherItem = value;
@@ -225,10 +226,11 @@ orp.model.Item.prototype._createNewEntry = function(previousEntry, attribute, va
     orp.lang.assert(otherItem instanceof orp.model.Item);
     orp.lang.assert(myAttribute instanceof orp.model.Item);
   
-    // If we've just been asked to replace the string "Foo" with the string "Foo",
+    // If we've just been asked to replace a connection to the item Foo with 
+    // an identical connection to the item Foo,
     // then don't even bother creating a new entry. 
     if (previousEntry) {
-      if (previousEntry.getType() == this.getWorld().getTypeCalledConnection()) {
+      if (previousEntry.getType() == world.getTypeCalledConnection()) {
         var oldItem = previousEntry.getItem();
         var oldAttribute = previousEntry.getAttribute();
         var oldValue = previousEntry.getValue();
@@ -245,38 +247,84 @@ orp.model.Item.prototype._createNewEntry = function(previousEntry, attribute, va
     // If we've just been asked to replace the string "Foo" with the string "Foo",
     // then don't even bother creating a new entry. 
     if (previousEntry) {
-      oldValue = previousEntry.getValue();
       oldAttribute = previousEntry.getAttribute();
+      if (oldAttribute == attribute) {
+        var typeCalledText = world.getTypeCalledText();
+        var typeCalledDate = world.getTypeCalledDate();
+        var typeCalledNumber = world.getTypeCalledNumber();
+        var typeCalledItem = world.getTypeCalledItem();
+        var typeCalledConnection = world.getTypeCalledConnection();
+        oldValue = previousEntry.getValue();
+        switch (previousEntry.getType()) {
+          case typeCalledText:
+            if (dojo.lang.isString(value) && (oldValue == value)) {
+              return null;
+            }
+            break;
+          case typeCalledDate:
+            if (value instanceof Date) {
+              if ((oldValue.valueOf() == value.valueOf()) &&
+                (oldValue._hasTime == value._hasTime) &&
+                (oldValue._hasDay == value._hasDay) && 
+                (oldValue._hasMonth == value._hasMonth)) {
+                return null;
+              }
+            }
+            break;
+          case typeCalledNumber:
+            if (dojo.lang.isNumber(value) && (oldValue == value)) {
+              return null;
+            }
+            break;
+          case typeCalledItem:
+            if ((value instanceof Item) && (oldValue == value)) {
+              return null;
+            }
+            break;
+          case typeCalledConnection:
+            if ((value instanceof Item) && (oldValue == value)) {
+              // FIXME: 
+              // need to do a slightly complicated check here
+              // we should re-factor this to combine it with the code
+              // above -- see: "if (inverseAttribute) {"
+            }
+            break;
+          default:
+            orp.lang.assert(false); // We should never get here
+            break;
+        }
+      }
+      // FIXME: this works for string values, but it doesn't work for date values
       if ((oldValue == value) && (oldAttribute == attribute)) {
         return null;
       }
     }
   }
   
-  this.getWorld().beginTransaction();
+  world.beginTransaction();
   if (this._provisionalFlag) {
     this._provisionalFlag = false;
-    this.getWorld()._provisionalItemJustBecameReal(this);
+    world._provisionalItemJustBecameReal(this);
   }
   if (inverseAttribute) {
     if (otherItem._provisionalFlag) {
       otherItem._provisionalFlag = false;
-      this.getWorld()._provisionalItemJustBecameReal(otherItem);
+      world._provisionalItemJustBecameReal(otherItem);
     }
     if (!otherAttribute) {
-      otherAttribute = this.getWorld().getAttributeCalledUnfiled();
+      otherAttribute = world.getAttributeCalledUnfiled();
     }
-    newEntry = this.getWorld()._newConnectionEntry(previousEntry, this, myAttribute, otherItem, otherAttribute);
+    newEntry = world._newConnectionEntry(previousEntry, this, myAttribute, otherItem, otherAttribute);
   } else {
-    newEntry = this.getWorld()._newEntry(this, previousEntry, attribute, value, type);
+    newEntry = world._newEntry(this, previousEntry, attribute, value, type);
   }
-  this.getWorld().endTransaction();
+  world.endTransaction();
   this._noteChanges(null);
   if (inverseAttribute) {
     otherItem._noteChanges(null);
     if (previousEntry) {
       previousEntry.getItem()._noteChanges(null);
-      if (previousEntry.getType() == this.getWorld().getTypeCalledConnection()) {
+      if (previousEntry.getType() == world.getTypeCalledConnection()) {
         previousEntry.getValue()._noteChanges(null);
       }
     }
@@ -289,35 +337,43 @@ orp.model.Item.prototype._createNewEntry = function(previousEntry, attribute, va
 /**
  * Creates a new entry object representing a connection between two
  * items.
- * For example, to make a Tolkien be the author of The Hobbit:
+ * For example, to make Tolkien be the author of The Hobbit:
  * <pre>
- *    theHobbit.addConnectionEntry(author, tolkien, booksAuthored);
+ *    theHobbit.addConnectionEntry({
+ *      attribute: author, 
+ *      value: tolkien,
+ *      inverseAttribute: booksAuthored });
  * </pre>
  * Or you could get exactly the same result by doing the reverse:
  * <pre>
- *    tolkien.addConnectionEntry(booksAuthored, theHobbit, author);
+ *    tolkien.addConnectionEntry({
+ *      attribute: booksAuthored, 
+ *      value: theHobbit,
+ *      inverseAttribute: author });
  * </pre>
  *
  * @scope    public instance method
- * @param    myAttribute    The attribute to assign the entry to. 
- * @param    otherItem    The item to create a connection to.
- * @param    otherAttribute    Optional. An attribute of the otherItem to assign the entry to on the otherItem.
+ * @namedParam    attribute    Optional. The attribute to assign the entry to. 
+ * @namedParam    value    The item to create a connection to.
+ * @namedParam    previousEntry    Optional. The old entry to be replaced.
+ * @namedParam    inverseAttribute    Optional. The attribute to use as the inverseAttribute of 'attribute'.
  * @return   The new entry object.
  * @throws   Throws an Error if no user is logged in.
  */
-orp.model.Item.prototype.addConnectionEntry = function(myAttribute, otherItem, otherAttribute) {
+orp.model.Item.prototype.addConnectionEntry = function(namedParameters) {
+  orp.lang.assert(dojo.lang.isObject(namedParameters));
+
   var typeCalledConnection = this.getWorld().getTypeCalledConnection();
-  return this._createNewEntry(null, myAttribute, otherItem, typeCalledConnection, otherAttribute);
+  var type = namedParameters[orp.model.Item.NamedParameters.type];
+  if (type) {
+    orp.lang.assert(type == typeCalledConnection);
+  } else {
+    namedParameters[orp.model.Item.NamedParameters.type] = typeCalledConnection;
+  }
+  
+  return this.addEntry(namedParameters);
 };
 
-
-/**
- *
- */
-orp.model.Item.prototype.replaceEntryWithConnection = function(previousEntry, myAttribute, otherItem, otherAttribute) {
-  var typeCalledConnection = this.getWorld().getTypeCalledConnection();
-  return this._createNewEntry(previousEntry, myAttribute, otherItem, typeCalledConnection, otherAttribute);
-};
 
 
 /**
@@ -329,7 +385,11 @@ orp.model.Item.prototype.replaceEntryWithConnection = function(previousEntry, my
 orp.model.Item.prototype.assignToCategory = function(category) {
   var attributeCalledCategory = this.getWorld().getAttributeCalledCategory();
   var attributeCalledItemsInCategory = this.getWorld().getAttributeCalledItemsInCategory();
-  this.addConnectionEntry(attributeCalledCategory, category, attributeCalledItemsInCategory);
+  this.addEntry({
+    attribute: attributeCalledCategory, 
+    value: category,
+    inverseAttribute: attributeCalledItemsInCategory });
+  // this.addConnectionEntry(attributeCalledCategory, category, attributeCalledItemsInCategory);
 };
 
 
@@ -580,15 +640,17 @@ orp.model.Item.prototype.getShortNameEntries = function() {
 
 
 /**
- * Returns just the first entry of an item's attribute.
+ * Returns just the first entry of an item's attribute.  
+ * Returns null if the item does not have any entries for the given
+ * attribute.
  *
  * @scope    public instance method
  * @param    attribute    An item representing an attribute. 
- * @return   A string with a description of the item.
+ * @return   An Entry object, or null.
  */
 orp.model.Item.prototype.getSingleEntryFromAttribute = function(attribute) {
   var listOfEntries = this.getEntriesForAttribute(attribute);
-  if (listOfEntries) {
+  if (listOfEntries && (listOfEntries.length > 0)) {
     return listOfEntries[0];
   }
   return null;
@@ -596,16 +658,18 @@ orp.model.Item.prototype.getSingleEntryFromAttribute = function(attribute) {
 
 
 /**
- * Returns just the first entry of an item's attribute.
+ * Returns the value held in the first entry of an item's attribute. 
+ * Returns null if the item does not have any entries for the given
+ * attribute.
  *
  * @scope    public instance method
  * @param    attribute    An item representing an attribute. 
- * @return   A string with a description of the item.
+ * @return   A data value, or null.
  */
 orp.model.Item.prototype.getSingleValueFromAttribute = function(attribute) {
-  var listOfEntries = this.getEntriesForAttribute(attribute);
-  if (listOfEntries[0]) {
-    return listOfEntries[0].getValue();
+  var firstEntry = this.getSingleEntryFromAttribute(attribute);
+  if (firstEntry) {
+    return firstEntry.getValue();
   }
   return null;
 };

@@ -224,24 +224,21 @@ orp.model.Entry.prototype._revive = function(item, attribute, value, previousEnt
  * @param    previousEntry    Optional. An old entry that this entry replaces. 
  */
 orp.model.Entry.prototype._reviveConnection = function(firstItem, firstAttribute, secondItem, secondAttribute, previousEntry) {
-  var FIXME_OCT_7_2005_EXPERIMENT = true;
-  if (FIXME_OCT_7_2005_EXPERIMENT) {
-    if (previousEntry) {
-      this._previousEntry = previousEntry;
-      this._previousEntry._addSubsequentEntry(this);
-    } else {
-      this._previousEntry = null;
-    }
-    this._item = [firstItem, secondItem];
-    this._attribute = [firstAttribute, secondAttribute];
-    this._value = null;
-    this._type = this.getWorld().getTypeCalledConnection();
-    
-    var firstProxy = new orp.model.ProxyEntry(this, firstItem, firstAttribute, secondItem, secondAttribute);
-    var secondProxy = new orp.model.ProxyEntry(this, secondItem, secondAttribute, firstItem, firstAttribute);
-    firstItem._addRevivedEntry(firstProxy, firstAttribute);
-    secondItem._addRevivedEntry(secondProxy, secondAttribute);
+  if (previousEntry) {
+    this._previousEntry = previousEntry;
+    this._previousEntry._addSubsequentEntry(this);
+  } else {
+    this._previousEntry = null;
   }
+  this._item = [firstItem, secondItem];
+  this._attribute = [firstAttribute, secondAttribute];
+  this._value = null;
+  this._type = this.getWorld().getTypeCalledConnection();
+  
+  var firstProxy = new orp.model.ProxyEntry(this, firstItem, firstAttribute, secondItem, secondAttribute);
+  var secondProxy = new orp.model.ProxyEntry(this, secondItem, secondAttribute, firstItem, firstAttribute);
+  firstItem._addRevivedEntry(firstProxy, firstAttribute);
+  secondItem._addRevivedEntry(secondProxy, secondAttribute);
 };
 
 
@@ -292,67 +289,6 @@ orp.model.Entry.prototype.getPreviousEntry = function() {
  */
 orp.model.Entry.prototype.getAttribute = function() {
   return this._attribute;
-};
-
-
-/**
- * If this is a ConnectionEntry, given one of the two connected items, this
- * method returns the attribute that this entry was assigned to in that item.
- *
- * @scope    public instance method
- * @param    item    The item that this is an entry of. 
- * @return   An attribute item.
- */
-orp.model.Entry.prototype.getAttributeForItem = function(item) {
-  var FIXME_OCT_7_2005_EXPERIMENT = true;
-  if (FIXME_OCT_7_2005_EXPERIMENT) {
-    orp.lang.assert(false);  // we should never get called
-  } else {
-    if (this._item == item) {
-      return this._attribute;
-    }
-    if (dojo.lang.isArray(this._item)) {
-      if (this._item[0] == item) {
-        return this._attribute[0];
-      }
-      if (this._item[1] == item) {
-        return this._attribute[1];
-      }
-    }
-    return null;
-  }
-};
-
-
-/**
- * If this is a ConnectionEntry, given one of the two connected items, this
- * method returns the other connected item.
- *
- * @scope    public instance method
- * @param    item    The item that this is an entry of. 
- * @return   The item that is connected to the given item.
- */
-orp.model.Entry.prototype.getConnectedItem = function(item) {
-  var FIXME_OCT_7_2005_EXPERIMENT = true;
-  if (FIXME_OCT_7_2005_EXPERIMENT) {
-    orp.lang.assert(false);  // we should never get called
-  } else {
-    orp.lang.assert(item instanceof orp.model.Item);
-    if (this._item == item) {
-      if (this._type == this.getWorld().getTypeCalledItem()) {
-        return this._value;
-      }
-    }
-    if (dojo.lang.isArray(this._item)) {
-      if (this._item[0] == item) {
-        return this._item[1];
-      }
-      if (this._item[1] == item) {
-        return this._item[0];
-      }
-    }
-    return null;
-  }
 };
 
 

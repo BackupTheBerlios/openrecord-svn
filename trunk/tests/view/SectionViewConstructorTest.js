@@ -184,10 +184,8 @@ function testPluginItemWithMissingPluginFile() {
   var bogusPluginItem = world.newItem("BogusPluginItem");
   bogusPluginItem.addEntry({attribute: world.getAttributeCalledClassName(),
                            value: "BogusPlugin"});
-  var uuid = orp.view.SectionView.UUID.CATEGORY_PLUGIN_VIEW;
-  bogusPluginItem.addConnectionEntry(world.getAttributeCalledCategory(),
-                                     world.getItemFromUuid(uuid),
-                                     world.getAttributeCalledItemsInCategory());
+  var categoryCalledPluginView = world.getItemFromUuid(orp.view.SectionView.UUID.CATEGORY_PLUGIN_VIEW);
+  bogusPluginItem.assignToCategory(categoryCalledPluginView);
 
   var exceptionCaught = false;
   try {

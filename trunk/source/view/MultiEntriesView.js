@@ -240,19 +240,19 @@ orp.view.MultiEntriesView.prototype._handleDrop = function(element) {
   if (!this.hasEntry(droppedEntry)) {
     var newEntry;
     if (droppedEntry.getType() == this.getWorld().getTypeCalledConnection()) {
-      var FIXME_OCT_7_2005_EXPERIMENT = true;
-      if (FIXME_OCT_7_2005_EXPERIMENT) {
-        var inverseItem = droppedEntry.getValue();
-        var inverseAttribute = droppedEntry.getInverseAttribute();
-        newEntry = this._item.replaceEntryWithConnection(droppedEntry, this._attribute, inverseItem, inverseAttribute);
-      } else {
-        var otherItem = droppedEntry.getConnectedItem(draggedEntryView._item);
-        var otherAttribute = droppedEntry.getAttributeForItem(otherItem);
-        newEntry = this._item.replaceEntryWithConnection(droppedEntry, this._attribute, otherItem, otherAttribute);
-      }
+      var inverseItem = droppedEntry.getValue();
+      var inverseAttribute = droppedEntry.getInverseAttribute();
+      newEntry = this._item.replaceEntry({
+        previousEntry: droppedEntry, 
+        attribute: this._attribute, 
+        value: inverseItem,
+        inverseAttribute: inverseAttribute });
     } else {
-      // newEntry = this._item.replaceEntry(droppedEntry, droppedEntry.getValue(), droppedEntry.getType());
-      newEntry = this._item.replaceEntry({previousEntry:droppedEntry, attribute:this._attribute, value:droppedEntry.getValue(), type:droppedEntry.getType()});
+      newEntry = this._item.replaceEntry({
+        previousEntry: droppedEntry, 
+        attribute: this._attribute, 
+        value: droppedEntry.getValue(), 
+        type: droppedEntry.getType() });
     }
     this._addEntryView(newEntry);
 
