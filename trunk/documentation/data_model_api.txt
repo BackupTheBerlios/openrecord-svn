@@ -1,0 +1,84 @@
+================================================================
+OpenRecord Data Model API
+================================================================
+ Copyright rights relinquished under the Creative Commons  
+ Public Domain Dedication:
+    http://creativecommons.org/licenses/publicdomain/
+----------------------------------------------------------------
+
+
+----------------------------------------------------------------
+Examples of creating a new Item
+----------------------------------------------------------------
+var item   = world.newItem();
+var kermit = world.newItem("kermit");
+var utah   = world.newItem("Utah");
+var provo  = world.newItem("Provo");
+
+
+----------------------------------------------------------------
+Examples of creating a new Attribute
+----------------------------------------------------------------
+var color     = world.newAttribute("Fabric Color");
+var locatedIn = world.newAttribute("Located in");
+var cities    = world.newAttribute("Cities");
+var foo       = world.newAttribute();
+
+
+----------------------------------------------------------------
+Examples of adding an Entry to an Item
+----------------------------------------------------------------
+// example: adding two entries for the same attribute
+kermit.addEntry({attribute: color, value: "blue"});
+kermit.addEntry({attribute: color, value: "green"});
+
+// example: adding a value for no particular attribute
+kermit.addEntry({value: "green"});
+
+// example: creating an entry of different types
+item.addEntry({attribute: foo, value: "2004", type: typeNumber});
+item.addEntry({attribute: foo, value: "2004", type: typeDate});
+item.addEntry({attribute: foo, value: "2004", type: typeString});
+
+
+----------------------------------------------------------------
+Examples of adding an Entry that connects two Items
+----------------------------------------------------------------
+utah.addEntry({attribute: cities, value: provo, inverseAttribute: locatedIn});
+
+
+----------------------------------------------------------------
+Examples of replacing one Entry with a different Entry
+----------------------------------------------------------------
+// example: replacing an entry -- changing the value
+var blueEntry = item.addEntry({attribute: color, value: "blue"});
+item.replaceEntry({previousEntry: blueEntry, value: "green"});
+
+// example: replacing an entry -- changing the type
+var dateEntry = item.addEntry({value: "2004", type: typeDate});
+item.replaceEntry({previousEntry: dateEntry, value: "2004", type: typeNumber});
+
+// example: replacing an entry -- changing the attribute
+var blue = item.addEntry({attribute: color, value: "blue"});
+item.replaceEntry({attribute: eyeColor, previousEntry: blue});
+
+// example: replacing an entry -- "addEntry" as a synonym for "replaceEntry"
+var blueEntry = item.addEntry({attribute: color, value: "blue"});
+item.addEntry({previousEntry: blueEntry, value: "green"});
+
+
+----------------------------------------------------------------
+Examples of getting information about items
+----------------------------------------------------------------
+var listOfAttributes = kermit.getAttributes();
+for (var i in listOfAttributes) {
+  var attribute = listOfAttributes[i];
+  var attributeName = attribute.getDisplayString();
+  var listOfValues = kermit.getValuesForAttribute(attribute);
+  for (var j in listOfValues) {
+    var value = listOfValues[j];
+    alert('Kermit has a "' + attributeName + '" value of "' + value + '"');
+  }
+}
+
+
