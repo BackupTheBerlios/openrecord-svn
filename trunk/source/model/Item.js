@@ -277,12 +277,12 @@ orp.model.Item.prototype._createNewEntry = function(previousEntry, attribute, va
             }
             break;
           case typeCalledItem:
-            if ((value instanceof Item) && (oldValue == value)) {
+            if ((value instanceof orp.model.Item) && (oldValue == value)) {
               return null;
             }
             break;
           case typeCalledConnection:
-            if ((value instanceof Item) && (oldValue == value)) {
+            if ((value instanceof orp.model.Item) && (oldValue == value)) {
               // FIXME: 
               // need to do a slightly complicated check here
               // we should re-factor this to combine it with the code
