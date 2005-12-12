@@ -49,11 +49,19 @@ function userClickedOnButton() {
   var authorField = document.getElementById("plugin_author");
   var outputArea = document.getElementById("output_area");
   
-  var className = classNameField.value;
-  var name      = nameField.value;
-  var author    = authorField.value;
+  var generatedContents;
 
-  var generatedContents = generateContents(className, name, author);
+  var className = classNameField.value;
+  if (className.match(/^[A-Z]\w*$/)) {
+    var name      = nameField.value;
+    var author    = authorField.value;
+    generatedContents = generateContents(className, name, author);
+  }
+  else {
+    generatedContents = "Error: ClassName must contain only alphanumeric characters " + 
+                        "and underscores, and must start with an uppercase letter.  " +
+                        "Example: MySuperFooView";
+  }
 
   outputArea.value = generatedContents;
   outputArea.style.visibility = "visible";
