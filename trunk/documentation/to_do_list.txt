@@ -45,15 +45,23 @@ Tasks toward having a stable API for developers
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
        |          |         |  1. Document the Data model public API
-brian  |          | (0.7+)  |  2. Try to convert one unit test over to the dojo jum framework
-       |          |         |  3. Rationalize the View API and document public API
-mignon | 1    IED |         |  4. Rationalize the ViewPlugin API
-mignon | 0.25 IED |         |  5. Create a "view_plugins" directory & change "TablePlugin" to "TableView", etc. 
-mignon | 2    IED |         |  6. Automatically load ViewPlugins found in the view_plugins directory 
-       |          |         |  7. Move DOM methods from orp.view.View.xxx to orp.dom.xxx
-       |          |         |  8. Make RootView subclass from View, or add comments explaining why it doesn't
-       |          |         |  9. Refactor our observer notification API (and implementation)
-       |          |         | 10. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
+       |          |         |  2. Change the "node" used in the UUIDs for plugins
+       |          |         |  3. Add validation code to create_new_plugin.html to check the supplied ClassName
+       |          |         |  4. Add instructions on the create_new_plugin.html page
+       |          |         |  5. Add list of suggested plugins to the create_new_plugin.html page
+       |          |         |  6. Make the 4 original plugins conform to the new plugin API (if possible)
+       |          |         |  7. See if it's possible to simplify the plugin API
+       |          |         |  8. Change "TablePlugin" to "TableView", etc.
+       |          |         |  9. Move the 4 original plugins into the plugins folder
+       |          |         | 10. Remove BarChartView and Outline view from the axiomatic.json file
+       |          |         | 11. Make a HelloWorld plugin
+       |          |         | 12. Have Entry.toSting() return the Entry's UUID -- same for Item.toString()
+       |          |         | 13. Move DOM methods from orp.view.View.xxx to orp.dom.xxx
+       |          |         | 14. Make RootView subclass from View, or add comments explaining why it doesn't
+       |          |         | 15. Rationalize the View API and document public API
+brian  |          | (0.7+)  | 16. Try to convert one unit test over to the dojo jum framework
+       |          |         | 17. Refactor our observer notification API (and implementation)
+       |          |         | 18. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
 -------+----------+---------+----------------------------------------------
 
 
@@ -65,10 +73,9 @@ Who    | Estimate | Actual  | Task
        |          |         |  1. Research standard text representations for DateValues
        |          |         |  2. Make DateValue support date ranges
        |          |         |  3. Make ordinal value strings not grow long so quickly
-brian  |          | 0.2  IED|  4. Do lazy creation of layout data items
-       |          |         |  5. Make sure view code uses transactions
-       |          |         |  6. Write concurrency tests 
-       |          |         |  7. Ensure that PHP scripts and file I/O works for concurrent multi-user access
+       |          |         |  4. Make sure view code uses transactions
+       |          |         |  5. Write concurrency tests 
+       |          |         |  6. Ensure that PHP scripts and file I/O works for concurrent multi-user access
 -------+----------+---------+----------------------------------------------
 
 
@@ -133,7 +140,7 @@ Who    | Estimate | Actual  | Task
        |          |         | 23. improve UI for creating a new page
        |          |         | 24. improve UI for adding a new section to a page
        |          |         | 25. UI to move/delete sections?
-brian  |          | 0.1  IED| 26. Better time parsing e.g. 3pm
+       |          |         | 26. 
        |          |         | 27. Have different documents use different style-sheets
        |          |         | 28. Wire up observers & keep views in sync
        |          |         | 29. Provide GUI feedback about what's editable

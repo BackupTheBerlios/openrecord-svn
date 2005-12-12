@@ -400,5 +400,50 @@ mignon |          |         |     write function to return the list of files in 
 ################################################################################
 
 
+---------------------------------------------------------------------------
+   Tasks we originally identified for Iteration #7, in November 2005
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+mignon | 0.25 IED | 0    IED|  5. Create a "view_plugins" directory
+mignon | 2    IED | 4    IED|  6. Automatically load ViewPlugins found in the plugins directory 
+brian  |          | 0.2  IED|  4. Do lazy creation of layout data items
+brian  |          | 0.1  IED| 26. Better time parsing e.g. 3pm
+-------+----------+---------+----------------------------------------------
+
+
+---------------------------------------------------------------------------
+   New tasks that we decided to take on for Iteration #7, in November 2005
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+none?
+-------+----------+---------+----------------------------------------------
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Summary of Iteration #7
+          November 2005
+  November 7 to December 5, 2005
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   3    = number of PLANNED tasks that were finished 
+   0    = number of ADDITIONAL tasks that were finished 
+  ~4.3  = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
+   4    = number of weeks in October iteration
+ ~ 1.1  = Velocity (in estimated IEDs per week)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+################################################################################
+################################################################################
+##                                                                            ##
+##                                Iteration #8                                ##
+##                                December 2005                               ##
+##                                                                            ##
+################################################################################
+################################################################################
+
+
 ...FIXME...
 
