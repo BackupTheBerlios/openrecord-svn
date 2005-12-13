@@ -319,12 +319,13 @@ orp.view.SectionView.prototype.doInitialDisplay = function() {
     optionElement.selected = (selectedPluginClass == pluginClass);
     optionElement.value = pluginClass.getPluginItemUuid();
     var pluginItem = this.getWorld().getItemFromUuid(pluginClass.getPluginItemUuid());
-    optionElement.text = pluginItem.getDisplayString();
+    optionElement.text = pluginItem.getDisplayName();
     dojo.event.connect(optionElement, "onclick", this, "clickOnPluginSelectionMenu");
   }
-  orp.view.View.appendNewTextNode(controlArea," of items whose ");
+  orp.view.View.appendNewElement(controlArea,"br");
+  orp.view.View.appendNewTextNode(controlArea,"Include items whose ");
   this._queryEditSpan = orp.view.View.appendNewElement(controlArea, "span");
-  orp.view.View.appendNewTextNode(controlArea,".");
+  // orp.view.View.appendNewTextNode(controlArea,".");
 
   // create a div element for the plugin class to use
   this._pluginDiv = orp.view.View.appendNewElement(sectionDiv, "div");

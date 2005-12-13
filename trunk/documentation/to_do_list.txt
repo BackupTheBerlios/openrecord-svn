@@ -109,7 +109,7 @@ brian  |          | (0.4+)  |  3. try to replace md5.js with dojo.crypto.MD5 met
        |          |         |  9. Pick one file, and do a group code review on it
 brian  | 1    IED |         | 10. Rationalize our CSS style sheet approach
        |          |         | 11. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
-brian  |          |         | 12. move XmlConverter.js out of util, because it depends on model code
+brian  |          | 0.2  IED| 12. move XmlConverter.js out of util, because it depends on model code
        |          |         | 13. Write one unit test that tests GUI code
        |          |         | 14. Write one performance test that measures the time some code takes
        |          |         | 15. Convert UI code from DOM level 0 to DOM level 2

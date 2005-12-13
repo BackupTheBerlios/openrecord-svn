@@ -1,5 +1,5 @@
 // %(CLASS_NAME).js
-// Written by %(AUTHOR)
+// Created by %(AUTHOR)
 
 // Dojo Package System "provide" and "require" statements
 dojo.provide("orp.plugins.%(CLASS_NAME)");
