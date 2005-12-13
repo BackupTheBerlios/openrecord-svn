@@ -49,6 +49,10 @@ function userClickedOnButton() {
   var nameField = document.getElementById("plugin_name");
   var authorField = document.getElementById("plugin_author");
   var outputArea = document.getElementById("output_area");
+  var placeholder = document.getElementById("placeholder");
+  if (placeholder.hasChildNodes()) {
+    placeholder.removeChild(placeholder.firstChild);
+  }
   
   var generatedContents;
 
@@ -57,6 +61,13 @@ function userClickedOnButton() {
     var name      = nameField.value;
     var author    = authorField.value;
     generatedContents = generateContents(className, name, author);
+
+    var newElem = document.createElement("p");
+    var instructions = "Copy the text below into a file called " + className +
+                       ".js and put it in .../source/plugins.";
+    var newText = document.createTextNode(instructions);
+    newElem.appendChild(newText);
+    placeholder.appendChild(newElem);
   } else {
     generatedContents = 'Error: ClassName must contain only alphanumeric characters ' + 
                         'and underscores, and must start with an uppercase letter.  \n\n' +
