@@ -42,7 +42,6 @@ function setUp() {
   dojo.require("orp.util.CsvParser");
   dojo.require("orp.util.DateValue");
   dojo.require("orp.util.LintTool");
-  // dojo.require("orp.util.XmlConverter");  // FIX_ME: need to move XmlConverter out of util
 }
 
 function tearDown() {

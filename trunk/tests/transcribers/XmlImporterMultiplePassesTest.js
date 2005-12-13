@@ -1,5 +1,5 @@
 /*****************************************************************************
- XmlConverterMultiplePassesTest.js
+ XmlImporterMultiplePassesTest.js
  
 ******************************************************************************
  Written in 2005 by Mignon Belongie.
@@ -31,7 +31,7 @@
 var world;
 var foodIdAttribute;
 var itemCategory;
-var xmlConverterForSecondPass;
+var xmlImporterForSecondPass;
 
 // -------------------------------------------------------------------
 // setUp and tearDown
@@ -40,14 +40,14 @@ var xmlConverterForSecondPass;
 function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
-  dojo.require("orp.util.XmlConverter");
+  dojo.require("orp.transcribers.XmlImporter");
   dojo.require("orp.util.Util");
   dojo.require("orp.archive.StubArchive");
   dojo.require("orp.model.World");
 
-  XmlTextNodeToAttributeSpecifier = orp.util.XmlTextNodeToAttributeSpecifier;
-  XmlAttributeToAttributeSpecifier = orp.util.XmlAttributeToAttributeSpecifier;
-  XmlConverter = orp.util.XmlConverter;
+  XmlTextNodeToAttributeSpecifier = orp.transcribers.XmlTextNodeToAttributeSpecifier;
+  XmlAttributeToAttributeSpecifier = orp.transcribers.XmlAttributeToAttributeSpecifier;
+  XmlImporter = orp.transcribers.XmlImporter;
   
   // var pathToTrunkDirectoryFromThisFile = "../../../";
   var pathToTrunkDirectoryFromThisFile = "../..";
@@ -58,17 +58,17 @@ function setUp() {
   var userAnn = world.newUser("Ann Doe", annsPassword);
   world.login(userAnn, annsPassword);
   var xmlFile = "../../../tests/util/food.xml";
-  var xmlConverter = new XmlConverter(world, xmlFile, "food", "Record");
+  var xmlImporter = new XmlImporter(world, xmlFile, "food", "Record");
   var xmlToAttributeSpecifiers = new Array();
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
   var xmlAttributeToAttributeSpecifiers = new Array();
   foodIdAttribute = world.newAttribute("Food ID");
   xmlAttributeToAttributeSpecifiers.push(new XmlAttributeToAttributeSpecifier("food_id", foodIdAttribute));
-  var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers,
+  var listOfItems = xmlImporter.makeItemsFromXmlFile(xmlToAttributeSpecifiers,
                                                       xmlAttributeToAttributeSpecifiers);
   assertTrue('3 items should have been created', listOfItems.length == 3);
-  itemCategory = xmlConverter.getItemCategory();
-  xmlConverterForSecondPass = new XmlConverter(world, xmlFile, null, "Record", itemCategory);
+  itemCategory = xmlImporter.getItemCategory();
+  xmlImporterForSecondPass = new XmlImporter(world, xmlFile, null, "Record", itemCategory);
 }
 
 function tearDown() {
@@ -83,7 +83,7 @@ function tearDown() {
 function testNewItemsNotCreatedForRecordsWithMatchingXmlAttribute() {
   var equalitySpecifier = new XmlAttributeToAttributeSpecifier("food_id", foodIdAttribute);
   var xmlTextNodeToAttributeSpecifiers = [new XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C"))];
-  var listOfModifiedItems = xmlConverterForSecondPass.makeOrModifyItemsFromXmlFile(equalitySpecifier,
+  var listOfModifiedItems = xmlImporterForSecondPass.makeOrModifyItemsFromXmlFile(equalitySpecifier,
                                                                                    xmlTextNodeToAttributeSpecifiers);
   assertTrue('3 items should have been returned.', listOfModifiedItems.length == 3);
   var listOfAllItemsInItemCategory = world.getItemsInCategory(itemCategory);
@@ -93,7 +93,7 @@ function testNewItemsNotCreatedForRecordsWithMatchingXmlAttribute() {
 function testNewItemsNotCreatedForRecordsWithMatchingXmlTextNode() {
   var equalitySpecifier = new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName());
   var xmlTextNodeToAttributeSpecifiers = [new XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C"))];
-  var listOfModifiedItems = xmlConverterForSecondPass.makeOrModifyItemsFromXmlFile(equalitySpecifier,
+  var listOfModifiedItems = xmlImporterForSecondPass.makeOrModifyItemsFromXmlFile(equalitySpecifier,
                                                                                    xmlTextNodeToAttributeSpecifiers);
   assertTrue('3 items should have been returned.', listOfModifiedItems.length == 3);
   var listOfAllItemsInItemCategory = world.getItemsInCategory(itemCategory);
@@ -107,7 +107,7 @@ function testNewItemCreatedForRecordWithNonMatchingXmlTextNode() {
 
   var equalitySpecifier = new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName());
   var xmlTextNodeToAttributeSpecifiers = [new XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C"))];
-  var listOfModifiedItems = xmlConverterForSecondPass.makeOrModifyItemsFromXmlFile(equalitySpecifier,
+  var listOfModifiedItems = xmlImporterForSecondPass.makeOrModifyItemsFromXmlFile(equalitySpecifier,
                                                                                    xmlTextNodeToAttributeSpecifiers);
   assertTrue('3 items should have been returned.', listOfModifiedItems.length == 3);
   var itemsInItemCategory = world.getItemsInCategory(itemCategory);
@@ -125,7 +125,7 @@ function testModifiedItemsHaveAllExpectedAttributes() {
   var xmlTextNodeToAttributeSpecifiers = new Array();
   xmlTextNodeToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["vitamins", "A"], world.newAttribute("Vitamin A")));
   xmlTextNodeToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C")));
-  var listOfModifiedItems = xmlConverterForSecondPass.makeOrModifyItemsFromXmlFile(equalitySpecifier,
+  var listOfModifiedItems = xmlImporterForSecondPass.makeOrModifyItemsFromXmlFile(equalitySpecifier,
                                                                                    xmlTextNodeToAttributeSpecifiers);
   assertTrue('3 items should have been returned.', listOfModifiedItems.length == 3);
   for (var i in listOfModifiedItems) {

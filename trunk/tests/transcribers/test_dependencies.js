@@ -1,8 +1,9 @@
 /*****************************************************************************
- LintTest.js
+ test_dependencies.js
  
 ******************************************************************************
- Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
+ Written in 2005 by 
+    Brian Douglas Skinner <brian.skinner@gumption.org>
   
  Copyright rights relinquished under the Creative Commons  
  Public Domain Dedication:
@@ -28,12 +29,6 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
-// -------------------------------------------------------------------
-// Dependencies, expressed in the syntax that JSLint understands:
-// 
-/*global LintTool, assertTrue, setUp, tearDown */
-// -------------------------------------------------------------------
-
 
 // -------------------------------------------------------------------
 // setUp and tearDown
@@ -42,10 +37,12 @@
 function setUp() {
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
-  dojo.require("orp.util.LintTool");
+  dojo.require("orp.transcribers.XmlImporter");
+  dojo.require("orp.transcribers.XmlExporter");
 }
 
 function tearDown() {
+  UtilTestVars = null;
 }
 
 
@@ -53,19 +50,10 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
-function testJsLintOnOpenRecordCode() {
-  var listOfSourceCodeFiles = [
-    "CsvParser.js",
-    "DateValue.js",
-    "LintTool.js",
-    "Util.js"];
-  var prefix = "../../../source/util/";
-  var errorReport = orp.util.LintTool.getErrorReportFromListOfFilesnames(listOfSourceCodeFiles, prefix);
-  var message = "Lint check \n" + errorReport;
-  assertTrue(message, !errorReport);
+function testDependencies() {
+  var expectedOrpPackages = ["lang", "util", "uuid", "model", "archive", "storage", "transcribers"];
+  assertTrue("Only orp.lang, orp.util, orp.model, and orp.transcriber are defined", orp.util.hasExactlyTheseProperties(orp, expectedOrpPackages));
 }
-
-
 
 // -------------------------------------------------------------------
 // End of file

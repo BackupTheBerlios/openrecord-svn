@@ -11,23 +11,22 @@
 -->
 
   <head>
-    <title>Util Test Suite</title>
+    <title>Transcriber Test Suite</title>
 
     <script type="text/javascript" src="../../third_party/jsunit/jsunit2_1/app/jsUnitCore.js"></script>
     <script type="text/javascript">
       function suite() {
         var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestSuite(utilTestSuite());
+        testSuite.addTestSuite(transcriberTestSuite());
         return testSuite;
       }
       
-      function utilTestSuite() {
+      function transcriberTestSuite() {
         var testSuite = new window.top.jsUnitTestSuite();
-        testSuite.addTestPage("../../../tests/util/CsvParserTest.html");
-        testSuite.addTestPage("../../../tests/util/DateValueTest.html");
-        testSuite.addTestPage("../../../tests/util/LintTest.html");
-        testSuite.addTestPage("../../../tests/util/UtilTest.html");
-        testSuite.addTestPage("../../../tests/util/test_dependencies.html");
+        testSuite.addTestPage("../../../tests/transcribers/LintTest.html");
+        testSuite.addTestPage("../../../tests/transcribers/XmlImporterTest.html");
+        testSuite.addTestPage("../../../tests/transcribers/XmlImporterMultiplePassesTest.html");
+        testSuite.addTestPage("../../../tests/transcribers/test_dependencies.html");
         return testSuite;
       }
     </script>

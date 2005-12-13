@@ -1,5 +1,5 @@
 /*****************************************************************************
- XmlConverter.js
+ XmlImporter.js
  
 ******************************************************************************
  Written in 2005 by Mignon Belongie
@@ -32,12 +32,12 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.provide("orp.util.XmlConverter");
+dojo.provide("orp.transcribers.XmlImporter");
 dojo.require("orp.model.World");
 dojo.require("orp.util.Util");
 dojo.require("orp.lang.Lang");
-// dojo.provide("orp.util.XmlTextNodeToAttributeSpecifier");
-// dojo.provide("orp.util.XmlAttributeToAttributeSpecifier");
+// dojo.provide("orp.transcribers.XmlTextNodeToAttributeSpecifier");
+// dojo.provide("orp.transcribers.XmlAttributeToAttributeSpecifier");
 
 /**
  * @param    tagPath    A sequence of nested XML tags (relative to an 'item-element'; see below).
@@ -45,7 +45,7 @@ dojo.require("orp.lang.Lang");
  *
  * @scope    public instance constructor
  */
-orp.util.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) {
+orp.transcribers.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) {
   orp.lang.assertType(tagPath, Array);
   orp.lang.assert(attribute instanceof orp.model.Item);
   this._tagPath = tagPath;
@@ -69,7 +69,7 @@ orp.util.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) {
  *
  * @scope    public instance constructor
  */
-orp.util.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, attribute) {
+orp.transcribers.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, attribute) {
   orp.lang.assert(attribute instanceof orp.model.Item);
   this._xmlAttributeName = xmlAttributeName;
   this._attribute = attribute;
@@ -91,7 +91,7 @@ orp.util.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, attribute
 // -------------------------------------------------------------------
 
 /**
- * The XmlConverter class knows how to load an XML file and make items
+ * The XmlImporter class knows how to load an XML file and make items
  * out of specified parts of the data.
  *
  * @scope    public instance constructor
@@ -101,7 +101,7 @@ orp.util.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, attribute
  * @param    itemTagName                        Items will be made from elements with this tag name.
  * @param    itemCategory                       If null, a new category is created from 'namespace' and 'itemTagName'.
  */
-orp.util.XmlConverter = function(world, url, nameSpace, itemTagName, itemCategory) {
+orp.transcribers.XmlImporter = function(world, url, nameSpace, itemTagName, itemCategory) {
   orp.lang.assert(world instanceof orp.model.World);
   var urlSeparators = new RegExp("\\.|\\/");
   var urlParts = url.split(urlSeparators);
@@ -135,7 +135,7 @@ orp.util.XmlConverter = function(world, url, nameSpace, itemTagName, itemCategor
  * @scope    public instance method
  * @return   Returns the category that new items are assigned to.
  */
-orp.util.XmlConverter.prototype.getItemCategory = function() {
+orp.transcribers.XmlImporter.prototype.getItemCategory = function() {
   return this._itemCategory;
 };
 
@@ -165,19 +165,19 @@ orp.util.XmlConverter.prototype.getItemCategory = function() {
  * then makeItemsFromXmlFile("file:.../file.xml", "food", "Record") would result
  * in three items each with attributes called 'food:name', 'food:color' and 'food:flavor',
  * while makeItemsFromXmlFile("file:.../file.xml", "food", "Record", [["name"], ["vitamins", "C"]) 
- *                            [new orp.util.XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()),
- *                             new orp.util.XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C"))],
- *                             new orp.util.XmlAttributeToAttributeSpecifier("id", world.newAttribute("Food ID"));
+ *                            [new orp.transcribers.XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()),
+ *                             new orp.transcribers.XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C"))],
+ *                             new orp.transcribers.XmlAttributeToAttributeSpecifier("id", world.newAttribute("Food ID"));
  * would result in three items each with attributes called 'name', 'Vitamin C' and 'Food ID'.
  * In both cases, the three items are assigned to the category food:Record.
  *
  * @scope    public instance method
- * @param    xmlToAttributeSpecifiers           Array of type orp.util.XmlTextNodeToAttributeSpecifier
- * @param    xmlAttributeToAttributeSpecifiers  Array of type orp.util.XmlAttributeToAttributeSpecifier
+ * @param    xmlToAttributeSpecifiers           Array of type orp.transcribers.XmlTextNodeToAttributeSpecifier
+ * @param    xmlAttributeToAttributeSpecifiers  Array of type orp.transcribers.XmlAttributeToAttributeSpecifier
  *
  * @return   Returns an array of created items.
  */
-orp.util.XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
+orp.transcribers.XmlImporter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
   this._world.beginTransaction();
   var listOfOutputItems = [];
   if (!xmlToAttributeSpecifiers) {
@@ -186,7 +186,7 @@ orp.util.XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSp
   else {
     // orp.lang.assert(xmlToAttributeSpecifiers instanceof Array);
     orp.lang.assertType(xmlToAttributeSpecifiers, Array);
-    orp.lang.assert(xmlToAttributeSpecifiers[0] instanceof orp.util.XmlTextNodeToAttributeSpecifier);
+    orp.lang.assert(xmlToAttributeSpecifiers[0] instanceof orp.transcribers.XmlTextNodeToAttributeSpecifier);
     for (var i = 0; i < this._itemElements.length; ++i) {
       var newItem = this._world.newItem();
       newItem.assignToCategory(this._itemCategory);
@@ -213,20 +213,20 @@ orp.util.XmlConverter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSp
 
 /**
  * @scope    public instance method
- * @param    equalitySpecifier                  type orp.util.XmlTextNodeToAttributeSpecifier or orp.util.XmlAttributeToAttributeSpecifier
- * @param    xmlToAttributeSpecifiers           Array of type orp.util.XmlTextNodeToAttributeSpecifier
- * @param    xmlAttributeToAttributeSpecifiers  Array of type orp.util.XmlAttributeToAttributeSpecifier
+ * @param    equalitySpecifier                  type orp.transcribers.XmlTextNodeToAttributeSpecifier or orp.transcribers.XmlAttributeToAttributeSpecifier
+ * @param    xmlToAttributeSpecifiers           Array of type orp.transcribers.XmlTextNodeToAttributeSpecifier
+ * @param    xmlAttributeToAttributeSpecifiers  Array of type orp.transcribers.XmlAttributeToAttributeSpecifier
  *
  * @return   Returns an array of modified or created items.
  */
-orp.util.XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier, xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
+orp.transcribers.XmlImporter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier, xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
   var matchXmlAttribute;
-  if (equalitySpecifier instanceof orp.util.XmlAttributeToAttributeSpecifier) {
+  if (equalitySpecifier instanceof orp.transcribers.XmlAttributeToAttributeSpecifier) {
     matchXmlAttribute = true;
     var xmlAttributeToMatch = equalitySpecifier._xmlAttributeName;
   } else {
-    orp.lang.assert(equalitySpecifier instanceof orp.util.XmlTextNodeToAttributeSpecifier,
-                "equalitySpecifier should be of type orp.util.XmlTextNodeToAttributeSpecifier or orp.util.XmlAttributeToAttributeSpecifier.");
+    orp.lang.assert(equalitySpecifier instanceof orp.transcribers.XmlTextNodeToAttributeSpecifier,
+                "equalitySpecifier should be of type orp.transcribers.XmlTextNodeToAttributeSpecifier or orp.transcribers.XmlAttributeToAttributeSpecifier.");
     matchXmlAttribute = false;
     var xmlTagPathToMatch = equalitySpecifier._tagPath;
   }
@@ -283,7 +283,7 @@ orp.util.XmlConverter.prototype.makeOrModifyItemsFromXmlFile = function(equality
 /**
  * @scope    private instance method
  */
-orp.util.XmlConverter.prototype._doDefaultConversion = function(world, nameSpace, itemElements, itemCategory) {
+orp.transcribers.XmlImporter.prototype._doDefaultConversion = function(world, nameSpace, itemElements, itemCategory) {
   var listOfOutputItems = [];
   var hashTableOfAttributesKeyedByName = [];
   for (var i = 0; i < itemElements.length; ++i) {
@@ -311,7 +311,7 @@ orp.util.XmlConverter.prototype._doDefaultConversion = function(world, nameSpace
 /**
  * @scope    private instance method
  */
-orp.util.XmlConverter.prototype._processElementTree = function(level, maxLevel, node, newItem, xmlToAttributeSpecifier) {
+orp.transcribers.XmlImporter.prototype._processElementTree = function(level, maxLevel, node, newItem, xmlToAttributeSpecifier) {
   if (level == maxLevel) {
     if (node.childNodes && node.childNodes.length > 0 && node.childNodes[0].nodeType == Node.TEXT_NODE) {
       value = this._world.transformValueToExpectedType(node.childNodes[0].nodeValue, xmlToAttributeSpecifier._listOfTypes);
@@ -338,7 +338,7 @@ orp.util.XmlConverter.prototype._processElementTree = function(level, maxLevel, 
 /**
  * @scope    private instance method
  */
-orp.util.XmlConverter.prototype._getTextForTagPath = function(itemElement, xmlTagPathToMatch) {
+orp.transcribers.XmlImporter.prototype._getTextForTagPath = function(itemElement, xmlTagPathToMatch) {
   var node = itemElement;
   for (var i in xmlTagPathToMatch) {
     var tagName = xmlTagPathToMatch[i];

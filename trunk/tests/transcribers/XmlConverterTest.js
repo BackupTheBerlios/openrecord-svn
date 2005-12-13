@@ -1,5 +1,5 @@
 /*****************************************************************************
- XmlConverterTest.js
+ XmlImporterTest.js
  
 ******************************************************************************
  Written in 2005 by Mignon Belongie.
@@ -29,7 +29,7 @@
 *****************************************************************************/
 
 var world;
-var xmlConverter;
+var xmlImporter;
 
 // -------------------------------------------------------------------
 // setUp and tearDown
@@ -38,14 +38,14 @@ var xmlConverter;
 function setUp() {
   dojo.hostenv.setModulePrefix("orp", "../../../../source");
   dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
-  dojo.require("orp.util.XmlConverter");
+  dojo.require("orp.transcribers.XmlImporter");
   dojo.require("orp.util.Util");
   dojo.require("orp.archive.StubArchive");
   dojo.require("orp.model.World");
 
-  XmlTextNodeToAttributeSpecifier = orp.util.XmlTextNodeToAttributeSpecifier;
-  XmlAttributeToAttributeSpecifier = orp.util.XmlAttributeToAttributeSpecifier;
-  XmlConverter = orp.util.XmlConverter;
+  XmlTextNodeToAttributeSpecifier = orp.transcribers.XmlTextNodeToAttributeSpecifier;
+  XmlAttributeToAttributeSpecifier = orp.transcribers.XmlAttributeToAttributeSpecifier;
+  XmlImporter = orp.transcribers.XmlImporter;
 
   // var pathToTrunkDirectoryFromThisFile = "../../../";
   pathToTrunkDirectoryFromThisFile = "../..";
@@ -56,7 +56,7 @@ function setUp() {
   var userAnn = world.newUser("Ann Doe", annsPassword);
   world.login(userAnn, annsPassword);
   var xmlFile = "../../../tests/util/food.xml";
-  xmlConverter = new XmlConverter(world, xmlFile, "food", "Record");
+  xmlImporter = new XmlImporter(world, xmlFile, "food", "Record");
 }
 
 function tearDown() {
@@ -69,7 +69,7 @@ function tearDown() {
 // -------------------------------------------------------------------
 
 function testDefaultConversionOfTagsToAttributes() {
-  var listOfItems = xmlConverter.makeItemsFromXmlFile();
+  var listOfItems = xmlImporter.makeItemsFromXmlFile();
   assertTrue('3 items should have been created', listOfItems.length == 3);
   var expectedNewCategory = null;
   var listOfCategories = world.getCategories();
@@ -96,9 +96,9 @@ function testDefaultConversionOfTagsToAttributes() {
 
 function testSimpleXmlToAttributeSpecifiers() {
   var xmlToAttributeSpecifiers = new Array();
-  xmlToAttributeSpecifiers.push(new orp.util.XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
+  xmlToAttributeSpecifiers.push(new orp.transcribers.XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["flavor"], world.newAttribute("Flavor")));
-  var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
+  var listOfItems = xmlImporter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
   assertTrue('3 items should have been created', listOfItems.length == 3);
   var expectedNewCategory = null;
   var listOfCategories = world.getCategories();
@@ -127,7 +127,7 @@ function testMultipleValuesForAnAttribute() {
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
   var flavorAttribute = world.newAttribute("Flavor");
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["flavor"], flavorAttribute));
-  var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
+  var listOfItems = xmlImporter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
   assertTrue('3 items should have been created', listOfItems.length == 3);
   for (var i in listOfItems) {
     var item = listOfItems[i];
@@ -149,7 +149,7 @@ function testNestedXmlConversion() {
   var xmlToAttributeSpecifiers = new Array();
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C")));
-  var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
+  var listOfItems = xmlImporter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
   assertTrue('3 items should have been created', listOfItems.length == 3);
   for (var i in listOfItems) {
     var item = listOfItems[i];
@@ -168,7 +168,7 @@ function testXmlAttributeConversion() {
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()));
   var xmlAttributeToAttributeSpecifiers = new Array();
   xmlAttributeToAttributeSpecifiers.push(new XmlAttributeToAttributeSpecifier("food_id", world.newAttribute("Food ID")));
-  var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers,
+  var listOfItems = xmlImporter.makeItemsFromXmlFile(xmlToAttributeSpecifiers,
                                                       xmlAttributeToAttributeSpecifiers);
   assertTrue('3 items should have been created', listOfItems.length == 3);
   var listOfIds = [];
@@ -195,7 +195,7 @@ function testExpectedType() {
   var foodColorCategory = world.newCategory("Food color");
   colorAttribute.addEntry({attribute:world.getAttributeCalledExpectedType(), value:foodColorCategory});
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["color"], colorAttribute));
-  var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
+  var listOfItems = xmlImporter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
   assertTrue('3 items should have been created', listOfItems.length == 3);
   for (var i in listOfItems) {
     var item = listOfItems[i];
@@ -214,7 +214,7 @@ function testInverseAttribute() {
   var foodsOfThisColorCategory = world.newCategory("Foods of this color");
   colorAttribute.addEntry({attribute:world.getAttributeCalledInverseAttribute(), value:foodsOfThisColorCategory});
   xmlToAttributeSpecifiers.push(new XmlTextNodeToAttributeSpecifier(["color"], colorAttribute));
-  var listOfItems = xmlConverter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
+  var listOfItems = xmlImporter.makeItemsFromXmlFile(xmlToAttributeSpecifiers);
   var colorCategories = world.getItemsInCategory(foodColorCategory);
   assertTrue('2 color categories should have been created', colorCategories.length == 2);
   var red = colorCategories[0].getDisplayName() == 'red'? colorCategories[0] : colorCategories[1].getDisplayName() == 'red'? colorCategories[1] : null;
