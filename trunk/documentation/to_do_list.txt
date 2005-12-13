@@ -54,7 +54,7 @@ mignon |          | 0.05 IED|  3. Add validation code to create_new_plugin.html 
        |          |         |  8. Change "TablePlugin" to "TableView", etc.
        |          |         |  9. Move the 4 original plugins into the plugins folder
        |          |         | 10. Remove BarChartView and Outline view from the axiomatic.json file
-       |          |         | 11. Make a HelloWorld plugin
+brian  |          | 0.05 IED| 11. Make a HelloWorld plugin
        |          |         | 12. Have Entry.toSting() return the Entry's UUID -- same for Item.toString()
        |          |         | 13. Move DOM methods from orp.view.View.xxx to orp.dom.xxx
        |          |         | 14. Make RootView subclass from View, or add comments explaining why it doesn't
