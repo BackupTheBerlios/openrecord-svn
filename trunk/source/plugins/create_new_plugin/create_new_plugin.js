@@ -34,6 +34,7 @@ dojo.hostenv.setModulePrefix("orp", "../../../source"); // relative to dojo
 dojo.require("dojo.text.*");
 dojo.require("dojo.event.*");
 dojo.require("orp.uuid.TimeBasedUuid");
+dojo.require("orp.model.World");
 
 function startHere() {
   var createButton = document.getElementById("button");
@@ -56,32 +57,33 @@ function userClickedOnButton() {
     var name      = nameField.value;
     var author    = authorField.value;
     generatedContents = generateContents(className, name, author);
-  }
-  else {
-    generatedContents = "Error: ClassName must contain only alphanumeric characters " + 
-                        "and underscores, and must start with an uppercase letter.  " +
-                        "Example: MySuperFooView";
+  } else {
+    generatedContents = 'Error: ClassName must contain only alphanumeric characters ' + 
+                        'and underscores, and must start with an uppercase letter.  \n\n' +
+                        'Examples: \n' + 
+                        '  "MySuperFooView" is valid. \n' +
+                        '  "mySuperFooView" is not valid. \n' +
+                        '  "23 is a fine #" is not valid. \n';
   }
 
   outputArea.value = generatedContents;
   outputArea.style.visibility = "visible";
-  // alert(generatedContents);
-  
-  // var uuid = new orp.uuid.TimeBasedUuid();
-  // alert(uuid);
-  
-  // var string = "     Just Foo    ";
-  // var trimmedString = dojo.text.trim(string);
-  // alert(trimmedString);
 }
 
 function generateContents(className, name, author) {
   var templateFileContents = dojo.hostenv.getText("create_new_plugin_template.js");
-  var itemUuid = new orp.uuid.TimeBasedUuid();
-  var entryUuid1 = new orp.uuid.TimeBasedUuid();
-  var entryUuid2 = new orp.uuid.TimeBasedUuid();
-  var entryUuid3 = new orp.uuid.TimeBasedUuid();
-  var entryUuid4 = new orp.uuid.TimeBasedUuid();
+
+  // Get the 'node' from the UUID that identifies the axiomatic user account
+  // that we use for creating new plugins, "Otto the Automatic Plugin Creator"
+  var uuidForTheUserWhoCreatesPlugins = orp.model.World.UUID.USER_PLUGIN_GOD;
+  var arrayOfUuidParts = uuidForTheUserWhoCreatesPlugins.split('-');
+  var nodeForUserWhoCreatesPlugins = arrayOfUuidParts[4]; // the 'node' is part [4] of the UUID
+
+  var itemUuid   = new orp.uuid.TimeBasedUuid({node: nodeForUserWhoCreatesPlugins});
+  var entryUuid1 = new orp.uuid.TimeBasedUuid({node: nodeForUserWhoCreatesPlugins});
+  var entryUuid2 = new orp.uuid.TimeBasedUuid({node: nodeForUserWhoCreatesPlugins});
+  var entryUuid3 = new orp.uuid.TimeBasedUuid({node: nodeForUserWhoCreatesPlugins});
+  var entryUuid4 = new orp.uuid.TimeBasedUuid({node: nodeForUserWhoCreatesPlugins});
   
   var intermediateResult = templateFileContents;
   intermediateResult = intermediateResult.replace(/%\(AUTHOR\)/g, author);
@@ -97,8 +99,21 @@ function generateContents(className, name, author) {
   return finalString;
 }
 
-dojo.event.connect(window, "onload", startHere);
+// -----------------------------------------------------------
+// Register the startHere() function so that it will be called 
+// after the loading is done
 
+// this is an okay way
+dojo.addOnLoad(startHere); 
+
+// we can use connect(), if we've done a dojo.require("dojo.event.*");
+// dojo.event.connect(dojo, "loaded", startHere); 
+// dojo.event.connect(dojo, "loaded", someObject, "methodName"); 
+
+// don't do it this way -- the window will have loaded, but dojo may not have
+// dojo.event.connect(window, "onload", startHere); 
+//
+// -----------------------------------------------------------
 
 // -------------------------------------------------------------------
 // End of file

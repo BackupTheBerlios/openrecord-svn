@@ -45,8 +45,8 @@ Tasks toward having a stable API for developers
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
        |          |         |  1. Document the Data model public API
-       |          |         |  2. Change the "node" used in the UUIDs for plugins
-mignon |          |    0.05 |  3. Add validation code to create_new_plugin.html to check the supplied ClassName
+brian  |          | 0.1  IED|  2. Change the "node" used in the UUIDs for plugins
+mignon |          | 0.05 IED|  3. Add validation code to create_new_plugin.html to check the supplied ClassName
        |          |         |  4. Add instructions on the create_new_plugin.html page
        |          |         |  5. Add list of suggested plugins to the create_new_plugin.html page
        |          |         |  6. Make the 4 original plugins conform to the new plugin API (if possible)

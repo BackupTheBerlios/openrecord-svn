@@ -532,8 +532,10 @@ orp.archive.StubArchive.prototype.login = function(user, password) {
     return false;
   }
 
-  if (user.getUuidString() == orp.model.World.UUID.USER_AMY) {
-    // nobody is allowed to log in as the axiomatic user
+  if ((user.getUuidString() == orp.model.World.UUID.USER_AMY_GOD) ||
+      (user.getUuidString() == orp.model.World.UUID.USER_PLUGIN_GOD)) {
+    // nobody is allowed to log in as "Amy the Axiomatic User"
+    // nobody is allowed to log in as the "Otto the Automatic Plugin Creator"
     return false;
   }
   

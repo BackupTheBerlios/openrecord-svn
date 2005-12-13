@@ -106,7 +106,8 @@ orp.model.World.UUID = {
   // NULL:                        "00000000-ce7f-11d9-8cd5-0011113ae5d6",
   // IDENTITY:                    "00000001-ce7f-11d9-8cd5-0011113ae5d6",
 
-  USER_AMY:                       "00001000-ce7f-11d9-8cd5-0011113ae5d6",
+  USER_AMY_GOD:                       "00001000-ce7f-11d9-8cd5-0011113ae5d6",
+  USER_PLUGIN_GOD:                    "00001800-65f4-11da-ba24-0011111f4abe",
 
   ATTRIBUTE_NAME:                     "00001001-ce7f-11d9-8cd5-0011113ae5d6",
   ATTRIBUTE_SHORT_NAME:               "00001002-ce7f-11d9-8cd5-0011113ae5d6",

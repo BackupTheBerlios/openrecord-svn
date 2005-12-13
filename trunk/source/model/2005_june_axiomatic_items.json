@@ -3,8 +3,12 @@
   "records": [
   // =======================================================================
   { "Transaction": [  // Axiomatic items
-    { "Item": {                                               // User: Amy ex machina
+    { "Item": {                                               // User: Amy the Axiomatic User
              "uuid": "00001000-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // User: Otto the Automatic Plugin Creator
+             "uuid": "00001800-65f4-11da-ba24-0011111f4abe" }
     },
     // -----------------------------------------------------------------------
     { "Item": {                                               // Attribute: Name
@@ -123,12 +127,20 @@
              "uuid": "00001214-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // "Amy ex machina"
+    { "Entry": {                                              // "Amy the Axiomatic User"
              "uuid": "0001000a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // (Name)
-             "item": "00001000-ce7f-11d9-8cd5-0011113ae5d6",  // User: Amy ex machina
+             "item": "00001000-ce7f-11d9-8cd5-0011113ae5d6",  // User: Amy the Axiomatic User
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Amy ex machina" }
+            "value": "Amy the Axiomatic User" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // "Otto the Automatic Plugin Creator"
+             "uuid": "0001800a-65f4-11da-ba24-0011111f4abe",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // (Name)
+             "item": "00001800-65f4-11da-ba24-0011111f4abe",  // User: Otto the Automatic Plugin Creator
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Otto the Automatic Plugin Creator" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // "Name"
