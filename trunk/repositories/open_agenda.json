@@ -3162,4 +3162,35 @@
          "item": ["d53d6ce0-6b71-11da-bb5c-0011111f4abe", "00040201-ce7f-11d9-8cd5-0011113ae5d6"],
     "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
 }  ]
+  },
+  // =======================================================================
+  { "Transaction": [
+{ "Item": { "uuid": "e0f7b540-6b8a-11da-b1ed-0011111f4abe" } },
+{ "Entry": {
+         "uuid": "e0f7b541-6b8a-11da-b1ed-0011111f4abe",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "e0f7b540-6b8a-11da-b1ed-0011111f4abe",
+        "value": "Detail View (with creator and time)"  }
+},
+{ "Entry": {
+         "uuid": "e0f7b542-6b8a-11da-b1ed-0011111f4abe",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "e0f7b540-6b8a-11da-b1ed-0011111f4abe",
+        "value": "DetailWithAttributionView"  }
+},
+{ "Entry": {
+         "uuid": "e0f7b543-6b8a-11da-b1ed-0011111f4abe",
+         "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",
+    "attribute": "0000100f-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": "e0f7b540-6b8a-11da-b1ed-0011111f4abe",
+        "value": "DetailWithAttributionView"  }
+},
+{ "Entry": {
+         "uuid": "e0f7b544-6b8a-11da-b1ed-0011111f4abe",
+         "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+         "item": ["e0f7b540-6b8a-11da-b1ed-0011111f4abe", "00040201-ce7f-11d9-8cd5-0011113ae5d6"],
+    "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+}  ]
   }
