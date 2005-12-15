@@ -90,6 +90,7 @@ Who    | Estimate | Actual  | Task
        |          |         |  3. Look at replacing our notion of Views with Dojo's notion of widgets
        |          |         |  4. Run in IE as well as Firefox
        |          |         |  5. Add support for repository merging
+       |          |         |  6. Use Camtesia Studio to create a screencast about OpenRecord (and plugins)
 -------+----------+---------+----------------------------------------------
 
 
