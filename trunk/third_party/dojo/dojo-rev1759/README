@@ -1,9 +1,0 @@
-Building is done for example by:
-  cd buildscripts
-  ant help
-
-Notes:
-
-The presence of "iframe_history.html" may seem mysterious at first glance -- it is used in back-button management.  
-
-Note that if you omit this file, IE may display a custom error page in the iframe (loaded from the local filesystem), in which case the user will see security warnings if the rest of the page is served under https.
