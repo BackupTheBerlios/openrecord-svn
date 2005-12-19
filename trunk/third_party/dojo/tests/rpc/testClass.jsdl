@@ -1,0 +1,1 @@
+{"JSDLVersion":".1","className":"testClass","serviceURL":"test_JsonRPCMediator.php","methods":[{"name":"myecho","parameters":[{"name":"somestring","type":"STRING"}]},{"name":"contentB"},{"name":"contentC"},{"name":"add","parameters":[{"name":"x","type":"STRING"},{"name":"y","type":"STRING"}]}]}

@@ -1,0 +1,78 @@
+<!--
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>TabSet Demo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+
+<script type="text/javascript">
+	var djConfig = { isDebug: true };
+</script>
+<script type="text/javascript" src="../../dojo.js"></script>
+<script type="text/javascript">
+	dojo.require("dojo.widget.TabSet");
+</script>
+
+<!-- there's a race condition when tabs get loaded; if the CSS isn't available
+when the tabs are sized then there will be a big gap between the labels and the
+content.  As a workaround, load CSS directly
+-->
+<LINK href="../../src/widget/templates/HtmlTabSet.css" type="text/css" media=screen>
+<style type="text/css">
+body {
+	font-family : sans-serif;
+}
+
+</style>
+<script type="text/javascript">
+function boo(panel, node) {
+	node.innerHTML = "Handlers override grabbing from URLs. They run in context of the widget, so 'this' refers to the tab widget.";
+}
+</script>
+</head>
+
+<body>
+	<p>These TabSet are made up of local and external content. Tab 1 and Tab 2 are loading
+	files tab1.html and tab2.html. Tab 3 and Another Tab are using content that is already
+	part of this page.</p>
+
+	<div id="mainTabSet" dojoType="TabSet" style="width: 100%; height: 20em;" selectedTab="tab2">
+	
+		<div id="tab1" dojoType="Tab" label="Tab 1" url="tab1.html"></div>
+		
+		<div id="tab2" dojoType="Tab" label="Tab 2" url="tab2.html"></div>
+		
+		<div dojoType="Tab" label="Tab 3">
+			<h1>I am tab 3</h1>
+			<p>And I was already part of the page! That's cool, no?</p>
+		</div>
+		
+		<div dojoType="Tab" label="Handler tab" handler="boo"></div>
+
+		<div dojoType="Tab" label="Another Tab">
+			<h1>I love local content</h1>
+			<p>And I'm not ashamed to admit it.</p>
+			<p>venga venga venga venga venga venga venga venga venga venga venga venga
+			venga venga venga venga venga venga venga venga venga venga venga venga
+			venga venga venga venga venga venga venga venga venga venga venga venga
+			venga venga venga venga venga venga venga venga venga venga venga venga
+			venga venga venga venga venga venga venga venga venga venga venga venga
+			venga venga venga venga venga venga venga venga venga venga venga venga
+			venga venga venga venga venga venga venga venga venga venga venga venga</p>
+		</div>
+
+		<div dojoType="Tab" label="Sub TabSet">
+			<div id="subTabSet" dojoType="TabSet" style="width: 100%; height: 100%;">	
+				<div dojoType="Tab" label="Tab 1" url="tab1.html"></div>		
+				<div dojoType="Tab" label="Tab 2" url="tab2.html" selected="true"></div>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

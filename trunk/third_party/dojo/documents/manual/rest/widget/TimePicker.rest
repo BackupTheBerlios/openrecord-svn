@@ -1,0 +1,75 @@
+.. title:: dojo.widget.TimePicker -- The Dojo Manual
+
+.. this is a comment. for more information on reST, see:
+   http://docutils.sf.net/docs/user/rst/quickstart.html
+   http://docutils.sf.net/docs/user/rst/quickref.html
+
+Name
+===============================================================================
+
+dojo.widget.html.TimePicker - Base class for a stand-alone TimePicker widget
+that makes it easy to select a time.
+
+Summary and Overview
+===============================================================================
+
+Base class for a current HTML TimePicker, see dojo.widget.html.TimePicker
+
+Usage
+===============================================================================
+
+::
+
+  var timePicker = dojo.widget.fromScript("TimePicker", {},  
+  dojo.byId("timePickerNode"));
+
+or::
+
+  <div dojoType="TimePicker"></div>
+																		
+
+API Reference
+===============================================================================
+
+Properties
+---------------------------------------
+
+``widgetType``:
+
+    widgetType is set to TimePicker
+
+``isContainer``:
+
+    isContainer is set to false as the TimePicker does not currently support 
+		the nesting of other widgets.
+
+
+Methods
+---------------------------------------
+
+		none
+				
+Requires
+===============================================================================
+
+- `dojo.widget.DomWidget`_
+
+.. _`dojo.widget.DomWidget`:	widget/DomWidget.html
+
+Provides
+===============================================================================
+
+dojo.widget.TimePicker
+    A class constructor that allows a widget of type 
+		dojo.widget.TimePicker to be created.
+
+
+About
+===============================================================================
+
+:Author: Dylan Schiemann
+:Version: 0.1
+:Copyright: Dojo Foundation, 2005
+:Date: 2005/11/14
+
+.. vim:ts=4:et:tw=80:shiftwidth=4:
