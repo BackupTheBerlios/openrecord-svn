@@ -30,7 +30,7 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
  
-dojo.hostenv.setModulePrefix("orp", "../../../source"); // relative to dojo
+dojo.setModulePrefix("orp", "../../source"); // relative to dojo.js
 dojo.require("dojo.text.*");
 dojo.require("dojo.event.*");
 dojo.require("orp.uuid.TimeBasedUuid");
