@@ -84,7 +84,7 @@ Big picture tasks
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         |  0. Switch to using Dojo-0.2.0, and have it live directly in .../third_party/dojo
+brian  |          | 0.3  IED|  0. Switch to using Dojo-0.2.0, and have it live directly in .../third_party/dojo
        |          |         |  1. Attempt to embed an OpenRecord view in a MediaWiki page
        |          |         |  2. Have a server that supports repositories with thousands of items
        |          |         |  3. Look at replacing our notion of Views with Dojo's notion of widgets

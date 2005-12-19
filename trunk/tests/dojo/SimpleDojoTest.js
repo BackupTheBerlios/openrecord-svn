@@ -33,7 +33,13 @@
 // -------------------------------------------------------------------
 
 function setUp() {
-  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
+  dojo.setModulePrefix("dojo", "../../dojo/src");  // relative to testRunner.html
+  // alert("Dojo version: " + dojo.version.toString()); // "Dojo version: 0.2.0 (2540)"
+  // alert("dojo.hostenv.getBaseScriptUri() = " + dojo.hostenv.getBaseScriptUri());
+    // "dojo.hostenv.getBaseScriptUri() = ../../third_party/dojo/"
+  dojo.require("dojo.lang.*");
+  dojo.require("dojo.text.*");
+  dojo.require("dojo.crypto.MD5");
 }
 
 function tearDown() {
@@ -46,21 +52,12 @@ function tearDown() {
 // -------------------------------------------------------------------
 
 function testDojoTextTrim() {
-  // alert("Dojo version: " + dojo.version.toString()); 
-    // Dojo version: 0.1.0 (1321)
-  // alert("dojo.hostenv.getBaseScriptUri() = " + dojo.hostenv.getBaseScriptUri());
-    // dojo.hostenv.getBaseScriptUri() = ../../third_party/dojo/dojo-0.1.0
-
-  dojo.require("dojo.text.*");
-
   var string = "     Just Foo    ";
   var trimmedString = dojo.text.trim(string);
   assertTrue("'Just Foo' remains after trimming.", trimmedString == "Just Foo");
 }
 
 function testDojoLang() {
-  dojo.require("dojo.lang.*");
-
   assertTrue("'Iggy Pop' is a string.", dojo.lang.isString("Iggy Pop"));
 }
 
@@ -80,8 +77,6 @@ function testDojoInherits() {
 }
 
 function testMD5() {
-  dojo.require("dojo.crypto.*");
-
   var whenInTheCourse = "When in the course of human events: d41d8cd98f00b204e9800998ecf8427e";
   var theQuickBrownFox = "The quick brown fox jumps over the lazy dog";
   var theRainInSpain = "The rain in Spain falls mainly on the plain.";
@@ -98,7 +93,8 @@ function testMD5() {
 // -------------------------------------------------------------------
 
 function getHexMD5(string) {
-  return dojo.crypto.toBinHex(dojo.crypto.MD5.compute(string));
+  // return dojo.crypto.toBinHex(dojo.crypto.MD5.compute(string));
+  return dojo.crypto.MD5.compute(string, dojo.crypto.outputTypes.Hex);
 }
 
 

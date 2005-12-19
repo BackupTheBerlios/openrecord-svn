@@ -33,7 +33,8 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.archive.StubArchive");
 dojo.provide("orp.archive.ArchiveLoader");
-dojo.require("dojo.crypto.*");
+dojo.require("dojo.crypto");
+dojo.require("dojo.crypto.MD5");
 dojo.require("orp.model.World");
 dojo.require("orp.model.Item");
 dojo.require("orp.model.Entry");
@@ -468,7 +469,8 @@ orp.archive.StubArchive.prototype.newUser = function(name, authentication, obser
   var md5Authentication = null;
   if (authentication) {
     // md5Authentication = orp.util.hex_md5(authentication);
-    md5Authentication = dojo.crypto.toBinHex(dojo.crypto.MD5.compute(authentication));
+    // md5Authentication = dojo.crypto.toBinHex(dojo.crypto.MD5.compute(authentication));
+    md5Authentication = dojo.crypto.MD5.compute(authentication, dojo.crypto.outputTypes.Hex);
   }
   this._hashTableOfUserAuthenticationInfo[newUser.getUuid()] = md5Authentication;
 
@@ -542,7 +544,8 @@ orp.archive.StubArchive.prototype.login = function(user, password) {
   var md5hashOfPassword = null;
   if (password) {
     // md5hashOfPassword = orp.util.hex_md5(password);
-    md5hashOfPassword = dojo.crypto.toBinHex(dojo.crypto.MD5.compute(password));
+    // md5hashOfPassword = dojo.crypto.toBinHex(dojo.crypto.MD5.compute(password));
+    md5hashOfPassword = dojo.crypto.MD5.compute(password, dojo.crypto.outputTypes.Hex);
   }
   var realAuthentication = this.getAuthenticationInfoForUser(user);
   var successfulAuthentication = ((realAuthentication == md5hashOfPassword) || !realAuthentication);

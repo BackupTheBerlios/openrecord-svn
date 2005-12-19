@@ -78,8 +78,8 @@ var TEST_TYPE_TWO_BOX = "TYPE_TWO_BOX";
 // -------------------------------------------------------------------
 
 function setUp() {
-  dojo.hostenv.setModulePrefix("dojo", "../../../dojo/dojo-rev1759/src");
-  dojo.hostenv.setModulePrefix("orp", "../../../../source");
+  dojo.setModulePrefix("dojo", "../../dojo/src"); // relative to testRunner.html
+  dojo.setModulePrefix("orp", "../../../source"); // relative to dojo.js
   dojo.require("orp.util.Util");
 }
 

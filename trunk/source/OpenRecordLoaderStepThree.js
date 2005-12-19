@@ -28,7 +28,7 @@
  connection with the use or distribution of the work.
 *****************************************************************************/
 
-dojo.hostenv.setModulePrefix("orp", "../../../source");  // path relative to dojo
+dojo.hostenv.setModulePrefix("orp", "../../source");  // relative to dojo.js
 
 dojo.require("orp.model.World");
 dojo.require("orp.view.RootView");
