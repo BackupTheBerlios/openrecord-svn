@@ -85,6 +85,9 @@ Big picture tasks
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
 brian  |          | 0.3  IED|  0. Switch to using Dojo-0.2.0, and have it live directly in .../third_party/dojo
+       |          |         |     Instead of having a copy of dojo in our SVN archive, link to dojo using SVN "externals"
+                                    see http://svnbook.red-bean.com/en/1.1/ch07s04.html
+                                    see section 5.2.4 of http://tortoisesvn.sourceforge.net/docs/nightly/TortoiseSVN_en.pdf
        |          |         |  1. Attempt to embed an OpenRecord view in a MediaWiki page
        |          |         |  2. Have a server that supports repositories with thousands of items
        |          |         |  3. Look at replacing our notion of Views with Dojo's notion of widgets
