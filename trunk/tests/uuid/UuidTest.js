@@ -41,10 +41,7 @@ var TimeBasedUuid = null;
 function setUp() {
   dojo.setModulePrefix("dojo", "../../dojo/src"); // relative to testRunner.html
   dojo.setModulePrefix("orp", "../../../source"); // relative to dojo.js
-  dojo.require("orp.uuid.factory");
-  dojo.require("orp.uuid.Uuid");
-  dojo.require("orp.uuid.RandomUuid");
-  dojo.require("orp.uuid.TimeBasedUuid");
+  dojo.require("orp.uuid.*");
   dojo.require("dojo.lang.*");
 
   Uuid = orp.uuid.Uuid;
@@ -189,7 +186,7 @@ function testTimeBasedUuids() {
   uuid4 = uuid4.toString();
 
   assertTrue("uuid1 != uuid2", uuid1 != uuid2);
-  assertTrue("uuid2 != uuid3", uuid1 != uuid2);
+  assertTrue("uuid2 != uuid3", uuid1 != uuid3);
   
   var arrayOfParts = uuid1.split("-");
   var section4 = arrayOfParts[4];
