@@ -1,1 +1,0 @@
-showTime("<?= time('r') ?>");
