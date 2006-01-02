@@ -44,18 +44,19 @@ Tasks toward having a stable API for developers
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         |  1. Document the Data model public API
-       |          |         |  6. Make the 4 original plugins conform to the new plugin API (if possible)
-       |          |         |  7. See if it's possible to simplify the plugin API
-       |          |         |  8. Change "TablePlugin" to "TableView", etc.
-       |          |         |  9. Move the 4 original plugins into the plugins folder
-       |          |         | 10. Remove BarChartView and Outline view from the axiomatic.json file
-       |          |         | 12. Have Entry.toSting() return the Entry's UUID -- same for Item.toString()
-       |          |         | 13. Move DOM methods from orp.view.View.xxx to orp.dom.xxx
-       |          |         | 14. Make RootView subclass from View, or add comments explaining why it doesn't
-       |          |         | 15. Rationalize the View API and document public API
-       |          |         | 17. Refactor our observer notification API (and implementation)
-       |          |         | 18. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
+       |          |         | 101. Document the Data model public API
+       |          |         | 102. Make the 4 original plugins conform to the new plugin API (if possible)
+       |          |         | 103. See if it's possible to simplify the plugin API
+       |          |         | 104. Change "TablePlugin" to "TableView", etc.
+       |          |         | 105. Move the 4 original plugins into the plugins folder
+       |          |         | 106. Remove BarChartView and Outline view from the axiomatic.json file
+       |          |         | 107. Have Entry.toSting() return the Entry's UUID -- same for Item.toString()
+       |          |         | 108. Move DOM methods from orp.view.View.xxx to orp.dom.xxx
+       |          |         | 109. Make RootView subclass from View, or add comments explaining why it doesn't
+       |          |         | 110. Rationalize the View API and document public API
+       |          |         | 111. Refactor our observer notification API (and implementation)
+       |          |         | 112. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
+       |          |         | 113. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
@@ -64,12 +65,13 @@ Tasks toward having a stable file format
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         |  1. Research standard text representations for DateValues
-       |          |         |  2. Make DateValue support date ranges
-       |          |         |  3. Make ordinal value strings not grow long so quickly
-       |          |         |  4. Make sure view code uses transactions
-       |          |         |  5. Write concurrency tests 
-       |          |         |  6. Ensure that PHP scripts and file I/O works for concurrent multi-user access
+       |          |         | 201. Research standard text representations for DateValues
+       |          |         | 202. Make DateValue support date ranges
+       |          |         | 203. Make ordinal value strings not grow long so quickly
+       |          |         | 204. Make sure view code uses transactions
+       |          |         | 205. Write concurrency tests 
+       |          |         | 206. Ensure that PHP scripts and file I/O works for concurrent multi-user access
+       |          |         | 207. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
@@ -78,15 +80,16 @@ Big picture tasks
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         |     Instead of having a copy of dojo in our SVN archive, link to dojo using SVN "externals"
+       |          |         | 301. Instead of having a copy of dojo in our SVN archive, link to dojo using SVN "externals"
                                     see http://svnbook.red-bean.com/en/1.1/ch07s04.html
                                     see section 5.2.4 of http://tortoisesvn.sourceforge.net/docs/nightly/TortoiseSVN_en.pdf
-       |          |         |  1. Attempt to embed an OpenRecord view in a MediaWiki page
-       |          |         |  2. Have a server that supports repositories with thousands of items
-       |          |         |  3. Look at replacing our notion of Views with Dojo's notion of widgets
-       |          |         |  4. Run in IE as well as Firefox
-       |          |         |  5. Add support for repository merging
-       |          |         |  6. Use Camtesia Studio to create a screencast about OpenRecord (and plugins)
+       |          |         | 302. Attempt to embed an OpenRecord view in a MediaWiki page
+       |          |         | 303. Have a server that supports repositories with thousands of items
+       |          |         | 304. Look at replacing our notion of Views with Dojo's notion of widgets
+       |          |         | 305. Run in IE as well as Firefox
+       |          |         | 306. Add support for repository merging
+       |          |         | 307. Use Camtesia Studio to create a screencast about OpenRecord (and plugins)
+       |          |         | 308. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
@@ -95,23 +98,24 @@ Tasks toward cleaning up the code base
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         |  1. try to replace View.appendNewElement() with dojo.xml.domUtil methods
-       |          |         |  2. try to replace orp.util.css_xxx functions with dojo.xml.htmlUtil.xxxClass functions
-       |          |         |  4. try to replace /source/util/Cookie.js with dojo.io.cookies
-       |          |         |  5. try to replace remaining Util.js functions with dojo.lang functions
-       |          |         |  6. Make DateValue wrap an internal Date object
-       |          |         |  7. merge StubArchive + DeltaArchive, and re-name the result
-       |          |         |  8. update unit tests to use the FakeStorage instead of StubArchive
-       |          |         |  9. Pick one file, and do a group code review on it
-brian  | 1    IED |         | 10. Rationalize our CSS style sheet approach
-       |          |         | 11. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
-       |          |         | 13. Write one unit test that tests GUI code
-       |          |         | 14. Write one performance test that measures the time some code takes
-       |          |         | 15. Convert UI code from DOM level 0 to DOM level 2
-       |          |         | 16. Start process for doing ongoing code reviews
-       |          |         |     grep for ".getEntriesForAttribute(" and refactor to use ".getValuesForAttribute("
-       |          |         |     Maybe change all our indenting from spaces to tabs, to be in sync with dojo
-       |          |         |     Prevent memory leaks via dojo.event.browser.clean(parent.removeChild(child));
+       |          |         | 401. try to replace View.appendNewElement() with dojo.xml.domUtil methods
+       |          |         | 402. try to replace orp.util.css_xxx functions with dojo.xml.htmlUtil.xxxClass functions
+       |          |         | 404. try to replace /source/util/Cookie.js with dojo.io.cookies
+       |          |         | 405. try to replace remaining Util.js functions with dojo.lang functions
+       |          |         | 406. Make DateValue wrap an internal Date object
+       |          |         | 407. merge StubArchive + DeltaArchive, and re-name the result
+       |          |         | 408. update unit tests to use the FakeStorage instead of StubArchive
+       |          |         | 409. Pick one file, and do a group code review on it
+brian  | 1    IED |         | 410. Rationalize our CSS style sheet approach
+       |          |         | 411. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
+       |          |         | 412. Write one unit test that tests GUI code
+       |          |         | 413. Write one performance test that measures the time some code takes
+       |          |         | 414. Convert UI code from DOM level 0 to DOM level 2
+       |          |         | 415. Start process for doing ongoing code reviews
+       |          |         | 416. grep for ".getEntriesForAttribute(" and refactor to use ".getValuesForAttribute("
+       |          |         | 417. Maybe change all our indenting from spaces to tabs, to be in sync with dojo
+       |          |         | 418. Prevent memory leaks via dojo.event.browser.clean(parent.removeChild(child));
+       |          |         | 419. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
@@ -120,50 +124,50 @@ Tasks to make the UI usable
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         | 10. Implement a good URL-to-content mapping, so that URLs won't go bad in future releases
-       |          |         | 11. Assign system attributes & categories to a "System" category
-       |          |         | 12. Hide "System" items most of the time
-       |          |         | 13. improve UI for creating a new category
-       |          |         | 14. Deal with \n in page name or summary fields
-       |          |         | 15. be able to select a table row 
-       |          |         | 16. be able to delete a selected table row 
-       |          |         | 17. drag-and-drop to re-order table rows
-       |          |         | 18. improve UI for "add new attribute" in Table View 
-       |          |         | 19. improve UI for setting the expected data type of an attribute
+       |          |         | 510. Implement a good URL-to-content mapping, so that URLs won't go bad in future releases
+       |          |         | 511. Assign system attributes & categories to a "System" category
+       |          |         | 512. Hide "System" items most of the time
+       |          |         | 513. improve UI for creating a new category
+       |          |         | 514. Deal with \n in page name or summary fields
+       |          |         | 515. be able to select a table row 
+       |          |         | 516. be able to delete a selected table row 
+       |          |         | 517. drag-and-drop to re-order table rows
+       |          |         | 518. improve UI for "add new attribute" in Table View 
+       |          |         | 519. improve UI for setting the expected data type of an attribute
 -------+----------+---------+----------------------------------------------
-       |          |         | 20. have Detail View use textarea instead of text input, for long strings
-       |          |         | 21. make it possible to add a new attribute in Detail View 
-       |          |         | 22. improve UI for initial "out of the box" experience
-       |          |         | 23. improve UI for creating a new page
-       |          |         | 24. improve UI for adding a new section to a page
-       |          |         | 25. UI to move/delete sections?
-       |          |         | 26. 
-       |          |         | 27. Have different documents use different style-sheets
-       |          |         | 28. Wire up observers & keep views in sync
-       |          |         | 29. Provide GUI feedback about what's editable
+       |          |         | 520. have Detail View use textarea instead of text input, for long strings
+       |          |         | 521. make it possible to add a new attribute in Detail View 
+       |          |         | 522. improve UI for initial "out of the box" experience
+       |          |         | 523. improve UI for creating a new page
+       |          |         | 524. improve UI for adding a new section to a page
+       |          |         | 525. UI to move/delete sections?
+       |          |         | 526. improve UI for creating a new user
+       |          |         | 527. Have different documents use different style-sheets
+       |          |         | 528. Wire up observers & keep views in sync
+       |          |         | 529. Provide GUI feedback about what's editable
 -------+----------+---------+----------------------------------------------
-       |          |         | 30. Data model: boolean, URL, entries that apply to timespan (e.g. annual population)
-       |          |         | 31. Make currently sorted column have a special CSS class so that it can look different
-       |          |         | 32. Resolve: How should table cells deal with <enter>, move down a cell or to the right?
-       |          |         | 33. be able to select a non-lozenge literal entry
-       |          |         | 34. be able to select the text within an entry
-       |          |         | 35. Reach consensus on (colors, padding, and borders) and then implement
-       |          |         | 36. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
-       |          |         | 37. UI and data model design to support collaboration
-       |          |         | 38. config option so that only logged-in users have read-access
-       |          |         | 39. have an "icon" attribute, and use icons in suggestion box and in EntryView
+       |          |         | 530. Data model: boolean, URL, entries that apply to timespan (e.g. annual population)
+       |          |         | 531. Make currently sorted column have a special CSS class so that it can look different
+       |          |         | 532. Resolve: How should table cells deal with <enter>, move down a cell or to the right?
+       |          |         | 533. be able to select a non-lozenge literal entry
+       |          |         | 534. be able to select the text within an entry
+       |          |         | 535. Reach consensus on (colors, padding, and borders) and then implement
+       |          |         | 536. Set up an OpenRecord.org "dogfood" site & hand-copy info into it
+       |          |         | 537. UI and data model design to support collaboration
+       |          |         | 538. config option so that only logged-in users have read-access
+       |          |         | 539. have an "icon" attribute, and use icons in suggestion box and in EntryView
 -------+----------+---------+----------------------------------------------
-       |          |         | 40. improve UI for entering references to categories or to other items
-       |          |         | 41. improve UI for creating a new user
-       |          |         | 42. BUG: back button is broken
-       |          |         | 43. BUG: "Waiting for localhost..." (may be related to how we load images)
-       |          |         | 44. BUG: "Node was not found" exception in EntryView/LoginView?
-       |          |         | 45. Do some testing to find other existing bugs
-       |          |         | 46. Have explicit save instead of (or in addition to) autosave
-       |          |         | 47. Be able to cancel out of creating a new account
-       |          |         | 48. Save view layout choice and user preferences
-       |          |         | 49. Write scalability tests 
-       |          |         | 50. Fix the message that says "Sorry, for some reason OpenRecord was not able to launch."
+       |          |         | 540. improve UI for entering references to categories or to other items
+       |          |         | 541. BUG: back button is broken
+       |          |         | 542. BUG: "Waiting for localhost..." (may be related to how we load images)
+       |          |         | 543. BUG: "Node was not found" exception in EntryView/LoginView?
+       |          |         | 544. Do some testing to find other existing bugs
+       |          |         | 545. Have explicit save instead of (or in addition to) autosave
+       |          |         | 546. Be able to cancel out of creating a new account
+       |          |         | 547. Save view layout choice and user preferences
+       |          |         | 548. Write scalability tests 
+       |          |         | 549. Fix the message that says "Sorry, for some reason OpenRecord was not able to launch."
+       |          |         | 550. (new task...)
 -------+----------+---------+----------------------------------------------
                             
 
