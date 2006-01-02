@@ -55,7 +55,7 @@ Who    | Estimate | Actual  | Task
        |          |         | 109. Make RootView subclass from View, or add comments explaining why it doesn't
        |          |         | 110. Rationalize the View API and document public API
        |          |         | 111. Refactor our observer notification API (and implementation)
-       |          |         | 112. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
+(soon) |          |         | 112. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
        |          |         | 113. (new task...)
 -------+----------+---------+----------------------------------------------
 
@@ -84,11 +84,11 @@ Who    | Estimate | Actual  | Task
                                     see http://svnbook.red-bean.com/en/1.1/ch07s04.html
                                     see section 5.2.4 of http://tortoisesvn.sourceforge.net/docs/nightly/TortoiseSVN_en.pdf
        |          |         | 302. Attempt to embed an OpenRecord view in a MediaWiki page
-       |          |         | 303. Have a server that supports repositories with thousands of items
-       |          |         | 304. Look at replacing our notion of Views with Dojo's notion of widgets
+(soon) |          |         | 303. Have a server that supports repositories with thousands of items
+(soon) |          |         | 304. Look at replacing our notion of Views with Dojo's notion of widgets
        |          |         | 305. Run in IE as well as Firefox
        |          |         | 306. Add support for repository merging
-       |          |         | 307. Use Camtesia Studio to create a screencast about OpenRecord (and plugins)
+(soon) |          |         | 307. Use Camtesia Studio to create a screencast about OpenRecord (and plugins)
        |          |         | 308. (new task...)
 -------+----------+---------+----------------------------------------------
 
@@ -115,7 +115,8 @@ brian  | 1    IED |         | 410. Rationalize our CSS style sheet approach
        |          |         | 416. grep for ".getEntriesForAttribute(" and refactor to use ".getValuesForAttribute("
        |          |         | 417. Maybe change all our indenting from spaces to tabs, to be in sync with dojo
        |          |         | 418. Prevent memory leaks via dojo.event.browser.clean(parent.removeChild(child));
-       |          |         | 419. (new task...)
+(soon) |          |         | 419. Replace scriptaculous/dragdrop.js with dojo.dnd, and remove scriptaculous from our tree
+       |          |         | 420. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
