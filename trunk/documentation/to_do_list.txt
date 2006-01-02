@@ -59,7 +59,7 @@ brian  |          | 0.05 IED| 11. Make a HelloWorld plugin
        |          |         | 13. Move DOM methods from orp.view.View.xxx to orp.dom.xxx
        |          |         | 14. Make RootView subclass from View, or add comments explaining why it doesn't
        |          |         | 15. Rationalize the View API and document public API
-brian  |          | (0.7+)  | 16. Try to convert one unit test over to the dojo jum framework
+brian  |          | 1    IED| 16. Try to convert one unit test over to the dojo jum framework
        |          |         | 17. Refactor our observer notification API (and implementation)
        |          |         | 18. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
 -------+----------+---------+----------------------------------------------
@@ -102,9 +102,10 @@ Tasks toward cleaning up the code base
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
+brian  |          | 1    IED|  0. move orp.uuid and orp.lang to dojo.uuid and dojo.lang, and offer them to dojo
        |          |         |  1. try to replace View.appendNewElement() with dojo.xml.domUtil methods
        |          |         |  2. try to replace orp.util.css_xxx functions with dojo.xml.htmlUtil.xxxClass functions
-brian  |          | (0.4+)  |  3. try to replace md5.js with dojo.crypto.MD5 methods
+brian  |          | 0.5  IED|  3. try to replace md5.js with dojo.crypto.MD5 methods
        |          |         |  4. try to replace /source/util/Cookie.js with dojo.io.cookies
        |          |         |  5. try to replace remaining Util.js functions with dojo.lang functions
        |          |         |  6. Make DateValue wrap an internal Date object
@@ -120,6 +121,7 @@ brian  |          | 0.2  IED| 12. move XmlConverter.js out of util, because it d
        |          |         | 16. Start process for doing ongoing code reviews
        |          |         |     grep for ".getEntriesForAttribute(" and refactor to use ".getValuesForAttribute("
        |          |         |     Maybe change all our indenting from spaces to tabs, to be in sync with dojo
+       |          |         |     Prevent memory leaks via dojo.event.browser.clean(parent.removeChild(child));
 -------+----------+---------+----------------------------------------------
 
 
