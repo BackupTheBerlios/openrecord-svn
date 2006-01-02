@@ -201,7 +201,7 @@ orp.util.isEmpty = function(object) {
 
 
 orp.util.hasProperty = function(object, property) {
-  return (object[property] !== undefined);
+  return (object[property] !== undefined); // return (property in object);
 };
 
 orp.util.hasProperties = function(object, properties) {
@@ -245,12 +245,13 @@ orp.util.hasExactlyTheseProperties = function(object, properties) {
  * @return   Returns a number between 0 and array.length, or -1 if the element was not in the array.
  */
 orp.util.getArrayIndex = function(array, value) {
-  for (var i=0; i<array.length; ++i) {
-    if (array[i] == value) {
-      return i;
-    }
-  }
-  return -1;
+  return dojo.lang.indexOf(array, value);
+  // for (var i=0; i<array.length; ++i) {
+  //   if (array[i] == value) {
+  //     return i;
+  //   }
+  // }
+  // return -1;
 };
 
 
@@ -268,13 +269,7 @@ orp.util.getArrayIndex = function(array, value) {
  */
 orp.util.isObjectInSet = function(object, set) {
   orp.lang.assertType(set, Array);
-  
-  for (var key in set) {
-    if (set[key] == object) {
-      return true;
-    }
-  }
-  return false;
+  return dojo.lang.inArray(set, object);
 };
 
 
