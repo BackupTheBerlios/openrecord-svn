@@ -445,5 +445,56 @@ none?
 ################################################################################
 
 
+---------------------------------------------------------------------------
+   Tasks we originally identified for Iteration #8, in December 2005
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+brian  |          | 0.1  IED|  2. Change the "node" used in the UUIDs for plugins
+mignon |          | 0.05 IED|  3. Add validation code to create_new_plugin.html to check the supplied ClassName
+mignon |          |0.125 IED|  4. Add instructions on the create_new_plugin.html page
+mignon |          |0.125 IED|  5. Add list of suggested plugins to the create_new_plugin.html page
+brian  |          | 0.05 IED| 11. Make a HelloWorld plugin
+brian  |          | 1    IED| 16. Try to convert one unit test over to the dojo jum framework
+brian  |          | 0.5  IED|  3. try to replace md5.js with dojo.crypto.MD5 methods
+brian  |          | 0.2  IED| 12. move XmlConverter.js out of util, because it depends on model code
+-------+----------+---------+----------------------------------------------
+
+
+---------------------------------------------------------------------------
+   New tasks that we decided to take on for Iteration #8, in December 2005
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+brian  |          | 0.3  IED|  0. Switch to using Dojo-0.2.0, and have it live directly in .../third_party/dojo
+brian  |          | 1    IED|  0. move orp.uuid and orp.lang to dojo.uuid and dojo.lang, and offer them to dojo
+-------+----------+---------+----------------------------------------------
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Summary of Iteration #8
+          December 2005
+  December 5 to January 2, 2005
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   8    = number of PLANNED tasks that were finished 
+   2    = number of ADDITIONAL tasks that were finished 
+  ~3.5  = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
+   4    = number of weeks in October iteration
+ ~ 0.9  = Velocity (in estimated IEDs per week)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+################################################################################
+################################################################################
+##                                                                            ##
+##                                Iteration #9                                ##
+##                                January 2006                                ##
+##                                                                            ##
+################################################################################
+################################################################################
+
+
 ...FIXME...
 

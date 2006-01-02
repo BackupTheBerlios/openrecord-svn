@@ -45,21 +45,15 @@ Tasks toward having a stable API for developers
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
        |          |         |  1. Document the Data model public API
-brian  |          | 0.1  IED|  2. Change the "node" used in the UUIDs for plugins
-mignon |          | 0.05 IED|  3. Add validation code to create_new_plugin.html to check the supplied ClassName
-mignon |          |0.125 IED|  4. Add instructions on the create_new_plugin.html page
-mignon |          |0.125 IED|  5. Add list of suggested plugins to the create_new_plugin.html page
        |          |         |  6. Make the 4 original plugins conform to the new plugin API (if possible)
        |          |         |  7. See if it's possible to simplify the plugin API
        |          |         |  8. Change "TablePlugin" to "TableView", etc.
        |          |         |  9. Move the 4 original plugins into the plugins folder
        |          |         | 10. Remove BarChartView and Outline view from the axiomatic.json file
-brian  |          | 0.05 IED| 11. Make a HelloWorld plugin
        |          |         | 12. Have Entry.toSting() return the Entry's UUID -- same for Item.toString()
        |          |         | 13. Move DOM methods from orp.view.View.xxx to orp.dom.xxx
        |          |         | 14. Make RootView subclass from View, or add comments explaining why it doesn't
        |          |         | 15. Rationalize the View API and document public API
-brian  |          | 1    IED| 16. Try to convert one unit test over to the dojo jum framework
        |          |         | 17. Refactor our observer notification API (and implementation)
        |          |         | 18. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
 -------+----------+---------+----------------------------------------------
@@ -84,7 +78,6 @@ Big picture tasks
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-brian  |          | 0.3  IED|  0. Switch to using Dojo-0.2.0, and have it live directly in .../third_party/dojo
        |          |         |     Instead of having a copy of dojo in our SVN archive, link to dojo using SVN "externals"
                                     see http://svnbook.red-bean.com/en/1.1/ch07s04.html
                                     see section 5.2.4 of http://tortoisesvn.sourceforge.net/docs/nightly/TortoiseSVN_en.pdf
@@ -102,10 +95,8 @@ Tasks toward cleaning up the code base
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-brian  |          | 1    IED|  0. move orp.uuid and orp.lang to dojo.uuid and dojo.lang, and offer them to dojo
        |          |         |  1. try to replace View.appendNewElement() with dojo.xml.domUtil methods
        |          |         |  2. try to replace orp.util.css_xxx functions with dojo.xml.htmlUtil.xxxClass functions
-brian  |          | 0.5  IED|  3. try to replace md5.js with dojo.crypto.MD5 methods
        |          |         |  4. try to replace /source/util/Cookie.js with dojo.io.cookies
        |          |         |  5. try to replace remaining Util.js functions with dojo.lang functions
        |          |         |  6. Make DateValue wrap an internal Date object
@@ -114,7 +105,6 @@ brian  |          | 0.5  IED|  3. try to replace md5.js with dojo.crypto.MD5 met
        |          |         |  9. Pick one file, and do a group code review on it
 brian  | 1    IED |         | 10. Rationalize our CSS style sheet approach
        |          |         | 11. Do refactoring wherever needed (e.g. SuggestionBox and AttributeSuggestionBox)
-brian  |          | 0.2  IED| 12. move XmlConverter.js out of util, because it depends on model code
        |          |         | 13. Write one unit test that tests GUI code
        |          |         | 14. Write one performance test that measures the time some code takes
        |          |         | 15. Convert UI code from DOM level 0 to DOM level 2
