@@ -56,7 +56,8 @@ Who    | Estimate | Actual  | Task
        |          |         | 110. Rationalize the View API and document public API
        |          |         | 111. Refactor our observer notification API (and implementation)
 (soon) |          |         | 112. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
-       |          |         | 113. (new task...)
+       |          |         | 113. BUG: in plugins, dojo.require() statements don't do anything 
+       |          |         | 114. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
