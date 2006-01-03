@@ -84,11 +84,12 @@ Who    | Estimate | Actual  | Task
 mignon |          |  .25    | 301. Instead of having a copy of dojo in our SVN archive, link to dojo using SVN "externals"
        |          |         | 302. Attempt to embed an OpenRecord view in a MediaWiki page
 (soon) |          |         | 303. Have a server that supports repositories with thousands of items
-(soon) |          |         | 304. Look at replacing our notion of Views with Dojo's notion of widgets
-       |          |         | 305. Run in IE as well as Firefox
-       |          |         | 306. Add support for repository merging
-(soon) |          |         | 307. Use Camtesia Studio to create a screencast about OpenRecord (and plugins)
-       |          |         | 308. (new task...)
+(soon) |          |         | 304. Change View class so a subview can be either an orp.view.View or a dojo.widget instance
+(soon) |          |         | 305. Look at replacing our notion of Views with Dojo's notion of widgets
+       |          |         | 306. Run in IE as well as Firefox
+       |          |         | 307. Add support for repository merging
+(soon) |          |         | 308. Use Camtesia Studio to create a screencast about OpenRecord (and plugins)
+       |          |         | 309. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
@@ -181,18 +182,6 @@ More tasks
  + BUG: Back button is broken
     The browser's back button doesn't work after you click from 
     page to page in the navbar.
----------------------------------------------------
- + BUG: problems with HTML in text strings
-    We still have some problems with handling text strings that 
-    have HTML in them. If an item has an attribute value with some 
-    HTML in it, like '<cite>', we incorrectly render it like 
-    '& lt;cite& gt;' instead of '<cite>'
----------------------------------------------------
- + Editable Detail Plugin
-    Make a new version of the current DetailPlugin.js.  The 
-    current one just lets the user view the attribute values, 
-    but we should make a better one that lets the user change 
-    the values, and add new values, and add new ad-hoc attributes.
 ---------------------------------------------------
  + List/Detail Combo Plugin
     We could make a plugin that takes a list of items and
