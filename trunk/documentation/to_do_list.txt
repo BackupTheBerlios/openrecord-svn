@@ -115,7 +115,7 @@ brian  | 1    IED |         | 410. Rationalize our CSS style sheet approach
        |          |         | 416. grep for ".getEntriesForAttribute(" and refactor to use ".getValuesForAttribute("
        |          |         | 417. Maybe change all our indenting from spaces to tabs, to be in sync with dojo
        |          |         | 418. Prevent memory leaks via dojo.event.browser.clean(parent.removeChild(child));
-(soon) |          |         | 419. Replace scriptaculous/dragdrop.js with dojo.dnd, and remove scriptaculous from our tree
+mignon |          |         | 419. Replace scriptaculous/dragdrop.js with dojo.dnd, and remove scriptaculous from our tree
        |          |         | 420. (new task...)
 -------+----------+---------+----------------------------------------------
 
@@ -168,7 +168,8 @@ Who    | Estimate | Actual  | Task
        |          |         | 547. Save view layout choice and user preferences
        |          |         | 548. Write scalability tests 
        |          |         | 549. Fix the message that says "Sorry, for some reason OpenRecord was not able to launch."
-       |          |         | 550. (new task...)
+       |          |         | 550. use dojo.fx.html transitions fadeOut/fadeIn or implode/explode for page changes
+       |          |         | 551. (new task...)
 -------+----------+---------+----------------------------------------------
                             
 
