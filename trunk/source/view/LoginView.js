@@ -2,7 +2,7 @@
  LoginView.js
 
 ******************************************************************************
- Written in 2005 by 
+ Written in 2005 and 2006 by 
     Brian Douglas Skinner <brian.skinner@gumption.org>
     Chih-Chao Lam <chao@cs.stanford.edu>
 
@@ -39,6 +39,9 @@ dojo.provide("orp.view.UserSuggestionBox");
 dojo.require("orp.view.View");
 dojo.require("orp.util.Cookie");
 dojo.require("dojo.event.*");
+dojo.require("dojo.html");
+dojo.require("dojo.fx.*");
+
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -134,9 +137,11 @@ orp.view.LoginView.prototype._rebuildView = function() {
   var editMode = currentUser ? true : false;
   this.getRootView().setEditMode(editMode);
   
-  this.errorNode = orp.view.View.appendNewElement(mySpan,"span",null,{id:"login_view_error"});
-  this.errorNode.style.display = 'None';
-  this.errorNode.style.color = '#EE0000';
+  this.errorNode = orp.view.View.appendNewElement(mySpan, "span");
+  this.errorNode.style.color = '#FFFFFF';      // white
+  this.errorNode.style.background = '#EE0000'; // red
+  dojo.fx.html.fadeOut(this.errorNode, 1);
+  
   if (this._isCreatingNewAccount) {
     // The user wants to create a new account.
     // Create a line that looks like this:
@@ -169,7 +174,7 @@ orp.view.LoginView.prototype._rebuildView = function() {
     // Create a line that looks like this:
     //   _Create Account_  or sign in:  _username_  _password_  [Sign in]
     
-    var createAccountLink = orp.view.View.appendNewElement(mySpan, "a", null, null, "Create Account");
+    var createAccountLink = orp.view.View.appendNewElement(mySpan, "a", null, null, " Create Account");
     dojo.event.connect(createAccountLink, "onclick", this, "_clickOnCreateAccountLink");
     orp.view.View.appendNewTextNode(mySpan, " or sign in: ");
     this.usernameInput = orp.view.View.appendNewElement(mySpan, "input", null, {size:20,value:"Albert Einstein"});
@@ -343,10 +348,10 @@ orp.view.LoginView.prototype._loginUser = function(user, password) {
  */
 orp.view.LoginView.prototype._reportError = function(errorString) {
   var mySpan = this.getHtmlElement();
-  Effect.Shake(mySpan);
   orp.view.View.removeChildrenOfElement(this.errorNode);
-  orp.view.View.appendNewTextNode(this.errorNode,errorString + ' ');
-  Effect.Appear(this.errorNode, {duration:2.0, transition:Effect.Transitions.wobble});
+  orp.view.View.appendNewTextNode(this.errorNode, ' ' + errorString + ' ');
+  this.errorNode.style.display = 'inline';
+  dojo.fx.html.fadeIn(this.errorNode, 1000);
 };
 
 
