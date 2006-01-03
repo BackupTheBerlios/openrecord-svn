@@ -50,7 +50,7 @@ Who    | Estimate | Actual  | Task
        |          |         | 104. Change "TablePlugin" to "TableView", etc.
        |          |         | 105. Move the 4 original plugins into the plugins folder
        |          |         | 106. Remove BarChartView and Outline view from the axiomatic.json file
-       |          |         | 107. Have Entry.toSting() return the Entry's UUID -- same for Item.toString()
+       |          |         | 107. Have Entry.toString() return the Entry's UUID -- same for Item.toString()
        |          |         | 108. Move DOM methods from orp.view.View.xxx to orp.dom.xxx
        |          |         | 109. Make RootView subclass from View, or add comments explaining why it doesn't
        |          |         | 110. Rationalize the View API and document public API
@@ -80,9 +80,7 @@ Big picture tasks
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         | 301. Instead of having a copy of dojo in our SVN archive, link to dojo using SVN "externals"
-                                    see http://svnbook.red-bean.com/en/1.1/ch07s04.html
-                                    see section 5.2.4 of http://tortoisesvn.sourceforge.net/docs/nightly/TortoiseSVN_en.pdf
+mignon |          |  .25    | 301. Instead of having a copy of dojo in our SVN archive, link to dojo using SVN "externals"
        |          |         | 302. Attempt to embed an OpenRecord view in a MediaWiki page
 (soon) |          |         | 303. Have a server that supports repositories with thousands of items
 (soon) |          |         | 304. Look at replacing our notion of Views with Dojo's notion of widgets
