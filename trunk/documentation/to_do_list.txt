@@ -57,7 +57,10 @@ Who    | Estimate | Actual  | Task
        |          |         | 111. Refactor our observer notification API (and implementation)
 (soon) |          |         | 112. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
        |          |         | 113. BUG: in plugins, dojo.require() statements don't do anything 
-       |          |         | 114. (new task...)
+       |          |         | 114. In OpenRecordLoader.js, add: djConfig.cacheBust = new Date().valueOf().toString();
+       |          |         | 115. Allow a plugin view to register as a default detail view for a category of item
+       |          |         | 116. Have DetailPlugin show tabs, if more than one detail view is available for an item
+       |          |         | 117. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
@@ -66,9 +69,9 @@ Tasks toward having a stable file format
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         | 201. Research standard text representations for DateValues
-       |          |         | 202. Make DateValue support date ranges
-       |          |         | 203. Make ordinal value strings not grow long so quickly
+(soon) |          |         | 201. Research standard text representations for DateValues
+(soon) |          |         | 202. Make a DateRange data class, for values like "July 2002 - May 2003"
+(soon) |          |         | 203. Make ordinal value strings not grow long so quickly
        |          |         | 204. Make sure view code uses transactions
        |          |         | 205. Write concurrency tests 
        |          |         | 206. Ensure that PHP scripts and file I/O works for concurrent multi-user access
@@ -88,8 +91,9 @@ mignon |          |  .25    | 301. Instead of having a copy of dojo in our SVN a
 (soon) |          |         | 305. Look at replacing our notion of Views with Dojo's notion of widgets
        |          |         | 306. Run in IE as well as Firefox
        |          |         | 307. Add support for repository merging
-(soon) |          |         | 308. Use Camtesia Studio to create a screencast about OpenRecord (and plugins)
-       |          |         | 309. (new task...)
+brian  | 3    IED |         | 308. Use Camtesia Studio to create screencasts about OpenRecord (and plugins)
+       |          |         | 309. Consider implementing a JavaScript file:// version of this: http://lists.berlios.de/pipermail/openrecord-dev/2005-October/000248.html
+       |          |         | 310. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
@@ -116,7 +120,9 @@ brian  | 1    IED |         | 410. Rationalize our CSS style sheet approach
        |          |         | 417. Maybe change all our indenting from spaces to tabs, to be in sync with dojo
        |          |         | 418. Prevent memory leaks via dojo.event.browser.clean(parent.removeChild(child));
 mignon |          |         | 419. Replace scriptaculous/dragdrop.js with dojo.dnd, and remove scriptaculous from our tree
-       |          |         | 420. (new task...)
+       |          |         | 420. Replace XMLHttpRequest calls with dojo.io.bind() calls
+       |          |         | 421. Consider refactoring orp.storage so that FileProtocolStorage is "behind" dojo.io.bind
+       |          |         | 422. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
@@ -147,7 +153,7 @@ Who    | Estimate | Actual  | Task
        |          |         | 528. Wire up observers & keep views in sync
        |          |         | 529. Provide GUI feedback about what's editable
 -------+----------+---------+----------------------------------------------
-       |          |         | 530. Data model: boolean, URL, entries that apply to timespan (e.g. annual population)
+(soon) |          |         | 530. Data model: boolean, URL, entries that apply to timespan (e.g. annual population)
        |          |         | 531. Make currently sorted column have a special CSS class so that it can look different
        |          |         | 532. Resolve: How should table cells deal with <enter>, move down a cell or to the right?
        |          |         | 533. be able to select a non-lozenge literal entry
@@ -169,12 +175,27 @@ Who    | Estimate | Actual  | Task
        |          |         | 548. Write scalability tests 
        |          |         | 549. Fix the message that says "Sorry, for some reason OpenRecord was not able to launch."
        |          |         | 550. use dojo.fx.html transitions fadeOut/fadeIn or implode/explode for page changes
-       |          |         | 551. (new task...)
+       |          |         | 551. Make a Quantity class, for representing values like "18 kg"
+       |          |         | 552. (new task...)
 -------+----------+---------+----------------------------------------------
                             
 
+---------------------------------------------------------------------------
+Plugins to write -- see also: .../source/plugins/create_new_plugin/plugin_suggestions.html
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+       |          |         | 601. pivot table (Brian Skinner has starter code available.)
+       |          |         | 602. periodic table element -- could make use of features 115 and 116
+       |          |         | 603. scatter plot -- (using dojo.widget.Chart, fallback to html ?)
+       |          |         | 604. bar chart -- (using dojo.widget.Chart, fallback to html ?)
+       |          |         | 605. Gantt chart -- (using dojo.widget.Chart, fallback to html ?)
+       |          |         | 606. some animated view -- e.g. http://weblog.infoworld.com/udell/2005/01/22.html#a1156
+       |          |         | 607. timeline -- like Wikimedia EasyTimeline: http://meta.wikimedia.org/wiki/EasyTimeline
+       |          |         | 608. calendar -- month view, etc. -- with items placed based on date attributes
+-------+----------+---------+----------------------------------------------
 
-   
+  
   
 =======================================================
 More tasks
