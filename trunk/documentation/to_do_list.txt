@@ -185,7 +185,7 @@ Plugins to write -- see also: .../source/plugins/create_new_plugin/plugin_sugges
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-       |          |         | 601. pivot table (Brian Skinner has starter code available.)
+       |          |         | 601. pivot table -- starter code: http://openrecord.org/pivot_table/
        |          |         | 602. periodic table element -- could make use of features 115 and 116
        |          |         | 603. scatter plot -- (using dojo.widget.Chart, fallback to html ?)
        |          |         | 604. bar chart -- (using dojo.widget.Chart, fallback to html ?)
