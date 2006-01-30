@@ -40,6 +40,7 @@ dojo.require("orp.view.EntryView");
 dojo.require("orp.model.Item");
 dojo.require("orp.lang.Lang");
 dojo.require("dojo.event.*");
+dojo.require("dojo.dnd.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -233,7 +234,7 @@ orp.view.MultiEntriesView.prototype._handleOwnClick = function(eventObject) {
  *
  */
 orp.view.MultiEntriesView.prototype._handleDrop = function(element) {
-  var draggedEntryView = element.orp_entryView;
+  var draggedEntryView = element.dragObject.domNode.orp_entryView;
   if (!draggedEntryView) {orp.lang.assert(false);}
   var droppedEntry = draggedEntryView._entry;
   if (!droppedEntry) {orp.lang.assert(false);}
@@ -255,15 +256,6 @@ orp.view.MultiEntriesView.prototype._handleDrop = function(element) {
         type: droppedEntry.getType() });
     }
     this._addEntryView(newEntry);
-
-    // This is a little hack that accesses instance variables of the "Draggable"
-    // object in the script.aculo.us dragdrop.js library.
-    // We set "revert" to false to prevent the UI animation where the dragged 
-    // column header goes "flying" home again
-    var draggable = draggedEntryView._draggable;
-    draggable.options.revert = false;
-    // element.style.display = "none";
-    
     this.getSuperview().refresh();
   }
 };
@@ -369,10 +361,8 @@ orp.view.MultiEntriesView.prototype._buildView = function() {
   
   if (this.isInEditMode()) {
     dojo.event.connect(htmlElement, "onclick", this, "_handleOwnClick");
-    var listener = this;
-    Droppables.add(htmlElement, {accept: [orp.view.EntryView.cssClass.CONNECTION_VALUE, orp.view.EntryView.CSS_ITEM_VALUE, orp.view.EntryView.cssClass.SELECTED],
-      hoverclass: "test",
-      onDrop: function(element) {listener._handleDrop(element);}});
+    var dropTarget = new dojo.dnd.HtmlDropTarget(htmlElement, ["lozenge"]);
+    dojo.event.connect(dropTarget, "onDrop", this, "_handleDrop");
   } 
   this._myHasEverBeenDisplayedFlag = true;
 };

@@ -95,9 +95,6 @@ var djConfig = {
 orp.loader.loadStylesheet("source/base_style.css");
 
 orp.loader.loadScript("third_party/dojo/dojo.js");
-orp.loader.loadScript("third_party/scriptaculous/prototype.js");
-orp.loader.loadScript("third_party/scriptaculous/effects.js");
-orp.loader.loadScript("third_party/scriptaculous/dragdrop.js");
 
 orp.loader.loadScript("source/OpenRecordLoaderStepTwo.js");
 

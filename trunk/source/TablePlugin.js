@@ -43,12 +43,12 @@ dojo.require("orp.model.Item");
 dojo.require("orp.util.CsvParser");
 dojo.require("orp.lang.Lang");
 dojo.require("dojo.event.*");
+dojo.require("dojo.dnd.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global window, document, HTMLTableRowElement  */
-/*global Draggable, Droppables,  */
 /*global Util  */
 /*global Item  */
 /*global CsvParser  */
@@ -352,29 +352,29 @@ orp.TablePlugin.prototype.observedItemHasChanged = function(item) {
 /**
  *
  */
-orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppableObject) {
-  // First figure out what column header was dropped where
+orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged) {
+  // First figure out which column header was dragged (indexOfDraggedAttribute) 
+  // and where it landed (indexOfDraggedElement).
   var world = this.getWorld();
-  var draggedUuid = elementThatWasDragged.getAttribute('uuid');
+  var draggedUuid = elementThatWasDragged.dragObject.domNode.getAttribute('uuid');
   var draggedAttribute = world.getItemFromUuid(draggedUuid);
-  var headerCellElement = droppableObject.element;
-  var headerCellUuid = headerCellElement.getAttribute('uuid');
-  var droppedOnAttribute = world.getItemFromUuid(headerCellUuid);
   var indexOfDraggedAttribute = orp.util.getArrayIndex(this._displayAttributes, draggedAttribute);
-  var indexOfDroppedOnAttribute = orp.util.getArrayIndex(this._displayAttributes, droppedOnAttribute);
-
+  var headerRow = this._table.rows[0];
+  var headerCells = headerRow.getElementsByTagName("th");
+  var indexOfDraggedElement = -1;
+  for (i = 0; i < headerCells.length; ++i) {
+    if (headerCells[i].getAttribute('uuid') == draggedUuid) {
+      indexOfDraggedElement = i;
+      break;
+    }
+  }
+  orp.lang.assert(indexOfDraggedElement >= 0);
+  
   // If the user dragged a column header and dropped it on the same column 
   // header, then we don't need to change the column order.
-  if (indexOfDraggedAttribute == indexOfDroppedOnAttribute) {
+  if (indexOfDraggedAttribute == indexOfDraggedElement) {
     return;
   }
-
-  // This is a little hack that accesses instance variables of the "Draggable"
-  // object in the script.aculo.us dragdrop.js library.
-  // We set "revert" to false to prevent the UI animation where the dragged 
-  // column header goes "flying" home again
-  var draggable = elementThatWasDragged.orp_draggable;
-  draggable.options.revert = false;
 
   // Now we need to save the new column order to the repository.
   var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
@@ -386,43 +386,32 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged, droppabl
     // If we get here, it means this table has a saved list of user-selected
     // columns, and we just want to re-order that list.
     orp.lang.assert(this._displayAttributes.length == listOfTableColumnEntries.length);
+    
+    // Figure out which entry is being reordered between which two entries.
     var draggedEntry = listOfTableColumnEntries[indexOfDraggedAttribute];
-    var droppedOnEntry = listOfTableColumnEntries[indexOfDroppedOnAttribute];
-    if (indexOfDraggedAttribute > indexOfDroppedOnAttribute) {
-      // the user dragged the column to the left
-      var entryBeforeDroppedOnEntry = null;
-      if (indexOfDroppedOnAttribute > 0) {
-        entryBeforeDroppedOnEntry = listOfTableColumnEntries[indexOfDroppedOnAttribute-1];
-      }
-      draggedEntry.reorderBetween(entryBeforeDroppedOnEntry, droppedOnEntry);
+    var noPreviousEntry = (indexOfDraggedElement == 0);
+    var noFollowingEntry = (indexOfDraggedElement == headerCells.length - 1);
+    var draggedLeft = indexOfDraggedAttribute > indexOfDraggedElement;
+    var entryBeforeDroppedOnEntry = null;
+    if (!noPreviousEntry) {
+      var beforeIndex = draggedLeft? indexOfDraggedElement - 1 : indexOfDraggedElement;
+      entryBeforeDroppedOnEntry = listOfTableColumnEntries[beforeIndex];
     }
-    if (indexOfDraggedAttribute < indexOfDroppedOnAttribute) {
-      // the user dragged the column to the right
-      var entryAfterDroppedOnEntry = null;
-      if (indexOfDroppedOnAttribute < (listOfTableColumnEntries.length - 1)) {
-        entryAfterDroppedOnEntry = listOfTableColumnEntries[indexOfDroppedOnAttribute+1];
-      }
-      draggedEntry.reorderBetween(droppedOnEntry, entryAfterDroppedOnEntry);
+    var entryAfterDroppedOnEntry = null;
+    if (!noFollowingEntry) {
+      var afterIndex = draggedLeft? indexOfDraggedElement : indexOfDraggedElement + 1;
+      entryAfterDroppedOnEntry = listOfTableColumnEntries[afterIndex];
     }
+    draggedEntry.reorderBetween(entryBeforeDroppedOnEntry, entryAfterDroppedOnEntry);
   } else {
     // If we get here, it means we need to save a newly created list of
     // user-selected columns.
     this._displayAttributes.splice(indexOfDraggedAttribute, 1);
-    if (indexOfDraggedAttribute > indexOfDroppedOnAttribute) {
-      // the user dragged the column to the left
-      this._displayAttributes.splice(indexOfDroppedOnAttribute, 0, draggedAttribute);
-    }
-    if (indexOfDraggedAttribute < indexOfDroppedOnAttribute) {
-      // the user dragged the column to the right
-      this._displayAttributes.splice(indexOfDroppedOnAttribute, 0, draggedAttribute);
-    }
-    // alertString = "";
+    this._displayAttributes.splice(indexOfDraggedElement, 0, draggedAttribute);
     for (var i in this._displayAttributes) {
       var attribute = this._displayAttributes[i];
       layoutItem.addEntry({attribute:attributeTableColumns, value:attribute});
-      // alertString += attribute.getDisplayString() + '\n';
     }
-    // alert(alertString);
   }
   world.endTransaction();
   this.refresh();
@@ -451,17 +440,16 @@ orp.TablePlugin.prototype._buildHeader = function() {
     dojo.event.connect(headerCell, "onclick", orp.lang.bind(this, "clickOnHeader", attribute));
     
     if (this.isInEditMode()) {
-      var listener = this;
-      var draggable = new Draggable(headerCellContentSpan, {revert:true});
-      headerCellContentSpan.orp_draggable = draggable;
-      Droppables.add(headerCell, {
-        accept: "headerCellContentSpan",
-        hoverclass: 'drophover',
-        onDrop: function(element, droppableObject) {listener._handleDrop(element, droppableObject);}});   
+      new dojo.dnd.HtmlDragSource(headerCell, "headerCell");
     }
     ++numCols;
   }
   this._numberOfColumns = numCols;
+
+  if (this.isInEditMode()) {
+    var dropTarget = new dojo.dnd.HtmlDropTarget(headerRow, ["headerCell"]);
+    dojo.event.connect(dropTarget, "onDrop", this, "_handleDrop");
+  }
 };
 
 

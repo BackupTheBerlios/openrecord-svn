@@ -41,6 +41,7 @@ dojo.require("orp.model.World");
 dojo.require("orp.model.Item");
 dojo.require("orp.lang.Lang");
 dojo.require("dojo.event.*");
+dojo.require("dojo.dnd.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
@@ -278,11 +279,11 @@ orp.view.EntryView.prototype._setClassName = function() {
             // if (this.getRootView().isInShowToolsMode()) {
             if (orp.view.EntryView._PENDING_enableDragging) {
               this._textSpan.orp_entryView = this; 
-              this._draggable = new Draggable(this._textSpan, {revert:true});
+              this._draggable = new dojo.dnd.HtmlDragSource(this._textSpan, "lozenge");
             }
           } else {
             this._textSpan.orp_entryView = this; 
-            this._draggable = new Draggable(this._textSpan, {revert:true});
+            this._draggable = new dojo.dnd.HtmlDragSource(this._textSpan, "lozenge");
           }
         }
       }
@@ -371,7 +372,7 @@ orp.view.EntryView.prototype.startEditing = function(dontSelect,initialStr) {
     
     if (this._isMultiLine) {
       editField.style.height = (this.getHtmlElement().offsetHeight) + "px";
-    }  
+    }
     
     this._setupSuggestionBox();
     this.getHtmlElement().replaceChild(editField, this._textSpan);

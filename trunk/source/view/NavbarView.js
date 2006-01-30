@@ -39,13 +39,13 @@ dojo.require("orp.view.View");
 dojo.require("orp.view.RootView");
 dojo.require("orp.lang.Lang");
 dojo.require("dojo.event.*");
+dojo.require("dojo.dnd.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 
 /*global window */
 /*global RootView */
-/*global Sortable */
 // -------------------------------------------------------------------
 
 
@@ -80,10 +80,6 @@ orp.view.NavbarView.cssClass = {
   MENU_ITEM: "menu_item",
   SELECTED:  "selected" };
 
-// Caution: 
-// In order for us to use the "Sortable" feature in the script.aculo.us 
-// dragdrop.js library, this "MainMenu" Id must *not* have an underscore 
-// in it.
 orp.view.NavbarView.elementId = {
   MENU:      "MainMenu" };
   
@@ -114,74 +110,36 @@ orp.view.NavbarView.prototype.refresh = function() {
 // Private instance methods
 // -------------------------------------------------------------------
 
-/**
- * Called whenever there is a mousedown event on one of the menu item
- * html "li" elements.  All we do here is record which element is 
- * being touched, because we may need that info later on in the 
- * _sortOrderUpdate() method. 
- *
- * @scope    public instance method
- * @param    event    The mousedown event object. 
- */
-orp.view.NavbarView.prototype._mouseDownOnMenuItem = function(event) {
-  // FIXME: 
-  // Should we be using "event.target" instead of "event.currentTarget"?
-  // Or should we be using orp.util.getTargetFromEvent(event)?
-  this._liElementBeingTouched = event.currentTarget;
-};
+orp.view.NavbarView.prototype._handleDrop = function(elementThatWasDragged) {
+  // First figure out which page was dragged (indexOfDraggedPage) 
+  // and where it landed (newIndex).
+  var world = this.getWorld();
+  var draggedUuid = elementThatWasDragged.dragObject.domNode.getAttribute('uuid');
+  var draggedPage = world.getItemFromUuid(draggedUuid);
+  var indexOfDraggedPage = orp.util.getArrayIndex(this._listOfPages, draggedPage);
+  var ulElement = dojo.byId(orp.view.NavbarView.elementId.MENU);
+  var liCells = ulElement.getElementsByTagName("li");
 
-
-/**
- * Called by the "Sortable" feature in the script.aculo.us dragdrop.js library.
- * This method gets called when the user drags and drops a menu item in the
- * Navbar.  We only get called if the new location of the menu item is 
- * different from the old location.
- *
- * @scope    public instance method
- * @param    ulElement    The "ul" HTMLElement for the menu of menu items. 
- */
-orp.view.NavbarView.prototype._sortOrderUpdate = function(ulElement) {
-  orp.lang.assert(this._liElementBeingTouched !== null);
-  
-  var liElementPrefixString = orp.view.NavbarView.elementId.MENU + '_';
-  var menuItemElementId = this._liElementBeingTouched.id;
-  var pageUuid = menuItemElementId.replace(liElementPrefixString, '');
-  var pageToReorder = this.getWorld().getItemFromUuid(pageUuid);
-  
-  var listOfPages = this._getNewOrderingForPageList(ulElement);
-  
-  var arrayIndex = orp.util.getArrayIndex(listOfPages, pageToReorder);
-  orp.lang.assert(arrayIndex != -1);
-  var pageAbove = (arrayIndex === 0) ? null : listOfPages[arrayIndex-1];
-  var pageBelow = (arrayIndex > listOfPages.length) ? null : listOfPages[arrayIndex+1];
-  pageToReorder.reorderBetween(pageAbove, pageBelow);
-};
-
-
-/**
- * Returns a list of page items, arranged in the new order that resulted
- * from the most recent drag-and-drop re-ordering.
- *
- * @scope    public instance method
- * @param    ulElement    The "ul" HTMLElement for the menu of menu items. 
- * @return   A list of items representing pages.
- */
-orp.view.NavbarView.prototype._getNewOrderingForPageList = function(ulElement) {
-  // The string '[]=' is used by the "Sortable" feature in the script.aculo.us 
-  // dragdrop.js library within each token in the serialization string.
-  var prefixString = orp.view.NavbarView.elementId.MENU + '[]=';
-  
-  var serializationString = Sortable.serialize(ulElement);
-  var listOfTokens = serializationString.split('&');
-  var listOfPages = [];
-  for (var i in listOfTokens) {
-    var uuidForPage = listOfTokens[i].replace(prefixString, '');
-    var page = this.getWorld().getItemFromUuid(uuidForPage);
-    listOfPages.push(page);
+  var newIndex = -1;
+  for (i = 0; i < liCells.length; ++i) {
+    if (liCells[i].getAttribute('uuid') == draggedUuid) {
+      newIndex = i;
+      break;
+    }
   }
-  return listOfPages;
-};
+  orp.lang.assert(newIndex >= 0);
 
+  if (indexOfDraggedPage == newIndex) {
+    return;
+  }
+
+  var draggedUp = indexOfDraggedPage > newIndex;
+  var pageAbove = (newIndex === 0) ?
+    null : this._listOfPages[draggedUp? newIndex - 1 : newIndex];
+  var pageBelow = (newIndex == liCells.length - 1) ?
+    null : this._listOfPages[draggedUp? newIndex : newIndex + 1];
+  draggedPage.reorderBetween(pageAbove, pageBelow);
+};
 
 /**
  * Re-creates the HTML for the view, and hands the HTML to the 
@@ -192,45 +150,40 @@ orp.view.NavbarView.prototype._getNewOrderingForPageList = function(ulElement) {
 orp.view.NavbarView.prototype._rebuildView = function() {
   var categoryCalledPage = this.getWorld().getItemFromUuid(orp.view.RootView.UUID.CATEGORY_PAGE);
   categoryCalledPage.addObserver(this);
-  var listOfPages = this.getWorld().getItemsInCategory(categoryCalledPage);
+  this._listOfPages = this.getWorld().getItemsInCategory(categoryCalledPage);
   var key;
   var page;
 
   orp.view.View.removeChildrenOfElement(this._htmlElementForAnchors);
-  for (key in listOfPages) {
-    page = listOfPages[key];
+  for (key in this._listOfPages) {
+    page = this._listOfPages[key];
     var anchorName = orp.view.RootView.URL_PAGE_PREFIX + page.getUuidString();
     orp.view.View.appendNewElement(this._htmlElementForAnchors, "a", null, {name: anchorName});
   }
   
   var divElement = this.getHtmlElement();
-  orp.view.View.removeChildrenOfElement(divElement); 
+  orp.view.View.removeChildrenOfElement(divElement);
   var ulElement = orp.view.View.appendNewElement(divElement, "ul", orp.view.NavbarView.cssClass.MENU, {id: orp.view.NavbarView.elementId.MENU});
   var rootView = this.getRootView();
-  for (key in listOfPages) {
-    page = listOfPages[key];
+  for (key in this._listOfPages) {
+    page = this._listOfPages[key];
     page.addObserver(this);
     var menuUrl = rootView.getUrlForItem(page);
     var menuText = page.getDisplayString();
-    // Caution: 
-    // In order for us to use the "Sortable" feature in the script.aculo.us 
-    // dragdrop.js library, this menuItemId must have exactly one underscore in
-    // it, with the id for the whole menu is to the left of the underscore, and
-    // the id for the individual menu item to the right of the underscore.
-    var menuItemId = orp.view.NavbarView.elementId.MENU + '_' + page.getUuidString();
-    var liElement = orp.view.View.appendNewElement(ulElement, "li", orp.view.NavbarView.cssClass.MENU_ITEM, {id: menuItemId});
+    var liElement = orp.view.View.appendNewElement(ulElement, "li", orp.view.NavbarView.cssClass.MENU_ITEM, 
+                                                   {uuid: page.getUuidString()});
     if (page == this.getRootView().getCurrentPage()) {orp.util.css_addClass(liElement, orp.view.NavbarView.cssClass.SELECTED);}
     var anchorElement = orp.view.View.appendNewElement(liElement, "a", null, {href: menuUrl}, menuText);
-    
+
     dojo.event.connect(anchorElement, "onclick", orp.view.RootView.clickOnLocalLink);
-    dojo.event.connect(liElement, "onmousedown", this, "_mouseDownOnMenuItem");
+    if (this.isInEditMode()) {
+      new dojo.dnd.HtmlDragSource(liElement, "pageCell");
+    }
   }
-  var listener = this;
   this._builtForEditMode = this.isInEditMode();
   if (this._builtForEditMode) {
-    Sortable.create(orp.view.NavbarView.elementId.MENU, {
-      onUpdate: function(element){ listener._sortOrderUpdate(element);}
-    });
+    var dropTarget = new dojo.dnd.HtmlDropTarget(ulElement, ["pageCell"]);
+    dojo.event.connect(dropTarget, "onDrop", this, "_handleDrop");
   }
   
   var newPageButton = orp.view.View.appendNewElement(divElement, "input", orp.view.RootView.cssClass.EDIT_TOOL);
