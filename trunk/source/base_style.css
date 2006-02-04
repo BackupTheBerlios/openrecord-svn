@@ -245,7 +245,7 @@ div.viewmode .edit_tool {
 
 div.NavbarView {
   float: left;
-  width: 100pt;
+  width: 120px;
   margin: 0;
   padding: 0;
   font-size: 0.8em;
@@ -258,7 +258,7 @@ div.NavbarView {
   padding-bottom: 20pt;
   margin-left: 0;
   list-style-type: none;
-  width: 80pt;
+  width: 120px;
 }
 
 .menu_item {
@@ -276,8 +276,8 @@ div.NavbarView {
 
 .menu_item a {
   display: block;
-  width: 80%;
-  margin-left: 20px;
+  width: 102px;
+  margin-left: 10px;
   padding: 5pt 0pt 5pt 5pt;
   text-decoration: none;
   color: rgb(0%, 0%, 0%); 
