@@ -229,7 +229,7 @@ brian  |          | 0.5     |     Import CSV data files when running from a file
   11    = number of PLANNED tasks that were finished 
    4    = number of ADDITIONAL tasks that were finished 
   ~9    = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
-   4    = number of weeks in June iteration
+   4    = number of weeks in July iteration
  ~ 2.25 = Velocity (in estimated IEDs per week)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -429,7 +429,7 @@ none?
    3    = number of PLANNED tasks that were finished 
    0    = number of ADDITIONAL tasks that were finished 
   ~4.3  = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
-   4    = number of weeks in October iteration
+   4    = number of weeks in November iteration
  ~ 1.1  = Velocity (in estimated IEDs per week)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -479,7 +479,7 @@ brian  |          | 1    IED|  0. move orp.uuid and orp.lang to dojo.uuid and do
    8    = number of PLANNED tasks that were finished 
    2    = number of ADDITIONAL tasks that were finished 
   ~3.5  = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
-   4    = number of weeks in October iteration
+   4    = number of weeks in December iteration
  ~ 0.9  = Velocity (in estimated IEDs per week)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -491,6 +491,51 @@ brian  |          | 1    IED|  0. move orp.uuid and orp.lang to dojo.uuid and do
 ##                                                                            ##
 ##                                Iteration #9                                ##
 ##                                January 2006                                ##
+##                                                                            ##
+################################################################################
+################################################################################
+
+
+---------------------------------------------------------------------------
+   Tasks we originally identified for Iteration #9, in January 2006
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+mignon |          | 5 IED   | 419. Replace scriptaculous/dragdrop.js with dojo.dnd, and remove scriptaculous from our tree
+-------+----------+---------+----------------------------------------------
+
+
+---------------------------------------------------------------------------
+   New tasks that we decided to take on for Iteration #9, in January 2006
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+brian  |          | 2.5  IED|  0. re-do dojo.uuid and dojo.lang based on Dojo contributor feedback, and get them checked into dojo 
+brian  |          | 2.5  IED|  0. write experimental dojo data-model implementation, and post it for feedback
+brian  |          | 0.75 IED|  0. put together an initial data model comparison table
+-------+----------+---------+----------------------------------------------
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Summary of Iteration #9
+          January 2006
+  January 2 to February 6, 2005
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   1    = number of PLANNED tasks that were finished 
+   3    = number of ADDITIONAL tasks that were finished 
+ ~10.75 = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
+   5    = number of weeks in January iteration
+ ~ 2.1  = Velocity (in estimated IEDs per week)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+################################################################################
+################################################################################
+##                                                                            ##
+##                                Iteration #10                               ##
+##                                February 2006                               ##
 ##                                                                            ##
 ################################################################################
 ################################################################################
