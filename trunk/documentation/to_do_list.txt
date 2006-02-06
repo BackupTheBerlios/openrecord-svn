@@ -91,7 +91,7 @@ mignon |          |  .25    | 301. Instead of having a copy of dojo in our SVN a
 (soon) |          |         | 305. Look at replacing our notion of Views with Dojo's notion of widgets
        |          |         | 306. Run in IE as well as Firefox
        |          |         | 307. Add support for repository merging
-brian  | 3    IED |         | 308. Make screencasts about OpenRecord (and plugins) see: .swf, .mov, SnapZ Pro, Camtesia Studio 
+brian  | 3    IED |         | 308. Make screencasts about OpenRecord (and plugins) see: .swf, .mov, SnapZ Pro, Camtesia Studio, Windows Media Encoder 9 Series
        |          |         | 309. Consider implementing a JavaScript file:// version of this: http://lists.berlios.de/pipermail/openrecord-dev/2005-October/000248.html
 brian  |          |         | 310. Propose a Dojo data-provider design (dojo.data) that would work for OpenRecord as well as other uses
        |          |         | 311. (new task...)
