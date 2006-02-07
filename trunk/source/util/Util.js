@@ -33,7 +33,6 @@
 
 dojo.provide("orp.util.Util");
 dojo.require("orp.lang.Lang");
-dojo.require("dojo.lang.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:

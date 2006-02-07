@@ -71,7 +71,7 @@ orp.finishLoading = function(){
       alert(e);
     }
   }
-}
+};
 
 dojo.addOnLoad(orp.finishLoading);
 

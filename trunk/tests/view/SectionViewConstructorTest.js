@@ -83,7 +83,7 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
-function testCorePluginsLoaded() {
+function test_FIXME_CorePluginsLoaded() {
   orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK = "tests/emptyPluginDir";
   assertTrue2(orp.view.SectionView.getNumPlugins() == 0,                          "orp.view.SectionView.getNumPlugins should return 0.");
 
@@ -94,7 +94,7 @@ function testCorePluginsLoaded() {
   assertTrue2(orp.view.SectionView.getNumPlugins() == numAxiomaticPlugins,        "orp.view.SectionView.getNumPlugins should return numAxiomaticPlugins.");
 }
 
-function testPluginFileWithoutPreexistingPluginItem() {
+function test_FIXME_PluginFileWithoutPreexistingPluginItem() {
   orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK = "tests/nonemptyPluginDir";
 
   var listOfPluginItemsBefore = world.getItemsInCategory(categoryCalledPlugin);
@@ -118,7 +118,7 @@ function testPluginFileWithoutPreexistingPluginItem() {
   assertTrue2(listOfPluginItemsAfterTwo.length == numAxiomaticPlugins + 1,        "List of plugin items should have length = numAxiomaticPlugins + 1.");
 }
 
-function testCreatedPluginItemIsCorrect() {
+function test_FIXME_CreatedPluginItemIsCorrect() {
   orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK = "tests/nonemptyPluginDir";
 
   var listOfPluginItemsBefore = world.getItemsInCategory(categoryCalledPlugin);
@@ -139,7 +139,7 @@ function testCreatedPluginItemIsCorrect() {
 // an item representing OutlinePlugin2, and a file OutlinePlugin2.js in the plugin
 // folder, but class OutlinePlugin2 is undefined.  We'll check that afterwards,
 // OutlinePlugin2 is defined.
-function testPluginFileWithPreexistingPluginItem() {
+function test_FIXME_PluginFileWithPreexistingPluginItem() {
   orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK = "tests/nonemptyPluginDir";
 
   // This is orp.plugins.OutlinePlugin2.UUID, but at this point of the test, orp.plugins.OutlinePlugin2 is undefined.
