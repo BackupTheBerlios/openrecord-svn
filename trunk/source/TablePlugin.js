@@ -353,6 +353,8 @@ orp.TablePlugin.prototype.observedItemHasChanged = function(item) {
  *
  */
 orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged) {
+  var i;
+  
   // First figure out which column header was dragged (indexOfDraggedAttribute) 
   // and where it landed (indexOfDraggedElement).
   var world = this.getWorld();
@@ -389,7 +391,7 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged) {
     
     // Figure out which entry is being reordered between which two entries.
     var draggedEntry = listOfTableColumnEntries[indexOfDraggedAttribute];
-    var noPreviousEntry = (indexOfDraggedElement == 0);
+    var noPreviousEntry = (indexOfDraggedElement === 0);
     var noFollowingEntry = (indexOfDraggedElement == headerCells.length - 1);
     var draggedLeft = indexOfDraggedAttribute > indexOfDraggedElement;
     var entryBeforeDroppedOnEntry = null;
@@ -408,7 +410,7 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged) {
     // user-selected columns.
     this._displayAttributes.splice(indexOfDraggedAttribute, 1);
     this._displayAttributes.splice(indexOfDraggedElement, 0, draggedAttribute);
-    for (var i in this._displayAttributes) {
+    for (i in this._displayAttributes) {
       var attribute = this._displayAttributes[i];
       layoutItem.addEntry({attribute:attributeTableColumns, value:attribute});
     }
