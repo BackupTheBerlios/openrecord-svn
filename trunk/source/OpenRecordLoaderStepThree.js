@@ -52,7 +52,7 @@ if (djConfig.debugAtAllCosts) {
   dojo.hostenv.writeIncludes(); // needed when using "debugAtAllCosts: true"
 }
 
-function onload(){
+orp.finishLoading = function(){
   // figure out if we're running in IE or Firefox
   var firefox = true;  // PENDING: hack!
   var errorMessage;
@@ -73,8 +73,7 @@ function onload(){
   }
 }
 
-dojo.hostenv.modulesLoadedListeners.push(onload);
-
+dojo.addOnLoad(orp.finishLoading);
 
 // -------------------------------------------------------------------
 // End of file
