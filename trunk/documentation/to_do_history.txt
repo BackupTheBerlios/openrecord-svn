@@ -501,7 +501,8 @@ brian  |          | 1    IED|  0. move orp.uuid and orp.lang to dojo.uuid and do
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-mignon |          | 5 IED   | 419. Replace scriptaculous/dragdrop.js with dojo.dnd, and remove scriptaculous from our tree
+mignon |          | 0.25 IED| 301. Instead of having a copy of dojo in our SVN archive, link to dojo using SVN "externals"
+mignon |          | 5    IED| 419. Replace scriptaculous/dragdrop.js with dojo.dnd, and remove scriptaculous from our tree
 -------+----------+---------+----------------------------------------------
 
 
@@ -523,9 +524,9 @@ brian  |          | 0.75 IED|  0. put together an initial data model comparison 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    1    = number of PLANNED tasks that were finished 
    3    = number of ADDITIONAL tasks that were finished 
- ~10.75 = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
+ ~11    = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
    5    = number of weeks in January iteration
- ~ 2.1  = Velocity (in estimated IEDs per week)
+ ~ 2.2  = Velocity (in estimated IEDs per week)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -541,5 +542,21 @@ brian  |          | 0.75 IED|  0. put together an initial data model comparison 
 ################################################################################
 
 
-...FIXME...
+---------------------------------------------------------------------------
+   Tasks we originally identified for Iteration #10, in February 2006
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+-------+----------+---------+----------------------------------------------
+
+
+---------------------------------------------------------------------------
+   New tasks that we decided to take on for Iteration #10, in February 2006
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+brian  |          | 1    IED|  0. switch from dojo rev-2540 to dojo rev-3024
+mignon |          | 1    IED|  0. switch from dojo rev-2540 to dojo rev-3024
+-------+----------+---------+----------------------------------------------
+
 
