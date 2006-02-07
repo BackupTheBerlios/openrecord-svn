@@ -112,6 +112,7 @@ orp.view.RootView = function(world) {
   var contentAreaDiv = orp.view.View.appendNewElement(rootDiv, "div", "content_area");
   this._contentViewDivElement = orp.view.View.appendNewElement(contentAreaDiv, "div");
   this._debugDivElement = orp.view.View.appendNewElement(rootDiv, "div", "debug");
+  this._dojoDebugDivElement = orp.view.View.appendNewElement(rootDiv, "div", null, {'id':"dojoDebug"});
 
   var footerP = orp.view.View.appendNewElement(rootDiv, "p", "footer");
   var copyrightSpan = orp.view.View.appendNewElement(footerP, "span", "copyright");

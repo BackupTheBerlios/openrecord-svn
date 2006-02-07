@@ -88,6 +88,7 @@ orp.loader.loadStylesheet = function(stylesheetUrl) {
 // This code is immediately executed when this file is first loaded.
 // -------------------------------------------------------------------
 var djConfig = {
+  debugContainerId: "dojoDebug",
   isDebug: true, 
   debugAtAllCosts: true
 };

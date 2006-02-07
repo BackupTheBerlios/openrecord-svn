@@ -447,6 +447,11 @@ orp.view.SectionView.prototype._refreshQueryEditSpan = function() {
  * @param    newPluginClass    A JavaScript class, such as TablePlugin.
  */    
 orp.view.SectionView.prototype._addNewItemForNewPluginClass = function(world, newPluginClass) {
+  var pluginItemUuid = newPluginClass.getPluginItemUuid();
+  var existingItem = world.getItemFromUuid(pluginItemUuid);
+  if (existingItem) {
+    return existingItem;
+  }
   world.beginTransaction();
   var newItem = world.importItem(newPluginClass.getPluginItemUuid());
   var entries = newPluginClass.getEntriesForItemRepresentingPluginClass(newItem, world);
