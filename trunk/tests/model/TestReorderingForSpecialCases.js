@@ -84,6 +84,7 @@ function setUp() {
 
 function tearDown() {
   world.logout();
+  mockUuidGenerator.queueOfUuids = new Array();
 }
 
 
@@ -154,10 +155,9 @@ function testReorderBetweenTwoItemsWithTheSameTimestamp() {
   pesto.assignToCategory(categoryCalledFood);
   guavaLinkUuid    = "60000002-2222-1333-F444-555555555555";
   mockUuidGenerator.queueOfUuids.push(guavaLinkUuid);
+  guava.assignToCategory(categoryCalledFood);
   
   orp.archive.StubArchive.prototype._generateUuid = realUuidGenerator;
-
-  guava.assignToCategory(categoryCalledFood);
 
   guava.reorderBetween(sushi, pesto);
   foodItems = world.getItemsInCategory(categoryCalledFood);
