@@ -14,8 +14,6 @@ dojo.provide("orp.plugins.ButtonView");
 dojo.require("orp.view.PluginView");
 
 dojo.require("dojo.widget.*");
-dojo.require("dojo.widget.Button");
-dojo.require("dojo.widget.html.Button");
 dojo.require("dojo.widget.Button2");
 dojo.require("dojo.widget.html.Button2");
 dojo.require("dojo.widget.Menu2");
@@ -114,35 +112,28 @@ orp.plugins.ButtonView.prototype.refresh = function() {
   var divElement = orp.view.View.appendNewElement(outlineDiv, "div");
   
   // This doesn't work yet:
-  // var popupMenu = dojo.widget.fromScript("PopupMenu2", {toggle: "wipe"}, divElement, "last");
-  // var menuItemA = dojo.widget.fromScript("MenuItem2", {caption: "Save", accelKey: "Ctrl+S"}, divElement, "last");
-  // var menuItemB = dojo.widget.fromScript("MenuItem2", {caption: "Save As", accelKey: "Ctrl+A"}, divElement, "last");
+  // var popupMenu = dojo.widget.createWidget("PopupMenu2", {toggle: "wipe"}, divElement, "last");
+  // var menuItemA = dojo.widget.createWidget("MenuItem2", {caption: "Save", accelKey: "Ctrl+S"}, divElement, "last");
+  // var menuItemB = dojo.widget.createWidget("MenuItem2", {caption: "Save As", accelKey: "Ctrl+A"}, divElement, "last");
   
   for (var i in listOfContentItems) {
     var contentItem = listOfContentItems[i];
     var itemName = contentItem.getDisplayName("{no name}");
-    var button = dojo.widget.fromScript("Button", {label: itemName}, divElement, "last");
-    dojo.event.connect(button, "onClick", this, "buttonClick")
-  }
-  orp.view.View.appendNewElement(divElement, "p");
-  for (var i in listOfContentItems) {
-    var contentItem = listOfContentItems[i];
-    var itemName = contentItem.getDisplayName("{no name}");
-    var button2 = dojo.widget.fromScript("Button2", {caption: itemName}, divElement, "last");
+    var button2 = dojo.widget.createWidget("Button2", {caption: itemName}, divElement, "last");
     dojo.event.connect(button2, "onClick", this, "buttonClick")
   }
   orp.view.View.appendNewElement(divElement, "p");
   for (var i in listOfContentItems) {
     var contentItem = listOfContentItems[i];
     var itemName = contentItem.getDisplayName("{no name}");
-    var dropdown2 = dojo.widget.fromScript("DropDownButton2", {caption: itemName}, divElement, "last");
+    var dropdown2 = dojo.widget.createWidget("DropDownButton2", {caption: itemName}, divElement, "last");
     dojo.event.connect(dropdown2, "onClick", this, "buttonClick")
   }
   orp.view.View.appendNewElement(divElement, "p");
   for (var i in listOfContentItems) {
     var contentItem = listOfContentItems[i];
     var itemName = contentItem.getDisplayName("{no name}");
-    var combo2 = dojo.widget.fromScript("ComboButton2", {caption: itemName}, divElement, "last");
+    var combo2 = dojo.widget.createWidget("ComboButton2", {caption: itemName}, divElement, "last");
     dojo.event.connect(combo2, "onClick", this, "buttonClick")
   }
 
