@@ -69,6 +69,16 @@ dojo.inherits(orp.BarChartPlugin, orp.view.PluginView);  // makes BarChartPlugin
 
 
 // -------------------------------------------------------------------
+// Public constants
+// -------------------------------------------------------------------
+orp.BarChartPlugin.cssClass = {
+  TABLE: "bar_chart_table",
+  PLAIN: "plain",
+  FRAME: "bar_chart_frame",
+  BAR: "bar_chart_bar" };
+
+  
+// -------------------------------------------------------------------
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
 
@@ -174,10 +184,11 @@ orp.BarChartPlugin.prototype.refresh = function() {
   }
 
   // add the table header row(s)
-  listOfStrings.push("<table class=\"" + orp.view.SectionView.cssClass.SIMPLE_TABLE + "\">");
+  listOfStrings.push("<table class=\"" + orp.BarChartPlugin.cssClass.TABLE + "\">");
   listOfStrings.push("<tr>");
   var attributeCalledName = this.getWorld().getAttributeCalledName();
-  listOfStrings.push("<th>" + attributeCalledName.getDisplayName() + "</th>");
+  listOfStrings.push("<th>" + "" + "</th>"); // listOfStrings.push("<th>" + attributeCalledName.getDisplayName() + "</th>");
+  
   if (selectedAttribute) {
     listOfStrings.push("<th>" + selectedAttribute.getDisplayName() + "</th>");
   } else {
@@ -185,11 +196,13 @@ orp.BarChartPlugin.prototype.refresh = function() {
   }
   listOfStrings.push("</tr>");
     
+  var staticThis = this;
+  listOfContentItems.sort(orp.BarChartPlugin.compareItemsByName);
   // add all the table body rows
   for (var kKey in listOfContentItems) {
     contentItem = listOfContentItems[kKey];
     listOfStrings.push("<tr>");
-    listOfStrings.push("<td class=\"" + orp.view.SectionView.cssClass.PLAIN + "\">" + contentItem.getDisplayName("{no name}") + "</td>");
+    listOfStrings.push("<td class=\"" + orp.BarChartPlugin.cssClass.PLAIN + "\">" + contentItem.getDisplayName("{no name}") + "</td>");
     var numericValue = 0;
     if (selectedAttribute) {
       listOfValues = contentItem.getValuesForAttribute(selectedAttribute);
@@ -204,7 +217,7 @@ orp.BarChartPlugin.prototype.refresh = function() {
     if (maxValue > 0) {
       width = (numericValue / maxValue) * 100; // 100 Percent
     }
-    listOfStrings.push("<td class=\"bar_chart_frame\"><input disabled type=\"text\" class=\"bar_chart_bar\" value=\"" + numericValue + "\" size=\"1\" style=\"width: " + width + "%;\"></input></td>");
+    listOfStrings.push('<td class="' + orp.BarChartPlugin.cssClass.FRAME + '"><input disabled type="text" class="' + orp.BarChartPlugin.cssClass.BAR + '" value="' + numericValue + '" size="1" style="width: ' + width + '%;\"></input></td>');
     listOfStrings.push("</tr>");
   }  
   listOfStrings.push("</table>");
@@ -214,6 +227,13 @@ orp.BarChartPlugin.prototype.refresh = function() {
   this.getHtmlElement().innerHTML = finalString;
 };
 
+orp.BarChartPlugin.compareItemsByName = function(itemA, itemB) {
+  var strA = itemA.getDisplayName().toLowerCase();
+  var strB = itemB.getDisplayName().toLowerCase();
+  if (strA < strB) {return -1;}
+  if (strA == strB) {return 0;}
+  return 1;
+};
 
 // -------------------------------------------------------------------
 // End of file

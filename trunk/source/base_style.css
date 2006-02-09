@@ -605,6 +605,58 @@ td.newitem {
   background: #DEE7F8;
 }
 
+/****************************************/
+/* Bar Chart styles                     */
+
+.bar_chart_table {
+  background: rgb(70%, 70%, 70%);
+  border: 1pt solid rgb(100%, 100%, 100%);
+  border-collapse: collapse;
+}
+
+.bar_chart_table th {
+  padding: 0.1em; /* 0.3em; */
+  text-align: left;
+  background: #FFFFFF;
+  font-size: 0.8em;
+  /* color: #000000; */
+  border: 1pt solid rgb(100%, 100%, 100%);
+}
+
+.bar_chart_table tr {
+  background: rgb(100%, 100%, 100%);
+}
+
+.bar_chart_table td {
+  padding: 0.1em 0.3em; 
+  font-size: 0.8em;
+  border: 1pt solid rgb(100%, 100%, 100%);
+}
+
+.bar_chart_table td.plain {
+  width: 20em;
+  padding: 0px;
+  margin: 0px;
+  text-align: right;
+}
+
+.bar_chart_table td.bar_chart_frame {
+  width: 20em;
+  padding: 0px;
+  margin: 0px;
+  text-align: left;
+}
+
+.bar_chart_bar {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  background: rgb(0%, 40%, 0%);
+  border: none;
+  text-align: right;
+  vertical-align: middle;
+  color: white;
+}
 
 /****************************************/
 /* Outline styles                       */
@@ -630,28 +682,6 @@ li.detail {
    padding-top: 4pt;
    font-weight: normal;
    font-size: small;
-}
-
-
-/****************************************/
-/* Bar chart styles                     */
-
-.simple_table td.bar_chart_frame {
-  width: 20em;
-  padding: 0px;
-  margin: 0px;
-  text-align: left;
-}
-
-.bar_chart_bar {
-  height: 100%;
-  margin: 0px;
-  padding: 0px;
-  background: rgb(0%, 40%, 0%);
-  border: none;
-  text-align: right;
-  vertical-align: middle;
-  color: white;
 }
 
 
