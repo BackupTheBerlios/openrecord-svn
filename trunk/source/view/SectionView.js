@@ -35,8 +35,8 @@
 // -------------------------------------------------------------------
 // Provides and Requires
 // -------------------------------------------------------------------
-dojo.require("orp.TablePlugin");
 dojo.provide("orp.view.SectionView");
+dojo.require("orp.TablePlugin");
 dojo.require("orp.view.View");
 dojo.require("orp.view.RootView");
 dojo.require("orp.model.Item");

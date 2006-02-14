@@ -49,6 +49,11 @@ MockRootView.prototype.getWorld = function() {
 // -------------------------------------------------------------------
 
 function setUp() {
+  // This hack is needed so that, for instance, in test_PluginFileWithPreexistingPluginItem,
+  // OutlinePlugin2 won't already be present in dojo.hostenv.loadedUris (and hence not reloaded),
+  // due to having been loaded earlier in test_CreatedPluginItemIsCorrect.
+  dojo.hostenv.loadedUris = [];
+  
   dojo.setModulePrefix("dojo", "../../dojo/src"); // relative to testRunner.html
   dojo.setModulePrefix("orp", "../../../source"); // relative to dojo.js
   dojo.require("orp.archive.StubArchive");
@@ -83,7 +88,7 @@ function tearDown() {
 // Test functions
 // -------------------------------------------------------------------
 
-function test_FIXME_CorePluginsLoaded() {
+function test_CorePluginsLoaded() {
   orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK = "tests/emptyPluginDir";
   assertTrue2(orp.view.SectionView.getNumPlugins() == 0,                          "orp.view.SectionView.getNumPlugins should return 0.");
 
@@ -94,7 +99,7 @@ function test_FIXME_CorePluginsLoaded() {
   assertTrue2(orp.view.SectionView.getNumPlugins() == numAxiomaticPlugins,        "orp.view.SectionView.getNumPlugins should return numAxiomaticPlugins.");
 }
 
-function test_FIXME_PluginFileWithoutPreexistingPluginItem() {
+function test_PluginFileWithoutPreexistingPluginItem() {
   orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK = "tests/nonemptyPluginDir";
 
   var listOfPluginItemsBefore = world.getItemsInCategory(categoryCalledPlugin);
@@ -118,7 +123,7 @@ function test_FIXME_PluginFileWithoutPreexistingPluginItem() {
   assertTrue2(listOfPluginItemsAfterTwo.length == numAxiomaticPlugins + 1,        "List of plugin items should have length = numAxiomaticPlugins + 1.");
 }
 
-function test_FIXME_CreatedPluginItemIsCorrect() {
+function test_CreatedPluginItemIsCorrect() {
   orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK = "tests/nonemptyPluginDir";
 
   var listOfPluginItemsBefore = world.getItemsInCategory(categoryCalledPlugin);
@@ -139,7 +144,7 @@ function test_FIXME_CreatedPluginItemIsCorrect() {
 // an item representing OutlinePlugin2, and a file OutlinePlugin2.js in the plugin
 // folder, but class OutlinePlugin2 is undefined.  We'll check that afterwards,
 // OutlinePlugin2 is defined.
-function test_FIXME_PluginFileWithPreexistingPluginItem() {
+function test_PluginFileWithPreexistingPluginItem() {
   orp.view.PluginView.PATH_TO_PLUGIN_DIRECTORY_FROM_TRUNK = "tests/nonemptyPluginDir";
 
   // This is orp.plugins.OutlinePlugin2.UUID, but at this point of the test, orp.plugins.OutlinePlugin2 is undefined.
@@ -169,7 +174,7 @@ function test_FIXME_PluginFileWithPreexistingPluginItem() {
   var sectionView = new orp.view.SectionView(rootView, sectionViewDiv, sectionItem);
 
   assertTrue2(!dojo.lang.isUndefined(orp.plugins.OutlinePlugin2),                 "orp.plugins.OutlinePlugin2 should be defined.");
-  assertTrue2(orp.plugins.OutlinePlugin2.getPluginItemUuid() == knownUuid,        "orp.plugins should be undefined.");
+  assertTrue2(orp.plugins.OutlinePlugin2.getPluginItemUuid() == knownUuid,        "getPluginItemUuid should return the UUID of the preexisting item.");
   assertTrue2(orp.view.SectionView.getNumPlugins() == numAxiomaticPlugins + 1,    "orp.view.SectionView.getNumPlugins should return numAxiomaticPlugins + 1.");
 
   var sectionView2 = new orp.view.SectionView(rootView, sectionViewDiv, sectionItem);
