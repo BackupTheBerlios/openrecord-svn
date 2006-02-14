@@ -220,24 +220,36 @@ orp.TablePlugin.prototype._getListOfColumns = function() {
  *
  * @scope    private instance method
  */
-orp.TablePlugin.prototype._buildAttributeEditor = function() {
-  var htmlElement = this.getHtmlElement();
-  var selectElt = orp.view.View.appendNewElement(htmlElement, "select", orp.view.RootView.cssClass.EDIT_TOOL);
-  var listOfAttributes = this.getWorld().getAttributes();
-  var optionElt = orp.view.View.appendNewElement(selectElt, "option");
-  optionElt.text = "Add new attribute:";
-  for (var key in listOfAttributes) {
-    var attribute = listOfAttributes[key];
-    optionElt = orp.view.View.appendNewElement(selectElt, "option");
-    if (orp.util.isObjectInSet(attribute, this._displayAttributes)) {
-      optionElt.text = '* ';
-    }
-    optionElt.text += attribute.getDisplayString();
-    optionElt.value = attribute.getUuidString();
-    dojo.event.connect(optionElt, "onclick", this, "_attributeEditorChanged");
-  }
-  this._selectElement = selectElt;
+orp.TablePlugin.prototype._buildAddColumnControl = function(headerRow) {
+  var cssClass = "add_column" + " " + orp.view.RootView.cssClass.EDIT_TOOL;
+  var headerCell = orp.view.View.appendNewElement(headerRow, "th", cssClass);
+  var emptySpan = orp.view.View.appendNewElement(headerCell, "span");
+  orp.view.View.appendNewTextNode(emptySpan, " ");
+  orp.view.View.appendNewElement(headerCell, "br");
   
+  var ADD_COLUMN_CONTROL_USES_HTML_INSTEAD_OF_DOJO = true;
+  if (ADD_COLUMN_CONTROL_USES_HTML_INSTEAD_OF_DOJO) {
+    // var htmlElement = this.getHtmlElement();
+    var selectElt = orp.view.View.appendNewElement(headerCell, "select");
+    var listOfAttributes = this.getWorld().getAttributes();
+    var optionElt = orp.view.View.appendNewElement(selectElt, "option");
+    optionElt.text = "Add column...";
+    for (var i in listOfAttributes) {
+      var attribute = listOfAttributes[i];
+      if (!orp.util.isObjectInSet(attribute, this._displayAttributes)) {
+        optionElt = orp.view.View.appendNewElement(selectElt, "option");
+        optionElt.text += attribute.getDisplayString();
+        optionElt.value = attribute.getUuidString();
+        dojo.event.connect(optionElt, "onclick", this, "_attributeEditorChanged");
+      }
+    }
+    this._selectElement = selectElt;
+  } else {
+    var editButton = orp.view.View.appendNewElement(headerCell, "input");
+    editButton.type = "Button";
+    editButton.value = "Add column...";
+    dojo.event.connect(editButton, "onclick", this, "_clickOnAddColumnButton");
+  }
 };
 
 /**
@@ -361,8 +373,10 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged) {
   var draggedUuid = elementThatWasDragged.dragObject.domNode.getAttribute('uuid');
   var draggedAttribute = world.getItemFromUuid(draggedUuid);
   var indexOfDraggedAttribute = orp.util.getArrayIndex(this._displayAttributes, draggedAttribute);
+  var oldIndexOfDraggedColumn = indexOfDraggedAttribute;
   var headerRow = this._table.rows[0];
   var headerCells = headerRow.getElementsByTagName("th");
+  
   var indexOfDraggedElement = -1;
   for (i = 0; i < headerCells.length; ++i) {
     if (headerCells[i].getAttribute('uuid') == draggedUuid) {
@@ -371,10 +385,23 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged) {
     }
   }
   orp.lang.assert(indexOfDraggedElement >= 0);
+  var newIndexOfDraggedColumn = indexOfDraggedElement;
+
+  var indexOfSpecialColumnAtFarRight = headerCells.length - 1;
+  var indexOfRightmostDataColumn = headerCells.length - 2;
+  
+  if (newIndexOfDraggedColumn == indexOfSpecialColumnAtFarRight) {
+    // If the user dropped the column all the way to the right, past even the  
+    // special column at the far right (the column with the "Add column" 
+    // control), then we'll pretend that they dropped the column just to 
+    // the left of the special last column
+    newIndexOfDraggedColumn = newIndexOfDraggedColumn - 1;
+  }
+    
   
   // If the user dragged a column header and dropped it on the same column 
   // header, then we don't need to change the column order.
-  if (indexOfDraggedAttribute == indexOfDraggedElement) {
+  if (oldIndexOfDraggedColumn == newIndexOfDraggedColumn) {
     return;
   }
 
@@ -384,32 +411,37 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged) {
   var createNewLayoutItemIfNecessary;
   var layoutItem = this.getLayoutItem(createNewLayoutItemIfNecessary = true);
   var listOfTableColumnEntries = layoutItem.getEntriesForAttribute(attributeTableColumns);
+
+  // alert("this._displayAttributes.length == " + this._displayAttributes.length);
+  // alert("listOfTableColumnEntries.length == " + listOfTableColumnEntries.length);
+  // alert("headerCells.length == " + headerCells.length);
+
   if (listOfTableColumnEntries.length > 0) {
     // If we get here, it means this table has a saved list of user-selected
     // columns, and we just want to re-order that list.
     orp.lang.assert(this._displayAttributes.length == listOfTableColumnEntries.length);
-    
+   
     // Figure out which entry is being reordered between which two entries.
-    var draggedEntry = listOfTableColumnEntries[indexOfDraggedAttribute];
-    var noPreviousEntry = (indexOfDraggedElement === 0);
-    var noFollowingEntry = (indexOfDraggedElement == headerCells.length - 1);
-    var draggedLeft = indexOfDraggedAttribute > indexOfDraggedElement;
+    var draggedEntry = listOfTableColumnEntries[oldIndexOfDraggedColumn];
+    var noPreviousEntry = (newIndexOfDraggedColumn === 0);
+    var noFollowingEntry = (newIndexOfDraggedColumn == indexOfRightmostDataColumn);
+    var draggedLeft = oldIndexOfDraggedColumn > newIndexOfDraggedColumn;
     var entryBeforeDroppedOnEntry = null;
     if (!noPreviousEntry) {
-      var beforeIndex = draggedLeft? indexOfDraggedElement - 1 : indexOfDraggedElement;
+      var beforeIndex = draggedLeft? newIndexOfDraggedColumn - 1 : newIndexOfDraggedColumn;
       entryBeforeDroppedOnEntry = listOfTableColumnEntries[beforeIndex];
     }
     var entryAfterDroppedOnEntry = null;
     if (!noFollowingEntry) {
-      var afterIndex = draggedLeft? indexOfDraggedElement : indexOfDraggedElement + 1;
+      var afterIndex = draggedLeft? newIndexOfDraggedColumn : newIndexOfDraggedColumn + 1;
       entryAfterDroppedOnEntry = listOfTableColumnEntries[afterIndex];
     }
     draggedEntry.reorderBetween(entryBeforeDroppedOnEntry, entryAfterDroppedOnEntry);
   } else {
     // If we get here, it means we need to save a newly created list of
     // user-selected columns.
-    this._displayAttributes.splice(indexOfDraggedAttribute, 1);
-    this._displayAttributes.splice(indexOfDraggedElement, 0, draggedAttribute);
+    this._displayAttributes.splice(oldIndexOfDraggedColumn, 1);
+    this._displayAttributes.splice(newIndexOfDraggedColumn, 0, draggedAttribute);
     for (i in this._displayAttributes) {
       var attribute = this._displayAttributes[i];
       layoutItem.addEntry({attribute:attributeTableColumns, value:attribute});
@@ -419,13 +451,31 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged) {
   this.refresh();
 };
 
+// Called when the user clicks the "Remove" menu item on the context menu.
+orp.TablePlugin.prototype._contextMenuRemove = function(evt) {
+  // alert("not actually removing anything, just a test! " + this._contextMenuForColumnAttribute.getDisplayString());
+  this._addOrRemoveOneColumn(this._contextMenuForColumnAttribute);
+};
+
+// Called at the moment a conext menu is opened, just after the user right clicks.
+// All we do here is make a note of which column/attribute the user clicked on.
+orp.TablePlugin.prototype._contextMenuWasOpened = function(columnAttribute) {
+  this._contextMenuForColumnAttribute = columnAttribute;
+};
 
 /**
- * Constructs the table header 
+ * Constructs the table header row
  *
  * @scope    private instance method
  */
 orp.TablePlugin.prototype._buildHeader = function() {
+  var menuItemRemove = dojo.widget.createWidget("MenuItem2", {caption: "Remove"}, null);
+  var menuItemPaste  = dojo.widget.createWidget("MenuItem2", {caption: "Paste"}, null);
+  var contextMenu = dojo.widget.createWidget("PopupMenu2", {}, null);
+  dojo.event.connect(menuItemRemove, "onClick", this, "_contextMenuRemove");
+  contextMenu.addChild(menuItemRemove);
+  // contextMenu.addChild(menuItemPaste);
+
   // add header row
   var headerRow = this._table.insertRow(0);
   var numCols = 0;
@@ -438,8 +488,32 @@ orp.TablePlugin.prototype._buildHeader = function() {
     if (this._sortAttribute == attribute) {
       headerCellContentSpan.appendChild(this.getSortIcon());
     }
-    
-    dojo.event.connect(headerCell, "onclick", orp.lang.bind(this, "clickOnHeader", attribute));
+    var FIXME_renderDatatype = true;
+    if (FIXME_renderDatatype) {
+      var br = orp.view.View.appendNewElement(headerCell, "br");
+      var outerSpan = orp.view.View.appendNewElement(headerCell, "span", orp.view.RootView.cssClass.EDIT_TOOL);
+      var datatypeSpan = orp.view.View.appendNewElement(outerSpan, "span");
+      var attributeCalledExpectedType = this.getWorld().getAttributeCalledExpectedType();
+      var listOfMatchingEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
+      var hasMatchingEntries = (listOfMatchingEntries && (listOfMatchingEntries.length > 0));
+      var matchingEntry = hasMatchingEntries ? listOfMatchingEntries[0] : null;
+
+     var listOfPossibleEntries = this.getWorld().getSuggestedItemsForAttribute(attributeCalledExpectedType);
+      
+      var entryView = new orp.view.EntryView(this, datatypeSpan, attribute, attributeCalledExpectedType, matchingEntry);
+      entryView.alwaysUseEditField();
+      entryView.setSuggestions(listOfPossibleEntries);
+      entryView.setAutoWiden(true);
+      var listOfExpectedTypeEntries = attributeCalledExpectedType.getEntriesForAttribute(attributeCalledExpectedType);
+      entryView.setExpectedTypeEntries(listOfExpectedTypeEntries);
+
+      entryView.refresh();
+      var listener = this;
+      // entryView.setKeyPressFunction(function (evt, entryView) {return listener.keyPressOnDatatypeField(evt, entryView);});
+    }    
+    dojo.event.connect(headerCellContentSpan, "onclick", orp.lang.bind(this, "clickOnHeader", attribute));
+    dojo.event.connect(headerCell, "oncontextmenu", orp.lang.bind(this, "_contextMenuWasOpened", attribute));
+    dojo.event.connect(headerCell, "oncontextmenu", contextMenu, "onOpen");
     
     if (this.isInEditMode()) {
       new dojo.dnd.HtmlDragSource(headerCell, "headerCell");
@@ -448,12 +522,38 @@ orp.TablePlugin.prototype._buildHeader = function() {
   }
   this._numberOfColumns = numCols;
 
+  this._buildAddColumnControl(headerRow);
+
   if (this.isInEditMode()) {
     var dropTarget = new dojo.dnd.HtmlDropTarget(headerRow, ["headerCell"]);
     dojo.event.connect(dropTarget, "onDrop", this, "_handleDrop");
   }
 };
 
+orp.TablePlugin.prototype._clickOnAddColumnButton = function(eventObject) {
+  var popopMenu = dojo.widget.createWidget("PopupMenu2", {}, null);
+  var listOfAttributes = this.getWorld().getAttributes();
+  for (var i in listOfAttributes) {
+    var attribute = listOfAttributes[i];
+    if (!orp.util.isObjectInSet(attribute, this._displayAttributes)) {
+      var attributeName = attribute.getDisplayString();
+      var menuItem = dojo.widget.createWidget("MenuItem2", {caption: attributeName}, null);
+      dojo.event.connect(menuItem, "onClick",  orp.lang.bind(this, "_addOrRemoveOneColumn", attribute));
+      popopMenu.addChild(menuItem);
+    }
+  }
+  popopMenu.onOpen(eventObject);
+};
+
+/*
+orp.TablePlugin.prototype.keyPressOnDatatypeField = function(event, anEntryView) {
+  if (event.keyCode == orp.util.ASCII.RETURN) {
+    anEntryView.stopEditing();
+    return true;
+  }
+  return false;
+};
+*/
 
 /**
  * Re-creates all the HTML for the TablePlugin, and hands the HTML to the 
@@ -472,7 +572,6 @@ orp.TablePlugin.prototype._buildTable = function(doNotRebuildHash) {
   //create new table, remove old table if already exists
   var viewDivElement = this.getHtmlElement();
   orp.view.View.removeChildrenOfElement(viewDivElement);
-  this._buildAttributeEditor();
   
   // We could do use View.appendNewElement() here, but we seem to get a 20%
   // speed improvement by instead using View.newElement() and then making our 
@@ -706,44 +805,50 @@ orp.TablePlugin.prototype._importData = function(eventObject) {
  */
 orp.TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
   var attributeUuid = eventObject.target.value;
-  
   if (attributeUuid) {
-    var world = this.getWorld();
-    world.beginTransaction();
-    
-    var createNewLayoutItemIfNecessary;
-    var layoutItem = this.getLayoutItem(createNewLayoutItemIfNecessary = true);
-    
-    var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
-    var entriesTableColumns = layoutItem.getEntriesForAttribute(attributeTableColumns);
-    var noStoredColumns = (entriesTableColumns.length === 0);
     var changedAttribute = this.getWorld().getItemFromUuid(attributeUuid);
-    var removeAttribute = orp.util.removeObjectFromSet(changedAttribute, this._displayAttributes);
-    var typeCalledItem = world.getTypeCalledItem();
-    if (removeAttribute) {
-      for (var i in entriesTableColumns) {
-        if (changedAttribute == entriesTableColumns[i].getValue()) {
-          entriesTableColumns[i].voteToDelete();
-          break;
-        }
+    this._addOrRemoveOneColumn(changedAttribute);
+  } 
+};
+
+// Add a column to the table, or remove a column from the table.
+orp.TablePlugin.prototype._addOrRemoveOneColumn = function(attribute) {
+  var changedAttribute = attribute;
+  var world = this.getWorld();
+  world.beginTransaction();
+  
+  var createNewLayoutItemIfNecessary;
+  var layoutItem = this.getLayoutItem(createNewLayoutItemIfNecessary = true);
+  
+  var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
+  var entriesTableColumns = layoutItem.getEntriesForAttribute(attributeTableColumns);
+  var noStoredColumns = (entriesTableColumns.length === 0);
+  // var changedAttribute = this.getWorld().getItemFromUuid(attributeUuid);
+  var removeAttribute = orp.util.removeObjectFromSet(changedAttribute, this._displayAttributes);
+  var typeCalledItem = world.getTypeCalledItem();
+  if (removeAttribute) {
+    for (var i in entriesTableColumns) {
+      if (changedAttribute == entriesTableColumns[i].getValue()) {
+        entriesTableColumns[i].voteToDelete();
+        break;
       }
-    } else {
-      this._displayAttributes.push(changedAttribute);
     }
-    if (noStoredColumns) {
-      for (i in this._displayAttributes) {
-        var anAttribute = this._displayAttributes[i];
-        layoutItem.addEntry({attribute:attributeTableColumns, value:anAttribute, type:typeCalledItem});
-      }
-    } else {
-      if (!removeAttribute) {
-        layoutItem.addEntry({attribute:attributeTableColumns, value:changedAttribute, type:typeCalledItem});
-      }
-    }
-    world.endTransaction();
-    
-    this._buildTable(true);
+  } else {
+    this._displayAttributes.push(changedAttribute);
   }
+  if (noStoredColumns) {
+    for (i in this._displayAttributes) {
+      var anAttribute = this._displayAttributes[i];
+      layoutItem.addEntry({attribute:attributeTableColumns, value:anAttribute, type:typeCalledItem});
+    }
+  } else {
+    if (!removeAttribute) {
+      layoutItem.addEntry({attribute:attributeTableColumns, value:changedAttribute, type:typeCalledItem});
+    }
+  }
+  world.endTransaction();
+  
+  this._buildTable(true);
 };
  
 

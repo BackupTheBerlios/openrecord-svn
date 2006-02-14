@@ -239,6 +239,9 @@ div.viewmode .edit_tool {
   display: none;
 }
 
+.edit_tool {
+  display: none;
+}
 
 /****************************************/
 /* NavbarView styles                */
@@ -248,7 +251,6 @@ div.NavbarView {
   width: 120px;
   margin: 0;
   padding: 0;
-  font-size: 0.8em;
   font-weight: bold;
 }
 
@@ -262,6 +264,7 @@ div.NavbarView {
 }
 
 .menu_item {
+  font-size: 0.8em;
   list-style: none;
   margin: 0;
   cursor: move;
@@ -459,6 +462,10 @@ div.EntryView textarea {
 /****************************************/
 /* Table styles                         */
 
+.headerCellContentSpan {
+  font-size: 0.8em;
+}
+
 .simple_table {
   background: rgb(70%, 70%, 70%);
   border: 1pt solid rgb(70%, 70%, 70%);
@@ -469,7 +476,7 @@ div.EntryView textarea {
   vertical-align: middle;
 }
 
-.simple_table th {
+.simple_table tr th {
   padding: 0.1em;
   text-align: left;
   background: #BBCEF1;
@@ -480,7 +487,6 @@ div.EntryView textarea {
   padding: 0.3em;
   color: #000000;
   background: #BBCEF1;
-  font-size: 0.8em;
   text-align: left;
   width: 100%;
 }
@@ -723,16 +729,16 @@ div.SectionView {
 /****************************************/
 /* EntryView styles                     */
 
-.EntryView {
+td .EntryView {
   width: 100%;
   height: 100%;
 }
 
-.EntryView .provisional {
+td .EntryView .provisional {
   color: #999999;
 }
 
-.ItemValue, .ConnectionValue {
+td .ItemValue, .ConnectionValue {
   background-color: #DEE7F8; /* light blue */
   padding-top: 1px;
   padding-bottom: 1px;
@@ -742,11 +748,11 @@ div.SectionView {
   -moz-border-radius: 12px; /* WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners */
 }
 
-.ItemValue:hover, .ConnectionValue:hover {
+td .ItemValue:hover, .ConnectionValue:hover {
   background-color: #BBCEF1; /* darker blue */
 }
 
-.ItemValueSelected {
+td .ItemValueSelected {
   background-color:#598bec;
   padding-top: 1px;
   padding-bottom: 1px;
@@ -757,23 +763,23 @@ div.SectionView {
   -moz-border-radius: 12px; /* WARNING: Mozilla only attribute. This just makes a rectangle have rounded corners */
 }
 
-.DateValue {
+td .DateValue {
   color: #606060;
 }
 
-.NumberValue {
+td .NumberValue {
   color: #606060;
   text-align: right;
 }
 
-.TextValue {
+td .TextValue {
 }
 
-.UrlValue {
+td .UrlValue {
   text-decoration: underline;
 }
 
-.NegativeNumber {
+td .NegativeNumber {
   color: rgb(100%, 0%, 0%);
 }
 
@@ -806,6 +812,11 @@ p.byline a {
 }
 
 
+
 /****************************************/
 /* END                                  */
 /****************************************/
+
+.add_column {
+  background: rgb(50%, 0%, 0%);
+}
