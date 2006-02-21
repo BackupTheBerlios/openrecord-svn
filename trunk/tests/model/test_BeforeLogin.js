@@ -110,7 +110,7 @@ function testAccessorsForAxiomaticItems() {
     assertTrue('Every entry can be displayed as a string', dojo.lang.isString(nameEntry.getDisplayString()));
     assertTrue('Every axiomatic attribute is in the category "Attribute"', item.isInCategory(categoryCalledAttribute));
     var uuid = item.getUuid();
-    assertTrue('Every axiomatic attribute has a UUID', (uuid instanceof orp.uuid.Uuid));
+    assertTrue('Every axiomatic attribute has a UUID', (uuid instanceof dojo.uuid.Uuid));
     assertTrue('getItemFromUuid() returns the right attribute', (world.getItemFromUuid(uuid) == item));
   }
   

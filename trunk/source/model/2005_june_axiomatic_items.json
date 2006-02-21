@@ -23,7 +23,7 @@
              "uuid": "00001003-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Attribute: Body
+    { "Item": {                                               // Attribute: Content
              "uuid": "00001004-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -69,6 +69,10 @@
     // -----------------------------------------------------------------------
     { "Item": {                                               // Attribute: Class Name
              "uuid": "0000100f-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Attribute: Developer Mode
+             "uuid": "00001025-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Item": {                                               // Type: Text
@@ -125,6 +129,10 @@
     // -----------------------------------------------------------------------
     { "Item": {                                               // Category: Tag
              "uuid": "00001214-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Category: Not General Purpose
+             "uuid": "00001215-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // "Amy the Axiomatic User"
@@ -218,17 +226,17 @@
             "value": "00001020-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Body
+    { "Entry": {                                              // Content
              "uuid": "0001004a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00001004-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Body
+             "item": "00001004-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Content
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Body" }
+            "value": "Content" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Body) assign (Attribute: Category) = (Category: Attribute)
-             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Body)
+             // in item (Attribute: Content) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Content)
              "uuid": "0001004b-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00001004-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
@@ -238,7 +246,7 @@
     { "Entry": {                                              // Text
              "uuid": "0001004c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "item": "00001004-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Body
+             "item": "00001004-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Content
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001020-ce7f-11d9-8cd5-0011113ae5d6" }
     },
@@ -293,6 +301,15 @@
             "value": "00001212-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Query Spec) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Query Spec)
+             "uuid": "0001006d-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001006-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },  
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Matching Value
              "uuid": "0001007a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -307,6 +324,15 @@
              "uuid": "0001007b-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00001007-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },  
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Matching Value) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Matching Value)
+             "uuid": "0001007c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001007-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
@@ -335,6 +361,15 @@
             "value": "00001210-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Matching Attribute) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Matching Attribute)
+             "uuid": "0001008d-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001008-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },  
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Unfiled Entry
              "uuid": "0001009a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -359,6 +394,15 @@
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001040-ce7f-11d9-8cd5-0011113ae5d6" }
     },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Unfiled Entry) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Unfiled Entry)
+             "uuid": "0001009d-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001009-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Expected Type
              "uuid": "000100aa-ce7f-11d9-8cd5-0011113ae5d6",
@@ -393,6 +437,15 @@
             "value": "00001213-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Expected Type) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Expected Type)
+             "uuid": "000100ae-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0000100a-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Inverse Attribute
              "uuid": "000100ba-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -425,6 +478,15 @@
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001210-ce7f-11d9-8cd5-0011113ae5d6" }
     },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Inverse Attribute) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Inverse Attribute)
+             "uuid": "000100be-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0000100b-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
     // -----------------------------------------------------------------------
     { "Entry": {                                              // "Items in Category"
              "uuid": "000100ca-ce7f-11d9-8cd5-0011113ae5d6",
@@ -460,6 +522,15 @@
             "value": "00001030-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Items in Category) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Items in Category)
+             "uuid": "000100ce-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0000100c-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // "Tag"
              "uuid": "000100da-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -484,6 +555,15 @@
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001214-ce7f-11d9-8cd5-0011113ae5d6" }
     },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Tag) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Tag)
+             "uuid": "000100dd-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0000100d-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
     // -----------------------------------------------------------------------
     { "Entry": {                                              // "Tagged Items"
              "uuid": "000100ea-ce7f-11d9-8cd5-0011113ae5d6",
@@ -519,6 +599,15 @@
             "value": "00001030-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Tagged Items) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Tagged Items)
+             "uuid": "000100ee-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0000100e-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // "Class Name"
              "uuid": "000100fa-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -543,6 +632,49 @@
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001020-ce7f-11d9-8cd5-0011113ae5d6" }
     },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Class Name) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Class Name)
+             "uuid": "000100fd-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0000100f-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // "Developer Mode"
+             "uuid": "0001025a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00001025-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Developer Mode
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Developer Mode" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Developer Mode) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Developer Mode)
+             "uuid": "0001025b-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001025-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },  
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // "Developer Mode"
+             "uuid": "0001025c-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "00001025-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Developer Mode
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
+            "value": "00001020-ce7f-11d9-8cd5-0011113ae5d6" }  // Text <-- FIXME: should be "Check Mark"
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Developer Mode) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Developer Mode)
+             "uuid": "0001025d-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001025-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
     // -----------------------------------------------------------------------
     { "Entry": {                                              // "Text"
              "uuid": "0001020a-ce7f-11d9-8cd5-0011113ae5d6",
@@ -714,6 +846,15 @@
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Attribute) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Category: Attribute)
+             "uuid": "0001210c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001210-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // "Category"
              "uuid": "0001211a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -730,6 +871,15 @@
              "item": ["00001211-ce7f-11d9-8cd5-0011113ae5d6", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Category) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Category: Category)
+             "uuid": "0001211c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001211-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
     // -----------------------------------------------------------------------
     { "Entry": {                                              // "Query Spec"
              "uuid": "0001212a-ce7f-11d9-8cd5-0011113ae5d6",
@@ -748,6 +898,15 @@
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Query Spec) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Category: Query Spec)
+             "uuid": "0001212c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001212-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // "Type"
              "uuid": "0001213a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -765,6 +924,15 @@
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Type) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Category: Type)
+             "uuid": "0001213c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001213-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // "Tag"
              "uuid": "0001214a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -779,6 +947,41 @@
              "uuid": "0001214b-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00001214-ce7f-11d9-8cd5-0011113ae5d6", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Tag) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Category: Tag)
+             "uuid": "0001214c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001214-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // "Not General Purpose"
+             "uuid": "0001215a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00001215-ce7f-11d9-8cd5-0011113ae5d6",  // Category: Not General Purpose
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Not General Purpose" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Not General Purpose) assign (Attribute: Category) = (Category: Category)
+             // in item (Category: Category) assign (Attribute: Items in Category) = (Category: Not General Purpose)
+             "uuid": "0001215b-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001215-ce7f-11d9-8cd5-0011113ae5d6", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Not General Purpose) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Category: Not General Purpose)
+             "uuid": "0001215c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001215-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     }  ]
   },
@@ -870,6 +1073,15 @@
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Page) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Category: Section)
+             "uuid": "0020000c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00020000-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Section
              "uuid": "0020100a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -886,6 +1098,15 @@
              "item": ["00020100-ce7f-11d9-8cd5-0011113ae5d6", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Section) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Category: Section)
+             "uuid": "0020100c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00020100-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Sections In Page
              "uuid": "0030000a-ce7f-11d9-8cd5-0011113ae5d6",
@@ -921,6 +1142,15 @@
         "attribute": ["0000100b-ce7f-11d9-8cd5-0011113ae5d6", "0000100b-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Sections In Page) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Sections In Page)
+             "uuid": "0030000e-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00030000-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Page for section
              "uuid": "0030001a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -945,6 +1175,15 @@
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00020000-ce7f-11d9-8cd5-0011113ae5d6" }
     },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Page for section) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Page for section)
+             "uuid": "0030001d-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00030001-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Plugin View
              "uuid": "0040101a-ce7f-11d9-8cd5-0011113ae5d6",
@@ -971,6 +1210,15 @@
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Plugin View) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Plugin View)
+             "uuid": "0040101d-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00040101-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Layout Data
              "uuid": "0040102a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -996,6 +1244,15 @@
             "value": "00040202-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Layout Data) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Layout Data)
+             "uuid": "0040102d-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00040102-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Applies To Plugin
              "uuid": "0040103a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -1020,6 +1277,15 @@
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00040201-ce7f-11d9-8cd5-0011113ae5d6" }
     },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Applies To Plugin) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Applies To Plugin)
+             "uuid": "0040103d-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00040103-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Section for layout data 
              "uuid": "0040104a-ce7f-11d9-8cd5-0011113ae5d6",
@@ -1055,6 +1321,15 @@
             "value": "00020100-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Section for layout data) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Section for layout data)
+             "uuid": "0040104e-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00040104-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Section for query spec 
              "uuid": "0040105a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -1089,6 +1364,15 @@
             "value": "00020100-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Section for query spec) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Section for query spec)
+             "uuid": "0040105e-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00040105-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Table Columns 
              "uuid": "004010aa-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -1114,6 +1398,15 @@
             "value": "00001210-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Table Columns) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Table Columns)
+             "uuid": "004010ad-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0004010a-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Not Lozenge
              "uuid": "004010fa-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -1130,6 +1423,15 @@
              "item": ["0004010f-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Not Lozenge) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Not Lozenge)
+             "uuid": "004010fc-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0004010f-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Plugin View
              "uuid": "0040201a-ce7f-11d9-8cd5-0011113ae5d6",
@@ -1148,6 +1450,15 @@
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Plugin View) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Category: Plugin View)
+             "uuid": "0040201c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00040201-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // Layout Data
              "uuid": "0040202a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -1164,6 +1475,15 @@
              "item": ["00040202-ce7f-11d9-8cd5-0011113ae5d6", "00001211-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Category: Layout Data) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Category: Layout Data)
+             "uuid": "0040202c-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00040202-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    }, 
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Table View
              "uuid": "0040301a-ce7f-11d9-8cd5-0011113ae5d6",
@@ -1332,7 +1652,15 @@
              "item": "2c4fa780-dde4-11d9-9c71-000c414ce854",  // Brian Douglas Skinner
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "Brian Douglas Skinner" }
-    }  ]
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Brian Douglas Skinner
+             "uuid": "2c4fa784-dde4-11d9-9c71-000c414ce854",
+        "attribute": "00001025-ce7f-11d9-8cd5-0011113ae5d6",  // Developer Mode
+             "item": "2c4fa780-dde4-11d9-9c71-000c414ce854",  // Brian Douglas Skinner
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue <-- FIXME: should be a boolean
+            "value": "true" }
+    }    ]
   },
   // =======================================================================
   { "Transaction": [

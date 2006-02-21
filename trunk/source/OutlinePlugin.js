@@ -122,12 +122,10 @@ orp.OutlinePlugin.prototype.refresh = function() {
     var liElement = orp.view.View.appendNewElement(ulElement, "li", null, null, liText);
     var anchorElement = orp.view.View.appendNewElement(liElement, "a", orp.view.SectionView.cssClass.MORE_LINK);
 
-    // PENDING: 
-    //  We need a better way to get the URL for a content item
-    anchorElement.setAttribute("href", orp.view.RootView.URL_HASH_ITEM_PREFIX + contentItem.getUuidString());
+    anchorElement.setAttribute("href", this.getRootView().getUrlForItem(contentItem));
 
-    // orp.view.View.appendNewTextNode(anchorElement, "(more &#8658;)");
-    anchorElement.innerHTML = "(more &#8658;)";
+    orp.view.View.appendNewTextNode(anchorElement, "(more)");
+    // anchorElement.innerHTML = "(more &#8658;)";
 
     dojo.event.connect(anchorElement, "onclick", orp.view.RootView.clickOnLocalLink);
   }

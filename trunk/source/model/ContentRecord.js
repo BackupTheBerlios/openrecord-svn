@@ -113,7 +113,8 @@ orp.model.ContentRecord.prototype._addOrdinal = function(ordinal) {
  * @return   A number.
  */
 orp.model.ContentRecord.prototype.getOrdinalNumberAtCreation = function() {
-  return this.getUuid().getTimestampAsHexString();
+  // return this.getUuid().getTimestampAsHexString();
+  return this.getUuid().getTimestamp("hex");
 };
 
 
@@ -261,9 +262,6 @@ orp.model.ContentRecord.prototype.reorderBetween = function(contentRecordFirst, 
   var secondOrdinalNumber = null;
   var thirdOrdinalNumber = null;
   
-  // PENDING: this is a hack
-  var sourceOfRandomness = contentRecordFirst ? contentRecordFirst.getUuid() : contentRecordThird.getUuid();
-  
   if (contentRecordFirst) {
     firstOrdinalNumber = contentRecordFirst.getOrdinalNumber();
   }
@@ -281,20 +279,18 @@ orp.model.ContentRecord.prototype.reorderBetween = function(contentRecordFirst, 
         firstOrdinalNumber = thirdOrdinalNumber;
         thirdOrdinalNumber = temp;
       }
-      // PENDING: we should not be calling the private method _generateRandomEightCharacterHexString()
-      var randomEightCharacterHexString = sourceOfRandomness._generateRandomEightCharacterHexString();
+      var randomEightCharacterHexString = this._generateRandomEightCharacterHexString();
       secondOrdinalNumber = firstOrdinalNumber + randomEightCharacterHexString;
       var zeroes = "";
       while (secondOrdinalNumber >= thirdOrdinalNumber) {
         zeroes += "0";
-        // PENDING: we should not be calling the private method _generateRandomEightCharacterHexString()
-        randomEightCharacterHexString = sourceOfRandomness._generateRandomEightCharacterHexString();
+        randomEightCharacterHexString = this._generateRandomEightCharacterHexString();
         secondOrdinalNumber = firstOrdinalNumber + zeroes + randomEightCharacterHexString;
       }
     }
   }
   if (firstOrdinalNumber && !thirdOrdinalNumber) {
-    secondOrdinalNumber = firstOrdinalNumber + sourceOfRandomness._generateRandomEightCharacterHexString();
+    secondOrdinalNumber = firstOrdinalNumber + this._generateRandomEightCharacterHexString();
   }
   if (!firstOrdinalNumber && thirdOrdinalNumber) {
     secondOrdinalNumber = thirdOrdinalNumber;
@@ -310,11 +306,33 @@ orp.model.ContentRecord.prototype.reorderBetween = function(contentRecordFirst, 
     while (secondOrdinalNumber.length < origLen) {
       secondOrdinalNumber += "f";
     }
-    secondOrdinalNumber += sourceOfRandomness._generateRandomEightCharacterHexString();
+    secondOrdinalNumber += this._generateRandomEightCharacterHexString();
   }
   this.getWorld()._newOrdinal(this, secondOrdinalNumber);
 };
 
+/**
+ * Returns a randomly generated 8-character string of hex digits.
+ *
+ * @scope    private instance method
+ */
+orp.model.ContentRecord.prototype._generateRandomEightCharacterHexString = function() {
+  // PENDING: 
+  // This isn't really random.  We should find some source of real 
+  // randomness, and feed it to an MD5 hash algorithm.
+  
+  
+  // random32bitNumber is a randomly generated floating point number 
+  // between 0 and (4,294,967,296 - 1), inclusive.
+  var random32bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 32) );
+  
+  var HEX_RADIX = 16;
+  var eightCharacterString = random32bitNumber.toString(HEX_RADIX);
+  while (eightCharacterString.length < 8) {
+    eightCharacterString = "0" + eightCharacterString;
+  }
+  return eightCharacterString;
+};
 
 /**
  * Registers a vote to delete this contentRecord. 

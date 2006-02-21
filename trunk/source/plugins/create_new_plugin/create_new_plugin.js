@@ -33,7 +33,7 @@
 dojo.setModulePrefix("orp", "../../source"); // relative to dojo.js
 dojo.require("dojo.text.*");
 dojo.require("dojo.event.*");
-dojo.require("orp.uuid.TimeBasedUuid");
+dojo.require("dojo.uuid.TimeBasedGenerator");
 dojo.require("orp.model.World");
 
 function startHere() {
@@ -90,11 +90,12 @@ function generateContents(className, name, author) {
   var arrayOfUuidParts = uuidForTheUserWhoCreatesPlugins.split('-');
   var nodeForUserWhoCreatesPlugins = arrayOfUuidParts[4]; // the 'node' is part [4] of the UUID
 
-  var itemUuid   = new orp.uuid.TimeBasedUuid({node: nodeForUserWhoCreatesPlugins});
-  var entryUuid1 = new orp.uuid.TimeBasedUuid({node: nodeForUserWhoCreatesPlugins});
-  var entryUuid2 = new orp.uuid.TimeBasedUuid({node: nodeForUserWhoCreatesPlugins});
-  var entryUuid3 = new orp.uuid.TimeBasedUuid({node: nodeForUserWhoCreatesPlugins});
-  var entryUuid4 = new orp.uuid.TimeBasedUuid({node: nodeForUserWhoCreatesPlugins});
+  dojo.uuid.TimeBasedGenerator.setNode(nodeForUserWhoCreatesPlugins);
+  var itemUuid   = dojo.uuid.TimeBasedGenerator.generate();
+  var entryUuid1 = dojo.uuid.TimeBasedGenerator.generate();
+  var entryUuid2 = dojo.uuid.TimeBasedGenerator.generate();
+  var entryUuid3 = dojo.uuid.TimeBasedGenerator.generate();
+  var entryUuid4 = dojo.uuid.TimeBasedGenerator.generate();
   
   var intermediateResult = templateFileContents;
   intermediateResult = intermediateResult.replace(/%\(AUTHOR\)/g, author);

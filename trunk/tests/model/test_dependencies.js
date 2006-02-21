@@ -58,7 +58,8 @@ function tearDown() {
 // -------------------------------------------------------------------
 
 function testDependencies() {
-  assertTrue("orp.model depends only on lang, util, uuid, archive, and storage", orp.util.hasExactlyTheseProperties(orp, ["model", "lang", "util", "uuid", "archive", "storage"]));
+  // assertTrue("orp.model depends only on lang, util, uuid, archive, and storage", orp.util.hasExactlyTheseProperties(orp, ["model", "lang", "util", "uuid", "archive", "storage"]));
+  assertTrue("orp.model depends only on lang, util, uuid, archive, and storage", orp.util.hasExactlyTheseProperties(orp, ["model", "lang", "util", "archive", "storage"]));
 }
 
 // -------------------------------------------------------------------

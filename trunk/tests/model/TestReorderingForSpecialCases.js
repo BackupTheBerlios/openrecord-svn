@@ -61,9 +61,9 @@ function setUp() {
 
   world = new orp.model.World(archive);
 
-  annUuid1 = "10000000-2222-1333-F444-555555555555";
-  annUuid2 = "10000001-2222-1333-F444-555555555555";
-  annUuid3 = "10000002-2222-1333-F444-555555555555";
+  annUuid1 = "10000000-2222-1333-8444-555555555555";
+  annUuid2 = "10000001-2222-1333-8444-555555555555";
+  annUuid3 = "10000002-2222-1333-8444-555555555555";
   mockUuidGenerator.queueOfUuids.push(annUuid1);
   mockUuidGenerator.queueOfUuids.push(annUuid2);
   mockUuidGenerator.queueOfUuids.push(annUuid3);
@@ -73,9 +73,9 @@ function setUp() {
   assertTrue("Ann has the expected uuid", userAnn.getUuidString() == annUuid1);
   world.login(userAnn, annsPassword);
 
-  foodUuid1    = "20000000-2222-1333-F444-555555555555";
-  foodUuid2    = "20000001-2222-1333-F444-555555555555";
-  foodUuid3    = "20000002-2222-1333-F444-555555555555";
+  foodUuid1    = "20000000-2222-1333-8444-555555555555";
+  foodUuid2    = "20000001-2222-1333-8444-555555555555";
+  foodUuid3    = "20000002-2222-1333-8444-555555555555";
   mockUuidGenerator.queueOfUuids.push(foodUuid1);
   mockUuidGenerator.queueOfUuids.push(foodUuid2);
   mockUuidGenerator.queueOfUuids.push(foodUuid3);
@@ -93,16 +93,16 @@ function tearDown() {
 // -------------------------------------------------------------------
 
 function testReorderBetweenTwoItemsWithTheSameOrdinal() {
-  sushiUuid     = "40000000-2222-1333-F444-555555555555";
-  sushiNameUuid = "40000001-2222-1333-F444-555555555555";
+  sushiUuid     = "40000000-2222-1333-8444-555555555555";
+  sushiNameUuid = "40000001-2222-1333-8444-555555555555";
   mockUuidGenerator.queueOfUuids.push(sushiUuid);
   mockUuidGenerator.queueOfUuids.push(sushiNameUuid);
   pestoUuid     = "40000000-2222-1333-9999-555555555555";
   pestoNameUuid = "40000001-2222-1333-9999-555555555555";
   mockUuidGenerator.queueOfUuids.push(pestoUuid);
   mockUuidGenerator.queueOfUuids.push(pestoNameUuid);
-  guavaUuid     = "50000000-2222-1333-F444-555555555555";
-  guavaNameUuid = "50000001-2222-1333-F444-555555555555";
+  guavaUuid     = "50000000-2222-1333-8444-555555555555";
+  guavaNameUuid = "50000001-2222-1333-8444-555555555555";
   mockUuidGenerator.queueOfUuids.push(guavaUuid);
   mockUuidGenerator.queueOfUuids.push(guavaNameUuid);
   var sushi = world.newItem("Sushi");
@@ -123,16 +123,16 @@ function testReorderBetweenTwoItemsWithTheSameOrdinal() {
 }
 
 function testReorderBetweenTwoItemsWithTheSameTimestamp() {
-  sushiUuid     = "40000000-2222-1333-F444-555555555555";
-  sushiNameUuid = "40000001-2222-1333-F444-555555555555";
+  sushiUuid     = "40000000-2222-1333-8444-555555555555";
+  sushiNameUuid = "40000001-2222-1333-8444-555555555555";
   mockUuidGenerator.queueOfUuids.push(sushiUuid);
   mockUuidGenerator.queueOfUuids.push(sushiNameUuid);
-  pestoUuid     = "40000002-2222-1333-F444-555555555555";
-  pestoNameUuid = "40000003-2222-1333-F444-555555555555";
+  pestoUuid     = "40000002-2222-1333-8444-555555555555";
+  pestoNameUuid = "40000003-2222-1333-8444-555555555555";
   mockUuidGenerator.queueOfUuids.push(pestoUuid);
   mockUuidGenerator.queueOfUuids.push(pestoNameUuid);
-  guavaUuid     = "40000004-2222-1333-F444-555555555555";
-  guavaNameUuid = "40000005-2222-1333-F444-555555555555";
+  guavaUuid     = "40000004-2222-1333-8444-555555555555";
+  guavaNameUuid = "40000005-2222-1333-8444-555555555555";
   mockUuidGenerator.queueOfUuids.push(guavaUuid);
   mockUuidGenerator.queueOfUuids.push(guavaNameUuid);
   var sushi = world.newItem("Sushi");
@@ -147,13 +147,13 @@ function testReorderBetweenTwoItemsWithTheSameTimestamp() {
 
   orp.archive.StubArchive.prototype._generateUuid = mockUuidGenerator;
 
-  sushiLinkUuid    = "60000000-2222-1333-F444-555555555555";
+  sushiLinkUuid    = "60000000-2222-1333-8444-555555555555";
   mockUuidGenerator.queueOfUuids.push(sushiLinkUuid);
   sushi.assignToCategory(categoryCalledFood);
-  pestoLinkUuid    = "60000001-2222-1333-F444-555555555555";
+  pestoLinkUuid    = "60000001-2222-1333-8444-555555555555";
   mockUuidGenerator.queueOfUuids.push(pestoLinkUuid);
   pesto.assignToCategory(categoryCalledFood);
-  guavaLinkUuid    = "60000002-2222-1333-F444-555555555555";
+  guavaLinkUuid    = "60000002-2222-1333-8444-555555555555";
   mockUuidGenerator.queueOfUuids.push(guavaLinkUuid);
   guava.assignToCategory(categoryCalledFood);
   

@@ -123,7 +123,7 @@ brian  | 1    IED |         | 410. Rationalize our CSS style sheet approach
 mignon |          | 5    IED| 419. done
        |          |         | 420. Replace XMLHttpRequest calls with dojo.io.bind() calls
        |          |         | 421. Consider refactoring orp.storage so that FileProtocolStorage is "behind" dojo.io.bind
-       |          |         | 422. Replace all use of orp.uuid with dojo.uuid, and remove orp.uuid from our tree
+brian  |          | done?   | 422. Replace all use of orp.uuid with dojo.uuid, and remove orp.uuid from our tree
        |          |         | 423. Replace all use of orp.lang with dojo.lang, and remove orp.lang from our tree
        |          |         | 424. Fix the unit tests in tests/view/SectionViewConstructorTest.js
        |          |         | 425. (new task...)

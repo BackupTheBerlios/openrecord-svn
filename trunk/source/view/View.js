@@ -34,7 +34,6 @@
 // -------------------------------------------------------------------
 dojo.provide("orp.view.View");
 dojo.require("orp.util.Util");
-dojo.require("orp.uuid.TimeBasedUuid");
 dojo.require("orp.lang.Lang");
 
 // -------------------------------------------------------------------

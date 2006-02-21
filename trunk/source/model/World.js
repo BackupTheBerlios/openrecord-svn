@@ -112,19 +112,44 @@ orp.model.World.UUID = {
   ATTRIBUTE_NAME:                     "00001001-ce7f-11d9-8cd5-0011113ae5d6",
   ATTRIBUTE_SHORT_NAME:               "00001002-ce7f-11d9-8cd5-0011113ae5d6",
   ATTRIBUTE_SUMMARY:                  "00001003-ce7f-11d9-8cd5-0011113ae5d6",
-  ATTRIBUTE_BODY:                     "00001004-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_CONTENT:                  "00001004-ce7f-11d9-8cd5-0011113ae5d6",
   ATTRIBUTE_CATEGORY:                 "00001005-ce7f-11d9-8cd5-0011113ae5d6",
-  ATTRIBUTE_QUERY_SPEC:               "00001006-ce7f-11d9-8cd5-0011113ae5d6",
-  ATTRIBUTE_QUERY_MATCHING_VALUE:     "00001007-ce7f-11d9-8cd5-0011113ae5d6",
-  ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE: "00001008-ce7f-11d9-8cd5-0011113ae5d6",
-  ATTRIBUTE_UNFILED:                  "00001009-ce7f-11d9-8cd5-0011113ae5d6",
-  ATTRIBUTE_EXPECTED_TYPE:            "0000100a-ce7f-11d9-8cd5-0011113ae5d6",
-  ATTRIBUTE_INVERSE_ATTRIBUTE:        "0000100b-ce7f-11d9-8cd5-0011113ae5d6",
-  ATTRIBUTE_ITEMS_IN_CATEGORY:        "0000100c-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_QUERY_SPEC:               "00001006-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose
+  ATTRIBUTE_QUERY_MATCHING_VALUE:     "00001007-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose 
+  ATTRIBUTE_QUERY_MATCHING_ATTRIBUTE: "00001008-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose
+  ATTRIBUTE_UNFILED:                  "00001009-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose
+  ATTRIBUTE_EXPECTED_TYPE:            "0000100a-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose
+  ATTRIBUTE_INVERSE_ATTRIBUTE:        "0000100b-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose
+  ATTRIBUTE_ITEMS_IN_CATEGORY:        "0000100c-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose
   ATTRIBUTE_TAG:                      "0000100d-ce7f-11d9-8cd5-0011113ae5d6",
-  ATTRIBUTE_TAGGED_ITEMS:             "0000100e-ce7f-11d9-8cd5-0011113ae5d6",
-  ATTRIBUTE_CLASS_NAME:               "0000100f-ce7f-11d9-8cd5-0011113ae5d6",
+  ATTRIBUTE_TAGGED_ITEMS:             "0000100e-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose
+  ATTRIBUTE_CLASS_NAME:               "0000100f-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose
+  ATTRIBUTE_DEVELOPER_MODE:           "00001025-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose
 
+  // see also:
+  //   orp.TablePlugin.UUID = {ATTRIBUTE_TABLE_COLUMNS: "0004010a-ce7f-11d9-8cd5-0011113ae5d6" };
+  //   orp.view.EntryView.UUID = {ATTRIBUTE_NOT_LOZENGE: "0004010f-ce7f-11d9-8cd5-0011113ae5d6" };
+  //   orp.view.PageView.UUID = {
+  //     ATTRIBUTE_SECTIONS_IN_PAGE:             "00030000-ce7f-11d9-8cd5-0011113ae5d6",
+  //     ATTRIBUTE_PAGE_THIS_SECTION_APPEARS_ON: "00030001-ce7f-11d9-8cd5-0011113ae5d6" };
+  //   orp.view.SectionView.UUID = {
+  //     ATTRIBUTE_PLUGIN_VIEW:       "00040101-ce7f-11d9-8cd5-0011113ae5d6",
+  //     ATTRIBUTE_LAYOUT_DATA:       "00040102-ce7f-11d9-8cd5-0011113ae5d6",
+  //     ATTRIBUTE_APPLIES_TO_PLUGIN: "00040103-ce7f-11d9-8cd5-0011113ae5d6",
+  //     ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO: "00040104-ce7f-11d9-8cd5-0011113ae5d6",
+  //     ATTRIBUTE_SECTION_THIS_QUERY_BELONGS_TO: "00040105-ce7f-11d9-8cd5-0011113ae5d6",
+
+  //   orp.view.SectionView.UUID = {
+  //     CATEGORY_PLUGIN_VIEW:        "00040201-ce7f-11d9-8cd5-0011113ae5d6",
+  //     CATEGORY_LAYOUT_DATA:        "00040202-ce7f-11d9-8cd5-0011113ae5d6" };
+  //   orp.view.RootView.UUID = {
+  //     CATEGORY_PAGE:    "00020000-ce7f-11d9-8cd5-0011113ae5d6",
+  //     CATEGORY_SECTION: "00020100-ce7f-11d9-8cd5-0011113ae5d6" };
+  
+  
+  // FIXME: 
+  // we should change these UUID prefixes from "000010" to "000011"
+  // but that will break existing repositories
   TYPE_TEXT:               "00001020-ce7f-11d9-8cd5-0011113ae5d6",
   TYPE_NUMBER:             "00001021-ce7f-11d9-8cd5-0011113ae5d6",
   TYPE_DATE:               "00001022-ce7f-11d9-8cd5-0011113ae5d6",
@@ -135,11 +160,12 @@ orp.model.World.UUID = {
   TYPE_CONNECTION:         "00001050-ce7f-11d9-8cd5-0011113ae5d6",
 
   CATEGORY_PERSON:         "00001201-ce7f-11d9-8cd5-0011113ae5d6",
-  CATEGORY_ATTRIBUTE:      "00001210-ce7f-11d9-8cd5-0011113ae5d6",
-  CATEGORY_CATEGORY:       "00001211-ce7f-11d9-8cd5-0011113ae5d6",
-  CATEGORY_QUERY:          "00001212-ce7f-11d9-8cd5-0011113ae5d6",
-  CATEGORY_TYPE:           "00001213-ce7f-11d9-8cd5-0011113ae5d6",
-  CATEGORY_TAG:            "00001214-ce7f-11d9-8cd5-0011113ae5d6" };
+  CATEGORY_ATTRIBUTE:      "00001210-ce7f-11d9-8cd5-0011113ae5d6",   // not general purpose
+  CATEGORY_CATEGORY:       "00001211-ce7f-11d9-8cd5-0011113ae5d6",   // not general purpose
+  CATEGORY_QUERY:          "00001212-ce7f-11d9-8cd5-0011113ae5d6",   // not general purpose
+  CATEGORY_TYPE:           "00001213-ce7f-11d9-8cd5-0011113ae5d6",   // not general purpose
+  CATEGORY_TAG:            "00001214-ce7f-11d9-8cd5-0011113ae5d6",   // not general purpose
+  CATEGORY_NOT_GENERAL_PURPOSE:   "00001215-ce7f-11d9-8cd5-0011113ae5d6"};  // not general purpose
 
 
 // -------------------------------------------------------------------
@@ -174,6 +200,7 @@ orp.model.World.prototype._loadAxiomaticItems = function() {
   this._attributeCalledTag                    = server.getItemFromUuid(UUID.ATTRIBUTE_TAG);
   this._attributeCalledTaggedItems            = server.getItemFromUuid(UUID.ATTRIBUTE_TAGGED_ITEMS);
   this._attributeCalledClassName              = server.getItemFromUuid(UUID.ATTRIBUTE_CLASS_NAME);
+  this._attributeCalledDeveloperMode          = server.getItemFromUuid(UUID.ATTRIBUTE_DEVELOPER_MODE);
 
   // load the axiomatic types
   this._typeCalledText       = server.getItemFromUuid(UUID.TYPE_TEXT);
@@ -192,6 +219,8 @@ orp.model.World.prototype._loadAxiomaticItems = function() {
   this._categoryCalledQuery       = server.getItemFromUuid(UUID.CATEGORY_QUERY);
   this._categoryCalledType        = server.getItemFromUuid(UUID.CATEGORY_TYPE);
   this._categoryCalledTag         = server.getItemFromUuid(UUID.CATEGORY_TAG);
+  this._categoryCalledNotGeneralPurpose = server.getItemFromUuid(UUID.CATEGORY_NOT_GENERAL_PURPOSE);
+  
 };
 
 
@@ -507,6 +536,9 @@ orp.model.World.prototype.getAttributeCalledClassName = function() {
   return this._attributeCalledClassName;
 };
 
+orp.model.World.prototype.getAttributeCalledDeveloperMode = function() {
+  return this._attributeCalledDeveloperMode;
+};
 
 
 // -------------------------------------------------------------------
@@ -573,6 +605,10 @@ orp.model.World.prototype.getCategoryCalledType = function() {
 
 orp.model.World.prototype.getCategoryCalledTag = function() {
   return this._categoryCalledTag;
+};
+
+orp.model.World.prototype.getCategoryCalledNotGeneralPurpose = function() {
+  return this._categoryCalledNotGeneralPurpose;
 };
 
 
@@ -962,13 +998,34 @@ orp.model.World.prototype.setItemToBeIncludedInQueryResultList = function(item, 
  * @scope    public instance method
  * @param    category    A category item. 
  * @param    observer    Optional. An object or method to be registered as an observer of the returned item. 
+ * @param    filterOutNonGeneralPurposeItems    Optional. Boolean. 
  * @return   A list of items.
  */
-orp.model.World.prototype.getItemsInCategory = function(category, observer) {
+orp.model.World.prototype.getItemsInCategory = function(category, observer, filterOutNonGeneralPurposeItems) {
   var listOfItems = this._archive.getItemsInCategory(category);
-  // listOfItems = this._getFilteredList(listOfItems); PENDING: not sure if I should call this?
-  this._addListObserver(listOfItems, observer);
-  return (listOfItems);
+  var returnList;
+  if (filterOutNonGeneralPurposeItems) {
+    var currentUser = this.getCurrentUser();
+    var attributeCalledDeveloperMode = this.getAttributeCalledDeveloperMode();
+    var inDeveloperMode = (currentUser.getSingleValueFromAttribute(attributeCalledDeveloperMode) == "true"); // FIXME
+    var categoryCalledNotGeneralPurpose = this.getCategoryCalledNotGeneralPurpose();
+    if (inDeveloperMode) {
+      returnList = listOfItems;
+    } else {
+      returnList = [];
+      for (var i in listOfItems) {
+        var item = listOfItems[i];
+        var itemIsGeneralPurpose = !(item.isInCategory(categoryCalledNotGeneralPurpose));
+        if (itemIsGeneralPurpose) {
+          returnList.push(item);
+        }
+      }
+    }
+  } else {
+    returnList = listOfItems;
+  }
+  this._addListObserver(returnList, observer);
+  return (returnList);
 };
 
 
@@ -983,6 +1040,7 @@ orp.model.World.prototype.getCategories = function(observer) {
   return this.getItemsInCategory(categoryCalledCategory, observer);
 };
 
+
 /**
  * Returns a list of all the items that represent attributes.
  *
@@ -991,7 +1049,8 @@ orp.model.World.prototype.getCategories = function(observer) {
  */
 orp.model.World.prototype.getAttributes = function(observer) {
   var categoryCalledAttribute = this.getCategoryCalledAttribute();
-  return this.getItemsInCategory(categoryCalledAttribute, observer);
+  var filterOutNonGeneralPurposeItems = true;
+  return this.getItemsInCategory(categoryCalledAttribute, observer, filterOutNonGeneralPurposeItems);
 };
 
 
@@ -1000,23 +1059,24 @@ orp.model.World.prototype.getAttributes = function(observer) {
  */
 orp.model.World.prototype.getSuggestedItemsForAttribute = function(attribute, observer) {
   var listOfSuggestedItems = [];
-  var key;
   var categoryCalledCategory = this.getCategoryCalledCategory();
   var attributeCalledExpectedType = this.getAttributeCalledExpectedType();
   var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
   var listOfCategories = [];
-  for (key in listOfExpectedTypeEntries) {
-    var expectedTypeEntry = listOfExpectedTypeEntries[key];
+  for (var i in listOfExpectedTypeEntries) {
+    var expectedTypeEntry = listOfExpectedTypeEntries[i];
     var expectedType = expectedTypeEntry.getValue();
     if (expectedType.isInCategory(categoryCalledCategory)) {
       listOfCategories.push(expectedType);
     }
   }
-  for (key in listOfCategories) {
-    var category = listOfCategories[key];
-    var listOfItems = this.getItemsInCategory(category);
-    for (var keyToo in listOfItems) {
-      var item = listOfItems[keyToo];
+
+  for (var j in listOfCategories) {
+    var category = listOfCategories[j];
+    var filterOutNonGeneralPurposeItems = true;
+    var listOfItems = this.getItemsInCategory(category, null, filterOutNonGeneralPurposeItems);
+    for (var k in listOfItems) {
+      var item = listOfItems[k];
       orp.util.addObjectToSet(item, listOfSuggestedItems);
     }
   }

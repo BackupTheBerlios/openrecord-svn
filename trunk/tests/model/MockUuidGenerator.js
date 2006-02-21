@@ -32,14 +32,14 @@
 // dojo.require("orp.util.TimeBasedUuid");
 
 function mockUuidGenerator() {
-  dojo.require("orp.uuid.TimeBasedUuid");
+  dojo.require("dojo.uuid.Uuid");
   
   if (mockUuidGenerator.queueOfUuids.length === 0) {
     // This should probably throw an exception instead.    
     return "00000000-0000-0000-0000-000000000000";
   }
   var uuidString = mockUuidGenerator.queueOfUuids.shift();
-  var uuid = new orp.uuid.TimeBasedUuid();
+  var uuid = new dojo.uuid.Uuid();
   uuid._uuidString = uuidString;
   return uuid;
 }

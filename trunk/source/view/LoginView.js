@@ -161,7 +161,12 @@ orp.view.LoginView.prototype._rebuildView = function() {
     // Create a line that looks like this:
     //   Hello Jane Doe.  _Sign out_  [Edit]
     
-    orp.view.View.appendNewTextNode(mySpan, "Hello " + currentUser.getDisplayString() + ". ");
+    orp.view.View.appendNewTextNode(mySpan, "Hello ");
+    var userLink = orp.view.View.appendNewElement(mySpan, "a");
+    userLink.setAttribute("href", this.getRootView().getUrlForItem(currentUser));
+    orp.view.View.appendNewTextNode(userLink, currentUser.getDisplayString());
+    dojo.event.connect(userLink, "onclick", orp.view.RootView.clickOnLocalLink);
+    orp.view.View.appendNewTextNode(mySpan, ". ");
     var signOutLink = orp.view.View.appendNewElement(mySpan, "a", null, null, "Sign out");
     dojo.event.connect(signOutLink, "onclick", this, "_clickOnSignoutLink");
     orp.view.View.appendNewTextNode(mySpan, " ");
@@ -211,7 +216,6 @@ orp.view.LoginView.prototype._clickOnSignoutLink = function(eventObject) {
   this.getRootView().setShowToolsMode(false);
   this.getRootView().setEditMode(false);
 };
-
 
 /**
  * Called when sign in password input field gets focus.

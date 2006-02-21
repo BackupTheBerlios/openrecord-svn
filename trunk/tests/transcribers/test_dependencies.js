@@ -51,7 +51,8 @@ function tearDown() {
 // -------------------------------------------------------------------
 
 function testDependencies() {
-  var expectedOrpPackages = ["lang", "util", "uuid", "model", "archive", "storage", "transcribers"];
+  // var expectedOrpPackages = ["lang", "util", "uuid", "model", "archive", "storage", "transcribers"];
+  var expectedOrpPackages = ["lang", "util", "model", "archive", "storage", "transcribers"];
   assertTrue("Only orp.lang, orp.util, orp.model, and orp.transcriber are defined", orp.util.hasExactlyTheseProperties(orp, expectedOrpPackages));
 }
 

@@ -41,8 +41,10 @@ dojo.require("orp.model.Entry");
 dojo.require("orp.model.ProxyEntry");
 dojo.require("orp.model.Transaction");
 dojo.require("orp.util.DateValue");
-// dojo.require("orp.uuid.Uuid");
-dojo.require("orp.uuid.TimeBasedUuid");
+// dojo.  require("orp.uuid.Uuid");
+// dojo.  require("orp.uuid.TimeBasedUuid");
+dojo.require("dojo.uuid.Uuid");
+dojo.require("dojo.uuid.TimeBasedGenerator");
 dojo.require("orp.lang.Lang");
 dojo.require("orp.archive.TextEncoding");
 dojo.require("orp.archive.JsonDeserializer");
@@ -593,7 +595,7 @@ orp.archive.StubArchive.prototype.logout = function() {
  * @return   Returns the item identified by the given UUID, or returns undefined if there is no item for that UUID.
  */
 orp.archive.StubArchive.prototype.getItemFromUuid = function(uuid, observer) {
-  orp.lang.assert(dojo.lang.isString(uuid) || uuid instanceof orp.uuid.Uuid);
+  orp.lang.assert(dojo.lang.isString(uuid) || uuid instanceof dojo.uuid.Uuid);
   
   var item = this._hashTableOfItemsKeyedByUuid[uuid];
   if (item && observer) {
@@ -766,9 +768,12 @@ orp.archive.StubArchive.prototype._throwErrorIfNoUserIsLoggedIn = function() {
  */
 orp.archive.StubArchive.prototype._generateUuid = function(node) {
   if (node) {
-    return new orp.uuid.TimeBasedUuid({'node': node});
+    // return new orp.uuid.TimeBasedUuid({'node': node});
+    return dojo.uuid.TimeBasedGenerator.generate({node: node, returnType: dojo.uuid.Uuid});
   } else {
-    return new orp.uuid.TimeBasedUuid();
+    orp.lang.assert(false);
+    // return new orp.uuid.TimeBasedUuid();
+    // return dojo.uuid.TimeBasedGenerator.generate({returnType: dojo.uuid.Uuid});
   }
 };
 
@@ -786,11 +791,33 @@ orp.archive.StubArchive.prototype._getNewUuid = function() {
     var nodeForCurrentUser = uuidOfCurrentUser.getNode(); // "0123456789AB";
     newUuid = this._generateUuid(nodeForCurrentUser);
   } else {
-    newUuid = this._generateUuid();
+    var HEX_RADIX = 16;
+    var pseudoNodeIndicatorBit = 0x8000;
+    var random15bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 15) );
+    var leftmost4HexCharacters = (pseudoNodeIndicatorBit | random15bitNumber).toString(HEX_RADIX);
+    var uuidPseudoNodeString = leftmost4HexCharacters + this._generateRandomEightCharacterHexString();
+    newUuid = this._generateUuid(uuidPseudoNodeString);
   }
   return newUuid;
 };
 
+orp.archive.StubArchive.prototype._generateRandomEightCharacterHexString = function() {
+  // PENDING: 
+  // This isn't really random.  We should find some source of real 
+  // randomness, and feed it to an MD5 hash algorithm.
+  
+  
+  // random32bitNumber is a randomly generated floating point number 
+  // between 0 and (4,294,967,296 - 1), inclusive.
+  var random32bitNumber = Math.floor( (Math.random() % 1) * Math.pow(2, 32) );
+  
+  var HEX_RADIX = 16;
+  var eightCharacterString = random32bitNumber.toString(HEX_RADIX);
+  while (eightCharacterString.length < 8) {
+    eightCharacterString = "0" + eightCharacterString;
+  }
+  return eightCharacterString;
+};
 
 /**
  * Given an item representing a user, return the authentication info
