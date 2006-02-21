@@ -136,15 +136,15 @@ Tasks to make the UI usable
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
        |          |         | 510. Implement a good URL-to-content mapping, so that URLs won't go bad in future releases
-       |          |         | 511. Assign system attributes & categories to a "System" category
-       |          |         | 512. Hide "System" items most of the time
+brian  |          | done?   | 511. Assign system attributes & categories to a "System" category
+brian  |          | done?   | 512. Hide "System" items most of the time
        |          |         | 513. improve UI for creating a new category
        |          |         | 514. Deal with \n in page name or summary fields
        |          |         | 515. be able to select a table row 
        |          |         | 516. be able to delete a selected table row 
        |          |         | 517. drag-and-drop to re-order table rows
        |          |         | 518. improve UI for "add new attribute" in Table View 
-       |          |         | 519. improve UI for setting the expected data type of an attribute
+brian  |          | done    | 519. improve UI for setting the expected data type of an attribute
 -------+----------+---------+----------------------------------------------
        |          |         | 520. have Detail View use textarea instead of text input, for long strings
        |          |         | 521. make it possible to add a new attribute in Detail View 
