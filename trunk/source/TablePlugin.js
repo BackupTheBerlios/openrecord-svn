@@ -304,7 +304,7 @@ orp.TablePlugin.prototype._buildTableBody = function() {
     var observer = this; 
     // PENDING: 
     // no need to register an observer here, if we move code from
-    // observedItemHasChanged() to _provisionalItemJustBecomeReal()
+    // observedItemHasChanged() to _provisionalItemJustBecameReal()
     var newItem = this.getWorld().newProvisionalItem(observer);
     this._insertRow(newItem, ++numRows, true);
   }
@@ -321,7 +321,7 @@ orp.TablePlugin.prototype._buildTableBody = function() {
  * @scope    package instance method
  * @param    item      The Item which just became real. 
  */
-orp.TablePlugin.prototype._provisionalItemJustBecomeReal = function(item) {
+orp.TablePlugin.prototype._provisionalItemJustBecameReal = function(item) {
   this.getWorld().setItemToBeIncludedInQueryResultList(item, this.getQuerySpec());
 };
 
@@ -329,17 +329,17 @@ orp.TablePlugin.prototype._provisionalItemJustBecomeReal = function(item) {
 /**
  * PENDING: 
  * This method observedItemHasChanged() was written back before we 
- * wrote the method above this one, _provisionalItemJustBecomeReal().
+ * wrote the method above this one, _provisionalItemJustBecameReal().
  * Now we've got things set up so that the EntryView will call
- * our _provisionalItemJustBecomeReal() method when the user first
+ * our _provisionalItemJustBecameReal() method when the user first
  * makes a change that causes the provisional item to become real.
- * Now that we have _provisionalItemJustBecomeReal(), we might 
+ * Now that we have _provisionalItemJustBecameReal(), we might 
  * want to move all the code from observedItemHasChanged() over
- * into _provisionalItemJustBecomeReal(), and then we could get
+ * into _provisionalItemJustBecameReal(), and then we could get
  * rid of this method.  HOWEVER, moving the code might cause bugs,
  * because this observedItemHasChanged() method is probably 
- * called slightly later than the _provisionalItemJustBecomeReal()
- * method above.  The _provisionalItemJustBecomeReal() is called
+ * called slightly later than the _provisionalItemJustBecameReal()
+ * method above.  The _provisionalItemJustBecameReal() is called
  * DURING the transaction, whereas observedItemHasChanged() is,
  * in theory, called after the transaction.
  */
@@ -498,7 +498,7 @@ orp.TablePlugin.prototype._buildHeader = function() {
       var hasMatchingEntries = (listOfMatchingEntries && (listOfMatchingEntries.length > 0));
       var matchingEntry = hasMatchingEntries ? listOfMatchingEntries[0] : null;
 
-     var listOfPossibleEntries = this.getWorld().getSuggestedItemsForAttribute(attributeCalledExpectedType);
+      var listOfPossibleEntries = this.getWorld().getSuggestedItemsForAttribute(attributeCalledExpectedType);
       
       var entryView = new orp.view.EntryView(this, datatypeSpan, attribute, attributeCalledExpectedType, matchingEntry);
       entryView.alwaysUseEditField();
@@ -531,7 +531,7 @@ orp.TablePlugin.prototype._buildHeader = function() {
 };
 
 orp.TablePlugin.prototype._clickOnAddColumnButton = function(eventObject) {
-  var popopMenu = dojo.widget.createWidget("PopupMenu2", {}, null);
+  var popupMenu = dojo.widget.createWidget("PopupMenu2", {}, null);
   var listOfAttributes = this.getWorld().getAttributes();
   for (var i in listOfAttributes) {
     var attribute = listOfAttributes[i];
@@ -539,10 +539,10 @@ orp.TablePlugin.prototype._clickOnAddColumnButton = function(eventObject) {
       var attributeName = attribute.getDisplayString();
       var menuItem = dojo.widget.createWidget("MenuItem2", {caption: attributeName}, null);
       dojo.event.connect(menuItem, "onClick",  orp.lang.bind(this, "_addOrRemoveOneColumn", attribute));
-      popopMenu.addChild(menuItem);
+      popupMenu.addChild(menuItem);
     }
   }
-  popopMenu.onOpen(eventObject);
+  popupMenu.onOpen(eventObject);
 };
 
 /*

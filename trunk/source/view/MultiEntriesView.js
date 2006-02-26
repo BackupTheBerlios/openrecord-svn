@@ -121,11 +121,11 @@ orp.view.MultiEntriesView.prototype.refresh = function() {
  * @scope    package instance method
  * @param    item      The Item which just became real. 
  */
-orp.view.MultiEntriesView.prototype._provisionalItemJustBecomeReal = function(item) {
+orp.view.MultiEntriesView.prototype._provisionalItemJustBecameReal = function(item) {
   orp.lang.assert(item == this._item);
   var superview = this.getSuperview();
-  if (superview._provisionalItemJustBecomeReal) {
-    superview._provisionalItemJustBecomeReal(item);
+  if (superview._provisionalItemJustBecameReal) {
+    superview._provisionalItemJustBecameReal(item);
   }
 };
 

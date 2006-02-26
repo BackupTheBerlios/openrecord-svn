@@ -350,7 +350,7 @@ orp.view.EntryView.prototype.startEditing = function(dontSelect,initialStr) {
         editField = this._editField = document.createElement("textarea");
       }
       else {
-        editField = this._editField= document.createElement("input");
+        editField = this._editField = document.createElement("input");
         editField.type = 'text';
       }
       var listener = this; 
@@ -483,8 +483,8 @@ orp.view.EntryView.prototype._writeValue = function(value) {
     if (newEntry) {
       this._entry = newEntry;
       var superview = this.getSuperview();
-      if (this._isProvisional && superview._provisionalItemJustBecomeReal) {
-        superview._provisionalItemJustBecomeReal(this._item);
+      if (this._isProvisional && superview._provisionalItemJustBecameReal) {
+        superview._provisionalItemJustBecameReal(this._item);
       }
       if (value instanceof orp.model.Item) {
         this._valueIsItem = true;

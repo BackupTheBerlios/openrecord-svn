@@ -95,8 +95,8 @@ orp.plugins.DetailWithAttributionView.prototype.getClass = function() {
  */
 orp.plugins.DetailWithAttributionView.prototype.refresh = function() {
   var listOfContentItems = this.fetchItems();
-  var outlineDiv = this.getHtmlElement();
-  orp.view.View.removeChildrenOfElement(outlineDiv);
+  var detailDiv = this.getHtmlElement();
+  orp.view.View.removeChildrenOfElement(detailDiv);
 
   for (var i in listOfContentItems) {
     var contentItem = listOfContentItems[i];
@@ -107,7 +107,7 @@ orp.plugins.DetailWithAttributionView.prototype.refresh = function() {
 
 
 /**
- * Given an item to be display, returns a string with XHTML to display
+ * Given an item to display, returns a string with XHTML to display
  * the item.
  *
  * @scope    public instance method
