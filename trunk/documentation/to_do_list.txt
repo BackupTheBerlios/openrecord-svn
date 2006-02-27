@@ -126,7 +126,8 @@ mignon |          | 5    IED| 419. done
 brian  |          | done?   | 422. Replace all use of orp.uuid with dojo.uuid, and remove orp.uuid from our tree
        |          |         | 423. Replace all use of orp.lang with dojo.lang, and remove orp.lang from our tree
        |          |         | 424. Fix the unit tests in tests/view/SectionViewConstructorTest.js
-       |          |         | 425. (new task...)
+       |          |         | 425. Fix the bug that prevents http:// access on Brian's desktop machine
+       |          |         | 426. (new task...)
 -------+----------+---------+----------------------------------------------
 
 
@@ -180,7 +181,9 @@ brian  |          | done    | 519. improve UI for setting the expected data type
        |          |         | 549. Fix the message that says "Sorry, for some reason OpenRecord was not able to launch."
        |          |         | 550. use dojo.fx.html transitions fadeOut/fadeIn or implode/explode for page changes
        |          |         | 551. Make a Quantity class, for representing values like "18 kg"
-       |          |         | 552. (new task...)
+       |          |         | 552. Make all the drag handles have a visual cue
+       |          |         | 553. Make all the editable text has a visual cue on hover
+       |          |         | 554. (new task...)
 -------+----------+---------+----------------------------------------------
                             
 
@@ -197,10 +200,26 @@ Who    | Estimate | Actual  | Task
        |          |         | 606. some animated view -- e.g. http://weblog.infoworld.com/udell/2005/01/22.html#a1156
        |          |         | 607. timeline -- like Wikimedia EasyTimeline: http://meta.wikimedia.org/wiki/EasyTimeline
        |          |         | 608. calendar -- month view, etc. -- with items placed based on date attributes
+       |          |         | 609. revision viewer -- shows any/all previous versions of any item
+       |          |         | 610. (new task...)
 -------+----------+---------+----------------------------------------------
 
   
-  
+=======================================================
+Screencast 2.0 notes, based on feedback from Feb 2006 screencast
+=======================================================
+ + Chao says: "do a 2-3 minute summary" ... for people who don't want to commit to 22 minutes.
+ + Rowan says: "show something about revisions".  Demo the plugin from task 609, if that's been implemented.
+ + DA says: "intro section seems too long.  Why confuse people w/ the large set of alternatives?"
+ + DA says: "I'm not sure you need all of the interstitial slides"
+ + DA says: "too bad you're using a file:// url -- distracts from the webapp concept"
+ + DA says: "I want to know how to build the book club, not just edit it."
+ + DA says: "The screencast seems aimed halfway towards developers and halfway towards users.  
+             I think it would be good to aim more towards users, and trim some of the jargon 
+             (esp. at the end of the concurrency section).  
+             For developers, I'd show more code.  A lot more code =)."
+
+
 =======================================================
 More tasks
 =======================================================
