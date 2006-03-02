@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+
+  <head>
+    <title>Screencast Transcript - openrecord.org</title>
+    <link rel="stylesheet" type="text/css" href="../../chrome/base_style.css" />
+    <script type="text/javascript" src="../../chrome/external_links.js"></script>
+  </head>
+  
+  <body>
+    <!--#include virtual="../../chrome/header.html" -->
+    
+    <div>
+      <h1>Screencast Transcript</h1>
+        <ul> 
+          <li class="detail"><a href="#part_1">1. Intro</a></li>
+          <li class="detail"><a href="#part_2">2. Examples</a></li>
+          <li class="detail"><a href="#part_3">3. Editing</a></li>
+          <li class="detail"><a href="#part_4">4. Flexibility</a></li>
+          <li class="detail"><a href="#part_5">5. Concurrency</a></li>
+          <li class="detail"><a href="#part_6">6. Plugins</a></li>
+          <li class="detail"><a href="#part_7">7. Introspection</a></li>
+          <li class="detail"><a href="#part_8">8. Public domain</a></li>
+        </ul>
+      <hr/>
+
+      <h2><a name="part_1" class="anchor">1. Intro</a></h2>      
+        <p>Hello, I'm Brian Skinner. I'm one of the developers of OpenRecord.
+        OpenRecord is a software product. It's a free, open source software product, 
+        being developed by volunteers at the Dojo Foundation.
+        OpenRecord is a wiki engine that you'll be able to use to run wiki sites.</p>
+
+        <p>OpenRecord is similar to conventional wiki software,
+        like the MediaWiki engine, which runs the Wikipedia site, 
+        and TWiki, which is popular on internal corporate sites, 
+        as well and public Internet sites.
+        MediaWiki and TWiki are both examples of traditional text-based wiki engines.
+        They're geared towards content that's mostly text, like encyclopedia entries.
+        In the past decade, over 100 other text-based wiki engines have been developed.</p>
+
+        <p>More recently we've begun to see new wiki engines that are geared 
+        toward spreadsheet and database content.  
+        Instead of sites with pages of prose,
+        these new wikis are designed for sites with charts and graphs, 
+        and tables of database records.
+
+        There are dozens of examples of this new sort of wiki software.
+        Some products have been around for years, like QuickBase and Sparrow Web.
+        Other products are just coming out now, like Dabble DB and JotSpot Tracker.
+        OpenRecord falls into this new category of wiki software.</p>
+
+        <p>Today, text-based wiki software is being used for all sorts of different web sites.
+        For example, the MediaWiki software is used for the famous Wikipedia site,
+        and it's also used on hundreds of other public Internet sites, 
+        as well as internal corporate sites and small personal wikis.
+ 
+        We're designing OpenRecord with a wide variety of use cases in mind.
+        We'd love to create a large flagship Alamanac site, inspired by the Wikipedia site. 
+        Where Wikipedia focuses on encyclopedia entries, 
+        we would focus on the sort of quantitative database content 
+        that you find in reference books like the World Alamanac and the CIA World Factbook.
+        
+        We'd also like to see OpenRecord used to make other public wiki sites, 
+        private corporate sites, and small personal sites for individuals and clubs.</p>
+ 
+        <p>OpenRecord is still in the early stages of development.
+        We're only at about a 0.2 release now,
+        but we've already got a lot of features implemented
+        and we'll demo some of those for you in the rest of this screencast.</p>
+      <hr/>
+      
+      <h2><a name="part_2" class="anchor">2. Examples</a></h2>
+        <p>Here are a few examples of web sites that you could make using OpenRecord.</p>
+        
+        <p>This first example is a World Almanac site,
+        with statistics about the nations and cities of the world,
+        like this page about the top-ten largest cities,
+        which shows a bar graph of the city sizes.
+        
+        A site like this could be set up for open,
+        world-scale collaboration, like the Wikipedia site.</p>
+        
+        <p>You could also use OpenRecord for much smaller scale collaboration. 
+        
+        Here's another example.
+        This is the Cole County Little League site.
+        It's a site where parents and coaches can keep track of
+        of team rosters and upcoming games.
+        This page has the team roster for the Uniondale Sluggers,
+        with the names and jersey numbers of the kids on the team.</p>
+        
+        <p>Here's a book club example, 
+        where the forest heights book club
+        keeps track of what books they've read
+        and what books they're planning to read.
+        This page just has a couple simple bullet point lists,
+        with the titles of books.</p>
+        
+        <p>This next site is an example of something that might be set 
+        up by the volunteers who run a little museum in a small town.
+        They could use a site like this as a database to keep 
+        historical records about the few thousand items the have on exhibit.</p>
+        
+        <p>And this last example is a wiki site set up to keep track of 
+        open source software projects.
+        Here's a page about the Mozilla Firefox software project,
+        with information about which open source license it uses
+        and what platforms it runs on.</p>
+      <hr/>
+      
+      <h2><a name="part_3" class="anchor">3. Editing</a></h2>
+        <p>Hi, I'm Patricia.  I'm going to show you what it's like to use an OpenRecord wiki.</p>
+
+        Here's the wiki for the Forest Heights Book Club.
+        It's an example of the sort of site that a small book club might set up.</p>
+        
+        <p>Every OpenRecord site is a database of items and attributes.  
+        In this case, the items represent things like Books and Authors.
+        
+        An OpenRecord site has a navigation bar at the left, 
+        with links to the main pages on the site.
+        When I made this site, I created pages to keep track of who's in the book club, 
+        what books we've read, and what books people have suggested.</p>
+        
+        <p>The Books page shows a quick summary of what books we've read 
+        and what books we're thinking of reading.</p>
+        
+        <p>The Suggestions page shows more information about each of 
+        the books that have been suggested.</p>
+        
+        <p>Even though OpenRecord is a web app, we want it to feel like a desktop app.  
+        We try to provide WYSIWYG, in-place editing.
+        For example, to change the name of a page,
+        you can click on the name and start typing.
+       
+        Or you can click on the summary of the page, and "add text here".
+        
+        Or you can click on any cell in a table, and change the text there.</p>
+       
+        <p>We're also putting in drag-and-drop editing where-ever it makes sense.
+        
+        For example, on the nav bar, I can grab the Meetings page and 
+        drag it up above Members.
+        
+        And I can drag one of the columns to change the column order.
+        
+        And I can drag entries in a table.
+        I can move Eric Drexler up to be the author of Engines of Creation,
+        and I can move Jane Austen down to be the author of Mansfield Park.</p>
+        
+        <p>We've also made it easy to create new items.
+        To add a new book, I just click in the table and start typing.
+        I'll add Bleak House, 
+        and Emma, by Jane Austen.
+        
+        When I entered those lines, OpenRecord made two new items, one for each book,
+        and entered those items in the database for this site.
+        I didn't have to fill in any form, or click a submit button,
+        or get re-directed to any confirmation page.</p>
+        
+        <p>Creating new items is easy, and we've also made it easy to create new pages.
+        I'll just press this "Show Tools" button to get a few more editing tools,
+        and then I can press the "New Page" button to get a new page.
+        Now I can give the page a title, "Authors",
+        and select what sort of items I want to have show up on the page, "Author".</p>
+        
+        <p>Each page has its own URL, 
+        so when I created this page, OpenRecord created a new URL for it.
+        I can bookmark the URL in my browser,
+        or I can copy the URL and paste it into a mail message to tell a friend about the new page.</p>
+        
+        <p>Every page has a URL, and every item has its own page, with its own URL.
+        I can click on any of these books to go to a detail page about that book.
+        
+        Here's the detail page for Mansfield Park, showing all the attributes of this book.
+        I could bookmark this page, or mail the URL.
+        I can also click on any of these cells and change the values, if I want to.</p>
+        
+        <p>Now let me go to the Meetings page.
+        When I made this page, I created two sections.
+        The first section has a table showing some details about each meeting of the book club.
+        The bottom section has a bar graph of the attendance at the meetings.</p>
+        
+        <p>Both of these sections are views into the database of items.
+        Each of the views are showing the same three items,
+        the items representing the book club meetings in October, November, and December.
+        If I change an item in one of the views, the change will automatically appear in the other view.
+        
+        In the table, I'll change the December attendance to 12, 
+        and you can see the bar graph update too.</p>
+        
+        <p>You can add however many sections you want to each page.  
+        
+        Sections are views into the database, and different sections can show the same items.
+        You can also have the same items showing up on different pages.
+        For example, the Books page shows the book Emma,
+        and the Suggestions page also shows the book Emma.
+        
+        If I change Emma on either of those pages, the other page will automatically change.
+        This is one of the big differences between OpenRecord and a traditional wiki.
+        In a traditional wiki, each page is an island. 
+        Each page <b>owns</b> the content on that page, 
+        and if you delete the page, you'll also delete the content.
+        In OpenRecord, the content lives in the database, 
+        and each page is just a view into the content.</p>
+      <hr/>
+      
+      <h2><a name="part_4" class="anchor">4. Flexibility</a></h2>
+        <p>We want OpenRecord to be more flexible than traditional database tools.
+        Instead of enforcing rigid rules, our goal is to let you do whatever you want.
+        
+        I'll use the Book Club wiki site to show you 
+        a few of the ways we try to be flexible.</p>
+        
+        <p>On this Suggestions page, I've made a table of books.
+        The different columns of the table have different data types.
+        
+        Like other spreadsheets and database tools, 
+        OpenRecord knows about different data types, like numbers, dates, and text.
+        
+        The entries in the "Name" column are just simple text strings.
+        The "Pages" column has integer numbers.
+        The "Publication Date" column has calendar dates.
+        And the "Author" column has links to items that represent authors.
+        
+        If you enter "1852" in the "Pages" column, we interpret it as a number.
+        If you enter "1852" in the Publication Date" column, we interpret it as a Date.</p>
+        
+        <p>OpenRecord is loosely typed, like a spreadsheet, 
+        rather than strongly typed, like a relational database.
+        
+        What that means is that you're never restricted from entering whatever you want.
+        You can put "I don't know" as the publication date for Bleak House, and that's fine.
+        You can always put plain text values into any sort of field.
+        
+        If you type something like "I don't know", 
+        OpenRecord gives up on interpreting it as a date, 
+        and instead just treats it as a text string.<p>
+        
+        </p>But in a date field, we do our best to interpret what you type as a date.
+        You can type just a year, like 1986, and we'll read it as a date.
+        Or you can type "Oct 1986", 
+        or "Today",
+        or "Oct 12, 1986 9:52 am".<p>
+        
+        <p>You can also put more than one publication date for a book.
+        Bleak House was actually published in instalments, starting in 
+        March 1852 and running until Sep 1853.</p>
+        
+        <p>We never restrict you to only having one value for an attribute. 
+        Any attribute of any item is always allowed to have as many values as you want.
+        
+        For example, some books might have more than one author.
+        I'll add "Chris Peterson" as an author for "Engines of Creation".</p>
+        
+        <p>OpenRecord has simple literal types, like numbers, dates, and text.
+        We also have item links, so one item can be related to another.
+        For example, in the author column I've added references to author items.
+        I could have just used a text string to record the author, 
+        but I wanted to create author items so that I could keep track of 
+        detailed information about authors as well as books.
+        
+        I can click on this Jane Austen link and go to a detail page showing more
+        information about Jane Austen, like when she lived, and what books she wrote.</p>
+        
+        <p>We try to make it easy to create item links.
+        For example, if I click in the author column, 
+        OpenRecord knows that I probably want to create a link to an author item.
+        OpenRecord offers me a list of the authors who are already in the database.
+        If I type the letter "J", 
+        the list narrows down to just the authors with names that start with "J".
+        
+        If I type in a new name, OpenRecord creates a brand new item for that author
+        and creates a link to the new item.</p>
+        
+        <p>OpenRecord offers both one-way links and bi-directional links.
+        On this book club wiki, I've told OpenRecord to connect the
+        authors and books using bi-directional links.  
+        That means OpenRecord will always keep the authors in sync
+        with the books they've authored. 
+        
+        When I entered Charles Dickens in this table as the author of Bleak House,
+        OpenRecord did three things for me:
+        it created an item to represent Charles Dickens;
+        it set the author attribute of Bleak House to point to Dickens;
+        and on the Dickens item, it created a books attribute and set that
+        to point back at Bleak House.
+        
+        So, if I click on the link to Charles Dickens
+        I'll see that this item has an entry for Bleak House in the books attribute.</p>
+      <hr/>
+      
+      <h2><a name="part_5" class="anchor">5. Concurrency</a></h2>
+        <p>OpenRecord supports concurrent editing by multiple users.
+        Several people can edit a page at the same time, and
+        one person will never accidentally overwrite another person's changes.
+        
+        I'll use the Book Club wiki site to show you some
+        examples of concurrent editing.</p>
+        
+        <p>I'm going to use several browser windows, 
+        one for each user.
+        
+        In this first window, I'm logged in as Bill.
+        Here's a second window, where I'm logged in as Hillary.
+        
+        In this demo, Hillary's browser and Bill's browser are both
+        running on the same computer, but OpenRecord doesn't know 
+        that, and Hillary and Bill could just as easily be thousands
+        of miles away from each other, using different browsers on 
+        different operating systems.</p>
+        
+        <p>Hillary and Bill can each add new books to the suggestions page.
+        I'll start with Hillary, who adds a couple of books: "Ariel"
+        and "Carfree Cities".
+        
+        And then I'll switch to Bill's window, where I'll add "Atlas Shrugged".
+               
+        Now I'll bring up a new browser window, for a third user, Al,
+        who's just now visiting the same page.
+        Al sees all of the books that Hillary and Bill added: 
+        Ariel, Atlas Shrugged, and Carfree Cities.</p>
+                
+        <p>At this point, neither Bill nor Hillary see the new books 
+        that the other person added.
+        The new additions have been sent to the server and saved in the
+        database, but the changes don't show up until the page is reloaded.
+        
+        Someday OpenRecord might use a polling mechanism 
+        or a live subscription mechanism so that the browser client code
+        gets notified of new changes on the server.  
+        But we haven't got that implemented yet, so for now you only
+        see changes when you refresh the page.
+        That's how most wikis work today, 
+        and in practice that's good enough for what most people need.
+        
+        If I press the refresh button in Bill's browser,
+        Hillary's new changes appear.</p>
+        
+        <p>Adding new items to a page is one example of concurrent editing.
+        Let me show you another example, 
+        this time changing the order of the pages in the nav bar.
+        Bill will drag the Suggestions page all the way to the top.
+        And Hillary will drag the Members page all the way to the bottom.
+        
+        Now when Al looks at the site, 
+        he'll see Suggestions at the top and Members at the bottom.
+        OpenRecord accepted both Hillary and Bill's changes,
+        and merged them together without letting either user's changes overwrite
+        the other user's changes.</p>
+        
+        <p>I'll show you one more example, 
+        this time with two users editing the same value in the same cell of a table.
+        In Bill's browser, I'll change the publication date 
+        of Mansfield Park from 1814 to December 1814.
+        In Hillary's browser, I'll change the same date from 1814
+        to January 1815.
+        
+        When I open the page in Al's browser, I see both of the new dates.  
+        It may be that both December 1814 and January 1815 are correct, 
+        so the users will leave the page just as it is. 
+        Or, one date may be wrong and should be deleted, but OpenRecord has
+        no way of knowing that, so OpenRecord just accepts both Bill's changes 
+        and Hillary's changes, and lets them sort it out.</p>
+        
+        <p>OpenRecord requires very little code to handle these sorts of concurrency cases.  
+        OpenRecord uses some unconventional data structures for representing 
+        items and values, and most of the concurrency handling falls out
+        for free as a result of the data structures.
+        
+        The OpenRecord database structure is inherently well-suited 
+        to distributed use.  
+        On-line concurrent use is one example of that.
+        Another example that we expect to handle well is offline use,
+        where a user copies an entire database to a laptop,
+        takes it on vacation, makes a bunch of changes,
+        and then merges those changes back into the company database 
+        once they return from vacation.</p>
+        
+        <p>OpenRecord should be well suited to this sort of forking and merging of repositories, 
+        including more complicated examples with multi-way forks and merges.
+        
+        The OpenRecord data structures might also work well in a set-up 
+        where you have a fault-tolerant peer-to-peer distributed datastore 
+        instead of a central server-based datastore.</p>
+      <hr/>
+      
+      <h2><a name="part_6" class="anchor">6. Plugins</a></h2>
+        <p>Developers can add to OpenRecord by writing plugin views.
+        
+        OpenRecord uses plugins to display items on pages.
+        OpenRecord has a small set of built-in plugins, 
+        and you can also add new ones.
+        
+        I'll use the Book Club wiki site to show you where we use plugins.</p>
+        
+        <p>On the book club wiki, the different pages show items in different ways.
+        The Books page has a couple of simple bullet-point lists of items.
+        The Suggestions page has a table of items.
+        The Meetings page has both a table and a bar graph.
+        I can click on an item link to go to a detail page,
+        and that page shows a detail view of a single item.
+        
+        All of those different views are implemented as plugins: 
+        the table view, the bar graph, the detail view, and the bullet point list.</p>
+        
+        <p>When you make a page, you can choose which plugin views you want to use.
+        You can also change an existing page to use different views.
+        
+        The Suggestions page shows a list of items using a table view.
+        When I click on the "Show Tools" button, 
+        I get a menu that lets me see what other plugin views are available.
+        I can switch to Outline View,
+        or Bar Chart View, 
+        or Detail View, where each item is displayed in a separate box.</p>
+        
+        <p>We've tried to make it pretty easy for programmers to create new plugins.
+        
+        Here's a simple Plugin Generator page that's included in OpenRecord.
+        
+        You fill in the name you want for your new plugin class,
+        and then press the "Create Plugin" button.</p>
+        
+        <p>The code generator creates a starter file for you, 
+        with a little boilerplate code that all plugins need.
+        
+        In the generated code, there's a method called "refresh", 
+        which the plugin calls whenever it draws itself on the screen.
+        The generated file includes some simple example code in the refresh method.  
+        I'll delete that generated code, 
+        and replace it with a single line that says "Hello World!".</p>
+        
+        <p>That's all it takes to write a simple plugin.
+        To install the plugin, just drop the file into the plugins directory of your
+        OpenRecord site.  OpenRecord will automatically find the plugin and install it.
+        
+        The next time you visit a page on the site, the new plugin will be available.</p>
+        
+        <p>To make a plugin, you just need to know how to write a little bit of
+        JavaScript code that looks at items and attributes and creates 
+        corresponding HTML elements in the DOM.  
+        You don't need to know anything about any of the underlying infrastructure.
+        You don't need to know about client-server communication, 
+        or about automatic update notifications,
+        or query execution,
+        or concurrency,
+        or unique IDs.</p>
+        
+        <p>We're hoping that we've made it easy to create plugins,
+        and that as a result developers will write a wide variety of plugin views:
+          bar graphs, scatter plots, Gantt charts, pivot tables, timeline views,
+          and all sorts of other quantitative visualizations,
+          like the ones Edward Tufte highlights in his books.</p>
+      <hr/>
+      
+      <h2><a name="part_7" class="anchor">7. Introspection</a></h2>
+        <p>If you're a programmer, 
+        you might be interested in looking around inside an OpenRecord database.
+        
+        You can use normal OpenRecord views for introspection,
+        to look into the database and see some of the underlying structures,
+        like the structures of the views themselves.</p>
+       
+        <p>Here's a newly created OpenRecord web site, without any pages.
+        It doesn't even have a welcome page, so there's not even a nav bar menu.</p>
+        
+        <p>I'll create an account for myself, 
+        and once I'm logged in I'll press the "Show Tools" button,
+        which makes the "New Page" button show up, so I can create a new page.
+        
+        I'll name this page "Page 1".</p>
+        
+        <p>Usually, when a user creates a new page, 
+        they'll set it up to show normal content items: 
+        items that represent things like books, or cities, or baseball players.
+        
+        But if you want to, 
+        you can create introspection pages, 
+        which show the items that represent the underlying structures in OpenRecord itself.</p>
+        
+        <p>In a langauge like Smalltalk, almost everything is an object, 
+        including classes and metaclasses.
+        
+        Similarly, in OpenRecord, almost everything is an item.
+        There are items for things like pages, sections, queries, attributes, and categories.</p>
+        
+        <p>Now that we've created a page in the database, 
+        we should be able to ask for a list of the pages, 
+        and see our new page in the list.
+        
+        To do that, I'll create a new section, and I'll call it "Section 1.1"
+        Then I'll set up the query to include items whose Category is "Page".
+        
+        That creates a table which has one row for each page in the database, 
+        and which has columns for the different attributes of the item representing the page.</p>
+        
+        <p>Now I'll create a second section, which I'll call "Section 1.2".
+        I'll set up the query to include items whose Category is "Section".
+        
+        That creates a table which has one row for each section in the database.
+        
+        Page 1 knows what sections it has, Section 1.1 and Section 1.2.
+        
+        And each of the Sections knows what page it belongs on.</p>
+        
+        <p>Now I'll create a second page, "Page 2", 
+        with a "Section 2.1", 
+        which I'll use to show an Outline View
+        that includes items whose Category is "Category".
+        
+        That creates a list that shows me the ten axiomatic Categories 
+        that are built into OpenRecord, before the user starts creating new categories.
+        The list includes Categories for things like Pages, Sections, Plugins,
+        Attributes, Categories, and Queries.</p>
+        
+        <p>I can go look at any of these items in more detail.
+        Here's the item representing the category called Page.
+        There are two items in this category, Page 1 and Page 2.
+        I'll go to the detail view for Page 2.
+        Since Page 2 is a page, it belongs to the Category called Page.
+        Since the category called Page is a category, 
+        it belongs to the category called category.
+        The Category called Category is itself a category, 
+        so that's where it all ends.</p>
+      <hr/>
+      
+      <h2><a name="part_8" class="anchor">8. Public domain</a></h2>
+        <p>This screencast is in the public domain.
+        Feel free to copy from it, or re-use any of the material however you'd like.</p>
+        
+        <p>All of the work in the OpenRecord project is public domain, 
+        including the source code.
+        
+        You can copy all of it, or any part of it, without restrictions.
+        
+        You're free to use it in proprietary commerical products
+        or in open source projects.</p>
+        
+        <p>For more information about the public domain dedication, 
+        check out the Creative Commons web site.</p>
+ 
+    </div>    
+        <p class="footer">
+          <span class="copyright">You can copy freely from this site &mdash; <a href="../../copyright.html">copyright</a> rights relinquished under the Creative Commons  
+          <a rel="license external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain Dedication</a>.</span>
+          <br/>
+        </p>
+        
+    <!-- Creative Commons metadata for Public Domain License 
+    
+    <rdf:RDF xmlns="http://web.resource.org/cc/"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <Work rdf:about="">
+       <dc:title>openrecord.org</dc:title>
+       <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
+       <license rdf:resource="http://web.resource.org/cc/PublicDomain" />
+    </Work>
+    
+    <License rdf:about="http://web.resource.org/cc/PublicDomain">
+       <permits rdf:resource="http://web.resource.org/cc/Reproduction" />
+       <permits rdf:resource="http://web.resource.org/cc/Distribution" />
+       <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+    </License>
+    
+    </rdf:RDF>
+
+    -->
+  </body>
+  
+</html>
+    
