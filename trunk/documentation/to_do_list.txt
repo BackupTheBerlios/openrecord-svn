@@ -84,16 +84,14 @@ Big picture tasks
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-mignon |          | 0.25 IED| 301. done
        |          |         | 302. Attempt to embed an OpenRecord view in a MediaWiki page
 (soon) |          |         | 303. Have a server that supports repositories with thousands of items
 (soon) |          |         | 304. Change View class so a subview can be either an orp.view.View or a dojo.widget instance
 (soon) |          |         | 305. Look at replacing our notion of Views with Dojo's notion of widgets
        |          |         | 306. Run in IE as well as Firefox
        |          |         | 307. Add support for repository merging
-brian  | 3    IED | 1    IED| 308. Make screencasts about OpenRecord (and plugins) see: .swf, .mov, SnapZ Pro, Camtesia Studio, Windows Media Encoder 9 Series
        |          |         | 309. Consider implementing a JavaScript file:// version of this: http://lists.berlios.de/pipermail/openrecord-dev/2005-October/000248.html
-brian  |          |         | 310. Propose a Dojo data-provider design (dojo.data) that would work for OpenRecord as well as other uses
+brian  |          | (2.5)   | 310. Propose a Dojo data-provider design (dojo.data) that would work for OpenRecord as well as other uses
        |          |         | 311. (new task...)
 -------+----------+---------+----------------------------------------------
 
@@ -120,12 +118,9 @@ brian  | 1    IED |         | 410. Rationalize our CSS style sheet approach
        |          |         | 416. grep for ".getEntriesForAttribute(" and refactor to use ".getValuesForAttribute("
        |          |         | 417. Maybe change all our indenting from spaces to tabs, to be in sync with dojo
        |          |         | 418. Prevent memory leaks via dojo.event.browser.clean(parent.removeChild(child));
-mignon |          | 5    IED| 419. done
        |          |         | 420. Replace XMLHttpRequest calls with dojo.io.bind() calls
        |          |         | 421. Consider refactoring orp.storage so that FileProtocolStorage is "behind" dojo.io.bind
-brian  |          | done?   | 422. Replace all use of orp.uuid with dojo.uuid, and remove orp.uuid from our tree
        |          |         | 423. Replace all use of orp.lang with dojo.lang, and remove orp.lang from our tree
-       |          |         | 424. Fix the unit tests in tests/view/SectionViewConstructorTest.js
        |          |         | 425. Fix the bug that prevents http:// access on Brian's desktop machine
        |          |         | 426. (new task...)
 -------+----------+---------+----------------------------------------------
@@ -137,18 +132,15 @@ Tasks to make the UI usable
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
        |          |         | 510. Implement a good URL-to-content mapping, so that URLs won't go bad in future releases
-brian  |          | done?   | 511. Assign system attributes & categories to a "System" category
-brian  |          | done?   | 512. Hide "System" items most of the time
        |          |         | 513. improve UI for creating a new category
        |          |         | 514. Deal with \n in page name or summary fields
        |          |         | 515. be able to select a table row 
        |          |         | 516. be able to delete a selected table row 
        |          |         | 517. drag-and-drop to re-order table rows
-       |          |         | 518. improve UI for "add new attribute" in Table View 
-brian  |          | done    | 519. improve UI for setting the expected data type of an attribute
+       |          | (0.25)  | 518. improve UI for "add new attribute" in Table View 
 -------+----------+---------+----------------------------------------------
        |          |         | 520. have Detail View use textarea instead of text input, for long strings
-       |          |         | 521. make it possible to add a new attribute in Detail View 
+mignon |          | (1  IED)| 521. make it possible to add a new attribute in Detail View 
        |          |         | 522. improve UI for initial "out of the box" experience
        |          |         | 523. improve UI for creating a new page
        |          |         | 524. improve UI for adding a new section to a page
@@ -218,7 +210,11 @@ Screencast 2.0 notes, based on feedback from Feb 2006 screencast
              I think it would be good to aim more towards users, and trim some of the jargon 
              (esp. at the end of the concurrency section).  
              For developers, I'd show more code.  A lot more code =)."
-
+ + bodly says: "sound came across very clear and what not on this, however it still 
+               has alot of ambient sound ... I think that maybe you could take care of 
+               some of that with an audio filter after the recording. ... Really your 
+               best bet would probably be to rent a real mic from a music store. ...
+               i'm always happy to help with any audio stuff"
 
 =======================================================
 More tasks

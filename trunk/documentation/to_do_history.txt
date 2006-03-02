@@ -474,7 +474,7 @@ brian  |          | 1    IED|  0. move orp.uuid and orp.lang to dojo.uuid and do
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      Summary of Iteration #8
           December 2005
-  December 5 to January 2, 2005
+December 5, 2005 to January 2, 2006
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    8    = number of PLANNED tasks that were finished 
    2    = number of ADDITIONAL tasks that were finished 
@@ -520,7 +520,7 @@ brian  |          | 0.75 IED|  0. put together an initial data model comparison 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      Summary of Iteration #9
           January 2006
-  January 2 to February 6, 2005
+  January 2 to February 6, 2006
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    1    = number of PLANNED tasks that were finished 
    3    = number of ADDITIONAL tasks that were finished 
@@ -547,6 +547,12 @@ brian  |          | 0.75 IED|  0. put together an initial data model comparison 
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
+brian  |          | 0.15 IED| 422. Replace all use of orp.uuid with dojo.uuid, and remove orp.uuid from our tree
+brian  |          | 0.25 IED| 511. Assign system attributes & categories to a "System" category
+brian  |          | 0.25 IED| 512. Hide "System" items most of the time
+brian  |          | 0.25 IED| 519. improve UI for setting the expected data type of an attribute
+brian  | 3    IED | 4    IED| 308. Make screencasts about OpenRecord (and plugins) see: .swf, .mov, SnapZ Pro, Camtesia Studio, Windows Media Encoder 9 Series
+patricia          | 0.6  IED| 308. Make screencasts about OpenRecord (and plugins) see: .swf, .mov, SnapZ Pro, Camtesia Studio, Windows Media Encoder 9 Series
 -------+----------+---------+----------------------------------------------
 
 
@@ -555,8 +561,59 @@ Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
 Who    | Estimate | Actual  | Task
 -------+----------+---------+----------------------------------------------
-brian  |          | 1    IED|  0. switch from dojo rev-2540 to dojo rev-3024
-mignon |          | 1    IED|  0. switch from dojo rev-2540 to dojo rev-3024
+brian  |          | 0.25 IED|   0. context menu to remove table columns
+mignon and brian  | 2    IED|   0. switch from dojo rev-2540 to dojo rev-3024
+mignon |          | 1    IED| 424. Fix the unit tests in tests/view/SectionViewConstructorTest.js
 -------+----------+---------+----------------------------------------------
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Summary of Iteration #10
+          February 2006
+  February 6 to March 6, 2006
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   5    = number of PLANNED tasks that were finished 
+   3    = number of ADDITIONAL tasks that were finished 
+ ~ 8.75 = total estimated IEDs for PLANNED and ADDITIONAL tasks that were finished
+   4    = number of weeks in February iteration
+ ~ 2.2  = Velocity (in estimated IEDs per week)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+################################################################################
+################################################################################
+##                                                                            ##
+##                                Iteration #11                               ##
+##                                 March 2006                                 ##
+##                                                                            ##
+################################################################################
+################################################################################
+
+
+---------------------------------------------------------------------------
+   Tasks we originally identified for Iteration #11, in March 2006
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+-------+----------+---------+----------------------------------------------
+
+
+---------------------------------------------------------------------------
+   New tasks that we decided to take on for Iteration #11, in March 2006
+-------+----------+---------+----------------------------------------------
+Who    | Estimate | Actual  | Task
+-------+----------+---------+----------------------------------------------
+-------+----------+---------+----------------------------------------------
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Summary of Iteration #11
+            March 2006
+     March 6 to April 3, 2006
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   4    = number of weeks in March iteration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
