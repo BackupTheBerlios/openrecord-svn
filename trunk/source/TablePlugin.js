@@ -225,56 +225,36 @@ orp.TablePlugin.prototype._buildAddColumnControl = function(headerRow) {
   var headerCell = orp.view.View.appendNewElement(headerRow, "th", cssClass);
   headerCell.superView = this;
   
-  var ADD_COLUMN_CONTROL_USES_HTML_INSTEAD_OF_DOJO = false;
-  if (ADD_COLUMN_CONTROL_USES_HTML_INSTEAD_OF_DOJO) {
-    var emptySpan = orp.view.View.appendNewElement(headerCell, "span");
-    orp.view.View.appendNewTextNode(emptySpan, " ");
-    orp.view.View.appendNewElement(headerCell, "br");
-    var selectElt = orp.view.View.appendNewElement(headerCell, "select");
-    var listOfAttributes = this.getWorld().getAttributes();
-    var optionElt = orp.view.View.appendNewElement(selectElt, "option");
-    optionElt.text = "Add column...";
-    for (var i in listOfAttributes) {
-      var attribute = listOfAttributes[i];
-      if (!orp.util.isObjectInSet(attribute, this._displayAttributes)) {
-        optionElt = orp.view.View.appendNewElement(selectElt, "option");
-        optionElt.text += attribute.getDisplayString();
-        optionElt.value = attribute.getUuidString();
-        dojo.event.connect(optionElt, "onclick", this, "_attributeEditorChanged");
-      }
+  var listOfAttributes = this.getWorld().getAttributes();    
+  var comboData = new Array();
+  var j = 0;
+  for (var i = 0; i < listOfAttributes.length; ++i) {
+    var attribute = listOfAttributes[i];
+    if (!orp.util.isObjectInSet(attribute, this._displayAttributes)) {
+      comboData[j] = new Array(listOfAttributes[i].getDisplayName(), listOfAttributes[i].getUuidString());
+      ++j;
     }
-    this._selectElement = selectElt;
-  } else {
-    var listOfAttributes = this.getWorld().getAttributes();    
-    var comboData = new Array();
-    var j = 0;
-    for (var i = 0; i < listOfAttributes.length; ++i) {
-      var attribute = listOfAttributes[i];
-      if (!orp.util.isObjectInSet(attribute, this._displayAttributes)) {
-        comboData[j++] = new Array(listOfAttributes[i].getDisplayName(), listOfAttributes[i].getUuidString());
-      }
-    }
-    var comboBox = dojo.widget.createWidget("ComboBox", {}, headerCell, "last");
-    var provider = comboBox.dataProvider;
-    provider.setData(comboData);
-    
-    var _this = this;
-    headerCell.onComboBoxKeyUp = function(evt) {
-      if (evt.keyCode != orp.util.ASCII.RETURN) {
-        return;
-      }
-      var attribute = orp.TablePlugin.getAttributeFromComboBoxValue(evt.target.value, this.superView.getWorld());
-      _this._addOrRemoveOneColumn(attribute);
-    };
-    dojo.event.connect(comboBox, "onKeyUp", headerCell, "onComboBoxKeyUp");
-    headerCell.selectOption = function(evt) {
-      if (evt && evt.type == "click" && evt.target && evt.target.textContent) {
-        var attribute = orp.TablePlugin.getAttributeFromComboBoxValue(evt.target.textContent, this.superView.getWorld());
-        _this._addOrRemoveOneColumn(attribute);
-      }
-    };
-    dojo.event.connect(comboBox, "selectOption", headerCell, "selectOption");
   }
+  var comboBox = dojo.widget.createWidget("ComboBox", {}, headerCell, "last");
+  var provider = comboBox.dataProvider;
+  provider.setData(comboData);
+  
+  var _this = this;
+  headerCell.onComboBoxKeyUp = function(evt) {
+    if (evt.keyCode != orp.util.ASCII.RETURN) {
+      return;
+    }
+    var attribute = orp.TablePlugin.getAttributeFromComboBoxValue(evt.target.value, this.superView.getWorld());
+    _this._addOrRemoveOneColumn(attribute);
+  };
+  dojo.event.connect(comboBox, "onKeyUp", headerCell, "onComboBoxKeyUp");
+  headerCell.selectOption = function(evt) {
+    if (evt && evt.type == "click" && evt.target && evt.target.textContent) {
+      var attribute = orp.TablePlugin.getAttributeFromComboBoxValue(evt.target.textContent, this.superView.getWorld());
+      _this._addOrRemoveOneColumn(attribute);
+    }
+  };
+  dojo.event.connect(comboBox, "selectOption", headerCell, "selectOption");
 };
 
 /**
@@ -566,6 +546,9 @@ orp.TablePlugin.getAttributeFromComboBoxValue = function(comboBoxValue, world) {
   }
   if (i == listOfAttributes.length) {
     attribute = world.newAttribute(comboBoxValue);
+    var attributeCalledExpectedType = world.getAttributeCalledExpectedType();
+    var typeCalledText = world.getTypeCalledText();
+    attribute.addEntry({attribute: attributeCalledExpectedType, value: typeCalledText});
   }
   return attribute;
 };
@@ -821,20 +804,6 @@ orp.TablePlugin.prototype._importData = function(eventObject) {
   this.refresh();
 };
 
-
-/**
- * Called when the user clicks on attribute editor item, either to add or 
- * remove attribute column
- * 
- * @scope    private class method
- */
-orp.TablePlugin.prototype._attributeEditorChanged = function(eventObject) {
-  var attributeUuid = eventObject.target.value;
-  if (attributeUuid) {
-    var changedAttribute = this.getWorld().getItemFromUuid(attributeUuid);
-    this._addOrRemoveOneColumn(changedAttribute);
-  } 
-};
 
 // Add a column to the table, or remove a column from the table.
 orp.TablePlugin.prototype._addOrRemoveOneColumn = function(attribute) {

@@ -748,9 +748,6 @@ orp.model.World.prototype.newAttribute = function(name, observer) {
   var item = this._archive.newItem(name, observer);
   var categoryCalledAttribute = this.getCategoryCalledAttribute();
   item.assignToCategory(categoryCalledAttribute);
-  var attributeCalledExpectedType = this.getAttributeCalledExpectedType();
-  var typeCalledText = this.getTypeCalledText();
-  item.addEntry({attribute: attributeCalledExpectedType, value: typeCalledText});
   this.endTransaction();
   return item;
 };

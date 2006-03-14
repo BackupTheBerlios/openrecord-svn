@@ -168,14 +168,15 @@ orp.DetailPlugin.prototype.createTableForItem = function (inItem) {
     var cssLine = "comboBox";
     var newAttributeCell = orp.view.View.appendNewElement(newRow, "td", cssLine);
     newAttributeCell.superView = this;
-    var listOfAttributes = this.getWorld().getAttributes();
+    listOfAttributes = this.getWorld().getAttributes();
     
     var comboData = new Array();
     var j = 0;
     for (var i = 0; i < listOfAttributes.length; ++i) {
       // Only list attributes that aren't already in the table.
-      if (inItem.getSingleEntryFromAttribute(listOfAttributes[i]) == null) {
-        comboData[j++] = new Array(listOfAttributes[i].getDisplayName(), listOfAttributes[i].getUuidString());
+      if (inItem.getSingleEntryFromAttribute(listOfAttributes[i]) === null) {
+        comboData[j] = new Array(listOfAttributes[i].getDisplayName(), listOfAttributes[i].getUuidString());
+        ++j;
       }
     }
     var comboBox = dojo.widget.createWidget("ComboBox", {}, newAttributeCell, "last");
@@ -223,6 +224,9 @@ orp.DetailPlugin.getAttributeFromComboBoxValue = function(comboBoxValue, world) 
   }
   if (i == listOfAttributes.length) {
     attribute = world.newAttribute(comboBoxValue);
+    var attributeCalledExpectedType = world.getAttributeCalledExpectedType();
+    var typeCalledText = world.getTypeCalledText();
+    attribute.addEntry({attribute: attributeCalledExpectedType, value: typeCalledText});
   }
   return attribute;
 };
