@@ -233,7 +233,7 @@ orp.view.LoginView.prototype._signinPasswordFocus = function(eventObject) {
  * @scope    private instance method
  */
 orp.view.LoginView.prototype._signinPasswordKeyPress = function(eventObject) {
-  // see if <return> is pressed, if so, similate clicking on sign in button
+  // see if <return> is pressed, if so, simulate clicking on sign in button
   if (eventObject.keyCode == orp.util.ASCII.RETURN) {
     this._clickOnSignInButton(eventObject);
   }
@@ -246,7 +246,7 @@ orp.view.LoginView.prototype._signinPasswordKeyPress = function(eventObject) {
  * @scope    private instance method
  */
 orp.view.LoginView.prototype._createAccountPasswordKeyPress = function(eventObject) {
-  // see if <return> is pressed, if so, similate clicking on sign in button
+  // see if <return> is pressed, if so, simulate clicking on sign in button
   if (eventObject.keyCode == orp.util.ASCII.RETURN) {
     this._clickOnNewAcctButton(eventObject);
   }

@@ -44,6 +44,8 @@ dojo.require("dojo.widget.*");
 dojo.require("dojo.widget.Button2");
 dojo.require("dojo.widget.html.Button2");
 dojo.require("dojo.widget.Menu2");
+dojo.require("dojo.widget.ComboBox");
+dojo.require("dojo.widget.html.ComboBox");
 
 
 if (djConfig.debugAtAllCosts) {

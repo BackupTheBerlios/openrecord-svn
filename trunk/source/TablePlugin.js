@@ -223,13 +223,13 @@ orp.TablePlugin.prototype._getListOfColumns = function() {
 orp.TablePlugin.prototype._buildAddColumnControl = function(headerRow) {
   var cssClass = "add_column" + " " + orp.view.RootView.cssClass.EDIT_TOOL;
   var headerCell = orp.view.View.appendNewElement(headerRow, "th", cssClass);
-  var emptySpan = orp.view.View.appendNewElement(headerCell, "span");
-  orp.view.View.appendNewTextNode(emptySpan, " ");
-  orp.view.View.appendNewElement(headerCell, "br");
+  headerCell.superView = this;
   
-  var ADD_COLUMN_CONTROL_USES_HTML_INSTEAD_OF_DOJO = true;
+  var ADD_COLUMN_CONTROL_USES_HTML_INSTEAD_OF_DOJO = false;
   if (ADD_COLUMN_CONTROL_USES_HTML_INSTEAD_OF_DOJO) {
-    // var htmlElement = this.getHtmlElement();
+    var emptySpan = orp.view.View.appendNewElement(headerCell, "span");
+    orp.view.View.appendNewTextNode(emptySpan, " ");
+    orp.view.View.appendNewElement(headerCell, "br");
     var selectElt = orp.view.View.appendNewElement(headerCell, "select");
     var listOfAttributes = this.getWorld().getAttributes();
     var optionElt = orp.view.View.appendNewElement(selectElt, "option");
@@ -245,10 +245,35 @@ orp.TablePlugin.prototype._buildAddColumnControl = function(headerRow) {
     }
     this._selectElement = selectElt;
   } else {
-    var editButton = orp.view.View.appendNewElement(headerCell, "input");
-    editButton.type = "Button";
-    editButton.value = "Add column...";
-    dojo.event.connect(editButton, "onclick", this, "_clickOnAddColumnButton");
+    var listOfAttributes = this.getWorld().getAttributes();    
+    var comboData = new Array();
+    var j = 0;
+    for (var i = 0; i < listOfAttributes.length; ++i) {
+      var attribute = listOfAttributes[i];
+      if (!orp.util.isObjectInSet(attribute, this._displayAttributes)) {
+        comboData[j++] = new Array(listOfAttributes[i].getDisplayName(), listOfAttributes[i].getUuidString());
+      }
+    }
+    var comboBox = dojo.widget.createWidget("ComboBox", {}, headerCell, "last");
+    var provider = comboBox.dataProvider;
+    provider.setData(comboData);
+    
+    var _this = this;
+    headerCell.onComboBoxKeyUp = function(evt) {
+      if (evt.keyCode != orp.util.ASCII.RETURN) {
+        return;
+      }
+      var attribute = orp.TablePlugin.getAttributeFromComboBoxValue(evt.target.value, this.superView.getWorld());
+      _this._addOrRemoveOneColumn(attribute);
+    };
+    dojo.event.connect(comboBox, "onKeyUp", headerCell, "onComboBoxKeyUp");
+    headerCell.selectOption = function(evt) {
+      if (evt && evt.type == "click" && evt.target && evt.target.textContent) {
+        var attribute = orp.TablePlugin.getAttributeFromComboBoxValue(evt.target.textContent, this.superView.getWorld());
+        _this._addOrRemoveOneColumn(attribute);
+      }
+    };
+    dojo.event.connect(comboBox, "selectOption", headerCell, "selectOption");
   }
 };
 
@@ -530,19 +555,19 @@ orp.TablePlugin.prototype._buildHeader = function() {
   }
 };
 
-orp.TablePlugin.prototype._clickOnAddColumnButton = function(eventObject) {
-  var popupMenu = dojo.widget.createWidget("PopupMenu2", {}, null);
-  var listOfAttributes = this.getWorld().getAttributes();
-  for (var i in listOfAttributes) {
-    var attribute = listOfAttributes[i];
-    if (!orp.util.isObjectInSet(attribute, this._displayAttributes)) {
-      var attributeName = attribute.getDisplayString();
-      var menuItem = dojo.widget.createWidget("MenuItem2", {caption: attributeName}, null);
-      dojo.event.connect(menuItem, "onClick",  orp.lang.bind(this, "_addOrRemoveOneColumn", attribute));
-      popupMenu.addChild(menuItem);
+orp.TablePlugin.getAttributeFromComboBoxValue = function(comboBoxValue, world) {
+  var listOfAttributes = world.getAttributes();
+  var attribute;
+  for (var i = 0; i < listOfAttributes.length; ++i) {
+    if (listOfAttributes[i].getDisplayName() == comboBoxValue) {
+      attribute = listOfAttributes[i];
+      break;
     }
   }
-  popupMenu.onOpen(eventObject);
+  if (i == listOfAttributes.length) {
+    attribute = world.newAttribute(comboBoxValue);
+  }
+  return attribute;
 };
 
 /*

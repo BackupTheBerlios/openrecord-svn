@@ -37,29 +37,37 @@ Here's a quick overview of the Data Model API that's available for people who ar
 
 Item methods --------------------
 
-  item.addEntryForAttribute() 
   item.addEntry()
   item.replaceEntry()
-  item.replaceEntryWithEntryForAttribute()
+  item.addConnectionEntry()
   
   item.getAttributes()
   item.getEntriesForAttribute()
   item.getEntries()
+  item.getValuesForAttribute()
+  item.hasAttributeValue()
   
   item.getDisplayName()
   item.getNameEntries()
   item.getShortNameEntries()
+  item.getDisplayString()
+  item.getDisplayStringForEntry()
+  item.toString()
+  item.doesStringMatchName()
+  
+  item.getSingleEntryFromAttribute()
+  item.getSingleValueFromAttribute()
+  item.getSingleStringValueFromAttribute()
   
   item.isInCategory()
-  item.reorderBetween()
-  
-  item.hasBeenDeleted()
-  item.voteToDelete()
-  item.voteToRetain()
+  item.assignToCategory()
+  item.getFirstCategory()
   
   item.addObserver()
   item.removeObserver()
-
+  
+  item.isProvisional()
+  
   
 Entry methods ------------------- 
 

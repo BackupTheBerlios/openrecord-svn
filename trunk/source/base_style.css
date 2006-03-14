@@ -812,11 +812,30 @@ p.byline a {
 }
 
 
+/****************************************/
+/* ComboBox styles                     */
+
+.simple_table td.comboBox {
+  padding: 0 0 0 0;
+  font-size: 1.0em;
+}
+
+.simple_table th.add_column {
+  height: 100%;
+  padding: 0 0 0 0;
+}
+
+table.dojoComboBox {
+  border-collapse: collapse;
+}
+table.dojoComboBox td {
+  background: rgb(90%, 90%, 100%);
+}
+
+table.dojoComboBox input.comboBoxInput {
+  background: rgb(90%, 90%, 100%);
+}
 
 /****************************************/
 /* END                                  */
 /****************************************/
-
-.add_column {
-  background: rgb(50%, 0%, 0%);
-}
