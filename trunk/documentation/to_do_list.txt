@@ -234,11 +234,6 @@ More tasks
     TablePlugin.js and DetailPlugin.js, so it shouldn't be
     too hard to make a simple read-only version.
 ---------------------------------------------------
- + Table Plugin with ad-hoc attributes
-    We should change the TablePlugin.js so that the user is
-    able to add new columns on the fly, where each new
-    column is for some new ad-hoc attribute.
----------------------------------------------------
  + Be able to edit in outline mode
     In the outline plugin, add code to handle editing. The
     user should be able to add new items to an outline,
