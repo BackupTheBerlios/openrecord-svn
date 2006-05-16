@@ -56,7 +56,7 @@ Who    | Estimate | Actual  | Task
        |          |         | 110. Rationalize the View API and document public API
        |          |         | 111. Refactor our observer notification API (and implementation)
 (soon) |          |         | 112. Try using Ant and the Dojo build system to build OpenRecord into a single-file 
-       |          |         | 113. BUG: in plugins, dojo.require() statements don't do anything 
+mignon |          |  .25    | 113. BUG: in plugins, dojo.require() statements don't do anything 
        |          |         | 114. In OpenRecordLoader.js, add: djConfig.cacheBust = new Date().valueOf().toString();
        |          |         | 115. Allow a plugin view to register as a default detail view for a category of item
        |          |         | 116. Have DetailPlugin show tabs, if more than one detail view is available for an item

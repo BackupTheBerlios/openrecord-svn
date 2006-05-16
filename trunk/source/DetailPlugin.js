@@ -38,7 +38,10 @@ dojo.require("orp.view.SectionView");
 dojo.require("orp.util.Util");
 dojo.require("orp.model.Item");
 dojo.require("orp.lang.Lang");
-  
+dojo.require("dojo.widget.*");
+dojo.require("dojo.widget.ComboBox");
+dojo.require("dojo.widget.html.ComboBox");
+
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
 // 

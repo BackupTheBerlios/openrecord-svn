@@ -44,6 +44,10 @@ dojo.require("orp.util.CsvParser");
 dojo.require("orp.lang.Lang");
 dojo.require("dojo.event.*");
 dojo.require("dojo.dnd.*");
+dojo.require("dojo.widget.*");
+dojo.require("dojo.widget.Menu2");
+dojo.require("dojo.widget.ComboBox");
+dojo.require("dojo.widget.html.ComboBox");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:

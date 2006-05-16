@@ -33,20 +33,6 @@ dojo.setModulePrefix("orp", "../../source");  // relative to dojo.js
 dojo.require("orp.model.World");
 dojo.require("orp.view.RootView");
 
-// FIXME:
-// These dojo.require() statements are needed in order to 
-// get plugins/ButtonView.js to work.  Someday we should 
-// delete these next six lines, and instead just have the
-// identical lines in ButtonView.js.  But, for now we can't
-// do that because dojo.require() statements don't work
-// within plugins (see bug #113 in the to_do_list.txt file).
-dojo.require("dojo.widget.*");
-dojo.require("dojo.widget.Button");
-dojo.require("dojo.widget.Menu2");
-dojo.require("dojo.widget.ComboBox");
-dojo.require("dojo.widget.html.ComboBox");
-
-
 if (djConfig.debugAtAllCosts) {
   dojo.hostenv.writeIncludes(); // needed when using "debugAtAllCosts: true"
 }
