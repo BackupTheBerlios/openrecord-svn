@@ -41,8 +41,7 @@ dojo.require("orp.view.RootView");
 // do that because dojo.require() statements don't work
 // within plugins (see bug #113 in the to_do_list.txt file).
 dojo.require("dojo.widget.*");
-dojo.require("dojo.widget.Button2");
-dojo.require("dojo.widget.html.Button2");
+dojo.require("dojo.widget.Button");
 dojo.require("dojo.widget.Menu2");
 dojo.require("dojo.widget.ComboBox");
 dojo.require("dojo.widget.html.ComboBox");
