@@ -1,18 +1,18 @@
 /*****************************************************************************
  fileProtocolUtil.js
- 
+
 ******************************************************************************
  The code in this file is a heavily modified version of code that was copied
  from the TiddlyWiki and GTDTiddlyWiki code base.
- 
- The original code is Copyright (c) Osmosoft Limited.  The original copyright 
- notice is included below, along with the license conditions and disclaimer.  
- 
+
+ The original code is Copyright (c) Osmosoft Limited.  The original copyright
+ notice is included below, along with the license conditions and disclaimer.
+
  OpenRecord modifications by Brian Douglas Skinner <brian.skinner@gumption.org>
 
- For the OpenRecord modifications, the Copyright rights are relinquished under  
+ For the OpenRecord modifications, the Copyright rights are relinquished under
  the Creative Commons Public Domain Dedication:
-    http://creativecommons.org/licenses/publicdomain/
+		http://creativecommons.org/licenses/publicdomain/
 
 ******************************************************************************
 TiddlyWiki 1.2.6 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
@@ -60,90 +60,90 @@ dojo.provide("orp.storage.fileProtocolUtil");
 /**
  * This function looks at the URL value in the window.location property,
  * strips the filename off the end, appends any given path elements,
- * converts the whole thing to a format that is compatible with the 
+ * converts the whole thing to a format that is compatible with the
  * local file system, and returns the new local path.
  *
  * @scope    public function
  * @return   Returns a full local pathname.
  */
 orp.storage.getLocalPathFromWindowLocation = function(listOfAdditions) {
-  // Example location:
-  //   location.href     == file:///D:/amy/openrecord/foo.html#bar
-  //   location.protocol == file:
-  //   location.pathname ==        /D:/amy/openrecord/foo.html
-  //   location.hash     ==                                   #bar
+	// Example location:
+	//   location.href     == file:///D:/amy/openrecord/foo.html#bar
+	//   location.protocol == file:
+	//   location.pathname ==        /D:/amy/openrecord/foo.html
+	//   location.hash     ==                                   #bar
 
-  // Get the URL of the document
-  var pathname = window.location.pathname;
-  
-  
-  // Step 1: Make the requested additions to the pathname
-  var arrayOfParts = pathname.split('/');
-  arrayOfParts.pop();  // get rid of the final "/foo.html" part
-  for (var i in listOfAdditions) {
-    var additionalPart = listOfAdditions[i];
-    arrayOfParts.push(additionalPart);
-  }
-  pathname = arrayOfParts.join('/');
-
-  
-  // Step 2: Figure out what type of URL we're working with
-  // Constants
-  var PathType = {
-    LOCAL_PC:        "LOCAL_PC",          // "file:///x:/path/path..." 
-    LOCAL_UNIX_MAC:  "LOCAL_UNIX_MAC",    // "file:///path/path..."
-    NETWORK_PC:      "NETWORK_PC",        // "file://server/share/path/path..."
-    NETWORK_FIREFOX: "NETWORK_FIREFOX" }; // "file://///server/share/path/path..."
-  // "file:///x:/path/path..."             == PathType.LOCAL_PC        --> "x:\path\path..."
-  // "file:///path/path..."                == PathType.LOCAL_UNIX_MAC  --> "/path/path..."
-  // "file://server/share/path/path..."    == PathType.NETWORK_PC      --> "\\server\share\path\path..."
-  // "file://///server/share/path/path..." == PathType.NETWORK_FIREFOX --> "\\server\share\path\path..."
-
-  var pathType = null;
-  if (pathname.charAt(2) == ":") {
-    pathType = PathType.LOCAL_PC;
-  } else if (pathname.indexOf("///") === 0) {
-    pathType = PathType.NETWORK_FIREFOX;
-  } else if (pathname.indexOf("/") === 0) {
-    pathType = PathType.LOCAL_UNIX_MAC;
-  } else {
-    pathType = PathType.NETWORK_PC;
-  }
+	// Get the URL of the document
+	var pathname = window.location.pathname;
 
 
-  // Step 3: Convert the URL to a file path
-  var localPath = pathname;
-  switch (pathType) {
-    case PathType.LOCAL_PC:
-      // example: "/x:/path/path..."
-      localPath = localPath.substring(1);  // get rid of initial '/'
-      localPath = unescape(localPath);
-      localPath = localPath.replace(new RegExp("/","g"),"\\");
-      // result: "x:\path\path..."
-      break;
-    case PathType.LOCAL_UNIX_MAC:         
-      // example: "/path/path..."
-      localPath = unescape(localPath);
-      // result: "/path/path..."
-      break;
-    case PathType.NETWORK_FIREFOX:
-      // example: "///server/share/path/path..."
-      localPath = localPath.substring(3);  // get rid of initial '///'
-      localPath = unescape(localPath);
-      localPath = localPath.replace(new RegExp("/","g"),"\\");
-      localPath = "\\\\" + localPath;      
-      // result: "\\server\share\path\path..."
-      break;
-    case PathType.NETWORK_PC:
-      // example: "server/share/path/path..."
-      localPath = unescape(localPath);
-      localPath = localPath.replace(new RegExp("/","g"),"\\");
-      localPath = "\\\\" + localPath;      
-      // result: "\\server\share\path\path..."
-      break;
-  }
+	// Step 1: Make the requested additions to the pathname
+	var arrayOfParts = pathname.split('/');
+	arrayOfParts.pop();  // get rid of the final "/foo.html" part
+	for (var i in listOfAdditions) {
+		var additionalPart = listOfAdditions[i];
+		arrayOfParts.push(additionalPart);
+	}
+	pathname = arrayOfParts.join('/');
 
-  return localPath;
+
+	// Step 2: Figure out what type of URL we're working with
+	// Constants
+	var PathType = {
+		LOCAL_PC:        "LOCAL_PC",          // "file:///x:/path/path..."
+		LOCAL_UNIX_MAC:  "LOCAL_UNIX_MAC",    // "file:///path/path..."
+		NETWORK_PC:      "NETWORK_PC",        // "file://server/share/path/path..."
+		NETWORK_FIREFOX: "NETWORK_FIREFOX" }; // "file://///server/share/path/path..."
+	// "file:///x:/path/path..."             == PathType.LOCAL_PC        --> "x:\path\path..."
+	// "file:///path/path..."                == PathType.LOCAL_UNIX_MAC  --> "/path/path..."
+	// "file://server/share/path/path..."    == PathType.NETWORK_PC      --> "\\server\share\path\path..."
+	// "file://///server/share/path/path..." == PathType.NETWORK_FIREFOX --> "\\server\share\path\path..."
+
+	var pathType = null;
+	if (pathname.charAt(2) == ":") {
+		pathType = PathType.LOCAL_PC;
+	} else if (pathname.indexOf("///") === 0) {
+		pathType = PathType.NETWORK_FIREFOX;
+	} else if (pathname.indexOf("/") === 0) {
+		pathType = PathType.LOCAL_UNIX_MAC;
+	} else {
+		pathType = PathType.NETWORK_PC;
+	}
+
+
+	// Step 3: Convert the URL to a file path
+	var localPath = pathname;
+	switch (pathType) {
+		case PathType.LOCAL_PC:
+			// example: "/x:/path/path..."
+			localPath = localPath.substring(1);  // get rid of initial '/'
+			localPath = unescape(localPath);
+			localPath = localPath.replace(new RegExp("/","g"),"\\");
+			// result: "x:\path\path..."
+			break;
+		case PathType.LOCAL_UNIX_MAC:
+			// example: "/path/path..."
+			localPath = unescape(localPath);
+			// result: "/path/path..."
+			break;
+		case PathType.NETWORK_FIREFOX:
+			// example: "///server/share/path/path..."
+			localPath = localPath.substring(3);  // get rid of initial '///'
+			localPath = unescape(localPath);
+			localPath = localPath.replace(new RegExp("/","g"),"\\");
+			localPath = "\\\\" + localPath;
+			// result: "\\server\share\path\path..."
+			break;
+		case PathType.NETWORK_PC:
+			// example: "server/share/path/path..."
+			localPath = unescape(localPath);
+			localPath = localPath.replace(new RegExp("/","g"),"\\");
+			localPath = "\\\\" + localPath;
+			// result: "\\server\share\path\path..."
+			break;
+	}
+
+	return localPath;
 };
 
 

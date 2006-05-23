@@ -1,30 +1,30 @@
 /*****************************************************************************
  XmlImporter.js
- 
+
 ******************************************************************************
  Written in 2005 by Mignon Belongie
-  
- Copyright rights relinquished under the Creative Commons  
+
+ Copyright rights relinquished under the Creative Commons
  Public Domain Dedication:
-    http://creativecommons.org/licenses/publicdomain/
-  
- You can copy freely from this file.  This work may be freely reproduced, 
+		http://creativecommons.org/licenses/publicdomain/
+
+ You can copy freely from this file.  This work may be freely reproduced,
  distributed, transmitted, used, modified, built upon, or otherwise exploited
  by anyone for any purpose.
-  
- This work is provided on an "AS IS" basis, without warranties or conditions 
- of any kind, either express or implied, including, without limitation, any 
- warranties or conditions of title, non-infringement, merchantability, or 
- fitness for a particular purpose. You are solely responsible for determining 
- the appropriateness of using or distributing the work and assume all risks 
- associated with use of this work, including but not limited to the risks and 
- costs of errors, compliance with applicable laws, damage to or loss of data 
+
+ This work is provided on an "AS IS" basis, without warranties or conditions
+ of any kind, either express or implied, including, without limitation, any
+ warranties or conditions of title, non-infringement, merchantability, or
+ fitness for a particular purpose. You are solely responsible for determining
+ the appropriateness of using or distributing the work and assume all risks
+ associated with use of this work, including but not limited to the risks and
+ costs of errors, compliance with applicable laws, damage to or loss of data
  or equipment, and unavailability or interruption of operations.
 
- In no event shall the authors or contributors have any liability for any 
+ In no event shall the authors or contributors have any liability for any
  direct, indirect, incidental, special, exemplary, or consequential damages,
- however caused and on any theory of liability, whether in contract, strict 
- liability, or tort (including negligence), arising in any way out of or in 
+ however caused and on any theory of liability, whether in contract, strict
+ liability, or tort (including negligence), arising in any way out of or in
  connection with the use or distribution of the work.
 *****************************************************************************/
 
@@ -46,20 +46,20 @@ dojo.require("orp.lang.Lang");
  * @scope    public instance constructor
  */
 orp.transcribers.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) {
-  orp.lang.assertType(tagPath, Array);
-  orp.lang.assert(attribute instanceof orp.model.Item);
-  this._tagPath = tagPath;
-  this._attribute = attribute;
-  var attributeCalledExpectedType = attribute.getWorld().getAttributeCalledExpectedType();
-  var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
-  this._listOfTypes = [];
-  for (j in listOfExpectedTypeEntries) {
-    var entry = listOfExpectedTypeEntries[j];
-    this._listOfTypes.push(entry.getValue());
-  }
-  var attributeCalledInverseAttribute = attribute.getWorld().getAttributeCalledInverseAttribute();
-  var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
-  this._inverseAttribute = inverseAttributeEntry? inverseAttributeEntry.getValue(attribute) : null;
+	orp.lang.assertType(tagPath, Array);
+	orp.lang.assert(attribute instanceof orp.model.Item);
+	this._tagPath = tagPath;
+	this._attribute = attribute;
+	var attributeCalledExpectedType = attribute.getWorld().getAttributeCalledExpectedType();
+	var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
+	this._listOfTypes = [];
+	for (j in listOfExpectedTypeEntries) {
+		var entry = listOfExpectedTypeEntries[j];
+		this._listOfTypes.push(entry.getValue());
+	}
+	var attributeCalledInverseAttribute = attribute.getWorld().getAttributeCalledInverseAttribute();
+	var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
+	this._inverseAttribute = inverseAttributeEntry? inverseAttributeEntry.getValue(attribute) : null;
 };
 
 
@@ -70,19 +70,19 @@ orp.transcribers.XmlTextNodeToAttributeSpecifier = function(tagPath, attribute) 
  * @scope    public instance constructor
  */
 orp.transcribers.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, attribute) {
-  orp.lang.assert(attribute instanceof orp.model.Item);
-  this._xmlAttributeName = xmlAttributeName;
-  this._attribute = attribute;
-  var attributeCalledExpectedType = attribute.getWorld().getAttributeCalledExpectedType();
-  var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
-  this._listOfTypes = [];
-  for (j in listOfExpectedTypeEntries) {
-    var entry = listOfExpectedTypeEntries[j];
-    this._listOfTypes.push(entry.getValue());
-  }
-  var attributeCalledInverseAttribute = attribute.getWorld().getAttributeCalledInverseAttribute();
-  var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
-  this._inverseAttribute = inverseAttributeEntry? inverseAttributeEntry.getValue(attribute) : null;
+	orp.lang.assert(attribute instanceof orp.model.Item);
+	this._xmlAttributeName = xmlAttributeName;
+	this._attribute = attribute;
+	var attributeCalledExpectedType = attribute.getWorld().getAttributeCalledExpectedType();
+	var listOfExpectedTypeEntries = attribute.getEntriesForAttribute(attributeCalledExpectedType);
+	this._listOfTypes = [];
+	for (j in listOfExpectedTypeEntries) {
+		var entry = listOfExpectedTypeEntries[j];
+		this._listOfTypes.push(entry.getValue());
+	}
+	var attributeCalledInverseAttribute = attribute.getWorld().getAttributeCalledInverseAttribute();
+	var inverseAttributeEntry = attribute.getSingleEntryFromAttribute(attributeCalledInverseAttribute);
+	this._inverseAttribute = inverseAttributeEntry? inverseAttributeEntry.getValue(attribute) : null;
 };
 
 
@@ -95,59 +95,59 @@ orp.transcribers.XmlAttributeToAttributeSpecifier = function(xmlAttributeName, a
  * out of specified parts of the data.
  *
  * @scope    public instance constructor
- * @param    world             
+ * @param    world
  * @param    url                                (of an XML file)
  * @param    nameSpace                          If null, the name of the file will be used.
  * @param    itemTagName                        Items will be made from elements with this tag name.
  * @param    itemCategory                       If null, a new category is created from 'namespace' and 'itemTagName'.
  */
 orp.transcribers.XmlImporter = function(world, url, nameSpace, itemTagName, itemCategory) {
-  orp.lang.assert(world instanceof orp.model.World);
-  var urlSeparators = new RegExp("\\.|\\/");
-  var urlParts = url.split(urlSeparators);
-  var len = urlParts.length;
-  orp.lang.assert(urlParts[len-1] == "xml");
-  if (!nameSpace) {
-    nameSpace = urlParts[len-2];
-  }
-  orp.lang.assertType(itemTagName, String);
+	orp.lang.assert(world instanceof orp.model.World);
+	var urlSeparators = new RegExp("\\.|\\/");
+	var urlParts = url.split(urlSeparators);
+	var len = urlParts.length;
+	orp.lang.assert(urlParts[len-1] == "xml");
+	if (!nameSpace) {
+		nameSpace = urlParts[len-2];
+	}
+	orp.lang.assertType(itemTagName, String);
 
-  var xmlDoc = document.implementation.createDocument("", "doc", null);
-  var objXMLHTTP = new XMLHttpRequest();
-  objXMLHTTP.open("GET", url, false);
-  objXMLHTTP.send(null);
-  xmlDoc = objXMLHTTP.responseXML;
-  this._itemElements = xmlDoc.getElementsByTagName(itemTagName);
-  if (itemCategory) {
-    this._itemCategory = itemCategory;
-  } else {
-    var itemCategoryName = nameSpace + ":" + itemTagName;
-    this._itemCategory = world.newCategory(itemCategoryName);
-  }
-  this._world = world;
-  this._nameSpace = nameSpace;
+	var xmlDoc = document.implementation.createDocument("", "doc", null);
+	var objXMLHTTP = new XMLHttpRequest();
+	objXMLHTTP.open("GET", url, false);
+	objXMLHTTP.send(null);
+	xmlDoc = objXMLHTTP.responseXML;
+	this._itemElements = xmlDoc.getElementsByTagName(itemTagName);
+	if (itemCategory) {
+		this._itemCategory = itemCategory;
+	} else {
+		var itemCategoryName = nameSpace + ":" + itemTagName;
+		this._itemCategory = world.newCategory(itemCategoryName);
+	}
+	this._world = world;
+	this._nameSpace = nameSpace;
 };
 
 
 /**
  * Returns the category that new items are assigned to.
- * 
+ *
  * @scope    public instance method
  * @return   Returns the category that new items are assigned to.
  */
 orp.transcribers.XmlImporter.prototype.getItemCategory = function() {
-  return this._itemCategory;
+	return this._itemCategory;
 };
 
 
 /**
  * Given the URL of an XML file, a tag name used in the file, and optionally
  * a list of tag paths, items are created from the elements with the given
- * tag name ('item-elements') with attributes corresponding to the tag paths.  
+ * tag name ('item-elements') with attributes corresponding to the tag paths.
  * If no tag paths are specified, attributes will come from all direct children
  * of item-elements with nodeType TEXT_NODE.  A category named nameSpace:itemTagName
  * will be created and the new items assigned to it.
- * 
+ *
  * For example, if file.xml contains the following:
  *
  * <Food_Glossary>
@@ -161,10 +161,10 @@ orp.transcribers.XmlImporter.prototype.getItemCategory = function() {
  * <name>radish</name><color>red</color><flavor>hot</flavor><vitamins><A>maybe</A><C>some</C></vitamins>
  * </Record>
  * </Food_Glossary>
- * 
+ *
  * then makeItemsFromXmlFile("file:.../file.xml", "food", "Record") would result
  * in three items each with attributes called 'food:name', 'food:color' and 'food:flavor',
- * while makeItemsFromXmlFile("file:.../file.xml", "food", "Record", [["name"], ["vitamins", "C"]) 
+ * while makeItemsFromXmlFile("file:.../file.xml", "food", "Record", [["name"], ["vitamins", "C"])
  *                            [new orp.transcribers.XmlTextNodeToAttributeSpecifier(["name"], world.getAttributeCalledName()),
  *                             new orp.transcribers.XmlTextNodeToAttributeSpecifier(["vitamins", "C"], world.newAttribute("Vitamin C"))],
  *                             new orp.transcribers.XmlAttributeToAttributeSpecifier("id", world.newAttribute("Food ID"));
@@ -178,36 +178,36 @@ orp.transcribers.XmlImporter.prototype.getItemCategory = function() {
  * @return   Returns an array of created items.
  */
 orp.transcribers.XmlImporter.prototype.makeItemsFromXmlFile = function(xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
-  this._world.beginTransaction();
-  var listOfOutputItems = [];
-  if (!xmlToAttributeSpecifiers) {
-    listOfOutputItems = this._doDefaultConversion(this._world, this._nameSpace, this._itemElements, this._itemCategory);
-  }
-  else {
-    // orp.lang.assert(xmlToAttributeSpecifiers instanceof Array);
-    orp.lang.assertType(xmlToAttributeSpecifiers, Array);
-    orp.lang.assert(xmlToAttributeSpecifiers[0] instanceof orp.transcribers.XmlTextNodeToAttributeSpecifier);
-    for (var i = 0; i < this._itemElements.length; ++i) {
-      var newItem = this._world.newItem();
-      newItem.assignToCategory(this._itemCategory);
-      for (var j in xmlToAttributeSpecifiers) {
-        var tagPath = xmlToAttributeSpecifiers[j]._tagPath;
-        this._processElementTree(0, tagPath.length, this._itemElements[i], newItem, xmlToAttributeSpecifiers[j]);
-      }
-      if (xmlAttributeToAttributeSpecifiers) {
-        for (j in xmlAttributeToAttributeSpecifiers) {
-          var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j]._xmlAttributeName;
-          var xmlAttributeValue = this._itemElements[i].getAttribute(xmlAttributeName);
-          if (xmlAttributeValue !== "") {
-            newItem.addEntry({attribute:xmlAttributeToAttributeSpecifiers[j]._attribute, value:xmlAttributeValue});
-          }
-        }
-      }
-      listOfOutputItems.push(newItem);
-    }
-  }
-  this._world.endTransaction();
-  return listOfOutputItems;
+	this._world.beginTransaction();
+	var listOfOutputItems = [];
+	if (!xmlToAttributeSpecifiers) {
+		listOfOutputItems = this._doDefaultConversion(this._world, this._nameSpace, this._itemElements, this._itemCategory);
+	}
+	else {
+		// orp.lang.assert(xmlToAttributeSpecifiers instanceof Array);
+		orp.lang.assertType(xmlToAttributeSpecifiers, Array);
+		orp.lang.assert(xmlToAttributeSpecifiers[0] instanceof orp.transcribers.XmlTextNodeToAttributeSpecifier);
+		for (var i = 0; i < this._itemElements.length; ++i) {
+			var newItem = this._world.newItem();
+			newItem.assignToCategory(this._itemCategory);
+			for (var j in xmlToAttributeSpecifiers) {
+				var tagPath = xmlToAttributeSpecifiers[j]._tagPath;
+				this._processElementTree(0, tagPath.length, this._itemElements[i], newItem, xmlToAttributeSpecifiers[j]);
+			}
+			if (xmlAttributeToAttributeSpecifiers) {
+				for (j in xmlAttributeToAttributeSpecifiers) {
+					var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j]._xmlAttributeName;
+					var xmlAttributeValue = this._itemElements[i].getAttribute(xmlAttributeName);
+					if (xmlAttributeValue !== "") {
+						newItem.addEntry({attribute:xmlAttributeToAttributeSpecifiers[j]._attribute, value:xmlAttributeValue});
+					}
+				}
+			}
+			listOfOutputItems.push(newItem);
+		}
+	}
+	this._world.endTransaction();
+	return listOfOutputItems;
 };
 
 
@@ -220,59 +220,60 @@ orp.transcribers.XmlImporter.prototype.makeItemsFromXmlFile = function(xmlToAttr
  * @return   Returns an array of modified or created items.
  */
 orp.transcribers.XmlImporter.prototype.makeOrModifyItemsFromXmlFile = function(equalitySpecifier, xmlToAttributeSpecifiers, xmlAttributeToAttributeSpecifiers) {
-  var matchXmlAttribute;
-  if (equalitySpecifier instanceof orp.transcribers.XmlAttributeToAttributeSpecifier) {
-    matchXmlAttribute = true;
-    var xmlAttributeToMatch = equalitySpecifier._xmlAttributeName;
-  } else {
-    orp.lang.assert(equalitySpecifier instanceof orp.transcribers.XmlTextNodeToAttributeSpecifier,
-                "equalitySpecifier should be of type orp.transcribers.XmlTextNodeToAttributeSpecifier or orp.transcribers.XmlAttributeToAttributeSpecifier.");
-    matchXmlAttribute = false;
-    var xmlTagPathToMatch = equalitySpecifier._tagPath;
-  }
-  this._world.beginTransaction();
-  var itemsInItemCategory = this._world.getItemsInCategory(this._itemCategory);
-  var hash = {};
-  var matchString;
-  for (var j in itemsInItemCategory) {
-    matchString = itemsInItemCategory[j].getSingleEntryFromAttribute(equalitySpecifier._attribute);
-    if (matchString) {
-      hash[matchString.getValue()] = itemsInItemCategory[j];
-    }
-  }
-  var listOfOutputItems = [];
-  for (var i = 0; i < this._itemElements.length; ++i) {
-    itemElement = this._itemElements[i];
-    if (matchXmlAttribute) {
-      matchString = itemElement.getAttribute(xmlAttributeToMatch);
-    } else {
-      matchString = this._getTextForTagPath(itemElement, xmlTagPathToMatch);
-    }
-    var item;
-    if (hash[matchString]) {
-      item = hash[matchString];
-    } else {
-      item = this._world.newItem();
-      item.assignToCategory(this._itemCategory);
-      item.addEntry({attribute:equalitySpecifier._attribute, value:matchString});
-    }
-    for (j in xmlToAttributeSpecifiers) {
-      var tagPath = xmlToAttributeSpecifiers[j]._tagPath;
-      this._processElementTree(0, tagPath.length, this._itemElements[i], item, xmlToAttributeSpecifiers[j]);
-    }
-    if (xmlAttributeToAttributeSpecifiers) {
-      for (j in xmlAttributeToAttributeSpecifiers) {
-        var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j]._xmlAttributeName;
-        var xmlAttributeValue = this._itemElements[i].getAttribute(xmlAttributeName);
-        if (xmlAttributeValue !== "") {
-          item.addEntry({attribute:xmlAttributeToAttributeSpecifiers[j]._attribute, value:xmlAttributeValue});
-        }
-      }
-    }
-    listOfOutputItems.push(item);
-  }
-  this._world.endTransaction();
-  return listOfOutputItems;
+	var matchXmlAttribute;
+	if (equalitySpecifier instanceof orp.transcribers.XmlAttributeToAttributeSpecifier) {
+		matchXmlAttribute = true;
+		var xmlAttributeToMatch = equalitySpecifier._xmlAttributeName;
+	} else {
+		orp.lang.assert(
+				equalitySpecifier instanceof orp.transcribers.XmlTextNodeToAttributeSpecifier,
+				"equalitySpecifier should be of type orp.transcribers.XmlTextNodeToAttributeSpecifier or orp.transcribers.XmlAttributeToAttributeSpecifier.");
+		matchXmlAttribute = false;
+		var xmlTagPathToMatch = equalitySpecifier._tagPath;
+	}
+	this._world.beginTransaction();
+	var itemsInItemCategory = this._world.getItemsInCategory(this._itemCategory);
+	var hash = {};
+	var matchString;
+	for (var j in itemsInItemCategory) {
+		matchString = itemsInItemCategory[j].getSingleEntryFromAttribute(equalitySpecifier._attribute);
+		if (matchString) {
+			hash[matchString.getValue()] = itemsInItemCategory[j];
+		}
+	}
+	var listOfOutputItems = [];
+	for (var i = 0; i < this._itemElements.length; ++i) {
+		itemElement = this._itemElements[i];
+		if (matchXmlAttribute) {
+			matchString = itemElement.getAttribute(xmlAttributeToMatch);
+		} else {
+			matchString = this._getTextForTagPath(itemElement, xmlTagPathToMatch);
+		}
+		var item;
+		if (hash[matchString]) {
+			item = hash[matchString];
+		} else {
+			item = this._world.newItem();
+			item.assignToCategory(this._itemCategory);
+			item.addEntry({attribute:equalitySpecifier._attribute, value:matchString});
+		}
+		for (j in xmlToAttributeSpecifiers) {
+			var tagPath = xmlToAttributeSpecifiers[j]._tagPath;
+			this._processElementTree(0, tagPath.length, this._itemElements[i], item, xmlToAttributeSpecifiers[j]);
+		}
+		if (xmlAttributeToAttributeSpecifiers) {
+			for (j in xmlAttributeToAttributeSpecifiers) {
+				var xmlAttributeName = xmlAttributeToAttributeSpecifiers[j]._xmlAttributeName;
+				var xmlAttributeValue = this._itemElements[i].getAttribute(xmlAttributeName);
+				if (xmlAttributeValue !== "") {
+					item.addEntry({attribute:xmlAttributeToAttributeSpecifiers[j]._attribute, value:xmlAttributeValue});
+				}
+			}
+		}
+		listOfOutputItems.push(item);
+	}
+	this._world.endTransaction();
+	return listOfOutputItems;
 };
 
 
@@ -284,27 +285,27 @@ orp.transcribers.XmlImporter.prototype.makeOrModifyItemsFromXmlFile = function(e
  * @scope    private instance method
  */
 orp.transcribers.XmlImporter.prototype._doDefaultConversion = function(world, nameSpace, itemElements, itemCategory) {
-  var listOfOutputItems = [];
-  var hashTableOfAttributesKeyedByName = [];
-  for (var i = 0; i < itemElements.length; ++i) {
-    var newItem = world.newItem();
-    newItem.assignToCategory(itemCategory);
-    e = itemElements[i];
-    for (var j = 0; j < e.childNodes.length; ++j) {
-      var node = e.childNodes[j];
-      if (node.nodeType == Node.ELEMENT_NODE && node.firstChild && node.firstChild.nodeType == Node.TEXT_NODE) {
-        var attrName = nameSpace + ":" + node.tagName;
-        var attr = hashTableOfAttributesKeyedByName[attrName];
-        if (!attr) {
-          attr = world.newAttribute(attrName);
-          hashTableOfAttributesKeyedByName[attrName] = attr;
-        }
-        newItem.addEntry({attribute:attr, value:node.firstChild.nodeValue});
-      }
-    }
-    listOfOutputItems.push(newItem);
-  }
-  return listOfOutputItems;
+	var listOfOutputItems = [];
+	var hashTableOfAttributesKeyedByName = [];
+	for (var i = 0; i < itemElements.length; ++i) {
+		var newItem = world.newItem();
+		newItem.assignToCategory(itemCategory);
+		e = itemElements[i];
+		for (var j = 0; j < e.childNodes.length; ++j) {
+			var node = e.childNodes[j];
+			if (node.nodeType == Node.ELEMENT_NODE && node.firstChild && node.firstChild.nodeType == Node.TEXT_NODE) {
+				var attrName = nameSpace + ":" + node.tagName;
+				var attr = hashTableOfAttributesKeyedByName[attrName];
+				if (!attr) {
+					attr = world.newAttribute(attrName);
+					hashTableOfAttributesKeyedByName[attrName] = attr;
+				}
+				newItem.addEntry({attribute:attr, value:node.firstChild.nodeValue});
+			}
+		}
+		listOfOutputItems.push(newItem);
+	}
+	return listOfOutputItems;
 };
 
 
@@ -312,26 +313,26 @@ orp.transcribers.XmlImporter.prototype._doDefaultConversion = function(world, na
  * @scope    private instance method
  */
 orp.transcribers.XmlImporter.prototype._processElementTree = function(level, maxLevel, node, newItem, xmlToAttributeSpecifier) {
-  if (level == maxLevel) {
-    if (node.childNodes && node.childNodes.length > 0 && node.childNodes[0].nodeType == Node.TEXT_NODE) {
-      value = this._world.transformValueToExpectedType(node.childNodes[0].nodeValue, xmlToAttributeSpecifier._listOfTypes);
-      newItem.addEntry({
-        attribute: xmlToAttributeSpecifier._attribute, 
-        value: value,
-        inverseAttribute: xmlToAttributeSpecifier._inverseAttribute });
-    }
-    return;
-  }
-  var tagName = xmlToAttributeSpecifier._tagPath[level];
-  var matchingElements = node.getElementsByTagName(tagName);
-  if (!matchingElements) {
-    return;
-  }
-  for (i in matchingElements) {
-    if (matchingElements[i].childNodes && matchingElements[i].childNodes.length > 0) {
-      this._processElementTree(level + 1, maxLevel, matchingElements[i], newItem, xmlToAttributeSpecifier);
-    }
-  }
+	if (level == maxLevel) {
+		if (node.childNodes && node.childNodes.length > 0 && node.childNodes[0].nodeType == Node.TEXT_NODE) {
+			value = this._world.transformValueToExpectedType(node.childNodes[0].nodeValue, xmlToAttributeSpecifier._listOfTypes);
+			newItem.addEntry({
+				attribute: xmlToAttributeSpecifier._attribute,
+				value: value,
+				inverseAttribute: xmlToAttributeSpecifier._inverseAttribute });
+		}
+		return;
+	}
+	var tagName = xmlToAttributeSpecifier._tagPath[level];
+	var matchingElements = node.getElementsByTagName(tagName);
+	if (!matchingElements) {
+		return;
+	}
+	for (i in matchingElements) {
+		if (matchingElements[i].childNodes && matchingElements[i].childNodes.length > 0) {
+			this._processElementTree(level + 1, maxLevel, matchingElements[i], newItem, xmlToAttributeSpecifier);
+		}
+	}
 };
 
 
@@ -339,20 +340,20 @@ orp.transcribers.XmlImporter.prototype._processElementTree = function(level, max
  * @scope    private instance method
  */
 orp.transcribers.XmlImporter.prototype._getTextForTagPath = function(itemElement, xmlTagPathToMatch) {
-  var node = itemElement;
-  for (var i in xmlTagPathToMatch) {
-    var tagName = xmlTagPathToMatch[i];
-    var matchingElements = node.getElementsByTagName(tagName);
-    if (!matchingElements) {
-      return null;
-    }
-    node = matchingElements[0];
-  }
-  if (node.childNodes && node.childNodes.length > 0 && node.childNodes[0].nodeType == Node.TEXT_NODE) {
-    return node.childNodes[0].nodeValue;
-  } else {
-    return null;
-  }
+	var node = itemElement;
+	for (var i in xmlTagPathToMatch) {
+		var tagName = xmlTagPathToMatch[i];
+		var matchingElements = node.getElementsByTagName(tagName);
+		if (!matchingElements) {
+			return null;
+		}
+		node = matchingElements[0];
+	}
+	if (node.childNodes && node.childNodes.length > 0 && node.childNodes[0].nodeType == Node.TEXT_NODE) {
+		return node.childNodes[0].nodeValue;
+	} else {
+		return null;
+	}
 };
 
 

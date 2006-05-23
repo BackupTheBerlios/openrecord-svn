@@ -1,30 +1,30 @@
 /*****************************************************************************
  Entry.js
- 
+
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
-  
- Copyright rights relinquished under the Creative Commons  
+
+ Copyright rights relinquished under the Creative Commons
  Public Domain Dedication:
-    http://creativecommons.org/licenses/publicdomain/
-  
- You can copy freely from this file.  This work may be freely reproduced, 
+		http://creativecommons.org/licenses/publicdomain/
+
+ You can copy freely from this file.  This work may be freely reproduced,
  distributed, transmitted, used, modified, built upon, or otherwise exploited
  by anyone for any purpose.
-  
- This work is provided on an "AS IS" basis, without warranties or conditions 
- of any kind, either express or implied, including, without limitation, any 
- warranties or conditions of title, non-infringement, merchantability, or 
- fitness for a particular purpose. You are solely responsible for determining 
- the appropriateness of using or distributing the work and assume all risks 
- associated with use of this work, including but not limited to the risks and 
- costs of errors, compliance with applicable laws, damage to or loss of data 
+
+ This work is provided on an "AS IS" basis, without warranties or conditions
+ of any kind, either express or implied, including, without limitation, any
+ warranties or conditions of title, non-infringement, merchantability, or
+ fitness for a particular purpose. You are solely responsible for determining
+ the appropriateness of using or distributing the work and assume all risks
+ associated with use of this work, including but not limited to the risks and
+ costs of errors, compliance with applicable laws, damage to or loss of data
  or equipment, and unavailability or interruption of operations.
 
- In no event shall the authors or contributors have any liability for any 
+ In no event shall the authors or contributors have any liability for any
  direct, indirect, incidental, special, exemplary, or consequential damages,
- however caused and on any theory of liability, whether in contract, strict 
- liability, or tort (including negligence), arising in any way out of or in 
+ however caused and on any theory of liability, whether in contract, strict
+ liability, or tort (including negligence), arising in any way out of or in
  connection with the use or distribution of the work.
 *****************************************************************************/
 
@@ -42,7 +42,7 @@ dojo.require("dojo.lang.*");
 
 // -------------------------------------------------------------------
 // Dependencies, expressed in the syntax that JSLint understands:
-// 
+//
 /*global ContentRecord */
 /*global World, Item */
 // -------------------------------------------------------------------
@@ -55,26 +55,26 @@ dojo.require("dojo.lang.*");
  * Instances of the Entry class hold literal values (like strings
  * and numbers), or reference values (pointers to Items).
  *
- * WARNING: This constructor method should be called ONLY from an 
+ * WARNING: This constructor method should be called ONLY from an
  * orp.archive implementation.
  *
  * If you're writing code in a view class, instead of calling this
  * constructor, call a method on Item, like item.addAttributeEntry()
  *
  * @scope    protected instance constructor
- * @param    world    The world that this entry is a part of. 
- * @param    uuid    The UUID for this entry. 
+ * @param    world    The world that this entry is a part of.
+ * @param    uuid    The UUID for this entry.
  */
 orp.model.Entry = function(world, uuid) {
-  orp.model.ContentRecord.call(this, world, uuid);
- 
-  this._previousEntry = null;
-  this._listOfSubsequentEntries = [];
-  this._item = null;
+	orp.model.ContentRecord.call(this, world, uuid);
 
-  this._attribute = null;
-  this._value = null;
-  this._type = null;
+	this._previousEntry = null;
+	this._listOfSubsequentEntries = [];
+	this._item = null;
+
+	this._attribute = null;
+	this._value = null;
+	this._type = null;
 };
 
 dojo.inherits(orp.model.Entry, orp.model.ContentRecord);  // makes Entry be a subclass of ContentRecord
@@ -94,50 +94,50 @@ dojo.inherits(orp.model.Entry, orp.model.ContentRecord);  // makes Entry be a su
  * need to call entry._revive();
  *
  * @scope    protected instance method
- * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry replaces. 
+ * @param    inItemOrEntry    The item that this is a entry of, or the old entry that this entry replaces.
 
- * @param    item    The item that this is an entry of. 
- * @param    previousEntry    Optional. The old entry that this entry is replacing. 
- * @param    attribute    The attribute that this entry is assigned to. May be null. 
- * @param    value    The value to initialize the entry with. 
- * @param    type    Optional.  The data type to interpret the value as. 
+ * @param    item    The item that this is an entry of.
+ * @param    previousEntry    Optional. The old entry that this entry is replacing.
+ * @param    attribute    The attribute that this entry is assigned to. May be null.
+ * @param    value    The value to initialize the entry with.
+ * @param    type    Optional.  The data type to interpret the value as.
  */
 orp.model.Entry.prototype._initialize = function(item, previousEntry, attribute, value, type) {
-  this._item = item;
-  this._attribute = attribute;
+	this._item = item;
+	this._attribute = attribute;
 
-  if (previousEntry) {
-    this._previousEntry = previousEntry;
-    this._previousEntry._addSubsequentEntry(this);
-  } else {
-    this._previousEntry = null;
-  }
-  
-  if (type) {
-    this._type = type;
-  } else {
-    if (dojo.lang.isNumber(value)) {
-      this._type = this.getWorld().getTypeCalledNumber();
-    }
-    else if (dojo.lang.isString(value)) {
-      this._type = this.getWorld().getTypeCalledText();
-    }
-    else if (orp.util.isDate(value)) {
-      this._type = this.getWorld().getTypeCalledDate();
-    }
-    else if (value instanceof orp.model.Item) {
-      this._type = this.getWorld().getTypeCalledItem();
-    }
-    else {orp.lang.assert(false, "unknown data type:" + (typeof value) + ' value: ' + value);}
-  }
-  this._value = value;
+	if (previousEntry) {
+		this._previousEntry = previousEntry;
+		this._previousEntry._addSubsequentEntry(this);
+	} else {
+		this._previousEntry = null;
+	}
+
+	if (type) {
+		this._type = type;
+	} else {
+		if (dojo.lang.isNumber(value)) {
+			this._type = this.getWorld().getTypeCalledNumber();
+		}
+		else if (dojo.lang.isString(value)) {
+			this._type = this.getWorld().getTypeCalledText();
+		}
+		else if (orp.util.isDate(value)) {
+			this._type = this.getWorld().getTypeCalledDate();
+		}
+		else if (value instanceof orp.model.Item) {
+			this._type = this.getWorld().getTypeCalledItem();
+		}
+		else {orp.lang.assert(false, "unknown data type:" + (typeof value) + ' value: ' + value);}
+	}
+	this._value = value;
 };
 
 
 /**
  * Initializes a new entry that has just been created by a user action.
  *
- * WARNING: This method should be called ONLY from an orp.archive 
+ * WARNING: This method should be called ONLY from an orp.archive
  * implementation.
  *
  * This method is NOT used for setting the properties of entrys that
@@ -146,22 +146,22 @@ orp.model.Entry.prototype._initialize = function(item, previousEntry, attribute,
  *
  * @scope    protected instance method
  * @param    previousEntry    The entry that this entry will replace. Can be null.
- * @param    itemOne    One of the two items that this entry will connect. 
- * @param    attributeOne    The attribute of itemOne that this entry will be assigned to. 
- * @param    itemTwo    One of the two items that this entry will connect. 
- * @param    attributeTwo    Optional. The attribute of itemTwo that this entry will be assigned to.  
+ * @param    itemOne    One of the two items that this entry will connect.
+ * @param    attributeOne    The attribute of itemOne that this entry will be assigned to.
+ * @param    itemTwo    One of the two items that this entry will connect.
+ * @param    attributeTwo    Optional. The attribute of itemTwo that this entry will be assigned to.
  */
 orp.model.Entry.prototype._initializeConnection = function(previousEntry, itemOne, attributeOne, itemTwo, attributeTwo) {
-  if (previousEntry) {
-    this._previousEntry = previousEntry;
-    this._previousEntry._addSubsequentEntry(this);
-  } else {
-    this._previousEntry = null;
-  }
+	if (previousEntry) {
+		this._previousEntry = previousEntry;
+		this._previousEntry._addSubsequentEntry(this);
+	} else {
+		this._previousEntry = null;
+	}
 
-  this._item = [itemOne, itemTwo];
-  this._attribute = [attributeOne, attributeTwo];
-  this._type = this.getWorld().getTypeCalledConnection();
+	this._item = [itemOne, itemTwo];
+	this._attribute = [attributeOne, attributeTwo];
+	this._type = this.getWorld().getTypeCalledConnection();
 };
 
 
@@ -170,42 +170,42 @@ orp.model.Entry.prototype._initializeConnection = function(previousEntry, itemOn
  *
  * WARNING: This method should be called ONLY from an orp.archive
  * implementation. This method should only be called from orp.archive
- * code that is reviving serialized Entry objects. 
+ * code that is reviving serialized Entry objects.
  *
  * @scope    protected instance method
- * @param    item    The item that this is an entry of. 
- * @param    inAttribute    The attribute that this entry is assigned to. May be null. 
- * @param    value    The value to initialize the entry with. 
- * @param    previousEntry    Optional. An old entry that this entry replaces. 
- * @param    type    Optional. An item representing a data type. 
+ * @param    item    The item that this is an entry of.
+ * @param    inAttribute    The attribute that this entry is assigned to. May be null.
+ * @param    value    The value to initialize the entry with.
+ * @param    previousEntry    Optional. An old entry that this entry replaces.
+ * @param    type    Optional. An item representing a data type.
  */
 orp.model.Entry.prototype._revive = function(item, attribute, value, previousEntry, type) {
-  this._item = item;
-  if (previousEntry) {
-    this._previousEntry = previousEntry;
-    this._previousEntry._addSubsequentEntry(this);
-  } else {
-    this._previousEntry = null;
-  }
+	this._item = item;
+	if (previousEntry) {
+		this._previousEntry = previousEntry;
+		this._previousEntry._addSubsequentEntry(this);
+	} else {
+		this._previousEntry = null;
+	}
 
-  this._attribute = attribute;
-  this._value = value;
-  
-  this._type = type;
+	this._attribute = attribute;
+	this._value = value;
 
-  if (this._item instanceof orp.model.Item) {
-    this._item._addRevivedEntry(this, this._attribute);
-  } else {
-    orp.lang.assertType(this._item, Array);
-    orp.lang.assertType(this._attribute, Array);
-    orp.lang.assert(this._item.length == 2);
-    orp.lang.assert(this._attribute.length == 2);
-    
-    var firstItem = this._item[0];
-    var secondItem = this._item[1];
-    firstItem._addRevivedEntry(this, this._attribute[0]);
-    secondItem._addRevivedEntry(this, this._attribute[1]);
-  }
+	this._type = type;
+
+	if (this._item instanceof orp.model.Item) {
+		this._item._addRevivedEntry(this, this._attribute);
+	} else {
+		orp.lang.assertType(this._item, Array);
+		orp.lang.assertType(this._attribute, Array);
+		orp.lang.assert(this._item.length == 2);
+		orp.lang.assert(this._attribute.length == 2);
+
+		var firstItem = this._item[0];
+		var secondItem = this._item[1];
+		firstItem._addRevivedEntry(this, this._attribute[0]);
+		secondItem._addRevivedEntry(this, this._attribute[1]);
+	}
 };
 
 
@@ -214,31 +214,31 @@ orp.model.Entry.prototype._revive = function(item, attribute, value, previousEnt
  *
  * WARNING: This method should be called ONLY from an orp.archive
  * implementation. This method should only be called from orp.archive
- * code that is reviving serialized Entry objects. 
+ * code that is reviving serialized Entry objects.
  *
  * @scope    protected instance method
  * @param    firstItem    One of the two item connected by this entry.
- * @param    firstAttribute    The attribute on firstItem to assign the entry to. 
+ * @param    firstAttribute    The attribute on firstItem to assign the entry to.
  * @param    secondItem    The item connected to firstItem by this entry.
  * @param    secondAttribute    An attribute on secondItem to assign the entry to.
- * @param    previousEntry    Optional. An old entry that this entry replaces. 
+ * @param    previousEntry    Optional. An old entry that this entry replaces.
  */
 orp.model.Entry.prototype._reviveConnection = function(firstItem, firstAttribute, secondItem, secondAttribute, previousEntry) {
-  if (previousEntry) {
-    this._previousEntry = previousEntry;
-    this._previousEntry._addSubsequentEntry(this);
-  } else {
-    this._previousEntry = null;
-  }
-  this._item = [firstItem, secondItem];
-  this._attribute = [firstAttribute, secondAttribute];
-  this._value = null;
-  this._type = this.getWorld().getTypeCalledConnection();
-  
-  var firstProxy = new orp.model.ProxyEntry(this, firstItem, firstAttribute, secondItem, secondAttribute);
-  var secondProxy = new orp.model.ProxyEntry(this, secondItem, secondAttribute, firstItem, firstAttribute);
-  firstItem._addRevivedEntry(firstProxy, firstAttribute);
-  secondItem._addRevivedEntry(secondProxy, secondAttribute);
+	if (previousEntry) {
+		this._previousEntry = previousEntry;
+		this._previousEntry._addSubsequentEntry(this);
+	} else {
+		this._previousEntry = null;
+	}
+	this._item = [firstItem, secondItem];
+	this._attribute = [firstAttribute, secondAttribute];
+	this._value = null;
+	this._type = this.getWorld().getTypeCalledConnection();
+
+	var firstProxy = new orp.model.ProxyEntry(this, firstItem, firstAttribute, secondItem, secondAttribute);
+	var secondProxy = new orp.model.ProxyEntry(this, secondItem, secondAttribute, firstItem, firstAttribute);
+	firstItem._addRevivedEntry(firstProxy, firstAttribute);
+	secondItem._addRevivedEntry(secondProxy, secondAttribute);
 };
 
 
@@ -254,7 +254,7 @@ orp.model.Entry.prototype._reviveConnection = function(firstItem, firstAttribute
  * @return   The item that this is a entry of.
  */
 orp.model.Entry.prototype.getItem = function() {
-  return this._item;
+	return this._item;
 };
 
 
@@ -265,7 +265,7 @@ orp.model.Entry.prototype.getItem = function() {
  * @return   the type of this entry
  */
 orp.model.Entry.prototype.getType = function() {
-  return this._type;
+	return this._type;
 };
 
 
@@ -274,10 +274,10 @@ orp.model.Entry.prototype.getType = function() {
  * entry, this method returns the previous entry.
  *
  * @scope    public instance method
- * @return   The previous entry, which this entry replaces. 
+ * @return   The previous entry, which this entry replaces.
  */
 orp.model.Entry.prototype.getPreviousEntry = function() {
-  return this._previousEntry;
+	return this._previousEntry;
 };
 
 
@@ -288,7 +288,7 @@ orp.model.Entry.prototype.getPreviousEntry = function() {
  * @return   An attribute item.
  */
 orp.model.Entry.prototype.getAttribute = function() {
-  return this._attribute;
+	return this._attribute;
 };
 
 
@@ -296,20 +296,20 @@ orp.model.Entry.prototype.getAttribute = function() {
  * Returns the value that this entry holds.
  *
  * @scope    public instance method
- * @param    item    The item that this is an entry of. 
+ * @param    item    The item that this is an entry of.
  * @return   The value this entry was initialized to hold.
  */
 orp.model.Entry.prototype.getValue = function(item) {
-  if (dojo.lang.isArray(this._item)) {
-    if (this._item[0] == item) {
-      return this._item[1];
-    }
-    if (this._item[1] == item) {
-      return this._item[0];
-    }
-    orp.lang.assert(false, "orp.model.Entry.getValue() was called on a connection entry, but was not passed an item as a parameter.");
-  }
-  return this._value; 
+	if (dojo.lang.isArray(this._item)) {
+		if (this._item[0] == item) {
+			return this._item[1];
+		}
+		if (this._item[1] == item) {
+			return this._item[0];
+		}
+		orp.lang.assert(false, "orp.model.Entry.getValue() was called on a connection entry, but was not passed an item as a parameter.");
+	}
+	return this._value;
 };
 
 
@@ -320,66 +320,66 @@ orp.model.Entry.prototype.getValue = function(item) {
  * @return   A string representing the literal data in this entry.
  */
 orp.model.Entry.prototype.getDisplayString = function(callingItem) {
-  var returnString = "";
-  switch (this._type) {
-    case this.getWorld().getTypeCalledNumber():
-      var originalString = this._value.toString();
-      var arrayOfTwoStrings = originalString.split('.');
-      orp.lang.assert(arrayOfTwoStrings.length < 3);
-      wholeNumberString = arrayOfTwoStrings[0];
-      fractionalNumberString = null;
-      if (arrayOfTwoStrings.length == 2) {
-        fractionalNumberString = arrayOfTwoStrings[1];
-      }
-      var length = wholeNumberString.length;
-      if (length > 3) {
-        var sections = [];
-        var lengthOfFirstSection = length % 3;
-        var plusOneIfFirstSection = (lengthOfFirstSection > 0) ? 1 : 0;
-        var numberOfSections = ((length - lengthOfFirstSection) / 3) + plusOneIfFirstSection;
-        for (i = 0; i < numberOfSections; ++i) {
-          var end = length - (i * 3);
-          var start = end - 3;
-          if (start < 0) { start = 0; }
-          sections[i] = wholeNumberString.slice(start, end);
-        }
-        sections.reverse();
-        returnString = sections.join(',');
-      } else {
-        returnString = wholeNumberString;
-      }
-      if (fractionalNumberString) {
-        returnString += '.' + fractionalNumberString;
-      }
-      break;
-    case this.getWorld().getTypeCalledText():
-      returnString = this._value;
-      break;
-    case this.getWorld().getTypeCalledDate():
-      var aDate = this._value;
-      returnString = aDate.toShortLocaleDateString();
-      break;
-    case this.getWorld().getTypeCalledItem():
-      returnString = this._value.getDisplayString();
-      break;
-    case this.getWorld().getTypeCalledConnection():
-      var firstItem = this._item[0];
-      var secondItem = this._item[1];
-      if (callingItem) {
-        if (callingItem == firstItem) {returnString = secondItem.getDisplayString();}
-        else if (callingItem == secondItem) {returnString = firstItem.getDisplayString();}
-        else {orp.lang.assert(false, "callingItem isn't part of this orp.model.Entry");}
-      }
-      else {
-        returnString = 'connection between "' + firstItem.getDisplayString() + '" and "' + secondItem.getDisplayString() + '"';
-      }
-      break;
-    default:
-      // alert("this is a bad sign");
-      orp.lang.assert(false); // we should never get here
-      break;
-  }
-  return returnString;
+	var returnString = "";
+	switch (this._type) {
+		case this.getWorld().getTypeCalledNumber():
+			var originalString = this._value.toString();
+			var arrayOfTwoStrings = originalString.split('.');
+			orp.lang.assert(arrayOfTwoStrings.length < 3);
+			wholeNumberString = arrayOfTwoStrings[0];
+			fractionalNumberString = null;
+			if (arrayOfTwoStrings.length == 2) {
+				fractionalNumberString = arrayOfTwoStrings[1];
+			}
+			var length = wholeNumberString.length;
+			if (length > 3) {
+				var sections = [];
+				var lengthOfFirstSection = length % 3;
+				var plusOneIfFirstSection = (lengthOfFirstSection > 0) ? 1 : 0;
+				var numberOfSections = ((length - lengthOfFirstSection) / 3) + plusOneIfFirstSection;
+				for (i = 0; i < numberOfSections; ++i) {
+					var end = length - (i * 3);
+					var start = end - 3;
+					if (start < 0) { start = 0; }
+					sections[i] = wholeNumberString.slice(start, end);
+				}
+				sections.reverse();
+				returnString = sections.join(',');
+			} else {
+				returnString = wholeNumberString;
+			}
+			if (fractionalNumberString) {
+				returnString += '.' + fractionalNumberString;
+			}
+			break;
+		case this.getWorld().getTypeCalledText():
+			returnString = this._value;
+			break;
+		case this.getWorld().getTypeCalledDate():
+			var aDate = this._value;
+			returnString = aDate.toShortLocaleDateString();
+			break;
+		case this.getWorld().getTypeCalledItem():
+			returnString = this._value.getDisplayString();
+			break;
+		case this.getWorld().getTypeCalledConnection():
+			var firstItem = this._item[0];
+			var secondItem = this._item[1];
+			if (callingItem) {
+				if (callingItem == firstItem) {returnString = secondItem.getDisplayString();}
+				else if (callingItem == secondItem) {returnString = firstItem.getDisplayString();}
+				else {orp.lang.assert(false, "callingItem isn't part of this orp.model.Entry");}
+			}
+			else {
+				returnString = 'connection between "' + firstItem.getDisplayString() + '" and "' + secondItem.getDisplayString() + '"';
+			}
+			break;
+		default:
+			// alert("this is a bad sign");
+			orp.lang.assert(false); // we should never get here
+			break;
+	}
+	return returnString;
 };
 
 
@@ -390,9 +390,9 @@ orp.model.Entry.prototype.getDisplayString = function(callingItem) {
  * @return   A string with a description of the item.
  */
 orp.model.Entry.prototype.toString = function() {
-  var returnString = "[Entry #" + this.getUuid() + 
-    " \"" + this.getDisplayString() + "\"" + "]";
-  return returnString;
+	var returnString = "[Entry #" + this.getUuid() +
+		" \"" + this.getDisplayString() + "\"" + "]";
+	return returnString;
 };
 
 
@@ -403,32 +403,32 @@ orp.model.Entry.prototype.toString = function() {
  * @return   True if this entry has been replaced. False if it has not.
  */
 orp.model.Entry.prototype.hasBeenReplaced = function() {
-  var listOfEntries = this._listOfSubsequentEntries;
+	var listOfEntries = this._listOfSubsequentEntries;
 
-  if (!listOfEntries || listOfEntries.length === 0) {
-    return false;
-  }
-  
-  var filter = this.getWorld().getRetrievalFilter();
+	if (!listOfEntries || listOfEntries.length === 0) {
+		return false;
+	}
 
-  switch (filter) {
-    case orp.model.World.RetrievalFilter.LAST_EDIT_WINS:
-      return true;
-    case orp.model.World.RetrievalFilter.SINGLE_USER:
-      // PENDING: This still needs to be implemented.
-      orp.lang.assert(false);
-      break;
-    case orp.model.World.RetrievalFilter.DEMOCRATIC:
-      // PENDING: This still needs to be implemented.
-      orp.lang.assert(false);
-      break;
-    case orp.model.World.RetrievalFilter.UNABRIDGED:
-      return false;
-    default:
-      // We should never get here.  If we get here, it's an error.
-      orp.lang.assert(false);
-      break;
-  }
+	var filter = this.getWorld().getRetrievalFilter();
+
+	switch (filter) {
+		case orp.model.World.RetrievalFilter.LAST_EDIT_WINS:
+			return true;
+		case orp.model.World.RetrievalFilter.SINGLE_USER:
+			// PENDING: This still needs to be implemented.
+			orp.lang.assert(false);
+			break;
+		case orp.model.World.RetrievalFilter.DEMOCRATIC:
+			// PENDING: This still needs to be implemented.
+			orp.lang.assert(false);
+			break;
+		case orp.model.World.RetrievalFilter.UNABRIDGED:
+			return false;
+		default:
+			// We should never get here.  If we get here, it's an error.
+			orp.lang.assert(false);
+			break;
+	}
 };
 
 // -------------------------------------------------------------------
@@ -442,7 +442,7 @@ orp.model.Entry.prototype.hasBeenReplaced = function() {
  * @param    entry    The entry that replaces this one.
  */
 orp.model.Entry.prototype._addSubsequentEntry = function(entry) {
-  this._listOfSubsequentEntries.push(entry);
+	this._listOfSubsequentEntries.push(entry);
 };
 
 

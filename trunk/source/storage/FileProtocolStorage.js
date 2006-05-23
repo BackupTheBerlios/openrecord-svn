@@ -1,18 +1,18 @@
 /*****************************************************************************
  FileProtocolStorage.js
- 
+
 ******************************************************************************
  The code in this file is a heavily modified version of code that was copied
  from the TiddlyWiki and GTDTiddlyWiki code base.
- 
- The original code is Copyright (c) Osmosoft Limited.  The original copyright 
- notice is included below, along with the license conditions and disclaimer.  
- 
+
+ The original code is Copyright (c) Osmosoft Limited.  The original copyright
+ notice is included below, along with the license conditions and disclaimer.
+
  OpenRecord modifications by Brian Douglas Skinner <brian.skinner@gumption.org>
 
- For the OpenRecord modifications, the Copyright rights are relinquished under  
+ For the OpenRecord modifications, the Copyright rights are relinquished under
  the Creative Commons Public Domain Dedication:
-    http://creativecommons.org/licenses/publicdomain/
+		http://creativecommons.org/licenses/publicdomain/
 
 ******************************************************************************
 TiddlyWiki 1.2.6 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
@@ -71,29 +71,29 @@ dojo.require("orp.lang.Lang");
  * @scope    public instance constructor
  */
 orp.storage.FileProtocolStorage = function(repositoryName, repositoryDirectoryName, pathToTrunkDirectory) {
-  orp.storage.Storage.call(this, repositoryName, repositoryDirectoryName, pathToTrunkDirectory);
-  
-  // Step 1: Build the fileUrl
-  // 
-  // Our saveTextToFile() method needs a fileUrl that looks like this:
-  //   fileUrl = "K:\\www\\htdocs\\openrecord\\demo\\current\\trunk\\repositories\\demo_page.json";
-  // 
-  // We start with a value in this.getRepositoryName() that looks like this:
-  //   this.getRepositoryName() == "demo_page"
+	orp.storage.Storage.call(this, repositoryName, repositoryDirectoryName, pathToTrunkDirectory);
 
-  // URLs like these don't work:
-  //   fileUrl = "repositories/demo_page.json";
-  //   fileUrl = "repositories\\demo_page.json";
-  //   fileUrl = "\\repositories\\demo_page.json";
-  //   fileUrl = "K:/www/htdocs/openrecord/demo/current/trunk/repositories/demo_page.json";
+	// Step 1: Build the fileUrl
+	//
+	// Our saveTextToFile() method needs a fileUrl that looks like this:
+	//   fileUrl = "K:\\www\\htdocs\\openrecord\\demo\\current\\trunk\\repositories\\demo_page.json";
+	//
+	// We start with a value in this.getRepositoryName() that looks like this:
+	//   this.getRepositoryName() == "demo_page"
 
-  var listOfAdditions = [];
-  if (pathToTrunkDirectory && pathToTrunkDirectory !== "") {
-    listOfAdditions.push(pathToTrunkDirectory);
-  }
-  listOfAdditions.push(this._repositoryDirectoryName);
-  listOfAdditions.push(this.getRepositoryName() + ".json");
-  this._fileUrl = orp.storage.getLocalPathFromWindowLocation(listOfAdditions);
+	// URLs like these don't work:
+	//   fileUrl = "repositories/demo_page.json";
+	//   fileUrl = "repositories\\demo_page.json";
+	//   fileUrl = "\\repositories\\demo_page.json";
+	//   fileUrl = "K:/www/htdocs/openrecord/demo/current/trunk/repositories/demo_page.json";
+
+	var listOfAdditions = [];
+	if (pathToTrunkDirectory && pathToTrunkDirectory !== "") {
+		listOfAdditions.push(pathToTrunkDirectory);
+	}
+	listOfAdditions.push(this._repositoryDirectoryName);
+	listOfAdditions.push(this.getRepositoryName() + ".json");
+	this._fileUrl = orp.storage.getLocalPathFromWindowLocation(listOfAdditions);
 };
 
 dojo.inherits(orp.storage.FileProtocolStorage, orp.storage.Storage);  // makes FileProtocolStorage be a subclass of Storage
@@ -109,8 +109,8 @@ dojo.inherits(orp.storage.FileProtocolStorage, orp.storage.Storage);  // makes F
  * @scope    public instance method
  */
 orp.storage.FileProtocolStorage.prototype.appendText = function(textToAppend) {
-  var append = true;
-  this._saveTextToFile(textToAppend, this._fileUrl, append);
+	var append = true;
+	this._saveTextToFile(textToAppend, this._fileUrl, append);
 };
 
 
@@ -120,8 +120,8 @@ orp.storage.FileProtocolStorage.prototype.appendText = function(textToAppend) {
  * @scope    public instance method
  */
 orp.storage.FileProtocolStorage.prototype.writeText = function(textToWrite, overwriteIfExists) {
-  var append = false;
-  this._saveTextToFile(textToWrite, this._fileUrl, append);
+	var append = false;
+	this._saveTextToFile(textToWrite, this._fileUrl, append);
 };
 
 
@@ -136,16 +136,16 @@ orp.storage.FileProtocolStorage.prototype.writeText = function(textToWrite, over
  * @return   Returns true if the text was saved.
  */
 orp.storage.FileProtocolStorage.prototype._saveTextToFile = function(text, fileUrl, append) {
-  // Make sure we were loaded from a "file:" URL
-  if (window.location.protocol != "file:") {
-    orp.lang.assert(false, 'FileProtocolStorage.js can only be used for pages loaded from a "file:///" location');
-  }
+	// Make sure we were loaded from a "file:" URL
+	if (window.location.protocol != "file:") {
+		orp.lang.assert(false, 'FileProtocolStorage.js can only be used for pages loaded from a "file:///" location');
+	}
 
-  var success = this._mozillaSaveToFile(text, fileUrl, append);
-  if (!success) {
-    success = this._ieSaveToFile(text, fileUrl, append);
-  }
-  return(success);
+	var success = this._mozillaSaveToFile(text, fileUrl, append);
+	if (!success) {
+		success = this._ieSaveToFile(text, fileUrl, append);
+	}
+	return(success);
 };
 
 
@@ -156,37 +156,37 @@ orp.storage.FileProtocolStorage.prototype._saveTextToFile = function(text, fileU
  * @return   Returns true if the text was saved, false if there was an error, or null if we couldn't even try.
  */
 orp.storage.FileProtocolStorage.prototype._mozillaSaveToFile = function(text, filePath, append) {
-  if (window.Components) {
-    try {
-      netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-      var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
-      file.initWithPath(filePath);
-      if (!file.exists()) {
-        // Not all JavaScript implementations  support octal literals,
-        // so it's not safe to use '0664' here:
-        //   file.create(0, 0664);
-        //   file.permissions = 0664; // Because create ignores the permissions argument, at least on Mignon's Mac.
-        file.create(0, 0x1B4);
-        file.permissions = 0x1B4; // Because create ignores the permissions argument, at least on Mignon's Mac.
-      }
-      var outputStream = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
-      if (append) {
-        outputStream.init(file, 0x10 | 0x02, 0x0004, null);
-      } else {
-        outputStream.init(file, 0x20 | 0x02, 0x0004, null);
-      }
-      outputStream.write(text, text.length);
-      outputStream.flush();
-      outputStream.close();
-      return true;
-    } catch(exception) {
-      alert("Exception while attempting to save\n\n" + exception);
-      return false;
-    }
-  } else {
-    alert("window.Components == null");
-  }
-  return null;
+	if (window.Components) {
+		try {
+			netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+			var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+			file.initWithPath(filePath);
+			if (!file.exists()) {
+				// Not all JavaScript implementations  support octal literals,
+				// so it's not safe to use '0664' here:
+				//   file.create(0, 0664);
+				//   file.permissions = 0664; // Because create ignores the permissions argument, at least on Mignon's Mac.
+				file.create(0, 0x1B4);
+				file.permissions = 0x1B4; // Because create ignores the permissions argument, at least on Mignon's Mac.
+			}
+			var outputStream = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
+			if (append) {
+				outputStream.init(file, 0x10 | 0x02, 0x0004, null);
+			} else {
+				outputStream.init(file, 0x20 | 0x02, 0x0004, null);
+			}
+			outputStream.write(text, text.length);
+			outputStream.flush();
+			outputStream.close();
+			return true;
+		} catch(exception) {
+			alert("Exception while attempting to save\n\n" + exception);
+			return false;
+		}
+	} else {
+		alert("window.Components == null");
+	}
+	return null;
 };
 
 
@@ -197,20 +197,20 @@ orp.storage.FileProtocolStorage.prototype._mozillaSaveToFile = function(text, fi
  * @return   Returns true if the text was saved, or false if there was an error.
  */
 orp.storage.FileProtocolStorage.prototype._ieSaveToFile = function(text, filePath, append) {
-  try {
-    var fileSystemObject = new ActiveXObject("Scripting.FileSystemObject");
-  } catch(exception) {
-    alert("Exception while attempting to save\n\n" + exception.toString());
-    return false;
-  }
-  if (append) {
-    orp.lang.assert(false, "FIXME: still need to write code for this");
-  } else {
-    var file = fileSystemObject.OpenTextFile(filePath, 2, -1, 0);
-  }
-  file.Write(text);
-  file.Close();
-  return true;
+	try {
+		var fileSystemObject = new ActiveXObject("Scripting.FileSystemObject");
+	} catch(exception) {
+		alert("Exception while attempting to save\n\n" + exception.toString());
+		return false;
+	}
+	if (append) {
+		orp.lang.assert(false, "FIXME: still need to write code for this");
+	} else {
+		var file = fileSystemObject.OpenTextFile(filePath, 2, -1, 0);
+	}
+	file.Write(text);
+	file.Close();
+	return true;
 };
 
 

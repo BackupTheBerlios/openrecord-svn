@@ -1,30 +1,30 @@
 /*****************************************************************************
  TimingTest.js
- 
+
 ******************************************************************************
  Written in 2005 by Brian Douglas Skinner <brian.skinner@gumption.org>
-  
- Copyright rights relinquished under the Creative Commons  
+
+ Copyright rights relinquished under the Creative Commons
  Public Domain Dedication:
-    http://creativecommons.org/licenses/publicdomain/
-  
- You can copy freely from this file.  This work may be freely reproduced, 
+		http://creativecommons.org/licenses/publicdomain/
+
+ You can copy freely from this file.  This work may be freely reproduced,
  distributed, transmitted, used, modified, built upon, or otherwise exploited
  by anyone for any purpose.
-  
- This work is provided on an "AS IS" basis, without warranties or conditions 
- of any kind, either express or implied, including, without limitation, any 
- warranties or conditions of title, non-infringement, merchantability, or 
- fitness for a particular purpose. You are solely responsible for determining 
- the appropriateness of using or distributing the work and assume all risks 
- associated with use of this work, including but not limited to the risks and 
- costs of errors, compliance with applicable laws, damage to or loss of data 
+
+ This work is provided on an "AS IS" basis, without warranties or conditions
+ of any kind, either express or implied, including, without limitation, any
+ warranties or conditions of title, non-infringement, merchantability, or
+ fitness for a particular purpose. You are solely responsible for determining
+ the appropriateness of using or distributing the work and assume all risks
+ associated with use of this work, including but not limited to the risks and
+ costs of errors, compliance with applicable laws, damage to or loss of data
  or equipment, and unavailability or interruption of operations.
 
- In no event shall the authors or contributors have any liability for any 
+ In no event shall the authors or contributors have any liability for any
  direct, indirect, incidental, special, exemplary, or consequential damages,
- however caused and on any theory of liability, whether in contract, strict 
- liability, or tort (including negligence), arising in any way out of or in 
+ however caused and on any theory of liability, whether in contract, strict
+ liability, or tort (including negligence), arising in any way out of or in
  connection with the use or distribution of the work.
 *****************************************************************************/
 
@@ -78,9 +78,9 @@ var TEST_TYPE_TWO_BOX = "TYPE_TWO_BOX";
 // -------------------------------------------------------------------
 
 function setUp() {
-  dojo.setModulePrefix("dojo", "../../dojo/src"); // relative to testRunner.html
-  dojo.setModulePrefix("orp", "../../../source"); // relative to dojo.js
-  dojo.require("orp.util.Util");
+	dojo.setModulePrefix("dojo", "../../dojo/src"); // relative to testRunner.html
+	dojo.setModulePrefix("orp", "../../../source"); // relative to dojo.js
+	dojo.require("orp.util.Util");
 }
 
 function tearDown() {
@@ -91,277 +91,277 @@ function tearDown() {
 // -------------------------------------------------------------------
 
 function testTimes() {
-  var testName;
-  var hashTableOfOperationsPerMillisecondKeyedByTestName = {};
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_EMPTY_LOOP] = null;
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_ARRAY_CREATION] = null;
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_OBJECT_CREATION] = null;
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_OBJECT_CREATION_WITH_STRINGS] = null;
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_DATE_CREATION] = null;
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_METHOD_CALL] = null;
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_GLOBAL_VARIABLE_LOOKUP] = null;
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_DATE_VALUEOF] = null;
-  // hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_ENTRY_COMPAREORDINALS] = null;
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_TYPE_ONE_BOX] = null;
-  hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_TYPE_TWO_BOX] = null;
-  for (testName in hashTableOfOperationsPerMillisecondKeyedByTestName) {
-    var opsPerMS = getOpsPerMS(testName);
-    hashTableOfOperationsPerMillisecondKeyedByTestName[testName] = opsPerMS;
-  }
-  var resultMessage = "";
-  for (testName in hashTableOfOperationsPerMillisecondKeyedByTestName) {
-    var opsPerMS = hashTableOfOperationsPerMillisecondKeyedByTestName[testName];
-    var emptyLoopsPerMS = hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_EMPTY_LOOP];
-    var microSecondsPerEmptyLoop = 1000 / emptyLoopsPerMS;
-    var microSecondsPerOperationGross = 1000 / opsPerMS;
-    var microSecondsPerOperationNet = microSecondsPerOperationGross - microSecondsPerEmptyLoop;
-    resultMessage += microSecondsPerOperationNet.toFixed(1) + " microseconds for " + testName + "\n";
-  }
-  
-  alert(resultMessage);
+	var testName;
+	var hashTableOfOperationsPerMillisecondKeyedByTestName = {};
+	hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_EMPTY_LOOP] = null;
+	hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_ARRAY_CREATION] = null;
+	hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_OBJECT_CREATION] = null;
+	hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_OBJECT_CREATION_WITH_STRINGS] = null;
+	hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_DATE_CREATION] = null;
+	hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_METHOD_CALL] = null;
+	hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_GLOBAL_VARIABLE_LOOKUP] = null;
+	hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_DATE_VALUEOF] = null;
+	// hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_ENTRY_COMPAREORDINALS] = null;
+	hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_TYPE_ONE_BOX] = null;
+	hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_TYPE_TWO_BOX] = null;
+	for (testName in hashTableOfOperationsPerMillisecondKeyedByTestName) {
+		var opsPerMS = getOpsPerMS(testName);
+		hashTableOfOperationsPerMillisecondKeyedByTestName[testName] = opsPerMS;
+	}
+	var resultMessage = "";
+	for (testName in hashTableOfOperationsPerMillisecondKeyedByTestName) {
+		var opsPerMS = hashTableOfOperationsPerMillisecondKeyedByTestName[testName];
+		var emptyLoopsPerMS = hashTableOfOperationsPerMillisecondKeyedByTestName[TEST_EMPTY_LOOP];
+		var microSecondsPerEmptyLoop = 1000 / emptyLoopsPerMS;
+		var microSecondsPerOperationGross = 1000 / opsPerMS;
+		var microSecondsPerOperationNet = microSecondsPerOperationGross - microSecondsPerEmptyLoop;
+		resultMessage += microSecondsPerOperationNet.toFixed(1) + " microseconds for " + testName + "\n";
+	}
+
+	alert(resultMessage);
 }
 
 function noop() {
-  return 0;
+	return 0;
 }
 
 function getOpsPerMS(inTestName) {
 
-  var numberOfMillisecondsWorthOfTrials = 500;
-  var operationsPerForLoopIteration = 10;
-  var numberOfForLoopIterations = 5;
-  var operationsPerWhileLoopIteration = numberOfForLoopIterations * operationsPerForLoopIteration;
-  var totalOperations = 0;
-  
+	var numberOfMillisecondsWorthOfTrials = 500;
+	var operationsPerForLoopIteration = 10;
+	var numberOfForLoopIterations = 5;
+	var operationsPerWhileLoopIteration = numberOfForLoopIterations * operationsPerForLoopIteration;
+	var totalOperations = 0;
+
 /*
-  if (inTestName == TEST_ENTRY_COMPAREORDINALS) {
-    var world = {};
-    world.getCurrentUser = function () { return this; };
-    var e1 = new orp.model.Entry();
-    var e2 = new orp.model.Entry();
-    e1._Entry(world, 1);
-    e2._Entry(world, 2);
-    e1._initializeEntry();
-    e2._initializeEntry();
-  }
+	if (inTestName == TEST_ENTRY_COMPAREORDINALS) {
+		var world = {};
+		world.getCurrentUser = function () { return this; };
+		var e1 = new orp.model.Entry();
+		var e2 = new orp.model.Entry();
+		e1._Entry(world, 1);
+		e2._Entry(world, 2);
+		e1._initializeEntry();
+		e2._initializeEntry();
+	}
 */
-  var start = new Date();
-  var startMS = start.valueOf();
-  var nowMS = startMS;
-  var i;
-  var now;
-  var foo;
-  
-  while (nowMS == startMS) {
-    now = new Date();
-    nowMS = now.valueOf();
-  }
-  
-  startMS = nowMS;
-  
-  while ((nowMS - startMS) < numberOfMillisecondsWorthOfTrials) {
-    if (inTestName == TEST_EMPTY_LOOP) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        // empty: do nothing
-      }
-    }
-    if (inTestName == TEST_ARRAY_CREATION) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        foo = [nowMS, startMS];
-        foo = [nowMS, startMS];
-        foo = [nowMS, startMS];
-        foo = [nowMS, startMS];
-        foo = [nowMS, startMS];
-        foo = [nowMS, startMS];
-        foo = [nowMS, startMS];
-        foo = [nowMS, startMS];
-        foo = [nowMS, startMS];
-        foo = [nowMS, startMS];
-      }
-    }
-    if (inTestName == TEST_OBJECT_CREATION) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        foo = {now: nowMS, start: startMS};
-        foo = {now: nowMS, start: startMS};
-        foo = {now: nowMS, start: startMS};
-        foo = {now: nowMS, start: startMS};
-        foo = {now: nowMS, start: startMS};
-        foo = {now: nowMS, start: startMS};
-        foo = {now: nowMS, start: startMS};
-        foo = {now: nowMS, start: startMS};
-        foo = {now: nowMS, start: startMS};
-        foo = {now: nowMS, start: startMS};
-      }
-    }
-    if (inTestName == TEST_OBJECT_CREATION_WITH_STRINGS) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        foo = {"now": nowMS, "start": startMS};
-        foo = {"now": nowMS, "start": startMS};
-        foo = {"now": nowMS, "start": startMS};
-        foo = {"now": nowMS, "start": startMS};
-        foo = {"now": nowMS, "start": startMS};
-        foo = {"now": nowMS, "start": startMS};
-        foo = {"now": nowMS, "start": startMS};
-        foo = {"now": nowMS, "start": startMS};
-        foo = {"now": nowMS, "start": startMS};
-        foo = {"now": nowMS, "start": startMS};
-      }
-    }
-    if (inTestName == TEST_DATE_CREATION) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        foo = new Date();
-        foo = new Date();
-        foo = new Date();
-        foo = new Date();
-        foo = new Date();
-        foo = new Date();
-        foo = new Date();
-        foo = new Date();
-        foo = new Date();
-        foo = new Date();
-      }
-    }
-    if (inTestName == TEST_METHOD_CALL) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        foo = noop();
-        foo = noop();
-        foo = noop();
-        foo = noop();
-        foo = noop();
-        foo = noop();
-        foo = noop();
-        foo = noop();
-        foo = noop();
-        foo = noop();
-      }
-    }
-    if (inTestName == TEST_GLOBAL_VARIABLE_LOOKUP) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        foo = TEST_EMPTY_LOOP;
-        foo = TEST_EMPTY_LOOP;
-        foo = TEST_EMPTY_LOOP;
-        foo = TEST_EMPTY_LOOP;
-        foo = TEST_EMPTY_LOOP;
-        foo = TEST_EMPTY_LOOP;
-        foo = TEST_EMPTY_LOOP;
-        foo = TEST_EMPTY_LOOP;
-        foo = TEST_EMPTY_LOOP;
-        foo = TEST_EMPTY_LOOP;
-      }
-    }
-    if (inTestName == TEST_DATE_VALUEOF) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        foo = now.valueOf();
-        foo = now.valueOf();
-        foo = now.valueOf();
-        foo = now.valueOf();
-        foo = now.valueOf();
-        foo = now.valueOf();
-        foo = now.valueOf();
-        foo = now.valueOf();
-        foo = now.valueOf();
-        foo = now.valueOf();
-      }
-    }
+	var start = new Date();
+	var startMS = start.valueOf();
+	var nowMS = startMS;
+	var i;
+	var now;
+	var foo;
+
+	while (nowMS == startMS) {
+		now = new Date();
+		nowMS = now.valueOf();
+	}
+
+	startMS = nowMS;
+
+	while ((nowMS - startMS) < numberOfMillisecondsWorthOfTrials) {
+		if (inTestName == TEST_EMPTY_LOOP) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				// empty: do nothing
+			}
+		}
+		if (inTestName == TEST_ARRAY_CREATION) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				foo = [nowMS, startMS];
+				foo = [nowMS, startMS];
+				foo = [nowMS, startMS];
+				foo = [nowMS, startMS];
+				foo = [nowMS, startMS];
+				foo = [nowMS, startMS];
+				foo = [nowMS, startMS];
+				foo = [nowMS, startMS];
+				foo = [nowMS, startMS];
+				foo = [nowMS, startMS];
+			}
+		}
+		if (inTestName == TEST_OBJECT_CREATION) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				foo = {now: nowMS, start: startMS};
+				foo = {now: nowMS, start: startMS};
+				foo = {now: nowMS, start: startMS};
+				foo = {now: nowMS, start: startMS};
+				foo = {now: nowMS, start: startMS};
+				foo = {now: nowMS, start: startMS};
+				foo = {now: nowMS, start: startMS};
+				foo = {now: nowMS, start: startMS};
+				foo = {now: nowMS, start: startMS};
+				foo = {now: nowMS, start: startMS};
+			}
+		}
+		if (inTestName == TEST_OBJECT_CREATION_WITH_STRINGS) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				foo = {"now": nowMS, "start": startMS};
+				foo = {"now": nowMS, "start": startMS};
+				foo = {"now": nowMS, "start": startMS};
+				foo = {"now": nowMS, "start": startMS};
+				foo = {"now": nowMS, "start": startMS};
+				foo = {"now": nowMS, "start": startMS};
+				foo = {"now": nowMS, "start": startMS};
+				foo = {"now": nowMS, "start": startMS};
+				foo = {"now": nowMS, "start": startMS};
+				foo = {"now": nowMS, "start": startMS};
+			}
+		}
+		if (inTestName == TEST_DATE_CREATION) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				foo = new Date();
+				foo = new Date();
+				foo = new Date();
+				foo = new Date();
+				foo = new Date();
+				foo = new Date();
+				foo = new Date();
+				foo = new Date();
+				foo = new Date();
+				foo = new Date();
+			}
+		}
+		if (inTestName == TEST_METHOD_CALL) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				foo = noop();
+				foo = noop();
+				foo = noop();
+				foo = noop();
+				foo = noop();
+				foo = noop();
+				foo = noop();
+				foo = noop();
+				foo = noop();
+				foo = noop();
+			}
+		}
+		if (inTestName == TEST_GLOBAL_VARIABLE_LOOKUP) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				foo = TEST_EMPTY_LOOP;
+				foo = TEST_EMPTY_LOOP;
+				foo = TEST_EMPTY_LOOP;
+				foo = TEST_EMPTY_LOOP;
+				foo = TEST_EMPTY_LOOP;
+				foo = TEST_EMPTY_LOOP;
+				foo = TEST_EMPTY_LOOP;
+				foo = TEST_EMPTY_LOOP;
+				foo = TEST_EMPTY_LOOP;
+				foo = TEST_EMPTY_LOOP;
+			}
+		}
+		if (inTestName == TEST_DATE_VALUEOF) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				foo = now.valueOf();
+				foo = now.valueOf();
+				foo = now.valueOf();
+				foo = now.valueOf();
+				foo = now.valueOf();
+				foo = now.valueOf();
+				foo = now.valueOf();
+				foo = now.valueOf();
+				foo = now.valueOf();
+				foo = now.valueOf();
+			}
+		}
 /*
-    if (inTestName == TEST_ENTRY_COMPAREORDINALS) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        foo = Entry.compareOrdinals(e1, e2);
-        foo = Entry.compareOrdinals(e1, e2);
-        foo = Entry.compareOrdinals(e1, e2);
-        foo = Entry.compareOrdinals(e1, e2);
-        foo = Entry.compareOrdinals(e1, e2);
-        foo = Entry.compareOrdinals(e1, e2);
-        foo = Entry.compareOrdinals(e1, e2);
-        foo = Entry.compareOrdinals(e1, e2);
-        foo = Entry.compareOrdinals(e1, e2);
-        foo = Entry.compareOrdinals(e1, e2);
-      }
-    }
+		if (inTestName == TEST_ENTRY_COMPAREORDINALS) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				foo = Entry.compareOrdinals(e1, e2);
+				foo = Entry.compareOrdinals(e1, e2);
+				foo = Entry.compareOrdinals(e1, e2);
+				foo = Entry.compareOrdinals(e1, e2);
+				foo = Entry.compareOrdinals(e1, e2);
+				foo = Entry.compareOrdinals(e1, e2);
+				foo = Entry.compareOrdinals(e1, e2);
+				foo = Entry.compareOrdinals(e1, e2);
+				foo = Entry.compareOrdinals(e1, e2);
+				foo = Entry.compareOrdinals(e1, e2);
+			}
+		}
  */
-    if (inTestName == TEST_TYPE_ONE_BOX) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        foo = new shapes.TypeOneBox(10, 10);
-        foo = new shapes.TypeOneBox(10, 10);
-        foo = new shapes.TypeOneBox(10, 10);
-        foo = new shapes.TypeOneBox(10, 10);
-        foo = new shapes.TypeOneBox(10, 10);
-        foo = new shapes.TypeOneBox(10, 10);
-        foo = new shapes.TypeOneBox(10, 10);
-        foo = new shapes.TypeOneBox(10, 10);
-        foo = new shapes.TypeOneBox(10, 10);
-        foo = new shapes.TypeOneBox(10, 10);
-      }
-    }
-    if (inTestName == TEST_TYPE_TWO_BOX) {
-      for (i = 0; i < numberOfForLoopIterations; i += 1) {
-        foo = new shapes.TypeTwoBox(10, 10);
-        foo = new shapes.TypeTwoBox(10, 10);
-        foo = new shapes.TypeTwoBox(10, 10);
-        foo = new shapes.TypeTwoBox(10, 10);
-        foo = new shapes.TypeTwoBox(10, 10);
-        foo = new shapes.TypeTwoBox(10, 10);
-        foo = new shapes.TypeTwoBox(10, 10);
-        foo = new shapes.TypeTwoBox(10, 10);
-        foo = new shapes.TypeTwoBox(10, 10);
-        foo = new shapes.TypeTwoBox(10, 10);
-      }
-    }
-    now = new Date();
-    nowMS = now.valueOf();
-    totalOperations += operationsPerWhileLoopIteration;
-  }
-     
+		if (inTestName == TEST_TYPE_ONE_BOX) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				foo = new shapes.TypeOneBox(10, 10);
+				foo = new shapes.TypeOneBox(10, 10);
+				foo = new shapes.TypeOneBox(10, 10);
+				foo = new shapes.TypeOneBox(10, 10);
+				foo = new shapes.TypeOneBox(10, 10);
+				foo = new shapes.TypeOneBox(10, 10);
+				foo = new shapes.TypeOneBox(10, 10);
+				foo = new shapes.TypeOneBox(10, 10);
+				foo = new shapes.TypeOneBox(10, 10);
+				foo = new shapes.TypeOneBox(10, 10);
+			}
+		}
+		if (inTestName == TEST_TYPE_TWO_BOX) {
+			for (i = 0; i < numberOfForLoopIterations; i += 1) {
+				foo = new shapes.TypeTwoBox(10, 10);
+				foo = new shapes.TypeTwoBox(10, 10);
+				foo = new shapes.TypeTwoBox(10, 10);
+				foo = new shapes.TypeTwoBox(10, 10);
+				foo = new shapes.TypeTwoBox(10, 10);
+				foo = new shapes.TypeTwoBox(10, 10);
+				foo = new shapes.TypeTwoBox(10, 10);
+				foo = new shapes.TypeTwoBox(10, 10);
+				foo = new shapes.TypeTwoBox(10, 10);
+				foo = new shapes.TypeTwoBox(10, 10);
+			}
+		}
+		now = new Date();
+		nowMS = now.valueOf();
+		totalOperations += operationsPerWhileLoopIteration;
+	}
+
 //  now = new Date();
-//  nowMS = now.valueOf();   
+//  nowMS = now.valueOf();
 //  var elapsedMS = nowMS - startMS;
 //  var totalOperations = operationsPerForLoopIteration * numberOfForLoopIterations;
 //  var operationsPerMillisecond = totalOperations / elapsedMS;
 
-  var operationsPerMillisecond = totalOperations / numberOfMillisecondsWorthOfTrials;
-  return operationsPerMillisecond;  
+	var operationsPerMillisecond = totalOperations / numberOfMillisecondsWorthOfTrials;
+	return operationsPerMillisecond;
 }
 
 function testBoxConstruction() {
-  var boxA = new shapes.TypeOneBox(10, 10);
-  var boxB = new shapes.TypeOneBox(10, 10);
-  assertTrue("'TypeOneBox' objects each have their own 'getValue' method", boxA.getArea != boxB.getArea);
-  
-  boxA = new shapes.TypeTwoBox(10, 10);
-  boxB = new shapes.TypeTwoBox(10, 10);
-  assertTrue("'TypeTwoBox' objects share a common 'getValue' method", boxA.getArea == boxB.getArea);
+	var boxA = new shapes.TypeOneBox(10, 10);
+	var boxB = new shapes.TypeOneBox(10, 10);
+	assertTrue("'TypeOneBox' objects each have their own 'getValue' method", boxA.getArea != boxB.getArea);
+
+	boxA = new shapes.TypeTwoBox(10, 10);
+	boxB = new shapes.TypeTwoBox(10, 10);
+	assertTrue("'TypeTwoBox' objects share a common 'getValue' method", boxA.getArea == boxB.getArea);
 }
 
 shapes = {
-  TypeOneBox: function(width, height) {
-    this._width = width;
-    this._height = height;
-    
-    this.getArea = function() {
-      // Here's some code that does some busy work, just so the  
-      // definition of the getArea method has more code in it,
-      // to eat up more memory.
-      for (var i = 0; i < 10; i++) {
-        var area = (this._width * this._height);
-      }
-      return area;
-    }
-  }
+	TypeOneBox: function(width, height) {
+		this._width = width;
+		this._height = height;
+
+		this.getArea = function() {
+			// Here's some code that does some busy work, just so the
+			// definition of the getArea method has more code in it,
+			// to eat up more memory.
+			for (var i = 0; i < 10; i++) {
+				var area = (this._width * this._height);
+			}
+			return area;
+		}
+	}
 };
 
 shapes.TypeTwoBox = function(width, height) {
-  this._width = width;
-  this._height = height;
+	this._width = width;
+	this._height = height;
 };
 
 shapes.TypeTwoBox.prototype.getArea = function() {
-  // Here's some code that does some busy work, just so the  
-  // definition of the getArea method has more code in it,
-  // to eat up more memory.
-  for (var i = 0; i < 10; i++) {
-    var area = (this._width * this._height);
-  }
-  return area;
+	// Here's some code that does some busy work, just so the
+	// definition of the getArea method has more code in it,
+	// to eat up more memory.
+	for (var i = 0; i < 10; i++) {
+		var area = (this._width * this._height);
+	}
+	return area;
 };
 
 

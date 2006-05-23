@@ -4,9 +4,9 @@
 ******************************************************************************
  Created in 2006 by Brian Douglas Skinner <skinner@dojotoolkit.org>
 
- Copyright rights relinquished under the Creative Commons  
+ Copyright rights relinquished under the Creative Commons
  Public Domain Dedication:
-    http://creativecommons.org/licenses/publicdomain/
+		http://creativecommons.org/licenses/publicdomain/
 *****************************************************************************/
 
 // Dojo Package System "provide" and "require" statements
@@ -18,17 +18,17 @@ dojo.require("dojo.widget.Button");
 dojo.require("dojo.widget.Menu2");
 
 /**
- * The ButtonView view displays a set of content items. 
+ * The ButtonView view displays a set of content items.
  *
  * @scope    public instance constructor
  * @extends  PluginView
- * @param    superview    The View that serves as the superview for this view. 
- * @param    htmlElement    The HTMLElement to display this view in. 
+ * @param    superview    The View that serves as the superview for this view.
+ * @param    htmlElement    The HTMLElement to display this view in.
  * @param    querySpec    The Query Spec item that provides the items for this PluginView to display
- * @param    layoutItem    An item that can be used to store layout data (like table column order). 
+ * @param    layoutItem    An item that can be used to store layout data (like table column order).
  */
 orp.plugins.ButtonView = function(superview, htmlElement, querySpec, layoutItem) {
-  orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "ButtonView");
+	orp.view.PluginView.call(this, superview, htmlElement, querySpec, layoutItem, "ButtonView");
 };
 
 dojo.inherits(orp.plugins.ButtonView, orp.view.PluginView);  // makes ButtonView be a subclass of PluginView
@@ -52,7 +52,7 @@ orp.view.SectionView.registerPlugin(orp.plugins.ButtonView);
  * @return   The UUID of the item that represents this class of plugin.
  */
 orp.plugins.ButtonView.getPluginItemUuid = function() {
-  return orp.plugins.ButtonView.UUID;
+	return orp.plugins.ButtonView.UUID;
 };
 
 /**
@@ -62,25 +62,25 @@ orp.plugins.ButtonView.getPluginItemUuid = function() {
  * @return   A list of anonymous objects representing Entries that describe the plugin.
  */
 orp.plugins.ButtonView.getEntriesForItemRepresentingPluginClass = function(pluginItem, world) {
-  return [
-    { uuid: "b8344e11-7bdf-11da-a86a-0011111f4abe",
-      item: pluginItem,
-      attribute: world.getAttributeCalledName(),
-      value: "Dojo Button" },
-    { uuid: "b8344e12-7bdf-11da-a86a-0011111f4abe",
-      item: pluginItem,
-      attribute: world.getAttributeCalledShortName(),
-      value: "ButtonView" },
-    { uuid: "b8344e13-7bdf-11da-a86a-0011111f4abe",
-      item: pluginItem,
-      attribute: world.getAttributeCalledClassName(),
-      value: "ButtonView" },
-    { uuid: "b8344e14-7bdf-11da-a86a-0011111f4abe",
-      item: pluginItem,
-      attribute: world.getAttributeCalledCategory(),
-      inverseAttribute: world.getAttributeCalledItemsInCategory(),
-      value: world.getItemFromUuid(orp.view.SectionView.UUID.CATEGORY_PLUGIN_VIEW) }
-  ];
+	return [
+		{	uuid: "b8344e11-7bdf-11da-a86a-0011111f4abe",
+			item: pluginItem,
+			attribute: world.getAttributeCalledName(),
+			value: "Dojo Button" },
+		{	uuid: "b8344e12-7bdf-11da-a86a-0011111f4abe",
+			item: pluginItem,
+			attribute: world.getAttributeCalledShortName(),
+			value: "ButtonView" },
+		{	uuid: "b8344e13-7bdf-11da-a86a-0011111f4abe",
+			item: pluginItem,
+			attribute: world.getAttributeCalledClassName(),
+			value: "ButtonView" },
+		{	uuid: "b8344e14-7bdf-11da-a86a-0011111f4abe",
+			item: pluginItem,
+			attribute: world.getAttributeCalledCategory(),
+			inverseAttribute: world.getAttributeCalledItemsInCategory(),
+			value: world.getItemFromUuid(orp.view.SectionView.UUID.CATEGORY_PLUGIN_VIEW) }
+	];
 };
 
 // -------------------------------------------------------------------
@@ -91,10 +91,10 @@ orp.plugins.ButtonView.getEntriesForItemRepresentingPluginClass = function(plugi
  * Returns the class of this instance.
  *
  * @scope    public instance method
- * @return   A JavaScript class. 
+ * @return   A JavaScript class.
  */
 orp.plugins.ButtonView.prototype.getClass = function() {
-  return orp.plugins.ButtonView;
+	return orp.plugins.ButtonView;
 };
 
 /**
@@ -104,43 +104,43 @@ orp.plugins.ButtonView.prototype.getClass = function() {
  * @scope    public instance method
  */
 orp.plugins.ButtonView.prototype.refresh = function() {
-  var listOfContentItems = this.fetchItems();
-  var outlineDiv = this.getHtmlElement();
+	var listOfContentItems = this.fetchItems();
+	var outlineDiv = this.getHtmlElement();
 
-  orp.view.View.removeChildrenOfElement(outlineDiv);
-  var divElement = orp.view.View.appendNewElement(outlineDiv, "div");
-  
-  // This doesn't work yet:
-  // var popupMenu = dojo.widget.createWidget("PopupMenu2", {toggle: "wipe"}, divElement, "last");
-  // var menuItemA = dojo.widget.createWidget("MenuItem2", {caption: "Save", accelKey: "Ctrl+S"}, divElement, "last");
-  // var menuItemB = dojo.widget.createWidget("MenuItem2", {caption: "Save As", accelKey: "Ctrl+A"}, divElement, "last");
-  
-  for (var i in listOfContentItems) {
-    var contentItem = listOfContentItems[i];
-    var itemName = contentItem.getDisplayName("{no name}");
-    var button = dojo.widget.createWidget("Button", {caption: itemName}, divElement, "last");
-    dojo.event.connect(button, "onClick", this, "buttonClick")
-  }
-  orp.view.View.appendNewElement(divElement, "p");
-  for (var i in listOfContentItems) {
-    var contentItem = listOfContentItems[i];
-    var itemName = contentItem.getDisplayName("{no name}");
-    var dropdown = dojo.widget.createWidget("DropDownButton", {caption: itemName}, divElement, "last");
-    dojo.event.connect(dropdown, "onClick", this, "buttonClick")
-  }
-  orp.view.View.appendNewElement(divElement, "p");
-  for (var i in listOfContentItems) {
-    var contentItem = listOfContentItems[i];
-    var itemName = contentItem.getDisplayName("{no name}");
-    var combo = dojo.widget.createWidget("ComboButton", {caption: itemName}, divElement, "last");
-    dojo.event.connect(combo, "onClick", this, "buttonClick")
-  }
+	orp.view.View.removeChildrenOfElement(outlineDiv);
+	var divElement = orp.view.View.appendNewElement(outlineDiv, "div");
+
+	// This doesn't work yet:
+	// var popupMenu = dojo.widget.createWidget("PopupMenu2", {toggle: "wipe"}, divElement, "last");
+	// var menuItemA = dojo.widget.createWidget("MenuItem2", {caption: "Save", accelKey: "Ctrl+S"}, divElement, "last");
+	// var menuItemB = dojo.widget.createWidget("MenuItem2", {caption: "Save As", accelKey: "Ctrl+A"}, divElement, "last");
+
+	for (var i in listOfContentItems) {
+		var contentItem = listOfContentItems[i];
+		var itemName = contentItem.getDisplayName("{no name}");
+		var button = dojo.widget.createWidget("Button", {caption: itemName}, divElement, "last");
+		dojo.event.connect(button, "onClick", this, "buttonClick")
+	}
+	orp.view.View.appendNewElement(divElement, "p");
+	for (var i in listOfContentItems) {
+		var contentItem = listOfContentItems[i];
+		var itemName = contentItem.getDisplayName("{no name}");
+		var dropdown = dojo.widget.createWidget("DropDownButton", {caption: itemName}, divElement, "last");
+		dojo.event.connect(dropdown, "onClick", this, "buttonClick")
+	}
+	orp.view.View.appendNewElement(divElement, "p");
+	for (var i in listOfContentItems) {
+		var contentItem = listOfContentItems[i];
+		var itemName = contentItem.getDisplayName("{no name}");
+		var combo = dojo.widget.createWidget("ComboButton", {caption: itemName}, divElement, "last");
+		dojo.event.connect(combo, "onClick", this, "buttonClick")
+	}
 
 };
 
 orp.plugins.ButtonView.prototype.buttonClick = function(clickEvent) {
-  var htmlButtonElement = clickEvent.target;
-  var textNode = htmlButtonElement.firstChild;
-  alert(textNode.nodeValue);
+	var htmlButtonElement = clickEvent.target;
+	var textNode = htmlButtonElement.firstChild;
+	alert(textNode.nodeValue);
 };
 
