@@ -92,11 +92,13 @@ orp.util.LintTool.getErrorReportForCodeInString = function(codeString) {
     errorMessage = report + '\n';
   }
   
-  // Check for tabs, backspaces, etc.
-  errorMessage += orp.util.LintTool.checkForString(codeString, '\t', "There are tab characters in the file.");
+  // Check for backspaces and form feed characaters
   errorMessage += orp.util.LintTool.checkForString(codeString, '\b', "There are backspace characters in the file.");
-  errorMessage += orp.util.LintTool.checkForString(codeString, '\r', "There are carriage return characters in the file.");
   errorMessage += orp.util.LintTool.checkForString(codeString, '\f', "There are form feed characters in the file.");
+  
+  // Check for tabs and carriage return characters
+  // errorMessage += orp.util.LintTool.checkForString(codeString, '\t', "There are tab characters in the file.");
+  // errorMessage += orp.util.LintTool.checkForString(codeString, '\r', "There are carriage return characters in the file.");
   
   // Check for discouraged code
   // We have to break 'document' + '.write' into two parts, or else this LintTool.js

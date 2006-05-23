@@ -56,13 +56,13 @@ function testJsLintOnBadCodeFragment() {
   // badFragmentOne has THIS_SYMBOL_IS_BAD, which JSLint should catch
   var badFragmentOne = "function iggy() { var pop = 'no fun'; } THIS_SYMBOL_IS_BAD";
 
-  // badFragmentTwo has tab characters in it, which our own isCodeCleanInString()
+  // badFragmentTwo has a backspace character in it, which our own isCodeCleanInString()
   // method should catch
-  var badFragmentTwo = "function iggy()		{ var pop = 'no fun'; } ";
+  var badFragmentTwo = "function iggy()	\b { var pop = 'no fun'; } ";
   
-  // badFragmentThree has a carriage return character in it, which our own 
+  // badFragmentThree has a form feed character in it, which our own 
   // isCodeCleanInString() method should catch
-  var badFragmentThree = "function iggy() \r { var pop = 'no fun'; } ";
+  var badFragmentThree = "function iggy() \f { var pop = 'no fun'; } ";
   
   assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentOne));
   assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentTwo));
