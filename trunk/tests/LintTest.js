@@ -56,17 +56,17 @@ function testJsLintOnBadCodeFragment() {
 	// badFragmentOne has THIS_SYMBOL_IS_BAD, which JSLint should catch
 	var badFragmentOne = "function iggy() { var pop = 'no fun'; } THIS_SYMBOL_IS_BAD";
 
-  // badFragmentTwo has a backspace character in it, which our own isCodeCleanInString()
-  // method should catch
-  var badFragmentTwo = "function iggy()	\b { var pop = 'no fun'; } ";
-  
-  // badFragmentThree has a form feed character in it, which our own 
-  // isCodeCleanInString() method should catch
-  var badFragmentThree = "function iggy() \f { var pop = 'no fun'; } ";
-  
-  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentOne));
-  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentTwo));
-  assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentThree));
+	// badFragmentTwo has a backspace character in it, which our own isCodeCleanInString()
+	// method should catch
+	var badFragmentTwo = "function iggy()	\b { var pop = 'no fun'; } ";
+
+	// badFragmentThree has a form feed character in it, which our own
+	// isCodeCleanInString() method should catch
+	var badFragmentThree = "function iggy() \f { var pop = 'no fun'; } ";
+
+	assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentOne));
+	assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentTwo));
+	assertFalse("jslint says dirty code is dirty", !orp.util.LintTool.getErrorReportForCodeInString(badFragmentThree));
 }
 
 function testJsLintOnOpenRecordCode() {
