@@ -116,7 +116,7 @@ brian  | 1    IED |         | 410. Rationalize our CSS style sheet approach
        |          |         | 414. Convert UI code from DOM level 0 to DOM level 2
        |          |         | 415. Start process for doing ongoing code reviews
        |          |         | 416. grep for ".getEntriesForAttribute(" and refactor to use ".getValuesForAttribute("
-       |          |         | 417. Maybe change all our indenting from spaces to tabs, to be in sync with dojo
+mignon |          |         | 417. Maybe change all our indenting from spaces to tabs, to be in sync with dojo
        |          |         | 418. Prevent memory leaks via dojo.event.browser.clean(parent.removeChild(child));
        |          |         | 420. Replace XMLHttpRequest calls with dojo.io.bind() calls
        |          |         | 421. Consider refactoring orp.storage so that FileProtocolStorage is "behind" dojo.io.bind
