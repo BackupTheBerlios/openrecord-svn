@@ -1776,37 +1776,37 @@
   // =======================================================================
   { "Transaction": [
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Marty Betz
+    { "Item": {                                               // Hiran Ganegedara
              "uuid": "a00bf340-dde4-11d9-9c71-dae11c269bc7" }
     },
     // -----------------------------------------------------------------------
-    { "User": {                                               // Marty Betz
+    { "User": {                                               // Hiran Ganegedara
              "user": "a00bf340-dde4-11d9-9c71-dae11c269bc7",
          "password": null }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Person: Marty Betz) assign (Attribute: Category) = (Category: Person)
-             // in item (Category: Person) assign (Attribute: Items in Category) = (Person: Marty Betz)
+             // in item (Person: Hiran Ganegedara) assign (Attribute: Category) = (Category: Person)
+             // in item (Category: Person) assign (Attribute: Items in Category) = (Person: Hiran Ganegedara)
              "uuid": "a00bf341-dde4-11d9-9c71-dae11c269bc7",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["a00bf340-dde4-11d9-9c71-dae11c269bc7", "00001201-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // "Marty"
+    { "Entry": {                                              // "Hiran"
              "uuid": "a00bf342-dde4-11d9-9c71-dae11c269bc7",
         "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
-             "item": "a00bf340-dde4-11d9-9c71-dae11c269bc7",  // Marty Betz
+             "item": "a00bf340-dde4-11d9-9c71-dae11c269bc7",  // Hiran Ganegedara
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Marty" }
+            "value": "Hiran" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Marty Betz
+    { "Entry": {                                              // Hiran Ganegedara
              "uuid": "a00bf343-dde4-11d9-9c71-dae11c269bc7",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "a00bf340-dde4-11d9-9c71-dae11c269bc7",  // Marty Betz
+             "item": "a00bf340-dde4-11d9-9c71-dae11c269bc7",  // Hiran Ganegedara
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Marty Betz" }
+            "value": "Hiran Ganegedara" }
     }  ]
   }
