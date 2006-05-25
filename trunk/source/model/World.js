@@ -1008,7 +1008,7 @@ orp.model.World.prototype.getItemsInCategory = function(category, observer, filt
 	if (filterOutNonGeneralPurposeItems) {
 		var currentUser = this.getCurrentUser();
 		var attributeCalledDeveloperMode = this.getAttributeCalledDeveloperMode();
-		var inDeveloperMode = (currentUser.getSingleValueFromAttribute(attributeCalledDeveloperMode) == "true"); // FIXME
+		var inDeveloperMode = (currentUser && currentUser.getSingleValueFromAttribute(attributeCalledDeveloperMode) == "true"); // FIXME
 		var categoryCalledNotGeneralPurpose = this.getCategoryCalledNotGeneralPurpose();
 		if (inDeveloperMode) {
 			returnList = listOfItems;
