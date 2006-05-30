@@ -92,6 +92,16 @@ Additional OpenRecord Conventions
 
 + line ending characters
 	+ files should have subversion property svn:eol_style set to native
+	+ To do this automatically, edit your Subversion config file to add (or uncomment out) the following lines:
+		+ in the [miscellany] section:
+			enable-auto-props = yes
+		+ in the [auto-props] section:
+			*.js = svn:eol-style=native
+			*.txt = svn:eol-style=native
+			*.html = svn:eol-style=native
+			*.css = svn:eol-style=native
+			*.xml = svn:eol-style=native
+	+ In TortoiseSVN, this can be done from the context menu: TortoiseSVN >> Settings >> General >> Edit.
 
 + file header and footer conventions
 	+ file name is given
