@@ -91,8 +91,7 @@ dojo.inherits(orp.TablePlugin, orp.view.PluginView);  // makes TablePlugin be a 
 // Register this plugin in the SectionView registry
 // -------------------------------------------------------------------
 orp.TablePlugin.UUID = {
-	PLUGIN_VIEW_TABLE: "00040301-ce7f-11d9-8cd5-0011113ae5d6",
-	ATTRIBUTE_TABLE_COLUMNS: "0004010a-ce7f-11d9-8cd5-0011113ae5d6" };
+	PLUGIN_VIEW_TABLE: "00040301-ce7f-11d9-8cd5-0011113ae5d6" };
 
 // FIXME:
 // orp.view.SectionView.registerPlugin(orp.TablePlugin);
@@ -168,8 +167,8 @@ orp.TablePlugin.prototype._getListOfColumns = function() {
 
 	var layoutItem = this.getLayoutItem();
 	if (layoutItem) {
-		var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
-		var listOfTableColumnEntries = layoutItem.getEntriesForAttribute(attributeTableColumns);
+		var attributeCalledSelectedAttributes = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_SELECTED_ATTRIBUTES);
+		var listOfTableColumnEntries = layoutItem.getEntriesForAttribute(attributeCalledSelectedAttributes);
 		if (listOfTableColumnEntries.length > 0) {
 			useSavedListOfColumns = true;
 		}
@@ -415,11 +414,11 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged) {
 	}
 
 	// Now we need to save the new column order to the repository.
-	var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
+	var attributeCalledSelectedAttributes = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_SELECTED_ATTRIBUTES);
 	world.beginTransaction();
 	var createNewLayoutItemIfNecessary;
 	var layoutItem = this.getLayoutItem(createNewLayoutItemIfNecessary = true);
-	var listOfTableColumnEntries = layoutItem.getEntriesForAttribute(attributeTableColumns);
+	var listOfTableColumnEntries = layoutItem.getEntriesForAttribute(attributeCalledSelectedAttributes);
 
 	// alert("this._displayAttributes.length == " + this._displayAttributes.length);
 	// alert("listOfTableColumnEntries.length == " + listOfTableColumnEntries.length);
@@ -453,7 +452,7 @@ orp.TablePlugin.prototype._handleDrop = function(elementThatWasDragged) {
 		this._displayAttributes.splice(newIndexOfDraggedColumn, 0, draggedAttribute);
 		for (i in this._displayAttributes) {
 			var attribute = this._displayAttributes[i];
-			layoutItem.addEntry({attribute:attributeTableColumns, value:attribute});
+			layoutItem.addEntry({attribute:attributeCalledSelectedAttributes, value:attribute});
 		}
 	}
 	world.endTransaction();
@@ -817,16 +816,16 @@ orp.TablePlugin.prototype._addOrRemoveOneColumn = function(attribute) {
 	var createNewLayoutItemIfNecessary;
 	var layoutItem = this.getLayoutItem(createNewLayoutItemIfNecessary = true);
 
-	var attributeTableColumns = world.getItemFromUuid(orp.TablePlugin.UUID.ATTRIBUTE_TABLE_COLUMNS);
-	var entriesTableColumns = layoutItem.getEntriesForAttribute(attributeTableColumns);
-	var noStoredColumns = (entriesTableColumns.length === 0);
+	var attributeCalledSelectedAttributes = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_SELECTED_ATTRIBUTES);
+	var listOfTableColumnEntries = layoutItem.getEntriesForAttribute(attributeCalledSelectedAttributes);
+	var noStoredColumns = (listOfTableColumnEntries.length === 0);
 	// var changedAttribute = this.getWorld().getItemFromUuid(attributeUuid);
 	var removeAttribute = orp.util.removeObjectFromSet(changedAttribute, this._displayAttributes);
 	var typeCalledItem = world.getTypeCalledItem();
 	if (removeAttribute) {
-		for (var i in entriesTableColumns) {
-			if (changedAttribute == entriesTableColumns[i].getValue()) {
-				entriesTableColumns[i].voteToDelete();
+		for (var i in listOfTableColumnEntries) {
+			if (changedAttribute == listOfTableColumnEntries[i].getValue()) {
+				listOfTableColumnEntries[i].voteToDelete();
 				break;
 			}
 		}
@@ -836,11 +835,11 @@ orp.TablePlugin.prototype._addOrRemoveOneColumn = function(attribute) {
 	if (noStoredColumns) {
 		for (i in this._displayAttributes) {
 			var anAttribute = this._displayAttributes[i];
-			layoutItem.addEntry({attribute:attributeTableColumns, value:anAttribute, type:typeCalledItem});
+			layoutItem.addEntry({attribute:attributeCalledSelectedAttributes, value:anAttribute, type:typeCalledItem});
 		}
 	} else {
 		if (!removeAttribute) {
-			layoutItem.addEntry({attribute:attributeTableColumns, value:changedAttribute, type:typeCalledItem});
+			layoutItem.addEntry({attribute:attributeCalledSelectedAttributes, value:changedAttribute, type:typeCalledItem});
 		}
 	}
 	world.endTransaction();

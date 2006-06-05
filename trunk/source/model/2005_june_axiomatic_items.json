@@ -1024,7 +1024,7 @@
              "uuid": "00040105-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Table Columns (Attribute)
+    { "Item": {                                               // Selected Attributes (Attribute)
              "uuid": "0004010a-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -1373,17 +1373,17 @@
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     }, 
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Table Columns 
+    { "Entry": {                                              // Selected Attributes 
              "uuid": "004010aa-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
+             "item": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",  // Selected Attributes (Attribute)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Table Columns" }
+            "value": "Selected Attributes" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Table Columns) assign (Attribute: Category) = (Category: Attribute)
-             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Table Columns)
+             // in item (Attribute: Selected Attributes) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Selected Attributes)
              "uuid": "004010ab-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["0004010a-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
@@ -1393,14 +1393,14 @@
     { "Entry": {                                              // Attribute
              "uuid": "004010ac-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
-             "item": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",  // Table Columns (Attribute)
+             "item": "0004010a-ce7f-11d9-8cd5-0011113ae5d6",  // Selected Attributes (Attribute)
              "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
             "value": "00001210-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Attribute: Table Columns) assign (Attribute: Category) = (Category: Not General Purpose)
-             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Table Columns)
+             // in item (Attribute: Selected Attributes) assign (Attribute: Category) = (Category: Not General Purpose)
+             // in item (Category: Not General Purpose) assign (Attribute: Items in Category) = (Attribute: Selected Attributes)
              "uuid": "004010ad-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["0004010a-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],

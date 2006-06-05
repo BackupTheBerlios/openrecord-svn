@@ -127,7 +127,6 @@ orp.model.World.UUID = {
 	ATTRIBUTE_DEVELOPER_MODE:           "00001025-ce7f-11d9-8cd5-0011113ae5d6", // not general purpose
 
 	// see also:
-	//   orp.TablePlugin.UUID = {ATTRIBUTE_TABLE_COLUMNS: "0004010a-ce7f-11d9-8cd5-0011113ae5d6" };
 	//   orp.view.EntryView.UUID = {ATTRIBUTE_NOT_LOZENGE: "0004010f-ce7f-11d9-8cd5-0011113ae5d6" };
 	//   orp.view.PageView.UUID = {
 	//     ATTRIBUTE_SECTIONS_IN_PAGE:             "00030000-ce7f-11d9-8cd5-0011113ae5d6",
@@ -138,6 +137,7 @@ orp.model.World.UUID = {
 	//     ATTRIBUTE_APPLIES_TO_PLUGIN: "00040103-ce7f-11d9-8cd5-0011113ae5d6",
 	//     ATTRIBUTE_SECTION_THIS_LAYOUT_DATA_BELONGS_TO: "00040104-ce7f-11d9-8cd5-0011113ae5d6",
 	//     ATTRIBUTE_SECTION_THIS_QUERY_BELONGS_TO: "00040105-ce7f-11d9-8cd5-0011113ae5d6",
+	//     ATTRIBUTE_SELECTED_ATTRIBUTES: "0004010a-ce7f-11d9-8cd5-0011113ae5d6",
 
 	//   orp.view.SectionView.UUID = {
 	//     CATEGORY_PLUGIN_VIEW:        "00040201-ce7f-11d9-8cd5-0011113ae5d6",
