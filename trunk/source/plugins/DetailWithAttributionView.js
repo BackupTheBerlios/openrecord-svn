@@ -137,7 +137,7 @@ orp.plugins.DetailWithAttributionView.prototype.createTableForItem = function (i
 		}
 	}
 
-	var tableRow = orp.view.View.appendNewElement(itemTable, "tr");
+	tableRow = orp.view.View.appendNewElement(itemTable, "tr");
 	orp.view.View.appendNewElement(tableRow, "td", null, {colspan: "2"}, "<this item>");
 	orp.view.View.appendNewElement(tableRow, "td", orp.view.SectionView.cssClass.TITLE, null, inItem.getUserstamp().getDisplayString());
 	orp.view.View.appendNewElement(tableRow, "td", orp.view.SectionView.cssClass.TITLE, null, inItem.getCreationDate().toLocaleString());
@@ -148,23 +148,24 @@ orp.plugins.DetailWithAttributionView.prototype.createRowForAttribute = function
 	var cssLine = orp.view.SectionView.cssClass.LABEL + " " + orp.view.SectionView.cssClass.PLAIN;
 	var listOfEntries = item.getEntriesForAttribute(attribute);
 	var i;
+	var entry;
 
 	var columnOneCell = orp.view.View.appendNewElement(tableRow, "td", cssLine, null, attribute.getDisplayName());
 	var columnTwoCell = orp.view.View.appendNewElement(tableRow, "td", cssClass, null);
 	for (i in listOfEntries) {
-		var entry = listOfEntries[i];
+		entry = listOfEntries[i];
 		orp.view.View.appendNewTextNode(columnTwoCell, entry.getDisplayString());
 		orp.view.View.appendNewElement(columnTwoCell, "br");
 	}
 	var columnThreeCell = orp.view.View.appendNewElement(tableRow, "td", cssClass, null);
 	for (i in listOfEntries) {
-		var entry = listOfEntries[i];
+		entry = listOfEntries[i];
 		orp.view.View.appendNewTextNode(columnThreeCell, entry.getUserstamp().getDisplayString());
 		orp.view.View.appendNewElement(columnThreeCell, "br");
 	}
 	var columnFourCell = orp.view.View.appendNewElement(tableRow, "td", cssClass, null);
 	for (i in listOfEntries) {
-		var entry = listOfEntries[i];
+		entry = listOfEntries[i];
 		orp.view.View.appendNewTextNode(columnFourCell, entry.getCreationDate().toLocaleString());
 		orp.view.View.appendNewElement(columnFourCell, "br");
 	}
