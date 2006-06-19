@@ -45,10 +45,6 @@ Differences
 			        Expression2,
 			        Expression3);
 
-	5) for loops
-		+ Dojo tends to use this style:  for (var i=0; i < bar.length; i++)
-		+ OpenRecord tends to do this:   for (var i in bar)
-
 Additional OpenRecord Conventions
 
 + jslint approved (see http://jslint.com)
@@ -106,9 +102,7 @@ Additional OpenRecord Conventions
 + file header and footer conventions
 	+ file name is given
 	+ copyright and license statements are included
-	+ file dependencies are listed
 	+ sections for: class constants, class properties, constructor, instance methods
-	+ "End of file" ending
 
 + scoping
 	+ locally scoped variables are declared before being used: "var foo", not "foo"
