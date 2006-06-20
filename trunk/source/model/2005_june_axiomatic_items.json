@@ -95,6 +95,10 @@
              "uuid": "00001024-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
+    { "Item": {                                               // Type: Color
+             "uuid": "00001026-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
     { "Item": {                                               // Type: Item
              "uuid": "00001030-ce7f-11d9-8cd5-0011113ae5d6" }
     },
@@ -218,7 +222,7 @@
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Text
+    { "Entry": {                                              // Summary
              "uuid": "0001003c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
              "item": "00001003-ce7f-11d9-8cd5-0011113ae5d6",  // Attribute: Summary
@@ -761,6 +765,23 @@
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
+    { "Entry": {                                              // "Color"
+             "uuid": "0001026a-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "00001026-ce7f-11d9-8cd5-0011113ae5d6",  // Type: Color
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Color" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Type: Color) assign (Attribute: Category) = (Category: Type)
+             // in item (Category: Type) assign (Attribute: Items in Category) = (Type: Color)
+             "uuid": "0001026b-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["00001026-ce7f-11d9-8cd5-0011113ae5d6", "00001213-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },  
+    // -----------------------------------------------------------------------
     { "Entry": {                                              // "Item"
              "uuid": "0001030a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
@@ -1026,6 +1047,14 @@
     // -----------------------------------------------------------------------
     { "Item": {                                               // Selected Attributes (Attribute)
              "uuid": "0004010a-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Background Color (Attribute)
+             "uuid": "0004010b-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Item": {                                               // Foreground Color (Attribute)
+             "uuid": "0004010c-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
     { "Item": {                                               // Not Lozenge (Attribute)
@@ -1405,7 +1434,57 @@
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["0004010a-ce7f-11d9-8cd5-0011113ae5d6", "00001215-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
-    }, 
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Background Color 
+             "uuid": "004010ba-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "0004010b-ce7f-11d9-8cd5-0011113ae5d6",  // Background Color (Attribute)
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Background Color" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Background Color) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Background Color)
+             "uuid": "004010bb-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0004010b-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },  
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "004010bc-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "0004010b-ce7f-11d9-8cd5-0011113ae5d6",  // Background Color (Attribute)
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
+            "value": "00001026-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Foreground Color 
+             "uuid": "004010ca-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
+             "item": "0004010c-ce7f-11d9-8cd5-0011113ae5d6",  // Foreground Color (Attribute)
+             "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
+            "value": "Foreground Color" }
+    },
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              
+             // in item (Attribute: Foreground Color) assign (Attribute: Category) = (Category: Attribute)
+             // in item (Category: Attribute) assign (Attribute: Items in Category) = (Attribute: Foreground Color)
+             "uuid": "004010cb-ce7f-11d9-8cd5-0011113ae5d6",
+             "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
+             "item": ["0004010c-ce7f-11d9-8cd5-0011113ae5d6", "00001210-ce7f-11d9-8cd5-0011113ae5d6"],
+        "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
+    },  
+    // -----------------------------------------------------------------------
+    { "Entry": {                                              // Attribute
+             "uuid": "004010cc-ce7f-11d9-8cd5-0011113ae5d6",
+        "attribute": "0000100a-ce7f-11d9-8cd5-0011113ae5d6",  // Expected Type
+             "item": "0004010c-ce7f-11d9-8cd5-0011113ae5d6",  // Foreground Color (Attribute)
+             "type": "00001030-ce7f-11d9-8cd5-0011113ae5d6",  // RelatedUuid
+            "value": "00001026-ce7f-11d9-8cd5-0011113ae5d6" }
+    },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // Not Lozenge
              "uuid": "004010fa-ce7f-11d9-8cd5-0011113ae5d6",

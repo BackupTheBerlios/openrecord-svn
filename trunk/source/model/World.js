@@ -155,6 +155,8 @@ orp.model.World.UUID = {
 	TYPE_DATE:               "00001022-ce7f-11d9-8cd5-0011113ae5d6",
 	TYPE_CHECK_MARK:         "00001023-ce7f-11d9-8cd5-0011113ae5d6",
 	TYPE_URL:                "00001024-ce7f-11d9-8cd5-0011113ae5d6",
+	//                       "00001025-ce7f-11d9-8cd5-0011113ae5d6" // ATTRIBUTE_DEVELOPER_MODE (see above)
+	TYPE_COLOR:              "00001026-ce7f-11d9-8cd5-0011113ae5d6",
 	TYPE_ITEM:               "00001030-ce7f-11d9-8cd5-0011113ae5d6",
 	TYPE_ANYTHING:           "00001040-ce7f-11d9-8cd5-0011113ae5d6",
 	TYPE_CONNECTION:         "00001050-ce7f-11d9-8cd5-0011113ae5d6",
@@ -208,6 +210,7 @@ orp.model.World.prototype._loadAxiomaticItems = function() {
 	this._typeCalledDate       = server.getItemFromUuid(UUID.TYPE_DATE);
 	this._typeCalledCheckMark  = server.getItemFromUuid(UUID.TYPE_CHECK_MARK);
 	this._typeCalledUrl        = server.getItemFromUuid(UUID.TYPE_URL);
+	this._typeCalledColor      = server.getItemFromUuid(UUID.TYPE_COLOR);
 	this._typeCalledItem       = server.getItemFromUuid(UUID.TYPE_ITEM);
 	this._typeCalledAnything   = server.getItemFromUuid(UUID.TYPE_ANYTHING);
 	this._typeCalledConnection = server.getItemFromUuid(UUID.TYPE_CONNECTION);
@@ -563,6 +566,10 @@ orp.model.World.prototype.getTypeCalledCheckMark = function() {
 
 orp.model.World.prototype.getTypeCalledUrl = function() {
 	return this._typeCalledUrl;
+};
+
+orp.model.World.prototype.getTypeCalledColor = function() {
+	return this._typeCalledColor;
 };
 
 orp.model.World.prototype.getTypeCalledItem = function() {

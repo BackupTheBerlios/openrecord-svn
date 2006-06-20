@@ -244,6 +244,7 @@ orp.archive.JsonDeserializer.prototype._rehydrateRecords = function(listOfDehydr
 							orp.lang.assert(finalData.isValid());
 							break;
 						default:
+						    // orp.lang.assert(false, 'Unknown data type while _rehydrating() entry with UUID ' + entryUuid);
 							orp.lang.assert(false, 'Unknown data type while _rehydrating()');
 					}
 					entry._revive(item, attribute, finalData, previousEntry, dataType);
