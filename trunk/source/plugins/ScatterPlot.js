@@ -365,7 +365,6 @@ orp.plugins.ScatterPlot.prototype._getHtmlTextForChart = function() {
 	
 	var isComplete = false;
 	var isBubblePlot = false;
-	var listOfAttributesForAxes = [];
 	var arrayOfMaxAndMinValues = new Array();
 	
 	var world = this.getWorld();
@@ -377,17 +376,14 @@ orp.plugins.ScatterPlot.prototype._getHtmlTextForChart = function() {
 		if (listOfSelectedAttributes.length == 3) {
 			isComplete = true;
 			isBubblePlot = true;
-			listOfAttributesForAxes = listOfSelectedAttributes;
-			arrayOfMaxAndMinValues[0] = [0, 0];
-			arrayOfMaxAndMinValues[1] = [0, 0];
-			arrayOfMaxAndMinValues[2] = [0, 0];
+			
 		} else if (listOfSelectedAttributes.length == 2) {
 			isComplete = true;
 			isBubblePlot = false;
-			listOfAttributesForAxes = listOfSelectedAttributes;
-			arrayOfMaxAndMinValues[0] = [0, 0];
-			arrayOfMaxAndMinValues[1] = [0, 0];
 		}
+		arrayOfMaxAndMinValues[0] = [0, 0];
+		arrayOfMaxAndMinValues[1] = [0, 0];
+		arrayOfMaxAndMinValues[2] = [0, 0];
 		// Calculate maximum and minimum for each selected attribute
 		var listOfContentItems = [];
 		listOfContentItems = this.fetchItems();				
