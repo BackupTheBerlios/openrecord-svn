@@ -583,7 +583,7 @@ orp.plugins.ScatterPlot.prototype._displayColorPalette = function (evt) {
  * @param	 evt			The event object
  */
 orp.plugins.ScatterPlot.prototype._colorSelect = function (evt) {	
-  	this._setBackgroundColorForAttribute(evt.target.color);
+  	this._setPointColorForChart(evt.target.color);
 	orp.view.View.removeChildrenOfElement(this._colorElement);
 	var anchorObject = orp.view.View.appendNewElement(this._colorElement, "a", null, null, "Color");
 	dojo.event.connect(anchorObject, "onclick", this, "_displayColorPalette");
@@ -595,7 +595,7 @@ orp.plugins.ScatterPlot.prototype._colorSelect = function (evt) {
  * @scope    private instance method
  * @param	 color			The color value
  */
-orp.plugins.ScatterPlot.prototype._setBackgroundColorForAttribute = function(color) {
+orp.plugins.ScatterPlot.prototype._setPointColorForChart = function(color) {
 	var world = this.getWorld();
 	var attributeCalledBackgroundColor = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_BACKGROUND_COLOR);
 	for (var key in this._listOfAxisAttributes) {
