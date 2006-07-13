@@ -109,14 +109,21 @@ orp.plugins.ScatterPlot.prototype.getClass = function() {
 orp.plugins.ScatterPlot.prototype.refresh = function() {
 	var pluginDiv = this.getHtmlElement();
 	orp.view.View.removeChildrenOfElement(pluginDiv);
-	pluginDiv.appendChild(this._setElementsForSelection());
-	var divForChartWidget = orp.view.View.newElement("div");
-	divForChartWidget.innerHTML = this._getHtmlTextForChart();
-
-	var parser = new dojo.xml.Parse();
-	var fragment = parser.parseElement(divForChartWidget, null, true);
-	dojo.widget.getParser().createComponents(fragment);  
-	pluginDiv.appendChild(divForChartWidget);
+	var displayObject = this._setElementsForSelection();
+	if(displayObject) {
+		pluginDiv.appendChild(displayObject);
+		var divForChartWidget = orp.view.View.newElement("div");
+		divForChartWidget.innerHTML = this._getHtmlTextForChart();
+	
+		var parser = new dojo.xml.Parse();
+		var fragment = parser.parseElement(divForChartWidget, null, true);
+		dojo.widget.getParser().createComponents(fragment);  
+		pluginDiv.appendChild(divForChartWidget);
+	} else {						
+		var displayString = "Sorry, the number of attributes with numeric instances are insufficient to display the scatter plot";
+		var spanObject = orp.view.View.newElement("span", null, null, displayString);
+		pluginDiv.appendChild(spanObject);
+	}
 };
 
 /**
@@ -176,10 +183,8 @@ orp.plugins.ScatterPlot.prototype._setElementsForSelection = function() {
 	for(var tempAttributeUuid in this._hashTableOfAttributesKeyedByUuid) {
 		this._numberOfSelectableAttributes = this._numberOfSelectableAttributes + 1;
 	}
-	if(this._numberOfSelectableAttributes < 2) {				
-		var displayString = "Sorry, the number of attributes with numeric instances are insufficient to display the scatter plot";
-		var spanObject = orp.view.View.newElement("span", null, null, displayString);
-		return spanObject;
+	if(this._numberOfSelectableAttributes < 2) {
+		return;
 	} else {
 		if(!hasStoredAttributes) {		
 			for (var plotAttributeUuid in this._hashTableOfAttributesKeyedByUuid) {
@@ -369,7 +374,6 @@ orp.plugins.ScatterPlot.prototype._getHtmlTextForChart = function() {
 	if (layoutItem) {
 		var attributeCalledSelectedAttribute = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_SELECTED_ATTRIBUTES);
 		var listOfSelectedAttributes = layoutItem.getEntriesForAttribute(attributeCalledSelectedAttribute);
-		alert(listOfSelectedAttributes);
 		if (listOfSelectedAttributes.length == 3) {
 			isComplete = true;
 			isBubblePlot = true;
