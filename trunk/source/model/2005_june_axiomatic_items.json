@@ -1081,7 +1081,7 @@
              "uuid": "00040303-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
-    { "Item": {                                               // Bar Chart (Plugin View)
+    { "Item": {                                               // Old 2005 Bar Chart (Plugin View)
              "uuid": "00040304-ce7f-11d9-8cd5-0011113ae5d6" }
     },
     // -----------------------------------------------------------------------
@@ -1663,35 +1663,35 @@
             "value": "DetailPlugin" }
     },
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Bar Chart View
+    { "Entry": {                                              // Old 2005 Bar Chart View
              "uuid": "0040304a-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001001-ce7f-11d9-8cd5-0011113ae5d6",  // Name
-             "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Bar Chart View (Plugin View)
+             "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Old 2005 Bar Chart View (Plugin View)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Bar Chart View" }
+            "value": "Old 2005 Bar Chart View" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              
-             // in item (Plugin View: Bar Chart View) assign (Attribute: Category) = (Category: Plugin View)
-             // in item (Category: Plugin View) assign (Attribute: Items in Category) = (Plugin View: Bar Chart View)
+             // in item (Plugin View: Old 2005 Bar Chart View) assign (Attribute: Category) = (Category: Plugin View)
+             // in item (Category: Plugin View) assign (Attribute: Items in Category) = (Plugin View: Old 2005 Bar Chart View)
              "uuid": "0040304b-ce7f-11d9-8cd5-0011113ae5d6",
              "type": "00001050-ce7f-11d9-8cd5-0011113ae5d6",
              "item": ["00040304-ce7f-11d9-8cd5-0011113ae5d6", "00040201-ce7f-11d9-8cd5-0011113ae5d6"],
         "attribute": ["00001005-ce7f-11d9-8cd5-0011113ae5d6", "0000100c-ce7f-11d9-8cd5-0011113ae5d6"]  }
     },  
     // -----------------------------------------------------------------------
-    { "Entry": {                                              // Bar Chart
+    { "Entry": {                                              // Old 2005 Bar Chart
              "uuid": "0040304c-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "00001002-ce7f-11d9-8cd5-0011113ae5d6",  // Short Name
-             "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Bar Chart View (Plugin View)
+             "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Old 2005 Bar Chart View (Plugin View)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
-            "value": "Bar Chart" }
+            "value": "2005 Bar Chart" }
     },
     // -----------------------------------------------------------------------
     { "Entry": {                                              // BarChartPlugin
              "uuid": "0040304d-ce7f-11d9-8cd5-0011113ae5d6",
         "attribute": "0000100f-ce7f-11d9-8cd5-0011113ae5d6",  // attributeCalledClassName
-             "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Bar Chart View (Plugin View)
+             "item": "00040304-ce7f-11d9-8cd5-0011113ae5d6",  // Old 2005 Bar Chart View (Plugin View)
              "type": "00001020-ce7f-11d9-8cd5-0011113ae5d6",  // TextValue
             "value": "BarChartPlugin" }
     } ]
