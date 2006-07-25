@@ -287,6 +287,31 @@ orp.view.SectionView.prototype.doInitialDisplay = function() {
 	if (!this.getHtmlElement()) {
 		return;
 	}
+	var attributeCalledQuerySpec = this.getWorld().getAttributeCalledQuerySpec();
+	var querySpecEntry = this._section.getSingleEntryFromAttribute(attributeCalledQuerySpec);
+	// If querySpecEntry is null, then there is no query for this view to display the results of.
+	orp.lang.assert(querySpecEntry !== null);
+	var query = querySpecEntry.getValue();
+	var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
+	var listOfMatchingEntries = query.getEntriesForAttribute(attributeCalledQueryMatchingValue);
+	this._queryHasNoMatchingValueEntries = (listOfMatchingEntries.length == 0);
+	if (this._queryHasNoMatchingValueEntries) {
+		var sectionDiv = this.getHtmlElement();
+		var headerH2 = orp.view.View.appendNewElement(sectionDiv, "h2", null, {'id':this._section.getUuidString()});
+		var attributeCalledName = this.getWorld().getAttributeCalledName();
+		this._headerView = new orp.view.EntryView(
+		                       this, headerH2, this._section, attributeCalledName,
+		                       this._section.getSingleEntryFromAttribute(attributeCalledName));
+		var controlArea = orp.view.View.appendNewElement(sectionDiv, "p", orp.view.RootView.cssClass.EDIT_TOOL, null, "Category: ");
+		var matchingAttribute = this.getWorld().getAttributeCalledCategory();
+		var listOfPossibleEntries = this.getWorld().getSuggestedItemsForAttribute(matchingAttribute);
+		this._queryEditSpan = orp.view.View.appendNewElement(controlArea, "span");
+		var myQuery = this.getQuerySpec();
+		this._buildCategoryComboBox(this._queryEditSpan, listOfPossibleEntries, myQuery);
+		myQuery.addObserver(this);
+		this._headerView.refresh();
+		return;
+	}
 	var attributeCalledPluginView = this.getWorld().getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_PLUGIN_VIEW);
 	var selectedPluginViewEntry = this._section.getSingleEntryFromAttribute(attributeCalledPluginView);
 	var selectedPluginItem;
@@ -301,19 +326,15 @@ orp.view.SectionView.prototype.doInitialDisplay = function() {
 	}
 
 	var sectionDiv = this.getHtmlElement();
+	orp.view.View.removeChildrenOfElement(sectionDiv);
 	var headerH2 = orp.view.View.appendNewElement(sectionDiv, "h2", null, {'id':this._section.getUuidString()});
 	var attributeCalledName = this.getWorld().getAttributeCalledName();
-	// var attributeCalledSummary = this.getWorld().getAttributeCalledSummary();
 	this._headerView = new orp.view.EntryView(
 	                       this, headerH2, this._section, attributeCalledName,
 	                       this._section.getSingleEntryFromAttribute(attributeCalledName));
-	// var summaryDiv = orp.view.View.appendNewElement(sectionDiv, "div");
-	// this._sectionSummaryView = new orp.view.EntryView(this, summaryDiv, this._section, attributeCalledSummary,
-	//   this._section.getSingleEntryFromAttribute(attributeCalledSummary), true);
-	// orp.view.View.appendNewElement(sectionDiv, "p");
 
 	// create the editing controls, if we're in edit mode
-	var controlArea = orp.view.View.appendNewElement(sectionDiv, "p", orp.view.RootView.cssClass.EDIT_TOOL, null, "Show me a ");
+	var controlArea = orp.view.View.appendNewElement(sectionDiv, "p", orp.view.RootView.cssClass.EDIT_TOOL, null, "View: ");
 	var selectElement = orp.view.View.appendNewElement(controlArea, "select");
 	var listener;
 	for (var key in orp.view.SectionView._ourHashTableOfPluginClassesKeyedByPluginItemUuid) {
@@ -326,9 +347,8 @@ orp.view.SectionView.prototype.doInitialDisplay = function() {
 		dojo.event.connect(optionElement, "onclick", this, "clickOnPluginSelectionMenu");
 	}
 	orp.view.View.appendNewElement(controlArea,"br");
-	orp.view.View.appendNewTextNode(controlArea,"Include items whose ");
+	orp.view.View.appendNewTextNode(controlArea, "Category: ");
 	this._queryEditSpan = orp.view.View.appendNewElement(controlArea, "span");
-	// orp.view.View.appendNewTextNode(controlArea,".");
 
 	// create a div element for the plugin class to use
 	this._pluginDiv = orp.view.View.appendNewElement(sectionDiv, "div");
@@ -337,6 +357,59 @@ orp.view.SectionView.prototype.doInitialDisplay = function() {
 	this.refresh();
 };
 
+/**
+ * Builds a combo box for specifying the category for the query of a new section.
+ *
+ * @scope    private instance method
+ */
+orp.view.SectionView.prototype._buildCategoryComboBox = function(span, listOfSuggestedCategories, query) {
+	var cssClass = "categoryForQuery" + " " + orp.view.RootView.cssClass.EDIT_TOOL;
+	var innerSpan = orp.view.View.appendNewElement(span, "span", cssClass);
+	innerSpan.superView = this;
+	var comboData = new Array();
+
+	for (var i in listOfSuggestedCategories) {
+		var category = listOfSuggestedCategories[i];
+		comboData[i] = new Array(category.getDisplayName(), category.getUuidString());
+	}
+	
+	var comboBox = dojo.widget.createWidget("ComboBox", {}, innerSpan, "last");
+	var provider = comboBox.dataProvider;
+	provider.setData(comboData);
+
+	var _this = this;
+	var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
+	innerSpan.onComboBoxKeyUp = function(evt) {
+		if (evt.keyCode != orp.util.ASCII.RETURN) {
+			return;
+		}
+		var category = orp.view.SectionView.getCategoryFromComboBoxValue(evt.target.value, this.superView.getWorld());
+		query.addEntry({attribute: attributeCalledQueryMatchingValue, value: category});
+	};
+	dojo.event.connect(comboBox, "onKeyUp", innerSpan, "onComboBoxKeyUp");
+	innerSpan.selectOption = function(evt) {
+		if (evt && evt.type == "click" && evt.target && evt.target.textContent) {
+			var category = orp.view.SectionView.getCategoryFromComboBoxValue(evt.target.textContent, this.superView.getWorld());
+			query.addEntry({attribute: attributeCalledQueryMatchingValue, value: category});
+		}
+	};
+	dojo.event.connect(comboBox, "selectOption", innerSpan, "selectOption");
+};
+
+orp.view.SectionView.getCategoryFromComboBoxValue = function(comboBoxValue, world) {
+	var listOfCategories = world.getCategories();
+	var category;
+	for (var i = 0; i < listOfCategories.length; ++i) {
+		if (listOfCategories[i].getDisplayName() == comboBoxValue) {
+			category = listOfCategories[i];
+			break;
+		}
+	}
+	if (i == listOfCategories.length) {
+		category = world.newCategory(comboBoxValue);
+	}
+	return category;
+};
 
 /**
  * Returns a layout item for this section for a particular plugin.
@@ -395,8 +468,13 @@ orp.view.SectionView.prototype.createLayoutItemForPluginView = function(pluginVi
  */
 orp.view.SectionView.prototype._refreshQueryEditSpan = function() {
 	orp.view.View.removeChildrenOfElement(this._queryEditSpan);
-
 	var myQuery = this.getQuerySpec();
+
+	// For now, we will only allow 'Category' as the query matching attribute, until such time as we
+	// decide what to do with new items when no category is specified.
+	// If restoring this code, note that the string "Category: " is also now hardcoded in doInitialDisplay.
+	var matchingAttribute = this.getWorld().getAttributeCalledCategory();
+	/*
 	var attributeCalledQueryMatchingAttribute = this.getWorld().getAttributeCalledQueryMatchingAttribute();
 	var listOfMatchingAttrs = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingAttribute);
 	var matchingAttribute;
@@ -407,11 +485,6 @@ orp.view.SectionView.prototype._refreshQueryEditSpan = function() {
 		orp.lang.assert(listOfMatchingAttrs.length == 1, 'more than one matching attributes');
 		matchingAttribute = listOfMatchingAttrs[0].getValue();
 	}
-	var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
-	var listOfMatchingEntries = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
-	var hasMatchingEntries = (listOfMatchingEntries && (listOfMatchingEntries.length > 0));
-	var matchingEntry = hasMatchingEntries ? listOfMatchingEntries[0] : null;
-
 	var listOfAttributes = this.getWorld().getAttributes();
 	var selectElement = orp.view.View.appendNewElement(this._queryEditSpan, "select");
 	for (var key in listOfAttributes) {
@@ -422,9 +495,14 @@ orp.view.SectionView.prototype._refreshQueryEditSpan = function() {
 		dojo.event.connect(optionElement, "onclick", this, "clickOnAttributeMenu");
 		optionElement.text = anAttribute.getDisplayString();
 	}
-
 	orp.view.View.appendNewTextNode(this._queryEditSpan, " is ");
-
+	*/
+	
+	var attributeCalledQueryMatchingValue = this.getWorld().getAttributeCalledQueryMatchingValue();
+	var listOfMatchingEntries = myQuery.getEntriesForAttribute(attributeCalledQueryMatchingValue);
+	var hasMatchingEntries = (listOfMatchingEntries && (listOfMatchingEntries.length > 0));
+	var matchingEntry = hasMatchingEntries ? listOfMatchingEntries[0] : null;
+	
 	var listOfPossibleEntries = this.getWorld().getSuggestedItemsForAttribute(matchingAttribute);
 	var entrySpan = orp.view.View.appendNewElement(this._queryEditSpan, "span");
 
@@ -513,9 +591,11 @@ orp.view.SectionView.prototype.observedItemHasChanged = function(item) {
 	item.removeObserver(this); //item no longer needs to be observed as query editor span is rebuilt
 	var myQuery = this.getQuerySpec();
 	orp.lang.assert(item == myQuery);
-	var pluginItem = this._pluginView.getPluginItem();
-	this._pluginView.destroy();
-	this._pluginView = this.getPluginInstanceFromPluginItem(pluginItem, this._pluginDiv);
+	if (this._pluginView) {
+		var pluginItem = this._pluginView.getPluginItem();
+		this._pluginView.destroy();
+		this._pluginView = this.getPluginInstanceFromPluginItem(pluginItem, this._pluginDiv);
+	}
 	this.refresh();
 };
 
