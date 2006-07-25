@@ -497,6 +497,11 @@ orp.TablePlugin.prototype._buildHeader = function() {
 			headerCellContentSpan.appendChild(this.getSortIcon());
 		}
 		var FIXME_renderDatatype = true;
+		if (attribute == this.getWorld().getAttributeCalledName()) {
+			// This is a special case, partly because the expected type of 'Name' SHOULD be text, and
+			// partly because it's very confusing in a new empty table to have the expected type field under 'Name'.
+			FIXME_renderDatatype = false;
+		}
 		if (FIXME_renderDatatype) {
 			var br = orp.view.View.appendNewElement(headerCell, "br");
 			var outerSpan = orp.view.View.appendNewElement(headerCell, "span", orp.view.RootView.cssClass.EDIT_TOOL);
