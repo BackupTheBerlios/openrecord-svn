@@ -823,6 +823,11 @@ p.byline a {
 .simple_table th.add_column {
   height: 100%;
   padding: 0 0 0 0;
+  width: 12em;
+}
+
+.categoryForQuery {
+  width: 12em;
 }
 
 table.dojoComboBox {
