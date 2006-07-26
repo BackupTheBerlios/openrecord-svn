@@ -557,6 +557,23 @@ orp.plugins.ScatterPlot.prototype._changeModeToBubblePlot = function (evt) {
 	var zAxisRow = containerTableObject.childNodes[1];
 	var zAxisCell = zAxisRow.childNodes[2];
 	zAxisCell.childNodes[0].disabled = false;
+	var newAttributeUuid = zAxisCell.childNodes[0].value;
+	var selectedAttribute = this._hashTableOfAttributesKeyedByUuid[newAttributeUuid];
+	if(this._listOfAxisAttributes[2]) {
+		this._listOfAxisAttributes[2] = selectedAttribute;
+	} else {
+		this._listOfAxisAttributes.push(selectedAttribute);
+	}
+	var world = this.getWorld();
+	var createNewLayoutItemIfNecessary;
+	var layoutItem = this.getLayoutItem(createNewLayoutItemIfNecessary = true);
+	if (layoutItem) {
+		var attributeCalledSelectedAttribute = world.getItemFromUuid(orp.view.SectionView.UUID.ATTRIBUTE_SELECTED_ATTRIBUTES);
+		var typeCalledItem =  world.getTypeCalledItem();
+		layoutItem.addEntry({attribute: attributeCalledSelectedAttribute, value: this._listOfAxisAttributes[2], type: typeCalledItem});
+		this.refresh();
+		return;
+	}
 };
 
 /**
